@@ -1,3 +1,6 @@
+# RaspiBolt LND Mainnet: systemd unit for bitcoind
+# /etc/systemd/system/bitcoind.service
+
 [Unit]
 Description=Bitcoin daemon
 After=network.target
