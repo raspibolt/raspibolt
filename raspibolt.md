@@ -208,7 +208,7 @@ Save and apply these router settings, we will check them later. Disconnect the P
 ### Introduction to the command line
 We are going to work on the command line of the Pi, which may be new to you. Find some basic information below, it will help you navigate and interact with your Pi.
 
-**Entering commands**
+#### Entering commands
 You enter commands and the Pi answers by printing the results below your command. To make it clear where a command begins, every command in this guide starts with the `$` sign. The system response is marked with the `>` character.
 
 In the following example, just enter `ls -la` and press the enter/return key:
@@ -218,23 +218,23 @@ $ ls -la
 ```
 ![command ls -la](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/5_command_ls-la.png)
 
-**Auto-complete commands**
+#### Auto-complete commands
 When you enter commands, you can use the `Tab` key for auto-completion, eg. for commands, directories or filenames.
 
-**Use admin privileges**
+#### Use admin privileges
 Our regular user has no admin privileges. If a command needs to edit the system configuration, we need to use the `sudo` ("superuser do") command as prefix. Instead of editing a system file with `nano /etc/fstab`, we use `sudo nano /etc/fstab`. 
 
 For security reasons, the user "bitcoin" cannot use the `sudo` command.
 
-**Using the Nano text editor**
+#### Using the Nano text editor
 We use the Nano editor to create new text files or edit existing ones. It's not complicated, but to save and exit is not intuitive. 
 * Save: hit `Ctrl-O` (for Output), confirm the filename, and hit the `Enter` key
 * Exit: hit `Ctrl-X`
 
-**Copy / Paste**
+#### Copy / Paste
 If you are using Windows and the PuTTY SSH client, you can copy text from the shell by selecting it with your mouse (no need to click anything), and paste stuff at the cursor position with a right-click anywhere in the ssh window.
 
-**A (very) short list of common Linux commands**
+#### A (very) short list of common Linux commands
 
 | command | description | example |
 | -- | -- | -- |
@@ -864,5 +864,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQwNDMzMzA1MF19
+eyJoaXN0b3J5IjpbLTc4Mzk2NTc4MF19
 -->
