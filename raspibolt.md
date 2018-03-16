@@ -114,8 +114,7 @@ If your computer has a lot of memory, you can increase the database in-memory ca
 ```
 dbcache=6000
 ```
-**Speed of your hard disk**
-
+#### Speed of your hard disk
 Indexing creates heavy read/write traffic to your hard disk. If you have enough space on your internal hard disk, it might be quicker to use than an external hard disk. An external USB3 hard disk will be significantly faster than one with a USB2 connection.
 
 Let the blockchain sync for now, we can already start working on the Pi.
@@ -865,5 +864,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzAxMjc5NDJdfQ==
+eyJoaXN0b3J5IjpbLTUwOTIzMjIzOF19
 -->
