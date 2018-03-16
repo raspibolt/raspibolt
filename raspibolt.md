@@ -291,6 +291,7 @@ You are now on the command line of your own Bitcoin node. First we finish the Pi
 It is important to keep the system up-to-date with security patches and application updates. The “Advanced Packaging Tool” (apt) makes this easy:
 
 `$ sudo apt-get update`
+
 `$ sudo apt-get upgrade`
 
 :point_right: Do this regularly every few months to get security related updates.
@@ -864,5 +865,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc4Mzk2NTc4MF19
+eyJoaXN0b3J5IjpbLTYwNjk0OTE0XX0=
 -->
