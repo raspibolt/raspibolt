@@ -180,8 +180,6 @@ Now open your web browser and access your router by entering the address, like a
 
 ![Router client list](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/net1_clientlist.png)
 
-*Client list in my ASUS router*
-
 :point_right: don’t know your router password? Try [routerpasswords.com](http://www.routerpasswords.com/). 
 :warning: If your router still uses the initial password: change it!
 
@@ -205,8 +203,6 @@ Next, “Port Forwarding” needs to be configured. Different applications use d
 Save and apply these router settings, we will check them later. Disconnect the Pi from the power supply, wait a few seconds, and plug it in again. The node should now get the new fixed IP address.
 
 ![Fixed network address](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/net2_fixedip.png)
-
-*RaspiBolt is listed with new fixed address*
 
 ## Working on the Raspberry Pi
 ### Introduction to the command line
@@ -867,5 +863,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NjM0OTU4MDBdfQ==
+eyJoaXN0b3J5IjpbMTQzODA3NTg2Ml19
 -->
