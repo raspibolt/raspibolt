@@ -236,7 +236,7 @@ If you are using Windows and the PuTTY SSH client, you can copy text from the sh
 
 **A (very) short list of common Linux commands**
 
-| *command* | description | example |
+| command | description | example |
 | -- | -- | -- |
 | `cd` | change to directory | `cd /home/bitcoin` |
 | `ls` | list directory content | `ls -la /mnt/hdd` |
@@ -867,5 +867,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0MjIzOTIwMThdfQ==
+eyJoaXN0b3J5IjpbMTIzNzE3NTEyMF19
 -->
