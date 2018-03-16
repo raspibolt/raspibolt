@@ -336,14 +336,14 @@ As a server installation, the Linux native file system Ext4 is the best choice f
   `$ sudo mkfs.ext4 /dev/[NAME]`
 
 * Edit the fstab file and the following as a new line (replace `UUID=123456`) at the end  
-  `$ sudo nano /etc/fstab`
+  `$ sudo nano /etc/fstab`  
   `UUID=123456 /mnt/hdd ext4 noexec,defaults 0 0` 
 
 **Option 2: Use existing hard disk with NTFS**
 If you want to use your existing hard disk that already contains the bitcoin mainnet blockchain, you can simply mount it as is:
 
 * Identify the partition and note the UUID at the left (eg. “12345678”) and verify the FSTYPE (should be “ntfs”)  
-  `$ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL `
+  `$ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL `  
   `$ sudo apt-get install ntfs-3g`
 
 * Open the file “/etc/fstab” in the Nano text editor and add the following line, but use the “UUID” noted above, save and exit  
@@ -360,7 +360,7 @@ The following steps are valid regardless of the chosen option above.
   `$ sudo mkdir /mnt/hdd`
 
 * Mount all drives and check the file system. Is “/mnt/hdd” listed?  
-  `$ sudo mount -a`
+  `$ sudo mount -a`  
   `$ df /mnt/hdd`
 ```
 Filesystem     1K-blocks  Used Available Use% Mounted on
@@ -370,13 +370,13 @@ Filesystem     1K-blocks  Used Available Use% Mounted on
   `$ sudo chown bitcoin:bitcoin /mnt/hdd/`
 
 * Switch to user "bitcoin", navigate to the hard disk and create the bitcoin directory.  
-  `$ sudo su bitcoin`
-  `$ cd /mnt/hdd`
-  `$ mkdir bitcoin`
+  `$ sudo su bitcoin`  
+  `$ cd /mnt/hdd`  
+  `$ mkdir bitcoin`  
   `$ ls -lat`
 
 * Create a testfile in the new directory and delete it.  
-  `$ touch bitcoin/test.file`
+  `$ touch bitcoin/test.file`  
   `$ rm bitcoin/test.file`
 
 If this command gives you an error, chances are that your external hard disk is mounted as “read only”. This must be fixed before proceeding.
@@ -863,5 +863,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMjYyODUyXX0=
+eyJoaXN0b3J5IjpbNTQ0OTMxOTAwXX0=
 -->
