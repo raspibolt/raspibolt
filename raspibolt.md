@@ -319,8 +319,8 @@ This guide uses the main user "admin" instead of "pi" to make it more reusable w
 ### Adding the service user “bitcoin”
 The bitcoin and lightning processes will run in the background (as daemon) and use the separate user “bitcoin” for security reasons. This user does not have admin rights and cannot change the system configuration.
 
-* Enter the following command, set your `password [A]` and confirm all questions with the enter/return key. 
-`$ sudo adduser bitcoin`
+* Enter the following command, set your `password [A]` and confirm all questions with the enter/return key.  
+  `$ sudo adduser bitcoin`
 
 ### Mounting external hard disk
 The external hard disk is attached to the file system and can be accessed as a regular folder (this is called “mounting”). Plug your hard disk into the running Pi and power the drive up. You can either work proceed with a newly formatted hard disk (recommended) or an existing one that already contains data.
@@ -329,25 +329,25 @@ The external hard disk is attached to the file system and can be accessed as a r
 As a server installation, the Linux native file system Ext4 is the best choice for the external hard disk. 
 :warning: All data on this hard disk will be erased with the following steps! 
 
-* Get the NAME for main partition on the external hard disk
-`$ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL` 
+* Get the NAME for main partition on the external hard disk  
+  `$ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL` 
 
-* Format the external hard disk with Ext4 (use [NAME] from above, e.g `/dev/sda1`) and copy the UUID that is provided as a result of this process
-`$ sudo mkfs.ext4 /dev/[NAME]`
+* Format the external hard disk with Ext4 (use [NAME] from above, e.g `/dev/sda1`) and copy the UUID that is provided as a result of this process  
+  `$ sudo mkfs.ext4 /dev/[NAME]`
 
-* Edit the fstab file and the following as a new line (replace `UUID=123456`) at the end
-`$ sudo nano /etc/fstab`
-`UUID=123456 /mnt/hdd ext4 noexec,defaults 0 0` 
+* Edit the fstab file and the following as a new line (replace `UUID=123456`) at the end  
+  `$ sudo nano /etc/fstab`
+  `UUID=123456 /mnt/hdd ext4 noexec,defaults 0 0` 
 
 **Option 2: Use existing hard disk with NTFS**
 If you want to use your existing hard disk that already contains the bitcoin mainnet blockchain, you can simply mount it as is:
 
-* Identify the partition and note the UUID at the left (eg. “12345678”) and verify the FSTYPE (should be “ntfs”)
-`$ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL `
-`$ sudo apt-get install ntfs-3g`
+* Identify the partition and note the UUID at the left (eg. “12345678”) and verify the FSTYPE (should be “ntfs”)  
+  `$ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL `
+  `$ sudo apt-get install ntfs-3g`
 
-* Open the file “/etc/fstab” in the Nano text editor and add the following line, but use the “UUID” noted above, save and exit
-`$ sudo nano /etc/fstab`
+* Open the file “/etc/fstab” in the Nano text editor and add the following line, but use the “UUID” noted above, save and exit  
+  `$ sudo nano /etc/fstab`
 ```
 UUID=12345678 /mnt/hdd ntfs defaults,auto,umask=002,gid=bitcoin,users,rw 0 0
 ``` 
@@ -356,28 +356,28 @@ Please note that we mounted using `umask=002,gid=bitcoin`, which gives only the 
 **Continue for all options**
 The following steps are valid regardless of the chosen option above.
 
-* Create the directory to add the hard disk and set the correct owner 
-`$ sudo mkdir /mnt/hdd`
+* Create the directory to add the hard disk and set the correct owner  
+  `$ sudo mkdir /mnt/hdd`
 
-* Mount all drives and check the file system. Is “/mnt/hdd” listed?
-`$ sudo mount -a`
-`$ df /mnt/hdd`
+* Mount all drives and check the file system. Is “/mnt/hdd” listed?  
+  `$ sudo mount -a`
+  `$ df /mnt/hdd`
 ```
 Filesystem     1K-blocks  Used Available Use% Mounted on
 /dev/sda1      479667880 73756 455158568   1% /mnt/hdd
 ```
-*  Set the owner 
-`$ sudo chown bitcoin:bitcoin /mnt/hdd/`
+*  Set the owner  
+  `$ sudo chown bitcoin:bitcoin /mnt/hdd/`
 
-* Switch to user "bitcoin", navigate to the hard disk and create the bitcoin directory. 
-`$ sudo su bitcoin`
-`$ cd /mnt/hdd`
-`$ mkdir bitcoin`
-`$ ls -lat`
+* Switch to user "bitcoin", navigate to the hard disk and create the bitcoin directory.  
+  `$ sudo su bitcoin`
+  `$ cd /mnt/hdd`
+  `$ mkdir bitcoin`
+  `$ ls -lat`
 
-* Create a testfile in the new directory and delete it.
-`$ touch bitcoin/test.file`
-`$ rm bitcoin/test.file`
+* Create a testfile in the new directory and delete it.  
+  `$ touch bitcoin/test.file`
+  `$ rm bitcoin/test.file`
 
 If this command gives you an error, chances are that your external hard disk is mounted as “read only”. This must be fixed before proceeding.
 
@@ -863,5 +863,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTMwMjQ0NDA2XX0=
+eyJoaXN0b3J5IjpbLTEzMjYyODUyXX0=
 -->
