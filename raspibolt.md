@@ -303,8 +303,8 @@ The usage of a swap file can degrade your SD card very quickly. Therefore, we wi
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
 
 * Create the new user and add it to the group "sudo"  
-`$ sudo useradd -m admin`  
-`$ sudo adduser admin sudo` 
+  `$ sudo useradd -m admin`  
+  `$ sudo adduser admin sudo` 
 
 * Set the password to your password [A] and set the standard shell (command line interface) to "bash"
 `$ sudo passwd admin`
@@ -863,5 +863,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5NzkxOTU0MTBdfQ==
+eyJoaXN0b3J5IjpbMTQyNjA3ODk1OF19
 -->
