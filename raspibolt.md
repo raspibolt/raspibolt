@@ -298,8 +298,11 @@ It is important to keep the system up-to-date with security patches and applicat
 
 ### Disabling Swap File
 The usage of a swap file can degrade your SD card very quickly. Therefore, we will disable it completely. 
+
 `$ sudo swapoff --all`
+
 `$ sudo apt-get remove dphys-swapfile`
+
 
 ### Adding main user "admin"
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
@@ -865,5 +868,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYwNjk0OTE0XX0=
+eyJoaXN0b3J5IjpbMTgyNTI3NjE0OF19
 -->
