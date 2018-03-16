@@ -50,6 +50,7 @@ This guide utilizes free open-source software in combination with cheap hardware
 * Optional: Raspberry Pi case
 
 ![Raspberry Pi](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/raspberrypi_hardware.png)
+
 *Raspberry Pi 3: a tiny computer for less than $40*
 
 I used a Raspberry Pi 3 Model B and set it up with a 8 GB SD card. To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is ~200 GB and growing. I bought a cheap hard disk enclosure and reused an old 500 GB hard disk that was lying around. 
@@ -863,5 +864,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY5NTEyODk5MF19
+eyJoaXN0b3J5IjpbMjE0MDExMjM2OF19
 -->
