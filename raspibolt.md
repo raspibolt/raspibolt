@@ -306,15 +306,15 @@ This guide uses the main user "admin" instead of "pi" to make it more reusable w
   `$ sudo useradd -m admin`  
   `$ sudo adduser admin sudo` 
 
-* Set the password to your password [A] and set the standard shell (command line interface) to "bash"
-`$ sudo passwd admin`
-`$ sudo chsh admin -s /bin/bash`
+* Set the password to your password [A] and set the standard shell (command line interface) to "bash"  
+  `$ sudo passwd admin`  
+  `$ sudo chsh admin -s /bin/bash`
 
-* And while you’re at it, change the password of the “root” admin user to your password [A]. 
-`$ sudo passwd root`
+* And while you’re at it, change the password of the “root” admin user to your password [A].  
+  `$ sudo passwd root`
 
-* Log out and log in with the new user "admin"
-`$ exit`
+* Log out and log in with the new user "admin"  
+  `$ exit`
 
 ### Adding the service user “bitcoin”
 The bitcoin and lightning processes will run in the background (as daemon) and use the separate user “bitcoin” for security reasons. This user does not have admin rights and cannot change the system configuration.
@@ -863,5 +863,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQyNjA3ODk1OF19
+eyJoaXN0b3J5IjpbNTMwMjQ0NDA2XX0=
 -->
