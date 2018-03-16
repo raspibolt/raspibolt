@@ -288,28 +288,22 @@ You are now on the command line of your own Bitcoin node. First we finish the Pi
 * Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
 
 ### Software update
-It is important to keep the system up-to-date with security patches and application updates. The “Advanced Packaging Tool” (apt) makes this easy:
-
-`$ sudo apt-get update`
-
+It is important to keep the system up-to-date with security patches and application updates. The “Advanced Packaging Tool” (apt) makes this easy:  
+`$ sudo apt-get update`  
 `$ sudo apt-get upgrade`
 
 :point_right: Do this regularly every few months to get security related updates.
 
 ### Disabling Swap File
-The usage of a swap file can degrade your SD card very quickly. Therefore, we will disable it completely. 
-
-`$ sudo swapoff --all`
-
+The usage of a swap file can degrade your SD card very quickly. Therefore, we will disable it completely.  
+`$ sudo swapoff --all`  
 `$ sudo apt-get remove dphys-swapfile`
-
 
 ### Adding main user "admin"
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
 
-* Create the new user and add it to the group "sudo"
-
-`$ sudo useradd -m admin`
+* Create the new user and add it to the group "sudo"  
+`$ sudo useradd -m admin`  
 
 `$ sudo adduser admin sudo` 
 
@@ -870,5 +864,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYwNDc1NDQ4NF19
+eyJoaXN0b3J5IjpbLTE2MTI4NDUyNDhdfQ==
 -->
