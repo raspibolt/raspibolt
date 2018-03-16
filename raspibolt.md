@@ -241,9 +241,6 @@ If you are using Windows and the PuTTY SSH client, you can copy text from the sh
 | `cd` | change to directory | `cd /home/bitcoin` |
 | `ls` | list directory content | `ls -la /mnt/hdd` |
 | `cp` | copy | `cp file.txt newfile.txt` |
-
-
-
 | `mv` | move | `mv file.txt moved_file.txt`
 | `rm` | remove | `mv temporaryfile.txt`
 | `mkdir` | make directory | `mkdir /home/bitcoin/newdirectory`
@@ -867,5 +864,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIzNzE3NTEyMF19
+eyJoaXN0b3J5IjpbLTQwNDMzMzA1MF19
 -->
