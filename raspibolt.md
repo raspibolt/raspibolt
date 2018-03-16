@@ -325,7 +325,7 @@ The bitcoin and lightning processes will run in the background (as daemon) and u
 ### Mounting external hard disk
 The external hard disk is attached to the file system and can be accessed as a regular folder (this is called “mounting”). Plug your hard disk into the running Pi and power the drive up. You can either work proceed with a newly formatted hard disk (recommended) or an existing one that already contains data.
 
-**Option 1 (recommended): Format hard disk with Ext4**
+#### Option 1 (recommended): Format hard disk with Ext4
 As a server installation, the Linux native file system Ext4 is the best choice for the external hard disk. 
 :warning: All data on this hard disk will be erased with the following steps! 
 
@@ -339,7 +339,7 @@ As a server installation, the Linux native file system Ext4 is the best choice f
   `$ sudo nano /etc/fstab`  
   `UUID=123456 /mnt/hdd ext4 noexec,defaults 0 0` 
 
-**Option 2: Use existing hard disk with NTFS**
+#### Option 2: Use existing hard disk with NTFS
 If you want to use your existing hard disk that already contains the bitcoin mainnet blockchain, you can simply mount it as is:
 
 * Identify the partition and note the UUID at the left (eg. “12345678”) and verify the FSTYPE (should be “ntfs”)  
@@ -353,7 +353,7 @@ UUID=12345678 /mnt/hdd ntfs defaults,auto,umask=002,gid=bitcoin,users,rw 0 0
 ``` 
 Please note that we mounted using `umask=002,gid=bitcoin`, which gives only the user “bitcoin” write access. User “admin” can only read and must use `sudo` when writing to the disk.
 
-**Continue for all options**
+#### Continue for all options
 The following steps are valid regardless of the chosen option above.
 
 * Create the directory to add the hard disk and set the correct owner  
@@ -863,5 +863,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTQ0OTMxOTAwXX0=
+eyJoaXN0b3J5IjpbMzAzMTU3OTM2XX0=
 -->
