@@ -235,6 +235,7 @@ We use the Nano editor to create new text files or edit existing ones. It's not 
 If you are using Windows and the PuTTY SSH client, you can copy text from the shell by selecting it with your mouse (no need to click anything), and paste stuff at the cursor position with a right-click anywhere in the ssh window.
 
 **A (very) short list of common Linux commands**
+
 | *command* | description | example |
 | -- | -- | -- |
 | `cd` | change to directory | `cd /home/bitcoin` |
@@ -866,5 +867,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NjkzMDIwODBdfQ==
+eyJoaXN0b3J5IjpbLTE0MjIzOTIwMThdfQ==
 -->
