@@ -130,6 +130,7 @@ You will need several passwords and I find it easiest to write them all down in 
 [ D ] LND seed password (optional)
 ```
 ![xkcd: Password Strength](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/xkcd_password_strength.png)
+
 If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass) and keep your original notes out of sight once your system is up and running.
 
 ### Installing the operating system
@@ -178,6 +179,7 @@ The fixed address is configured in your network router: this can be the cable mo
 Now open your web browser and access your router by entering the address, like a regular web address. You need so sign in, and now you can look up all network clients in your home network. One of these should be listed as “raspberrypi”, together with its address (eg. “192.168.0.240”).
 
 ![Router client list](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/net1_clientlist.png)
+
 *Client list in my ASUS router*
 
 :point_right: don’t know your router password? Try [routerpasswords.com](http://www.routerpasswords.com/). 
@@ -203,6 +205,7 @@ Next, “Port Forwarding” needs to be configured. Different applications use d
 Save and apply these router settings, we will check them later. Disconnect the Pi from the power supply, wait a few seconds, and plug it in again. The node should now get the new fixed IP address.
 
 ![Fixed network address](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/net2_fixedip.png)
+
 *RaspiBolt is listed with new fixed address*
 
 ## Working on the Raspberry Pi
@@ -864,5 +867,5 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUwOTIzMjIzOF19
+eyJoaXN0b3J5IjpbLTE1NjM0OTU4MDBdfQ==
 -->
