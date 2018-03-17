@@ -34,7 +34,7 @@ This server is set up without graphical user interface and is used remotely usin
 
 Spoiler alert: this is the goal of this guide, simply buying a Blockaccino. 
 [![
-](https://raw.githubusercontent.com/Stadicus/guides/raspibolt_initial/raspibolt/images/00_blockaccino_goal.png)
+](images/00_blockaccino_goal.png)
 ](https://vimeo.com/252693058)
   
 ### Target audience
