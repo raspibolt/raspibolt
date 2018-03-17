@@ -55,3 +55,6 @@ As the guide is quite lengthy, I split it in several parts.
 
 ### A word of caution
 All components of the Lightning network are still under development and we are dealing with real money here. So this guide follows a conservative approach: first setup and test everything on Bitcoin testnet, then - once you are comfortable to put real money on the line - switch to Bitcoin mainnet with a few simple changes.
+
+---
+Get started: [Preparations >>](raspibolt_10_preparations.md)
