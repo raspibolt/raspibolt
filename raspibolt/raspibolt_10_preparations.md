@@ -86,3 +86,6 @@ dbcache=6000
 Save and close the text file, quit Bitcoin Core using `File` / `Exit` and restart the program. The program will start syncing again. 
 
 Let the blockchain sync for now, we can already start working on the Pi.
+
+---
+Next: [Raspberry Pi >>](raspibolt_20_pi.md)
