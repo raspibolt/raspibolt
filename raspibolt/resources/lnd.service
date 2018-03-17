@@ -1,0 +1,28 @@
+# RaspiBolt LND Mainnet: systemd unit for lnd
+# /etc/systemd/system/lnd.service
+
+[Unit]
+Description=LND Lightning Daemon
+Requires=bitcoind.service
+After=getpublicip.service
+After=bitcoind.service
+
+# for use with sendmail alert
+#OnFailure=systemd-sendmail@%n
+
+[Service]
+# get var PUBIP from file
+EnvironmentFile=/run/publicip
+
+ExecStart=/usr/local/bin/lnd --externalip=${PUBLICIP}
+PIDFile=/home/bitcoin/.lnd/lnd.pid
+User=bitcoin
+Group=bitcoin
+Type=simple
+KillMode=process
+TimeoutSec=180
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

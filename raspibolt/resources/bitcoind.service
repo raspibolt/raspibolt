@@ -1,0 +1,23 @@
+# RaspiBolt LND Mainnet: systemd unit for bitcoind
+# /etc/systemd/system/bitcoind.service
+
+[Unit]
+Description=Bitcoin daemon
+After=network.target
+
+# for use with sendmail alert
+#OnFailure=systemd-sendmail@%n
+
+[Service]
+User=bitcoin
+Group=bitcoin
+Type=forking
+PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
+ExecStart=/usr/local/bin/bitcoind -pid=/home/bitcoin/.bitcoin/bitcoind.pid
+KillMode=process
+Restart=always
+TimeoutSec=120
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
