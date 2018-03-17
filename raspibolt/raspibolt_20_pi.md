@@ -14,7 +14,7 @@ You will need several passwords and I find it easiest to write them all down in 
 [ C ] LND wallet password
 [ D ] LND seed password (optional)
 ```
-![xkcd: Password Strength](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_xkcd_password_strength.png)
+![xkcd: Password Strength](images/20_xkcd_password_strength.png)
 
 If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass) and keep your original notes out of sight once your system is up and running.
 
@@ -66,7 +66,7 @@ The fixed address is configured in your network router: this can be the cable mo
 
 Now open your web browser and access your router by entering the address, like a regular web address. You need so sign in, and now you can look up all network clients in your home network. One of these should be listed as “raspberrypi”, together with its address (eg. “192.168.0.240”).
 
-![Router client list](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_net1_clientlist.png)
+![Router client list](images/20_net1_clientlist.png)
 
 :point_right: don’t know your router password? Try [routerpasswords.com](http://www.routerpasswords.com/). 
 :warning: If your router still uses the initial password: change it!
@@ -90,7 +90,7 @@ Next, “Port Forwarding” needs to be configured. Different applications use d
 
 Save and apply these router settings, we will check them later. Disconnect the Pi from the power supply, wait a few seconds, and plug it in again. The node should now get the new fixed IP address.
 
-![Fixed network address](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_net2_fixedip.png)
+![Fixed network address](images/20_net2_fixedip.png)
 
 ## Working on the Raspberry Pi
 ### Introduction to the command line
@@ -104,7 +104,7 @@ In the following example, just enter `ls -la` and press the enter/return key:
 $ ls -la
 > example system response
 ```
-![command ls -la](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_command_ls-la.png)
+![command ls -la](images/20_command_ls-la.png)
 
 * **Auto-complete commands**: When you enter commands, you can use the `Tab` key for auto-completion, eg. for commands, directories or filenames.
 
@@ -134,7 +134,7 @@ Now it’s time to connect to the Pi via SSH and get to work. For that, a Secure
   - username: `pi` 
   - password:  `raspberry`.
 
-![login](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_login.png)
+![login](images/20_login.png)
 
 :point_right: additional information: [using SSH with Raspberry Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md)
 
@@ -142,7 +142,7 @@ Now it’s time to connect to the Pi via SSH and get to work. For that, a Secure
 You are now on the command line of your own Bitcoin node. First we finish the Pi configuration. Enter the following command:  
 `$ sudo raspi-config`
 
-![raspi-config](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_raspi-config.png)
+![raspi-config](images/20_raspi-config.png)
 
 * First, on `1` change your password to your `password [A]`.
 * Next, choose Update `8` to get the latest configuration tool
@@ -282,7 +282,7 @@ The SSH login to the Pi must be especially protected. The firewall blocks all lo
 
 The first measure is to install “fail2ban”, a service that cuts off any system with five failed login attempts for ten minutes. This makes a brute-force attack unfeasible, as it would simply take too long.
 
-![fail2ban](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_fail2ban.png)
+![fail2ban](images/20_fail2ban.png)
 *Me locking myself out by entering wrong passwords* :wink:
 
 `$ sudo apt-get install fail2ban`
