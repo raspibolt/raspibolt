@@ -175,3 +175,6 @@ A great point to start is the book "Mastering Bitcoin" by Andreas Antonopoulos -
 👉 additional information: [bitcoin-cli reference](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
 
 Once the blockchain is synced on testnet, the Lightning node can be set up.
+
+---
+Next: [Lightning >>](raspibolt_40_lnd.md)
