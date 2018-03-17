@@ -2,6 +2,8 @@
 
 [ **Intro** ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi) ] -- [ Bitcoin ] -- [ Lightning ] -- [ Mainnet ] -- [ FAQ ]
 
+-----
+
 I like to tinker and build stuff myself. Recently I built my own Bitcoin / Lightning Node with a simple Raspberry Pi for less than US$100. That's right: take free open-source software and some cheap hardware, and basically become your own bank. It took me several iterations to get it right, and this project taught me a lot. This is my attempt to share my learnings and encourage you to run a node yourself.
 
 ## Why am I excited about Bitcoin and Lightning?
