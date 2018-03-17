@@ -282,36 +282,36 @@ The first measure is to install “fail2ban”, a service that cuts off any syst
 `$ sudo apt-get install fail2ban`
 
 The initial configuration should be fine as it is enabled for SSH by default. If you want to dive deeper, you can  
-👉 [customize the configuration](https://linode.com/docs/security/using-fail2ban-for-security/).
+:point_right: [customize the configuration](https://linode.com/docs/security/using-fail2ban-for-security/).
 
 ### Login with SSH keys
-One of the best options to secure the SSH login is to completely disable the password login and require a SSH key certificate. Only someone with physical possession of the private key can login. To set this up for the “admin” user, please follow this guide:  
+One of the best options to secure the SSH login is to completely disable the password login and require a SSH key certificate. Only someone with physical possession of the private key can login. To set this up for the “admin” user, follow this guide:  
 [Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers](https://www.tecmint.com/ssh-passwordless-login-with-putty)
 
 We will now disable the password login.
 
 * Logout (`exit`) and make sure that you can log in as "admin" with your SSH key
 
-* Edit ssh config file  
+* Edit ssh config file 
 `$ sudo nano /etc/ssh/sshd_config`
 
 * Change settings "ChallengeResponseAuthentication" and "PasswordAuthentication" to "no" (uncomment the line by removing # if necessary)
 
 * Save config file and exit 
 
-* Copy the SSH public key for user "root", just in case  
-  `$ sudo mkdir /root/.ssh`  
-  `$ sudo cp /home/admin/.ssh/authorized_keys /root/.ssh/`  
-  `$ sudo chown -R root:root /root/.ssh/`  
-  `$ sudo chmod -R 700 /root/.ssh/`  
-  `$ sudo systemctl restart sshd.service`
+* Copy the SSH public key for user "root", just in case
+`$ sudo mkdir /root/.ssh`
+`$ sudo cp /home/admin/.ssh/authorized_keys /root/.ssh/`
+`$ sudo chown -R root:root /root/.ssh/`
+`$ sudo chmod -R 700 /root/.ssh/`
+`$ sudo systemctl restart sshd.service`
 
 You can now only login with “admin” or “root” and your SSH key. 
 
 :warning: **Backup your SSH key!** You will need to attach a screen and keyboard to your Pi if you lose it.
 
 ## Prettify your RaspiBolt
-The following is not exactly necessary, but I think still worth the effort. 🖖
+The following is not exactly necessary, but I think still worth the effort.
 
 ### Bash completion
 As user "admin”, install bash completion scripts for Bitcoin Core and LND. You then can complete commands by pressing the `[Tab]` key:
@@ -324,14 +324,15 @@ $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/bitcoin-
 $ wget https://raw.githubusercontent.com/lightningnetwork/lnd/master/contrib/lncli.bash-completion
 $ sudo cp *.bash-completion /etc/bash_completion.d/
 ```
-
 ### Pimp the command line prompt
-
 coming soon...
 
-![Custom prompt](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_pimp_prompt.png)
+![](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_pimp_prompt.png)
 
 ### System status on login
 coming soon...
 
 ![System status MOTD](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/20_motd_welcome.png)
+
+---
+Next: [Bitcoin >>](raspibolt_30_bitcoin.md)
