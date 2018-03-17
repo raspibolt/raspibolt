@@ -17,7 +17,7 @@ This is where the **Lightning Network** comes in. As one of several new blockcha
 
 To preserve the decentralized nature of this monetary system, I think it is important that everybody can run their own trustless Bitcoin full node, preferably on cheap hardware like a Raspberry Pi.
 
-![RaspiBolt Logo](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt./images/00_raspibolt_logo.png)
+![RaspiBolt Logo](images/00_raspibolt_logo.png)
 
 This is why I set out to build my **RaspiBolt** and think that I have now - through numerous iterations - quite a good configuration that I would like to share as my modest contribution to the community. I am not a systems specialist, so please feel free to point out improvements.
 
