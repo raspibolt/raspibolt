@@ -1,0 +1,177 @@
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ **Bitcoin** ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [FAQ](raspibolt_faq.md) ]
+
+-------
+### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
+--------
+
+# Bitcoin
+The base of the Lightning node is a fully trustless [Bitcoin Core](https://bitcoin.org/en/bitcoin-core/) node. It keeps a complete copy of the blockchain and validates all transactions and blocks. By doing all this work ourselves, nobody else needs to be trusted.
+
+In the beginning, we will use the Bitcoin testnet to familiarize ourselves with its operations. This sync is handled directly by the Pi and should not take longer than a few hours. Just let it sync overnight.
+
+### Installation
+We will download the software directly from bitcoin.org, verify its signature to make sure that we use an official release and install it.
+
+* Create a download folder  
+  `$ mkdir /home/admin/download`  
+  `$ cd /home/admin/download`  
+
+We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
+
+* Get the latest download links at bitcoin.org/en/download, they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
+  `$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`  
+  `$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc`  
+  `$ wget https://bitcoin.org/laanwj-releases.asc`
+
+* Check that the reference checksum matches the real checksum  
+  `$ sha256sum --check SHA256SUMS.asc --ignore-missing`  
+  `> bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK`
+
+* Manually check the fingerprint of the public key:  
+  `$ gpg ./laanwj-releases.asc`  
+  `> 01EA5486DE18A882D4C2684590C8019E36C2E964`
+
+* Import the public key of Wladimir van der Laan, verify the signed checksum file and check the fingerprint again in case of malicious keys  
+  `$ gpg --import ./laanwj-releases.asc`  
+  `$ gpg --verify SHA256SUMS.asc`  
+  `> gpg: Good signature from Wladimir ...`  
+  `> Primary key fingerprint: 01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964`  
+
+![commands to check bitcoind signature](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/7_checksum.png)
+
+* Now we know that the keys from bitcoin.org are valid, so we can also verify the Windows binary checksums. Compare the following output with the checksum of your Windows Bitcoin Core download.  
+  `$ cat manifest-v0.4-beta.txt | grep windows` 
+```
+d039c371d01bf788d26cb2876ceafcb21f40f705c98bb0b0b9cf6558cac4ca23  lnd-windows-386-v0.4-beta.zip
+1245abe9adeb2fab74fe57d62b6d8c09d30b9ada002cd95868a33406e5a14796  lnd-windows-amd64-v0.4-beta.zip
+```
+* Extract the Bitcoin Core binaries, install them and check the version.  
+  `$ tar -xvf bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`  
+  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.0/bin/*`  
+  `$ bitcoind --version`  
+  `> Bitcoin Core Daemon version v0.16.0`
+
+### Prepare Bitcoin Core directory
+We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory  `/home/bitcoin/.bitcoin`. Instead of creating a real directory, we create a link that points to a directory on the external hard disk. 
+
+* Change to user “bitcoin” and enter the password.
+  `$ sudo su bitcoin`
+
+* We add a symbolic link that points to the external hard disk.  
+  `$ ln -s /mnt/hdd/bitcoin /home/bitcoin/.bitcoin`
+
+* Navigate to the home directory an d check the symbolic link (the target must not be red). The content of this directory will actually be on the external hard disk.  
+  `$ cd `  
+  `$ ls -la`
+
+![verify .bitcoin symlink](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/7_show_symlink.png)
+
+### Configuration
+Now, the configuration file for bitcoind needs to be created. Open it with Nano and paste the configuration below. Save and exit.  
+`$ nano /home/bitcoin/.bitcoin/bitcoin.conf`
+
+```bash
+# RaspiBolt LND Mainnet: bitcoind configuration
+# /home/bitcoin/.bitcoin/bitcoin.conf
+
+# remove the following line to enable Bitcoin mainnet
+testnet=1
+
+# Bitcoind options
+server=1
+daemon=1
+txindex=1
+disablewallet=1
+
+# Connection settings
+rpcuser=raspibolt
+rpcpassword=PASSWORD_[B]
+zmqpubrawblock=tcp://127.0.0.1:29000
+zmqpubrawtx=tcp://127.0.0.1:29000
+
+# Raspberry Pi optimizations
+dbcache=100
+maxorphantx=10
+maxmempool=50
+maxconnections=40
+maxuploadtarget=5000
+```
+:warning: Change rpcpassword to your secure `password [B]`, otherwise your funds might get stolen.
+:point_right: additional information: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments) in Bitcoin Wiki
+
+### Autostart bitcoind
+The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
+
+* Exit the “bitcoin” user session back to user “admin”  
+  `$ exit`
+
+* Create the configuration file in the Nano text editor and copy the following paragraph.  
+  `$ sudo nano /etc/systemd/system/bitcoind.service`
+
+```bash
+# RaspiBolt LND Mainnet: systemd unit for bitcoind
+# /etc/systemd/system/bitcoind.service
+
+[Unit]
+Description=Bitcoin daemon
+After=network.target
+
+# for use with sendmail alert (coming soon)
+#OnFailure=systemd-sendmail@%n
+
+[Service]
+User=bitcoin
+Group=bitcoin
+Type=forking
+PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
+ExecStart=/usr/local/bin/bitcoind -pid=/home/bitcoin/.bitcoin/bitcoind.pid
+KillMode=process
+Restart=always
+TimeoutSec=120
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+* Save and exit
+
+* Enable the configuration file  
+  `$ sudo systemctl enable bitcoind.service`
+
+* Restart the Raspberry Pi  
+  `$ sudo shutdown -r now`
+
+### Verification of bitcoind operations
+After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain.
+
+* Wait a bit, reconnect via SSH and login with the user “admin”.
+
+* Switch to the user "bitcoin"  
+  `sudo su bitcoin`
+
+* Check the status of the bitcoin daemon that was started by systemd (exit with `Ctrl-C`)  
+  `$ systemctl status bitcoind.service`
+
+![check status bitcoind]()
+
+* See bitcoind in action by monitoring its log file (exit with `Ctrl-C`)
+  * on testnet: `$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
+  * on mainnet: `$ tail -f /home/bitcoin/.bitcoin/debug.log`
+
+* Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain
+  `$ bitcoin-cli getblockchaininfo`
+
+* Only the user "bitcoin" can use "bitcoin-cli".
+* When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes.
+* Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
+
+### Explore bitcoin-cli
+If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core and play around with `bitcoin-cli` until the blockchain is up-to-date.
+
+A great point to start is the book "Mastering Bitcoin" by Andreas Antonopoulos - which is open source - and in this regard especially chapter 3 (ignore the first part how to compile from source code):
+* you definitely need to have a [real copy](https://bitcoinbook.info/) of this book!
+* read online on [Github](https://github.com/bitcoinbook/bitcoinbook)
+
+👉 additional information: [bitcoin-cli reference](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
+
+Once the blockchain is synced on testnet, the Lightning node can be set up.
