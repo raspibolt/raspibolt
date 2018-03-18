@@ -32,8 +32,9 @@ My aim is to set up a Bitcoin and Lightning node that
 
 This server is set up without graphical user interface and is used remotely using the Secure Shell (SSH) command line. In the future, this server should function as my personal backend for desktop and mobile wallets, but I haven’t found a good solution to this yet. So, command line it is for the moment.
 
-Spoiler alert: this is the goal of this guide, simply buying a Blockaccino. 
-[![](images/00_blockaccino_goal_small.png)](https://vimeo.com/252693058)
+**Spoiler alert**: this is the goal of this guide, simply buying a Blockaccino.
+
+[![](images/00_blockaccino_goal.png)](https://vimeo.com/252693058)
   
 ### Target audience
 This guide strives to give simple and foolproof instructions. But the goal is also to do everything ourselves, no shortcuts that involve trust in a 3rd party allowed. This makes this guide quite technical and lengthy, but I try to make it as straightforward as possible and explain everything for you to gain a basic understanding of the how and why.
