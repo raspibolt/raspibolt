@@ -301,7 +301,7 @@ You should now generated three files. Keep them safe, we will now disable the pa
 
 * Logout (`exit`) and make sure that you can log in as "admin" with your SSH key
 
-* Edit ssh config file 
+* Edit ssh config file  
 `$ sudo nano /etc/ssh/sshd_config`
 
 * Change settings "ChallengeResponseAuthentication" and "PasswordAuthentication" to "no" (uncomment the line by removing # if necessary)  
@@ -317,7 +317,7 @@ You should now generated three files. Keep them safe, we will now disable the pa
   `$ sudo systemctl restart ssh`  
 
 * Exit and log in again. You can no longer log in with "pi" or "bitcoin", only "admin" and "root" have the necessary SSH keys.  
-  `exit`
+  `$ exit`
 
 :warning: **Backup your SSH keys!** You will need to attach a screen and keyboard to your Pi if you lose it.
 
