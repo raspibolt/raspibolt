@@ -292,7 +292,7 @@ The initial configuration should be fine as it is enabled for SSH by default. If
 
 ### Login with SSH keys
 One of the best options to secure the SSH login is to completely disable the password login and require a SSH key certificate. Only someone with physical possession of the private key can login. 
- 
+
 * Set up SSH keys for the "admin" user:  
   [Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers](https://www.tecmint.com/ssh-passwordless-login-with-putty)
 

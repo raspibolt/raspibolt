@@ -60,7 +60,7 @@ Open the Windows command prompt (`Win+R`, enter `cmd`, hit `Enter`), navigate to
 > certutil -hashfile bitcoin-0.16.0-win64-setup.exe sha256
 6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d
 ```
-![Windows Command Prompt: verify checksum](https://raw.githubusercontent.com/Stadicus/guides/raspibolt_initial/raspibolt/images/10_blockchain_wincheck.png)
+![Windows Command Prompt: verify checksum](images/10_blockchain_wincheck.png)
 
 Compare this value with the [release signatures](https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc). For the Windows v0.16.0 binaries, its
 ```
@@ -72,7 +72,7 @@ Usually, you would also need to check the signature of this file, but it's a pai
 ### Installing Bitcoin Core
 Execute the Bitcoin Core installation file (you might need to right-click and choose "Run as administrator") and install it using the default settings. Start the program `bitcoin-qt.exe` in the directory "C:\Program Files\Bitcoin". Choose your new “bitcoin_mainnet” folder as the custom data directory.
 
-![Bitcoin Core directory selection](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/10_bitcoinqt_directory.png)
+![Bitcoin Core directory selection](images/10_bitcoinqt_directory.png)
 
 Bitcoin Core opens and starts immediately syncing the blockchain. Unfortunately, we need to set one additional setting in the “bitcoin.conf” file, otherwise the whole blockchain will be useless. Using the menu, open `Settings` / `Options` and click the button `Open Configuration File`. Enter the following line:
 ```

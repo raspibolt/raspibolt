@@ -7,13 +7,13 @@
 # Mainnet
 Are you feeling comfortable to put real bitcoin on the line? Here's how to do it. 
 ```
-Personal disclaimer: This guide is provided as-is and without any guarantees. Most components are 
-under development and this guide may contain factual errors that result in the loss of your bitcoin.
-Use this guide at your own risk.
+Personal disclaimer: This guide is provided as-is and without any guarantees. Most components
+are under development and this guide may contain factual errors that result in the loss of your
+bitcoin. Use this guide at your own risk.
 ```
 ```
-Lightning Labs disclaimer: As this is the first mainnet release of lnd, we recommend that users experiment 
-with only small amounts (#craefulgang #craefulgang #craefulgang).
+Lightning Labs disclaimer: As this is the first mainnet release of lnd, we recommend that users
+experiment with only small amounts (#craefulgang #craefulgang #craefulgang).
 ```
 
 ## Copy the mainnet blockchain
@@ -73,7 +73,7 @@ Do not proceed until the copy task above is finished.
 # remove the following line to enable Bitcoin mainnet
 #testnet=1
 ```
-  
+
 * Edit "lnd.conf" file by switching from `bitcoin.testnet=1` to `bitcoin.mainnet=1`. Save and exit.  
   `$ sudo nano /home/bitcoin/.lnd/lnd.conf`
 ```
@@ -88,14 +88,17 @@ bitcoin.mainnet=1
   `$ tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
   `$ bitcoin-cli getblockchaininfo`  
   `$ exit`  
-
 * Start LND and check its operation  
   `$ sudo systemctl start lnd`   
   `$ systemctl status lnd`  
   `$ sudo journalctl -f -u lnd`  
-
 * If everything works fine, restart the RaspiBolt and check the operations again.
   `$ sudo shutdown -r now`  
+* After the restart, LND will catch up with the whole Bitcoin blockchain, that can take up to two hours.
+  * Monitor the system logs: `$ systemctl status lnd` 
+  * Check the system load to see if your RaspiBolt is still working hard: `htop` 
+
+
 
 ## Start using the Lightning Network
 
@@ -104,7 +107,7 @@ Congratulations, your RaspiBolt is live on the Bitcoin mainnet! To open channels
 
 * Generate a new Bitcoin address to receive funds on-chain  
   `$ lncli newaddress np2wkh`   
-  `> "address": ".............................."`
+  `> "address": "3.........................."`
 
 * From your regular Bitcoin wallet, send a small amount of bitcoin to this address
 
@@ -128,7 +131,16 @@ $ lncli listpayments
 
 ...more to come.
 
-👉 see Lightning API reference for additional information
+👉 see [LND API reference](http://api.lightning.community/) for additional information
 
---- 
+### Explore Lightning mainnet
+There are a lot of great resources to explore the Lightning mainnet in regard to your own node.
+
+* [Recksplorer](https://rompert.com/recksplorer/): Lightning Network Map
+* [1ML](https://1ml.com): Lightning Network Search and Analysis Engine
+* [lnroute.com](http://lnroute.com): comprehensive Lightning Network resources list
+
+
+
+---
 Next: [FAQ >>](raspibolt_faq.md)
