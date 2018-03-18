@@ -99,8 +99,36 @@ bitcoin.mainnet=1
 
 ## Start using the Lightning Network
 
-coming soon.
+### Fund your node
+Congratulations, your RaspiBolt is live on the Bitcoin mainnet! To open channels and start using it, you need to fund it with some bitcoin. For starters, put only on your node what you are willing to lose. Monopoly money.
 
+* Generate a new Bitcoin address to receive funds on-chain  
+  `$ lncli newaddress np2wkh`   
+  `> "address": ".............................."`
+
+* From your regular Bitcoin wallet, send a small amount of bitcoin to this address
+
+* Check your LND wallet balance  
+  `$ lncli walletbalance`
+
+* Monitor your transaction on a Blockchain explorer:
+  https://smartbit.com.au
+
+### LND in action
+As soon as your funding transaction is mined and confirmed, LND will start to open and maintain channels. This feature is called "Autopilot" and is configured in the "lnd.conf" file. If you would like to maintain your channels manually, you can disable the autopilot.
+
+Some commands to try:
+
+```
+$ lncli listpeers
+$ lncli listchannels
+$ lncli sendpayment --pay_req=lntb32u1pdg7p...y0gtw6qtq0gcpk50kww
+$ lncli listpayments
+```
+
+...more to come.
+
+👉 see Lightning API reference for additional information
 
 --- 
 Next: [FAQ >>](raspibolt_faq.md)
