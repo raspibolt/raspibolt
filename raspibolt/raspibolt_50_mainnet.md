@@ -41,6 +41,12 @@ We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winsc
 
 :warning: The transfer must not be interupted. Make sure your computer does not go to sleep. 
 
+### Error regarding timestamps
+When using an NTFS external hard disk, you might get the following error:  
+**Upload of file '.....' was successful, but error occurred while setting the permissions and/or timestamp.**
+
+You can safely ignore this and choose `Skip all` as NTFS does not support the necessary timestamp methods.
+
 ### Disable password login again
 * As user "admin", remove the `#` in front of "PasswordAuthentication no" to enable the line. Save and exit.  
   `$ sudo nano /etc/ssh/sshd_config`  
@@ -93,12 +99,3 @@ coming soon.
 
 --- 
 Next: [FAQ >>](raspibolt_faq.md)
-    
-
-
-
-
-
-
-
-

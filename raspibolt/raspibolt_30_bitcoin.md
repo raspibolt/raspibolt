@@ -155,7 +155,7 @@ After rebooting, the bitcoind should start and begin to sync and validate the Bi
 * Check the status of the bitcoin daemon that was started by systemd (exit with `Ctrl-C`)  
   `$ systemctl status bitcoind.service`
 
-![check status bitcoind]()
+![Bitcoind status ](images/30_status_bitcoind.png)
 
 * See bitcoind in action by monitoring its log file (exit with `Ctrl-C`)  
   `$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
