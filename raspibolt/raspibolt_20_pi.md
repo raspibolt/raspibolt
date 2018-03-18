@@ -68,7 +68,7 @@ Now open your web browser and access your router by entering the address, like a
 
 ![Router client list](images/20_net1_clientlist.png)
 
-:point_right: don’t know your router password? Try [routerpasswords.com](http://www.routerpasswords.com/). 
+:point_right: don’t know your router password? Try [routerpasswords.com](http://www.routerpasswords.com/).  
 :warning: If your router still uses the initial password: change it!
 
 ### Setting a fixed address
