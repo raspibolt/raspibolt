@@ -34,7 +34,7 @@ This server is set up without graphical user interface and is used remotely usin
 
 **Spoiler alert**: this is the goal of this guide, simply buying a Blockaccino.
 
-[![](images/00_blockaccino_goal.png)](https://vimeo.com/252693058)
+[![](images/00_blockaccino_goal.png)](https://vimeo.com/258395303)
   
 ### Target audience
 This guide strives to give simple and foolproof instructions. But the goal is also to do everything ourselves, no shortcuts that involve trust in a 3rd party allowed. This makes this guide quite technical and lengthy, but I try to make it as straightforward as possible and explain everything for you to gain a basic understanding of the how and why.
