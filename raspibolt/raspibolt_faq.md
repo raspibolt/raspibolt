@@ -33,6 +33,7 @@ This is a (very) short list of common Linux commands for your reference. For a s
 | `exit` | exit current user session | `exit`
 | `systemctl` | control systemd service | `sudo systemctl start bitcoind`
 | `journalctl` | query systemd journal | `sudo journalctl -u bitcoind`
+| `htop` | monitor processes & resource usage | `htop`
 | `shutdown` | shutdown or restart Pi | `sudo shutdown -r now`
 
 
