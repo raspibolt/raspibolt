@@ -7,10 +7,15 @@
 # Mainnet
 Are you feeling comfortable to put real bitcoin on the line? Here's how to do it. 
 ```
-Disclaimer: This guide is provided as is and without any guarantees. Most components are under
-development and this guide may contain factual errors that result in the loss of your bitcoin.
+Personal disclaimer: This guide is provided as-is and without any guarantees. Most components are 
+under development and this guide may contain factual errors that result in the loss of your bitcoin.
 Use this guide at your own risk.
 ```
+```
+Lightning Labs disclaimer: As this is the first mainnet release of lnd, we recommend that users experiment 
+with only small amounts (#craefulgang #craefulgang #craefulgang).
+```
+
 ## Copy the mainnet blockchain
 The current setup runs on Bitcoin testnet. Right at the beginning, however, we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it  should be fully synced (see status bar). 
 
@@ -79,8 +84,8 @@ bitcoin.mainnet=1
 * Start Bitcoind and check if it's operating on mainnet  
   `$ sudo systemctl start bitcoind`  
   `$ systemctl status bitcoind.service`  
-  `$ tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
   `$ sudo su bitcoin`  
+  `$ tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
   `$ bitcoin-cli getblockchaininfo`  
   `$ exit`  
 
