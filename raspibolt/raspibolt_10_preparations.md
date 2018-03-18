@@ -9,16 +9,15 @@
 ## Hardware requirements
 This guide builds on the easily available and very flexible Raspberry Pi. This amazing piece of hardware is a tiny computer-on-a-chip, costs about $35 and consumes very little energy.
 
+![Raspberry Pi](images/10_raspberrypi_hardware.png)  
+*Raspberry Pi 3: a tiny computer for less than $40*
+
 It is advisable to get the latest Raspberry Pi for good performance:
 * Raspberry Pi 3 Model B or better
 * Micro SD card: 8 GB or more, incl. adapter to your regular computer
 * USB power adapter: 5V/1.2A (more ampere is fine) + Micro USB cable
 * External hard disk: 500 GB or more with dedicated power supply
 * Optional: Raspberry Pi case
-
-![Raspberry Pi](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/10_raspberrypi_hardware.png)
-
-*Raspberry Pi 3: a tiny computer for less than $40*
 
 I used a Raspberry Pi 3 Model B and set it up with a 8 GB SD card. To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is ~200 GB and growing. I bought a cheap hard disk enclosure and reused an old 500 GB hard disk that was lying around. 
 
