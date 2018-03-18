@@ -17,7 +17,7 @@ This is where the **Lightning Network** comes in. As one of several new blockcha
 
 To preserve the decentralized nature of this monetary system, I think it is important that everybody can run their own trustless Bitcoin full node, preferably on cheap hardware like a Raspberry Pi.
 
-![RaspiBolt Logo](images/00_raspibolt_logo.png)
+![RaspiBolt Logo](images/00_raspibolt_logo_small.png)
 
 This is why I set out to build my **RaspiBolt** and think that I have now - through numerous iterations - quite a good configuration that I would like to share as my modest contribution to the community. I am not a systems specialist, so please feel free to point out improvements.
 
@@ -33,9 +33,7 @@ My aim is to set up a Bitcoin and Lightning node that
 This server is set up without graphical user interface and is used remotely using the Secure Shell (SSH) command line. In the future, this server should function as my personal backend for desktop and mobile wallets, but I haven’t found a good solution to this yet. So, command line it is for the moment.
 
 Spoiler alert: this is the goal of this guide, simply buying a Blockaccino. 
-[![
-](images/00_blockaccino_goal.png)
-](https://vimeo.com/252693058)
+[![](images/00_blockaccino_goal_small.png)](https://vimeo.com/252693058)
   
 ### Target audience
 This guide strives to give simple and foolproof instructions. But the goal is also to do everything ourselves, no shortcuts that involve trust in a 3rd party allowed. This makes this guide quite technical and lengthy, but I try to make it as straightforward as possible and explain everything for you to gain a basic understanding of the how and why.
@@ -58,6 +56,3 @@ All components of the Lightning network are still under development and we are d
 
 ---
 Get started: [Preparations >>](raspibolt_10_preparations.md)
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbNzIzMzI1MDQwXX0=
--->
