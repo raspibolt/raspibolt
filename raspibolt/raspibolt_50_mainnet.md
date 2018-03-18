@@ -70,7 +70,7 @@ Do not proceed until the copy task above is finished.
 ```
   
 * Edit "lnd.conf" file by switching from `bitcoin.testnet=1` to `bitcoin.mainnet=1`. Save and exit.  
-  `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
+  `$ sudo nano /home/bitcoin/.lnd/lnd.conf`
 ```
 # enable either testnet or mainnet
 #bitcoin.testnet=1
