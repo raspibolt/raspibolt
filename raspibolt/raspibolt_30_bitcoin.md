@@ -12,7 +12,7 @@ In the beginning, we will use the Bitcoin testnet to familiarize ourselves with 
 ### Installation
 We will download the software directly from bitcoin.org, verify its signature to make sure that we use an official release and install it.
 
-* Create a download folder  
+* Login as "admin" and create a download folder  
   `$ mkdir /home/admin/download`  
   `$ cd /home/admin/download`  
 
@@ -37,13 +37,15 @@ We download the latest Bitcoin Core binaries (the application) and compare the f
   `> gpg: Good signature from Wladimir ...`  
   `> Primary key fingerprint: 01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964`  
 
-![commands to check bitcoind signature](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/7_checksum.png)
+![commands to check bitcoind signature](images/30_checksum.png)
 
 * Now we know that the keys from bitcoin.org are valid, so we can also verify the Windows binary checksums. Compare the following output with the checksum of your Windows Bitcoin Core download.  
-  `$ cat manifest-v0.4-beta.txt | grep windows` 
+  `$ cat SHA256SUMS.asc | grep win` 
 ```
-d039c371d01bf788d26cb2876ceafcb21f40f705c98bb0b0b9cf6558cac4ca23  lnd-windows-386-v0.4-beta.zip
-1245abe9adeb2fab74fe57d62b6d8c09d30b9ada002cd95868a33406e5a14796  lnd-windows-amd64-v0.4-beta.zip
+7558249b04527d7d0bf2663f9cfe76d6c5f83ae90e513241f94fda6151396a29  bitcoin-0.16.0-win32-setup.exe
+60d65d6e57f42164e1c04bb5bb65156d87f0433825a1c1f1f5f6aebf5c8df424  bitcoin-0.16.0-win32.zip
+6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d  bitcoin-0.16.0-win64-setup.exe
+42706da1a95b2db8c5808529f73c2063a0dd770f71e0c8506bfa86dc0f3403ef  bitcoin-0.16.0-win64.zip
 ```
 * Extract the Bitcoin Core binaries, install them and check the version.  
   `$ tar -xvf bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`  
@@ -54,7 +56,7 @@ d039c371d01bf788d26cb2876ceafcb21f40f705c98bb0b0b9cf6558cac4ca23  lnd-windows-38
 ### Prepare Bitcoin Core directory
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory  `/home/bitcoin/.bitcoin`. Instead of creating a real directory, we create a link that points to a directory on the external hard disk. 
 
-* Change to user “bitcoin” and enter the password.
+* Change to user “bitcoin” and enter the password.  
   `$ sudo su bitcoin`
 
 * We add a symbolic link that points to the external hard disk.  
@@ -64,7 +66,7 @@ We use the Bitcoin daemon, called “bitcoind”, that runs in the background wi
   `$ cd `  
   `$ ls -la`
 
-![verify .bitcoin symlink](https://github.com/Stadicus/guides/raw/raspibolt_initial/raspibolt/images/7_show_symlink.png)
+![verify .bitcoin symlink](images/30_show_symlink.png)
 
 ### Configuration
 Now, the configuration file for bitcoind needs to be created. Open it with Nano and paste the configuration below. Save and exit.  
@@ -97,6 +99,7 @@ maxconnections=40
 maxuploadtarget=5000
 ```
 :warning: Change rpcpassword to your secure `password [B]`, otherwise your funds might get stolen.
+
 :point_right: additional information: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments) in Bitcoin Wiki
 
 ### Autostart bitcoind
@@ -147,23 +150,23 @@ After rebooting, the bitcoind should start and begin to sync and validate the Bi
 * Wait a bit, reconnect via SSH and login with the user “admin”.
 
 * Switch to the user "bitcoin"  
-  `sudo su bitcoin`
+  `$ sudo su bitcoin`
 
 * Check the status of the bitcoin daemon that was started by systemd (exit with `Ctrl-C`)  
   `$ systemctl status bitcoind.service`
 
-![check status bitcoind]()
+![Bitcoind status ](images/30_status_bitcoind.png)
 
-* See bitcoind in action by monitoring its log file (exit with `Ctrl-C`)
-  * on testnet: `$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
-  * on mainnet: `$ tail -f /home/bitcoin/.bitcoin/debug.log`
+* See bitcoind in action by monitoring its log file (exit with `Ctrl-C`)  
+  `$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
 
-* Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain
+* Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain  
   `$ bitcoin-cli getblockchaininfo`
 
-* Only the user "bitcoin" can use "bitcoin-cli".
-* When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes.
-* Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
+* Please note:
+  * Only the user "bitcoin" can use "bitcoin-cli".
+  * When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes.
+  * Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
 
 ### Explore bitcoin-cli
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin Core and play around with `bitcoin-cli` until the blockchain is up-to-date.
@@ -171,6 +174,8 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 A great point to start is the book "Mastering Bitcoin" by Andreas Antonopoulos - which is open source - and in this regard especially chapter 3 (ignore the first part how to compile from source code):
 * you definitely need to have a [real copy](https://bitcoinbook.info/) of this book!
 * read online on [Github](https://github.com/bitcoinbook/bitcoinbook)
+
+![Mastering Bitcoin](images/30_mastering_bitcoin_book.jpg)
 
 👉 additional information: [bitcoin-cli reference](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
 
