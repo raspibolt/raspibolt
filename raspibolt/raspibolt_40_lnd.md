@@ -198,7 +198,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 ### Get some testnet Bitcoin
 Now your Lightning node is ready. To use it in testnet, you can get some free testnet bitcoin from a faucet.
 * Generate a new Bitcoin address to receive funds on-chain  
-  `$ lncli newaddress np2wkh`
+  `$ lncli newaddress np2wkh`  
   `> "address": "2NCoq9q7............dkuca5LzPXnJ9NQ"` 
 
 * Get testnet bitcoin:  
@@ -234,5 +234,5 @@ Once you switch to mainnet and send real bitcoin to your RaspiBolt, you have "sk
 * Do a dry run with `lncli` and its many options (see [Lightning API reference](http://api.lightning.community/))
 * Try a few restarts (`sudo shutdown -r now`), is everything starting fine?
 
---- 
+---
 Next: [Mainnet >>](raspibolt_50_mainnet.md)

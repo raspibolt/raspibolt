@@ -7,7 +7,7 @@
 # FAQ
 
 ### Can I get rich by routing Lightning payments?
-Nobody knows. Probably not. I don't care. Enjoy the ride! 
+Nobody knows. Probably not. You will get minimal fees. I don't care. Enjoy the ride! 
 
 ### Can I attach the Ext4 formatted hard disk to my Windows computer?
 The Ext4 file system is not compatible with standard Windows, but with additional software like  [Linux File Systems](https://www.paragon-software.com/home/linuxfs-windows/#faq) by Paragon Software (they offer a 10 days free trial) it is possible. 
@@ -42,4 +42,6 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 * [What is Bitcoin?](https://bitcoinmagazine.com/guides/what-bitcoin)
 * [Understanding the Lightning Network](https://bitcoinmagazine.com/articles/understanding-the-lightning-network-part-building-a-bidirectional-payment-channel-1464710791/)
+* Bitcoin resources: http://lopp.net/bitcoin.html
+* Lightning Network resources: [lnroute.com](http://lnroute.com)
 
