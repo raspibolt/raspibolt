@@ -120,36 +120,38 @@ Congratulations, your RaspiBolt is live on the Bitcoin mainnet! To open channels
 ### LND in action
 As soon as your funding transaction is mined and confirmed, LND will start to open and maintain channels. This feature is called "Autopilot" and is configured in the "lnd.conf" file. If you would like to maintain your channels manually, you can disable the autopilot.
 
-Some commands to try:
+Some commands to try:  
 
-* find out some general stats about your node:
- `$ lncli getinfo`
+* find out some general stats about your node:  
+ `$ lncli getinfo`  
  
-* connect to a peer (you can find some nodes to connect to here: https://1ml.com/):
- `$ lncli connect [NODE_URI]`
+* connect to a peer (you can find some nodes to connect to here: https://1ml.com/):  
+ `$ lncli connect [NODE_URI]`  
  
-* check the peers you are currently connected to:
- `$ lncli listpeers`
+* check the peers you are currently connected to:  
+ `$ lncli listpeers`  
  
-* open a channel with a peer:
- `$ lncli openchannel [NODE_PUBKEY]`
- *keep in mind that [NODE__URI] includes @IP:PORT at it's end, while [NODE_PUBKEY] doesn't*
+* open a channel with a peer:  
+ `$ lncli openchannel [NODE_PUBKEY]`  
+ *keep in mind that [NODE__URI] includes @IP:PORT at it's end, while [NODE_PUBKEY] doesn't*  
  
-* check the status of your pending channels: 
- `$ lncli pendingchannels`
+* check the status of your pending channels:  
+ `$ lncli pendingchannels`  
  
-* check the status of your active channels:
- `$ lncli listchannels`
+* check the status of your active channels:  
+ `$ lncli listchannels`  
  
-* before paying an invoice, you should decode it to check if the amount and other infos are correct:
- `$ lncli decodepayreq [INVOICE]`
+* before paying an invoice, you should decode it to check if the amount and other infos are correct:  
+ `$ lncli decodepayreq [INVOICE]`  
  
-* pay an invoice: 
- `$ lncli payinvoice [INVOICE]`
+* pay an invoice:  
+ `$ lncli payinvoice [INVOICE]`  
  
 * create an invoice: 
- `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`
+ `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`  
  
+* check the paid payments
+ `$ lncli listpayments` 
  
 ```
 $ lncli listpeers
