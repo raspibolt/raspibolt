@@ -1,4 +1,4 @@
-[ **Intro** ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [FAQ](raspibolt_faq.md) ]
+[ **Intro** ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [FAQ](raspibolt_faq.md) ] --  [ Changelog ]
 
 -----
 # Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
@@ -51,6 +51,7 @@ As the guide is quite lengthy, I split it in several parts.
 5. [Lightning](raspibolt_40_lnd.md): install and configure the Lightning Network Daemon (LND), on testnet
 6. [Mainnet](raspibolt_50_mainnet.md): after you are comfortable with your setup, switch to Bitcoin mainnet
 7. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
+8. ​
 
 ### A word of caution
 All components of the Lightning network are still under development and we are dealing with real money here. So this guide follows a conservative approach: first setup and test everything on Bitcoin testnet, then - once you are comfortable to put real money on the line - switch to Bitcoin mainnet with a few simple changes.

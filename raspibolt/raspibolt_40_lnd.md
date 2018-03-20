@@ -179,12 +179,26 @@ WantedBy=multi-user.target
 
 ![LND startup log](images/40_start_lnd.png)
 
-### LND wallet setup
-Once LND is started, the process waits for us to create the integrated Bitcoin wallet (it does not use the bitcoind wallet). 
-* start a "bitcoin" user session  
-  `$ sudo su bitcoin` 
+### Assign LND permissions to "admin"
 
+* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).  
+  `$ ls -la /home/bitcoin/.lnd/`
+
+![Check macaroon](images/40_ls_macaroons.png)
+
+* Copy permission files and TLS cert to user "admin" to use `lndcli`  
+  `$ mkdir /home/admin/.lnd`  
+  `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
+  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
+  `$ sudo chown -R admin:admin /home/admin/.lnd/ ` 
+* Make sure that `lncli` works  
+  `$ lncli getinfo`
+
+### LND wallet setup
+
+Once LND is started, the process waits for us to create the integrated Bitcoin wallet (it does not use the bitcoind wallet). 
 * Create the LND wallet  
+
   `$ lncli create` 
 
 * If you want to create a new wallet, enter your `password [C]` as wallet password, select `n` regarding an existing seed and enter the optional `password [D]` as seed passphrase. A new cipher seed consisting of 24 words is created.
@@ -196,6 +210,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 :warning: This information must be kept secret at all times. **Write these 24 words down manually on a piece of paper and store it in a safe place.** This piece of paper is all an attacker needs to completely empty your wallet! Do not store it on a computer. Do not take a picture with your mobile phone. **This information should never be stored anywhere in digital form.**
 
 ### Get some testnet Bitcoin
+
 Now your Lightning node is ready. To use it in testnet, you can get some free testnet bitcoin from a faucet.
 * Generate a new Bitcoin address to receive funds on-chain  
   `$ lncli newaddress np2wkh`  

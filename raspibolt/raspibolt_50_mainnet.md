@@ -60,7 +60,7 @@ You can safely ignore this and choose `Skip all` as NTFS does not support the ne
 * Restart the SSH daemon.  
   `$ sudo systemctl restart ssh`
 
-## Restart bitcoind & lnd for mainnet
+## Adjust configuration 
 Do not proceed until the copy task above is finished.
 
 * As user "admin", stop the Bitcoin and Lightning services.  
@@ -74,6 +74,9 @@ Do not proceed until the copy task above is finished.
 #testnet=1
 ```
 
+* Delete files regarding permission  
+  `sudo rm /home/bitcoin/.lnd/*.macaroon`  
+  `sudo rm /home/bitcoin/.lnd/data/macaroons.db`
 * Edit "lnd.conf" file by switching from `bitcoin.testnet=1` to `bitcoin.mainnet=1`. Save and exit.  
   `$ sudo nano /home/bitcoin/.lnd/lnd.conf`
 ```
@@ -81,11 +84,12 @@ Do not proceed until the copy task above is finished.
 #bitcoin.testnet=1
 bitcoin.mainnet=1
 ```
+## Restart bitcoind & lnd for mainnet
+
 * Start Bitcoind and check if it's operating on mainnet  
   `$ sudo systemctl start bitcoind`  
   `$ systemctl status bitcoind.service`  
-  `$ sudo su bitcoin`  
-  `$ tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
+  `$ sudo tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
   `$ bitcoin-cli getblockchaininfo`  
   `$ exit`  
 * Start LND and check its operation  
@@ -96,7 +100,12 @@ bitcoin.mainnet=1
   `$ sudo shutdown -r now`  
 * After the restart, LND will catch up with the whole Bitcoin blockchain, that can take up to two hours.
   * Monitor the system logs: `$ systemctl status lnd` 
-  * Check the system load to see if your RaspiBolt is still working hard: `htop` 
+  * Check if the permission files (`admin.macaroon` and `readonly.macaroon`) have been created  
+    `$ ls -la /home/bitcoin/.lnd/`
+  * Copy the new permission file to user "admin"  
+    `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd/`  
+    `$ chown admin:admin admin.macaroon` 
+  * Check the system load to see if your RaspiBolt is still working hard: `htop`  :smile:
 
 
 
@@ -139,7 +148,6 @@ There are a lot of great resources to explore the Lightning mainnet in regard to
 * [Recksplorer](https://rompert.com/recksplorer/): Lightning Network Map
 * [1ML](https://1ml.com): Lightning Network Search and Analysis Engine
 * [lnroute.com](http://lnroute.com): comprehensive Lightning Network resources list
-
 
 
 ---
