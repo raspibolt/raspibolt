@@ -122,6 +122,35 @@ As soon as your funding transaction is mined and confirmed, LND will start to op
 
 Some commands to try:
 
+* find out some general stats about your node:
+ `$ lncli getinfo`
+ 
+* connect to a peer (you can find some nodes to connect to here: https://1ml.com/):
+ `$ lncli connect [NODE_URI]`
+ 
+* check the peers you are currently connected to:
+ `$ lncli listpeers`
+ 
+* open a channel with a peer:
+ `$ lncli openchannel [NODE_PUBKEY]`
+ *keep in mind that [NODE__URI] includes @IP:PORT at it's end, while [NODE_PUBKEY] doesn't*
+ 
+* check the status of your pending channels: 
+ `$ lncli pendingchannels`
+ 
+* check the status of your active channels:
+ `$ lncli listchannels`
+ 
+* before paying an invoice, you should decode it to check if the amount and other infos are correct:
+ `$ lncli decodepayreq [INVOICE]`
+ 
+* pay an invoice: 
+ `$ lncli payinvoice [INVOICE]`
+ 
+* create an invoice: 
+ `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`
+ 
+ 
 ```
 $ lncli listpeers
 $ lncli listchannels
