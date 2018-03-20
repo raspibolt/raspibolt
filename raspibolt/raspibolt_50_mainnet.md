@@ -133,7 +133,7 @@ Some commands to try:
  
 * open a channel with a peer:  
  `$ lncli openchannel [NODE_PUBKEY]`  
- *keep in mind that [NODE__URI] includes @IP:PORT at it's end, while [NODE_PUBKEY] doesn't*  
+ *keep in mind that [NODE__URI] includes @IP:PORT at the end, while [NODE_PUBKEY] doesn't*  
  
 * check the status of your pending channels:  
  `$ lncli pendingchannels`  
@@ -153,12 +153,7 @@ Some commands to try:
 * check the paid payments  
  `$ lncli listpayments`   
  
-```
-$ lncli listpeers
-$ lncli listchannels
-$ lncli sendpayment --pay_req=lntb32u1pdg7p...y0gtw6qtq0gcpk50kww
-$ lncli listpayments
-```
+
 
 ...more to come.
 
