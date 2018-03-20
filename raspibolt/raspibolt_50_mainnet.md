@@ -96,6 +96,7 @@ bitcoin.mainnet=1
   `$ sudo systemctl start lnd`   
   `$ systemctl status lnd`  
   `$ sudo journalctl -f -u lnd`  
+* Create 
 * If everything works fine, restart the RaspiBolt and check the operations again.
   `$ sudo shutdown -r now`  
 * After the restart, LND will catch up with the whole Bitcoin blockchain, that can take up to two hours.
