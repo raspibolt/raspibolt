@@ -147,11 +147,11 @@ Some commands to try:
 * pay an invoice:  
  `$ lncli payinvoice [INVOICE]`  
  
-* create an invoice: 
+* create an invoice:   
  `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`  
  
-* check the paid payments
- `$ lncli listpayments` 
+* check the paid payments  
+ `$ lncli listpayments`   
  
 ```
 $ lncli listpeers
