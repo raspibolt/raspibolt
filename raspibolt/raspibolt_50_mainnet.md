@@ -150,7 +150,7 @@ Some commands to try:
 * create an invoice:   
  `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`  
  
-* check the paid payments  
+* check the payments that you sent:      
  `$ lncli listpayments`   
  
 
