@@ -22,6 +22,17 @@ To preserve the decentralized nature of this monetary system, I think it is impo
 This is why I set out to build my **RaspiBolt** and think that I have now - through numerous iterations - quite a good configuration that I would like to share as my modest contribution to the community. I am not a systems specialist, so please feel free to point out improvements.
 
 ## About this guide
+### Structure
+
+1. Introduction (this page)
+2. [Preparations](raspibolt_10_preparations.md): get all required parts and start downloading the mainnet Blockchain
+3. [Raspberry Pi](raspibolt_20_pi.md): set up and configure the Pi as a secure Linux server
+4. [Bitcoin](raspibolt_30_bitcoin.md): install and configure the Bitcoin Core software as a Full Node, on testnet
+5. [Lightning](raspibolt_40_lnd.md): install and configure the Lightning Network Daemon (LND), on testnet
+6. [Mainnet](raspibolt_50_mainnet.md): after you are comfortable with your setup, switch to Bitcoin mainnet
+7. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
+8. [Updates](raspibolt_updates.md): keep track of changes
+
 ### Purpose
 
 My aim is to set up a Bitcoin and Lightning node that
@@ -40,18 +51,6 @@ This server is set up without graphical user interface and is used remotely usin
 This guide strives to give simple and foolproof instructions. But the goal is also to do everything ourselves, no shortcuts that involve trust in a 3rd party allowed. This makes this guide quite technical and lengthy, but I try to make it as straightforward as possible and explain everything for you to gain a basic understanding of the how and why.
 
 If you like to learn about Linux, Bitcoin and Lightning, this guide is for you.
-
-### Structure 
-As the guide is quite lengthy, I split it in several parts. 
-
-1. Introduction (this page)
-2. [Preparations](raspibolt_10_preparations.md): get all required parts and start downloading the mainnet Blockchain
-3. [Raspberry Pi](raspibolt_20_pi.md): set up and configure the Pi as a secure Linux server
-4. [Bitcoin](raspibolt_30_bitcoin.md): install and configure the Bitcoin Core software as a Full Node, on testnet
-5. [Lightning](raspibolt_40_lnd.md): install and configure the Lightning Network Daemon (LND), on testnet
-6. [Mainnet](raspibolt_50_mainnet.md): after you are comfortable with your setup, switch to Bitcoin mainnet
-7. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
-8. ​
 
 ### A word of caution
 All components of the Lightning network are still under development and we are dealing with real money here. So this guide follows a conservative approach: first setup and test everything on Bitcoin testnet, then - once you are comfortable to put real money on the line - switch to Bitcoin mainnet with a few simple changes.
