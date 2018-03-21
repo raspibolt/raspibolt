@@ -205,7 +205,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 * Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).  
   `$ ls -la /home/bitcoin/.lnd/`
 
-![Check macaroon](C:\Users_withBackup\Roland\Documents\GitHub\guides\raspibolt\images\40_ls_macaroon.png)
+![Check macaroon](images/40_ls_macaroon.png)
 
 * Copy permission files and TLS cert to user "admin" to use `lncli`  
   `$ mkdir /home/admin/.lnd`  
