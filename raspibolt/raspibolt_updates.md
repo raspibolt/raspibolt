@@ -14,6 +14,6 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 
 ### 2018-03-20
 
-* **Mainnet**: Delete the `admin.macaroon`, `readonly.macaroon` and `macaroons.db` files before the switch to mainnet. This is always needed before a new wallet is created.
+* **Lighting**: Add reference to LND issue 890 when macaroons are not created. 
 * **Bitcoin** and **Lightning**: Copy credentials for `bitcoind` and `lnd` to user "admin" home directory. As this is a superuser anyway there's no sense in always switching to the user "bitcoin" session.
 
