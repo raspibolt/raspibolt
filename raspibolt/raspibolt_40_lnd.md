@@ -207,7 +207,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 
 ![Check macaroon](C:\Users_withBackup\Roland\Documents\GitHub\guides\raspibolt\images\40_ls_macaroon.png)
 
-* Copy permission files and TLS cert to user "admin" to use `lndcli`  
+* Copy permission files and TLS cert to user "admin" to use `lncli`  
   `$ mkdir /home/admin/.lnd`  
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
   `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  

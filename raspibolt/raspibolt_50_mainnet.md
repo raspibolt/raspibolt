@@ -46,6 +46,8 @@ We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winsc
 
 :warning: The transfer must not be interupted. Make sure your computer does not go to sleep. 
 
+:point_right:_ Additional information: [Bitcoin Core data directory structure](https://en.bitcoin.it/wiki/Data_directory)
+
 ### Error regarding timestamps
 When using an NTFS external hard disk, you might get the following error:  
 **Upload of file '.....' was successful, but error occurred while setting the permissions and/or timestamp.**
@@ -60,10 +62,23 @@ You can safely ignore this and choose `Skip all` as NTFS does not support the ne
 * Restart the SSH daemon.  
   `$ sudo systemctl restart ssh`
 
-## Adjust configuration 
-Do not proceed until the copy task above is finished.
+## Send back your testnet Bitcoin
 
-* As user "admin", stop the Bitcoin and Lightning services.  
+To avoid burning our testnet Bitcoin, and as a courtesy to the next testers, we close all our channels and withdraw the funds to the address stated on the website of the [Bitcoin Testnet Faucet](https://testnet.manu.backend.hamburg/faucet).  
+
+* `$ lncli closeallchannels`
+
+
+* Wait unitl the the channel balance is zero and the funds to be back in our on-chain wallet.  
+  `$ lncli channelbalance`  
+  `$ lncli walletbalance`
+
+- Send the amount provided by `walletbalance` minus 500 satoshis to account for fees. If you get an "insufficient funds" error, deduct a bit more until the transaction gets broadcasted.  
+  `$ lncli sendcoins 2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF [amount]`
+
+## Adjust configuration 
+
+* Stop the Bitcoin and Lightning services.  
   `$ sudo systemctl stop lnd`   
   `$ sudo systemctl stop bitcoind` 
   
@@ -74,9 +89,6 @@ Do not proceed until the copy task above is finished.
 #testnet=1
 ```
 
-* Delete files regarding permission  
-  `sudo rm /home/bitcoin/.lnd/*.macaroon`  
-  `sudo rm /home/bitcoin/.lnd/data/macaroons.db`
 * Edit "lnd.conf" file by switching from `bitcoin.testnet=1` to `bitcoin.mainnet=1`. Save and exit.  
   `$ sudo nano /home/bitcoin/.lnd/lnd.conf`
 ```
@@ -86,26 +98,26 @@ bitcoin.mainnet=1
 ```
 ## Restart bitcoind & lnd for mainnet
 
+:warning: **Do not proceed** until the copy task of the mainnet blockchain is completely finished.
+
 * Start Bitcoind and check if it's operating on mainnet  
+
   `$ sudo systemctl start bitcoind`  
   `$ systemctl status bitcoind.service`  
   `$ sudo tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
   `$ bitcoin-cli getblockchaininfo`  
   `$ exit`  
+
 * Start LND and check its operation  
   `$ sudo systemctl start lnd`   
   `$ systemctl status lnd`  
   `$ sudo journalctl -f -u lnd`  
-* Create 
+
 * If everything works fine, restart the RaspiBolt and check the operations again.
   `$ sudo shutdown -r now`  
+
 * After the restart, LND will catch up with the whole Bitcoin blockchain, that can take up to two hours.
   * Monitor the system logs: `$ systemctl status lnd` 
-  * Check if the permission files (`admin.macaroon` and `readonly.macaroon`) have been created  
-    `$ ls -la /home/bitcoin/.lnd/`
-  * Copy the new permission file to user "admin"  
-    `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd/`  
-    `$ chown admin:admin admin.macaroon` 
   * Check the system load to see if your RaspiBolt is still working hard: `htop`  :smile:
 
 
