@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ **Bitcoin** ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [FAQ](raspibolt_faq.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ **Bitcoin** ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
 
 -------
 ### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
@@ -137,10 +137,11 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 * Save and exit
-
 * Enable the configuration file  
   `$ sudo systemctl enable bitcoind.service`
-
+* Copy `bitcoin.conf` to user "admin" home directory for RPC credentials  
+  `$ mkdir /home/admin/.bitcoin`   
+  `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/` 
 * Restart the Raspberry Pi  
   `$ sudo shutdown -r now`
 
@@ -149,22 +150,20 @@ After rebooting, the bitcoind should start and begin to sync and validate the Bi
 
 * Wait a bit, reconnect via SSH and login with the user “admin”.
 
-* Switch to the user "bitcoin"  
-  `$ sudo su bitcoin`
-
 * Check the status of the bitcoin daemon that was started by systemd (exit with `Ctrl-C`)  
+
   `$ systemctl status bitcoind.service`
+
 
 ![Bitcoind status ](images/30_status_bitcoind.png)
 
 * See bitcoind in action by monitoring its log file (exit with `Ctrl-C`)  
-  `$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
+  `$ sudo tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain  
   `$ bitcoin-cli getblockchaininfo`
 
 * Please note:
-  * Only the user "bitcoin" can use "bitcoin-cli".
   * When “bitcoind” is still starting, you may get an error message like “verifying blocks”. That’s normal, just give it a few minutes.
   * Among other infos, the “verificationprogress” is shown. Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
 

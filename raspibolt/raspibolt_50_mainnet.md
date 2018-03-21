@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ **Mainnet** ] -- [ [FAQ](raspibolt_faq.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ **Mainnet** ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
 
 -------
 ### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
@@ -46,6 +46,8 @@ We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winsc
 
 :warning: The transfer must not be interupted. Make sure your computer does not go to sleep. 
 
+:point_right:_ Additional information: [Bitcoin Core data directory structure](https://en.bitcoin.it/wiki/Data_directory)
+
 ### Error regarding timestamps
 When using an NTFS external hard disk, you might get the following error:  
 **Upload of file '.....' was successful, but error occurred while setting the permissions and/or timestamp.**
@@ -60,10 +62,23 @@ You can safely ignore this and choose `Skip all` as NTFS does not support the ne
 * Restart the SSH daemon.  
   `$ sudo systemctl restart ssh`
 
-## Restart bitcoind & lnd for mainnet
-Do not proceed until the copy task above is finished.
+## Send back your testnet Bitcoin
 
-* As user "admin", stop the Bitcoin and Lightning services.  
+To avoid burning our testnet Bitcoin, and as a courtesy to the next testers, we close all our channels and withdraw the funds to the address stated on the website of the [Bitcoin Testnet Faucet](https://testnet.manu.backend.hamburg/faucet).  
+
+* `$ lncli closeallchannels`
+
+
+* Wait unitl the the channel balance is zero and the funds to be back in our on-chain wallet.  
+  `$ lncli channelbalance`  
+  `$ lncli walletbalance`
+
+- Send the amount provided by `walletbalance` minus 500 satoshis to account for fees. If you get an "insufficient funds" error, deduct a bit more until the transaction gets broadcasted.  
+  `$ lncli sendcoins 2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF [amount]`
+
+## Adjust configuration 
+
+* Stop the Bitcoin and Lightning services.  
   `$ sudo systemctl stop lnd`   
   `$ sudo systemctl stop bitcoind` 
   
@@ -81,22 +96,29 @@ Do not proceed until the copy task above is finished.
 #bitcoin.testnet=1
 bitcoin.mainnet=1
 ```
+## Restart bitcoind & lnd for mainnet
+
+:warning: **Do not proceed** until the copy task of the mainnet blockchain is completely finished.
+
 * Start Bitcoind and check if it's operating on mainnet  
+
   `$ sudo systemctl start bitcoind`  
   `$ systemctl status bitcoind.service`  
-  `$ sudo su bitcoin`  
-  `$ tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
+  `$ sudo tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
   `$ bitcoin-cli getblockchaininfo`  
   `$ exit`  
+
 * Start LND and check its operation  
   `$ sudo systemctl start lnd`   
   `$ systemctl status lnd`  
   `$ sudo journalctl -f -u lnd`  
+
 * If everything works fine, restart the RaspiBolt and check the operations again.
   `$ sudo shutdown -r now`  
+
 * After the restart, LND will catch up with the whole Bitcoin blockchain, that can take up to two hours.
   * Monitor the system logs: `$ systemctl status lnd` 
-  * Check the system load to see if your RaspiBolt is still working hard: `htop` 
+  * Check the system load to see if your RaspiBolt is still working hard: `htop`  :smile:
 
 
 
@@ -165,7 +187,6 @@ There are a lot of great resources to explore the Lightning mainnet in regard to
 * [Recksplorer](https://rompert.com/recksplorer/): Lightning Network Map
 * [1ML](https://1ml.com): Lightning Network Search and Analysis Engine
 * [lnroute.com](http://lnroute.com): comprehensive Lightning Network resources list
-
 
 
 ---
