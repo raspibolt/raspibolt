@@ -37,13 +37,14 @@ done;
 
 [Unit]
 Description=getpublicip.sh: get public ip address from ipinfo.io
-After=network.target
+After=network-online.target
 
 [Service]
 User=root
 Group=root
 Type=simple
 ExecStart=/usr/local/bin/getpublicip.sh
+ExecStartPost=/bin/sleep 5
 Restart=always
 
 RestartSec=600
@@ -145,8 +146,7 @@ autopilot.allocation=0.6
 
 [Unit]
 Description=LND Lightning Daemon
-Requires=bitcoind.service
-After=getpublicip.service
+Wants=bitcoind.service
 After=bitcoind.service
 
 # for use with sendmail alert
