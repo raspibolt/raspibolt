@@ -89,6 +89,8 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next testers, we 
 #testnet=1
 ```
 
+* Copy updated "bitcoin.conf" to user "admin" for credentials  
+  `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/` 
 * Edit "lnd.conf" file by switching from `bitcoin.testnet=1` to `bitcoin.mainnet=1`. Save and exit.  
   `$ sudo nano /home/bitcoin/.lnd/lnd.conf`
 ```
@@ -105,8 +107,9 @@ bitcoin.mainnet=1
   `$ sudo systemctl start bitcoind`  
   `$ systemctl status bitcoind.service`  
   `$ sudo tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
-  `$ bitcoin-cli getblockchaininfo`  
-  `$ exit`  
+  `$ bitcoin-cli getblockchaininfo` 
+
+* **Wait until the blockchain is fully synced**: "blocks" = "headers", otherwise you might run into performance / memory issues when creating a new lnd mainnet wallet.
 
 * Start LND and check its operation  
   `$ sudo systemctl start lnd`   
@@ -116,15 +119,35 @@ bitcoin.mainnet=1
 * If everything works fine, restart the RaspiBolt and check the operations again.
   `$ sudo shutdown -r now`  
 
-* After the restart, LND will catch up with the whole Bitcoin blockchain, that can take up to two hours.
-  * Monitor the system logs: `$ systemctl status lnd` 
-  * Check the system load to see if your RaspiBolt is still working hard: `htop`  :smile:
+* Monitor the startup process of first  `bitcoind` and then `lnd`   
+  `$ sudo tail -f /home/bitcoin/.bitcoin/debug.log`  
+  `$ sudo journalctl -f -u lnd` 
+
+* Create the mainnet wallet with the **exact same** `password [C]` as on testnet. If you use another password, you need to recreate your access credentials.  
+
+  `$ lncli create `
+
+* Copy permission files and TLS cert to user "admin" to use `lncli`
+  `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`
+  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`
+
+* Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
+  `$ lncli unlock`   
+  `$ lncli getinfo`
+
+* Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).
+
+  `$ sudo journalctl -f -u lnd`
+
+:point_right: **Important**: you need to manually unlock the lnd wallet after each restart of the lnd service! 
+
 
 
 
 ## Start using the Lightning Network
 
 ### Fund your node
+
 Congratulations, your RaspiBolt is live on the Bitcoin mainnet! To open channels and start using it, you need to fund it with some bitcoin. For starters, put only on your node what you are willing to lose. Monopoly money.
 
 * Generate a new Bitcoin address to receive funds on-chain  
@@ -144,40 +167,40 @@ As soon as your funding transaction is mined and confirmed, LND will start to op
 
 Some commands to try:  
 
+* list all arguments for the command line interface (cli)  
+   `$ lncli`
+* get help for a specific argument  
+   `$ lncli [ARGUMENT]`
 * find out some general stats about your node:  
- `$ lncli getinfo`  
- 
+   `$ lncli getinfo`  
 * connect to a peer (you can find some nodes to connect to here: https://1ml.com/):  
- `$ lncli connect [NODE_URI]`  
- 
+   `$ lncli connect [NODE_URI]`  
 * check the peers you are currently connected to:  
- `$ lncli listpeers`  
- 
+   `$ lncli listpeers`  
 * open a channel with a peer:  
- `$ lncli openchannel [NODE_PUBKEY]`  
- *keep in mind that [NODE__URI] includes @IP:PORT at the end, while [NODE_PUBKEY] doesn't*  
- 
+   `$ lncli openchannel [NODE_PUBKEY] [AMOUNT_IN_SATOSHIS] 0`   
+    *keep in mind that [NODE_URI] includes @IP:PORT at the end, while [NODE_PUBKEY] doesn't*  
 * check the status of your pending channels:  
- `$ lncli pendingchannels`  
- 
+   `$ lncli pendingchannels`  
 * check the status of your active channels:  
- `$ lncli listchannels`  
- 
+   `$ lncli listchannels`  
 * before paying an invoice, you should decode it to check if the amount and other infos are correct:  
- `$ lncli decodepayreq [INVOICE]`  
- 
+   `$ lncli decodepayreq [INVOICE]`  
 * pay an invoice:  
- `$ lncli payinvoice [INVOICE]`  
- 
+   `$ lncli payinvoice [INVOICE]`  
 * create an invoice:   
- `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`  
- 
+   `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`  
 * check the payments that you sent:      
- `$ lncli listpayments`   
- 
+   `$ lncli listpayments`   
+* to close a channel, you need two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID` : `OUTPUT_INDEX` .   
+   `$ lncli listchannels`    
+   `$ lncli closechannel [FUNDING_TXID] [OUTPUT_INDEX] `
+* to force close a channel (if your peer is offline or not cooperative), use  
+   `$ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX] `
 
 
-...more to come.
+
+
 
 👉 see [LND API reference](http://api.lightning.community/) for additional information
 
