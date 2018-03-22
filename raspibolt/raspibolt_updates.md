@@ -10,7 +10,8 @@
 
 I try to keep track of my changes to the guide here, so you can see what parts I updated later on.
 
-
+### 2018-03-23
+* **Bitcoin**: added PDF version of "Mastering Bitcoin"
 
 ### 2018-03-22
 
