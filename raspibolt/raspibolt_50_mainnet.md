@@ -90,7 +90,9 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next testers, we 
 ```
 
 * Copy updated "bitcoin.conf" to user "admin" for credentials  
-  `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/` 
+  `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`  
+
+
 * Edit "lnd.conf" file by switching from `bitcoin.testnet=1` to `bitcoin.mainnet=1`. Save and exit.  
   `$ sudo nano /home/bitcoin/.lnd/lnd.conf`
 ```
@@ -124,7 +126,6 @@ bitcoin.mainnet=1
   `$ sudo journalctl -f -u lnd` 
 
 * Create the mainnet wallet with the **exact same** `password [C]` as on testnet. If you use another password, you need to recreate your access credentials.  
-
   `$ lncli create `
 
 * Copy permission files and TLS cert to user "admin" to use `lncli`
@@ -135,8 +136,7 @@ bitcoin.mainnet=1
   `$ lncli unlock`   
   `$ lncli getinfo`
 
-* Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).
-
+* Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, then you see a lot of very fast chatter (exit with `Ctrl-C`).  
   `$ sudo journalctl -f -u lnd`
 
 :point_right: **Important**: you need to manually unlock the lnd wallet after each restart of the lnd service! 
@@ -169,32 +169,46 @@ Some commands to try:
 
 * list all arguments for the command line interface (cli)  
    `$ lncli`
+
 * get help for a specific argument  
    `$ lncli [ARGUMENT]`
+
 * find out some general stats about your node:  
    `$ lncli getinfo`  
+
 * connect to a peer (you can find some nodes to connect to here: https://1ml.com/):  
    `$ lncli connect [NODE_URI]`  
+
 * check the peers you are currently connected to:  
    `$ lncli listpeers`  
+
 * open a channel with a peer:  
    `$ lncli openchannel [NODE_PUBKEY] [AMOUNT_IN_SATOSHIS] 0`   
     *keep in mind that [NODE_URI] includes @IP:PORT at the end, while [NODE_PUBKEY] doesn't*  
+
 * check the status of your pending channels:  
    `$ lncli pendingchannels`  
+
 * check the status of your active channels:  
    `$ lncli listchannels`  
+
 * before paying an invoice, you should decode it to check if the amount and other infos are correct:  
    `$ lncli decodepayreq [INVOICE]`  
+
 * pay an invoice:  
    `$ lncli payinvoice [INVOICE]`  
+
 * create an invoice:   
    `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`  
+
 * check the payments that you sent:      
    `$ lncli listpayments`   
-* to close a channel, you need two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID` : `OUTPUT_INDEX` .   
+
+* to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID` : `OUTPUT_INDEX` .   
    `$ lncli listchannels`    
+
    `$ lncli closechannel [FUNDING_TXID] [OUTPUT_INDEX] `
+
 * to force close a channel (if your peer is offline or not cooperative), use  
    `$ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX] `
 
