@@ -12,11 +12,12 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 
 ### 2018-03-23
 * **Bitcoin**: added PDF version of "Mastering Bitcoin"
+* **Bitcoin**: adjusted systemd unit files `bitcoind.service` , `getpublicip.service` and `lnd.service` to account for a problem with binding of bitcoind to port 18333 (see [discussion](https://bitcointalk.org/index.php?topic=3179045.msg32917243#msg32917243) on bitcointalk.org). Thanks, **@whywefightnet**! 
 
 ### 2018-03-22
 
 * **Mainnet**: more stable switch to mainnet, more conservative wallet creation
-* **Mainnet**: useful examples for `lncli` (thanks @raindogdance)
+* **Mainnet**: useful examples for `lncli`. Thanks **@raindogdance**!
 * **Mainnet**: copy updated `bitcoin.conf` to user "admin" for credentials
 
 ### 2018-03-20

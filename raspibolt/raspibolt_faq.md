@@ -45,3 +45,4 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 * Bitcoin resources: http://lopp.net/bitcoin.html
 * Lightning Network resources: [lnroute.com](http://lnroute.com)
 
+

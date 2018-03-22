@@ -117,7 +117,8 @@ The system needs to run the bitcoin daemon automatically in the background, even
 
 [Unit]
 Description=Bitcoin daemon
-After=network.target
+Wants=getpublicip.service
+After=getpublicip.service
 
 # for use with sendmail alert (coming soon)
 #OnFailure=systemd-sendmail@%n
