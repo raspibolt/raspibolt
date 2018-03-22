@@ -204,10 +204,9 @@ Some commands to try:
 * check the payments that you sent:      
    `$ lncli listpayments`   
 
-* to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID` : `OUTPUT_INDEX` .   
-   `$ lncli listchannels`    
-
-   `$ lncli closechannel [FUNDING_TXID] [OUTPUT_INDEX] `
+* to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID` : `OUTPUT_INDEX` .  
+   `$ lncli listchannels`  
+   `$ lncli closechannel [FUNDING_TXID] [OUTPUT_INDEX]`
 
 * to force close a channel (if your peer is offline or not cooperative), use  
    `$ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX] `
