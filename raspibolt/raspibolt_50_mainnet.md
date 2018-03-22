@@ -171,7 +171,7 @@ Some commands to try:
    `$ lncli`
 
 * get help for a specific argument  
-   `$ lncli [ARGUMENT]`
+   `$ lncli help [ARGUMENT]`
 
 * find out some general stats about your node:  
    `$ lncli getinfo`  
@@ -198,11 +198,14 @@ Some commands to try:
 * pay an invoice:  
    `$ lncli payinvoice [INVOICE]`  
 
-* create an invoice:   
-   `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`  
-
 * check the payments that you sent:      
    `$ lncli listpayments`   
+
+* create an invoice:   
+   `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`  
+   
+* list all invoices:  
+  `$ lncli listinvoices`
 
 * to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID` : `OUTPUT_INDEX` .  
    `$ lncli listchannels`  
