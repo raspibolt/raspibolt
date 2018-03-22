@@ -128,9 +128,9 @@ bitcoin.mainnet=1
 * Create the mainnet wallet with the **exact same** `password [C]` as on testnet. If you use another password, you need to recreate your access credentials.  
   `$ lncli create `
 
-* Copy permission files and TLS cert to user "admin" to use `lncli`
-  `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`
-  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`
+* Copy permission files and TLS cert to user "admin" to use `lncli`  
+  `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
+  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
 
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
   `$ lncli unlock`   
