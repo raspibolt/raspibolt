@@ -172,6 +172,7 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 A great point to start is the book "Mastering Bitcoin" by Andreas Antonopoulos - which is open source - and in this regard especially chapter 3 (ignore the first part how to compile from source code):
 * you definitely need to have a [real copy](https://bitcoinbook.info/) of this book!
+* get the [official PDF version](https://conferences.oreilly.com/oscon/oscon-or/public/content/mastering-bitcoin-second-edition) for free
 * read online on [Github](https://github.com/bitcoinbook/bitcoinbook)
 
 ![Mastering Bitcoin](images/30_mastering_bitcoin_book.jpg)
