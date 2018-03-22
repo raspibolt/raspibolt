@@ -210,12 +210,12 @@ Some commands to try:
 
 * to force close a channel (if your peer is offline or not cooperative), use  
    `$ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX] `
-
-
-
-
-
+   
 👉 see [LND API reference](http://api.lightning.community/) for additional information
+
+### Try it out 
+To try out your new Lightning node, you can send me a micro-tip:  
+[Article 'Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi'](https://mainnet.yalls.org/articles/97d67df1-d721-417d-a6c0-11d793739be9:0965AC5E-56CD-4870-9041-E69616660E6F/70858a49-d91c-40fb-ae34-bddc2e938704) on Y'alls ($0.01)
 
 ### Explore Lightning mainnet
 There are a lot of great resources to explore the Lightning mainnet in regard to your own node.
