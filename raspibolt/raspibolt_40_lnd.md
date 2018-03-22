@@ -214,7 +214,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
   `$ sudo chown -R admin:admin /home/admin/.lnd/ ` 
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
   `$ lncli unlock`
-* monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).
+* Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).
   `$ sudo journalctl -f -u lnd`
 
 ### Get some testnet Bitcoin
