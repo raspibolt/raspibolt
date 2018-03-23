@@ -42,6 +42,7 @@ After=network-online.target
 [Service]
 User=root
 Group=root
+LimitNOFILE=65536
 Type=simple
 ExecStart=/usr/local/bin/getpublicip.sh
 ExecStartPost=/bin/sleep 5
@@ -112,7 +113,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
 # /home/bitcoin/.lnd/lnd.conf
 
 [Application Options]
-debuglevel=debug
+debuglevel=info
 debughtlc=true
 maxpendingchannels=5
 alias=YOUR_NAME [LND]

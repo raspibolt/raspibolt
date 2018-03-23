@@ -159,11 +159,6 @@ It is important to keep the system up-to-date with security patches and applicat
 
 :point_right: Do this regularly every few months to get security related updates.
 
-### Disabling Swap File
-The usage of a swap file can degrade your SD card very quickly. Therefore, we will disable it completely.  
-`$ sudo swapoff --all`  
-`$ sudo apt-get remove dphys-swapfile`
-
 ### Adding main user "admin"
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
 
@@ -252,7 +247,26 @@ If this command gives you an error, chances are that your external hard disk is 
 
 👉 additional information: [external storage configuration](https://www.raspberrypi.org/documentation/configuration/external-storage.md)
 
+### Moving the Swap File
+
+The usage of a swap file can degrade your SD card very quickly. Therefore, we will move it to the external hard disk.  
+
+* Edit the configuration file and replace existing entries with the ones below. Save and exit.  
+  `$ sudo nano /etc/dphys-swapfile`
+
+```
+CONF_SWAPFILE=/mnt/hdd/swapfile
+CONF_SWAPSIZE=1000
+```
+
+* Enable new swap configuration  
+  `$ sudo dphys-swapfile setup`  
+  `$ sudo dphys-swapfile swapon`
+* Delete the old swap file  
+  `$ sudo rm /var/swap`
+
 ## Hardening your Pi
+
 The following steps need admin privileges and must be executed with the user "admin".
 
 ### Enabling the Uncomplicated Firewall
