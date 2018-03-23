@@ -64,5 +64,5 @@ PS1="${debian_chroot:+($debian_chroot)}\[\e[31m\]\u \[\033[01;34m\]\w\[\e[33;40m
 alias ls='ls -la --color=always'
 ```
 
-![Pimp prompt](/images/60_pimp_prompt.png)
+![Pimp prompt](images/60_pimp_prompt.png)
 
