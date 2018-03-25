@@ -12,11 +12,9 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 
 ### 2018-03-23
 * **Raspberry Pi**: Instead of disabling swap file, move it to the external hdd. If already removed, re-install swap utility with `sudo apt-get install dphys-swapfile` first.
-* **Bitcoin**: adjusted systemd unit files `bitcoind.service` , `getpublicip.service` and `lnd.service` to account for a problem with binding of bitcoind to port 18333 (see [discussion](https://bitcointalk.org/index.php?topic=3179045.msg32917243#msg32917243) on bitcointalk.org). Thanks, **@whywefightnet**! 
+* **Bitcoin** and **Lightning**: adjusted systemd unit files `bitcoind.service` , `getpublicip.service` and `lnd.service` to account for a problem with binding of bitcoind to port 18333 (see [discussion](https://bitcointalk.org/index.php?topic=3179045.msg32917243#msg32917243) on bitcointalk.org). Thanks, **@whywefightnet**! 
 * **Bitcoin**: added PDF version of "Mastering Bitcoin" and "Learning Bitcoin from the Command Line"
-* **Lightning**: in "lnd.conf"
-  * set "debuglevel" to `info` in "lnd.conf" to avoid huge log files
-  * add `LimitNOFILE=65536` to increase number of File descriptors
+* **Lightning**: in "lnd.conf" set "debuglevel" to `info` to avoid huge log files, and add `LimitNOFILE=65536` to increase number of file descriptors
 * **Bonus**: added new [bonus section](raspibolt_60_bonus.md) (not yet in site navigation)
 
 ### 2018-03-22
@@ -29,5 +27,3 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 
 * **Lighting**: Add reference to LND issue 890 when macaroons are not created. 
 * **Bitcoin** and **Lightning**: Copy credentials for `bitcoind` and `lnd` to user "admin" home directory. As this is a superuser anyway there's no sense in always switching to the user "bitcoin" session.
-
-
