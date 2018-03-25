@@ -37,7 +37,7 @@ done;
 
 [Unit]
 Description=getpublicip.sh: get public ip address from ipinfo.io
-After=network-online.target
+After=network.target
 
 [Service]
 User=root

@@ -146,8 +146,12 @@ You are now on the command line of your own Bitcoin node. First we finish the Pi
 
 * First, on `1` change your password to your `password [A]`.
 * Next, choose Update `8` to get the latest configuration tool
-* Network Options `2`: you can give your node a cute name (like “RaspiBolt”) and configure your Wifi connection (Pi 3 only)
-* Boot Options `3`: choose `Desktop / CLI` → `Console`
+* Network Options `2`: 
+  * you can give your node a cute name (like “RaspiBolt”) and
+  * configure your Wifi connection (Pi 3 only)
+* Boot Options `3`: 
+  * choose `Desktop / CLI` → `Console` and
+  * `Wait for network at boot`
 * Localisation `4`: set your timezone
 * Advanced `7`: run `Expand Filesystem` and set `Memory Split` to 16
 * Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
