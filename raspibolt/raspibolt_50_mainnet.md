@@ -132,12 +132,15 @@ bitcoin.mainnet=1
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
   `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
 
-* Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
+* Restart `lnd` and unlock your wallet (enter `password [C]` )  
+  `$ sudo systemctl restart lnd`
   `$ lncli unlock`   
-  `$ lncli getinfo`
 
 * Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, then you see a lot of very fast chatter (exit with `Ctrl-C`).  
   `$ sudo journalctl -f -u lnd`
+
+* Make sure that `lncli` works by getting some node infos  
+  `$ lncli getinfo`
 
 :point_right: **Important**: you need to manually unlock the lnd wallet after each restart of the lnd service! 
 
