@@ -136,7 +136,7 @@ bitcoin.mainnet=1
   `$ lncli unlock`   
   `$ lncli getinfo`
 
-* Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, then you see a lot of very fast chatter (exit with `Ctrl-C`).  
+* Monitor the LND startup progress until it caught up with the mainnet blockchain (about 515k blocks at the moment). This can take up to 2 hours, then you see a lot of very fast chatter (exit with `Ctrl-C`).  
   `$ sudo journalctl -f -u lnd`
 
 :point_right: **Important**: you need to manually unlock the lnd wallet after each restart of the lnd service! 
