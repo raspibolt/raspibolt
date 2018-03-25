@@ -65,4 +65,3 @@ alias ls='ls -la --color=always'
 ```
 
 ![Pimp prompt](images/60_pimp_prompt.png)
-
