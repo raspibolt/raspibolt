@@ -144,6 +144,8 @@ bitcoin.mainnet=1
 
 :point_right: **Important**: you need to manually unlock the lnd wallet after each restart of the lnd service! 
 
+:point_right: See further below for **Known Issues**
+
 
 
 
@@ -229,6 +231,34 @@ There are a lot of great resources to explore the Lightning mainnet in regard to
 * [Recksplorer](https://rompert.com/recksplorer/): Lightning Network Map
 * [1ML](https://1ml.com): Lightning Network Search and Analysis Engine
 * [lnroute.com](http://lnroute.com): comprehensive Lightning Network resources list
+
+
+
+
+----
+
+## Known issues
+
+#### Big log files
+
+LND v0.4-beta creates a lot of chatter and can, under some circumstances, create huge log files. In extreme cases, this can fill up the Pi's SD card within a day and bring down your node. These issues are already addressed, but not available in an updated binary release yet.
+
+You can detect a full file system like this:
+
+* The line listed as `/dev/root/` would have zero or very little available disk space  
+  `$ df`
+* You should not simply delete the log files, but empty them. Check what files are too big (> 100 MB):   
+  `$ sudo su`  
+  `$ cd /var/logs`  
+  `$ ls -lah`
+* Delete large files ending in `.1`  
+  `$ rm *.1`
+* Empty active files, eg. "daemon" or "syslog"  
+  `$ > daemon`  
+  `$ > syslog`
+* Now, it's probably a good idea to reboot (don't forget to `lncli unlock`) 
+  `$ sudo shutdown -r now`
+
 
 
 ---
