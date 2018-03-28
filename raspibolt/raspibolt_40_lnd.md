@@ -42,7 +42,6 @@ After=network.target
 [Service]
 User=root
 Group=root
-LimitNOFILE=128000
 Type=simple
 ExecStart=/usr/local/bin/getpublicip.sh
 ExecStartPost=/bin/sleep 5
@@ -161,6 +160,7 @@ ExecStart=/usr/local/bin/lnd --externalip=${PUBLICIP}
 PIDFile=/home/bitcoin/.lnd/lnd.pid
 User=bitcoin
 Group=bitcoin
+LimitNOFILE=128000
 Type=simple
 KillMode=process
 TimeoutSec=180
