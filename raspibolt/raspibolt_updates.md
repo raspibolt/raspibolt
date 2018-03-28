@@ -15,6 +15,7 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 * **Raspberry Pi**: increase system file descriptors limit 
 * **Lightning**: add `LimitNOFILE=128000` to increase number of file descriptors
 * **Mainnet**: new section "Known Issues" with first entry "Big log files"
+* **Bonus**: added to site navigation, fixed minor issue in raspibolt-welcome script
 
 ### 2018-03-25
 
