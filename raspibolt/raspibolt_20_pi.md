@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ **Raspberry Pi** ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ **Raspberry Pi** ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
 
 -------
 ### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
@@ -339,5 +339,44 @@ You should now generated three files. Keep them safe, we will now disable the pa
 
 :warning: **Backup your SSH keys!** You will need to attach a screen and keyboard to your Pi if you lose it.
 
+### Increase your open files limit
+
+In case your RaspiBolt is swamped with internet requests (honest or malicious due to a DDoS attack), you will quickly encounter the `can't accept connection: too many open files` error. This is due to a limit on open files (representing individual tcp connections) that is set too low.
+
+Edit the following three files, add the additional line(s) right before the end comment, save and exit.
+
+```
+$ sudo nano /etc/security/limits.conf
+*    soft nofile 128000
+*    hard nofile 128000
+root soft nofile 128000
+root hard nofile 128000
+
+
+```
+
+![Edit pam.d/limits.conf](images/20_nofile_limits.png)
+
+
+
+```
+$ sudo nano /etc/pam.d/common-session
+session required pam_limits.so
+```
+
+![Edit pam.d/common-session](images/20_nofile_common-session.png)
+
+
+
+```
+$ /etc/pam.d/common-session-noninteractive
+session required pam_limits.so
+```
+
+![Edit pam.d/common-session-noninteractive](images/20_nofile_common-session-noninteractive.png)
+
+
+
 ---
+
 Next: [Bitcoin >>](raspibolt_30_bitcoin.md)

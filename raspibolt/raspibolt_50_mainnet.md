@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ **Mainnet** ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ **Mainnet** ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
 
 -------
 ### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
@@ -132,14 +132,19 @@ bitcoin.mainnet=1
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
   `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
 
-* Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
+* Restart `lnd` and unlock your wallet (enter `password [C]` )  
+  `$ sudo systemctl restart lnd`
   `$ lncli unlock`   
-  `$ lncli getinfo`
 
 * Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, then you see a lot of very fast chatter (exit with `Ctrl-C`).  
   `$ sudo journalctl -f -u lnd`
 
+* Make sure that `lncli` works by getting some node infos  
+  `$ lncli getinfo`
+
 :point_right: **Important**: you need to manually unlock the lnd wallet after each restart of the lnd service! 
+
+:point_right: See further below for **Known Issues**
 
 
 
@@ -226,6 +231,33 @@ There are a lot of great resources to explore the Lightning mainnet in regard to
 * [Recksplorer](https://rompert.com/recksplorer/): Lightning Network Map
 * [1ML](https://1ml.com): Lightning Network Search and Analysis Engine
 * [lnroute.com](http://lnroute.com): comprehensive Lightning Network resources list
+
+
+
+
+----
+
+## Known issues
+
+#### Big log files
+
+LND v0.4-beta creates a lot of chatter and can, under some circumstances, create huge log files. In extreme cases, this can fill up the Pi's SD card within a day and bring down your node. These issues are already addressed, but not available in an updated binary release yet.
+
+You can detect a full file system like this:
+
+* The line listed as `/dev/root/` would have zero or very little available disk space  
+  `$ df`
+* You should not simply delete the log files, but empty them. Check what files are too big (> 100 MB):   
+  `$ sudo su`  
+  `$ cd /var/logs`  
+  `$ ls -lah`
+* Delete large files ending in `.1`  
+  `$ rm *.1`
+* Empty active files, eg. "daemon" or "syslog"  
+  `$ > daemon`  
+  `$ > syslog`
+* Now, it's probably a good idea to reboot (don't forget to `lncli unlock`) 
+  `$ sudo shutdown -r now`
 
 
 ---

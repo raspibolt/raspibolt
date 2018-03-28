@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ **Lightning** ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ **Lightning** ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
 
 -------
 ### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
@@ -42,7 +42,6 @@ After=network.target
 [Service]
 User=root
 Group=root
-LimitNOFILE=65536
 Type=simple
 ExecStart=/usr/local/bin/getpublicip.sh
 ExecStartPost=/bin/sleep 5
@@ -161,6 +160,7 @@ ExecStart=/usr/local/bin/lnd --externalip=${PUBLICIP}
 PIDFile=/home/bitcoin/.lnd/lnd.pid
 User=bitcoin
 Group=bitcoin
+LimitNOFILE=128000
 Type=simple
 KillMode=process
 TimeoutSec=180
