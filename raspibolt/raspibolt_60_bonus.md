@@ -74,9 +74,77 @@ The best way to safekeep your bitcoin (meaning the best combination of security 
 
 At the moment, the direct combination of Bitcoin Core with a hardware wallet is not possbile. One way was to use Bitcoin Core, setup an additional [ElectrumX](https://github.com/kyuupichan/electrumx) server and then use the great [Electrum wallet](https://electrum.org) (on your regular computer) that integrates with hardware wallets. Besides the setup not being easy, the overhead is significant, however, and more than a Raspberry Pi can handle.
 
-The new [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) makes it possible to connect Electrum (using your hardware wallet) directly to your RaspiBolt.
+The new [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) makes it possible to connect Electrum (using your hardware wallet) directly to your RaspiBolt. Before using this setup, please familiarize yourself with all components.
+
+#### Install Electrum Personal Server
+
+* Open a "bitcoin" user session and change into the home directory  
+  `$ sudo su bitcoin`  
+  `$ cd`
+* Clone the EPS GitHub repository  
+  `$ git clone https://github.com/chris-belcher/electrum-personal-server`
+* Copy and edit configuration template  
+  `$ cd electrum-personal-server`  
+  `$ cp config.cfg_sample config.cfg`  
+  `$ nano config.cfg`
+  * Add your wallet master public keys or watch-only addresses to the `[master-public-keys]` and `[watch-only-addresses]` sections. Master public keys for an Electrum wallet can be found in the Electrum client menu `Wallet` -> `Information`.
+  *  Uncomment and complete the lines  
+    `rpc_user = raspibolt`  
+    `rpc_password = [PASSWORD_B]`
+  * Change the listening `host` to `0.0.0.0`, so that you can reach it from a remote computer. Please note that the firewall only accepts connections from within the home network, not from the internet.  
+    `host = 0.0.0.0`
+  * Save & exit
 
 
+#### Initial blockchain scan
+
+Before starting the server for real, the bitcoin addresses need to be generated and looked up on the blockchain.
+
+* Start the server to generate addresses from your master public keys  
+  `$ ./server.py`
+* Scan the blockchain (this can take several hours, depending on the startdate you choose)  
+  `$ ./rescan-script.py`
+
+![initialize server and scan blockchain](images/60_eps_rescan.png)
+
+* Exit the "bitcoin" user session  
+  `$ exit`
+
+#### Automate startup
+
+* As "admin", set up the systemd unit for automatic start on boot  
+  `$ sudo nano /etc/systemd/system/eps.service`
+
+```bash
+# THIS DOES NOT WORK YET...
+
+[Unit]
+Description=Electrum Personal Server
+After=bitcoind.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/bitcoin/electrum-personal-server/server.py
+
+[Install]
+WantedBy=multi-user.target
+```
+
+#### Connect Electrum 
+
+On your regular computer, configure Electrum to use your RaspiBolt: 
+
+* In menu: `Tools > Network > Server` 
+
+* Uncheck "Select server automatically"
+
+* Enter the IP of your RaspiBolt (eg. 192.168.0.20) in the address field
+
+  ![Connect Electrum to RaspiBolt](images/60_eps_electrum-connect.png)
+
+* `Close` and check connection in tab "Console" 
+
+  ![Check Electrum console](images/60_eps_electrumwallet.png)
 
 
 

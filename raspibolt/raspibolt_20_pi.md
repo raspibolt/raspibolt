@@ -155,6 +155,8 @@ You are now on the command line of your own Bitcoin node. First we finish the Pi
 * Localisation `4`: set your timezone
 * Advanced `7`: run `Expand Filesystem` and set `Memory Split` to 16
 * Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
+* Make sure, all necessary software packages are installed  
+  `$ sudo apt-get install htop git curl bash-completion jq`
 
 ### Software update
 It is important to keep the system up-to-date with security patches and application updates. The “Advanced Packaging Tool” (apt) makes this easy:  
