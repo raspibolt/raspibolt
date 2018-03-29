@@ -369,7 +369,7 @@ session required pam_limits.so
 
 
 ```
-$ /etc/pam.d/common-session-noninteractive
+$ sudo nano /etc/pam.d/common-session-noninteractive
 session required pam_limits.so
 ```
 
