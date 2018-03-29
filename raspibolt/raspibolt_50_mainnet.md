@@ -261,4 +261,4 @@ You can detect a full file system like this:
 
 
 ---
-Next: [FAQ >>](raspibolt_faq.md)
+Next: [Bonus >>](raspibolt_60_bonus.md)

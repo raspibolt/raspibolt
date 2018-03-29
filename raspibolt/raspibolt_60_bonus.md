@@ -65,3 +65,21 @@ alias ls='ls -la --color=always'
 ```
 
 ![Pimp prompt](images/60_pimp_prompt.png)
+
+
+
+### Electrum Personal Server
+
+The best way to safekeep your bitcoin (meaning the best combination of security and usability) is to use a hardware wallet (like [Ledger](https://www.ledgerwallet.com) or [Trezor](https://trezor.io)) in combination with your own Bitcoin node. This gives you security, privacy and eliminates the need to trust a third party to verify transactions. 
+
+At the moment, the direct combination of Bitcoin Core with a hardware wallet is not possbile. One way was to use Bitcoin Core, setup an additional [ElectrumX](https://github.com/kyuupichan/electrumx) server and then use the great [Electrum wallet](https://electrum.org) (on your regular computer) that integrates with hardware wallets. Besides the setup not being easy, the overhead is significant, however, and more than a Raspberry Pi can handle.
+
+The new [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) makes it possible to connect Electrum (using your hardware wallet) directly to your RaspiBolt.
+
+
+
+
+
+------
+
+Next: [FAQ >>](raspibolt_faq.md)
