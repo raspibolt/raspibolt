@@ -11,7 +11,8 @@
 *Difficulty: easy*
 
 To get a quick overview over the system status, I created [a shell script](https://gist.github.com/Stadicus/ffbbd855d23cd068f7b739cae6440f4b) that is shown on login or on demand.  
-![MotD system overview](C:/Users_withBackup/Roland/Documents/GitHub/guides/raspibolt/images/60_status_overview.png)
+
+![MotD system overview](images/60_status_overview.png)
 
 This script will run as root, so please check it before blindly trusting me.
 
