@@ -6,9 +6,9 @@
 
 ------
 
-# Bonus
+# Bonus (optional)
 
-#### Add system overview
+## Add system overview
 
 To get a quick overview over the system status, I created [a shell script](https://gist.github.com/Stadicus/ffbbd855d23cd068f7b739cae6440f4b) that is shown on login or on demand.
 
@@ -35,7 +35,7 @@ You can now start the script with `raspibolt` and it is shown every time you log
 
 
 
-### Pimp the command line prompt
+## Pimp the command line prompt
 
 You can prettify your command prompt for each user by enabling color output and setting a custom prompt. Use either the yellow or red user, not both.
 
@@ -68,7 +68,7 @@ alias ls='ls -la --color=always'
 
 
 
-### Electrum Personal Server
+## Electrum Personal Server
 
 The best way to safekeep your bitcoin (meaning the best combination of security and usability) is to use a hardware wallet (like [Ledger](https://www.ledgerwallet.com) or [Trezor](https://trezor.io)) in combination with your own Bitcoin node. This gives you security, privacy and eliminates the need to trust a third party to verify transactions. 
 
