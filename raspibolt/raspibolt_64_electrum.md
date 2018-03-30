@@ -52,32 +52,39 @@ Before starting the server for real, the bitcoin addresses need to be generated 
 
 [![initialize server and scan blockchain](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_rescan.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_rescan.png)
 
-* The automatic startup (below) does not work yet. So wtart manually in the background  
-  `$ nohup ./server.py > /dev/null 2>&1 &`
 * Exit the "bitcoin" user session  
   `$ exit`
 
 ### Automate startup
 
-###### **The automatic startup does not work yet, skip this part**
-
-* As "admin", set up the systemd unit for automatic start on boot  
+* As "admin", set up the systemd unit for automatic start on boot, save and exit  
   `$ sudo nano /etc/systemd/system/eps.service`
 
 ```
-# THIS DOES NOT WORK YET...
-
 [Unit]
 Description=Electrum Personal Server
 After=bitcoind.service
 
 [Service]
+ExecStart=/usr/bin/python3 /home/bitcoin/electrum-personal-server/server.py  /home/bitcoin/electrum-personal-server
+User=bitcoin
+Group=bitcoin
 Type=simple
-ExecStart=/usr/bin/python3 /home/bitcoin/electrum-personal-server/server.py
+KillMode=process
+TimeoutSec=60
+Restart=always
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
 ```
+
+* Enable and start the eps.service unit  
+  `$ sudo systemctl enable eps.service`  
+  `$ sudo systemctl start eps.service`
+  
+* Check the startup process for Electrum Personal Server  
+  `$ tail -f /home/bitcoin/electrum-personal-server/debug.log`
 
 ### Connect Electrum
 
