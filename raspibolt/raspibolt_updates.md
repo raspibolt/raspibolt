@@ -12,7 +12,7 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 
 ### 2018-03-29: Electrum Personal Server
 
-* **Raspberry Pi**: added UFW rule for Electrum Personal Server (EPS)
+* **Raspberry Pi**: added UFW rule for Electrum Personal Server (EPS) and configure `sudo` to work without password entry
 * **Bitcoin**: enabled wallet for EPS
 * **Bonus**: add section how to set up EPS, no automatic startup yet
 

@@ -171,13 +171,18 @@ This guide uses the main user "admin" instead of "pi" to make it more reusable w
 * Create the new user and add it to the group "sudo"  
   `$ sudo adduser admin`  
   `$ sudo adduser admin sudo` 
-
 * Set the password to your password [A] and set the standard shell (command line interface) to "bash"  
   `$ sudo passwd admin`  
   `$ sudo chsh admin -s /bin/bash`
-
 * And while you’re at it, change the password of the “root” admin user to your password [A].  
   `$ sudo passwd root`
+* Configure sudo for usage without password entry: comment original and add new line, save & exit  
+  `$ sudo visudo`  
+
+```bash
+#%sudo  ALL=(ALL:ALL) ALL
+%sudo   ALL=(ALL) NOPASSWD:ALL
+```
 
 * Reboot and and log in with the new user "admin"  
   `$ sudo shutdown -r now`
