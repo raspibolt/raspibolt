@@ -91,9 +91,9 @@ The new [Electrum Personal Server](https://github.com/chris-belcher/electrum-per
   *  Uncomment and complete the lines  
     `rpc_user = raspibolt`  
     `rpc_password = [PASSWORD_B]`
-  * Change the listening `host` to `0.0.0.0`, so that you can reach it from a remote computer. Please note that the firewall only accepts connections from within the home network, not from the internet.  
+  * Change the listening `host` to `0.0.0.0`, so that you can reach it from a remote computer. The firewall only accepts connections from within the home network, not from the internet.  
     `host = 0.0.0.0`
-  * Save & exit
+* Save & exit
 
 
 #### Initial blockchain scan
@@ -102,15 +102,21 @@ Before starting the server for real, the bitcoin addresses need to be generated 
 
 * Start the server to generate addresses from your master public keys  
   `$ ./server.py`
-* Scan the blockchain (this can take several hours, depending on the startdate you choose)  
+* Scan the blockchain (this can take several hours, depending on the start date you choose)  
   `$ ./rescan-script.py`
 
 ![initialize server and scan blockchain](images/60_eps_rescan.png)
+
+* The automatic startup (below) does not work yet. So wtart manually in the background  
+  `$ nohup ./server.py > /dev/null 2>&1 &`
+
 
 * Exit the "bitcoin" user session  
   `$ exit`
 
 #### Automate startup
+
+**The automatic startup does not work yet, skip this part**
 
 * As "admin", set up the systemd unit for automatic start on boot  
   `$ sudo nano /etc/systemd/system/eps.service`
@@ -145,7 +151,6 @@ On your regular computer, configure Electrum to use your RaspiBolt:
 * `Close` and check connection in tab "Console" 
 
   ![Check Electrum console](images/60_eps_electrumwallet.png)
-
 
 
 ------
