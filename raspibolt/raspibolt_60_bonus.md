@@ -8,60 +8,45 @@
 
 # Bonus
 
-#### Add system overview
+In this section, you can find various optional topics that make your RaspiBolt running even smoother. I split this up in various subsections, as the individual tasks can be quite long.
 
-To get a quick overview over the system status, I created [a shell script](https://gist.github.com/Stadicus/ffbbd855d23cd068f7b739cae6440f4b) that is shown on login or on demand.
+* [**System overview**](raspibolt_61_system-overview.md)  
+  *Difficulty: easy*
 
-![MotD system overview](images/60_status_overview.png)
+  Your RaspiBolt will greet you with a quick system summary on login:  
+  [![MotD system overview](images/60_status_overview.png)](raspibolt_61_system-overview.md)
 
-This script will run as root, so please check it before blindly trusting me.
-
-```
-$ cd /home/admin/download/
-$ wget https://gist.githubusercontent.com/Stadicus/57122492cb3ea4b5ce606ac0df6db8ae/raw/2b9ca6b03357bc581758f155746dbd0febf7d7a8/20-raspibolt-welcome
-  
-# check script & exit
-$ nano 20-raspibolt-welcome
-
-# delete existing welcome scripts and install
-$ sudo mv /etc/update-motd.d /etc/update-motd.d.bak
-$ sudo mkdir /etc/update-motd.d
-$ sudo cp 20-raspibolt-welcome /etc/update-motd.d/
-$ sudo chmod +x /etc/update-motd.d/20-raspibolt-welcome
-$ sudo ln -s /etc/update-motd.d/20-raspibolt-welcome /usr/local/bin/raspibolt
-```
-
-You can now start the script with `raspibolt` and it is shown every time you log in.
+  ​
 
 
 
-### Pimp the command line prompt
+* [**Pimp the command line**](raspibolt_62_commandline.md)  
+  *Difficulty: easy*
 
-You can prettify your command prompt for each user by enabling color output and setting a custom prompt. Use either the yellow or red user, not both.
+  Make your command line prompt shine with a golden ฿ and use more colors overall:  
 
-I use the red prompt for user “admin”, and the yellow prompt for “bitcoin”.
+  [![Pimped prompt](C:/Users_withBackup/Roland/Documents/GitHub/guides/raspibolt/images/60_pimp_prompt_result.png)](raspibolt_62_commandline.md)
 
-```
-# edit .bashrc with user "admin", use options from below.
+  ​
 
-$ nano /home/admin/.bashrc
-$ sudo nano /home/bitcoin/.bashrc
-# reload .bashrc (or just wait until next login)
-$ source /home/admin/.bashrc
-```
+* [**Electrum Personal Server**](raspibolt_64_electrum.md) 
 
-```bash
-# enable color prompt (uncomment)
-force_color_prompt=yes
+  *Difficulty: intermediate*
 
-# pimp prompt (replace the PS1 line), use only one yellow OR red, not both.
-# yellow user
-PS1="${debian_chroot:+($debian_chroot)}\[\e[33m\]\u \[\033[01;34m\]\w\[\e[33;40m\] ฿\[\e[m\] "
-# red user
-PS1="${debian_chroot:+($debian_chroot)}\[\e[31m\]\u \[\033[01;34m\]\w\[\e[33;40m\] ฿\[\e[m\] "
+  The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain transactions. Together with the Electrum wallet, it works even with your Ledger or Trezor hardware wallet.
 
-# set "ls" to always use the -la option
-alias ls='ls -la --color=always'
-```
+  [![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md) 
 
-![Pimp prompt](images/60_pimp_prompt.png)
+  ​
+
+* **Email alerts** (upcoming)
+
+  *Difficulty: intermediate*
+
+  Let your RaspiBolt inform you by email in case the system or a service is restarted. As you need to manually unlock the LND wallet, this can be very helpful.
+
+  ​
+
+  ------
+
+  Next: [FAQ >>](raspibolt_faq.md)
