@@ -47,7 +47,28 @@ This server is set up without graphical user interface and is used remotely usin
 
 [![](images/00_blockaccino_goal.png)](https://vimeo.com/258395303)
 
+
+
+**Wishlist for further enhancements**
+
+[ ] Bitcoin desktop wallet support
+
+[ ] Bitcoin mobile wallet support
+
+[ ] Hardware wallet support
+
+[ ] Lightning web interface
+
+[ ] Email alerts
+
+[ ] Full backup, incl. Lightning channel states
+
+[ ] VPN access from public internet
+
+
+
 ### Target audience
+
 This guide strives to give simple and foolproof instructions. But the goal is also to do everything ourselves, no shortcuts that involve trust in a 3rd party allowed. This makes this guide quite technical and lengthy, but I try to make it as straightforward as possible and explain everything for you to gain a basic understanding of the how and why.
 
 If you like to learn about Linux, Bitcoin and Lightning, this guide is for you.

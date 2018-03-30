@@ -10,6 +10,10 @@
 
 I try to keep track of my changes to the guide here, so you can see what parts I updated later on.
 
+### 2018-03-30
+
+* Raspberry Pi: configure `sudo` to work without password entry
+
 ### 2018-03-28
 
 * **Raspberry Pi**: increase system file descriptors limit 
