@@ -27,19 +27,25 @@ Before using this setup, please familiarize yourself with all components by sett
 * Open a "bitcoin" user session and change into the home directory  
   `$ sudo su bitcoin`  
   `$ cd`
+  
 * Clone the EPS GitHub repository  
   `$ git clone https://github.com/chris-belcher/electrum-personal-server`
+  
 * Copy and edit configuration template  
   `$ cd electrum-personal-server`  
   `$ cp config.cfg_sample config.cfg`  
   `$ nano config.cfg` 
+  
   * Add your wallet master public keys or watch-only addresses to the `[master-public-keys]` and `[watch-only-addresses]` sections. Master public keys for an Electrum wallet can be found in the Electrum client menu `Wallet` -> `Information`.
+  
   * Uncomment and complete the lines  
     `rpc_user = raspibolt`  
     `rpc_password = [PASSWORD_B]`
+  
   * Change the listening `host` to `0.0.0.0`, so that you can reach it from a remote computer. The firewall only accepts connections from within the home network, not from the internet.  
     `host = 0.0.0.0`
-* Save & exit
+
+* Save and exit
 
 ### Initial blockchain scan
 
@@ -47,6 +53,7 @@ Before starting the server for real, the bitcoin addresses need to be generated 
 
 * Start the server to generate addresses from your master public keys  
   `$ ./server.py`
+  
 * Scan the blockchain (this can take several hours, depending on the start date you choose)  
   `$ ./rescan-script.py`
 
