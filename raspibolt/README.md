@@ -47,25 +47,15 @@ This server is set up without graphical user interface and is used remotely usin
 
 [![](images/00_blockaccino_goal.png)](https://vimeo.com/258395303)
 
-
-
 **Wishlist for further enhancements**
 
-[ ] Bitcoin desktop wallet support
-
-[ ] Bitcoin mobile wallet support
-
-[ ] Hardware wallet support
-
-[ ] Lightning web interface
-
-[ ] Email alerts
-
-[ ] Full backup, incl. Lightning channel states
-
-[ ] VPN access from public internet
-
-
+- [ ] Bitcoin desktop wallet support
+- [ ] Bitcoin mobile wallet support
+- [ ] Hardware wallet support
+- [ ] Lightning web interface
+- [ ] Email alerts
+- [ ] Full backup, incl. Lightning channel states
+- [ ] VPN access from public internet
 
 ### Target audience
 
