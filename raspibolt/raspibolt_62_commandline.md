@@ -6,8 +6,7 @@
 
 ------
 
-## Bonus guide: Pimp the command line
-
+## Bonus guide: Pimp the command line  
 *Difficulty: easy*
 
 You can prettify your command prompt for each user by enabling color output and setting a custom prompt. 
@@ -26,14 +25,12 @@ PS1="${debian_chroot:+($debian_chroot)}\[\e[33m\]\u \[\033[01;34m\]\w\[\e[33;40m
 alias ls='ls -la --color=always'
 ```
 
-![Pimp prompt](C:/Users_withBackup/Roland/Documents/GitHub/guides/raspibolt/images/60_pimp_prompt.png)
+![Pimp prompt](images/60_pimp_prompt.png)
 
 * Reload configuration  
   `source /home/admin/.bashrc`
 
-![Pimped prompt](C:/Users_withBackup/Roland/Documents/GitHub/guides/raspibolt/images/60_pimp_prompt_result.png)
-
-
+![Pimped prompt](images/60_pimp_prompt_result.png)
 
 ------
 
