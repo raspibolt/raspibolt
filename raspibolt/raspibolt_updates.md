@@ -10,6 +10,12 @@
 
 I try to keep track of my changes to the guide here, so you can see what parts I updated later on.
 
+### 2018-03-29: Electrum Personal Server
+
+* **Raspberry Pi**: added UFW rule for Electrum Personal Server (EPS)
+* **Bitcoin**: enabled wallet for EPS
+* **Bonus**: add section how to set up EPS, no automatic startup yet
+
 ### 2018-03-28
 
 * **Raspberry Pi**: increase system file descriptors limit 
