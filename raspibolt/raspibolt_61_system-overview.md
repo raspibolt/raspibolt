@@ -10,7 +10,7 @@
 
 *Difficulty: easy*
 
-To get a quick overview over the system status, I created [a shell script](https://gist.github.com/Stadicus/ffbbd855d23cd068f7b739cae6440f4b) that is shown on login or on demand.  
+To get a quick overview over the system status, I created [a shell script](https://github.com/Stadicus/guides/blob/master/raspibolt/resources/20-raspibolt-welcome) that is shown on login or on demand.  
 
 ![MotD system overview](images/60_status_overview.png)
 
@@ -18,7 +18,7 @@ This script will run as root, so please check it before blindly trusting me.
 
 ```
 $ cd /home/admin/download/
-$ wget https://gist.githubusercontent.com/Stadicus/57122492cb3ea4b5ce606ac0df6db8ae/raw/2b9ca6b03357bc581758f155746dbd0febf7d7a8/20-raspibolt-welcome
+$ wget https://github.com/Stadicus/guides/blob/master/raspibolt/resources/20-raspibolt-welcome
   
 # check script & exit
 $ nano 20-raspibolt-welcome
