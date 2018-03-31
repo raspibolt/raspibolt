@@ -18,7 +18,7 @@ This script will run as root, so please check it before blindly trusting me.
 
 ```
 $ cd /home/admin/download/
-$ wget https://github.com/Stadicus/guides/blob/master/raspibolt/resources/20-raspibolt-welcome
+$ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/20-raspibolt-welcome
   
 # check script & exit
 $ nano 20-raspibolt-welcome
