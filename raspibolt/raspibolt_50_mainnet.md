@@ -249,7 +249,7 @@ You can detect a full file system like this:
   `$ df`
 * You should not simply delete the log files, but empty them. Check what files are too big (> 100 MB):   
   `$ sudo su`  
-  `$ cd /var/logs`  
+  `$ cd /var/log`  
   `$ ls -lah`
 * Delete large files ending in `.1`  
   `$ rm *.1`
