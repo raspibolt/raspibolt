@@ -6,7 +6,7 @@
 
 ------
 
-## Bonus guide: Electrum Personal Server
+## Bonus guide: System recovery
 
 *Difficulty: easy*
 
