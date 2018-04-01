@@ -29,7 +29,7 @@ Make your command line prompt shine with a golden ฿ and use more colors overal
 ## [**Electrum Personal Server**](raspibolt_64_electrum.md)
 
 *Difficulty: intermediate*
-  
+
 The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain transactions. Together with the Electrum wallet, it works even with your Ledger or Trezor hardware wallet.
 
 [![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md)
@@ -38,9 +38,15 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 ## **Email alerts** (upcoming)
 
 *Difficulty: intermediate*
-  
+
 Let your RaspiBolt inform you by email in case the system or a service is restarted. As you need to manually unlock the LND wallet, this can be very helpful.
 
-------
+## System recovery
 
-Next: [FAQ >>](raspibolt_faq.md)
+Difficulty: easy
+
+In case your SD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand. It's not a full backup solution, but allows a system recovery.
+
+
+
+
