@@ -41,7 +41,7 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 
 Let your RaspiBolt inform you by email in case the system or a service is restarted. As you need to manually unlock the LND wallet, this can be very helpful.
 
-## System recovery
+## [**System recovery**](raspibolt_65_system-recovery.md)
 
 Difficulty: easy
 
