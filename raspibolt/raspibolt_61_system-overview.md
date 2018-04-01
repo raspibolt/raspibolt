@@ -10,7 +10,7 @@
 
 *Difficulty: easy*
 
-To get a quick overview over the system status, I created [a shell script](https://github.com/Stadicus/guides/blob/master/raspibolt/resources/20-raspibolt-welcome) that is shown on login or on demand.  
+To get a quick overview over the system status, I created [a shell script](https://github.com/Stadicus/guides/blob/master/raspibolt/resources/20-raspibolt-welcome) that is run as "message of the day" (motd) to be shown on login or on demand.  
 
 ![MotD system overview](images/60_status_overview.png)
 
@@ -29,6 +29,14 @@ $ sudo mkdir /etc/update-motd.d
 $ sudo cp 20-raspibolt-welcome /etc/update-motd.d/
 $ sudo chmod +x /etc/update-motd.d/20-raspibolt-welcome
 $ sudo ln -s /etc/update-motd.d/20-raspibolt-welcome /usr/local/bin/raspibolt
+```
+
+In case the script runs into problems, it could theoretically prevent you from logging in. We therefore disable all motd execution for the "root" user, so you will always be able to login as "root" to disable it.
+
+```
+$ sudo su 
+$ touch /root/.hushlogin
+$ exit
 ```
 
 You can now start the script with `raspibolt` and it is shown every time you log in.
