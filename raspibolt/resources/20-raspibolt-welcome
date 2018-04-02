@@ -124,6 +124,14 @@ public_addr="${public_ip}:${public_port}"
 ln_alias="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.alias')" 2>/dev/null
 ln_channels_online="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.num_active_channels')"
 ln_channels_total="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert listchannels | jq '.[] | length')"
+ln_external="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
+ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
+if [ $ln_external_ip = $public_ip ]; then
+  external_color="${color_grey}"
+else
+  external_color="${color_red}"
+fi
+
 
 printf "
 ${color_green}    .~~.   .~~.      ${color_yellow}%s: ${color_gray}Bitcoin Core & LND
@@ -134,7 +142,7 @@ ${color_red}  ~ (   ) (   ) ~    ${color_yellow}%-24s %-24s %-20s
 ${color_red} ( : '~'.~.'~' : )   ${color_gray}Memory   ${color_ram}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} %s
 ${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}        %-14s %s/%s Channels
 ${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s
-${color_red}    '~ .~~~. ~'      ${color_gray}Bandwith ▲ %-12s  %s
+${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %s   ${external_color}%s
 ${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool ${mempool} tx
 ${color_red}                     ${color_yellow}%s
 %s %s
@@ -146,7 +154,7 @@ ${color_red}                     ${color_yellow}%s
 "${ram}" "${sync}" "${ln_alias}" \
 "${sd}" "${sync_behind}" "${ln_channels_online}" "${ln_channels_total}" \
 "${hdd}" "${public}" \
-"${network_tx}" "${public_addr}" \
+"${network_tx}" "${public_addr}" "${ln_external}" \
 "${network_rx}" \
 ""
 
