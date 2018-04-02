@@ -150,7 +150,7 @@ ${color_red}  ~ (   ) (   ) ~    ${color_yellow}%-24s %-24s %-20s
 ${color_red} ( : '~'.~.'~' : )   ${color_gray}Memory   ${color_ram}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} ${alias_color}%s
 ${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}        %-14s %s/%s Channels
 ${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s
-${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %s   ${external_color}%s
+${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ${external_color}%s
 ${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool ${mempool} tx
 ${color_red}                     ${color_yellow}%s
 %s %s
