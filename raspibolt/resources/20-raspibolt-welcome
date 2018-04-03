@@ -21,8 +21,6 @@ load=$(w | grep "load average:" | cut -c11-)
 # get CPU temp
 cpu=$(cat /sys/class/thermal/thermal_zone0/temp)
 temp=$((cpu/1000))
-#echo $cpu
-#echo "CPU = $((cpu/1000)) C"
 
 # get memory
 ram_avail=$(free -m | grep Mem | awk '{ print $7 }')
