@@ -19,9 +19,9 @@ You will need several passwords and I find it easiest to write them all down in 
 If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass) and keep your original notes out of sight once your system is up and running.
 
 ## Preparing the operating system
-The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used. 
+The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used, unless you want to use an HFS+ (macOS-formatted) hard drive. In that case, you must use the Raspbian Stretch With Desktop disk image (or build your own kernel including the hfsplus module).
 
-1. Download the [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image
+1. Download the [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image, or the [Raspbian Stretch With Desktop](https://www.raspberrypi.org/downloads/raspbian/) disk image if you want to use an HFS+ hard drive
 2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
 ### Enable Secure Shell
@@ -222,6 +222,18 @@ If you want to use your existing hard disk that already contains the bitcoin mai
 * Open the file “/etc/fstab” in the Nano text editor and add the following line, but use the “UUID” noted above, save and exit  
   `$ sudo nano /etc/fstab`  
   `UUID=12345678 /mnt/hdd ntfs defaults,auto,umask=002,gid=bitcoin,users,rw 0 0`
+
+Please note that we mounted using `umask=002,gid=bitcoin`, which gives only the user “bitcoin” write access. User “admin” can only read and must use `sudo` when writing to the disk.
+
+#### Option 3: Use existing hard disk with HFS+ (macOS)
+If you have the bitcoin mainnet blockchain on a macOS machine you can place it on a hard disk formatted as HFS+ and mount on your Raspberry Pi. NOTE: the hfsplus driver is not included as part of the Raspian Stretch Lite disk image; you must have used the [Raspbian Stretch With Desktop](https://www.raspberrypi.org/downloads/raspbian/) disk image.
+
+* Identify the partition and note the UUID at the left (eg. “12345678”) and verify the FSTYPE (should be hfsplus)  
+  `$ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL `  
+
+* Open the file “/etc/fstab” in the Nano text editor and add the following line, but use the “UUID” noted above, save and exit  
+  `$ sudo nano /etc/fstab`  
+  `UUID=12345678       /mnt/hdd        hfsplus force,rw,auto,umask=002,gid=bitcoin,users       0       0`
 
 Please note that we mounted using `umask=002,gid=bitcoin`, which gives only the user “bitcoin” write access. User “admin” can only read and must use `sudo` when writing to the disk.
 
