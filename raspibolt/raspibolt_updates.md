@@ -12,7 +12,7 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 
 ### 2018-04-04
 
-* **Raspberry Pi**: added section for usage of existing MacOS HFS+ hard disk
+* **Raspberry Pi**: added section for usage of existing MacOS HFS+ hard disk. Thanks, **masonicboom**!
 * **Lightning**: Update `lnd` installation to version 0.4.1-beta (solving the "huge log file" issue)
 * **Bonus**: extended "System overview" script with lnd public ip and included `jq` installation.   
   Thanks, **robclark56** and **zavan**!
