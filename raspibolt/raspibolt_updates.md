@@ -10,6 +10,13 @@
 
 I try to keep track of my changes to the guide here, so you can see what parts I updated later on.
 
+### 2018-04-04
+
+* **Raspberry Pi**: added section for usage of existing MacOS HFS+ hard disk
+* **Lightning**: Update `lnd` installation to version 0.4.1-beta (solving the "huge log file" issue)
+* **Bonus**: extended "System overview" script with lnd public ip and included `jq` installation.   
+  Thanks, **robclark56** and **zavan**!
+
 ### 2018-03-30: Electrum Personal Server
 
 * **Raspberry Pi**: added UFW rule for Electrum Personal Server (EPS) and configure `sudo` to work without password entry
