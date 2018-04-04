@@ -30,8 +30,8 @@ while [ 0 ]; do
  fi
  sleep 600
 done;
-
 ```
+
 * make it executable  
   `$ sudo chmod +x /usr/local/bin/getpublicip.sh`
 
