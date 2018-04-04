@@ -18,6 +18,10 @@ lnd_dir="/home/bitcoin/.lnd"
 # get uptime & load
 load=$(w | grep "load average:" | cut -c11-)
 
+# get CPU temp
+cpu=$(cat /sys/class/thermal/thermal_zone0/temp)
+temp=$((cpu/1000))
+
 # get memory
 ram_avail=$(free -m | grep Mem | awk '{ print $7 }')
 ram=$(printf "%sM / %sM" "${ram_avail}" "$(free -m | grep Mem | awk '{ print $2 }')")
@@ -128,7 +132,10 @@ if [ "$wallet_unlocked" -eq 0 ] ; then
  ln_alias="Wallet Locked"
 else
  alias_color="${color_grey}"
- ln_alias="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.alias')" 2>/dev/null
+ln_alias="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.alias')" 2>/dev/null
+ ln_walletbalance="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
+ ln_channelbalance="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert channelbalance | jq -r '.balance')" 2>/dev/null
+
 fi
 ln_channels_online="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.num_active_channels')" 2>/dev/null
 ln_channels_total="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert listchannels | jq '.[] | length')" 2>/dev/null
@@ -144,26 +151,28 @@ fi
 printf "
 ${color_green}    .~~.   .~~.      ${color_yellow}%s: ${color_gray}Bitcoin Core & LND
 ${color_green}   '. \ ' ' / .'     ${color_yellow}%s
-${color_red}    .~ .~~~..~.      ${color_gray}%s
+${color_red}    .~ .~~~..~.      ${color_gray}%s , CPU Temp %sC
 ${color_red}   : .~.'~'.~. :
 ${color_red}  ~ (   ) (   ) ~    ${color_yellow}%-24s %-24s %-20s
 ${color_red} ( : '~'.~.'~' : )   ${color_gray}Memory   ${color_ram}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} ${alias_color}%s
 ${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}        %-14s %s/%s Channels
 ${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s
 ${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ${external_color}%s
-${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool ${mempool} tx
+${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool %-14s ฿ %12s sat
+${color_gray}                                                                     🗲 %12s sat
 ${color_red}                     ${color_yellow}%s
 %s %s
 " \
 "RaspiBolt" \
 "-------------------------------------------------------------------" \
-"${load}" \
+"${load}" "${temp}" \
 "Resources free" "${btc_title}" "Lightning (LND)" \
 "${ram}" "${sync}" "${ln_alias}" \
 "${sd}" "${sync_behind}" "${ln_channels_online}" "${ln_channels_total}" \
 "${hdd}" "${public}" \
 "${network_tx}" "${public_addr}" "${ln_external}" \
-"${network_rx}" \
+"${network_rx}" "${mempool} tx" "${ln_walletbalance}" \
+"${ln_channelbalance}" \
 ""
 
 echo "$(tput -T xterm sgr0)"
