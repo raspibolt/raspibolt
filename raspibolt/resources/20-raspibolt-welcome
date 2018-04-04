@@ -151,15 +151,14 @@ fi
 printf "
 ${color_green}    .~~.   .~~.      ${color_yellow}%s: ${color_gray}Bitcoin Core & LND
 ${color_green}   '. \ ' ' / .'     ${color_yellow}%s
-${color_red}    .~ .~~~..~.      ${color_gray}%s , CPU Temp %sC
+${color_red}    .~ .~~~..~.      ${color_gray}%s, CPU Temp %s°C
 ${color_red}   : .~.'~'.~. :
 ${color_red}  ~ (   ) (   ) ~    ${color_yellow}%-24s %-24s %-20s
 ${color_red} ( : '~'.~.'~' : )   ${color_gray}Memory   ${color_ram}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} ${alias_color}%s
-${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}        %-14s %s/%s Channels
-${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s
-${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ${external_color}%s
-${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool %-14s ฿ %12s sat
-${color_gray}                                                                     🗲 %12s sat
+${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}        %-14s ${external_color}%s
+${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s ${color_gray}%s/%s Channels
+${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ฿ %12s sat
+${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool %-14s 🗲 %12s sat
 ${color_red}                     ${color_yellow}%s
 %s %s
 " \
@@ -168,11 +167,10 @@ ${color_red}                     ${color_yellow}%s
 "${load}" "${temp}" \
 "Resources free" "${btc_title}" "Lightning (LND)" \
 "${ram}" "${sync}" "${ln_alias}" \
-"${sd}" "${sync_behind}" "${ln_channels_online}" "${ln_channels_total}" \
-"${hdd}" "${public}" \
-"${network_tx}" "${public_addr}" "${ln_external}" \
-"${network_rx}" "${mempool} tx" "${ln_walletbalance}" \
-"${ln_channelbalance}" \
+"${sd}" "${sync_behind}" "${ln_external}" \
+"${hdd}" "${public}" "${ln_channels_online}" "${ln_channels_total}" \
+"${network_tx}" "${public_addr}" "${ln_walletbalance}" \
+"${network_rx}" "${mempool} tx" "${ln_channelbalance}" \
 ""
 
 echo "$(tput -T xterm sgr0)"
