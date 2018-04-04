@@ -14,7 +14,7 @@ To announce our public IP address to the Lightning network, we first need to get
 * As user "admin", create the following script, save and exit  
   `$ sudo nano /usr/local/bin/getpublicip.sh`
 
-```
+```bash
 #!/bin/bash
 # RaspiBolt LND Mainnet: script to get public ip address
 # /usr/local/bin/getpublicip.sh
