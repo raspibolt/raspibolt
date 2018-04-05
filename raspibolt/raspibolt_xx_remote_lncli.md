@@ -9,14 +9,15 @@ In these instructions, it is assumed the lncli computer is on the local LAN, but
 
 - Allow port 10009 in firewall
 
-`admin ~  ฿  sudo su`
-
 ```
+admin ~  ฿  sudo su
 admin ~  ฿  ufw allow from 192.168.0.0/24 to any port  10009 comment 'allow lnd rpc from Local LAN'
 admin ~  ฿  ufw status
 admin ~  ฿  exit
 ```
 - Edit lnd.conf to allow rpc from more than just the default localhost
+
+Add one new line in the [Application Options] section
 
 `admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
   
