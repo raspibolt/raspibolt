@@ -12,9 +12,9 @@ In these instructions, it is assumed the lncli computer is on the local LAN, but
 `admin ~  ฿  sudo su`
 
 ```
-ufw allow from 192.168.0.0/24 to any port  10009 comment 'allow lnd rpc from Local LAN'
-ufw status
-exit
+admin ~  ฿  ufw allow from 192.168.0.0/24 to any port  10009 comment 'allow lnd rpc from Local LAN'
+admin ~  ฿  ufw status
+admin ~  ฿  exit
 ```
 - Edit lnd.conf to allow rpc from more than just the default localhost
 
