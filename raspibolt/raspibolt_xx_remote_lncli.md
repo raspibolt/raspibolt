@@ -15,9 +15,7 @@ admin ~  ฿  ufw allow from 192.168.0.0/24 to any port  10009 comment 'allow ln
 admin ~  ฿  ufw status
 admin ~  ฿  exit
 ```
-- Edit lnd.conf to allow rpc from more than just the default localhost
-
-Add one new line in the [Application Options] section
+- Add one new line in the [Application Options] section of lnd.conf to allow rpc from more than just the default localhost
 
 `admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
   
@@ -26,3 +24,23 @@ Add one new line in the [Application Options] section
 rpclisten=0.0.0.0:10009
 
 ```
+
+- Temporarily allow admin.macaroon to be copied
+
+`sudo chmod 777 /home/bitcoin/.lnd/admin.macaroon`
+
+
+## Windows PC
+
+Download and install lncli
+
+- Use your browser to visit https://github.com/lightningnetwork/lnd/releases
+
+- Download the file for your OS. For Windows10 it will genereally be lnd-windows-amd64-vx.x.x-beta.zip
+  
+- Open the compressed file and extract the lncli application (e.g. lncli.exe) to a known location (e.g. Your desktop)
+
+- Open 
+
+
+Follow the instructions in [Mainnet] to use WinSCP to xxx
