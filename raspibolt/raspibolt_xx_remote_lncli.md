@@ -69,9 +69,9 @@ GLOBAL OPTIONS:
 `> mkdir %LOCALAPPDATA%\Lnd`
 
 * Follow the instructions in [Mainnet] to use WinSCP to copy the files shown
-  *Local:  `\Users\xxxx\AppData\Local\Lnd`
- * Remote: `/home/bitcoin/.lnd/`
- * Files: `See below`
+  * Local:  `\Users\xxxx\AppData\Local\Lnd`
+  * Remote: `/home/bitcoin/.lnd/`
+  * Files: `See below`
  
  ![Files to Copy](images/60_winLND.png) 
  
