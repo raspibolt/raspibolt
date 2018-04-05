@@ -11,9 +11,9 @@ In these instructions, it is assumed the lncli computer is on the same LAN as th
 
 ```
 admin ~  ฿  sudo su
-admin ~  ฿  ufw allow from 192.168.0.0/24 to any port  10009 comment 'allow lnd rpc from Local LAN'
-admin ~  ฿  ufw status
-admin ~  ฿  exit
+root@RaspiBolt:/home/admin#  ufw allow from 192.168.0.0/24 to any port  10009 comment 'allow lnd rpc from Local LAN'
+root@RaspiBolt:/home/admin#  ufw status
+root@RaspiBolt:/home/admin#  exit
 ```
 - Add one new line in the [Application Options] section of lnd.conf to allow rpc from more than just the default localhost
 
@@ -85,7 +85,19 @@ GLOBAL OPTIONS:
 ```
 
 # What if the lncli computer is not on same LAN as the RaspiBolt
-You will have to add a new Port Forward for port 10009 on your router. See [ [Rasberry Pi](raspibolt_20_pi.md) ]
+
+* Add a new Port Forward for port 10009 on your router. See [ [Rasberry Pi](raspibolt_20_pi.md) ]
+
+* Add a new firewall rule on the RaspiBolt
+
+login as admin
+
+```
+admin ~  ฿  sudo su
+root@RaspiBolt:/home/admin# ufw delete allow from 192.168.0.0/24 to any port  10009 comment 'allow lnd rpc from Local LAN'
+root@RaspiBolt:/home/admin# ufw allow 10009 comment 'allow lnd rpc'
+root@RaspiBolt:/home/admin# exit
+```
 
 # A word on Permisson Files (Macaroons)
 By default, lncli will load admin.macaroon and hence have full admin priviledges. To limit what the lncli computer can do you can restrict what lncli can do by deleting macaroon files and starting lncli specifying the approprate macaroon.
@@ -107,7 +119,7 @@ The table below shows which commands are permitten by each macaroon
 
 |Command|admin|readonly|invoice|
 |-------| :---: |:---: | :---: |
-|create|Yes|n|N|
+|create|Yes|n|No|
 |unlock|Yes|Yes|Yes|
 |newaddress|Yes|No|Yes|   
 |sendmany|Yes|n|n|
@@ -116,15 +128,15 @@ The table below shows which commands are permitten by each macaroon
 |disconnect|Yes|n|No| 
 |openchannel|Yes|n|No|
 |closechannel|Yes|n|No|
-|closeallchannels|Yes|n|N|
+|closeallchannels|Yes|n|No|
 |listpeers|Yes|Yes|No|
 |walletbalance|Yes|Yes|No|
 |channelbalance|Yes|Yes|No|
 |getinfo|Yes|Yes|No|
 |pendingchannels|Yes|Yes|No| 
 |sendpayment|Yes|n|No|
-|payinvoice|Yes|n|N|
-|addinvoice|Yes|N|Y|
+|payinvoice|Yes|n|No|
+|addinvoice|Yes|No|Yes|
 |lookupinvoice|Yes|Yes|Yes|
 |listinvoices|Yes|Yes|Yes|
 |listchannels|Yes|Yes|No|   
