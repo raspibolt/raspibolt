@@ -1,5 +1,5 @@
 # Use lncli on a Different Computer
-It is possible to run lnd on the RaspiBolt, and run lncli on a different computer. The instructions below explain how to install and run lncli on a Windows PC and communicate with the RaspiBolt. Instructions for running on a different computer (MAC, Linux, ...) will be very similar.
+It is possible to run *lnd* on the RaspiBolt, and *lncli* on a different computer. The instructions below explain how to install *lncli* on a Windows PC and communicate with the RaspiBolt. Instructions for running on a different computer (MAC, Linux, ...) will be very similar.
 
 In these instructions, it is assumed the lncli computer is on the same LAN as the RaspiBolt, but it is possible to also have the lncli computer outside the local LAN.
 
@@ -27,7 +27,7 @@ rpclisten=0.0.0.0:10009
 
 - Temporarily allow admin.macaroon to be copied
 
-`sudo chmod 777 /home/bitcoin/.lnd/admin.macaroon`
+`admin ~  ฿ sudo chmod 777 /home/bitcoin/.lnd/admin.macaroon`
 
 
 ## Windows PC
@@ -41,7 +41,7 @@ rpclisten=0.0.0.0:10009
 
 - Open a CMD window
 
-`Press Win+R, then enter cmd, then press Enter` 
+`Press Win+R, enter cmd, then press Enter` 
 
 - Change to the directory where you saved lncli.exe, and view the help information
 
@@ -62,7 +62,7 @@ GLOBAL OPTIONS:
 ```
 - Take note of the default directory
 
-- Make the necessary Lnd directory
+- Make the necessary default directory
    
 `> mkdir %LOCALAPPDATA%\Lnd`
 
@@ -76,7 +76,7 @@ GLOBAL OPTIONS:
  
  - Back on the RaspiBolt: Reset admin.macaroon permissions
 
-`sudo chmod 600 /home/bitcoin/.lnd/admin.macaroon`
+`admin ~  ฿ sudo chmod 600 /home/bitcoin/.lnd/admin.macaroon`
 
 - Run lncli on the PC
 ```
@@ -100,7 +100,7 @@ root@RaspiBolt:/home/admin# exit
 ```
 
 # A word on Permisson Files (Macaroons)
-By default, lncli will load admin.macaroon and hence have full admin priviledges. To limit what the lncli computer can do you can restrict what lncli can do by deleting macaroon files and starting lncli specifying the approprate macaroon.
+By default, *lncli* will load *admin.macaroon* and hence have full privileges. To limit what the lncli computer can do you can delete unneeded macaroon files and start *lncli* specifying the approprate macaroon.
 
 Example
 
@@ -109,12 +109,12 @@ Example
 [lncli] rpc error: code = Unknown desc = permission denied
 ```
 
-The table below shows which commands are permitten by each macaroon
+The table below shows which commands are permitted by each macaroon
 
 * ? = Not checked
 * n = Not Checked, presumed No
-* No  = No (checked)
-* Yes = Yes (checked)
+* No  = No (checked, v0.4.1)
+* Yes = Yes (checked, v0.4.1)
 
 
 |Command|admin|readonly|invoice|
