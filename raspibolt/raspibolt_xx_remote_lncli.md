@@ -32,8 +32,6 @@ rpclisten=0.0.0.0:10009
 
 ## Windows PC
 
-Download and install lncli
-
 - Use your browser to visit https://github.com/lightningnetwork/lnd/releases
 
 - Download the file for your OS. For Windows10 it will generally be lnd-windows-amd64-vx.x.x-beta.zip
@@ -88,3 +86,54 @@ GLOBAL OPTIONS:
 
 # What if the lncli computer is not on same LAN as the RaspiBolt
 You will have to add a new Port Forward for port 10009 on your router. See [ [Rasberry Pi](raspibolt_20_pi.md) ]
+
+# A word on Permisson Files (Macaroons)
+By default, lncli will load admin.macaroon and hence have full admin priviledges. To limit what the lncli computer can do you can restrict what lncli can do by deleting macaroon files and starting lncli specifying the approprate macaroon.
+
+Example
+
+```
+>lncli  --macaroonpath %LOCALAPPDATA%\Lnd\readonly.macaroon --rpcserver ip.of.your.raspibolt:10009  addinvoice --amt=100
+[lncli] rpc error: code = Unknown desc = permission denied
+```
+
+The table below shows which commands are permitten by each macaroon
+
+|Command|admin|readonly|invoice|
+|-------| :---: |:---: | :---: |
+|create|Yes|?|?|
+|unlock|Yes|?|?|
+|newaddress|Yes|?|?|   
+|sendmany|Yes|?|?|
+|sendcoins|Yes|?|?| 
+|connect|Yes|?|?|
+|disconnect|Yes|?|?| 
+|openchannel|Yes|?|?|
+|closechannel|Yes|?|?|
+|closeallchannels|Yes|?|?|
+|listpeers|Yes|?|?|
+|walletbalance|Yes|?|?|
+|channelbalance|Yes|?|?|
+|getinfo|Yes|?|?|
+|pendingchannels|Yes|?|?| 
+|sendpayment|Yes|?|?|
+|payinvoice|Yes|?|?|
+|addinvoice|Yes|?|?|
+|lookupinvoice|Yes|?|?|
+|listinvoices|Yes|?|?|
+|listchannels|Yes|?|?|   
+|listpayments|Yes|?|?|
+|describegraph|Yes|?|?|
+|getchaninfo|Yes|?|?|
+|getnodeinfo|Yes|?|?|
+|queryroutes|Yes|?|?|
+|getnetworkinfo|Yes|?|?|
+|debuglevel|Yes|?|?|
+|decodepayreq|Yes|?|?|
+|listchaintxns|Yes|?|?|
+|stop|Yes|?|?|
+|signmessage|Yes|?|?|     
+|verifymessage|Yes|?|?|
+|feereport|Yes|?|?|
+|updatechanpolicy|Yes|?|?|
+|fwdinghistory|Yes|?|?|
