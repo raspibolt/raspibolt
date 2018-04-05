@@ -68,10 +68,20 @@ GLOBAL OPTIONS:
    
 `> mkdir %LOCALAPPDATA%\Lnd`
 
-* Follow the instructions in [Mainnet] to use WinSCP to copy the files shown
+* Follow the instructions in  [ [Mainnet](raspibolt_50_mainnet.md) ]  to use WinSCP to copy the files shown
   * Local:  `\Users\xxxx\AppData\Local\Lnd`
   * Remote: `/home/bitcoin/.lnd/`
   * Files: `See below`
  
  ![Files to Copy](images/60_winLND.png) 
  
+ 
+ - Back on the RaspiBolt: Reset admin.macaroon permissions
+
+`sudo chmod 600 /home/bitcoin/.lnd/admin.macaroon`
+
+- Run lncli on the PC
+```
+> cd %USERPROFILE%\desktop
+> lncli  --rpcserver ip.of.your.raspibolt:10009  getinfo
+```
