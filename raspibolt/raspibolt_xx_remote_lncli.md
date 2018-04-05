@@ -99,41 +99,47 @@ Example
 
 The table below shows which commands are permitten by each macaroon
 
+* ? = Not checked
+* n = Not Checked, presumed No
+* No  = No (checked)
+* Yes = Yes (checked)
+
+
 |Command|admin|readonly|invoice|
 |-------| :---: |:---: | :---: |
-|create|Yes|?|?|
-|unlock|Yes|?|?|
-|newaddress|Yes|?|?|   
-|sendmany|Yes|?|?|
-|sendcoins|Yes|?|?| 
-|connect|Yes|?|?|
-|disconnect|Yes|?|?| 
-|openchannel|Yes|?|?|
-|closechannel|Yes|?|?|
-|closeallchannels|Yes|?|?|
-|listpeers|Yes|?|?|
-|walletbalance|Yes|?|?|
-|channelbalance|Yes|?|?|
-|getinfo|Yes|?|?|
-|pendingchannels|Yes|?|?| 
-|sendpayment|Yes|?|?|
-|payinvoice|Yes|?|?|
-|addinvoice|Yes|?|?|
-|lookupinvoice|Yes|?|?|
-|listinvoices|Yes|?|?|
-|listchannels|Yes|?|?|   
-|listpayments|Yes|?|?|
-|describegraph|Yes|?|?|
-|getchaninfo|Yes|?|?|
-|getnodeinfo|Yes|?|?|
-|queryroutes|Yes|?|?|
-|getnetworkinfo|Yes|?|?|
-|debuglevel|Yes|?|?|
-|decodepayreq|Yes|?|?|
-|listchaintxns|Yes|?|?|
-|stop|Yes|?|?|
-|signmessage|Yes|?|?|     
-|verifymessage|Yes|?|?|
-|feereport|Yes|?|?|
-|updatechanpolicy|Yes|?|?|
-|fwdinghistory|Yes|?|?|
+|create|Yes|n|N|
+|unlock|Yes|Yes|Yes|
+|newaddress|Yes|No|Yes|   
+|sendmany|Yes|n|n|
+|sendcoins|Yes|n|n| 
+|connect|Yes|n|No|
+|disconnect|Yes|n|No| 
+|openchannel|Yes|n|No|
+|closechannel|Yes|n|No|
+|closeallchannels|Yes|n|N|
+|listpeers|Yes|Yes|No|
+|walletbalance|Yes|Yes|No|
+|channelbalance|Yes|Yes|No|
+|getinfo|Yes|Yes|No|
+|pendingchannels|Yes|Yes|No| 
+|sendpayment|Yes|n|No|
+|payinvoice|Yes|n|N|
+|addinvoice|Yes|N|Y|
+|lookupinvoice|Yes|Yes|Yes|
+|listinvoices|Yes|Yes|Yes|
+|listchannels|Yes|Yes|No|   
+|listpayments|Yes|Yes|No|
+|describegraph|Yes|Yes|No|
+|getchaninfo|Yes|Yes|No|
+|getnodeinfo|Yes|Yes|No|
+|queryroutes|Yes|Yes|No|
+|getnetworkinfo|Yes|Yes|No|
+|debuglevel|Yes|No|No|
+|decodepayreq|Yes|Yes|No|
+|listchaintxns|Yes|Yes|No|
+|stop|Yes|No|No|
+|signmessage|Yes|n|n|     
+|verifymessage|Yes|?|n|
+|feereport|Yes|Yes|No|
+|updatechanpolicy|Yes|No|No|
+|fwdinghistory|Yes|Yes|No|
