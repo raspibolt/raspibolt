@@ -212,6 +212,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
   `$ mkdir /home/admin/.lnd`  
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
   `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
+  `$ sudo cp /home/bitcoin/.lnd/invoice.macaroon /home/admin/.lnd`
   `$ sudo chown -R admin:admin /home/admin/.lnd/ ` 
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
   `$ lncli unlock`
