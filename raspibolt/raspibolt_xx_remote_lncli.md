@@ -41,6 +41,6 @@ Download and install lncli
 - Open the compressed file and extract the lncli application (e.g. lncli.exe) to a known location (e.g. Your desktop)
 
 - Open 
-
+![Zip File](images/60_remote_zip.png) 
 
 Follow the instructions in [Mainnet] to use WinSCP to xxx
