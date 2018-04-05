@@ -36,11 +36,39 @@ Download and install lncli
 
 - Use your browser to visit https://github.com/lightningnetwork/lnd/releases
 
-- Download the file for your OS. For Windows10 it will genereally be lnd-windows-amd64-vx.x.x-beta.zip
+- Download the file for your OS. For Windows10 it will generally be lnd-windows-amd64-vx.x.x-beta.zip
   
-- Open the compressed file and extract the lncli application (e.g. lncli.exe) to a known location (e.g. Your desktop)
-
-- Open 
+- Open the compressed file and extract the lncli application (e.g. lncli.exe) to your desktop.
 ![Zip File](images/60_remote_zip.png) 
 
-Follow the instructions in [Mainnet] to use WinSCP to xxx
+- Open a CMD window
+
+`Press Win+R, then enter cmd, then press Enter` 
+
+- Change to the directory where you saved lncli.exe, and view the help information
+
+```
+> cd %USERPROFILE%\desktop
+> lncli
+...
+GLOBAL OPTIONS:
+   --rpcserver value        host:port of ln daemon (default: "localhost:10009")
+   --lnddir value           path to lnd's base directory (default: "C:\\Users\\xxxx\\AppData\\Local\\Lnd")
+   --tlscertpath value      path to TLS certificate (default: "C:\\Users\\xxxx\\AppData\\Local\\Lnd\\tls.cert")
+   --no-macaroons           disable macaroon authentication
+   --macaroonpath value     path to macaroon file (default: "C:\\Users\\xxx\\AppData\\Local\\Lnd\\admin.macaroon")
+   --macaroontimeout value  anti-replay macaroon validity time in seconds (default: 60)
+   --macaroonip value       if set, lock macaroon to specific IP address
+   --help, -h               show help
+   --version, -v            print the version
+```
+- Take note of the default directory
+
+- Make the necessary Lnd directory
+   
+`> mkdir %LOCALAPPDATA%\Lnd`
+
+- Follow the instructions in [Mainnet] to use WinSCP to copy the files shown
+ Local:  \Users\xxxx\AppData\Local\Lnd
+ Remote: /home/bitcoin/.lnd/
+ Files: See below
