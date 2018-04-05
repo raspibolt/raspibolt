@@ -131,6 +131,7 @@ bitcoin.mainnet=1
 * Copy permission files and TLS cert to user "admin" to use `lncli`  
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
   `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
+  `$ sudo cp /home/bitcoin/.lnd/invoice.macaroon /home/admin/.lnd` 
 
 * Restart `lnd` and unlock your wallet (enter `password [C]` )  
   `$ sudo systemctl restart lnd`
