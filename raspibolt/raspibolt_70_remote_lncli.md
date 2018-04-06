@@ -1,7 +1,7 @@
 # Use lncli on a Different Computer
 It is possible to run *lnd* on the RaspiBolt, and *lncli* on a different computer. The instructions below explain how to install *lncli* on a Windows PC and communicate with the RaspiBolt. Instructions for different computer systems (MAC, Linux, ...) will be very similar.
 
-In these instructions, it is assumed the lncli computer is on the same LAN as the RaspiBolt, but it is possible to also have the lncli computer outside the local LAN.
+In these instructions, it is assumed the lncli computer is on the same LAN as the RaspiBolt. It is possible to also have the lncli computer outside the local LAN but that introduces additional security risks and will not be included in this guide.
 
 ## RaspiBolt
 
@@ -82,21 +82,6 @@ GLOBAL OPTIONS:
 ```
 > cd %USERPROFILE%\desktop
 > lncli  --rpcserver ip.of.your.raspibolt:10009  getinfo
-```
-
-# What if the lncli computer is not on same LAN as the RaspiBolt?
-
-* Add a new Port Forward for port 10009 on your router. See [ [Rasberry Pi](raspibolt_20_pi.md) ]
-
-* Add a new firewall rule on the RaspiBolt
-
-login as admin
-
-```
-admin ~  ฿  sudo su
-root@RaspiBolt:/home/admin# ufw delete allow from 192.168.0.0/24 to any port  10009 comment 'allow lnd rpc from Local LAN'
-root@RaspiBolt:/home/admin# ufw allow 10009 comment 'allow lnd rpc'
-root@RaspiBolt:/home/admin# exit
 ```
 
 # A word on Permisson Files (Macaroons)
