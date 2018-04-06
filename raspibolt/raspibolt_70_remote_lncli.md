@@ -1,7 +1,7 @@
 # Use lncli on a Different Computer
 It is possible to run *lnd* on the RaspiBolt, and *lncli* on a different computer. The instructions below explain how to install *lncli* on a Windows PC and communicate with the RaspiBolt. Instructions for different computer systems (MAC, Linux, ...) will be very similar.
 
-In these instructions, it is assumed the lncli computer is on the same LAN as the RaspiBolt. It is possible to also have the lncli computer outside the local LAN but that introduces additional security risks and will not be included in this guide.
+In these instructions, it is assumed the lncli computer is on the same LAN as the RaspiBolt. It is possible for the lncli computer to be outside the local LAN but that introduces additional security risks and will not be included in this guide.
 
 ## RaspiBolt
 
