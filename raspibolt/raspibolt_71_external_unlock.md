@@ -26,18 +26,42 @@ To unlock a wallet, the password must be entered. If that password is stored on 
 
 # Preparation
 
-Your RaspiBolt must be behind a firewall with either:
+* You will need a (free) [Google](https://google.com) account.
+* Your RaspiBolt must be behind a firewall with either:
 
-* A static public IP, or
-* A public [Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). This can be provided using a [Dynamic DNS Service](https://en.wikipedia.org/wiki/Dynamic_DNS).
+** A static public IP, or
+**  A public [Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). This can be provided using a [Dynamic DNS Service](https://en.wikipedia.org/wiki/Dynamic_DNS).
 
 # Procedure
+
+## Create Free Google Clould Platform (GCP) Virtual Machine (VM) instance
+
+* Visit [GCP](https://cloud.google.com/free/). 
+Click *Try It Free* 
+Setup Billing as needed. You get US$300 free usage.
+
+* Create your VM
+Add image here
+Click the Hamburger menu icon > Compute Engine > VM Instances
+Click *Create Instance*
+Select Machine Type = *Micro*
+Select Boot Disk = *Debian GNU/Linux*
+Click *Create*
+Note the External IP of your new VM
+|VM External IP|                     |
+|--------------|---------------------|
+
+Select Connect > *Open in browser window*
+
+Add image 02.png
+
+
 
 ## Create new Certificate/Key file pair
 
 ## Update lnd to use new Certificate/Key files
 
-## Create Free Google Clould Platform (GCP) Virtual Machine (VM) instance
+
 
 ## Setup the VM
 
