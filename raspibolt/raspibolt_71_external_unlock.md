@@ -270,7 +270,7 @@ log_user 1
 expect "lnd successfully unlocked!"
 ```
 
-* Create and save hourly cron job. Edit the home_dir 
+* Create and save hourly cron job.  
 
 Note: The cron job will run approximately every 60 mins, but not usually at 'the top of the hour'.
 
@@ -311,8 +311,26 @@ $ ./run_lncli getinfo
 ```
 If you see the above, it confirms the communication from your GCP instance to your RaspiBolt is working.
 
-Repeat the above command every 10 mins for at max. 1 hour, until you see:
+Repeat the above command every 10 mins or so for at max. 1 hour, until you see somwething like:
 ```
-
+$ ./run_lncli getinfo
+{
+    "identity_pubkey": "xxxxx4",
+    "alias": "xxxxx",
+    "num_pending_channels": 0,
+    "num_active_channels": 1,
+    "num_peers": 2,
+    "block_height": 1291957,
+    "block_hash": "00000000000000ca546331fbe0d83df81b8f4bf2b24f081cce359920faaa8dc1",
+    "synced_to_chain": true,
+    "testnet": true,
+    "chains": [
+        "bitcoin"
+    ],
+    "uris": [
+        "xxx@x.x.x.x:9735"
+    ],
+    "best_header_timestamp": "1523192388"
+}
 ```
 
