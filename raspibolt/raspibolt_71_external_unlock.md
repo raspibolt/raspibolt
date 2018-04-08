@@ -315,7 +315,7 @@ Repeat the above command every 10 mins or so for at max. 1 hour, until you see s
 ```
 $ ./run_lncli getinfo
 {
-    "identity_pubkey": "xxxxx4",
+    "identity_pubkey": "xxxxx",
     "alias": "xxxxx",
     "num_pending_channels": 0,
     "num_active_channels": 1,
