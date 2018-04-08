@@ -311,7 +311,7 @@ $ ./run_lncli getinfo
 ```
 If you see the above, it confirms the communication from your GCP instance to your RaspiBolt is working.
 
-Repeat the above command every 10 mins or so for at max. 1 hour, until you see somwething like:
+Repeat the above command every 10 mins or so for at max. 1 hour, until you see something like:
 ```
 $ ./run_lncli getinfo
 {
