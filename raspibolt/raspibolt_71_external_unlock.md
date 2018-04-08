@@ -30,7 +30,7 @@ To unlock a wallet, the password must be entered. If that password is stored on 
 
 * Your RaspiBolt must be behind a firewall with either:
   * A static public IP, or
-  *  A public [Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). This can be provided using a [Dynamic DNS Service](https://en.wikipedia.org/wiki/Dynamic_DNS).
+  * A public [Fully Qualified Domain Name=FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). This can be provided using a [Dynamic DNS Service](https://en.wikipedia.org/wiki/Dynamic_DNS).
 
 # Procedure
 
@@ -57,9 +57,14 @@ Setup Billing as needed. You get US$300 free usage.
 
 ![GPC](images/71_GCP03.png)
 
-Note the External IP of your new VM
+```
+your_GCP_username@instance-1:~$ 
+```
 
-|VM External IP|__________________________________|
+Note the External IP, and your GCP Username of your new VM
+
+|GCP External IP|__________________________________|
+|Your GCP Username|__________________________________|
 |--------------|---------------------|
 
 Select Connect > *Open in browser window*
@@ -101,7 +106,7 @@ instance-1:~$ ./lncli -h
 [You should see the lncli help]
 ```
 ## Modify firewall and port forwarding
-* xxxxx router
+* Add a new Port Forward for port 10009 on your router. See [ Rasberry Pi ](raspibolt_20_pi.md)
 * login as admin to your RaspiBolt
 * Allow rpc from your VM in RaspiBolt firewall
 
@@ -111,7 +116,6 @@ root@RaspiBolt:/home/admin# ufw allow from 35.184.120.10 to any port 10009 comme
 root@RaspiBolt:/home/admin# exit
 ```
 
-
 ## Create new Certificate/Key file pair
 * login as admin to your RaspiBolt
 * Stop the lnd service
@@ -119,7 +123,10 @@ root@RaspiBolt:/home/admin# exit
 admin ~  ฿  sudo systemctl stop lnd
 ```
 
-* Edit and save the lnd.conf file with the changes shown. Replace *my.vm.ip.address* with the External IP addess of your GCP VM.
+* Edit and save the lnd.conf file with the changes shown. 
+If you have:
+  * A static IP address: Uncomment tlsextraip, and replace *my.vm.ip.address* your External IP address.
+  * A static FQDN: Uncomment tlsextradns, and replace *my.fqdn* with the your FQDN.
 ```
 admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
 ```
@@ -128,38 +135,70 @@ admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
 [Application Options]
 #rpclisten=localhost:10009
 rpclisten=0.0.0.0:10009
+# use tlsextraip ONLY if you have a static public IP address
 tlsextraip=my.vm.ip.address
+# use tlsextradns ONLY if you have a static public FQDN
+tlsextradns=my.fqdn
 ```
 * Hide the existing tls.key and tls.cert files so that lnd regenerates them
 ```
 admin ~  ฿  sudo mv /home/bitcoin/.lnd/tls.cert  /home/bitcoin/.lnd/tls.cert.backup
 admin ~  ฿  sudo mv /home/bitcoin/.lnd/tls.key   /home/bitcoin/.lnd/tls.key.backup
 ``` 
+
 * Restart lnd to generate new tls files
 ```
 admin ~  ฿  sudo systemctl start lnd
 admin ~  ฿  openssl x509 -in /home/bitcoin/.lnd/tls.cert -text -noout
 ```
-You should see *my.vm.ip.address* in the result
+
+You should see *my.vm.ip.address* or *my.fqdn* in the result
 ```
 X509v3 Subject Alternative Name:
-    DNS:RaspiBolt, DNS:localhost, 
+    DNS:RaspiBolt, DNS:localhost, xxxxxxxxxx
     IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1, 
-    IP Address:192.168.0.141, IP Address:FE80:0:0:0:2481:BA24:A7E5:3DA1, 
-    IP Address:35.184.120.10
+    IP Address:192.168.0.141, IP Address:FE80:0:0:0:2481:BA24:A7E5:3DA1
 ```
-
-
-
-
-## Copy TLS cert to user admin 
+*  Copy the TLS cert to user admin 
 ```
 admin ~  ฿  sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
 admin ~  ฿  sudo chown -R admin:admin /home/admin/.lnd
 ```
 
+* Create an SSH key to use with GCP
+Substitute *Your_GCP_Username* with Your GCP Username
 
+`admin ~  ฿  ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C Your_GCP_Username`
+``` 
+admin ~  ฿  cat .ssh/gcp_ssh.pub
+ssh-rsa AAAAB3NzaC1yc2
+[....deleted...]
+47QMfLdEZQVXh2RgI+CQfWCiFrimq4h Your_GCP_Username
+```
+* Copy the SSH key to GCP
+  * On CGP: Hamburger Menu > Compute Engine > Metadata >SSH Keys > Edit > + Add Item
+  * Paste the contents of .ssh/gcp_ssh.pub where it says *Enter entire data key*, and Click save
+ 
+* Copy files from RaspiBolt to GCP
+Use the commands below, substituting *Your_GCP_Username* and *GCP_External_IP*
+
+```
+admin ~  ฿  sudo scp -i .ssh/gcp_ssh /home/bitcoin/.lnd/tls.cert          Your_GCP_Username@GCP_External_IP:.lnd/
+admin ~  ฿  sudo scp -i .ssh/gcp_ssh /home/bitcoin/.lnd/readonly.macaroon Your_GCP_Username@GCP_External_IP:.lnd/
+```
 
 ## Setup the VM
+* Login to your GCP VM
+  * Visit: https://console.cloud.google.com
+  * Compute Engine > VM Instances > Connect > Open in browser window
+
+* Check you have 3 files in the home directory
+
+```
+your_GCP_username@instance-1:~$ ls -l
+total 15860
+xxxxx
+```
+
 
 
