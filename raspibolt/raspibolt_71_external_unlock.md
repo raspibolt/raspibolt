@@ -11,7 +11,7 @@ To unlock a wallet, the password must be entered. If that password is stored on 
 
 |Hacker access after RaspiBolt reboot| Hacker Can ...|Hacker Can Not ...|
 |------|---|-------|
-|RaspiBolt Physical Access|Login via console|See Wallet Password, Open Wallet, Spend BTC |
+|RaspiBolt Physical Access||Login, See Wallet Password, Open Wallet, Spend BTC |
 |Remote Computer Login|See Wallet Password, Open Wallet|Spend BTC, Login to OS|
 
 # Preparation #
