@@ -22,7 +22,7 @@ To unlock a wallet, the password must be entered. If that password is stored on 
   * A static public [Fully Qualified Domain Name=FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). This can be provided using a [Dynamic DNS Service](https://en.wikipedia.org/wiki/Dynamic_DNS).
 
 # Procedure #
-## Create Free Google Clould Platform (GCP) Virtual Machine (VM) instance ##
+## Create Free Google Cloud Platform (GCP) Virtual Machine (VM) instance ##
 * Visit [https://cloud.google.com/free/](https://cloud.google.com/free/). 
   * Alternatives to GCP are:
     * [Amazon Web Services (Free)](https://aws.amazon.com/free)
@@ -32,14 +32,12 @@ To unlock a wallet, the password must be entered. If that password is stored on 
 
 Setup Billing as needed. You get US$300 free usage.
 
-* Create your VM
-
- * Click the Hamburger menu icon > Compute Engine > VM Instances
- ![GPC](images/71_GCP01.png)
- * Click *Create Instance*
- * Select Machine Type = *Micro*
- * Select Boot Disk = *Debian GNU/Linux*
- * Click *Create*
+* Click the Hamburger menu icon > Compute Engine > VM Instances
+![GPC](images/71_GCP01.png)
+* Click *Create Instance*
+* Select Machine Type = *Micro*
+* Select Boot Disk = *Debian GNU/Linux*
+* Click *Create*
  
 ![GPC](images/71_GCP02.png)
 
@@ -52,7 +50,7 @@ GCP_username@instance-1:~$
 
 ```
 
-* Note the External IP, and your GCP Username of your new VM.
+* Note the External IP, and GCP Username of your new VM.
 
 |Parameter|Your value|
 |--------------|---------------------|
@@ -63,7 +61,7 @@ GCP_username@instance-1:~$
 
 ### Install latest lncli ###
 * With a normal bowser, visit [https://github.com/lightningnetwork/lnd/releases](https://github.com/lightningnetwork/lnd/releases)
-* Copy the link to the linux-amd64 file
+* For the most recent release: Copy the link to the linux-amd64 file
 * In the GCP VM window
 ``` 
 $ wget <paste link>
@@ -170,10 +168,12 @@ admin ~  ฿  sudo chown -R admin:admin /home/admin/.lnd
 
 * Create an SSH key to use with GCP
 
-Substitute *GCP_Username* with Your GCP Username
+Substitute *GCP_Username* with Your GCP Username. 
+
+Use an empty passphrase when you see "Enter passphrase (empty for no passphrase):"
 
 ```
-admin ~  ฿  ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C GCP_Username
+admin ~  ฿  sudo ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C GCP_Username
 admin ~  ฿  cat .ssh/gcp_ssh.pub
 ssh-rsa AAAAB3NzaC1yc2
 [....deleted...]
@@ -185,6 +185,8 @@ ssh-rsa AAAAB3NzaC1yc2
  
 * Copy files from RaspiBolt to GCP
 Use the commands below, substituting *GCP_Username* and *GCP_External_IP*
+
+When you see "Are you sure you want to continue connecting (yes/no)?", answer *yes*
 
 ```
 admin ~  ฿  sudo scp -i .ssh/gcp_ssh /home/bitcoin/.lnd/tls.cert          GCP_Username@GCP_External_IP:.lnd/
@@ -213,12 +215,13 @@ total 8
 ## Check Wallet hourly, and Unlock if needed ##
 * Login to your GCP VM
 * Install expect
+
 `$ sudo apt-get install expect`
 * Create and save an lncli wrapper
 ```
 $ sudo touch run_lncli
 $ sudo chmod +x run_lncli
-$ sudo vi run_lncli
+$ sudo nano run_lncli
 ```
 Add the code below, after changing *GCP_Username*, and *my.fqdn*
 ```
@@ -229,7 +232,7 @@ Add the code below, after changing *GCP_Username*, and *my.fqdn*
 #
 # Change next 2 lines`
 #
-home_dir="/home/GCP_Username/"
+home_dir="/home/GCP_Username"
 RaspiBoltExternal="my.fqdn"
 
 ############################
@@ -274,7 +277,7 @@ Note: The cron job will run approximately every 60 mins, but not usually at 'the
 ```
 $ sudo touch /etc/cron.hourly/lnd_unlock
 $ sudo chmod +x /etc/cron.hourly/lnd_unlock
-$ sudo nano /etc/cron.hourly/lnd_unlock`
+$ sudo nano /etc/cron.hourly/lnd_unlock
 ```
 Change *GCP_Username*
 ```
