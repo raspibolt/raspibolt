@@ -9,7 +9,7 @@ This guide uses a free virtual machine on [Google Cloud Platform](https://cloud.
 To unlock a wallet, the password must be entered. If that password is stored on the RaspiBolt, the wallet funds are vulnerable to anyone with physical access to the RaspiBolt. This guide uses a remote computer to store the Password, but limits the functionality that the remote computer can perform; specifically it can not spend any wallet funds.
 
 
-|Hacker access after RaspiBolt reboot| Hacker Can|Hacker Can Not|
+|Hacker access after RaspiBolt reboot| Hacker Can ...|Hacker Can Not ...|
 |------|---|-------|
 |RaspiBolt Physical Access|Login via console|See Wallet Password, Open Wallet, Spend BTC |
 |Remote Computer Login|See Wallet Password, Open Wallet|Spend BTC, Login to OS|
@@ -45,6 +45,13 @@ Setup Billing as needed. You get US$300 free usage.
 
 ![GPC](images/71_GCP03.png)
 
+* Select Connect > Open in browser window
+
+```
+GCP_username@instance-1:~$ 
+
+```
+
 * Note the External IP, and your GCP Username of your new VM.
 
 |Parameter|Your value|
@@ -53,12 +60,7 @@ Setup Billing as needed. You get US$300 free usage.
 |GCP Username|__________________________________|
 
 
-Select Connect > *Open in browser window*
 
-```
-GCP_username@instance-1:~$ 
-
-```
 ### Install latest lncli ###
 * With a normal bowser, visit [https://github.com/lightningnetwork/lnd/releases](https://github.com/lightningnetwork/lnd/releases)
 * Copy the link to the linux-amd64 file
