@@ -1,21 +1,11 @@
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/lnd-linux-amd64-v0.4.1-beta.tar.gz
-
-$ tar -xvzf lnd-linux-amd64-v0.4.1-beta.tar.gz
-
-$ mkdir .lnd
-$ mv tls.cert .lnd
-$ mv readonly.macaroon .lnd
-
-# Introduction
-
+# Introduction #
 This guide explains how to automatically unlock the RaspiBolt LND wallet using a computer at a different location. The objective is to have a 'Lights Off' RaspiBolt that recovers automatically all the way to an unlocked wallet in the event that it is rebooted and unattended - e.g. a power failure.
 
 If the wallet remains unlocked, the lnd server is effectively offline and can not participate in the Lightning Network.
 
 This guide uses a free virtual machine on [Google Cloud Platform](https://cloud.google.com/), but any 24/7 linux server to which you have access should work. It could be another Raspberry Pi at a different location.
 
-# Security
-
+# Security #
 To unlock a wallet, the password must be entered. If that password is stored on the RaspiBolt, the wallet funds are vulnerable to anyone with physical access to the RaspiBolt. This guide uses a remote computer to store the Password, but limits the functionality that the remote computer can perform; specifically it can not spend any wallet funds.
 
 
@@ -24,17 +14,15 @@ To unlock a wallet, the password must be entered. If that password is stored on 
 |RaspiBolt Physical Access||See Wallet Password, Open Wallet, Spend BTC |
 |Remote Computer Login|See Wallet Password, Open Wallet|Spend BTC|
 
-# Preparation
-
+# Preparation #
 * You will need a (free) [Google](https://google.com) account. 
 
 * Your RaspiBolt must be behind a firewall with either:
   * A static public IP, or
   * A public [Fully Qualified Domain Name=FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). This can be provided using a [Dynamic DNS Service](https://en.wikipedia.org/wiki/Dynamic_DNS).
 
-# Procedure
-
-## Create Free Google Clould Platform (GCP) Virtual Machine (VM) instance##
+# Procedure #
+## Create Free Google Clould Platform (GCP) Virtual Machine (VM) instance ##
 * Visit [https://cloud.google.com/free/](https://cloud.google.com/free/). 
   * Alternatives to GCP are:
     * [Amazon Web Services (Free)](https://aws.amazon.com/free)
@@ -116,7 +104,7 @@ drwx------ 2 Your_GCP_Username Your_GCP_Username     4096 Apr  8 05:30 .ssh
 $ ./lncli -h
 [You should see the lncli help]
 ```
-## Modify firewall and port forwarding
+## Modify firewall and port forwarding ##
 * Add a new Port Forward for port 10009 on your router. See [ Rasberry Pi ](raspibolt_20_pi.md)
 * login as admin to your RaspiBolt
 * Allow rpc from your VM in RaspiBolt firewall
@@ -127,7 +115,7 @@ root@RaspiBolt:/home/admin# ufw allow from 35.184.120.10 to any port 10009 comme
 root@RaspiBolt:/home/admin# exit
 ```
 
-## Create new Certificate/Key file pair
+## Create new Certificate/Key file pair ##
 * login as admin to your RaspiBolt
 
 * Edit and save the lnd.conf file with the changes shown. 
@@ -218,7 +206,6 @@ total 8
 ```
 
 ## Check Wallet hourly, and Unlock if needed ##
-
 * Login to your GCP VM
 * Install expect
 `$ sudo apt-get install expect`
@@ -249,7 +236,6 @@ $home_dir/lncli --rpcserver=$RaspiBoltExternal:10009 \
 * Create and save Expect script
 
 Change *MyLndWalletPassword* and *Your_GCP_Username*.
-
 
 ```
 $ sudo nano .lnd/lnd_unlock.exp
@@ -307,4 +293,7 @@ else
  echo "Wallet UnLocked"
 fi
 ```
+
+# Test #
+xxxxx
 
