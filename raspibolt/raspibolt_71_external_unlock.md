@@ -26,30 +26,36 @@ To unlock a wallet, the password must be entered. If that password is stored on 
 
 # Preparation
 
-* You will need a (free) [Google](https://google.com) account.
-* Your RaspiBolt must be behind a firewall with either:
+* You will need a (free) [Google](https://google.com) account. 
 
-** A static public IP, or
-**  A public [Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). This can be provided using a [Dynamic DNS Service](https://en.wikipedia.org/wiki/Dynamic_DNS).
+* Your RaspiBolt must be behind a firewall with either:
+  * A static public IP, or
+  *  A public [Fully Qualified Domain Name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name). This can be provided using a [Dynamic DNS Service](https://en.wikipedia.org/wiki/Dynamic_DNS).
 
 # Procedure
 
-## Create Free Google Clould Platform (GCP) Virtual Machine (VM) instance
+## Create Free Google Clould Platform (GCP) Virtual Machine (VM) instance##
+* Visit [https://cloud.google.com/free/](https://cloud.google.com/free/). 
+  * Alternatives to GCP are:
+    * [Amazon Web Services (Free)](https://aws.amazon.com/free)
+    * [Digital Ocean](https://www.digitalocean.com/)
 
-* Visit [GCP](https://cloud.google.com/free/). 
 
-Click *Try It Free* 
+
+* Click *Try It Free* 
+
 Setup Billing as needed. You get US$300 free usage.
 
 * Create your VM
 
-![GPC](images/71_GCP01.png)
-
-Click the Hamburger menu icon > Compute Engine > VM Instances
-Click *Create Instance*
-Select Machine Type = *Micro*
-Select Boot Disk = *Debian GNU/Linux*
-Click *Create*
+ * Click the Hamburger menu icon > Compute Engine > VM Instances
+ ![GPC](images/71_GCP01.png)
+ * Click *Create Instance*
+ * Select Machine Type = *Micro*
+ * Select Boot Disk = *Debian GNU/Linux*
+ * Click *Create*
+ 
+![GPC](images/71_GCP02.png)
 
 ![GPC](images/71_GCP03.png)
 
