@@ -79,7 +79,8 @@ $ tar -xvzf *.gz
 $ cp lnd*/lncli .
 $ rm *.gz 
 $ rm -r lnd*
-$ ls -l
+$ mkdir .lnd
+$ ls -la
 $ ./lncli
 ```
 
@@ -100,8 +101,18 @@ lnd-linux-amd64-v0.4.1-beta/lnd
 instance-1:~$ cp lnd*/lncli .
 instance-1:~$ rm *.gz 
 instance-1:~$ rm -r lnd*
-instance-1:~$ ls -l
-drwxr-xr-x 2 rob_clark56 rob_clark56 4096 Apr  3 00:16 lncli
+instance-1:~ mkdir .lnd
+instance-1:~$ ls -la
+drwxr-xr-x 5 rob_clark56 rob_clark56     4096 Apr  8 07:14 .
+drwxr-xr-x 3 root              root                  4096 Apr  7 23:07 ..
+-rw-r--r-- 1 Your_GCP_Username Your_GCP_Username      220 May 15  2017 .bash_logout
+-rw-r--r-- 1 Your_GCP_Username Your_GCP_Username     3526 May 15  2017 .bashrc
+-rwxr-xr-x 1 Your_GCP_Username Your_GCP_Username 16231264 Apr  8 03:56 lncli
+drwxr-xr-x 2 Your_GCP_Username Your_GCP_Username     4096 Apr  8 07:15 .lnd
+drwxr-xr-x 2 Your_GCP_Username Your_GCP_Username     4096 Apr  8 05:10 .nano
+-rw-r--r-- 1 Your_GCP_Username Your_GCP_Username      675 May 15  2017 .profile
+drwx------ 2 Your_GCP_Username Your_GCP_Username     4096 Apr  8 05:30 .ssh
+-rw-r--r-- 1 Your_GCP_Username Your_GCP_Username      165 Apr  8 03:49 .wget-hsts
 instance-1:~$ ./lncli -h
 [You should see the lncli help]
 ```
@@ -118,17 +129,15 @@ root@RaspiBolt:/home/admin# exit
 
 ## Create new Certificate/Key file pair
 * login as admin to your RaspiBolt
-* Stop the lnd service
-```
-admin ~  ฿  sudo systemctl stop lnd
-```
 
 * Edit and save the lnd.conf file with the changes shown. 
-If you have:
-  * A static IP address: Uncomment tlsextraip, and replace *my.vm.ip.address* your External IP address.
-  * A static FQDN: Uncomment tlsextradns, and replace *my.fqdn* with the your FQDN.
+
+  * Change the *rpclisten* line as shown
+  * If you have:
+    * A static IP address: Add *tlsextraip=my.vm.ip.address* (i.e. your External IP address).
+    * A static FQDN: Add *tlsextradomain=my.fqdn* (i.e. your FQDN).
 ```
-admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
+admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf
 ```
 
 ```
@@ -137,8 +146,8 @@ admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
 rpclisten=0.0.0.0:10009
 # use tlsextraip ONLY if you have a static public IP address
 tlsextraip=my.vm.ip.address
-# use tlsextradns ONLY if you have a static public FQDN
-tlsextradns=my.fqdn
+# use tlsextradomain ONLY if you have a static public FQDN
+tlsextradomain=my.fqdn
 ```
 * Hide the existing tls.key and tls.cert files so that lnd regenerates them
 ```
@@ -148,16 +157,17 @@ admin ~  ฿  sudo mv /home/bitcoin/.lnd/tls.key   /home/bitcoin/.lnd/tls.key.ba
 
 * Restart lnd to generate new tls files
 ```
-admin ~  ฿  sudo systemctl start lnd
+admin ~  ฿  sudo systemctl restart lnd
 admin ~  ฿  openssl x509 -in /home/bitcoin/.lnd/tls.cert -text -noout
 ```
 
 You should see *my.vm.ip.address* or *my.fqdn* in the result
 ```
 X509v3 Subject Alternative Name:
-    DNS:RaspiBolt, DNS:localhost, xxxxxxxxxx
-    IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1, 
-    IP Address:192.168.0.141, IP Address:FE80:0:0:0:2481:BA24:A7E5:3DA1
+    DNS:RaspiBolt, DNS:localhost, DNS:my.fqdn, 
+    IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1, IP Address:192.168.0.141, 
+    IP Address:FE80:0:0:0:2481:BA24:A7E5:3DA1
+
 ```
 *  Copy the TLS cert to user admin 
 ```
@@ -192,12 +202,18 @@ admin ~  ฿  sudo scp -i .ssh/gcp_ssh /home/bitcoin/.lnd/readonly.macaroon Your
   * Visit: https://console.cloud.google.com
   * Compute Engine > VM Instances > Connect > Open in browser window
 
-* Check you have 3 files in the home directory
+* Check you have these 3 files
 
+`Your_GCP_Username@instance-1:~$ ls -l . .lnd`
 ```
-your_GCP_username@instance-1:~$ ls -l
-total 15860
-xxxxx
+.:
+total 15852
+-rwxr-xr-x 1 Your_GCP_Username Your_GCP_Username 16231264 Apr  8 03:56 lncli
+
+.lnd:
+total 8
+-rw-r--r-- 1 Your_GCP_Username Your_GCP_Username 183 Apr  8 07:19 readonly.macaroon
+-rw-r--r-- 1 Your_GCP_Username Your_GCP_Username 741 Apr  8 07:15 tls.cert
 ```
 
 
