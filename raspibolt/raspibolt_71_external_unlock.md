@@ -37,19 +37,28 @@ To unlock a wallet, the password must be entered. If that password is stored on 
 ## Create Free Google Clould Platform (GCP) Virtual Machine (VM) instance
 
 * Visit [GCP](https://cloud.google.com/free/). 
+
 Click *Try It Free* 
 Setup Billing as needed. You get US$300 free usage.
 
 * Create your VM
-Add image here
+
+![GPC](images/71_GCP01.png)
+
 Click the Hamburger menu icon > Compute Engine > VM Instances
 Click *Create Instance*
 Select Machine Type = *Micro*
 Select Boot Disk = *Debian GNU/Linux*
 Click *Create*
+
+![GPC](images/71_GCP03.png)
+
 Note the External IP of your new VM
-|VM External IP|                     |
+
+|VM External IP|__________________________________|
 |--------------|---------------------|
+
+
 
 Select Connect > *Open in browser window*
 
