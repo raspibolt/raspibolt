@@ -303,5 +303,16 @@ fi
 ```
 
 # Test #
-xxxxx
+On GCP:
+
+```
+$ ./run_lncli getinfo
+[lncli] Wallet is encrypted. Please unlock using 'lncli unlock', or set password using 'lncli create' if this is the first time starting lnd.
+```
+If you see the above, it confirms the communication from your GCP instance to your RaspiBolt is working.
+
+Repeat the above command every 10 mins for at max. 1 hour, until you see:
+```
+
+```
 
