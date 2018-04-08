@@ -1,5 +1,5 @@
 # Introduction #
-This guide explains how to automatically unlock the RaspiBolt LND wallet using a computer at a different location. The objective is to have a 'Lights Off' RaspiBolt that recovers automatically all the way to an unlocked wallet in the event that it has rebooted and unattended - e.g. a power failure.
+This guide explains how to automatically unlock the RaspiBolt LND wallet using a computer at a different location. The objective is to have a 'Lights Off' RaspiBolt that recovers automatically all the way to an unlocked wallet in the event that it has rebooted and is unattended - e.g. a power failure.
 
 If the wallet remains unlocked, the lnd server is effectively offline and can not participate in the Lightning Network.
 
