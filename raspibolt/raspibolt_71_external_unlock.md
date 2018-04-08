@@ -86,7 +86,7 @@ $ ./lncli
 
 **Example**
 ```
-instance-1:~$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/lnd-linux-amd64-v0.4.1-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/lnd-linux-amd64-v0.4.1-beta.tar.gz
 ...
 HTTP request sent, awaiting response... 200 OK
 Length: 14064932 (13M) [application/octet-stream]
@@ -94,16 +94,16 @@ Saving to: ‘lnd-linux-amd64-v0.4.1-beta.tar.gz’
 lnd-linux-amd64-v0.4.1-beta. 100%[=============================================>]  13.41M  7.66MB/s    in 1.8s    
 2018-04-08 03:49:56 (7.66 MB/s) - ‘lnd-linux-amd64-v0.4.1-beta.tar.gz’ saved [14064932/14064932]
 
-instance-1:~$ tar -xvzf *.gz
+$ tar -xvzf *.gz
 lnd-linux-amd64-v0.4.1-beta/
 lnd-linux-amd64-v0.4.1-beta/lncli
 lnd-linux-amd64-v0.4.1-beta/lnd
-instance-1:~$ cp lnd*/lncli .
-instance-1:~$ rm *.gz 
-instance-1:~$ rm -r lnd*
-instance-1:~ mkdir .lnd
-instance-1:~$ ls -la
-drwxr-xr-x 5 rob_clark56 rob_clark56     4096 Apr  8 07:14 .
+$ cp lnd*/lncli .
+$ rm *.gz 
+$ rm -r lnd*
+$ mkdir .lnd
+$ ls -la
+drwxr-xr-x 5 Your_GCP_Username6 Your_GCP_Username    4096 Apr  8 07:14 .
 drwxr-xr-x 3 root              root                  4096 Apr  7 23:07 ..
 -rw-r--r-- 1 Your_GCP_Username Your_GCP_Username      220 May 15  2017 .bash_logout
 -rw-r--r-- 1 Your_GCP_Username Your_GCP_Username     3526 May 15  2017 .bashrc
@@ -113,7 +113,7 @@ drwxr-xr-x 2 Your_GCP_Username Your_GCP_Username     4096 Apr  8 05:10 .nano
 -rw-r--r-- 1 Your_GCP_Username Your_GCP_Username      675 May 15  2017 .profile
 drwx------ 2 Your_GCP_Username Your_GCP_Username     4096 Apr  8 05:30 .ssh
 -rw-r--r-- 1 Your_GCP_Username Your_GCP_Username      165 Apr  8 03:49 .wget-hsts
-instance-1:~$ ./lncli -h
+$ ./lncli -h
 [You should see the lncli help]
 ```
 ## Modify firewall and port forwarding
@@ -176,17 +176,18 @@ admin ~  ฿  sudo chown -R admin:admin /home/admin/.lnd
 ```
 
 * Create an SSH key to use with GCP
+
 Substitute *Your_GCP_Username* with Your GCP Username
 
-`admin ~  ฿  ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C Your_GCP_Username`
-``` 
+```
+admin ~  ฿  ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C Your_GCP_Username
 admin ~  ฿  cat .ssh/gcp_ssh.pub
 ssh-rsa AAAAB3NzaC1yc2
 [....deleted...]
 47QMfLdEZQVXh2RgI+CQfWCiFrimq4h Your_GCP_Username
 ```
 * Copy the SSH key to GCP
-  * On CGP: Hamburger Menu > Compute Engine > Metadata >SSH Keys > Edit > + Add Item
+  * On GCP: Hamburger Menu > Compute Engine > Metadata >SSH Keys > Edit > + Add Item
   * Paste the contents of .ssh/gcp_ssh.pub where it says *Enter entire data key*, and Click save
  
 * Copy files from RaspiBolt to GCP
@@ -197,15 +198,15 @@ admin ~  ฿  sudo scp -i .ssh/gcp_ssh /home/bitcoin/.lnd/tls.cert          Your
 admin ~  ฿  sudo scp -i .ssh/gcp_ssh /home/bitcoin/.lnd/readonly.macaroon Your_GCP_Username@GCP_External_IP:.lnd/
 ```
 
-## Setup the VM
+## Setup the VM ##
 * Login to your GCP VM
   * Visit: https://console.cloud.google.com
   * Compute Engine > VM Instances > Connect > Open in browser window
 
 * Check you have these 3 files
 
-`Your_GCP_Username@instance-1:~$ ls -l . .lnd`
 ```
+$ ls -l . .lnd
 .:
 total 15852
 -rwxr-xr-x 1 Your_GCP_Username Your_GCP_Username 16231264 Apr  8 03:56 lncli
@@ -216,5 +217,94 @@ total 8
 -rw-r--r-- 1 Your_GCP_Username Your_GCP_Username 741 Apr  8 07:15 tls.cert
 ```
 
+## Check Wallet hourly, and Unlock if needed ##
 
+* Login to your GCP VM
+* Install expect
+`$ sudo apt-get install expect`
+* Create and save an lncli wrapper
+```
+$ sudo touch run_lncli
+$ sudo chmod +x run_lncli
+$ sudo vi run_lncli
+```
+Add the code below, after changing *Your_GCP_Username*, and *my.fqdn*
+```
+#!/bin/bash
+# Wrapper for lncli executable
+# <home_dir>/run_lncli
+
+#
+# Change next 2 lines`
+#
+home_dir="/home/Your_GCP_Username/"
+RaspiBoltExternal="my.fqdn"
+
+############################
+$home_dir/lncli --rpcserver=$RaspiBoltExternal:10009 \
+                --macaroonpath=$home_dir/.lnd/readonly.macaroon  \
+                --lnddir=$home_dir/.lnd \
+                $1
+```
+* Create and save Expect script
+
+Change *MyLndWalletPassword* and *Your_GCP_Username*.
+
+
+```
+$ sudo nano .lnd/lnd_unlock.exp
+
+#!/usr/bin/expect
+#
+# File invoked by /ect/cron.hourly to unlock the lnd wallet
+# <home_dir>/.lnd/lnd_unlock.exp
+
+#
+# Change next 2 lines
+#
+set walletPW MyLndWalletPassword
+set home_dir "/home/Your_GCP_Username"
+
+##################################
+set lncli "$home_dir/run_lncli"
+set timeout 40
+spawn $lncli unlock
+log_user 0
+expect "Input wallet password: "
+send "$walletPW\r"
+log_user 1
+expect "lnd successfully unlocked!"
+```
+
+* Create and save hourly cron job. Edit the home_dir 
+
+Note: The cron job will run approximately every 60 mins, but not usually at 'the top of the hour'.
+
+```
+$ sudo touch /etc/cron.hourly/lnd_unlock
+$ sudo chmod +x /etc/cron.hourly/lnd_unlock
+$ sudo nano /etc/cron.hourly/lnd_unlock`
+```
+Change *Your_GCP_Username*
+```
+#!/bin/bash
+# RaspiBolt LND: Script to unlock wallet
+# /etc/cron.hourly/lnd_unlock
+
+#
+# Change next 1 line
+#
+home_dir="/home/Your_GCP_Username"
+
+################################
+lncli="$home_dir/run_lncli"
+$lncli getinfo  2>&1 | grep "identity_pubkey" >/dev/null
+wallet_unlocked=$?
+if [ "$wallet_unlocked" -eq 1 ] ; then
+ echo "Wallet Locked"
+ /usr/bin/expect $home_dir/.lnd/lnd_unlock.exp  2>&1 > /dev/null
+else
+ echo "Wallet UnLocked"
+fi
+```
 
