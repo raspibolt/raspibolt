@@ -40,8 +40,6 @@ To unlock a wallet, the password must be entered. If that password is stored on 
     * [Amazon Web Services (Free)](https://aws.amazon.com/free)
     * [Digital Ocean](https://www.digitalocean.com/)
 
-
-
 * Click *Try It Free* 
 
 Setup Billing as needed. You get US$300 free usage.
@@ -64,17 +62,101 @@ Note the External IP of your new VM
 |VM External IP|__________________________________|
 |--------------|---------------------|
 
-
-
 Select Connect > *Open in browser window*
 
-Add image 02.png
+### Install latest lncli ###
+* With a normal bowser, visit [https://github.com/lightningnetwork/lnd/releases](https://github.com/lightningnetwork/lnd/releases)
+* Copy the link to the linux-amd64 file
+* In the GCP VM window
+``` 
+$ wget <paste link>
+$ tar -xvzf *.gz
+$ cp lnd*/lncli .
+$ rm *.gz 
+$ rm -r lnd*
+$ ls -l
+$ ./lncli
+```
 
+**Example**
+```
+instance-1:~$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/lnd-linux-amd64-v0.4.1-beta.tar.gz
+...
+HTTP request sent, awaiting response... 200 OK
+Length: 14064932 (13M) [application/octet-stream]
+Saving to: ‘lnd-linux-amd64-v0.4.1-beta.tar.gz’
+lnd-linux-amd64-v0.4.1-beta. 100%[=============================================>]  13.41M  7.66MB/s    in 1.8s    
+2018-04-08 03:49:56 (7.66 MB/s) - ‘lnd-linux-amd64-v0.4.1-beta.tar.gz’ saved [14064932/14064932]
+
+instance-1:~$ tar -xvzf *.gz
+lnd-linux-amd64-v0.4.1-beta/
+lnd-linux-amd64-v0.4.1-beta/lncli
+lnd-linux-amd64-v0.4.1-beta/lnd
+instance-1:~$ cp lnd*/lncli .
+instance-1:~$ rm *.gz 
+instance-1:~$ rm -r lnd*
+instance-1:~$ ls -l
+drwxr-xr-x 2 rob_clark56 rob_clark56 4096 Apr  3 00:16 lncli
+instance-1:~$ ./lncli -h
+[You should see the lncli help]
+```
+## Modify firewall and port forwarding
+* xxxxx router
+* login as admin to your RaspiBolt
+* Allow rpc from your VM in RaspiBolt firewall
+
+```
+admin ~  ฿  sudo su
+root@RaspiBolt:/home/admin# ufw allow from 35.184.120.10 to any port 10009 comment 'allow lnd rpc from GCP VM'
+root@RaspiBolt:/home/admin# exit
+```
 
 
 ## Create new Certificate/Key file pair
+* login as admin to your RaspiBolt
+* Stop the lnd service
+```
+admin ~  ฿  sudo systemctl stop lnd
+```
 
-## Update lnd to use new Certificate/Key files
+* Edit and save the lnd.conf file with the changes shown. Replace *my.vm.ip.address* with the External IP addess of your GCP VM.
+```
+admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
+```
+
+```
+[Application Options]
+#rpclisten=localhost:10009
+rpclisten=0.0.0.0:10009
+tlsextraip=my.vm.ip.address
+```
+* Hide the existing tls.key and tls.cert files so that lnd regenerates them
+```
+admin ~  ฿  sudo mv /home/bitcoin/.lnd/tls.cert  /home/bitcoin/.lnd/tls.cert.backup
+admin ~  ฿  sudo mv /home/bitcoin/.lnd/tls.key   /home/bitcoin/.lnd/tls.key.backup
+``` 
+* Restart lnd to generate new tls files
+```
+admin ~  ฿  sudo systemctl start lnd
+admin ~  ฿  openssl x509 -in /home/bitcoin/.lnd/tls.cert -text -noout
+```
+You should see *my.vm.ip.address* in the result
+```
+X509v3 Subject Alternative Name:
+    DNS:RaspiBolt, DNS:localhost, 
+    IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1, 
+    IP Address:192.168.0.141, IP Address:FE80:0:0:0:2481:BA24:A7E5:3DA1, 
+    IP Address:35.184.120.10
+```
+
+
+
+
+## Copy TLS cert to user admin 
+```
+admin ~  ฿  sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
+admin ~  ฿  sudo chown -R admin:admin /home/admin/.lnd
+```
 
 
 
