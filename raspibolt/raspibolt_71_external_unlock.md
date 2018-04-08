@@ -184,7 +184,7 @@ ssh-rsa AAAAB3NzaC1yc2
   * Paste the contents of .ssh/gcp_ssh.pub where it says *Enter entire data key*, and Click save
  
 * Copy files from RaspiBolt to GCP
-Use the commands below, substituting *GCP_Username* and *GCP_External_IP*
+  * Use the commands below, substituting *GCP_Username* and *GCP_External_IP*
 
 When you see "Are you sure you want to continue connecting (yes/no)?", answer *yes*
 
