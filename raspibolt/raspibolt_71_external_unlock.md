@@ -192,6 +192,11 @@ When you see "Are you sure you want to continue connecting (yes/no)?", answer *y
 admin ~  ฿  sudo scp -i .ssh/gcp_ssh /home/bitcoin/.lnd/tls.cert          GCP_Username@GCP_External_IP:.lnd/
 admin ~  ฿  sudo scp -i .ssh/gcp_ssh /home/bitcoin/.lnd/readonly.macaroon GCP_Username@GCP_External_IP:.lnd/
 ```
+* Delete the GCP ssh keys
+```
+admin ~  ฿  sudo rm .ssh/gcp_ssh
+admin ~  ฿  sudo rm .ssh/gcp_ssh.pub
+```
 
 ## Setup the VM ##
 * Login to your GCP VM
