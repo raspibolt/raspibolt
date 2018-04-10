@@ -34,7 +34,7 @@ rpclisten=0.0.0.0:10009
 
 - Use your browser to visit https://github.com/lightningnetwork/lnd/releases
 
-- Download the file for your OS. For Windows10 it will generally be lnd-windows-amd64-vx.x.x-beta.zip
+- Download the file for your OS. For Windows10 it will generally be lnd-windows-amd64-vx.x.x.zip
   
 - Open the compressed file and extract the lncli application (e.g. lncli.exe) to your desktop.
 ![Zip File](images/60_remote_zip.png) 
