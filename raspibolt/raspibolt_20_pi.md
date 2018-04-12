@@ -282,11 +282,13 @@ CONF_SWAPFILE=/mnt/hdd/swapfile
 CONF_SWAPSIZE=1000
 ```
 
+* Delete the old swap file  
+  `$ sudo dphys-swapfile swapoff`
+  `$ sudo rm /var/swap`
+
 * Enable new swap configuration  
   `$ sudo dphys-swapfile setup`  
   `$ sudo dphys-swapfile swapon`
-* Delete the old swap file  
-  `$ sudo rm /var/swap`
 
 ## Hardening your Pi
 
