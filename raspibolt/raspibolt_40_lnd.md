@@ -19,11 +19,17 @@ To announce our public IP address to the Lightning network, we first need to get
 # /usr/local/bin/getpublicip.sh
 
 echo 'getpublicip.sh started, writing public IP address every 10 minutes into /run/publicip'
-while [ 0 ];
-    do
-    printf "PUBLICIP=$(curl -vv ipinfo.io/ip 2> /run/publicip.log)\n" > /run/publicip;
-    sleep 600
+while [ 0 ];do
+ source /run/publicip
+ CURRENTIP=$(curl ipinfo.io/ip 2> /run/publicip.log )
+ echo  PUBLICIP=$CURRENTIP > /run/publicip;
+ if [ "$CURRENTIP" != "$PUBLICIP" ];then
+  echo Restarting lnd.service New external IP = $CURRENTIP
+  sudo /bin/systemctl restart lnd.service
+ fi
+ sleep 600
 done;
+
 ```
 * make it executable  
   `$ sudo chmod +x /usr/local/bin/getpublicip.sh`
