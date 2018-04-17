@@ -18,6 +18,8 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 [![MotD system overview](images/60_status_overview.png)](raspibolt_61_system-overview.md)
 
+  
+
 ## [**Pimp the command line**](raspibolt_62_commandline.md)
 
 *Difficulty: easy*
@@ -25,6 +27,16 @@ Your RaspiBolt will greet you with a quick system summary on login:
 Make your command line prompt shine with a golden ฿ and use more colors overall:
 
 [![Pimped prompt](images/60_pimp_prompt_result.png)](raspibolt_62_commandline.md)
+
+  
+
+## [**Use `lncli` on a different computer**](raspibolt_66_remote_lncli.md)
+
+*Difficulty: easy*
+
+Control your Lightning node from a different computer within you network, eg. from a Windows machine.
+
+  
 
 ## [**Electrum Personal Server**](raspibolt_64_electrum.md)
 
@@ -34,6 +46,8 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 
 [![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md)
 
+  
+
 
 ## **Email alerts** (upcoming)
 
@@ -41,12 +55,16 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 
 Let your RaspiBolt inform you by email in case the system or a service is restarted. As you need to manually unlock the LND wallet, this can be very helpful.
 
+  
+
 ## [**System recovery**](raspibolt_65_system-recovery.md)
 
 Difficulty: easy
 
 In case your SD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand. It's not a full backup solution, but allows a system recovery.
 
+------
 
+Next: [FAQ >>](raspibolt_faq.md)
 
 
