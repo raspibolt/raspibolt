@@ -9,6 +9,10 @@
 We will download and install the LND (Lightning Network Daemon) by [Lightning Labs](http://lightning.engineering/). Check out their [Github repository](https://github.com/lightningnetwork/lnd/blob/master/README.md) for a wealth of information about their open-source project and Lightning in general.
 
 ### Public IP script
+
+> *Note: this is a temporary solution, as LND is currently working on adding this functionality*  
+> *https://github.com/lightningnetwork/lnd/pull/1109*
+
 To announce our public IP address to the Lightning network, we first need to get our address from a source outside our network. As user “admin”, create the following script that checks the IP every 10 minutes and stores it locally.
 
 * As user "admin", create the following script, save and exit  
