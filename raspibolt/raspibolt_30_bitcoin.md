@@ -128,7 +128,7 @@ User=bitcoin
 Group=bitcoin
 Type=forking
 PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
-ExecStart=/usr/local/bin/bitcoind -pid=/home/bitcoin/.bitcoin/bitcoind.pid
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=/home/bitcoin/.bitcoin/bitcoin.conf -pid=/home/bitcoin/.bitcoin/bitcoind.pid
 KillMode=process
 Restart=always
 TimeoutSec=120
