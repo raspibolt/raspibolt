@@ -15,7 +15,9 @@ At the moment, Bitcoin is more of a store of value and not really suited for sma
 
 This is where the **Lightning Network** comes in. As one of several new blockchain “extensions”, its promise is to accommodate nearly unlimited transactions, with instant payment confirmation, minimal fees and increased privacy. It sounds almost too good to be true, but in contrast to ubiquitous ICO with their own token, this technology is well researched, committed to the cypherpunk open-source ethos and leverages the solid underpinnings of Bitcoin.
 
-To preserve the decentralized nature of this monetary system, I think it is important that everybody can run their own trustless Bitcoin full node, preferably on cheap hardware like a Raspberry Pi.
+Bitcoin's security model requires both full nodes and miners to be decentralized. While the full-node-using economy must be decentralized to stop fake bitcoins that do not abide to consensus from being accepted as payments, the miners must be  decentralized to stop censorship of transactions and to make  transactions irreversible. 
+
+To preserve the decentralized nature of this monetary system, I think it is important that everybody can run their own trustless Bitcoin full node, preferably on cheap hardware like a Raspberry Pi. If Bitcoin is digital gold, then a full node wallet is your own personal goldsmith who checks for you that received payments are genuine. 
 
 ![RaspiBolt Logo](images/00_raspibolt_banner_440.png)
 
