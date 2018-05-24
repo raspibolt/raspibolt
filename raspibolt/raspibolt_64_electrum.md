@@ -29,7 +29,7 @@ Before using this setup, please familiarize yourself with all components by sett
   `$ cd`
 * Clone the EPS GitHub repository  
   `$ git clone https://github.com/chris-belcher/electrum-personal-server`
-* To get the latest stable release, check the EPS [releases page](https://github.com/chris-belcher/electrum-personal-server/releases), list the available tags of the repository and check out the desired tag  (you might want to use a newer one than `v0.1.1`, if available) 
+* To get the latest stable release, check the EPS [releases page](https://github.com/chris-belcher/electrum-personal-server/releases), list the available tags of the repository and check out the desired tag  (you might want to use a newer one than `v0.1.1`, if available)  
   `$ cd electrum-personal-server`   
   `$ git tag -l`  
   `$ git checkout tags/v0.1.1`
