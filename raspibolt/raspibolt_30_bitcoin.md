@@ -56,7 +56,7 @@ We download the latest Bitcoin Core binaries (the application) and compare the f
 ### Prepare Bitcoin Core directory
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory  `/home/bitcoin/.bitcoin`. Instead of creating a real directory, we create a link that points to a directory on the external hard disk. 
 
-* Change to user “bitcoin” and enter the password.  
+* While logged in with user "admin", change to user “bitcoin”  
   `$ sudo su bitcoin`
 
 * We add a symbolic link that points to the external hard disk.  
