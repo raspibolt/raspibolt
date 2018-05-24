@@ -168,11 +168,10 @@ It is important to keep the system up-to-date with security patches and applicat
 ### Adding main user "admin"
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
 
-* Create the new user and add it to the group "sudo"  
+* Create the new user, set password [A] and add it to the group "sudo"  
   `$ sudo adduser admin`  
   `$ sudo adduser admin sudo` 
-* Set the password to your password [A] and set the standard shell (command line interface) to "bash"  
-  `$ sudo passwd admin`  
+* Set the standard shell (command line interface) to "bash" (this prevents some potential issues)
   `$ sudo chsh admin -s /bin/bash`
 * And while you’re at it, change the password of the “root” admin user to your password [A].  
   `$ sudo passwd root`
