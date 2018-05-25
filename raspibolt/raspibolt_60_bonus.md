@@ -56,6 +56,14 @@ In case your SD card gets corrupted or you brick your node, it's handy to have a
 
 
 
+## [Additional scripts: show balance & channels](raspibolt_67_additional-scripts.md)
+
+Difficulty: easy
+
+These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
+
+
+
 ------
 
 Next: [FAQ >>](raspibolt_faq.md)
