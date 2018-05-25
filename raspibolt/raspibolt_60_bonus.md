@@ -46,22 +46,15 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 
 [![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md)
 
-  
-
-
-## **Email alerts** (upcoming)
-
-*Difficulty: intermediate*
-
-Let your RaspiBolt inform you by email in case the system or a service is restarted. As you need to manually unlock the LND wallet, this can be very helpful.
-
-  
+   
 
 ## [**System recovery**](raspibolt_65_system-recovery.md)
 
 Difficulty: easy
 
 In case your SD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand. It's not a full backup solution, but allows a system recovery.
+
+
 
 ------
 
