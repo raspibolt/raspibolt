@@ -30,7 +30,7 @@ network. It's trivial to open it to the internet, but again, do this **at your o
 rpclisten=0.0.0.0:10009
 ``` 
 
-* Open port 10009 for connections from within the local network  
+* Open port 10009 for connections from within the local network (you might need to adjust the ip mask, see [more details](https://github.com/Stadicus/guides/blob/shango/raspibolt/raspibolt_20_pi.md#hardening-your-pi))  
   `$ sudo ufw allow from 192.168.0.0/24 to any port 10009 comment 'allow LND grpc from local LAN'`  
   `$ sudo ufw enable`  
   `$ sudo ufw status`
