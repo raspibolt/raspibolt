@@ -16,7 +16,7 @@ As user "admin", download the scripts, make them executable and copy them to the
 
 ### Balance
 
-![](images\60_balance.png)
+![](images/60_balance.png)
 
 ```
 $ cd /home/admin/download/
@@ -29,7 +29,7 @@ $ balance
 
 ### Channels
 
-![](images\60_channels.png)
+![](images/60_channels.png)
 
 ```
 ...script not ready yet...

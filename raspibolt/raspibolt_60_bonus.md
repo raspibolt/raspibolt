@@ -60,6 +60,14 @@ Difficulty: easy
 
 These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
 
+## [Additional scripts: show balance & channels](raspibolt_67_additional-scripts.md)
+
+Difficulty: easy
+
+These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
+
+
+
 ------
 
 Next: [FAQ >>](raspibolt_faq.md)

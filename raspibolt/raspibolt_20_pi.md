@@ -7,7 +7,7 @@
 # Raspberry Pi
 
 ## Write down your passwords
-You will need several passwords and I find it easiest to write them all down in the beginning, instead of bumping into them throughout the guide. They should be unique and very secure, at least 12 characters in length. Do not use uncommon special characters, blanks or quotes (‘ or “).
+You will need several passwords and I find it easiest to write them all down in the beginning, instead of bumping into them throughout the guide. They should be unique and very secure, at least 12 characters in length. Do **not use uncommon special characters**, spaces or quotes (‘ or “).
 ```
 [ A ] Master user password
 [ B ] Bitcoin RPC password
