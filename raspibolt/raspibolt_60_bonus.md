@@ -18,7 +18,21 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 [![MotD system overview](images/60_status_overview.png)](raspibolt_61_system-overview.md)
 
-  
+## [**Electrum Personal Server**](raspibolt_64_electrum.md)
+
+*Difficulty: intermediate*
+
+The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain transactions. Together with the Electrum wallet, it works even with your Ledger or Trezor hardware wallet.
+
+[![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md)
+
+## [**Shango Mobile Wallet**](raspibolt_68_shango.md)
+
+*Difficulty: intermediate*
+
+The iOS & Android app Shango provides a neat interface for the RaspiBolt, to manage peers & channels, make payments and create invoices.
+
+[![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
 
 ## [**Pimp the command line**](raspibolt_62_commandline.md)
 
@@ -28,25 +42,11 @@ Make your command line prompt shine with a golden ฿ and use more colors overal
 
 [![Pimped prompt](images/60_pimp_prompt_result.png)](raspibolt_62_commandline.md)
 
-  
-
 ## [**Use `lncli` on a different computer**](raspibolt_66_remote_lncli.md)
 
 *Difficulty: easy*
 
 Control your Lightning node from a different computer within you network, eg. from a Windows machine.
-
-  
-
-## [**Electrum Personal Server**](raspibolt_64_electrum.md)
-
-*Difficulty: intermediate*
-
-The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain transactions. Together with the Electrum wallet, it works even with your Ledger or Trezor hardware wallet.
-
-[![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md)
-
-   
 
 ## [**System recovery**](raspibolt_65_system-recovery.md)
 
@@ -54,15 +54,11 @@ Difficulty: easy
 
 In case your SD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand. It's not a full backup solution, but allows a system recovery.
 
-
-
 ## [Additional scripts: show balance & channels](raspibolt_67_additional-scripts.md)
 
 Difficulty: easy
 
 These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
-
-
 
 ------
 
