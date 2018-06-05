@@ -20,10 +20,11 @@ As user "admin", download the scripts, make them executable and copy them to the
 
 ```
 $ cd /home/admin/download/
-$ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/balance
-$ chmod +x balance
-$ sudo cp balance /usr/local/bin
-$ balance
+$ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/lnbalance
+$ chmod +x lnbalance
+$ sudo cp lnbalance /usr/local/bin
+$ cd
+$ lnbalance
 ```
 
 
@@ -32,7 +33,12 @@ $ balance
 ![](images/60_channels.png)
 
 ```
-...script not ready yet...
+$ cd /home/admin/download/
+$ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/lnchannels
+$ chmod +x lnchannels
+$ sudo cp lnchannels /usr/local/bin
+$ cd
+$ lnchannels
 ```
 ------
 
