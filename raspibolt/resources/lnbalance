@@ -2,14 +2,14 @@
 # RaspiBolt channel balance display, by robclark56
 
 # make executable & copy to 
-# /usr/local/bin/raspibolt_balance
-# root must be able to execute bitcoin-cli and lncli
+# /usr/local/bin/lnbalance
+# current user must be able to execute bitcoin-cli and lncli
 
 # Usage
-# $ raspibolt_balance            to display lnd mainnet status
-# $ raspibolt_balance --testnet  to display lnd testnet status
+# $ lnbalance            to display lnd mainnet status
+# $ lnbalance --testnet  to display lnd testnet status
 
-# Set Default (mainnet)
+# Set default (mainnet)
 lncli='/usr/local/bin/lncli'
 lnd_pid=$(systemctl show -p MainPID lnd | awk -F"=" '{print $2}')
 chain='main'
