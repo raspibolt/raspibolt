@@ -46,3 +46,43 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 * Lightning Network resources: [lnroute.com](http://lnroute.com)
 
 
+### How to upgrade LND bin ? 
+
+* As ADMIN user, stop lnd service  
+  `$ sudo systemctl stop lnd`
+
+* Delete the macaroon files in your LND directory (This needs to be done as the upgrade provides a new macaroon (see related issue lightningnetwork/lnd#921), otherwise you can no longer create invoices.)  
+  `$ sudo rm /home/bitcoin/.lnd/*.macaroon`
+
+* Verify and install the LND last binaries
+```
+$ cd /home/admin/download
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.2-beta/lnd-linux-arm-v0.4.2-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.2-beta/manifest-v0.4.2-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.2-beta/manifest-v0.4.2-beta.txt.sig
+
+$ sha256sum --check manifest-v0.4.2-beta.txt --ignore-missing
+> lnd-linux-arm-v0.4.2-beta.tar.gz: OK
+
+$ gpg --verify manifest-v0.4.2-beta.txt.sig
+> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
+> Primary key fingerprint: 6531 7176 B685 7F98 834E  DBE8 964E A263 DD63 7C21
+
+$ tar -xzf lnd-linux-arm-v0.4.2-beta.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm-v0.4.2-beta/*
+$ lnd --version
+> lnd version 0.4.2-beta commit=7cf5ebe2650b6798182e10be198c7ffc1f1d6e19
+```
+* Restart service  
+  `$ sudo systemctl start lnd`
+
+* Start a "bitcoin" user session and unlock your wallet  
+  `$ sudo su bitcoin`
+  `$ lncli unlock`
+  `$ exit`
+
+* Copy permission files and TLS cert to user "admin" to use `lncli`  
+  `$ mkdir /home/admin/.lnd`  
+  `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
+  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
+  `$ sudo chown -R admin:admin /home/admin/.lnd/ `   
