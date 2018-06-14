@@ -76,13 +76,12 @@ $ lnd --version
 * Restart service  
   `$ sudo systemctl start lnd`
 
-* Start a "bitcoin" user session and unlock your wallet  
-  `$ sudo su bitcoin`
-  `$ lncli unlock`
+* Start a "bitcoin" user session and unlock your wallet    
+  `$ sudo su bitcoin`  
+  `$ lncli unlock`  
   `$ exit`
 
-* Copy permission files and TLS cert to user "admin" to use `lncli`  
-  `$ mkdir /home/admin/.lnd`  
+* Copy permission files and TLS cert to user "admin" to use `lncli`   
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
   `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
   `$ sudo chown -R admin:admin /home/admin/.lnd/ `   
