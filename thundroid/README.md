@@ -2,6 +2,11 @@
 
 ![img](images/thundroid_banner.jpg)
 
+> This article was first published in the [Odroid Magazine June 2018](https://magazine.odroid.com/article/thundroid-perfect-bitcoin-lightning-node/) issue. 
+>
+> Part 1: Setup of Bitcoin & Lightning on testnet
+> Part 2: Move to Bitcoin mainnet & outlook (not published yet)
+
 ## Introduction
 
 Bitcoin is a native digital currency for the internet age. It can be thought of as just another international currency, but without a native country, so it defies borders, trade policies and arbitrary inflation. In the 2008 [whitepaper](https://bitcoin.org/bitcoin.pdf) by the pseudonymous Satoshi Nakamoto it is described as:
