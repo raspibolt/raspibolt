@@ -4,7 +4,7 @@
 
 > This article was first published in the [Odroid Magazine June 2018](https://magazine.odroid.com/article/thundroid-perfect-bitcoin-lightning-node/) issue. 
 >
-> Part 1: Setup of Bitcoin & Lightning on testnet
+> Part 1: Setup of Bitcoin & Lightning on testnet  
 > Part 2: Move to Bitcoin mainnet & outlook (not published yet)
 
 ## Introduction
