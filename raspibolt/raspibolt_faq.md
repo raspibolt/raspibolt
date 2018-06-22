@@ -51,7 +51,7 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 * As ADMIN user, stop lnd service  
   `$ sudo systemctl stop lnd`
 
-* Delete the macaroon files in your LND directory (This needs to be done as the upgrade provides a new macaroon (see related issue lightningnetwork/lnd#921), otherwise you can no longer create invoices.)  
+* Only if upgrading from version v0.4.0-beta or lower, delete the macaroon files. LND will create new and additional ones (otherwise you might expect [this issue](https://github.com/lightningnetwork/lnd/issues/921)) and can no longer create invoices).  
   `$ sudo rm /home/bitcoin/.lnd/*.macaroon`
 
 * Verify and install the LND last binaries
