@@ -48,9 +48,9 @@ rpclisten=0.0.0.0:10009
 * Start app & go to "Settings" / "Switch LND Server"  
 * Enter your IP address with the port 10009, eg. `192.168.0.20:10009`
 * On your RaspiBolt, enter the following command and scan the resulting QR code for "Server Macaroon" in the app  
-  `$ qrencode $(xxd -p -c2000 admin.macaroon) -t ANSIUTF8`  
+  `$ qrencode $(xxd -p -c3000 admin.macaroon) -t ANSIUTF8`  
 * On your RaspiBolt, enter the following command and scan the resulting QR code for "Server TLS Cert" in the app  
-  `$ qrencode $(xxd -p -c2000 tls.cert) -t ANSIUTF8`
+  `$ qrencode $(xxd -p -c3000 tls.cert) -t ANSIUTF8`
 * Click on "Connect" and the app should sync with your RaspiBolt.
   
 ### Disclaimer
