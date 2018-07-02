@@ -85,5 +85,11 @@ for (( i=0; i<=$(( $total -1 )); i++ ));do
  total_remote=$(( ${total_remote} + ${a_remote_balance[$i]} ))
 done
 printf "${color_yellow}%s\n" "${horiz_line}"
-printf "Totals%14s %13s %6s %12s %12s\n" "${total} ch" "${total_capacity}" "${total_fee}" "${total_local}" "${total_remote}"
+printf "Totals%14s %13s %6s %12s %12s Day: %7s\n" \
+       "${total} ch" "${total_capacity}" "${total_fee}" \
+       "${total_local}" "${total_remote}" \
+       "$(${lncli} feereport |jq -r ".day_fee_sum" )"
+printf "%74s %5s\n" 'Week: ' "$(${lncli} feereport |jq -r ".week_fee_sum" )"
+printf "%74s %5s\n" 'Month:' "$(${lncli} feereport |jq -r ".month_fee_sum" )"
 echo "$(tput -T xterm sgr0)"
+
