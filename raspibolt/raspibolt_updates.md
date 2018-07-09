@@ -10,6 +10,16 @@
 
 I try to keep track of my changes to the guide here, so you can see what parts I updated later on.
 
+### 2018-07
+
+* **Bonus**: Updated installation procedures for Electrum Personal Server
+* **FAQ**: How to upgrade LND
+
+### 2018-05
+
+* **Bonus**: Added Shango mobile wallet
+* **Bonus**: Additional helper scripts lnbalance / lnchannels
+
 ### 2018-04-04
 
 * **Raspberry Pi**: added section for usage of existing MacOS HFS+ hard disk. Thanks, **masonicboom**!
