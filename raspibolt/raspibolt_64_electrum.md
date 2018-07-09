@@ -52,13 +52,11 @@ Before using this setup, please familiarize yourself with all components by sett
   $ tar -xvf eps-v0.1.3.tar.gz  
   ```
 
-  ![60_eps_signature](C:\Users_withBackup\Roland\Documents\GitHub\guides\raspibolt\images\60_eps_signature.png)
-
 * Rename the folder to not show the release   
   `$ mv electrum-personal-server-eps-v0.1.3/ eps`
 
 * Copy and edit configuration template  
-  `$ cd eps`
+  `$ cd eps`  
   `$ cp config.cfg_sample config.cfg`  
   `$ nano config.cfg` 
 
@@ -99,9 +97,7 @@ Description=Electrum Personal Server
 After=bitcoind.service
 
 [Service]
-# this is one line only
 ExecStart=/usr/bin/python3 /home/bitcoin/electrum-personal-server/eps/server.py  /home/bitcoin/electrum-personal-server/eps
-
 User=bitcoin
 Group=bitcoin
 Type=simple
