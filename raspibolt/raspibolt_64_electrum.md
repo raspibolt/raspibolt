@@ -27,13 +27,38 @@ Before using this setup, please familiarize yourself with all components by sett
 * Open a "bitcoin" user session and change into the home directory  
   `$ sudo su bitcoin`  
   `$ cd`
-* Clone the EPS GitHub repository  
-  `$ git clone https://github.com/chris-belcher/electrum-personal-server`
-* To get the latest stable release, check the EPS [releases page](https://github.com/chris-belcher/electrum-personal-server/releases), list the available tags of the repository and check out the desired tag  (you might want to use a newer one than `v0.1.1`, if available)  
-  `$ cd electrum-personal-server`   
-  `$ git tag -l`  
-  `$ git checkout tags/v0.1.1`
+
+* Download, verify and extract the latest release (check the [Releases page](https://github.com/chris-belcher/electrum-personal-server/releases) on Github for the correct links)  
+
+  ```
+  # create new directory
+  $ mkdir electrum-personal-server
+  $ cd electrum-personal-server
+  
+  # download release
+  $ wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.1.3.tar.gz
+  $ wget https://github.com/chris-belcher/electrum-personal-server/releases/download/eps-v0.1.3/eps-v0.1.3.tar.gz.asc
+  $ wget https://raw.githubusercontent.com/chris-belcher/electrum-personal-server/master/pgp/pubkeys/belcher.asc
+  
+  # verify the signature of Chris Belcher and the release: check the reference values!
+  $ gpg belcher.asc
+  > 0A8B038F5E10CC2789BFCFFFEF734EA677F31129
+  
+  $ gpg --import belcher.asc
+  $ gpg --verify eps-v0.1.3.tar.gz.asc
+  > gpg: Good signature from "Chris Belcher <false@email.com>" [unknown]
+  > Primary key fingerprint: 0A8B 038F 5E10 CC27 89BF  CFFF EF73 4EA6 77F3 1129
+  
+  $ tar -xvf eps-v0.1.3.tar.gz  
+  ```
+
+  ![60_eps_signature](C:\Users_withBackup\Roland\Documents\GitHub\guides\raspibolt\images\60_eps_signature.png)
+
+* Rename the folder to not show the release   
+  `$ mv electrum-personal-server-eps-v0.1.3/ eps`
+
 * Copy and edit configuration template  
+  `$ cd eps`
   `$ cp config.cfg_sample config.cfg`  
   `$ nano config.cfg` 
 
@@ -45,6 +70,7 @@ Before using this setup, please familiarize yourself with all components by sett
 
   * Change the listening `host` to `0.0.0.0`, so that you can reach it from a remote computer. The firewall only accepts connections from within the home network, not from the internet.  
     `host = 0.0.0.0`
+
 * Save and exit
 
 ### Initial blockchain scan
@@ -73,7 +99,9 @@ Description=Electrum Personal Server
 After=bitcoind.service
 
 [Service]
-ExecStart=/usr/bin/python3 /home/bitcoin/electrum-personal-server/server.py  /home/bitcoin/electrum-personal-server
+# this is one line only
+ExecStart=/usr/bin/python3 /home/bitcoin/electrum-personal-server/eps/server.py  /home/bitcoin/electrum-personal-server/eps
+
 User=bitcoin
 Group=bitcoin
 Type=simple
@@ -91,7 +119,7 @@ WantedBy=multi-user.target
   `$ sudo systemctl start eps.service`
   
 * Check the startup process for Electrum Personal Server  
-  `$ tail -f /home/bitcoin/electrum-personal-server/debug.log`
+  `$ tail -f /home/bitcoin/electrum-personal-server/eps/debug.log`
 
 ### Connect Electrum
 
@@ -109,13 +137,27 @@ On your regular computer, configure Electrum to use your RaspiBolt:
 
   [![Check Electrum console](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_electrumwallet.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrumwallet.png)
 
+### Update
 
+If at a later stage you want to update your Electrum Personal server, do as follows:
+
+* As "admin" stop the EPS systemd unit  
+  `$ sudo systemctl stop eps`
+* Start a new bitcoin user session  
+  `$ sudo su bitcoin`  
+  `$ cd ~/electrum-personal-server`  
+* Download, verify and extract the new release as explained in the box above
+* Copy the new release over the existing one (adjust directory name)  
+  `$ cp -R electrum-personal-server-eps-v0.1.9/* eps` 
+* Exit "bitcoin" user session and start EPS systemd unit  
+  `$ exit`  
+  `$ sudo systemctl start eps`
+
+---
 
 ### Don't trust, verify.
 
 Congratulations, you have now one of the best Bitcoin desktop wallet, capable of securing your bitcoin with support of a hardware wallet, running with your own trustless Bitcoin full node! 
-
-
 
 ---
 
