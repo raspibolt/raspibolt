@@ -13,12 +13,12 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 ### 2018-07
 
 * **Bonus**: Updated installation procedures for Electrum Personal Server
-* **FAQ**: How to upgrade LND
+* **FAQ**: How to upgrade LND. Thanks, **giulnz**!
 
 ### 2018-05
 
 * **Bonus**: Added Shango mobile wallet
-* **Bonus**: Additional helper scripts lnbalance / lnchannels
+* **Bonus**: Additional helper scripts lnbalance / lnchannels. Thanks, **robclark56**!
 
 ### 2018-04-04
 
