@@ -46,9 +46,23 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 * Lightning Network resources: [lnroute.com](http://lnroute.com)
 
 
-### How to upgrade LND bin ? 
+### How to upgrade Bitcoin Core? 
+The latest release can be found on the Github page of the Bitcoin Core project. Make sure to read the Release Notes, as these can include importantupgrade information.  
+https://github.com/bitcoin/bitcoin/releases
 
-* As ADMIN user, stop lnd service  
+* As "admin" user, stop the lnd and bitcoind system units  
+  `$ sudo systemctl stop lnd`  
+  `$ sudo systemctl stop bitcoind`  
+
+* Download, verify, extract and install the Bitcoin Core binaries as described in the [Bitcoin section](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_30_bitcoin.md) of this guide.
+
+* Start the bitcoind and lnd system units  
+  `$ sudo systemctl start bitcoind`  
+  `$ sudo systemctl start lnd`
+
+### How to upgrade LND? 
+
+* As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
 
 * Only if upgrading from version v0.4.0-beta or lower, delete the macaroon files. LND will create new and additional ones (otherwise you might expect [this issue](https://github.com/lightningnetwork/lnd/issues/921)) and can no longer create invoices).  
