@@ -12,12 +12,7 @@
 The mobile app Shango (http://shangoapp.com) allows the managment of the Lightning daemon on your RaspiBolt. It provides 
 an status overview, lists peers, allows to open & close channels, make payments and create invoices.
 
-As this app controls has full control over you RaspiBolt, there is trust involved. Is is unclear, if this will be an 
-open-source application and whether it's trustworthy. **Use it at your own risk.**
-
-Even if the app is trustworthy, your RaspiBolt needs to be externally controlled using the gRPC interface. This adds an 
-additional attack vector and this is why we configure the firewall to only allow connections from within your local 
-network. It's trivial to open it to the internet, but again, do this **at your own risk**.
+At the moment this app is in closed beta testing (you can sign up) and the source code has not been published yet, so **use it with caution**. The intention is to provide this app as a free open-source application once it is ready for a public beta release. If you find bugs, you can contribute to this project by reporting them here: https://github.com/neogeno/shango-lightning-wallet/issues.
 
 ![Shango app overview](images/60_shango.png)
 
@@ -62,11 +57,7 @@ rpclisten=0.0.0.0:10009
 echo -e "$(curl -s ipinfo.io/ip),\n$(xxd -p -c2000 admin.macaroon)," > qr.txt && cat tls.cert >>qr.txt && qrencode -t ANSIUTF8 < qr.txt
 ```
 * Click on "Connect" and the app should sync with your RaspiBolt.
-  
-### Disclaimer
-* This app is still in beta testing and has access to all of your funds. Use at your own risk.
-* If you find bugs, please report them here: https://github.com/neogeno/shango-lightning-wallet/issues
-  
+
 ------
 
 << Back: [Bonus guides](raspibolt_60_bonus.md) 
