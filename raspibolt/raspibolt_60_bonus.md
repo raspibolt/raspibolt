@@ -60,16 +60,14 @@ Difficulty: easy
 
 These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
 
-## [Additional scripts: show balance & channels](raspibolt_67_additional-scripts.md)
+## Even more Extras 
 
-Difficulty: easy
-
-These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
-
-
+**[RaspiBolt-Extras](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md)** by Rob Clark
+* Lights-Out: automatic unlocking of wallet and dynamic ip
+* RaspiBoltDuo: testnet & mainnet running simultaneously
+* Using REST access
+* Receiving Lightning payments: automatically create invoices / qr codes
 
 ------
 
 Next: [FAQ >>](raspibolt_faq.md)
-
-
