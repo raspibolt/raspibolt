@@ -28,10 +28,21 @@ network. It's trivial to open it to the internet, but again, do this **at your o
   
 ```
 rpclisten=0.0.0.0:10009
+
+### Uncomment and ajust these lines for access from public internet
+#tlsextraip=111.222.333.444               # fixed ip is needed
+#tlsextradomain=lightning.yourhost.com    # domain name, works with FreeDNS (https://freedns.afraid.org)
 ``` 
 
-* Open port 10009 for connections from within the local network (you might need to adjust the ip mask, see [more details](https://github.com/Stadicus/guides/blob/shango/raspibolt/raspibolt_20_pi.md#hardening-your-pi))  
-  `$ sudo ufw allow from 192.168.0.0/24 to any port 10009 comment 'allow LND grpc from local LAN'`  
+* Open port 10009 so that Shango wallet can talk to your Lightning node. To be **safe**, open it only from within your own network. If you feel **reckless**, you can open it for access from everywhere to use Shango on the go. I think the connection itself is safe, but this exposes your node to DDoS and other attacks. So make sure you know what you do!  
+
+  * **Safe option**: for connections from within the local network (you might need to adjust the ip mask, see [more details](https://github.com/Stadicus/guides/blob/shango/raspibolt/raspibolt_20_pi.md#hardening-your-pi))  
+    `$ sudo ufw allow from 192.168.0.0/24 to any port 10009 comment 'allow LND grpc from local LAN'`  
+
+  * **Reckless option**: for connections from everywhere  
+    `$ sudo ufw allow 10009 comment 'allow LND grpc from public internet'`  
+
+* Update and check your Uncomplicated Firewall  
   `$ sudo ufw enable`  
   `$ sudo ufw status`
 
@@ -45,12 +56,11 @@ rpclisten=0.0.0.0:10009
 
 ### Configure Shango app
   
-* Start app & go to "Settings" / "Switch LND Server"  
-* Enter your IP address with the port 10009, eg. `192.168.0.20:10009`
-* On your RaspiBolt, enter the following command and scan the resulting QR code for "Server Macaroon" in the app  
-  `$ qrencode $(xxd -p -c3000 admin.macaroon) -t ANSIUTF8`  
-* On your RaspiBolt, enter the following command and scan the resulting QR code for "Server TLS Cert" in the app  
-  `$ qrencode $(xxd -p -c3000 tls.cert) -t ANSIUTF8`
+* Start app & go to "Settings" / "Connect to other LND Servers"  
+* On your RaspiBolt, enter the following command and "Scan QR" with the app
+```
+echo -e "$(curl -s ipinfo.io/ip),\n$(xxd -p -c2000 admin.macaroon)," > qr.txt && cat tls.cert >>qr.txt && qrencode -t ANSIUTF8 < qr.txt
+```
 * Click on "Connect" and the app should sync with your RaspiBolt.
   
 ### Disclaimer
