@@ -12,6 +12,7 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 
 ### 2018-07
 
+* **Bonus**: Updated Shango wallet setup & access from public internet
 * **Bonus**: Updated installation procedures for Electrum Personal Server
 * **FAQ**: How to upgrade LND. Thanks, **giulnz**!
 
