@@ -252,6 +252,12 @@ Get yourself a payment request on [StarBlocks](https://starblocks.acinq.co/#/) o
 
 -----
 
+### LND upgrade
+If you want to upgrade to a new release of LND in the future, check out the FAQ section:  
+[How to upgrade LND](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_faq.md#how-to-upgrade-lnd-bin-)
+
+-----
+
 ### Before proceeding to mainnet 
 This is the point of no return. Up until now, you can just start over. Experiment with testnet bitcoin. Open and close channels on the testnet. 
 
