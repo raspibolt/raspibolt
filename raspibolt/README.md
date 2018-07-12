@@ -51,13 +51,12 @@ This server is set up without graphical user interface and is used remotely usin
 
 **Wishlist for further enhancements**
 
-- [ ] Bitcoin desktop wallet support
-- [ ] Bitcoin mobile wallet support
-- [ ] Hardware wallet support
+- [x] Bitcoin desktop wallet support: Electrum  
+- [x] Bitcoin mobile wallet support: Shango  
+- [x] Hardware wallet support: Electrum + HW wallet
 - [ ] Lightning web interface
 - [ ] Email alerts
 - [ ] Full backup, incl. Lightning channel states
-- [ ] VPN access from public internet
 
 ### Target audience
 
