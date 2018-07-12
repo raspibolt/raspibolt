@@ -285,6 +285,11 @@ CONF_SWAPSIZE=1000
   `$ sudo dphys-swapfile swapoff`
   `$ sudo rm /var/swap`
 
+* Manually create new swap file
+  `$ sudo dd if=/dev/zero of=/mnt/hdd/swapfile count=1000 bs=1MiB`
+  `$ sudo chmod 600 /mnt/hdd/swapfile`
+  `$ sudo mkswap /mnt/hdd/swapfile`
+
 * Enable new swap configuration  
   `$ sudo dphys-swapfile setup`  
   `$ sudo dphys-swapfile swapon`
