@@ -29,13 +29,14 @@ rpclisten=0.0.0.0:10009
 #tlsextradomain=lightning.yourhost.com    # domain name, works with FreeDNS (https://freedns.afraid.org)
 ``` 
 
-* Open port 10009 so that Shango wallet can talk to your Lightning node. To be **safe**, open it only from within your own network. If you feel **reckless**, you can open it for access from everywhere to use Shango on the go. I think the connection itself is safe, but this exposes your node to DDoS and other attacks. So make sure you know what you do!  
+Open port 10009 so that Shango wallet can talk to your Lightning node. To be **safe**, open it only from within your own network. If you feel **reckless**, you can open it for access from everywhere to use Shango on the go. I think the connection itself is safe, but this exposes your node to DDoS and other attacks. So make sure you know what you do!  
 
-  * **Safe option**: for connections from within the local network (you might need to adjust the ip mask, see [more details](https://github.com/Stadicus/guides/blob/shango/raspibolt/raspibolt_20_pi.md#hardening-your-pi))  
-    `$ sudo ufw allow from 192.168.0.0/24 to any port 10009 comment 'allow LND grpc from local LAN'`  
+* **Safe option**: for connections from within the local network (you might need to adjust the ip mask, see [more details](https://github.com/Stadicus/guides/blob/shango/raspibolt/raspibolt_20_pi.md#hardening-your-pi))  
+  `$ sudo ufw allow from 192.168.0.0/24 to any port 10009 comment 'allow LND grpc from local LAN'`  
 
-  * **Reckless option**: for connections from everywhere  
-    `$ sudo ufw allow 10009 comment 'allow LND grpc from public internet'`  
+* **Reckless option**: for connections from everywhere. 
+  * Add a new router port forwarding for port 10009 (see [this section](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_20_pi.md#port-forwarding) in the base guide)   
+  * `$ sudo ufw allow 10009 comment 'allow LND grpc from public internet'`  
 
 * Update and check your Uncomplicated Firewall  
   `$ sudo ufw enable`  
