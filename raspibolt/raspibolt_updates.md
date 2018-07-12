@@ -12,8 +12,11 @@ I try to keep track of my changes to the guide here, so you can see what parts I
 
 ### 2018-07
 
-* **Bonus**: Updated Shango wallet setup & access from public internet
-* **Bonus**: Updated installation procedures for Electrum Personal Server
+* **Raspberry Pi**: changed swap file setup due to recurring problems. Thanks, **masonicboom**!
+* **Bonus**:  
+  * System overview: new method to check public availability of Bitcoin Core. Thanks, **robclark56**!
+  * Shango wallet: new setup & access from public internet  
+  * Electrum Personal Server: updated installation procedures  
 * **FAQ**: How to upgrade LND. Thanks, **giulnz**!
 
 ### 2018-05
