@@ -174,9 +174,67 @@ It takes a litte getting used to that everytime the LND daemon is restarted, you
 
 This is why we implement a script that automatically unlocks the wallet. The password is stored in a root-only directory as plaintext, so clearly not so secure, but for reasonable amounts this is a good middle-ground in my opinion. You can always decide to stick to manual unlocking, or implement a solution that unlocks the wallet from a remote machine.
 
+* As user "admin", create a new directory and save your LND wallet password [C] into a text file  
+  `$ sudo mkdir /etc/lnd`   
+  `$ sudo nano /etc/lnd/pwd` 
 
+* Copy the following script into a new file  
+  `$ sudo nano /etc/lnd/unlock`   
 
+  ```
+  #!/bin/sh
+  # LND wallet auto-unlock script
+  # 2018 by meeDamian
+  
+  /bin/sleep 5s
+  LN_ROOT=/home/bitcoin/.lnd
+  
+  curl -s \
+          -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/admin.macaroon)" \
+          --cacert ${LN_ROOT}/tls.cert \
+          -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
+          https://localhost:8080/v1/unlockwallet > /dev/null 2>&1
+  
+  echo "$? $(date)" >> /etc/lnd/unlocks.log
+  exit 0
+  ```
 
+* Make the directory and all content accessible only for "root"  
+
+  ```
+  $ sudo chmod 400 /etc/lnd/pwd
+  $ sudo chmod 100 /etc/lnd/unlock
+  $ sudo chown root:root /etc/lnd/*
+  ```
+
+* Edit the LND systemd unit  
+  `$ sudo nano /etc/systemd/system/lnd.service `
+
+  ```
+  # remove this line:
+  # PIDFile=/home/bitcoin/.lnd/lnd.pid
+  
+  # add this line directly below ExecStart:
+  ExecStartPost=+/etc/lnd/unlock
+  ```
+
+* Edit the LND config file  
+  `$ sudo nano /home/bitcoin/.lnd/lnd.conf`  
+
+  ```
+  # add the following line in the [Application Options] section
+  restlisten=localhost:8080
+  ```
+
+* Reload the systemd unit, restart LND and watch the startup process to see if the wallet is automatically unlocked
+
+  ```
+  $ sudo systemctl daemon-reload
+  $ sudo systemctl restart lnd
+  $ sudo journalctl -u lnd -f
+  ```
+
+  
 
 ## Start using the Lightning Network
 
