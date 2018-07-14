@@ -5,13 +5,14 @@
 > This article was first published in the Odroid Magazine August 2018 issue. 
 >
 > [Part 1: Setup of Bitcoin & Lightning on testnet](https://github.com/Stadicus/guides/blob/master/thundroid/README.md)  
-> Part 2: Move to Bitcoin mainnet & outlook (this guide)
+> Part 2: Move to Bitcoin mainnet (this guide)
+> Part 3: Additional apps like desktop & mobile wallet
 
 ## Introduction to Part 2: Mainnet!
 
-Remember part one of this guide? We set up a Bitcoin full node with Lightning from scratch, went to quite some length to secure our box and started testing Bitcoin on the testnet. If you did not catch [Part 1](https://github.com/Stadicus/guides/blob/master/thundroid/README.md), please read it first, as this part won't make much sense without it.
+Remember Part 1 of this guide? We set up a Bitcoin full node with Lightning from scratch, went to quite some length to secure our box and started testing Bitcoin on testnet. If you did not catch [Part 1](https://github.com/Stadicus/guides/blob/master/thundroid/README.md), please read it first, as this part won't make much sense without it.
 
-The goal of this guide is to switch our Thundroid from Bitcoin testnet to mainnet and to transact with real money. At the end of the day, this box is a box without a screen and the command line is just not for everyday use. So we will explore a few extensions like a desktop or mobile wallet that use Thundroid as our own trusted backend.
+The goal of this guide is to switch our Thundroid from Bitcoin testnet to mainnet and to transact with real money. 
 
 #### Financial best pracices
 
@@ -37,7 +38,7 @@ On your regular computer, check the verification progress in Bitcoin Core. To pr
 
 :information_source: **If you get stuck**, please [check out my GitHub repository](https://github.com/Stadicus/guides). You can search for already solved issues there, or open a new issue if necessary. 
 
-#### Temporarily enable password login
+### Temporarily enable password login
 
 In order to copy the data with the user "bitcoin", we need to temporarily enable the password login.
 
@@ -47,7 +48,7 @@ In order to copy the data with the user "bitcoin", we need to temporarily enable
 * Restart the SSH daemon.  
    `$ sudo systemctl restart ssh`
 
-#### Copy mainnet blockchain using SCP
+### Copy mainnet blockchain using SCP
 
 We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winscp.net), a free open-source program. There are other SCP programs available for Mac or Linux that work similarly.
 
@@ -62,7 +63,7 @@ We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winsc
 
 ⚠️ The transfer must not be interupted. Make sure your computer does not go to sleep.
 
-#### Disable password login again
+### Disable password login again
 
 As user "admin", remove the `#` in front of "PasswordAuthentication no" to enable the line. Save, exit the config file and restart the ssh daemon.
 
@@ -74,7 +75,7 @@ PasswordAuthentication no
 $ sudo systemctl restart ssh
 ```
 
-#### Send back your testnet Bitcoin
+### Send back your testnet Bitcoin
 
 To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we close all our channels and withdraw the funds to the address  stated on the website of the [Bitcoin Testnet Faucet](https://testnet.manu.backend.hamburg/faucet).
 
@@ -86,7 +87,7 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we
 * Send the amount provided by `walletbalance` minus 500  satoshis to account for fees. If you get an "insufficient funds" error,  deduct a bit more until the transaction gets broadcasted.  
    `$ lncli sendcoins 2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF [amount]`
 
-#### Adjust configuration
+### Adjust configuration
 
 * Stop the Bitcoin and Lightning services.  
    `$ sudo systemctl stop lnd`  
@@ -112,7 +113,7 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we
    bitcoin.mainnet=1
    ```
 
-#### Restart bitcoind & lnd for mainnet
+### Restart bitcoind & lnd for mainnet
 
 ⚠️ **Do not proceed** until the copy task of the mainnet blockchain is completely finished.
 
@@ -168,11 +169,11 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we
 * Make sure that `lncli` works by getting some node infos  
    `$ lncli getinfo`
 
-#### Improve startup process
+### Improve startup process
 
-It takes a litte getting used to that everytime the LND daemon is restarted, you have to unlock the wallet again. This makes sense from a security perspective, as the wallet is encrypted and the key is not stored on the same machine. For reliable operations, however, this is not optimal, as you can easily recover LND after it restarts for some reason (crash or power outage), but it's stuck and cannot operate at all. 
+It takes a litte getting used to the fact that the LND wallet needs to be manually unlocked everytime the LND daemon is restarted. This makes sense from a security perspective, as the wallet is encrypted and the key is not stored on the same machine. For reliable operations, however, this is not optimal, as you can easily recover LND after it restarts for some reason (crash or power outage), but then it's stuck with a locked wallet and cannot operate at all. 
 
-This is why we implement a script that automatically unlocks the wallet. The password is stored in a root-only directory as plaintext, so clearly not so secure, but for reasonable amounts this is a good middle-ground in my opinion. You can always decide to stick to manual unlocking, or implement a solution that unlocks the wallet from a remote machine.
+This is why a script that automatically unlocks the wallet is helpful. The password is stored in a root-only directory as plaintext, so clearly not so secure, but for reasonable amounts this is a good middle-ground in my opinion. You can always decide to stick to manual unlocking, or implement a solution that unlocks the wallet from a remote machine.
 
 * As user "admin", create a new directory and save your LND wallet password [C] into a text file  
   `$ sudo mkdir /etc/lnd`   
@@ -238,58 +239,23 @@ This is why we implement a script that automatically unlocks the wallet. The pas
 
 ## Start using the Lightning Network
 
-#### Fund your node
+### Fund your node
 
 Congratulations, your Thundroid is now live on the Bitcoin mainnet! To  open channels and start using it, you need to fund it with some bitcoin.  For starters, put only on your node what you are willing to lose.  Monopoly money.
 
 * Generate a new Bitcoin address to receive funds on-chain  
    `$ lncli newaddress np2wkh`  
    `> "address": "3.........................."`
-* From your regular Bitcoin wallet, send a small amount of bitcoin to this address
+* From your regular Bitcoin wallet, send a small amount of bitcoin to this address, or ask your one annoying Bitcoin friend to send you a few bucks. :-)
 * Check your LND wallet balance  
    `$ lncli walletbalance`
 * Monitor your transaction on a Blockchain explorer: <https://smartbit.com.au>
 
-#### LND in action
+### LND in action
 
 As soon as your funding transaction is mined and confirmed, LND will  start to open and maintain channels. This feature is called "Autopilot"  and is configured in the "lnd.conf" file. If you would like to maintain  your channels manually, you can disable the autopilot.
 
-Some commands to try:
-
-* list all arguments for the command line interface (cli)  
-   `$ lncli`
-* get help for a specific argument  
-   `$ lncli help [ARGUMENT]`
-* find out some general stats about your node:  
-   `$ lncli getinfo`
-* connect to a peer (you can find some nodes to connect to here: <https://1ml.com/>):  
-   `$ lncli connect [NODE_URI]`
-* check the peers you are currently connected to:  
-   `$ lncli listpeers`
-* open a channel with a peer:  
-   `$ lncli openchannel [NODE_PUBKEY] [AMOUNT_IN_SATOSHIS] 0`  
-   *keep in mind that [NODE_URI] includes @IP:PORT at the end, while [NODE_PUBKEY] doesn't*
-* check the status of your pending channels:  
-   `$ lncli pendingchannels`  
-* check the status of your active channels:  
-   `$ lncli listchannels`
-* before paying an invoice, you should decode it to check if the amount and other infos are correct:  
-   `$ lncli decodepayreq [INVOICE]`
-* pay an invoice:  
-   `$ lncli payinvoice [INVOICE]`
-* check the payments that you sent:  
-   `$ lncli listpayments`
-* create an invoice:  
-   `$ lncli addinvoice [AMOUNT_IN_SATOSHIS]`
-* list all invoices:  
-   `$ lncli listinvoices`
-* to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID` : `OUTPUT_INDEX` .  
-   `$ lncli listchannels`
-   `$ lncli closechannel [FUNDING_TXID] [OUTPUT_INDEX]`
-* to force close a channel (if your peer is offline or not cooperative), use  
-   `$ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX]`
-
-👉 see [LND API reference](http://api.lightning.community/) for additional information
+You can use the same commands that were listed in [Part 1](https://github.com/Stadicus/guides/blob/odroid_pt2/thundroid/README.md#lnd-in-action) of this guide or use, go to [LND API reference](http://api.lightning.community/) or just type `lncli --help`.
 
 ### Try it out and explore Lightning mainnet
 
@@ -311,21 +277,13 @@ You now have your own Bitcoin / Lightning full node. THe initially stated goals 
 * [x] is reliably running 24/7
 * [x] is part of and supports the decentralization of the Lightning network by routing payments
 * [x] can be used to send and receive personal payments using the command line interface.
+* [ ] Usability? Not so much...
 
-But still, it's cluky and the command line does just not cut it. We will therefore go on to extend the Thundroid with a 
+Is it the perfect Bitcoin Lightning node yet? It's cluky and the command line does just not cut it. In Part 3 of this guide we will therefore go on to extend the Thundroid with additional applications that use it as our own private backend.
 
-
-
-
-
-
-
-
-
-
-
-
+* The **Electrum** desktop wallet is the perfect power-user wallet to handle regular on-chain Bitcoin transaction. Because it supports a wide variety of hardware-wallets, you private keys never need to be exposed to any (possibly compromised) online computer. With the **Electrum Personal Server** running on Thundroid, you have full control to send, receive & verify Bitcoin transactions with great security and privacy.
+* The **Shango** lightning mobile wallet is perfect for small, instant payments on the go. It connects to your Thundroid and provides a neat user interface on your iOS / Android phone to send and receive payments, manage peers and channels. While still in closed beta, I hope it will be public just in time.
 
 ------
 
-
+See you soon in part 3 of the guide "The perfect Bitcoin Lightning️ node". 
