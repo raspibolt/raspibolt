@@ -59,10 +59,15 @@ printf "%-21s %12s %5s %12s %12s %6s %5s\n" 'Alias or Pubkey' 'Capacity' 'Fee' '
 horiz_line="-------------------- ------------- ------ ------------ ------------ ----- ------"
 echo $horiz_line
 for (( i=0; i<=$(( $total -1 )); i++ ));do
+ addr_port=$(${lncli} getnodeinfo ${a_remote_pubkey[$i]} | jq -r .node.addresses[0].addr)
+ addr=${addr_port/:/ }
  if [ ${a_active[$i]} == 'true' ];  then
   color_line=${color_gray}
+  public_check=''
  else
   color_line=${color_red}
+  public_check=$(timeout 2s nc -z ${addr}; echo $?)
+  if [ "${public_check}" == '0' ];then public_check='';else public_check='X';fi
  fi
  alias=$(${lncli} getnodeinfo ${a_remote_pubkey[$i]} | jq -r .node.alias)
  if [ "${alias}" == "" ] ; then
@@ -83,6 +88,7 @@ for (( i=0; i<=$(( $total -1 )); i++ ));do
  total_fee=$(( ${total_fee} + ${a_commit_fee[$i]} ))
  total_local=$(( ${total_local} + ${a_local_balance[$i]} ))
  total_remote=$(( ${total_remote} + ${a_remote_balance[$i]} ))
+ if [ ${#public_check} != 0 ] ; then echo " > No response from Addr:Port ${addr_port}";fi
 done
 printf "${color_yellow}%s\n" "${horiz_line}"
 printf "Totals%14s %13s %6s %12s %12s Day: %7s\n" \
