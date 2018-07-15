@@ -32,14 +32,14 @@ Without keyboard or screen, no direct interaction with the Pi is possible during
 ### Prepare Wifi 
 I would not recommend it, but you can run your RaspiBolt with a wireless network connection. To avoid using a network cable for the initial setup, you can pre-configure the wireless settings:
 
-* Create a file `wpa_supplicant.conf` on the MicroSD card with the following content:
+* Create a file `wpa_supplicant.conf` on the MicroSD card with the following content. Note that the network name (ssid) and password need to be in double-quotes (like `psk="password"`)  
 ```
 country=[COUNTRY_CODE]
 ctrl_interface=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
 network={
-    ssid=[WIFI_SSID]
-    psk=[WIFI_PASSWORD]
+    ssid="[WIFI_SSID]"
+    psk="[WIFI_PASSWORD]"
 }
 ```
 * Replace `[COUNTRY_CODE]` with the [ISO2 code](https://www.iso.org/obp/ui/#search) of your country (eg. `US`)
