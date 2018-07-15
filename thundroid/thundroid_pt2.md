@@ -229,6 +229,8 @@ This is why a script that automatically unlocks the wallet is helpful. The passw
   $ sudo chown root:root /etc/lnd/*
   ```
 
+*Note: I encountered the issue that `curl` was not running correctly on my machine and I had to reinstall a library before I got it working again: ` $ sudo apt install --reinstall libroken18-heimdal`.*
+
 * Create a new systemd unit that starts directly after LND.   
   `$ sudo nano /etc/systemd/system/lnd-unlock.service `
 
