@@ -50,7 +50,7 @@ In order to copy the data with the user "bitcoin", we need to temporarily enable
 
 ### Copy mainnet blockchain using SCP
 
-We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winscp.net), a free open-source program. There are other SCP programs available for Mac or Linux that work similarly.
+We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winscp.net), a free open-source program. There are other SCP programs available for Mac or Linux that work similarly. Do not use `rsync` as this can lead to issues later on.
 
 * With WinSCP, you can now connect to your Pi with the user "bitcoin". Both protocols SCP and SFTP work, in my experience SCP is a bit faster.  
    ![WinSCP connection settings](images/50_WinSCP.png)
@@ -93,6 +93,8 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we
    `$ sudo systemctl stop lnd`  
    `$ sudo systemctl stop bitcoind`
 
+* Delete LND wallet 
+
 * Edit "bitcoin.conf" file by commenting  `testnet=1` out. Save and exit.  
    `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`    
 
@@ -101,7 +103,7 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we
    #testnet=1
    ```
 
-* Copy updated "bitcoin.conf" to user "admin" for credentials  
+* Copy updated "bitcoin.conf" to user "admin" for credentials (the command `bitcoin-cli` looks up the "rpcpassword")  
    `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`  
 
 * Edit "lnd.conf" file by switching from `bitcoin.testnet=1` to `bitcoin.mainnet=1`. Save and exit.  
@@ -111,6 +113,13 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we
    # enable either testnet or mainnet
    #bitcoin.testnet=1
    bitcoin.mainnet=1
+   ```
+
+* Delete the LND authorization files (*.macaroon). They are linked to the currently active wallet and need to be created when we will create a new wallet for mainnet. 
+
+   ```
+   $ sudo rm /home/bitcoin/.lnd/*.macaroon
+   $ sudo rm /home/bitcoin/.lnd/data/macaroons.db
    ```
 
 ### Restart bitcoind & lnd for mainnet
@@ -126,35 +135,44 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we
   $ bitcoin-cli getblockchaininfo
   ```
 
-* **Wait until the blockchain is fully synced**: "blocks" = "headers", otherwise you might run into performance / memory issues when creating a new lnd mainnet wallet.
+* **Wait until the blockchain is fully synced**: "blocks" = "headers", otherwise you might run into performance / memory issues when creating a new lnd mainnet wallet. 
 
-* Start LND and check its operation   
+* Start LND and check its operation (it will wait for the wallet to be created)
 
    ```
    $ sudo systemctl start lnd
    $ systemctl status lnd
-   $ sudo journalctl -f -u lnd
    ```
 
-* If everything works fine, restart Thundroid and check the operations again.  
-   `$ sudo shutdown -r now`
+### Create mainnet wallet
 
-* Monitor the startup process of first  `bitcoind` and then `lnd`   
+Once LND is started, we need to create a new integrated Bitcoin wallet for mainnet. 
+
+* Start a "bitcoin" user session and create a new wallet  
+
+  ```
+  $ sudo su - bitcoin
+  $ lncli create
+  ```
+
+* If you want to create a new wallet, enter your `password [C]` as wallet password, select `n` regarding an existing seed and enter the optional `password [D]` as seed passphrase. 
+
+[![LND new cipher seed](https://github.com/Stadicus/guides/raw/odroid_pt2/thundroid/images/40_cipher_seed.png)](https://github.com/Stadicus/guides/blob/odroid_pt2/thundroid/images/40_cipher_seed.png)
+
+The 24 seed words that are displayed, combined with your optional passphrase, is the backup for your on-chain Bitcoin. The current state of your channels, however, cannot be recreated from this seed, this is still  under development for LND.
+
+⚠️ This information must be kept secret at all times. **Write these 24 words down manually on a piece of paper and store it in a safe place.**   This piece of paper is all an attacker needs to completely empty your   wallet! Do not store it on a computer. Do not take a picture with your   mobile phone. **This information should never be stored anywhere in digital form.**
+
+* Exit the "bitcoin" user session. To use  `lncli`  with the "admin" user, copy the permission files and the TLS certificate. Check if it's working.
 
    ```
-   $ sudo tail -f /home/bitcoin/.bitcoin/debug.log
-   $ sudo journalctl -f -u lnd
-   ```
-
-* Create the mainnet wallet with the **exact same** `password [C]` as on testnet. If you use another password, you need to recreate your access credentials.  
-   `$ lncli create`
-
-* Copy permission files and TLS cert to user "admin" to use `lncli`    
-
-   ```
+   $ exit
    $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
    $ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd
    ```
+
+* Check if it works by getting some node infos  
+   `$ lncli getinfo`
 
 * Restart `lnd` and unlock your wallet (enter `password [C]` )    
 
@@ -166,7 +184,7 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next  testers, we
 * Monitor the LND startup progress until it caught up with the mainnet  blockchain (about 515k blocks at the moment). This can take up to 2  hours, then you see a lot of very fast chatter (exit with `Ctrl-C`).  
    `$ sudo journalctl -f -u lnd`
 
-* Make sure that `lncli` works by getting some node infos  
+* This command will return "synced_to_chain: true" if LND is ready   
    `$ lncli getinfo`
 
 ### Improve startup process
@@ -179,15 +197,18 @@ This is why a script that automatically unlocks the wallet is helpful. The passw
   `$ sudo mkdir /etc/lnd`   
   `$ sudo nano /etc/lnd/pwd` 
 
-* Copy the following script into a new file  
+* The following script unlocks the LND wallet through its web service (REST interface). Copy it into a new file.    
   `$ sudo nano /etc/lnd/unlock`   
 
   ```
   #!/bin/sh
   # LND wallet auto-unlock script
-  # 2018 by meeDamian
+  # 2018 by meeDamian, robclark56
   
-  /bin/sleep 5s
+  # Delay is needed to make sure bitcoind and lnd are ready. You can still 
+  # unlock the wallet manually if you like. Adjust to your needs:
+  /bin/sleep 300s
+  
   LN_ROOT=/home/bitcoin/.lnd
   
   curl -s \
@@ -208,18 +229,28 @@ This is why a script that automatically unlocks the wallet is helpful. The passw
   $ sudo chown root:root /etc/lnd/*
   ```
 
-* Edit the LND systemd unit  
-  `$ sudo nano /etc/systemd/system/lnd.service `
+* Create a new systemd unit that starts directly after LND.   
+  `$ sudo nano /etc/systemd/system/lnd-unlock.service `
 
   ```
-  # remove this line:
-  # PIDFile=/home/bitcoin/.lnd/lnd.pid
+  # Thundroid: system unit for lnd unlock script
+  # /etc/systemd/system/lnd-unlock.service
   
-  # add this line directly below ExecStart:
-  ExecStartPost=+/etc/lnd/unlock
+  [Unit]
+  Description=LND wallet unlock
+  After=lnd.service
+  Wants=lnd.service
+  
+  [Service]
+  ExecStart=/etc/lnd/unlock
+  Type=simple
+  
+  [Install]
+  WantedBy=multi-user.target
   ```
 
-* Edit the LND config file  
+* Edit the LND config file to enable the REST interface on port 8080  
+
   `$ sudo nano /home/bitcoin/.lnd/lnd.conf`  
 
   ```
@@ -227,15 +258,18 @@ This is why a script that automatically unlocks the wallet is helpful. The passw
   restlisten=localhost:8080
   ```
 
-* Reload the systemd unit, restart LND and watch the startup process to see if the wallet is automatically unlocked
+* Reload systemd and enable the new unit. Restart your Thundroid and watch the startup process to see if the wallet is automatically unlocked
 
   ```
   $ sudo systemctl daemon-reload
-  $ sudo systemctl restart lnd
+  $ sudo systemctl enable lnd-unlock.service
+  $ sudo shutdown -r now
+  ---- reconnect ----
+  # Unlocking the wallet will take several minutes due to the build in delay
   $ sudo journalctl -u lnd -f
   ```
 
-  
+*Note:  a more elegant way were to run the script with `ExecStartPost=+/etc/lnd/unlock` in the lnd.service unit. This would it able to unlock the wallet if LND service is restarted outside the startup process. The `=+` is necessary to run LND with user "bitcoin" and the unlock script with root privileges. Unfortunately, this is only supported starting with systemd version 331, but we are using version 229.*
 
 ## Start using the Lightning Network
 
@@ -282,8 +316,15 @@ You now have your own Bitcoin / Lightning full node. THe initially stated goals 
 Is it the perfect Bitcoin Lightning node yet? It's cluky and the command line does just not cut it. In Part 3 of this guide we will therefore go on to extend the Thundroid with additional applications that use it as our own private backend.
 
 * The **Electrum** desktop wallet is the perfect power-user wallet to handle regular on-chain Bitcoin transaction. Because it supports a wide variety of hardware-wallets, you private keys never need to be exposed to any (possibly compromised) online computer. With the **Electrum Personal Server** running on Thundroid, you have full control to send, receive & verify Bitcoin transactions with great security and privacy.
-* The **Shango** lightning mobile wallet is perfect for small, instant payments on the go. It connects to your Thundroid and provides a neat user interface on your iOS / Android phone to send and receive payments, manage peers and channels. While still in closed beta, I hope it will be public just in time.
+
+![Electrum desktop wallet](images/60_Electrum_receive.png)
+
+* The **Shango** lightning mobile wallet is perfect for small, instant payments on the go. It connects to your Thundroid and provides a neat user interface on your iOS / Android phone to send and receive payments, manage peers and channels. While still in closed beta, I hope it will be public just in time. 
+
+  ![Shango mobile wallet](images/60_shango.png)
+
+  
 
 ------
 
-See you soon in part 3 of the guide "The perfect Bitcoin Lightning️ node". 
+Join me in part 3 of the guide "The perfect Bitcoin Lightning️ node" soon to discover some cutting edge applications that work on top of our own Bitcoin full node!
