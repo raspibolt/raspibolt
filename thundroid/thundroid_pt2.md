@@ -5,7 +5,7 @@
 > This article was first published in the Odroid Magazine August 2018 issue. 
 >
 > [Part 1: Setup of Bitcoin & Lightning on testnet](https://github.com/Stadicus/guides/blob/master/thundroid/README.md)  
-> Part 2: Move to Bitcoin mainnet (this guide)
+> Part 2: Move to Bitcoin mainnet (this guide)  
 > Part 3: Additional apps like desktop & mobile wallet
 
 ## Introduction to Part 2: Mainnet!
