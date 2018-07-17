@@ -71,6 +71,24 @@ Before using this setup, please familiarize yourself with all components by sett
 
 * Save and exit
 
+### Adjust configuration
+
+* Stop the Bitcoin service.  
+  `$ sudo systemctl stop bitcoind` 
+  
+* Edit "bitcoin.conf" file by altering `disablewallet` to value `0`. Save and exit.  
+  `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
+```
+# Bitcoind options
+disablewallet=0
+```
+
+* Copy updated "bitcoin.conf" to user "admin" for credentials  
+  `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`
+  
+* Restart the Raspberry Pi  
+  `$ sudo shutdown -r now`
+
 ### Initial blockchain scan
 
 Before starting the server for real, the bitcoin addresses need to be generated and looked up on the blockchain.
