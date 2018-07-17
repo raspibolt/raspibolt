@@ -71,11 +71,9 @@ Before using this setup, please familiarize yourself with all components by sett
 
 * Save and exit
 
-### Adjust configuration
+### Enable Bitcoin Core wallet 
+Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresses to monitor the blockchain for you.
 
-* Stop the Bitcoin service.  
-  `$ sudo systemctl stop bitcoind` 
-  
 * Edit "bitcoin.conf" file by altering `disablewallet` to value `0`. Save and exit.  
   `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
 ```
@@ -86,8 +84,8 @@ disablewallet=0
 * Copy updated "bitcoin.conf" to user "admin" for credentials  
   `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`
   
-* Restart the Raspberry Pi  
-  `$ sudo shutdown -r now`
+* Restart bitcoind
+  `$ sudo systemctl restart bitcoind`
 
 ### Initial blockchain scan
 
