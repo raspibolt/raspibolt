@@ -273,6 +273,10 @@ If this command gives you an error, chances are that your external hard disk is 
 
 The usage of a swap file can degrade your SD card very quickly. Therefore, we will move it to the external hard disk.  
 
+* Delete the old swap file  
+  `$ sudo dphys-swapfile swapoff`  
+  `$ sudo dphys-swapfile uninstall`  
+
 * Edit the configuration file and replace existing entries with the ones below. Save and exit.  
   `$ sudo nano /etc/dphys-swapfile`
 
@@ -280,10 +284,6 @@ The usage of a swap file can degrade your SD card very quickly. Therefore, we wi
 CONF_SWAPFILE=/mnt/hdd/swapfile
 CONF_SWAPSIZE=1000
 ```
-
-* Delete the old swap file  
-  `$ sudo dphys-swapfile swapoff`  
-  `$ sudo rm /var/swap`  
 
 * Manually create new swap file  
   `$ sudo dd if=/dev/zero of=/mnt/hdd/swapfile count=1000 bs=1MiB`  
