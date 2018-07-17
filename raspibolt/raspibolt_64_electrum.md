@@ -71,6 +71,22 @@ Before using this setup, please familiarize yourself with all components by sett
 
 * Save and exit
 
+### Enable Bitcoin Core wallet 
+Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresses to monitor the blockchain for you.
+
+* Edit "bitcoin.conf" file by altering `disablewallet` to value `0`. Save and exit.  
+  `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
+```
+# Bitcoind options
+disablewallet=0
+```
+
+* Copy updated "bitcoin.conf" to user "admin" for credentials  
+  `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`
+  
+* Restart bitcoind
+  `$ sudo systemctl restart bitcoind`
+
 ### Initial blockchain scan
 
 Before starting the server for real, the bitcoin addresses need to be generated and looked up on the blockchain.
