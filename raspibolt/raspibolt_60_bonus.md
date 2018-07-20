@@ -34,6 +34,14 @@ The iOS & Android app Shango provides a neat interface for the RaspiBolt, to man
 
 [![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
 
+## [**Lnd Web Client**](raspibolt_68_shango.md)
+
+*Difficulty: intermediate*
+
+This web client lets you manage your Lightning node from your browser. Administer channels, send and receive payments. It^s configured to be accessible only from inside your home network.
+
+[![Electrum](images/60_lncliweb_gui_small.png)](raspibolt_69_lncli-web.md)
+
 ## [**Pimp the command line**](raspibolt_62_commandline.md)
 
 *Difficulty: easy*
