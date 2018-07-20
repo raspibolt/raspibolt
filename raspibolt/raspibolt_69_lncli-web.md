@@ -13,9 +13,9 @@
 
 Having a personal full node is great, but the command line interface is just not for everyday usage. At the end of the day the RaspiBolt is a backend that enables additional applications to run without a 3rd party. In my opinion these are the most important components that exist today:
 
-* Desktop wallet with hardware wallet integration for on-chain transactions: [Electrum Personal Server](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_64_electrum.md)
+* Desktop wallet with hardware wallet integration for on-chain transactions: [Electrum Personal Server](raspibolt_64_electrum.md)
 * Web interface for Lightning for desktop / mobile usage: <u>Lnd Web Client</u> (this guide)
-* Mobile wallet for Lightning payments on the go: [Shango wallet](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_68_shango.md)
+* Mobile wallet for Lightning payments on the go: [Shango wallet](raspibolt/raspibolt_68_shango.md)
 
 It would be great to have combined Bitcoin on-chain / Lightning wallets both for desktop and mobile usage. Rumors are that Electrum is working on it, and who knows, maybe Samourai will enable complete full node integration soon?
 
@@ -89,7 +89,7 @@ $ lncli getinfo
 
 #### Start Lnd Web Client
 
-We configure the firewall for local network access only, generate self signed SSL certificates and start the web interface manually to test it. See [my comments in the original setup](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_20_pi.md#enabling-the-uncomplicated-firewall) on how you may need to adjust the ip subnet mask.
+We configure the firewall for local network access only, generate self signed SSL certificates and start the web interface manually to test it. See [my comments in the original setup](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall) on how you may need to adjust the ip subnet mask.
 
 ```
 # still as "admin" user
