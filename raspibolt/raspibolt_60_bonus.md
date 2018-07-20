@@ -34,7 +34,7 @@ The iOS & Android app Shango provides a neat interface for the RaspiBolt, to man
 
 [![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
 
-## [**Lnd Web Client**](raspibolt_68_shango.md)
+## [**Lnd Web Client**](raspibolt_69_lncli-web.md)
 
 *Difficulty: intermediate*
 
