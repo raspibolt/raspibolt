@@ -122,6 +122,11 @@ maxpendingchannels=5
 alias=YOUR_NAME [LND]
 color=#68F442
 
+[RPC]
+# enable ports to connect wallets like ZAP with the node
+rpclisten=0.0.0.0:10009
+listen=0.0.0.0:9735
+
 [Bitcoin]
 bitcoin.active=1
 
