@@ -37,6 +37,15 @@ Open port 10009 so that Shango wallet can talk to your Lightning node. To be **s
 * **Reckless option**: for connections from everywhere. 
   * Add a new router port forwarding for port 10009 (see [this section](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_20_pi.md#port-forwarding) in the base guide)   
   * `$ sudo ufw allow 10009 comment 'allow LND grpc from public internet'`  
+  * Make sure the `tlsextraip` and/or `tlsextradomain` is configure in the LND configuartion (see above)  
+  * Delete the TLS certificates (they do not yet contain the external ip address)  
+    `$ sudo rm /home/bitcoin/.lnd/tls.*`
+  * Restart LND, so that new TLS certificates are generated  
+    `$ sudo systemctl restart lnd`  
+  * Copy the new certificates to user "admin", as they are needed to use `lncli`  
+    `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
+  * Test if `lncli` can use the new certificates  
+    `$ lncli getinfo`
 
 * Update and check your Uncomplicated Firewall  
   `$ sudo ufw enable`  
