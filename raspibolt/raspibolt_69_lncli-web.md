@@ -15,7 +15,7 @@ Having a personal full node is great, but the command line interface is just not
 
 * Desktop wallet with hardware wallet integration for on-chain transactions: [Electrum Personal Server](raspibolt_64_electrum.md)
 * Web interface for Lightning for desktop / mobile usage: <u>Lnd Web Client</u> (this guide)
-* Mobile wallet for Lightning payments on the go: [Shango wallet](raspibolt/raspibolt_68_shango.md)
+* Mobile wallet for Lightning payments on the go: [Shango wallet](raspibolt_68_shango.md)
 
 It would be great to have combined Bitcoin on-chain / Lightning wallets both for desktop and mobile usage. Rumors are that Electrum is working on it, and who knows, maybe Samourai will enable complete full node integration soon?
 
