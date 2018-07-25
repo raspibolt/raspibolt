@@ -59,7 +59,7 @@ We use the Bitcoin daemon, called “bitcoind”, that runs in the background wi
 * We add a symbolic link that points to the external hard disk.  
   `$ ln -s /mnt/hdd/bitcoin /home/bitcoin/.bitcoin`
 
-* Navigate to the home directory an d check the symbolic link (the target must not be red). The content of this directory will actually be on the external hard disk.  
+* Navigate to the home directory and check the symbolic link (the target must not be red). The content of this directory will actually be on the external hard disk.  
   `$ cd `  
   `$ ls -la`
 
