@@ -18,7 +18,7 @@ We will download the software directly from bitcoin.org, verify its signature to
 
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
-* Get the latest download links at bitcoin.org/en/download, they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
+* Get the latest download links at bitcoin.org/en/download (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
   `$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`  
   `$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc`  
   `$ wget https://bitcoin.org/laanwj-releases.asc`
