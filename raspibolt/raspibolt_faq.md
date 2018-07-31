@@ -99,3 +99,5 @@ $ lnd --version
   `$ lncli unlock`  
   `$ sudo journalctl -u lnd -f`  
 
+### Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 3 with a 64 bit processor?
+At the time of this writing (July 2018) there is no 64 bit operating system for the Raspberry Pi developed yet. The 64 bit processors of the Raspberry 3 versions are running in 32 bit compatibility mode with a 32 bit operating system.
