@@ -88,6 +88,8 @@ disablewallet=1
 # Connection settings
 rpcuser=raspibolt
 rpcpassword=PASSWORD_[B]
+rpcport=8332
+onlynet=ipv4
 zmqpubrawblock=tcp://127.0.0.1:29000
 zmqpubrawtx=tcp://127.0.0.1:29000
 
@@ -124,11 +126,12 @@ After=getpublicip.service
 #OnFailure=systemd-sendmail@%n
 
 [Service]
+ExecStartPre=/bin/sh -c 'sleep 30'
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=/home/bitcoin/.bitcoin/bitcoin.conf -pid=/home/bitcoin/.bitcoin/bitcoind.pid
+PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
 User=bitcoin
 Group=bitcoin
 Type=forking
-PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
-ExecStart=/usr/local/bin/bitcoind -daemon -conf=/home/bitcoin/.bitcoin/bitcoin.conf -pid=/home/bitcoin/.bitcoin/bitcoind.pid
 KillMode=process
 Restart=always
 TimeoutSec=120

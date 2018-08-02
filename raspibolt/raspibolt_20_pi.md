@@ -19,9 +19,9 @@ You will need several passwords and I find it easiest to write them all down in 
 If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass) and keep your original notes out of sight once your system is up and running.
 
 ## Preparing the operating system
-The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used, unless you want to use an HFS+ (macOS-formatted) hard drive. In that case, you must use the Raspbian Stretch With Desktop disk image (or build your own kernel including the hfsplus module).
+The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used.
 
-1. Download the [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image, or the [Raspbian Stretch With Desktop](https://www.raspberrypi.org/downloads/raspbian/) disk image if you want to use an HFS+ hard drive
+1. Download the [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image
 2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
 ### Enable Secure Shell
@@ -155,15 +155,16 @@ You are now on the command line of your own Bitcoin node. First we finish the Pi
 * Localisation `4`: set your timezone
 * Advanced `7`: run `Expand Filesystem` and set `Memory Split` to 16
 * Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
-* Make sure, all necessary software packages are installed  
-  `$ sudo apt-get install htop git curl bash-completion jq`
 
 ### Software update
 It is important to keep the system up-to-date with security patches and application updates. The “Advanced Packaging Tool” (apt) makes this easy:  
 `$ sudo apt-get update`  
-`$ sudo apt-get upgrade`
+`$ sudo apt-get upgrade`  
 
 :point_right: Do this regularly every few months to get security related updates.
+
+Make sure, all necessary software packages are installed  
+  `$ sudo apt-get install htop git curl bash-completion jq dphys-swapfile`
 
 ### Adding main user "admin"
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
@@ -193,11 +194,11 @@ The bitcoin and lightning processes will run in the background (as daemon) and u
   `$ sudo adduser bitcoin`
 
 ### Mounting external hard disk
-The external hard disk is attached to the file system and can be accessed as a regular folder (this is called “mounting”). Plug your hard disk into the running Pi and power the drive up. You can either work proceed with a newly formatted hard disk (recommended) or an existing disk that already contains data.
+To store the blockchain, we need a lot of space. As a server installation, the Linux native file system Ext4 is the best choice for the external hard disk, so we will format the hard disk, erasing all previous data. The external hard disk is then attached to the file system and can be accessed as a regular folder (this is called “mounting”). 
 
-#### Option 1 (recommended): Format hard disk with Ext4
-As a server installation, the Linux native file system Ext4 is the best choice for the external hard disk. 
-:warning: All data on this hard disk will be erased with the following steps! 
+:warning: **Previous data on this hard disk will be deleted!**
+
+* Plug your hard disk into the running Pi and power the drive up. 
 
 * Get the NAME for main partition on the external hard disk  
   `$ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL` 
@@ -210,34 +211,6 @@ As a server installation, the Linux native file system Ext4 is the best choice f
 * Edit the fstab file and the following as a new line (replace `UUID=123456`) at the end  
   `$ sudo nano /etc/fstab`  
   `UUID=123456 /mnt/hdd ext4 noexec,defaults 0 0` 
-
-#### Option 2: Use existing hard disk with NTFS
-If you want to use your existing hard disk that already contains the bitcoin mainnet blockchain, you can simply mount it as is:
-
-* Identify the partition and note the UUID at the left (eg. “12345678”) and verify the FSTYPE (should be “ntfs”)  
-  `$ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL `  
-  `$ sudo apt-get install ntfs-3g`
-
-* Open the file “/etc/fstab” in the Nano text editor and add the following line, but use the “UUID” noted above, save and exit  
-  `$ sudo nano /etc/fstab`  
-  `UUID=12345678 /mnt/hdd ntfs defaults,auto,umask=002,gid=bitcoin,users,rw 0 0`
-
-Please note that we mounted using `umask=002,gid=bitcoin`, which gives only the user “bitcoin” write access. User “admin” can only read and must use `sudo` when writing to the disk.
-
-#### Option 3: Use existing hard disk with HFS+ (macOS)
-If you have the bitcoin mainnet blockchain on a macOS machine you can place it on a hard disk formatted as HFS+ and mount on your Raspberry Pi. NOTE: the hfsplus driver is not included as part of the Raspian Stretch Lite disk image; you must have used the [Raspbian Stretch With Desktop](https://www.raspberrypi.org/downloads/raspbian/) disk image.
-
-* Identify the partition and note the UUID at the left (eg. “12345678”) and verify the FSTYPE (should be hfsplus)  
-  `$ sudo lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL `  
-
-* Open the file “/etc/fstab” in the Nano text editor and add the following line, but use the “UUID” noted above, save and exit  
-  `$ sudo nano /etc/fstab`  
-  `UUID=12345678       /mnt/hdd        hfsplus force,rw,auto,umask=002,gid=bitcoin,users       0       0`
-
-Please note that we mounted using `umask=002,gid=bitcoin`, which gives only the user “bitcoin” write access. User “admin” can only read and must use `sudo` when writing to the disk.
-
-#### Continue for all options
-The following steps are valid regardless of the chosen option above.
 
 * Create the directory to add the hard disk and set the correct owner  
   `$ sudo mkdir /mnt/hdd`
@@ -273,7 +246,7 @@ If this command gives you an error, chances are that your external hard disk is 
 
 The usage of a swap file can degrade your SD card very quickly. Therefore, we will move it to the external hard disk.  
 
-* Delete the old swap file  
+* As user "admin", delete the old swap file  
   `$ sudo dphys-swapfile swapoff`  
   `$ sudo dphys-swapfile uninstall`  
 
@@ -282,7 +255,9 @@ The usage of a swap file can degrade your SD card very quickly. Therefore, we wi
 
 ```
 CONF_SWAPFILE=/mnt/hdd/swapfile
-CONF_SWAPSIZE=1000
+
+# comment or delete the CONF_SWAPSIZE line. It will then be created dynamically 
+#CONF_SWAPSIZE=
 ```
 
 * Manually create new swap file  
