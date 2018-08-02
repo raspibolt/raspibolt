@@ -155,15 +155,16 @@ You are now on the command line of your own Bitcoin node. First we finish the Pi
 * Localisation `4`: set your timezone
 * Advanced `7`: run `Expand Filesystem` and set `Memory Split` to 16
 * Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
-* Make sure, all necessary software packages are installed  
-  `$ sudo apt-get install htop git curl bash-completion jq`
 
 ### Software update
 It is important to keep the system up-to-date with security patches and application updates. The “Advanced Packaging Tool” (apt) makes this easy:  
 `$ sudo apt-get update`  
-`$ sudo apt-get upgrade`
+`$ sudo apt-get upgrade`  
 
 :point_right: Do this regularly every few months to get security related updates.
+
+Make sure, all necessary software packages are installed  
+  `$ sudo apt-get install htop git curl bash-completion jq dphys-swapfile`
 
 ### Adding main user "admin"
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
@@ -245,7 +246,7 @@ If this command gives you an error, chances are that your external hard disk is 
 
 The usage of a swap file can degrade your SD card very quickly. Therefore, we will move it to the external hard disk.  
 
-* Delete the old swap file  
+* As user "admin", delete the old swap file  
   `$ sudo dphys-swapfile swapoff`  
   `$ sudo dphys-swapfile uninstall`  
 
@@ -254,7 +255,6 @@ The usage of a swap file can degrade your SD card very quickly. Therefore, we wi
 
 ```
 CONF_SWAPFILE=/mnt/hdd/swapfile
-CONF_SWAPSIZE=1000
 ```
 
 * Manually create new swap file  
