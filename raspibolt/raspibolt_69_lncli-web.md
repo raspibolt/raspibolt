@@ -29,11 +29,11 @@ Starting as the "admin" user, we add the new user "web", install Node.js, create
 
 #### Install Node.js
 
-Installation and update of Node.js as described on [nodejs.org](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions). I recommend to use Node.js 8, as version 10 can lead to issues.
+Installation and update of Node.js as described on [nodejs.org](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions). I recommend to use Node.js 8, as version 10 can lead to issues. We also make sure that python is installed.
 
 ```
 $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-$ sudo apt-get install nodejs
+$ sudo apt-get install nodejs python
 $ sudo npm i npm@latest -g
 ```
 
@@ -164,6 +164,7 @@ You can remove and add additional DNS and IP entries, just pay attention to the 
 
 ```
 $ sudo su - bitcoin
+$ cd .lnd
 $ openssl ecparam -genkey -name prime256v1 -out tls.key
 $ openssl req -new -sha256 \
             -key tls.key \
@@ -173,6 +174,7 @@ $ openssl req -new -sha256 \
                 <(printf "\n[SAN]\nsubjectAltName=\
                      DNS:localhost,\
                      DNS:ln.yourdomain.com,\
+                     IP:127.0.0.1,\
                      IP:192.168.0.20,\
                      IP:11.22.33.44\
                  ")) \
@@ -188,6 +190,7 @@ $ openssl req -x509 -sha256 -days 36500 \
                 <(printf "\n[SAN]\nsubjectAltName=\
                      DNS:localhost,\
                      DNS:ln.yourdomain.com,\
+                     IP:127.0.0.1,\
                      IP:192.168.0.20,\
                      IP:11.22.33.44\
                  "))
