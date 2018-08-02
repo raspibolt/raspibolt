@@ -255,6 +255,9 @@ The usage of a swap file can degrade your SD card very quickly. Therefore, we wi
 
 ```
 CONF_SWAPFILE=/mnt/hdd/swapfile
+
+# comment or delete the CONF_SWAPSIZE line. It will then be created dynamically 
+#CONF_SWAPSIZE=
 ```
 
 * Manually create new swap file  
