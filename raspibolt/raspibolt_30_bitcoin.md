@@ -88,7 +88,7 @@ disablewallet=1
 # Connection settings
 rpcuser=raspibolt
 rpcpassword=PASSWORD_[B]
-rpcport=8332
+
 onlynet=ipv4
 zmqpubrawblock=tcp://127.0.0.1:29000
 zmqpubrawtx=tcp://127.0.0.1:29000
