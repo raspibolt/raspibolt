@@ -232,7 +232,7 @@ $ sudo dphys-swapfile setup
 $ sudo dphys-swapfile swapon
 
 # reboot, login as "admin" and delete old swapfile
-$ restart shutdown -r now  
+$ shutdown -r now  
 $ sudo rm /var/swap
 ```
 
