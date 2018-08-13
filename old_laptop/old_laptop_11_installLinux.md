@@ -46,9 +46,9 @@ Rufus ne nécessite pas d'installation. Contentez-vous donc d'exécuter le fichi
 
 ![](images/Tuto_linux2.PNG)
 
-1. La clé USB qui va vous servir à installer Linux sur votre futur noeud Bitcoin. **Attention, la clé sera formattée durant l'opération et toutes les données existantes effacées, pensez bien à sauvegarder d'éventuels fichiers importants sur votre disque dur !**
-2. La version de Linux que vous allez installer. Cliquez sur "Sélection" et sélectionnez le fichier .iso que vous avez télécharger en 1.
-3. Le schéma de partition est la façon dont sont organisée les données d'initialisation du système sur un disque dur. Il y a un ancien standard, _MBR_, et un nouveau, _GPT_. Dans la pratique, tous les ordinateurs utilisent GPT depuis une quinzaine d'années, et vous avez vraiment peu de chance de vous tromper en choisissant GPT. Si votre matériel est particulièrement vieux, renseignez-vous un peu plus. Ou essayez avec GPT, et si ça ne marche pas recommencer l'opération en MBR, cela ira probablement plus vite que d'essayer de comprendre. 
+1. La clé USB qui va vous servir à installer Linux sur votre futur noeud Bitcoin. **Attention, la clé sera formatée durant l'opération et toutes les données existantes effacées, pensez bien à sauvegarder d'éventuels fichiers importants sur votre disque dur !**
+2. La version de Linux que vous allez installer. Cliquez sur "Sélection" et sélectionnez le fichier .iso que vous avez téléchargé en 1.
+3. Le schéma de partition est la façon dont sont organisée les données d'initialisation du système sur un disque dur. Il y a un ancien standard, _MBR_, et un nouveau, _GPT_. Dans la pratique, tous les ordinateurs utilisent GPT depuis une quinzaine d'années, et vous avez vraiment peu de chance de vous tromper en choisissant GPT. Si votre matériel est particulièrement vieux, renseignez-vous un peu plus. Ou essayez avec GPT, et si ça ne marche pas recommencez l'opération en MBR, cela ira probablement plus vite que d'essayer de comprendre. 
 4. Comme dit plus haut, Rufus va formater votre clé. A priori, vous n'avez pas besoin de toucher aux options par défaut ici. 
 5. Quand tout est bon, cliquez sur "Démarrer". L'opération ne devrait pas prendre plus de quelques minutes. 
 
@@ -80,7 +80,7 @@ Normalement vous devriez pouvoir démarrer sur le système Linux de votre clé U
 
 Après quelques instants vous devriez voir apparaître un bureau vide identique à celui-là :
 
-![](images/Lubuntu1.JPG)
+![](images/Lubuntu1.png)
 
 Il s'agit de ce que l'on appelle une version _live_ d'un système d'exploitation, c'est à dire que toutes les modifications que vous ferez disparaîtront quand vous éteindrez l'ordinateur (enfin... il est aussi possible de sauvegarder des fichiers sur ce type d'installation, mais en fait on s'en fout pour ce tuto).
 
@@ -88,12 +88,12 @@ Quand vous aurez terminé de jouer avec Linux, cliquez sur "Install Lubuntu" (la
 
 Quand Lubuntu vous demande si vous préférez une installation "normale" ou "minimale", je vous conseille de choisir la seconde option. Après tout, cet ordinateur ne vous servira qu'à Bitcoin, inutile de le surcharger avec des applications multimédia !
 
-![](images/Lubuntu2.JPG)
+![](images/Lubuntu2.png)
 
 Enfin, il vous demandera si vous souhaitez conserver votre installation de Windows. Cela n'a pas grand sens pour notre projet, sélectionnez donc la seconde option "Effacer le disque et installer Lubuntu". 
 **Attention : jusque là, il est toujours possible de revenir en arrière et de récupérer le contenu de votre disque dur. Assurez-vous que vous avez récupéré tous les fichiers qui vous intéressent avant d'aller plus loin.**
 
-![](images/Lubuntu3.JPG)
+![](images/Lubuntu3.png)
 
 Vous pouvez également encrypter votre disque dur. Concrètement, cela signifie qu'un mot de passe supplémentaire sera demandé à chaque démarrage. C'est évidemment une sécurité en cas de vol de votre ordinateur, à vous de voir selon votre situation. 
 
