@@ -18,3 +18,13 @@ https://github.com/Stadicus/guides/blob/master/thundroid/README.md
 
 
 Feedback, issues and pull requests welcome!
+
+---
+
+# Guide en français (par Sosthène)
+
+**Recycler votre vieux laptop en noeud Bitcoin + Lightning**
+(Toujours à la recherche d'un nom aussi cool que 'Odroid' ou 'Raspibolt', suggestions vivement encouragées)
+
+[Travail en cours](https://github.com/BobleChinois/guides/tree/master/old_laptop)
+
