@@ -44,7 +44,7 @@ Vous pourrez télécharger la dernière version [ici](https://rufus.akeo.ie/).
 
 Rufus ne nécessite pas d'installation. Contentez-vous donc d'exécuter le fichier que vous avez télécharger, et vous devriez voir apparaître la fenêtre suivante :
 
-![](../images/Tuto_linux2.PNG)
+![](images/Tuto_linux2.PNG)
 
 1. La clé USB qui va vous servir à installer Linux sur votre futur noeud Bitcoin. **Attention, la clé sera formattée durant l'opération et toutes les données existantes effacées, pensez bien à sauvegarder d'éventuels fichiers importants sur votre disque dur !**
 2. La version de Linux que vous allez installer. Cliquez sur "Sélection" et sélectionnez le fichier .iso que vous avez télécharger en 1.
@@ -62,7 +62,7 @@ Nous allons maintenant ouvrir le BIOS de votre ordinateur, ce qui fait en géné
 
 Mais si, vous savez, le BIOS, c'est ça :
 
-![](../images/Bios1.JPG)
+![](images/Bios1.JPG)
 
 Le problème, c'est que ce menu et la façon d'y accéder varie selon les constructeurs ou même les modèles. Par conséquent, je ne peux pas vous donner de consignes précises pour le vôtre, il faudra éventuellement chercher sur internet si vous séchez.
 
@@ -70,7 +70,7 @@ En général, on accède au BIOS en appuyant (frénétiquement) soit sur la touc
 
 Une fois que vous y êtes, vous devriez avoir une foule d'options différentes, et parmi elle recherchez "BOOT" (cf capture d'écran ci-dessus). Il vous faudra sûrement ajouter la clé USB comme option de boot, comme ci-dessous.
 
-![](![](../images/Bios2.JPG)
+![](images/Bios2.JPG)
 
 Ou bien peut-être que non, mais dans tous les cas cela ne devrait pas être trop compliqué !
 
@@ -80,7 +80,7 @@ Normalement vous devriez pouvoir démarrer sur le système Linux de votre clé U
 
 Après quelques instants vous devriez voir apparaître un bureau vide identique à celui-là :
 
-![](../images/Lubuntu1.JPG)
+![](images/Lubuntu1.JPG)
 
 Il s'agit de ce que l'on appelle une version _live_ d'un système d'exploitation, c'est à dire que toutes les modifications que vous ferez disparaîtront quand vous éteindrez l'ordinateur (enfin... il est aussi possible de sauvegarder des fichiers sur ce type d'installation, mais en fait on s'en fout pour ce tuto).
 
@@ -88,12 +88,12 @@ Quand vous aurez terminé de jouer avec Linux, cliquez sur "Install Lubuntu" (la
 
 Quand Lubuntu vous demande si vous préférez une installation "normale" ou "minimale", je vous conseille de choisir la seconde option. Après tout, cet ordinateur ne vous servira qu'à Bitcoin, inutile de le surcharger avec des applications multimédia !
 
-![](../images/Lubuntu2.JPG)
+![](images/Lubuntu2.JPG)
 
 Enfin, il vous demandera si vous souhaitez conserver votre installation de Windows. Cela n'a pas grand sens pour notre projet, sélectionnez donc la seconde option "Effacer le disque et installer Lubuntu". 
 **Attention : jusque là, il est toujours possible de revenir en arrière et de récupérer le contenu de votre disque dur. Assurez-vous que vous avez récupéré tous les fichiers qui vous intéressent avant d'aller plus loin.**
 
-![](../images/Lubuntu3.JPG)
+![](images/Lubuntu3.JPG)
 
 Vous pouvez également encrypter votre disque dur. Concrètement, cela signifie qu'un mot de passe supplémentaire sera demandé à chaque démarrage. C'est évidemment une sécurité en cas de vol de votre ordinateur, à vous de voir selon votre situation. 
 
