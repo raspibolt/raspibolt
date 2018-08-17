@@ -286,7 +286,8 @@ One of the best options to secure the SSH login is to completely  disable the pa
 * Set up SSH keys for the "admin" user by following this article:  *Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers*  
   https://www.tecmint.com/ssh-passwordless-login-with-putty
 
-You should now generated three files. Keep them safe, we will now disable the password login. ![SSH Keys filelist](images/20_ssh_keys_filelist.png)
+You should now generated three files. Keep them safe, we will now disable the password login.  
+![SSH Keys filelist](images/20_ssh_keys_filelist.png)
 
 * Logout (`exit`) and make sure that you can log in as "admin" with your SSH key
 * Edit ssh config file
