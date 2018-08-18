@@ -386,7 +386,7 @@ $ gpg --verify SHA256SUMS.asc
 > Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 ```
 
-![commands to check bitcoind signature](/images/30_verify_signature.png)
+![commands to check bitcoind signature](images/30_verify_signature.png)
 
 Extract the Bitcoin Core binaries, install them and check the version. 
 
