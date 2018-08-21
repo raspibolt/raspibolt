@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ **Preparations** ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ **Preparations** ] 
 
 -------
 ### Un guide pour recycler votre vieux portable en noeud Bitcoin et ⚡Lightning️⚡
@@ -8,12 +8,14 @@
 
 ## Pré-requis technique
 
-Pour ce guide, j'ai décidé de recycler un de mes anciens ordinateurs portables. 
+Pour ce guide, j'ai décidé de recycler un de mes anciens ordinateurs portables. Il s'agit d'un vieux HP de 2009 acheté dans une petite boutique d'informatique de Hangzhou, en Chine. Sa coque ne tient plus que par une ou deux vis, il n'a plus de batterie et dort au fond de mon placard depuis au moins 4 ans.
 
-Votre ordinateur n'a certainement pas les mêmes caractéristiques que le mien, il n'y a donc pas beaucoup de sens à ce que je vous en parle. En revanche, je dois attirer votre attention sur quelques points précis qui vont nous permettre de nous assurer que votre ordinateur sera bien en mesure de faire tourner notre noeud !
-* Processeur : si vous souhaitez faire la synchronisation initiale sur la machine-même, veillez à ce que votre machine dispose au minimum d'un quad-core de milieu-haut de gamme pas trop ancien. De mon expérience, un quad-core i7 de 2013 s'en sort à peu près honorablement, mais sur un vieux dual-core de 2009 c'était la catastrophe !
-* RAM : De ma propre expérience, je dirai qu'avec 8Go de mémoire vive allouées en quasi-totalité à bitcoin, on ne s'en sort pas trop mal. Si vous avez moins de 4Go, cela risque d'être problématique. 
-* Votre disque dur contient-il 500 Go ou davantage ? Si oui, vous pouvez envisager de vous passer d'un disque dur externe. Sinon, je vous conseille fortement d'investir dans un petit HDD de 500 Go minimum. Une alimentation externe est **fortement recommandée** (on parle d'un disque qui va rester sous tension H24, je ne fais pas confiance à l'alimentation fournie par la plupart des ports USB de laptop pour ce type d'utilisation). 
+Il est le candidat parfait pour devenir notre premier Zorilla !
+
+Votre ordinateur n'a certainement pas les mêmes caractéristiques que le mien, et je dois donc attirer votre attention sur quelques points précis qui vont nous permettre de nous assurer que votre ordinateur sera bien en mesure de devenir lui aussi un Zorilla (en tout cas sans trop d'encombres) !
+* Processeur : si vous souhaitez faire la synchronisation initiale sur la machine-même, veillez à ce que votre machine dispose au minimum d'un quad-core de milieu-haut de gamme pas trop ancien. De mon expérience, un quad-core i7 de 2013 s'en sort à peu près honorablement, mais sur le vieux dual-core de mon Zorilla c'était la catastrophe !
+* RAM : De ma propre expérience, je dirai qu'avec 8Go de mémoire vive allouées en quasi-totalité à bitcoin, on ne s'en sort pas trop mal. Si vous avez moins de 4Go, cela risque de vous ralentir considérablement pour la synchronisation initiale. En phase de run vous vous en sortirez très bien avec 2Go, peut-être même moins. 
+* Votre disque dur contient-il 500 Go ou davantage ? Si oui, vous pouvez envisager de vous passer d'un disque dur externe. Sinon, je vous conseille fortement d'investir dans un petit HDD de 500 Go minimum. Si vous avez davantage de moyens et que vous êtes bricoleur, vous pouvez même carrément changer le disque dur interne pour un SDD, ce qui améliorera sensiblement les performances générales (mais pensez bien à prendre au moins 500 Go). /*Une alimentation externe est **fortement recommandée** (on parle d'un disque qui va rester sous tension H24, je ne fais pas confiance à l'alimentation fournie par la plupart des ports USB de laptop pour ce type d'utilisation).*/
 * Une connexion internet. Placez votre noeud dans un endroit où il capte bien le signal wifi de votre box. Si vous pouvez le brancher en filaire, c'est encore mieux. Là encore, voulez-vous synchronisez votre noeud directement sur cette machine ? Si oui, alors il vous faut une connection plutôt bonne car Bitcoin va télécharger plus de 200 Go en quelques heures/jours. Sinon, la consommation de Bitcoin en _run_ est très modeste. 
 
 En fait, vous devez maintenant vous poser la question de la façon dont vous allez effectuer votre synchronisation initiale de la blockchain de Bitcoin, c'est-à-dire le téléchargement et la validation de l'intégralité de l'historique de transactions sur (quasiment) 10 ans !
@@ -33,7 +35,7 @@ Comme pour moi, installer un noeud Bitcoin sur votre vieux portable est donc l'o
 De toutes façons, vous n'avez pas vraiment le choix :
 * Si vous utilisez un ordinateur un peu ancien, Linux est bien plus léger que Windows qui a tendance à faire tourner un peu n'importe quoi en arrière-plan. Installez Linux augmentera significativement les performances que vous pourrez tirer d'un matériel obsolète. 
 * Linux est bien supérieur à Windows en termes de sécurité et de stabilité, vous n'aurez pas à vous embêtez avec un antivirus et vous aurez beaucoup moins de plantages.
-* Notre objectif est de mettre en place un serveur que vous pourrez interroger y compris quand vous n'êtes pas chez vous. Vous vous imaginez devoir rouvrir l'écran juste pour vérifier que tout va bien avec l'interface graphique ? Je comprends que les lignes de commande vous fassent peur, mais elles ont l'avantage d'être une interface très légère qui vous permettra de contrôler votre noeud à distance, même dans des conditions de connectivité limitées. 
+* Notre objectif est de mettre en place un serveur que vous pourrez interroger y compris quand vous n'êtes pas chez vous. Vous vous imaginez devoir rouvrir l'écran juste pour vérifier que tout va bien avec l'interface graphique ? Je comprends que les lignes de commande vous fassent peur, mais elles ont l'avantage d'être une interface très légère qui vous permettra de contrôler votre noeud à distance, même dans des conditions de connectivité limitée. 
 
 La première étape pour vous sera donc de virer l'installation vétuste de Windows qui se trouve sur votre ancien ordinateur pour [mettre un Linux flambant neuf à la place](old_laptop_11_installLinux.md). 
 
@@ -54,14 +56,14 @@ Cette synchronisation initiale nécessite de réaliser les opérations suivantes
 :point_right: Vous pouvez vous référer à cet article (en anglais) pour plus d'informations [Running a Full Node](https://bitcoin.org/en/full-node).
 
 Comme vous pouvez le voir, la synchronisation initiale est une opération assez lourde qui peut se heurter à trois limitations de votre machine :
-* Bande-passante
+* bande-passante de votre connexion internet
 * puissance processeur
 * mémoire vive
 
 Si vous êtes limité sur un de ces trois paramètres, la synchronisation peut prendre jusqu'à plusieurs semaines ! Il est alors beaucoup plus intéressant d'effectuer cette synchronisation initiale sur une machine plus puissante, et de donner une blockchain déjà validée à votre Zorilla, qui pourra ensuite valider les nouveaux blocs et les nouvelles transactions sans difficulté.
 
 ### Synchronisation initiale sur une autre machine
-Je pars du principe que vous êtes sur Windows (désolé pour nos amis riches qui ont un Mac). De toutes façons installer Bitcoin Core n'a rien de compliqué. Autre bonne nouvelle : les données de Bitcoin sont parfaitement compatibles entre les différents systèmes d'exploitation. 
+Je pars du principe que vous êtes sur Windows (désolé pour nos amis riches qui ont un Mac). De toutes façons installer Bitcoin Core n'a rien de compliqué, vous devriez trouver sans problèmes l'équivalent du tuto ci-dessous pour Mac. Bonne nouvelle : les données de Bitcoin sont parfaitement compatibles entre les différents systèmes d'exploitation, aucune question à se poser de ce point de vue. 
 
 Le téléchargement peut se faire de préférence sur le disque dur interne (temps d'accès plus rapide) si vous avez suffisamment de place (attention la blockchain continue de grandir, pour mes lecteurs du futur vérifiez d'abord sa taille actuelle). Si vous avez prévu d'utiliser un disque dur externe, vous pouvez aussi faire directement la synchronisation sur le disque en question (mais dans ce cas-là il faudra faire attention à la compatibilité des différents formats de disque). 
 
@@ -69,14 +71,16 @@ Selon la configuration que vous choisirez, vous devrez :
 
 * copier la blockchain depuis votre ordinateur Windows (ou Apple) vers votre Zorilla via le réseau local. 
 
-* brancher directement le disque dur externe contenant les données sur le Zorilla.
+* brancher directement le disque dur externe contenant les données validées sur le Zorilla.
+
+Nous verrons ces deux options le moment venu. 
 
 ###  Télécharger et installer Bitcoin Core
-Bitcoin Core est l'implémentation de référence de Bitcoin. Comme Bitcoin est un logiciel libre, n'importe qui peut écrire sa propre version du logiciel, et plusieurs l'ont fait. Quand vous serez devenu un expert, vous pourrez expérimenter avec d'autres implémentations, mais en attendant il est plus sage de ne pas sortir des sentiers battus.
+Bitcoin Core est l'implémentation de référence de Bitcoin. Comme Bitcoin est un logiciel libre, n'importe qui peut écrire sa propre version du logiciel, et plusieurs l'ont effectivement fait. Quand vous serez devenu un expert, vous pourrez expérimenter avec d'autres implémentations, mais en attendant il est plus sage de ne pas sortir des sentiers battus.
 
 Télécharger le fichier d'installation de Bitcoin Core depuirs bitcoin.org/download et déplacez-le dans le répertoire dans lequel vous souhaitez télécharger la blockchain. 
 
-Une bonne habiture à prendre est de vérifier l'authenticité d'un programme que vous venez de télécharger, surtout quand il y a potentiellement beaucoup d'argent en jeu. Pour ce faire, nous allons calculer son _checksum_ et le comparer avec celui fourni par le développeur du logiciel. Cela permet de s'assurer que ce que vous avez téléchargé est bien conforme au logiciel d'origine, et qu'il ne lui a pas été substitué une version piratée. 
+Une bonne habitude à prendre est de vérifier l'authenticité d'un programme que vous venez de télécharger, surtout quand il y a potentiellement beaucoup d'argent en jeu. Pour ce faire, nous allons calculer son _checksum_ et le comparer avec celui fourni par le développeur du logiciel. Cela permet de s'assurer que ce que vous avez téléchargé est bien conforme au logiciel d'origine, et qu'il ne lui a pas été substitué une version piratée. 
 
 Pour ce faire, nous allons utiliser la tant redoutée _console de commande_. Respirez profondément, tout va bien se passer. 
 
@@ -111,7 +115,7 @@ Exécuter le fichier d'installation de Bitcoin Core (il est possible que deviez 
 
 Bitcoin Core va démarrer après quelques instants et commencer immédiatement la synchronisation. **Attention**, si vous souhaitez installer un noeud Lightning, il est très important de construire un index de transactions (cf ci-dessus). Il faut donc dire à Bitcoin Core de réaliser cette tâche. Cela se fait en modifiant un fichier texte “bitcoin.conf” qui est automatiquement créé dans le répertoire de données au lancement de Bitcoin (si ce n'est pas le cas, vous pouvez aussi le créer vous-même, prenez simplement garde à le nommer correctement pour que Bitcoin le reconnaisse). 
 
-Pour modifier ce fichier, nous allons ouvrir le menu, puis `Paramètres` / `Options` et cliquer sur le bouton `Ouvrir le fichier de configuration`. Saisissez alors la ligne suivante pour dire à Bitcoin que vous voulez qu'il construire un index de transactions :
+Pour modifier ce fichier, nous allons ouvrir le menu, puis `Paramètres` / `Options` et cliquer sur le bouton `Ouvrir le fichier de configuration`. Saisissez alors la ligne suivante pour dire à Bitcoin que vous voulez qu'il construise un index de transactions :
 ```
 txindex=1
 ```
@@ -124,6 +128,3 @@ dbcache=6000
 Sauvegardez et fermez le fichier de configuration, quittez Bitcoin Core avec `Fichier` / `Quitter`, et relancez le programme. La synchronisation devrait reprendre là où elle s'était arrêtée. 
 
 Voilà, vous pouvez désormais laisser la blockchain se synchroniser toute seule pendant que nous allons configurer notre Zorilla.
-
----
-Next: [Raspberry Pi >>](raspibolt_20_pi.md)
