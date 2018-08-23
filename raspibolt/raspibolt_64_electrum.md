@@ -148,6 +148,9 @@ On your regular computer, configure Electrum to use your RaspiBolt:
 * `Close` and check connection in tab "Console"
 
   [![Check Electrum console](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_electrumwallet.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrumwallet.png)
+  
+* This can also be achived by starting the Electrum wallet with the following command line arguments:  
+  `--oneserver --server 192.168.0.20:50002:s`
 
 ### Update
 
