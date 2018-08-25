@@ -18,6 +18,14 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 [![MotD system overview](images/60_status_overview.png)](raspibolt_61_system-overview.md)
 
+## [Auto unlock LND on startup](raspibolt_6A_auto-unlock.md)
+
+*Difficulty: easy*
+
+Manually unlocking the LND wallet every time the system starts is not really feasible if your RaspiBolt is meant to run reliably somewhere in a closet. This script automatically unlocks the wallet on startup or service-restart. This comes at a minimal security cost, however, as the password needs to be stored on the device.
+
+
+
 ## [**Electrum Personal Server**](raspibolt_64_electrum.md)
 
 *Difficulty: intermediate*
