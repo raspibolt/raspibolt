@@ -1,56 +1,59 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ **Raspberry Pi** ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations]() ] -- [ **Thunder Badger** ] 
 
 -------
-### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
+### Un guide pour recycler votre vieux portable en noeud Bitcoin et ⚡Lightning️⚡
 --------
 
-# Raspberry Pi
+# Le Thunder Badger
 
-## Write down your passwords
-You will need several passwords and I find it easiest to write them all down in the beginning, instead of bumping into them throughout the guide. They should be unique and very secure, at least 12 characters in length. Do **not use uncommon special characters**, spaces or quotes (‘ or “).
-```
-[ A ] Master user password
-[ B ] Bitcoin RPC password
-[ C ] LND wallet password
-[ D ] LND seed password (optional)
-```
+## Noter vos mots de passe
+Vous allez avoir besoin de plusieurs mots de passe tout au long de ce guide. Il sera certainement plus simple de tous les définir et les noter avant de commencer plutôt que de buter dedans au fur et à mesure. Chaque mot de passe doit être unique et sûr, au moins 12 caractères de long. **L'utilisation de caractères spéciaux peu communs est déconseillée**, ainsi que celle des espaces ou des guillemets (' ou ").
+
+1. un mot de passe "super user" pour Linux,
+2. un mot de passe pour chiffrer votre portefeuille Bitcoin,
+3. un mot de passe pour chiffrer votre portefeuille LND,
+4. et optionellement, un pour la seed du portefeuille de LND
+
 ![xkcd: Password Strength](images/20_xkcd_password_strength.png)
 
-If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass) and keep your original notes out of sight once your system is up and running.
+Si vous avez besoin d'inspiration pour créer vos mots de passe, [cette bande dessinnée](https://xkcd.com/936/) devrait vous aider. 
 
-## Preparing the operating system
-The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used, unless you want to use an HFS+ (macOS-formatted) hard drive. In that case, you must use the Raspbian Stretch With Desktop disk image (or build your own kernel including the hfsplus module).
+Stockez vos mots de passe de préférence dans un gestionnaire de mots de passe plutôt que dans un fichier texte en clair ou une app de prise de notes type Evernote. Personnellement j'utilise [Dashlane](https://www.dashlane.com/), mais il en existe plein d'autres tout aussi efficace. Garder une copie sur papier peut aussi être une bonne idée (en tout cas c'est ce que je fais moi).
 
-1. Download the [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image, or the [Raspbian Stretch With Desktop](https://www.raspberrypi.org/downloads/raspbian/) disk image if you want to use an HFS+ hard drive
-2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
+### Démarrer le Thunder Badger
+Si ce n'est pas déjà fait, mettez le Thunder Badger sous tension comme vous le faites habituellement. 
 
-### Enable Secure Shell
-Without keyboard or screen, no direct interaction with the Pi is possible during the initial setup. After writing the image to the Micro SD card, create an empty file called “ssh” (without extension) in the main directory of the card. This causes the Secure Shell (ssh) to be enabled from the start and we will be able to login remotely. 
+(Si vous avez encrypté votre disque dur lors de l'installation, Lubuntu vous demandera d'abord le mot de passe pour décrypter le disque.) 
 
-* Create a file `ssh` in the main directory of the MicroSD card
+(Initialisation du mot de passe de l'utilisateur principal ?)
 
-### Prepare Wifi 
-I would not recommend it, but you can run your RaspiBolt with a wireless network connection. To avoid using a network cable for the initial setup, you can pre-configure the wireless settings:
+Vous devriez rapidement arriver sur un écran de login, rien d'inhabituel, c'est tout à fait similaire à ce que vous voyez sur Windows ou Mac. Saisissez votre mot de passe et attendez d'être sur le bureau. 
 
-* Create a file `wpa_supplicant.conf` on the MicroSD card with the following content:
-```
-country=[COUNTRY_CODE]
-ctrl_interface=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-network={
-    ssid=[WIFI_SSID]
-    psk=[WIFI_PASSWORD]
-}
-```
-* Replace `[COUNTRY_CODE]` with the [ISO2 code](https://www.iso.org/obp/ui/#search) of your country (eg. `US`)
-* Replace `[WIFI_SSID]` and `[WIFI_PASSWORD]` with the credentials for your own WiFi.
+## Présentation de Linux et du terminal
+_Si vous utilisez déjà Linux, vous pouvez passer directement à la partie suivante._
 
+Avant d'aller plus loin, je vais d'abord vous présenter sommairement les bases de Linux et surtout des fameuses lignes de commande.
 
-### Start your Pi
-* Safely eject the sd card from your computer
-* Insert the sd card into the Pi
-* If you did not already setup Wifi: connect the Pi to your network with an ethernet cable
-* Start the Pi by connecting it to the mobile phone charger using the Micro USB cable
+### Vocabulaire
+* **Terminal** (_aussi appelée **console**, ou **shell**_) : il s'agit d'une fenêtre ne pouvant afficher que du texte, et qui vous permet de taper des instructions qui sont ensuite exécutées par l'ordinateur.
+
+![exemple de console](images/old_laptop_20_ThBd1.png)
+_`sosthene` est l'utilisateur, `Aubergine` le nom de l'ordinateur, `~` est mon emplacement dans l'ordinateur (en l'occurrence, mon propre répertoire utilisateur, l'équivalent de "Mes documents" dans Windows), `$` signifie que vous pouvez taper une instruction
+
+**Note** : toutes les commandes que je vous demanderai de taper dans votre terminal commenceront par le symbole `$`. **Vous n'avez pas besoin de copier ce symbole**, uniquement ce qui suit.
+
+* **Repository** (_souvent abrégé en **repo**_) : Linux permet d'installer facilement un grand nombre d'applications sur un principe qui vous sera certainement familier, puisqu'il ressemble en fait beaucoup aux _app store_ popularisés par les smartphones. Un repository est une sorte d'entrepôt virtuel duquel vous pouvez télécharger et mettre à jour une ou des applications. 
+
+* **Git** : le [logiciel de gestion de versions](https://fr.wikipedia.org/wiki/Git) le plus répandu actuellement. Concrètement, Git permet à plusieurs personnes de travailler sur le même code sans se perdre dans ses différentes versions et modifications. Rassurez-vous, vous n'en aurez pas besoin, mais il est indispensable pour télécharger et mettre à jour certains logiciels en cours de développement. Il est souvent installé par défaut sur la plupart des distributions de Linux.
+
+	** **[Github](https://github.com/)** : à ne pas confondre avec Git, Github est simplement une plateforme basée sur Git, extrêmement populaire dans le monde du logiciel libre. Les utilisateurs créent des **repositories** qui contiennent le code de leur projet. Le code de Bitcoin Core est [ici](https://github.com/bitcoin/bitcoin).
+	** **`$git clone`** : c'est la seule commande que vous aurez besoin de retenir. Elle permet de télécharger le code d'un **repository Github** sur votre ordinateur (on dit souvent "en local"). Par exemple, taper `$git clone https://github.com/bitcoin/bitcoin.git` dans votre **terminal** télécharge tout le code de Bitcoin Core dans le répertoire courant, c'est-à-dire le répertoire où vous vous trouvez. 
+
+## Configuration du Thunder Badger
+Normalement vous devriez déjà avoir installé Lubuntu (ou une autre distribution de Linux) sur votre Thunder Badger. Si ce n'est pas le cas, allez d'abord lire [cette page](old_laptop_11_installLinux.md) et revenez ici ensuite.
+
+### Activer Secure Shell (SSH)
+À moins que votre Thunder Badger ait particulièrement souffert et n'ait plus d'écran, vous devriez toujours pouvoir l'ouvrir et l'utiliser "normalement" (de la même façon que vous êtes en train d'utiliser votre ordinateur pour lire cet article). Quoique non indispensable en soi, l'installation et la configuration de SSH est une étape **fortement recommandée**, car cela vous permettra de vous connecter à votre Thunder Badger de n'importe quel autre poste, où que vous vous trouviez dans le monde. Toutes les opérations nécessaires peuvent être réalisées en ligne de commande via SSH, et vous ne devriez avoir besoin de rouvrir l'écran qu'en cas de gros problème (plantage, impossibilité de se connecter en SSH...).
 
 ## Connecting to the network
 The node is starting and getting a new address from your home network. This address can change over time. To make the Pi reachable from the internet, we assign it a fixed address.
