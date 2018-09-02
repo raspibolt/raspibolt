@@ -118,8 +118,8 @@ Le problème, c'est qu'en général l'adresse IP locale est "dynamique", c'est-�
 Pour ce faire, nous allons devoir nous connecter à l'interface de notre box internet. Pour cela, nous avons besoin de l'adresse IP locale de celle-ci. Si vous ne la connaissez pas, voici comment faire : 
 
 * ouvrir un terminal depuis un ordinateur connecté à votre box (sur Windows, cliquer sur "Démarrer" et taper `cmd` directement ou bien dans la barre de recherche, puis Entrée)
-* saisir la commande `ipconfig` pour Windows, `ifconfig` sur Linux
-* chercher `Passerelle par défaut` (“Default Gateway”) pour Windows, `eth0` et `inet address` pour Linux
+* saisir la commande `ipconfig` pour Windows, `route` sur Linux
+* chercher `Passerelle par défaut` (“Default Gateway”) pour Windows, `default` pour Linux
 
 Ou, plus simplement encore, chercher dans Google votre fournisseur d'accès + "box addresse ip" :smirk:
 
