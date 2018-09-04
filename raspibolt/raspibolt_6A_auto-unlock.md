@@ -17,7 +17,7 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   `$ sudo mkdir /etc/lnd`   
   `$ sudo nano /etc/lnd/pwd` 
 
-* The following script unlocks the LND wallet through its web service (REST interface). Copy it into a new file. The initial sleep delay waits for `lnd` to be ready. 4 minutes (240s) seem to work fine, but that can be adjusted if you run into timeout issues.   
+* The following script unlocks the LND wallet through its web service (REST interface). Copy it into a new file. The initial sleep delay waits for `lnd` to be ready. 3 minutes (180s) seem to work fine, but that can be adjusted if you run into timeout issues.   
   `$ sudo nano /etc/lnd/unlock`   
 
   ```bash
@@ -25,7 +25,7 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   # LND wallet auto-unlock script
   # 2018 by meeDamian, robclark56
   
-  /bin/sleep 240s
+  /bin/sleep 180s
   LN_ROOT=/home/bitcoin/.lnd
   
   curl -s \
@@ -55,6 +55,9 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   
   # add this line directly below ExecStart:
   ExecStartPost=+/etc/lnd/unlock
+  
+  # make sure that the overall timeout is longer than the unit timeout, eg. 240s
+  TimeoutSec=240
   ```
 
 * Edit the LND config file to enable the REST interface on port 8080  
