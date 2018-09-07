@@ -56,7 +56,7 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   # add this line directly below ExecStart:
   ExecStartPost=+/etc/lnd/unlock
   
-  # make sure that the overall timeout is longer than the unit timeout, eg. 240s
+  # make sure that the overall timeout is longer than the script wait time, eg. 240s
   TimeoutSec=240
   ```
 
@@ -73,10 +73,10 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   ```bash
   $ sudo systemctl daemon-reload
   $ sudo systemctl restart lnd
-  $ sudo journalctl -u lnd -f
   ```
 
-
+* You can observe how the LND starts and the wallet is unlocked by loggin into a second session and watching the log file:  
+  `$ sudo journalctl -u lnd -f`
 
 ------
 
