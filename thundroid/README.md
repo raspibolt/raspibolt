@@ -507,7 +507,8 @@ WantedBy=multi-user.target
    `$ sudo systemctl enable bitcoind.service`
 * Copy `bitcoin.conf` to user "admin" home directory for RPC credentials  
    `$ mkdir /home/admin/.bitcoin`  
-   `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`
+   `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`  
+   `$ sudo chown admin:admin /home/admin/.bitcoin/bitcoin.conf` 
 * Restart the Thundroid  
    `$ sudo shutdown -r now`
 
@@ -518,7 +519,7 @@ After rebooting, the bitcoind should start and begin to sync and validate the Bi
 * Wait a bit, reconnect via SSH and login with the user “admin”.
 
 * Check the status of the bitcoin daemon that was started by systemd (exit with `Ctrl-C`)  
-  `$ systemctl status bitcoind`
+  `$ sudo systemctl status bitcoind`
 
 ![Bitcoind status ](images/30_status_bitcoin.png)
 
