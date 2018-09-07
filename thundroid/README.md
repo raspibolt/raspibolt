@@ -655,7 +655,7 @@ WantedBy=multi-user.target
 * enable and start LND  
    `$ sudo systemctl enable lnd`  
    `$ sudo systemctl start lnd`  
-   `$ systemctl status lnd`
+   `$ sudo systemctl status lnd`
 * monitor the LND logfile in realtime (exit with `Ctrl-C`)  
    `$ sudo journalctl -f -u lnd`
 
@@ -682,7 +682,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)   is all
 
 ### Assign LND permissions to "admin"
 
-* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).
+* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).  
    `$ ls -la /home/bitcoin/.lnd/`
 
 ![Check macaroon](images/40_ls_macaroon.png)
