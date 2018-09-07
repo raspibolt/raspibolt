@@ -813,7 +813,8 @@ Execute the Bitcoin Core installation file (you might need to  right-click and c
 
 ![Bitcoin Core directory selection](images/10_bitcoinqt_directory.png)
 
-Bitcoin Core opens and starts immediately syncing the blockchain.  Now, we need to set one **very important** additional setting in the  “bitcoin.conf” file. If not set, the the whole blockchain will be useless and needs to be re-validated! Using the menu, open `Settings` / `Options` and click the button `Open Configuration File`. Enter the following line:
+:warning: **IMPORTANT: The next step is crucial. Without `txindex=1` your whole Bitcoin blockchain will be useless** :warning:  
+Bitcoin Core opens and starts immediately syncing the blockchain. We need to set one **very important** additional setting in the  “bitcoin.conf” file. Using the menu, open `Settings` / `Options` and click the button `Open Configuration File`. Enter the following line:
 
 ```
 txindex=1
