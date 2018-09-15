@@ -208,16 +208,16 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 
 ### Assign LND permissions to "admin"
 
-* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).  
+* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created.  
   `$ ls -la /home/bitcoin/.lnd/`
 
 ![Check macaroon](images/40_ls_macaroon.png)
 
 * Copy permission files and TLS cert to user "admin" to use `lncli`  
-  `$ mkdir /home/admin/.lnd`  
+  `$ cd /home/bitcoin/`  
+  `$ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/`  
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
-  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
-  `$ sudo chown -R admin:admin /home/admin/.lnd/ ` 
+  `$ sudo chown -R admin:admin /home/admin/.lnd/`  
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
   `$ lncli unlock`
 * Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).

@@ -83,7 +83,6 @@ testnet=1
 server=1
 daemon=1
 txindex=1
-disablewallet=1
 
 # Connection settings
 rpcuser=raspibolt
@@ -121,9 +120,6 @@ The system needs to run the bitcoin daemon automatically in the background, even
 Description=Bitcoin daemon
 Wants=getpublicip.service
 After=getpublicip.service
-
-# for use with sendmail alert (coming soon)
-#OnFailure=systemd-sendmail@%n
 
 [Service]
 ExecStartPre=/bin/sh -c 'sleep 30'
