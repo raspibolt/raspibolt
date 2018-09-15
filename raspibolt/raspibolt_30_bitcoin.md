@@ -90,8 +90,8 @@ rpcuser=raspibolt
 rpcpassword=PASSWORD_[B]
 
 onlynet=ipv4
-zmqpubrawblock=tcp://127.0.0.1:29000
-zmqpubrawtx=tcp://127.0.0.1:29000
+zmqpubrawblock=tcp://127.0.0.1:28332
+zmqpubrawtx=tcp://127.0.0.1:28333
 
 # Raspberry Pi optimizations
 dbcache=100
