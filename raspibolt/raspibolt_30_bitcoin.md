@@ -21,7 +21,7 @@ We download the latest Bitcoin Core binaries (the application) and compare the f
 * Get the latest download links at bitcoincore.org/en/download (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
   `$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.2/bitcoin-0.16.2-arm-linux-gnueabihf.tar.gz`  
   `$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.2/SHA256SUMS.asc`  
-  `$ wget https://bitcoincore.org/laanwj-releases.asc`
+  `$ wget https://bitcoin.org/laanwj-releases.asc`
 
 * Check that the reference checksum matches the real checksum  
   `$ sha256sum --check SHA256SUMS.asc --ignore-missing`  
