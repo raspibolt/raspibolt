@@ -99,7 +99,7 @@ The following information is directly taken from the [lnd v0.5-beta release note
 
 ---
 
-The 0.5-beta release doesn't include any strictly breaking changes. So a result, users should find the upgrade process to be smooth. If one is upgrading from 0.4.2, the initial starting logs should look something like:
+The `0.5-beta` release doesn't include any *strictly* breaking changes. So a result, users should find the upgrade process to be smooth. If one is upgrading from 0.4.2, the initial starting logs should look something like:
 
 ```
 2018-09-14 11:16:36.876 [INF] LTND: Version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
@@ -126,16 +126,25 @@ The 0.5-beta release doesn't include any strictly breaking changes. So a result,
 2018-09-14 11:16:36.876 [INF] CHDB: Migration to properly prune edge update index complete!
 ```
 
-One lncli related change that users running on simnet or testnet will notice is that the default location for macaroons has now changed. As a result, lnd will generate a new set of macaroons after it has initially been upgraded. Further details will be found below, but lnd will now generate a distinct set of macaroons for simnet, testnet, and mainnet. As a result, you may need to supply additional arguments for lncli to have it work as normal on testnet like so:
+One `lncli` related change that users running on `simnet` or `testnet` will notice is that the default location for macaroons has now changed. As a result, `lnd` will generate a **new set of macaroons** after it has initially been upgraded. Further details will be found below, but `lnd` will now generate a distinct set of macaroons for `simnet`, `testnet`, and `mainnet`. As a result, you may need to supply additional arguments for `lncli` to have it work as normal on `testnet` like so:
 
+```
 lncli --network=testnet getinfo
+```
+
 or
 
+```
 lncli --chain=litecoin --network=testnet getinfo
+```
+
 In order to cut down on the typing one needs to go through, we recommend creating an alias like so:
 
+``` 
 alias tlncli=lncli --network=testnet
-NOTE: In this release, the --noencryptwallet command line and config argument to lnd has been phased out. It has instead been replaced with an argument identical in functionality, but distinct in naming: --noseedbackup. The rationale for this change is to remove the foot gun that was the prior config value, as many users would unknowingly create mainnet nodes using the argument. This is dangerous, as if done, the user wouldn't receive a recovery mnemonic to recover their on-chain funds in the case of disaster. We've changed the name of the argument to better reflect the underlying semantics.
+```
+
+**NOTE**: In this release, the `--noencryptwallet` command line and config argument to `lnd` has been phased out. It has instead been replaced with an argument identical in functionality, but distinct in naming: `--noseedbackup`. The rationale for this change is to remove the foot gun that was the prior config value, as many users would unknowingly create *mainnet* nodes using the argument. This is dangerous, as if done, the user wouldn't receive a *recovery mnemonic* to recover their on-chain funds in the case of disaster. We've changed the name of the argument to better reflect the underlying semantics.
 
 ---
 
