@@ -25,8 +25,17 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   # LND wallet auto-unlock script
   # 2018 by meeDamian, robclark56
   
-  /bin/sleep 180s
   LN_ROOT=/home/bitcoin/.lnd
+  
+  upSeconds="$(cat /proc/uptime | grep -o '^[0-9]\+')"
+  upMins=$((${upSeconds} / 60))
+
+  if [ "${upMins}" -lt "5" ]
+  then
+    /bin/sleep 180s
+  else
+    /bin/sleep 10s
+  fi
   
   curl -s \
           -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/admin.macaroon)" \
