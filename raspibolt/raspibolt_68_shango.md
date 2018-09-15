@@ -9,6 +9,8 @@
 ## Bonus guide: Shango Mobile Lightning Wallet
 *Difficulty: medium*
 
+> Please note: this guide has not been updated to LND 0.5 yet and might not work as intended.
+
 The mobile app Shango (http://shangoapp.com) allows the managment of the Lightning daemon on your RaspiBolt. It provides 
 an status overview, lists peers, allows to open & close channels, make payments and create invoices.
 
