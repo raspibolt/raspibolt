@@ -9,8 +9,6 @@
 ## Bonus guide: Auto-unlock LND on startup
 *Difficulty: medium*
 
-> Please note: this guide has not been updated to LND 0.5 yet and might not work as intended.
-
 It takes a litte getting used to the fact that the LND wallet needs  to be manually unlocked everytime the LND daemon is restarted. This  makes sense from a security perspective, as the wallet is encrypted and  the key is not stored on the same machine. For reliable operations,  however, this is not optimal, as you can easily recover LND after it  restarts for some reason (crash or power outage), but then it's stuck  with a locked wallet and cannot operate at all.
 
 This is why a script that automatically unlocks the wallet is  helpful. The password is stored in a root-only directory as plaintext,  so clearly not so secure, but for reasonable amounts this is a good  middle-ground in my opinion. You can always decide to stick to manual  unlocking, or implement a solution that unlocks the wallet from a remote  machine.
@@ -40,7 +38,7 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   fi
   
   curl -s \
-          -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/admin.macaroon)" \
+          -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/data/chain/bitcoin/mainnet/admin.macaroon)" \
           --cacert ${LN_ROOT}/tls.cert \
           -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
           https://localhost:8080/v1/unlockwallet > /dev/null 2>&1
