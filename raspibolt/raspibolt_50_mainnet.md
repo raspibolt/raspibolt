@@ -48,12 +48,6 @@ We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winsc
 
 :point_right:_ Additional information: [Bitcoin Core data directory structure](https://en.bitcoin.it/wiki/Data_directory)
 
-### Error regarding timestamps
-When using an NTFS external hard disk, you might get the following error:  
-**Upload of file '.....' was successful, but error occurred while setting the permissions and/or timestamp.**
-
-You can safely ignore this and choose `Skip all` as NTFS does not support the necessary timestamp methods.
-
 ### Disable password login again
 * As user "admin", remove the `#` in front of "PasswordAuthentication no" to enable the line. Save and exit.  
   `$ sudo nano /etc/ssh/sshd_config`  
@@ -67,7 +61,6 @@ You can safely ignore this and choose `Skip all` as NTFS does not support the ne
 To avoid burning our testnet Bitcoin, and as a courtesy to the next testers, we close all our channels and withdraw the funds to the address stated on the website of the [Bitcoin Testnet Faucet](https://testnet.manu.backend.hamburg/faucet).  
 
 * `$ lncli closeallchannels`
-
 
 * Wait unitl the the channel balance is zero and the funds to be back in our on-chain wallet.  
   `$ lncli channelbalance`  
@@ -130,10 +123,11 @@ bitcoin.mainnet=1
 
 * Copy permission files and TLS cert to user "admin" to use `lncli`  
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
-  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
+  `$ cd /home/bitcoin/`  
+  `$ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/`  
 
 * Restart `lnd` and unlock your wallet (enter `password [C]` )  
-  `$ sudo systemctl restart lnd`
+  `$ sudo systemctl restart lnd`  
   `$ lncli unlock`   
 
 * Monitor the LND startup progress until it caught up with the mainnet blockchain (about 515k blocks at the moment). This can take up to 2 hours, then you see a lot of very fast chatter (exit with `Ctrl-C`).  
@@ -143,11 +137,6 @@ bitcoin.mainnet=1
   `$ lncli getinfo`
 
 :point_right: **Important**: you need to manually unlock the lnd wallet after each restart of the lnd service! 
-
-:point_right: See further below for **Known Issues**
-
-
-
 
 ## Start using the Lightning Network
 
@@ -231,34 +220,6 @@ There are a lot of great resources to explore the Lightning mainnet in regard to
 * [Recksplorer](https://rompert.com/recksplorer/): Lightning Network Map
 * [1ML](https://1ml.com): Lightning Network Search and Analysis Engine
 * [lnroute.com](http://lnroute.com): comprehensive Lightning Network resources list
-
-
-
-
-----
-
-## Known issues
-
-#### Big log files
-
-LND v0.4-beta creates a lot of chatter and can, under some circumstances, create huge log files. In extreme cases, this can fill up the Pi's SD card within a day and bring down your node. These issues are already addressed, but not available in an updated binary release yet.
-
-You can detect a full file system like this:
-
-* The line listed as `/dev/root/` would have zero or very little available disk space  
-  `$ df`
-* You should not simply delete the log files, but empty them. Check what files are too big (> 100 MB):   
-  `$ sudo su`  
-  `$ cd /var/log`  
-  `$ ls -lah`
-* Delete large files ending in `.1`  
-  `$ rm *.1`
-* Empty active files, eg. "daemon" or "syslog"  
-  `$ > daemon`  
-  `$ > syslog`
-* Now, it's probably a good idea to reboot (don't forget to `lncli unlock`) 
-  `$ sudo shutdown -r now`
-
 
 ---
 Next: [Bonus >>](raspibolt_60_bonus.md)
