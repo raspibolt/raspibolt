@@ -70,27 +70,28 @@ WantedBy=multi-user.target
 Now to the good stuff: download, verify and install the LND binaries.
 ```
 $ cd /home/admin/download
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.2-beta/lnd-linux-arm-v0.4.2-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.2-beta/manifest-v0.4.2-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.2-beta/manifest-v0.4.2-beta.txt.sig
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-armv7-v0.5-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig
 $ wget https://keybase.io/roasbeef/pgp_keys.asc
 
-$ sha256sum --check manifest-v0.4.2-beta.txt --ignore-missing
-> lnd-linux-arm-v0.4.2-beta.tar.gz: OK
+$ sha256sum --check manifest-v0.5-beta.txt --ignore-missing
+> lnd-linux-armv7-v0.5-beta.tar.gz: OK
 
 $ gpg ./pgp_keys.asc
-> 65317176B6857F98834EDBE8964EA263DD637C21
+> BD599672C804AF2770869A048B80CD2BB8BD8132
 
 $ gpg --import ./pgp_keys.asc
-$ gpg --verify manifest-v0.4.2-beta.txt.sig
+$ gpg --verify manifest-v0.5-beta.txt.sig
 > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
-> Primary key fingerprint: 6531 7176 B685 7F98 834E  DBE8 964E A263 DD63 7C21
+> Primary key fingerprint: BD59 9672 C804 AF27 7086  9A04 8B80 CD2B B8BD 8132
+>      Subkey fingerprint: F803 7E70 C12C 7A26 3C03  2508 CE58 F7F8 E20F D9A2
 
-$ tar -xzf lnd-linux-arm-v0.4.2-beta.tar.gz
+$ tar -xzf lnd-linux-armv7-v0.5-beta.tar.gz
 $ ls -la
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm-v0.4.2-beta/*
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5-beta/*
 $ lnd --version
-> lnd version 0.4.2-beta commit=7cf5ebe2650b6798182e10be198c7ffc1f1d6e19
+> lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
 ```
 ![Checksum LND](images/40_checksum_lnd.png)
 
@@ -207,16 +208,16 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 
 ### Assign LND permissions to "admin"
 
-* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).  
+* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created.  
   `$ ls -la /home/bitcoin/.lnd/`
 
 ![Check macaroon](images/40_ls_macaroon.png)
 
 * Copy permission files and TLS cert to user "admin" to use `lncli`  
-  `$ mkdir /home/admin/.lnd`  
+  `$ cd /home/bitcoin/`  
+  `$ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/`  
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
-  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
-  `$ sudo chown -R admin:admin /home/admin/.lnd/ ` 
+  `$ sudo chown -R admin:admin /home/admin/.lnd/`  
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
   `$ lncli unlock`
 * Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).
