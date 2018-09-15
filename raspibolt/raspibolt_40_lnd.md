@@ -192,7 +192,7 @@ Once LND is started, the process waits for us to create the integrated Bitcoin w
 
 * Create the LND wallet  
 
-  `$ lncli create` 
+  `$ lncli --network=testnet create` 
 
 * If you want to create a new wallet, enter your `password [C]` as wallet password, select `n` regarding an existing seed and enter the optional `password [D]` as seed passphrase. A new cipher seed consisting of 24 words is created.
 
@@ -218,7 +218,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
   `$ sudo chown -R admin:admin /home/admin/.lnd/`  
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
-  `$ lncli unlock`
+  `$ lncli --network=testnet unlock`
 * Monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).
   `$ sudo journalctl -f -u lnd`
 
@@ -226,14 +226,14 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 
 Now your Lightning node is ready. To use it in testnet, you can get some free testnet bitcoin from a faucet.
 * Generate a new Bitcoin address to receive funds on-chain  
-  `$ lncli newaddress np2wkh`  
+  `$ lncli --network=testnet newaddress np2wkh`  
   `> "address": "2NCoq9q7............dkuca5LzPXnJ9NQ"` 
 
 * Get testnet bitcoin:  
   https://testnet.manu.backend.hamburg/faucet
 
 * Check your LND wallet balance  
-  `$ lncli walletbalance`  
+  `$ lncli --network=testnet walletbalance`  
 
 * Monitor your transaction (the faucet shows the TX ID) on a Blockchain explorer:  
   https://testnet.smartbit.com.au
@@ -243,10 +243,10 @@ As soon as your funding transaction is mined and confirmed, LND will start to op
 
 Get yourself a payment request on [StarBlocks](https://starblocks.acinq.co/#/) or [Y’alls](https://yalls.org/) and move some coins!
 
-* `$ lncli listpeers`  
-* `$ lncli listchannels`  
-* `$ lncli sendpayment --pay_req=lntb32u1pdg7p...y0gtw6qtq0gcpk50kww`  
-* `$ lncli listpayments`  
+* `$ lncli --network=testnet listpeers`  
+* `$ lncli --network=testnet listchannels`  
+* `$ lncli --network=testnet sendpayment --pay_req=lntb32u1pdg7p...y0gtw6qtq0gcpk50kww`  
+* `$ lncli --network=testnet listpayments`  
 
 :point_right: see [Lightning API reference](http://api.lightning.community/) for additional information
 
