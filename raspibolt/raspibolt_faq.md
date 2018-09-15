@@ -89,73 +89,26 @@ $ gpg --verify manifest-v0.5-beta.txt.sig
 >      Subkey fingerprint: F803 7E70 C12C 7A26 3C03  2508 CE58 F7F8 E20F D9A2
 
 $ tar -xzf lnd-linux-armv7-v0.5-beta.tar.gz
-$ ls -la
 $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5-beta/*
 $ lnd --version
 > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
+$ sudo systemctl restart lnd
 ```
 
-The following information is directly taken from the [lnd v0.5-beta release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta): 
+With this release, a new set of macaroons will be created under the chain data directory for each supported network. For example, one can find the mainnet invoice macaroon for Bitcoin at:  
+`~/.lnd/data/chain/bitcoin/testnet/invoice.macaroon`  
 
----
-
-The `0.5-beta` release doesn't include any *strictly* breaking changes. So a result, users should find the upgrade process to be smooth. If one is upgrading from 0.4.2, the initial starting logs should look something like:
-
+Copy the new set of macaroons to your admin user, otherwise this user cannot use `lncli`. The new macaroon location also affects the [auto-unlock script](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_6A_auto-unlock.md) you might be running.
 ```
-2018-09-14 11:16:36.876 [INF] LTND: Version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
-2018-09-14 11:16:36.876 [INF] LTND: Active chain: Bitcoin (network=simnet)
-2018-09-14 11:16:36.876 [INF] CHDB: Checking for schema update: latest_version=6, db_version=0
-2018-09-14 11:16:36.876 [INF] CHDB: Performing database schema migration
-2018-09-14 11:16:36.876 [INF] CHDB: Applying migration #1
-2018-09-14 11:16:36.876 [INF] CHDB: Populating new node update index bucket
-2018-09-14 11:16:36.876 [TRC] CHDB: Adding 02765c691ce59134606665199882ceb4b689e8da3d9f5db8712dd2e1fe0960c418 to node update index
-2018-09-14 11:16:36.876 [INF] CHDB: Populating new edge update index bucket
-2018-09-14 11:16:36.876 [INF] CHDB: Migration to node and edge update indexes complete!
-2018-09-14 11:16:36.876 [INF] CHDB: Applying migration #2
-2018-09-14 11:16:36.876 [INF] CHDB: Migrating invoice database to new time series format
-2018-09-14 11:16:36.876 [INF] CHDB: Migration to invoice time series index complete!
-2018-09-14 11:16:36.876 [INF] CHDB: Applying migration #3
-2018-09-14 11:16:36.876 [INF] CHDB: Applying migration #4
-2018-09-14 11:16:36.876 [INF] CHDB: Migration of edge policies complete!
-2018-09-14 11:16:36.876 [INF] CHDB: Applying migration #5
-2018-09-14 11:16:36.876 [INF] CHDB: Migrating database to support payment statuses
-2018-09-14 11:16:36.876 [INF] CHDB: Marking all known circuits with status InFlight
-2018-09-14 11:16:36.876 [INF] CHDB: Marking all existing payments with status Completed
-2018-09-14 11:16:36.876 [INF] CHDB: Applying migration #6
-2018-09-14 11:16:36.876 [INF] CHDB: Migrating database to properly prune edge update index
-2018-09-14 11:16:36.876 [INF] CHDB: Migration to properly prune edge update index complete!
+$ rm /home/admin/.lnd/admin.macaroon
+$ cd /home/bitcoin/
+$ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/
+$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
+$ sudo chown -R admin:admin /home/admin/.lnd
+$ lncli getinfo
 ```
 
-One `lncli` related change that users running on `simnet` or `testnet` will notice is that the default location for macaroons has now changed. As a result, `lnd` will generate a **new set of macaroons** after it has initially been upgraded. Further details will be found below, but `lnd` will now generate a distinct set of macaroons for `simnet`, `testnet`, and `mainnet`. As a result, you may need to supply additional arguments for `lncli` to have it work as normal on `testnet` like so:
-
-```
-lncli --network=testnet getinfo
-```
-
-or
-
-```
-lncli --chain=litecoin --network=testnet getinfo
-```
-
-In order to cut down on the typing one needs to go through, we recommend creating an alias like so:
-
-``` 
-alias tlncli=lncli --network=testnet
-```
-
-**NOTE**: In this release, the `--noencryptwallet` command line and config argument to `lnd` has been phased out. It has instead been replaced with an argument identical in functionality, but distinct in naming: `--noseedbackup`. The rationale for this change is to remove the foot gun that was the prior config value, as many users would unknowingly create *mainnet* nodes using the argument. This is dangerous, as if done, the user wouldn't receive a *recovery mnemonic* to recover their on-chain funds in the case of disaster. We've changed the name of the argument to better reflect the underlying semantics.
-
----
-
-
-* Restart service  
-  `$ sudo systemctl start lnd`
-
-* Copy permission files and TLS cert to user "admin" to use `lncli`   
-  `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
-  `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
-  `$ sudo chown -R admin:admin /home/admin/.lnd/ `   
+Please take a look at the [lnd v0.5-beta release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) that cover additional changes. 
 
 * Don't forget to unlock your wallet & check logs  
   `$ lncli unlock`  
