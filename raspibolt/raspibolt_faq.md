@@ -21,7 +21,7 @@ This is a (very) short list of common Linux commands for your reference. For a s
 | `ls` | list directory content | `ls -la /mnt/hdd` |
 | `cp` | copy | `cp file.txt newfile.txt` |
 | `mv` | move | `mv file.txt moved_file.txt`
-| `rm` | remove | `mv temporaryfile.txt`
+| `rm` | remove | `rm temporaryfile.txt`
 | `mkdir` | make directory | `mkdir /home/bitcoin/newdirectory`
 | `ln` | make link | `ln -s /target_directory /link`
 | `sudo` | run command as superuser | `sudo nano textfile.txt`
