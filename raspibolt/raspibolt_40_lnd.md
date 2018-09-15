@@ -118,7 +118,6 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
 
 [Application Options]
 debuglevel=info
-debughtlc=true
 maxpendingchannels=5
 alias=YOUR_NAME [LND]
 color=#68F442
