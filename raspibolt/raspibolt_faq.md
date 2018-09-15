@@ -65,50 +65,59 @@ https://github.com/bitcoin/bitcoin/releases
 * As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
 
-* Only if upgrading from version v0.4.0-beta or lower, delete the macaroon files. LND will create new and additional ones (otherwise you might expect [this issue](https://github.com/lightningnetwork/lnd/issues/921)) and can no longer create invoices).  
+* If upgrading from version a version lower than v0.5 delete the macaroon files.  
   `$ sudo rm /home/bitcoin/.lnd/*.macaroon`
 
-* Verify and install the LND last binaries
-```
-$ cd /home/admin/download
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-armv7-v0.5-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig
-$ wget https://keybase.io/roasbeef/pgp_keys.asc
+* Verify and install the latest LND binaries  
+  ```
+  $ cd /home/admin/download
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-armv7-v0.5-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig
+  $ wget https://keybase.io/roasbeef/pgp_keys.asc
+  
+  $ sha256sum --check manifest-v0.5-beta.txt --ignore-missing
+  > lnd-linux-armv7-v0.5-beta.tar.gz: OK
+  
+  $ gpg ./pgp_keys.asc
+  > BD599672C804AF2770869A048B80CD2BB8BD8132
+  
+  $ gpg --import ./pgp_keys.asc
+  $ gpg --verify manifest-v0.5-beta.txt.sig
+  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
+  > Primary key fingerprint: BD59 9672 C804 AF27 7086  9A04 8B80 CD2B B8BD 8132
+  >      Subkey fingerprint: F803 7E70 C12C 7A26 3C03  2508 CE58 F7F8 E20F D9A2
+  
+  $ tar -xzf lnd-linux-armv7-v0.5-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5-beta/*
+  $ lnd --version
+  > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
+  ```
 
-$ sha256sum --check manifest-v0.5-beta.txt --ignore-missing
-> lnd-linux-armv7-v0.5-beta.tar.gz: OK
+* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, re save and exit.  
+  ```
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`  
+  zmqpubrawblock=tcp://127.0.0.1:28332
+  zmqpubrawtx=tcp://127.0.0.1:28333
+  
+  $ sudo systemctl restart bitcoind
+  $ sudo systemctl restart lnd
+  ```
 
-$ gpg ./pgp_keys.asc
-> BD599672C804AF2770869A048B80CD2BB8BD8132
+Also, the macaroons are now located under the chain data directory for each supported network. For example, one can find the mainnet invoice macaroon for Bitcoin at:  
+  `~/.lnd/data/chain/bitcoin/testnet/invoice.macaroon`  
 
-$ gpg --import ./pgp_keys.asc
-$ gpg --verify manifest-v0.5-beta.txt.sig
-> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
-> Primary key fingerprint: BD59 9672 C804 AF27 7086  9A04 8B80 CD2B B8BD 8132
->      Subkey fingerprint: F803 7E70 C12C 7A26 3C03  2508 CE58 F7F8 E20F D9A2
+* Copy the new set of macaroons to your admin user, otherwise this user cannot use `lncli`. The new macaroon location also affects the [auto-unlock script](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_6A_auto-unlock.md) you might be running.
+  ```
+  $ rm /home/admin/.lnd/admin.macaroon
+  $ cd /home/bitcoin/
+  $ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/
+  $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
+  $ sudo chown -R admin:admin /home/admin/.lnd
+  $ lncli getinfo
+  ```
 
-$ tar -xzf lnd-linux-armv7-v0.5-beta.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5-beta/*
-$ lnd --version
-> lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
-$ sudo systemctl restart lnd
-```
-
-With this release, a new set of macaroons will be created under the chain data directory for each supported network. For example, one can find the mainnet invoice macaroon for Bitcoin at:  
-`~/.lnd/data/chain/bitcoin/testnet/invoice.macaroon`  
-
-Copy the new set of macaroons to your admin user, otherwise this user cannot use `lncli`. The new macaroon location also affects the [auto-unlock script](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_6A_auto-unlock.md) you might be running.
-```
-$ rm /home/admin/.lnd/admin.macaroon
-$ cd /home/bitcoin/
-$ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/
-$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
-$ sudo chown -R admin:admin /home/admin/.lnd
-$ lncli getinfo
-```
-
-Please take a look at the [lnd v0.5-beta release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) that cover additional changes. 
+Please take a look at the [lnd v0.5-beta release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) that cover additional changes and many new features. 
 
 * Don't forget to unlock your wallet & check logs  
   `$ lncli unlock`  
