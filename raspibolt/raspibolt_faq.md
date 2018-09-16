@@ -94,17 +94,20 @@ https://github.com/bitcoin/bitcoin/releases
   > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
   ```
 
-* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Also, `debughtlc` is no longer allowed and needs to be deleted. Edit `bitcoin.conf`, re save and exit.  
+* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`  
-  #debughtlc=true
   zmqpubrawblock=tcp://127.0.0.1:28332
   zmqpubrawtx=tcp://127.0.0.1:28333
   
   $ sudo systemctl restart bitcoind
   $ sudo systemctl restart lnd
   ```
-
+* The option `debughtlc` is no longer allowed and needs to be deleted. Edit `lnd.conf`, save and exit.  
+  ```
+  $ sudo nano /home/bitcoin/.lnd/lnd.conf`  
+  #debughtlc=true
+  ```
 Also, the macaroons are now located under the chain data directory for each supported network. For example, one can find the mainnet invoice macaroon for Bitcoin at:  
   `~/.lnd/data/chain/bitcoin/testnet/invoice.macaroon`  
 
