@@ -366,14 +366,14 @@ Get the latest download links at [bitcoin.org/en/download](), they change  with 
 
 ```
 # download Bitcoin Core binary
-$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz
-$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc
+$ wget https://bitcoin.org/bin/bitcoin-core-0.16.2/bitcoin-0.16.2-arm-linux-gnueabihf.tar.gz
+$ wget https://bitcoin.org/bin/bitcoin-core-0.16.2/SHA256SUMS.asc
 $ wget https://bitcoin.org/laanwj-releases.asc
 
 # check that the reference checksum matches the real checksum 
 # (ignore the "lines are improperly formatted" warning)
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
-> bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK
+> bitcoin-0.16.2-arm-linux-gnueabihf.tar.gz: OK
 
 # manually check the fingerprint of the public key
 $ gpg --with-fingerprint ./laanwj-releases.asc  
@@ -392,10 +392,10 @@ $ gpg --verify SHA256SUMS.asc
 Extract the Bitcoin Core binaries, install them and check the version. 
 
 ```
-$ tar -xvf bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.0/bin/*
+$ tar -xvf bitcoin-0.16.2-arm-linux-gnueabihf.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.2/bin/*
 $ bitcoind --version
-> Bitcoin Core Daemon version v0.16.0
+> Bitcoin Core Daemon version v0.16.2
 ```
 
 ### Prepare Bitcoin Core directory
@@ -440,7 +440,7 @@ disablewallet=1
 rpcuser=bitcoin
 rpcpassword=PASSWORD_[B]
 zmqpubrawblock=tcp://127.0.0.1:29000
-zmqpubrawtx=tcp://127.0.0.1:29000
+zmqpubrawtx=tcp://127.0.0.1:29001
 
 # Optimizations for limited hardware
 dbcache=100
@@ -546,13 +546,13 @@ Now to the good stuff: download, verify and install the LND binaries.
 
 ```
 $ cd /home/admin/download
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/lnd-linux-arm-v0.4.1-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/manifest-v0.4.1-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/manifest-v0.4.1-beta.txt.sig
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/lnd-linux-armv7-v0.5-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/manifest-v0.5-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.4.1-beta/manifest-v0.5-beta.txt.sig
 $ wget https://keybase.io/roasbeef/pgp_keys.asc
 
-$ sha256sum --check manifest-v0.4.1-beta.txt --ignore-missing
-> lnd-linux-arm-v0.4-beta.tar.gz: OK
+$ sha256sum --check manifest-v0.5-beta.txt --ignore-missing
+> lnd-linux-armv7-v0.5-beta.tar.gz: OK
 
 $ gpg ./pgp_keys.asc
 > pub  4096R/DD637C21 2017-09-12 Olaoluwa Osuntokun <laolu32@gmail.com>
@@ -560,7 +560,7 @@ $ gpg ./pgp_keys.asc
 > 65317176B6857F98834EDBE8964EA263DD637C21
 
 $ gpg --import ./pgp_keys.asc
-$ gpg --verify manifest-v0.4.1-beta.txt.sig
+$ gpg --verify manifest-v0.5-beta.txt.sig
 > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
 > Primary key fingerprint: 6531 7176 B685 7F98 834E  DBE8 964E A263 DD63 7C21
 ```
@@ -568,11 +568,11 @@ $ gpg --verify manifest-v0.4.1-beta.txt.sig
 ![Checksum LND](images/40_checksum_lnd.png)
 
 ```
-$ tar -xzf lnd-linux-arm-v0.4.1-beta.tar.gz
+$ tar -xzf lnd-linux-armv7-v0.5-beta.tar.gz
 $ ls -la
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm-v0.4.1-beta/*
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5-beta/*
 $ lnd --version
-> lnd version 0.4.1-beta commit=
+> lnd version 0.5-beta commit=
 ```
 
 
