@@ -96,21 +96,27 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
   > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
   ```
 
-* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  Restart the services with the new configuration, this creates also a new set of macaroons (explained below).
+* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf 
   zmqpubrawblock=tcp://127.0.0.1:28332
   zmqpubrawtx=tcp://127.0.0.1:28333
-  
-  $ sudo systemctl restart bitcoind
-  $ sudo systemctl restart lnd
   ```
 * The option `debughtlc` is no longer allowed and needs to be deleted. Edit `lnd.conf`, save and exit.  
   ```
   $ sudo nano /home/bitcoin/.lnd/lnd.conf`  
   #debughtlc=true
   ```
-Also, the macaroons are now located under the chain data directory for each supported network. For example, the mainnet admin macaroon for Bitcoin is now located here:  
+* Restart the services with the new configuration and unlock the wallet with the "bitcoin" user. This creates a new set of macaroons (explained below).
+  ```
+  $ sudo systemctl restart bitcoind
+  $ sudo systemctl restart lnd
+  $ sudo su - bitcoin
+  $ lncli unlock
+  $ exit
+  ```
+
+The macaroons are now located under the chain data directory for each supported network. For example, the mainnet admin macaroon for Bitcoin is now located here:  
   `/home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon`  
 
 * Copy the new set of macaroons to your admin user, otherwise this user cannot use `lncli`. The new macaroon location also affects the [auto-unlock script](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_6A_auto-unlock.md) you might be running.  
