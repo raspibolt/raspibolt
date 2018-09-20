@@ -83,7 +83,7 @@ The new certificates need to be distributed and LND is restarted to load the new
 ```
 $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
 $ sudo cp /home/bitcoin/.lnd/tls.cert /home/web/lncli-web/lnd.cert
-$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/web/lncli-web/
+$ sudo cp /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/web/lncli-web/
 $ sudo chown web:web /home/web/lncli-web/*
 
 # restart lnd, unlock the wallet and check the startup process
