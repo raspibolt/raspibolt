@@ -98,7 +98,7 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
 
 * Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  Restart the services with the new configuration, this creates also a new set of macaroons (explained below).
   ```
-  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`  
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf 
   zmqpubrawblock=tcp://127.0.0.1:28332
   zmqpubrawtx=tcp://127.0.0.1:28333
   
