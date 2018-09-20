@@ -61,6 +61,7 @@ https://github.com/bitcoin/bitcoin/releases
   `$ sudo systemctl start lnd`
 
 ### How to upgrade LND? 
+Upgrading can lead to a number of issues. Please **always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) completely to understand the changes. They also cover a lot of additional topics and many new features not mentioned here. 
 
 * As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
@@ -94,7 +95,7 @@ https://github.com/bitcoin/bitcoin/releases
   > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
   ```
 
-* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  
+* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  Restart the services with the new configuration, this creates also a new set of macaroons (explained below).
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`  
   zmqpubrawblock=tcp://127.0.0.1:28332
@@ -108,20 +109,21 @@ https://github.com/bitcoin/bitcoin/releases
   $ sudo nano /home/bitcoin/.lnd/lnd.conf`  
   #debughtlc=true
   ```
-Also, the macaroons are now located under the chain data directory for each supported network. For example, one can find the mainnet invoice macaroon for Bitcoin at:  
-  `~/.lnd/data/chain/bitcoin/testnet/invoice.macaroon`  
+Also, the macaroons are now located under the chain data directory for each supported network. For example, the mainnet admin macaroon for Bitcoin is now located here:  
+  `/home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon`  
 
-* Copy the new set of macaroons to your admin user, otherwise this user cannot use `lncli`. The new macaroon location also affects the [auto-unlock script](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_6A_auto-unlock.md) you might be running.
-  ```
-  $ rm /home/admin/.lnd/admin.macaroon
-  $ cd /home/bitcoin/
-  $ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/
-  $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
-  $ sudo chown -R admin:admin /home/admin/.lnd
-  $ lncli getinfo
-  ```
-
-Please take a look at the [lnd v0.5-beta release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) that cover additional changes and many new features. 
+* Copy the new set of macaroons to your admin user, otherwise this user cannot use `lncli`. The new macaroon location also affects the [auto-unlock script](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_6A_auto-unlock.md) you might be running.  
+  * For **mainnet** use these commands:  
+    ```
+    $ rm /home/admin/.lnd/admin.macaroon
+    $ mkdir -p /home/admin/.lnd/data/chain/bitcoin/mainnet/
+    $ sudo cp /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/.lnd/data/chain/bitcoin/mainnet/
+    $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
+    $ sudo chown -R admin:admin /home/admin/.lnd
+    $ lncli getinfo
+    ```
+  
+  * If you're on **testnet**, use the commands for mainnet above, but replace the directory "mainnet" with "testnet". You will also need to always use `lncli --network=testnet `, so for example `lncli --network=testnet getinfo`. See the [release notes](https://github.com/lightningnetwork/lnd/releases) on how to create an alias to avoid typing this every time.  
 
 * Don't forget to unlock your wallet & check logs  
   `$ lncli unlock`  
