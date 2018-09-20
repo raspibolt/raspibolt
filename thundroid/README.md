@@ -366,14 +366,14 @@ Get the latest download links at [bitcoin.org/en/download](), they change  with 
 
 ```
 # download Bitcoin Core binary
-$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz
-$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc
 $ wget https://bitcoin.org/laanwj-releases.asc
 
 # check that the reference checksum matches the real checksum 
 # (ignore the "lines are improperly formatted" warning)
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
-> bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK
+> bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz: OK
 
 # manually check the fingerprint of the public key
 $ gpg --with-fingerprint ./laanwj-releases.asc  
@@ -392,10 +392,10 @@ $ gpg --verify SHA256SUMS.asc
 Extract the Bitcoin Core binaries, install them and check the version. 
 
 ```
-$ tar -xvf bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.0/bin/*
+$ tar -xvf bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.3/bin/*
 $ bitcoind --version
-> Bitcoin Core Daemon version v0.16.0
+> Bitcoin Core Daemon version v0.16.3
 ```
 
 ### Prepare Bitcoin Core directory
@@ -789,8 +789,8 @@ Open the Windows command prompt (`Win+R`, enter `cmd`, hit `Enter`), navigate to
 > cd \bitcoin
 > mkdir bitcoin_mainnet
 > dir
-> certutil -hashfile bitcoin-0.16.0-win64-setup.exe sha256
-6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d
+> certutil -hashfile bitcoin-0.16.3-win64-setup.exe sha256
+bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446
 ```
 
 ![Windows Command Prompt: verify checksum](images/10_blockchain_wincheck.png)
@@ -801,10 +801,10 @@ You can check this checksums with the the reference checksums on your Thundroid,
 # on Thundroid, with user "admin"
 $ cat /home/admin/download/SHA256SUMS.asc | grep win
 
-7558249b04527d7d0bf2663f9cfe76d6c5f83ae90e513241f94fda6151396a29  bitcoin-0.16.0-win32-setup.exe
-60d65d6e57f42164e1c04bb5bb65156d87f0433825a1c1f1f5f6aebf5c8df424  bitcoin-0.16.0-win32.zip
-6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d  bitcoin-0.16.0-win64-setup.exe
-42706da1a95b2db8c5808529f73c2063a0dd770f71e0c8506bfa86dc0f3403ef  bitcoin-0.16.0-win64.zip
+1fe280a78b8796ca02824c6e49d7873ec71886722021871bdd489cbddc37b1f3  bitcoin-0.16.3-win32-setup.exe
+e3d6a962a4c2cbbd4798f7257a0f85d54cec095e80d9b0f543f4c707b06c8839  bitcoin-0.16.3-win32.zip
+bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446  bitcoin-0.16.3-win64-setup.exe
+52469c56222c1b5344065ef2d3ce6fc58ae42939a7b80643a7e3ee75ec237da9  bitcoin-0.16.3-win64.zip
 ```
 
 ### Installing Bitcoin Core
