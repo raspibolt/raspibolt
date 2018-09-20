@@ -69,9 +69,10 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
 * If upgrading from version a version lower than v0.5 delete the macaroon files.  
   `$ sudo rm /home/bitcoin/.lnd/*.macaroon`
 
-* Verify and install the latest LND binaries  
+* Remove old stuff, then download, verify and install the latest LND binaries  
   ```
   $ cd /home/admin/download
+  $  rm -f lnd-linux* manifest* pgp_keys.asc
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-armv7-v0.5-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig
