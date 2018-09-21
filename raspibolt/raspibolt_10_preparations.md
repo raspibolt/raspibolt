@@ -47,7 +47,7 @@ To copy the blockchain to the Pi later, there are several options:
 * **Or**, if you want to use an external hard disk for your Pi that already contains data, eg. because you already downloaded the blockchain, this works as well. You can use the disk as is, but need to skip the formatting part later in this guide.
 
 ### Download and verify Bitcoin Core
-Download the Bitcoin Core installer from bitcoin.org/download and store it in the directory you want to use to download the blockchain. To check the authenticity of the program, we calculate its checksum and compare it with the checksums provided. 
+Download the Bitcoin Core installer from [bitcoincore.org/en/download](https://bitcoincore.org/en/download) and store it in the directory you want to use to download the blockchain. To check the authenticity of the program, we calculate its checksum and compare it with the checksums provided. 
 
 In Windows, I’ll preface all commands you need to enter with `>` , so with the command `> cd bitcoin` , just enter `cd bitcoin` and hit enter.
 
@@ -57,15 +57,15 @@ Open the Windows command prompt (`Win+R`, enter `cmd`, hit `Enter`), navigate to
 > cd \bitcoin
 > mkdir bitcoin_mainnet
 > dir
-> certutil -hashfile bitcoin-0.16.0-win64-setup.exe sha256
-6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d
+> certutil -hashfile bitcoin-0.16.3-win64-setup.exe sha256
+bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446
 ```
 ![Windows Command Prompt: verify checksum](images/10_blockchain_wincheck.png)
 
-Compare this value with the [release signatures](https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc). For the Windows v0.16.0 binaries, its
+Compare this value with the [release signatures](https://bitcoin.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc). For the Windows v0.16.3 binaries, its
 ```
-32 bit:  7558249b04527d7d0bf2663f9cfe76d6c5f83ae90e513241f94fda6151396a29
-64 bit:  6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d
+32 bit:  1fe280a78b8796ca02824c6e49d7873ec71886722021871bdd489cbddc37b1f3
+64 bit:  bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446
 ```
 Usually, you would also need to check the signature of this file, but it's a pain on Windows, so we will do it on the Pi later on.
 
