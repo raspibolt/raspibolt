@@ -83,7 +83,14 @@ The new certificates need to be distributed and LND is restarted to load the new
 ```
 $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
 $ sudo cp /home/bitcoin/.lnd/tls.cert /home/web/lncli-web/lnd.cert
+
+#The way macaroons work has changed since LND version 0.5 therefore we have to check our version.
+$ lnd --version
+# If using a LND with version 0.5.0 or above:
+$ sudo cp /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/web/lncli-web/
+# Else (if using a LND version lower then 0.5.0):
 $ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/web/lncli-web/
+
 $ sudo chown web:web /home/web/lncli-web/*
 
 # restart lnd, unlock the wallet and check the startup process
