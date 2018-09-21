@@ -1,7 +1,7 @@
 [ [Intro](README.md) ] -- [ [Preparations]() ] -- [ [Raspberry Pi]() ] -- [ **Bitcoin** ] 
 
 -------
-### Un guide pour recycler votre vieux portable en noeud Bitcoin et ⚡Lightning️⚡
+### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
 --------
 
 # Bitcoin
@@ -146,10 +146,10 @@ _Remarquez que sur la première ligne, il y a `test`. Si nous étions sur le mai
 
 ![bitcoin-cli getnetworkinfo](old_laptop_30_bitcoin-cli3.png)
 
-Pour avoir davantage d'informations, notamment si vous rencontrez des problèmes, vous pouvez suivre en temps réel les logs de bitcoind (c'est-à-dire, les messages qu'il imprime à chaque événement pour vous informer) :
-  `$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
+Pour avoir davantage d'informations, notamment si vous rencontrez des problèmes, vous pouvez suivre en temps réel les logs de bitcoind (c'est-à-dire, les messages générés à chaque événement) :
+`$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log`
 
-Quittez avec la fameuse combinaison `Ctrl-C` 
+Quittez avec `Ctrl-C`.
 
 ### Apprendre les commandes de `bitcoin-cli`
 

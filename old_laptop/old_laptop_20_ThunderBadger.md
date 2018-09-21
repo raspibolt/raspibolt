@@ -1,7 +1,7 @@
 [ [Intro](README.md) ] -- [ [Preparations]() ] -- [ **Thunder Badger** ] 
 
 -------
-### Un guide pour recycler votre vieux portable en noeud Bitcoin et ⚡Lightning️⚡
+### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
 --------
 
 # Le Thunder Badger

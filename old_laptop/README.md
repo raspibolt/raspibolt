@@ -1,7 +1,7 @@
 [ **Intro** ] -- [ [Preparations](old_laptop_10_preparations.md) ] 
 
 -----
-# Un guide pour recycler votre vieux portable en noeud Bitcoin et ⚡Lightning️⚡
+# Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
 
 Ce guide est en grande partie basé sur le travail de [Stadicus](https://github.com/Stadicus/guides), qui a réalisé deux tutoriels très complet expliquant comment installer un noeud Bitcoin ET un noeud Lightning sur du matériel très abordable, à savoir le Raspberry Pi et l'Odroid.
 

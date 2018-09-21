@@ -1,7 +1,7 @@
 [ [Intro](README.md) ] -- [ **Preparations** ] 
 
 -------
-### Un guide pour recycler votre vieux portable en noeud Bitcoin et ⚡Lightning️⚡
+### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
 --------
 
 # Préparation
@@ -10,10 +10,10 @@
 
 Pour ce guide, j'ai décidé de recycler un de mes anciens ordinateurs portables. Il s'agit d'un vieux HP de 2009 acheté dans une petite boutique d'informatique de Hangzhou, en Chine. Sa coque ne tient plus que par une ou deux vis, il n'a plus de batterie et dort au fond de mon placard depuis au moins 4 ans.
 
-Il est le candidat parfait pour devenir notre premier Zorilla !
+Il est le candidat parfait pour devenir notre premier Thunder Badger !
 
-Votre ordinateur n'a certainement pas les mêmes caractéristiques que le mien, et je dois donc attirer votre attention sur quelques points précis qui vont nous permettre de nous assurer que votre ordinateur sera bien en mesure de devenir lui aussi un Zorilla (en tout cas sans trop d'encombres) !
-* Processeur : si vous souhaitez faire la synchronisation initiale sur la machine-même, veillez à ce que votre machine dispose au minimum d'un quad-core de milieu-haut de gamme pas trop ancien. De mon expérience, un quad-core i7 de 2013 s'en sort à peu près honorablement, mais sur le vieux dual-core de mon Zorilla c'était la catastrophe !
+Votre ordinateur n'a certainement pas les mêmes caractéristiques que le mien, et je dois donc attirer votre attention sur quelques points précis qui vont nous permettre de nous assurer que votre ordinateur sera bien en mesure de devenir lui aussi un Thunder Badger (en tout cas sans trop d'encombres) !
+* Processeur : si vous souhaitez faire la synchronisation initiale sur la machine-même, veillez à ce que votre machine dispose au minimum d'un quad-core de milieu-haut de gamme pas trop ancien. De mon expérience, un quad-core i7 de 2013 s'en sort à peu près honorablement, mais sur le vieux dual-core de mon Thunder Badger c'était la catastrophe !
 * RAM : De ma propre expérience, je dirai qu'avec 8Go de mémoire vive allouées en quasi-totalité à bitcoin, on ne s'en sort pas trop mal. Si vous avez moins de 4Go, cela risque de vous ralentir considérablement pour la synchronisation initiale. En phase de run vous vous en sortirez très bien avec 2Go, peut-être même moins. 
 * Votre disque dur contient-il 500 Go ou davantage ? Si oui, vous pouvez envisager de vous passer d'un disque dur externe. Sinon, je vous conseille fortement d'investir dans un petit HDD de 500 Go minimum. Si vous avez davantage de moyens et que vous êtes bricoleur, vous pouvez même carrément changer le disque dur interne pour un SDD, ce qui améliorera sensiblement les performances générales (mais pensez bien à prendre au moins 500 Go). /*Une alimentation externe est **fortement recommandée** (on parle d'un disque qui va rester sous tension H24, je ne fais pas confiance à l'alimentation fournie par la plupart des ports USB de laptop pour ce type d'utilisation).*/
 * Une connexion internet. Placez votre noeud dans un endroit où il capte bien le signal wifi de votre box. Si vous pouvez le brancher en filaire, c'est encore mieux. Là encore, voulez-vous synchronisez votre noeud directement sur cette machine ? Si oui, alors il vous faut une connection plutôt bonne car Bitcoin va télécharger plus de 200 Go en quelques heures/jours. Sinon, la consommation de Bitcoin en _run_ est très modeste. 
@@ -60,7 +60,7 @@ Comme vous pouvez le voir, la synchronisation initiale est une opération assez 
 * puissance processeur
 * mémoire vive
 
-Si vous êtes limité sur un de ces trois paramètres, la synchronisation peut prendre jusqu'à plusieurs semaines ! Il est alors beaucoup plus intéressant d'effectuer cette synchronisation initiale sur une machine plus puissante, et de donner une blockchain déjà validée à votre Zorilla, qui pourra ensuite valider les nouveaux blocs et les nouvelles transactions sans difficulté.
+Si vous êtes limité sur un de ces trois paramètres, la synchronisation peut prendre jusqu'à plusieurs semaines ! Il est alors beaucoup plus intéressant d'effectuer cette synchronisation initiale sur une machine plus puissante, et de donner une blockchain déjà validée à votre Thunder Badger, qui pourra ensuite valider les nouveaux blocs et les nouvelles transactions sans difficulté.
 
 ### Synchronisation initiale sur une autre machine
 Je pars du principe que vous êtes sur Windows (désolé pour nos amis riches qui ont un Mac). De toutes façons installer Bitcoin Core n'a rien de compliqué, vous devriez trouver sans problèmes l'équivalent du tuto ci-dessous pour Mac. Bonne nouvelle : les données de Bitcoin sont parfaitement compatibles entre les différents systèmes d'exploitation, aucune question à se poser de ce point de vue. 
@@ -69,16 +69,17 @@ Le téléchargement peut se faire de préférence sur le disque dur interne (tem
 
 Selon la configuration que vous choisirez, vous devrez :
 
-* copier la blockchain depuis votre ordinateur Windows (ou Apple) vers votre Zorilla via le réseau local. 
+* copier la blockchain depuis votre ordinateur Windows (ou Apple) vers votre Thunder Badger via le réseau local. 
 
-* brancher directement le disque dur externe contenant les données validées sur le Zorilla.
+* brancher directement le disque dur externe contenant les données validées sur le Thunder Badger.
 
 Nous verrons ces deux options le moment venu. 
 
 ###  Télécharger et installer Bitcoin Core
+
 Bitcoin Core est l'implémentation de référence de Bitcoin. Comme Bitcoin est un logiciel libre, n'importe qui peut écrire sa propre version du logiciel, et plusieurs l'ont effectivement fait. Quand vous serez devenu un expert, vous pourrez expérimenter avec d'autres implémentations, mais en attendant il est plus sage de ne pas sortir des sentiers battus.
 
-Télécharger le fichier d'installation de Bitcoin Core depuirs bitcoin.org/download et déplacez-le dans le répertoire dans lequel vous souhaitez télécharger la blockchain. 
+Télécharger le fichier d'installation de Bitcoin Core depuirs [bitcoin.org/download](bitcoin.org/download) et déplacez-le dans le répertoire dans lequel vous souhaitez télécharger la blockchain. 
 
 Une bonne habitude à prendre est de vérifier l'authenticité d'un programme que vous venez de télécharger, surtout quand il y a potentiellement beaucoup d'argent en jeu. Pour ce faire, nous allons calculer son _checksum_ et le comparer avec celui fourni par le développeur du logiciel. Cela permet de s'assurer que ce que vous avez téléchargé est bien conforme au logiciel d'origine, et qu'il ne lui a pas été substitué une version piratée. 
 
@@ -127,4 +128,4 @@ dbcache=6000
 
 Sauvegardez et fermez le fichier de configuration, quittez Bitcoin Core avec `Fichier` / `Quitter`, et relancez le programme. La synchronisation devrait reprendre là où elle s'était arrêtée. 
 
-Voilà, vous pouvez désormais laisser la blockchain se synchroniser toute seule pendant que nous allons configurer notre Zorilla.
+Voilà, vous pouvez désormais laisser la blockchain se synchroniser toute seule pendant que nous allons configurer notre Thunder Badger.
