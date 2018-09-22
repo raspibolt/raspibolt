@@ -302,6 +302,7 @@ There are a lot of great resources to explore the Lightning mainnet in regard to
 * [Recksplorer](https://rompert.com/recksplorer/): Lightning Network Map
 * [1ML](https://1ml.com): Lightning Network Search and Analysis Engine
 * [lnroute.com](http://lnroute.com): comprehensive Lightning Network resources list
+* [lightningslotmachine.com](https://www.lightningslotmachine.com/): Play Slots With Lightning
 
 
 
