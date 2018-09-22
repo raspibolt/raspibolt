@@ -18,14 +18,14 @@ We will download the software directly from bitcoin.org, verify its signature to
 
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
-* Get the latest download links at bitcoin.org/en/download, they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
-  `$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`  
-  `$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc`  
+* Get the latest download links at bitcoincore.org/en/download (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
+  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz`  
+  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc`  
   `$ wget https://bitcoin.org/laanwj-releases.asc`
 
 * Check that the reference checksum matches the real checksum  
   `$ sha256sum --check SHA256SUMS.asc --ignore-missing`  
-  `> bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK`
+  `> bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz: OK`
 
 * Manually check the fingerprint of the public key:  
   `$ gpg ./laanwj-releases.asc`  
@@ -42,16 +42,16 @@ We download the latest Bitcoin Core binaries (the application) and compare the f
 * Now we know that the keys from bitcoin.org are valid, so we can also verify the Windows binary checksums. Compare the following output with the checksum of your Windows Bitcoin Core download.  
   `$ cat SHA256SUMS.asc | grep win` 
 ```
-7558249b04527d7d0bf2663f9cfe76d6c5f83ae90e513241f94fda6151396a29  bitcoin-0.16.0-win32-setup.exe
-60d65d6e57f42164e1c04bb5bb65156d87f0433825a1c1f1f5f6aebf5c8df424  bitcoin-0.16.0-win32.zip
-6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d  bitcoin-0.16.0-win64-setup.exe
-42706da1a95b2db8c5808529f73c2063a0dd770f71e0c8506bfa86dc0f3403ef  bitcoin-0.16.0-win64.zip
+1fe280a78b8796ca02824c6e49d7873ec71886722021871bdd489cbddc37b1f3  bitcoin-0.16.3-win32-setup.exe
+e3d6a962a4c2cbbd4798f7257a0f85d54cec095e80d9b0f543f4c707b06c8839  bitcoin-0.16.3-win32.zip
+bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446  bitcoin-0.16.3-win64-setup.exe
+52469c56222c1b5344065ef2d3ce6fc58ae42939a7b80643a7e3ee75ec237da9  bitcoin-0.16.3-win64.zip
 ```
 * Extract the Bitcoin Core binaries, install them and check the version.  
-  `$ tar -xvf bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`  
-  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.0/bin/*`  
+  `$ tar -xvf bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz`  
+  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.3/bin/*`  
   `$ bitcoind --version`  
-  `> Bitcoin Core Daemon version v0.16.0`
+  `> Bitcoin Core Daemon version v0.16.3`
 
 ### Prepare Bitcoin Core directory
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory  `/home/bitcoin/.bitcoin`. Instead of creating a real directory, we create a link that points to a directory on the external hard disk. 
@@ -83,13 +83,14 @@ testnet=1
 server=1
 daemon=1
 txindex=1
-disablewallet=1
 
 # Connection settings
 rpcuser=raspibolt
 rpcpassword=PASSWORD_[B]
-zmqpubrawblock=tcp://127.0.0.1:29000
-zmqpubrawtx=tcp://127.0.0.1:29000
+
+onlynet=ipv4
+zmqpubrawblock=tcp://127.0.0.1:28332
+zmqpubrawtx=tcp://127.0.0.1:28333
 
 # Raspberry Pi optimizations
 dbcache=100
@@ -120,15 +121,13 @@ Description=Bitcoin daemon
 Wants=getpublicip.service
 After=getpublicip.service
 
-# for use with sendmail alert (coming soon)
-#OnFailure=systemd-sendmail@%n
-
 [Service]
+ExecStartPre=/bin/sh -c 'sleep 30'
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=/home/bitcoin/.bitcoin/bitcoin.conf -pid=/home/bitcoin/.bitcoin/bitcoind.pid
+PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
 User=bitcoin
 Group=bitcoin
 Type=forking
-PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
-ExecStart=/usr/local/bin/bitcoind -daemon -conf=/home/bitcoin/.bitcoin/bitcoin.conf -pid=/home/bitcoin/.bitcoin/bitcoind.pid
 KillMode=process
 Restart=always
 TimeoutSec=120

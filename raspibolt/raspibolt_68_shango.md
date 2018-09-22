@@ -9,6 +9,8 @@
 ## Bonus guide: Shango Mobile Lightning Wallet
 *Difficulty: medium*
 
+> Please note: this guide has not been updated to LND 0.5 yet and might not work as intended.
+
 The mobile app Shango (http://shangoapp.com) allows the managment of the Lightning daemon on your RaspiBolt. It provides 
 an status overview, lists peers, allows to open & close channels, make payments and create invoices.
 
@@ -31,7 +33,7 @@ rpclisten=0.0.0.0:10009
 
 Open port 10009 so that Shango wallet can talk to your Lightning node. To be **safe**, open it only from within your own network. If you feel **reckless**, you can open it for access from everywhere to use Shango on the go. I think the connection itself is safe, but this exposes your node to DDoS and other attacks. So make sure you know what you do!  
 
-* **Safe option**: for connections from within the local network (you might need to adjust the ip mask, see [more details](https://github.com/Stadicus/guides/blob/shango/raspibolt/raspibolt_20_pi.md#hardening-your-pi))  
+* **Safe option**: for connections from within the local network (you might need to adjust the ip mask, see [more details](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_20_pi.md#hardening-your-pi))  
   `$ sudo ufw allow from 192.168.0.0/24 to any port 10009 comment 'allow LND grpc from local LAN'`  
 
 * **Reckless option**: for connections from everywhere. 

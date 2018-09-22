@@ -8,6 +8,7 @@
 # Usage
 # $ lnchannels            to display lnd mainnet channels
 # $ lnchannels --testnet  to display lnd testnet channels
+# $ lnchannels litecoin   to display lnd litecoin channels
 
 # Set default (mainnet)
 lncli='/usr/local/bin/lncli'
@@ -18,11 +19,14 @@ chain='main'
 for i in "$@"
 do
 case $i in
-    --testnet*)
-    lncli="/usr/local/bin/lncli  --rpcserver=localhost:11009"
+  --testnet*)
+    lncli="${lncli} --rpcserver=localhost:11009"
     lnd_pid=$(systemctl show -p MainPID lnd_testnet | awk -F"=" '{print $2}')
     chain='test'
     shift # past argument=value
+    ;;
+  *)
+    lncli="/usr/local/bin/lncli --chain=$i"
     ;;
 esac
 done

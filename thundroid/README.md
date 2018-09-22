@@ -4,8 +4,9 @@
 
 > This article was first published in the [Odroid Magazine June 2018](https://magazine.odroid.com/article/thundroid-perfect-bitcoin-lightning-node/) issue. 
 >
-> Part 1: Setup of Bitcoin & Lightning on testnet  
-> Part 2: Move to Bitcoin mainnet & outlook (not published yet)
+> Part 1: Setup of Bitcoin & Lightning on testnet (this guide)  
+> Part 2: [Move to Bitcoin mainnet](thundroid_pt2.md)  
+> Part 3: Additional apps like desktop & mobile wallet
 
 ## Introduction
 
@@ -232,7 +233,7 @@ $ sudo dphys-swapfile setup
 $ sudo dphys-swapfile swapon
 
 # reboot, login as "admin" and delete old swapfile
-$ restart shutdown -r now  
+$ shutdown -r now  
 $ sudo rm /var/swap
 ```
 
@@ -286,7 +287,8 @@ One of the best options to secure the SSH login is to completely  disable the pa
 * Set up SSH keys for the "admin" user by following this article:  *Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers*  
   https://www.tecmint.com/ssh-passwordless-login-with-putty
 
-You should now generated three files. Keep them safe, we will now disable the password login. ![SSH Keys filelist](images/ssh_keys_filelist.png)
+You should now generated three files. Keep them safe, we will now disable the password login.  
+![SSH Keys filelist](images/20_ssh_keys_filelist.png)
 
 * Logout (`exit`) and make sure that you can log in as "admin" with your SSH key
 * Edit ssh config file
@@ -364,14 +366,14 @@ Get the latest download links at [bitcoin.org/en/download](), they change  with 
 
 ```
 # download Bitcoin Core binary
-$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz
-$ wget https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc
 $ wget https://bitcoin.org/laanwj-releases.asc
 
 # check that the reference checksum matches the real checksum 
 # (ignore the "lines are improperly formatted" warning)
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
-> bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK
+> bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz: OK
 
 # manually check the fingerprint of the public key
 $ gpg --with-fingerprint ./laanwj-releases.asc  
@@ -385,15 +387,15 @@ $ gpg --verify SHA256SUMS.asc
 > Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 ```
 
-![commands to check bitcoind signature](/images/30_verify_signature.png)
+![commands to check bitcoind signature](images/30_verify_signature.png)
 
 Extract the Bitcoin Core binaries, install them and check the version. 
 
 ```
-$ tar -xvf bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.0/bin/*
+$ tar -xvf bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.3/bin/*
 $ bitcoind --version
-> Bitcoin Core Daemon version v0.16.0
+> Bitcoin Core Daemon version v0.16.3
 ```
 
 ### Prepare Bitcoin Core directory
@@ -505,7 +507,8 @@ WantedBy=multi-user.target
    `$ sudo systemctl enable bitcoind.service`
 * Copy `bitcoin.conf` to user "admin" home directory for RPC credentials  
    `$ mkdir /home/admin/.bitcoin`  
-   `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`
+   `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`  
+   `$ sudo chown admin:admin /home/admin/.bitcoin/bitcoin.conf` 
 * Restart the Thundroid  
    `$ sudo shutdown -r now`
 
@@ -516,7 +519,7 @@ After rebooting, the bitcoind should start and begin to sync and validate the Bi
 * Wait a bit, reconnect via SSH and login with the user “admin”.
 
 * Check the status of the bitcoin daemon that was started by systemd (exit with `Ctrl-C`)  
-  `$ systemctl status bitcoind`
+  `$ sudo systemctl status bitcoind`
 
 ![Bitcoind status ](images/30_status_bitcoin.png)
 
@@ -652,7 +655,7 @@ WantedBy=multi-user.target
 * enable and start LND  
    `$ sudo systemctl enable lnd`  
    `$ sudo systemctl start lnd`  
-   `$ systemctl status lnd`
+   `$ sudo systemctl status lnd`
 * monitor the LND logfile in realtime (exit with `Ctrl-C`)  
    `$ sudo journalctl -f -u lnd`
 
@@ -679,7 +682,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)   is all
 
 ### Assign LND permissions to "admin"
 
-* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).
+* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).  
    `$ ls -la /home/bitcoin/.lnd/`
 
 ![Check macaroon](images/40_ls_macaroon.png)
@@ -786,8 +789,8 @@ Open the Windows command prompt (`Win+R`, enter `cmd`, hit `Enter`), navigate to
 > cd \bitcoin
 > mkdir bitcoin_mainnet
 > dir
-> certutil -hashfile bitcoin-0.16.0-win64-setup.exe sha256
-6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d
+> certutil -hashfile bitcoin-0.16.3-win64-setup.exe sha256
+bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446
 ```
 
 ![Windows Command Prompt: verify checksum](images/10_blockchain_wincheck.png)
@@ -798,10 +801,10 @@ You can check this checksums with the the reference checksums on your Thundroid,
 # on Thundroid, with user "admin"
 $ cat /home/admin/download/SHA256SUMS.asc | grep win
 
-7558249b04527d7d0bf2663f9cfe76d6c5f83ae90e513241f94fda6151396a29  bitcoin-0.16.0-win32-setup.exe
-60d65d6e57f42164e1c04bb5bb65156d87f0433825a1c1f1f5f6aebf5c8df424  bitcoin-0.16.0-win32.zip
-6d93ba3b9c3e34f74ccfaeacc79f968755ba0da1e2d75ce654cf276feb2aa16d  bitcoin-0.16.0-win64-setup.exe
-42706da1a95b2db8c5808529f73c2063a0dd770f71e0c8506bfa86dc0f3403ef  bitcoin-0.16.0-win64.zip
+1fe280a78b8796ca02824c6e49d7873ec71886722021871bdd489cbddc37b1f3  bitcoin-0.16.3-win32-setup.exe
+e3d6a962a4c2cbbd4798f7257a0f85d54cec095e80d9b0f543f4c707b06c8839  bitcoin-0.16.3-win32.zip
+bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446  bitcoin-0.16.3-win64-setup.exe
+52469c56222c1b5344065ef2d3ce6fc58ae42939a7b80643a7e3ee75ec237da9  bitcoin-0.16.3-win64.zip
 ```
 
 ### Installing Bitcoin Core
@@ -810,7 +813,8 @@ Execute the Bitcoin Core installation file (you might need to  right-click and c
 
 ![Bitcoin Core directory selection](images/10_bitcoinqt_directory.png)
 
-Bitcoin Core opens and starts immediately syncing the blockchain.  Now, we need to set one **very important** additional setting in the  “bitcoin.conf” file. If not set, the the whole blockchain will be useless and needs to be re-validated! Using the menu, open `Settings` / `Options` and click the button `Open Configuration File`. Enter the following line:
+:warning: **IMPORTANT: The next step is crucial. Without `txindex=1` your whole Bitcoin blockchain will be useless** :warning:  
+Bitcoin Core opens and starts immediately syncing the blockchain. We need to set one **very important** additional setting in the  “bitcoin.conf” file. Using the menu, open `Settings` / `Options` and click the button `Open Configuration File`. Enter the following line:
 
 ```
 txindex=1

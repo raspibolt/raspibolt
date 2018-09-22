@@ -29,11 +29,11 @@ Starting as the "admin" user, we add the new user "web", install Node.js, create
 
 #### Install Node.js
 
-Installation and update of Node.js as described on [nodejs.org](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions). I recommend to use Node.js 8, as version 10 can lead to issues.
+Installation and update of Node.js as described on [nodejs.org](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions). I recommend to use Node.js 8, as version 10 can lead to issues. We also make sure that python is installed.
 
 ```
 $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-$ sudo apt-get install nodejs
+$ sudo apt-get install nodejs python
 $ sudo npm i npm@latest -g
 ```
 
@@ -52,6 +52,14 @@ $ npm install
 $ npm audit fix
 
 $ exit
+```
+
+#### FIX - If you encounter a grpc error on npm install
+
+You may receive a 404 error when attempting to download gRPC. Pre-built binaries not found for gRPC do not exist for ARM linux systems, this process is a bandaid fix to compile gRPC from source. Grab a coffee or a beer, it takes a little while.
+
+```
+$ npm --unsafe-perm install
 ```
 
 #### Create new certificates
@@ -75,7 +83,14 @@ The new certificates need to be distributed and LND is restarted to load the new
 ```
 $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
 $ sudo cp /home/bitcoin/.lnd/tls.cert /home/web/lncli-web/lnd.cert
+
+#The way macaroons work has changed since LND version 0.5 therefore we have to check our version.
+$ lnd --version
+# If using a LND with version 0.5.0 or above:
+$ sudo cp /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/web/lncli-web/
+# Else (if using a LND version lower then 0.5.0):
 $ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/web/lncli-web/
+
 $ sudo chown web:web /home/web/lncli-web/*
 
 # restart lnd, unlock the wallet and check the startup process
@@ -126,6 +141,14 @@ Make sure to test thoroughly before we proceed to automate the startup process.
 
 The visualization library needed for the network graph is not installed. You could install it, but building the graph takes several hours and can crash your Pi. Not recommended, just use [Reckslplorer](https://lnmainnet.gaben.win/#) instead.
 
+#### Keep Node Server Running
+
+If you wish to keep the node server running in the background use:
+
+```
+$ node server --usetls . --serverhost 0.0.0.0 --user manager --pwd YourOwnPassword --limituser lnd --limitpwd YourOwnPassword > stdout.txt 2> stderr.txt &
+```
+
 #### Automate startup 
 
 :warning: **This startup process does not work yet**. The server needs to be startet manually at the moment. Related github [issue #153](https://github.com/mably/lncli-web/issues/153).
@@ -144,7 +167,7 @@ Requires=lnd.service
 [Service]
 User=web
 Group=web
-ExecStart=/usr/bin/node /home/web/lncli-web/server.js --usetls /home/web/lncli-web --serverhost 0.0.0.0 --user manager --pwd YourOwnPW --limituser lnd --limitpwd YourOwnPW
+ExecStart=/usr/bin/node /home/web/lncli-web/server.js --usetls /home/web/lncli-web --serverhost 0.0.0.0 --user manager --pwd YourOwnPW --limituser lnd --limitpwd YourOwnPW 
 Restart=always
 RestartSec=10
 
@@ -164,6 +187,7 @@ You can remove and add additional DNS and IP entries, just pay attention to the 
 
 ```
 $ sudo su - bitcoin
+$ cd .lnd
 $ openssl ecparam -genkey -name prime256v1 -out tls.key
 $ openssl req -new -sha256 \
             -key tls.key \
@@ -173,6 +197,7 @@ $ openssl req -new -sha256 \
                 <(printf "\n[SAN]\nsubjectAltName=\
                      DNS:localhost,\
                      DNS:ln.yourdomain.com,\
+                     IP:127.0.0.1,\
                      IP:192.168.0.20,\
                      IP:11.22.33.44\
                  ")) \
@@ -188,6 +213,7 @@ $ openssl req -x509 -sha256 -days 36500 \
                 <(printf "\n[SAN]\nsubjectAltName=\
                      DNS:localhost,\
                      DNS:ln.yourdomain.com,\
+                     IP:127.0.0.1,\
                      IP:192.168.0.20,\
                      IP:11.22.33.44\
                  "))
