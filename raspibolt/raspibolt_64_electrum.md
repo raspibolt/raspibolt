@@ -91,6 +91,9 @@ disablewallet=0
 
 Before starting the server for real, the bitcoin addresses need to be generated and looked up on the blockchain.
 
+* Switch to the eps directory
+  `$ cd eps`
+
 * Start the server to generate addresses from your master public keys  
   `$ ./server.py`
   
