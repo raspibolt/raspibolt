@@ -71,6 +71,13 @@ Before using this setup, please familiarize yourself with all components by sett
 
 * Save and exit
 
+* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_20_pi.md#enabling-the-uncomplicated-firewall))
+  ```
+  $ sudo ufw allow from 192.168.0.0/24 to any port 50002 comment 'allow EPS from local network'
+  $ sudo ufw enable
+  $ sudo ufw status
+  ```
+
 ### Enable Bitcoin Core wallet 
 Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresses to monitor the blockchain for you.
 
