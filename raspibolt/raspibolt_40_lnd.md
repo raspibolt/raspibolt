@@ -214,7 +214,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 
 * Copy permission files and TLS cert to user "admin" to use `lncli`  
   `$ cd /home/bitcoin/`  
-  `$ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/`  
+  `$ sudo cp --parents .lnd/data/chain/bitcoin/testnet/admin.macaroon /home/admin/`  
   `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
   `$ sudo chown -R admin:admin /home/admin/.lnd/`  
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.   
