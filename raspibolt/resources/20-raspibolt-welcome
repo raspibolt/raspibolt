@@ -13,7 +13,6 @@ color_gray='\033[0;37m'
 
 # set datadir
 bitcoin_dir="/home/bitcoin/.bitcoin"
-lnd_dir="/home/bitcoin/.lnd"
 
 # get uptime & load
 load=$(w | grep "load average:" | cut -c11-)
@@ -124,21 +123,21 @@ fi
 public_addr="${public_ip}:${public_port}"
 
 # get LND info
-/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo 2>&1 | grep "Please unlock" >/dev/null
+/usr/local/bin/lncli getinfo 2>&1 | grep "Please unlock" >/dev/null
 wallet_unlocked=$?
 if [ "$wallet_unlocked" -eq 0 ] ; then
  alias_color="${color_red}"
  ln_alias="Wallet Locked"
 else
  alias_color="${color_grey}"
-ln_alias="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.alias')" 2>/dev/null
- ln_walletbalance="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
- ln_channelbalance="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert channelbalance | jq -r '.balance')" 2>/dev/null
+ln_alias="$(/usr/local/bin/lncli getinfo | jq -r '.alias')" 2>/dev/null
+ ln_walletbalance="$(/usr/local/bin/lncli walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
+ ln_channelbalance="$(/usr/local/bin/lncli channelbalance | jq -r '.balance')" 2>/dev/null
 
 fi
-ln_channels_online="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.num_active_channels')" 2>/dev/null
-ln_channels_total="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert listchannels | jq '.[] | length')" 2>/dev/null
-ln_external="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
+ln_channels_online="$(/usr/local/bin/lncli getinfo | jq -r '.num_active_channels')" 2>/dev/null
+ln_channels_total="$(/usr/local/bin/lncli listchannels | jq '.[] | length')" 2>/dev/null
+ln_external="$(/usr/local/bin/lncli getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
 ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
 if [ "$ln_external_ip" = "$public_ip" ]; then
   external_color="${color_grey}"
