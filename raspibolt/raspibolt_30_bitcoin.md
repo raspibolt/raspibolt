@@ -19,13 +19,13 @@ We will download the software directly from bitcoin.org, verify its signature to
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
 * Get the latest download links at bitcoincore.org/en/download (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
-  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz`  
-  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc`  
+  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz`  
+  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc`  
   `$ wget https://bitcoin.org/laanwj-releases.asc`
 
 * Check that the reference checksum matches the real checksum  
   `$ sha256sum --check SHA256SUMS.asc --ignore-missing`  
-  `> bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz: OK`
+  `> bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz: OK`
 
 * Manually check the fingerprint of the public key:  
   `$ gpg ./laanwj-releases.asc`  
@@ -42,16 +42,16 @@ We download the latest Bitcoin Core binaries (the application) and compare the f
 * Now we know that the keys from bitcoin.org are valid, so we can also verify the Windows binary checksums. Compare the following output with the checksum of your Windows Bitcoin Core download.  
   `$ cat SHA256SUMS.asc | grep win` 
 ```
-1fe280a78b8796ca02824c6e49d7873ec71886722021871bdd489cbddc37b1f3  bitcoin-0.16.3-win32-setup.exe
-e3d6a962a4c2cbbd4798f7257a0f85d54cec095e80d9b0f543f4c707b06c8839  bitcoin-0.16.3-win32.zip
-bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446  bitcoin-0.16.3-win64-setup.exe
-52469c56222c1b5344065ef2d3ce6fc58ae42939a7b80643a7e3ee75ec237da9  bitcoin-0.16.3-win64.zip
+1f4091f6f32685aac3f790edae8657abe0c96448720b165762399a31499f8ee7  bitcoin-0.17.0-win32-setup.exe
+402fd288b0ec851398047e2e986221fe72d7565dc19a2029879b6c28e6fc730d  bitcoin-0.17.0-win32.zip
+b37f738ab17a93e24028fa74280b74c353653cf03fc2fb7da6ead8669e440b1a  bitcoin-0.17.0-win64-setup.exe
+d6312ef594fa701d6bc863415baeccd3a140f200259fcfac56dde81a73d50799  bitcoin-0.17.0-win64.zip
 ```
 * Extract the Bitcoin Core binaries, install them and check the version.  
-  `$ tar -xvf bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz`  
-  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.3/bin/*`  
+  `$ tar -xvf bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz`  
+  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`  
   `$ bitcoind --version`  
-  `> Bitcoin Core Daemon version v0.16.3`
+  `> Bitcoin Core Daemon version v0.17.0`
 
 ### Prepare Bitcoin Core directory
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory  `/home/bitcoin/.bitcoin`. Instead of creating a real directory, we create a link that points to a directory on the external hard disk. 
