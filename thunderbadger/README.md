@@ -50,3 +50,7 @@ Vous allez apprendre principalement trois choses : utiliser Linux (et notamment 
 Bitcoin et Lightning sont des technologies encore jeunes et dont l'utilisation comporte certains risques, d'autant plus qu'il s'agit de votre argent. Ce guide est fourni en l'état et peut comporter des erreurs ou ne pas envisager tous les cas de figure possibles, et je ne saurais en aucun cas être tenu responsable d'éventuelles pertes financières ou autres. 
 
 Il est recommandé d'être prudent et d'expérimenter d'abord sur le [testnet](https://bitcoin.fr/testnet/), c'est-à-dire sans risquer votre argent. Ce tutorial vous indiquera par défaut comment vous connecter sur le testnet, mais je vous montrerai aussi comment passer sur le mainnet.
+
+---
+
+[ [Page suivante](thunderbadger_10_preparations.md) ]
