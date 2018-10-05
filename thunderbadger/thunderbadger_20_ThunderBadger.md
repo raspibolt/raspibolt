@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations]() ] -- [ **Thunder Badger** ] 
+[ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ **Thunder Badger** ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ]
 
 -------
 ### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
@@ -36,10 +36,6 @@ Stockez vos mots de passe de préférence dans un gestionnaire de mots de passe 
 
 ### Démarrer le Thunder Badger
 Si ce n'est pas déjà fait, mettez le Thunder Badger sous tension comme vous le faites habituellement. 
-
-(Si vous avez encrypté votre disque dur lors de l'installation, Lubuntu vous demandera d'abord le mot de passe pour décrypter le disque.) 
-
-(Initialisation du mot de passe de l'utilisateur principal ?)
 
 Vous devriez rapidement arriver sur un écran de login, rien d'inhabituel, c'est tout à fait similaire à ce que vous voyez sur Windows ou Mac. Saisissez votre mot de passe et attendez d'être sur le bureau. 
 

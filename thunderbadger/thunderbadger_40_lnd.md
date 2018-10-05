@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ **Lightning** ] 
+[ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ **LND** ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ]
 
 -------
 ### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
@@ -136,7 +136,7 @@ Ouvrez une 2ème fenêtre de terminal, et effectuez une nouvelle connexion SSH s
 Créer le portefeuille LND :
 * Tapez la commande ci-dessous :
 `$ lncli create` 
-* Entrez un mot de passe pour protéger l'accès à votre portefeuille (pas d'inquiétude, ce n'est qu'un portefeuille de test de toute façon).
+* Entrez le mot de passe #3 pour l'accès à votre portefeuille.
 * Quand LND vous demande si vous souhaitez restaurer un portefeuille existant, tapez `n`. Vous pouvez taper un mot de passe pour protéger la seed, mais ce n'est vraiment pas nécessaire, surtout pour un portefeuille de test. 
 * Une liste de 24 mots apparaît à l'écran. 
 
@@ -189,9 +189,64 @@ Si vous n'avez toujours pas de canaux ouverts, c'est donc une bonne occasion de 
 * Ouvrir un canal :
 `$ lncli openchannel 035fc91a8ba32729da031bde4543c7f247de3c8e67b483825ea64b32fd9664233d 100000`
 
-:warning: Le deuxième argument est le montant avec lequel vous souhaitez initialiser le canal avec ce pair. Il sera déduit du montant disponible dans votre portefeuille. **Ce montant n'est pas exprimé en bitcoins, mais en satoshis**, ici j'envoie donc 0,00100000, soit un millième de bitcoin, pour initialiser le canal. 
+Le deuxième argument est le montant avec lequel vous souhaitez initialiser le canal avec ce pair. Il sera déduit du montant disponible dans votre portefeuille. **Ce montant n'est pas exprimé en bitcoins, mais en satoshis**, ici j'envoie donc 0,00100000, soit un millième de bitcoin, pour initialiser le canal.
 
-:point_right: n'hésitez pas à taper `$ lncli help` pour avoir une présentation de l'ensemble des commandes, ou à faire `$ lncli help [command]` pour avoir une présentation détaillée d'une commande en particulier. 
+:warning: L'expérience Lightning sur le testnet peut être un peu frustrante, il est plus difficile de trouver des noeuds avec lesquels ouvrir un canal et les paiements échouent souvent faute de pouvoir trouver un chemin. Cela est dû au fait que, paradoxalement, **il y a beaucoup moins de noeuds sur le testnet que sur le mainnet, et que ces noeuds sont beaucoup plus souvent hors-ligne**, ce qui rend le réseau beaucoup moins fiable. 
+
+### Listes des commandes utiles de LND
+
+C'est le moment idéal pour vous familiariser avec les principales commandes de LND, d'autant plus que ce n'est pas malheureusement pas très intuitif pour les néophytes !
+
+* Obtenir la liste de toutes les commandes :  
+   `$ lncli`
+
+* Obtenir une aide plus détaillée sur une commande précise :  
+   `$ lncli help [COMMANDE]`
+
+* Obtenir une vue d'ensemble du fonctionnement de votre noeud :  
+   `$ lncli getinfo`  
+
+* Se connecter à un pair (vous pouvez trouver quelques noeuds auquel vous connecter sur [https://1ml.com/](https://1ml.com/)) :  
+   `$ lncli connect [NODE_URI]`  
+
+* Lister les pairs auxquels vous êtes connectés :  
+   `$ lncli listpeers`  
+
+* Ouvrir un canal avec un pair :  
+   `$ lncli openchannel [NODE_PUBKEY] [MONTANT_EN_SATOSHIS] 0`   
+    *[NODE_URI] est composé de [NODE_PUBKEY] auquel on ajoute @IP:PORT. Ici il faut donc **enlever** cette dernière partie.* 
+	*Le `0` à la suite de `[MONTANT_EN_SATOSHIS]` est une valeur appelée `push amount`. Elle permet d'envoyer une partie de l'argent utilisé pour créer le canal directement chez le pair avec lequel vous l'ouvrez. Cela peut être intéressant quand vous souhaitez effectuer immédiatement un paiement ou dans une logique "altruiste" pour créer un peu de liquidité dans votre réseau. À manier malgré tout avec précaution.*
+
+* Vérifier le statut des canaux en cours d'ouverture :  
+   `$ lncli pendingchannels`  
+
+* Vérifier le statut des canaux actifs :  
+   `$ lncli listchannels`  
+
+* Décoder une facture avant de la payer afin de s'assurer que le montant et les autres infos sont corrects :  
+   `$ lncli decodepayreq [FACTURE]`  
+
+* Payer une facture :  
+   `$ lncli payinvoice [FACTURE]`  
+
+* Vérifier les paiements déjà envoyés :      
+   `$ lncli listpayments`   
+
+* Créer une facture :   
+   `$ lncli addinvoice [MONTANT_EN_SATOSHIS]`
+   *Le montant est en fait optionnel. Vous pouvez créer des factures "blanches", charge à celui qui la paiera de préciser le montant qu'il souhaite vous envoyer.*
+   
+* Lister toutes les factures :  
+  `$ lncli listinvoices`
+
+* Pour fermer un canal, vous avez besoin de deux informations que vous pouvez trouver grâce à la commande `listchannels`. Vous verrez alors une valeur appelée "channelpoint" contenant `FUNDING_TXID` : `OUTPUT_INDEX`.  
+   `$ lncli listchannels`  
+   `$ lncli closechannel [FUNDING_TXID] [OUTPUT_INDEX]`
+
+* Pour forcer la fermeture d'un canal (notamment quand le pair est hors-ligne pour de longues périodes) :   
+   `$ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX] `
+   
+👉 Se référer à[LND API reference](http://api.lightning.community/) pour plus de détails.
 
 -----
 
@@ -207,4 +262,8 @@ Faites aussi quelques transactions "on-chain" avec votre noeud Bitcoin, voyez si
 
 Arrêtez LND (`$ lncli stop`) et Bitcoin (`$ bitcoin-cli stop`), assurez-vous que vous savez les relancer et que tout fonctionne correctement. Redémarrez plusieurs fois le Thunder Badger et vérifiez que cela n'impacte pas vos applications.
 
-Quand vous serez prêt vous n'aurez qu'une ligne à changer dans votre fichier de configuration pour activer le mainnet, et alors vous "jouez votre peau" :smile:.
+Quand vous lancez un programme dans un terminal, fermer ce dernier provoque l'interruption du programme. Pour éviter cela, vous pouvez ajouter `nohup` lorsque vous lancerez Bitcoin et LND :
+`$ nohup bitcoind --daemon`
+`$ nohup lnd`
+
+Quand vous serez prêt vous n'aurez qu'une ligne à changer dans votre fichier de configuration pour activer le mainnet, et "jouer votre peau" :smile:.

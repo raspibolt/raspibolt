@@ -1,4 +1,4 @@
-[ **Intro** ] -- [ [Preparations](old_laptop_10_preparations.md) ] 
+[ **Intro** ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ]
 
 -----
 # Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
@@ -37,7 +37,7 @@ Mon but est d'installer un noeud Bitcoin et Lightning, afin de
 * de supporter la décentralisation du réseau Lightning naissant en aidant à router les paiements et 
 * de recevoir et d'envoyer des paiements d'où vous voulez, quand vous voulez en apprenant à utiliser l'interface en ligne de commande.
 
-Bien que vous puissiez toujours ouvrir votre Zorilla pour utiliser l'interface graphique, il sera beaucoup plus pratique d'utiliser [SSH](https://fr.wikipedia.org/wiki/Secure_Shell) pour contrôler votre noeud de n'importe où grâce aux lignes de commande. À l'avenir, il sera même envisageable d'utiliser votre Zorilla comme serveur personnalisé pour vos wallets sur mobile ou desktop, mais nous verrons cela dans un 2e temps. 
+Bien que vous puissiez toujours ouvrir votre Thunder Badger pour utiliser l'interface graphique, il sera beaucoup plus pratique d'utiliser [SSH](https://fr.wikipedia.org/wiki/Secure_Shell) pour contrôler votre noeud de n'importe où grâce aux lignes de commande. À l'avenir, il sera même envisageable d'utiliser votre Thunder Badger comme serveur personnalisé pour vos wallets sur mobile ou desktop, mais nous verrons cela dans un 2e temps. 
 
 ### À qui ce guide s'adresse-t-il ?
 

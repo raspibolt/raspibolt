@@ -95,7 +95,7 @@ Enfin, il vous demandera si vous souhaitez conserver votre installation de Windo
 
 ![](images/Lubuntu3.png)
 
-Vous pouvez également encrypter votre disque dur. Concrètement, cela signifie qu'un mot de passe supplémentaire sera demandé à chaque démarrage. C'est évidemment une sécurité en cas de vol de votre ordinateur, à vous de voir selon votre situation. 
+Vous pouvez également encrypter votre disque dur. Concrètement, cela signifie qu'un mot de passe supplémentaire sera demandé à chaque démarrage. Je vous le déconseille car votre Thunder Badger ne devrait pas sortir de chez vous, et donc le gain de sécurité ne me semble pas très important. 
 
 Cochez la seconde option LVM, même si vous ne comprenez pas ce que c'est, ça ne peut pas faire de mal.
 

@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ **Preparations** ] 
+[ [Intro](README.md) ] -- [ **Préparatifs** ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ]
 
 -------
 ### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
@@ -63,17 +63,14 @@ Comme vous pouvez le voir, la synchronisation initiale est une opération assez 
 Si vous êtes limité sur un de ces trois paramètres, la synchronisation peut prendre jusqu'à plusieurs semaines ! Il est alors beaucoup plus intéressant d'effectuer cette synchronisation initiale sur une machine plus puissante, et de donner une blockchain déjà validée à votre Thunder Badger, qui pourra ensuite valider les nouveaux blocs et les nouvelles transactions sans difficulté.
 
 ### Synchronisation initiale sur une autre machine
-Je pars du principe que vous êtes sur Windows (désolé pour nos amis riches qui ont un Mac). De toutes façons installer Bitcoin Core n'a rien de compliqué, vous devriez trouver sans problèmes l'équivalent du tuto ci-dessous pour Mac. Bonne nouvelle : les données de Bitcoin sont parfaitement compatibles entre les différents systèmes d'exploitation, aucune question à se poser de ce point de vue. 
 
-Le téléchargement peut se faire de préférence sur le disque dur interne (temps d'accès plus rapide) si vous avez suffisamment de place (attention la blockchain continue de grandir, pour mes lecteurs du futur vérifiez d'abord sa taille actuelle). Si vous avez prévu d'utiliser un disque dur externe, vous pouvez aussi faire directement la synchronisation sur le disque en question (mais dans ce cas-là il faudra faire attention à la compatibilité des différents formats de disque). 
+Je pars du principe que vous êtes sur Windows (désolé pour nos amis riches qui ont un Mac). De toutes façons installer Bitcoin Core n'a rien de compliqué, vous devriez trouver sans problèmes l'équivalent du tuto ci-dessous pour Mac. 
 
-Selon la configuration que vous choisirez, vous devrez :
+Bonne nouvelle : les données de Bitcoin sont parfaitement compatibles entre les différents systèmes d'exploitation, aucune question à se poser de ce point de vue. 
 
-* copier la blockchain depuis votre ordinateur Windows (ou Apple) vers votre Thunder Badger via le réseau local. 
+Le plus simple est donc de télécharger la blockchain sur le disque dur interne (temps d'accès plus rapide) si vous avez suffisamment de place (attention la blockchain continue de grandir, pour mes lecteurs du futur vérifiez d'abord sa taille actuelle), puis de copier ensuite les données sur le Thunder Badger via la commande `scp`. 
 
-* brancher directement le disque dur externe contenant les données validées sur le Thunder Badger.
-
-Nous verrons ces deux options le moment venu. 
+Si vous avez prévu d'utiliser un disque dur externe, vous pourriez aussi faire directement la synchronisation sur le disque en question, mais cela risque de poser des problèmes de compatibilité (avec Ubuntu nous formatons le disque dur au format ext4, qui n'est pas lu par Windows). Mais si votre ordinateur principal est déjà Linux, cela peut être une bonne option.  
 
 ###  Télécharger et installer Bitcoin Core
 
@@ -110,7 +107,7 @@ Comparer la valeur que vous obtenez avec celle que vous trouverez [ici](https://
 Normalement, nous devrions aussi vérifier la signature du fichier, mais comme c'est un peu pénible sur Windows, nous le ferons tout à l'heure sur Lubuntu.
 
 ### Installer Bitcoin Core
-Exécuter le fichier d'installation de Bitcoin Core (il est possible que deviez faire un clic-droit et à sélectionner "Exécuter en tant qu'administrateur") et lancer l'installation avec les paramètres par défaut. Lancez le programme `bitcoin-qt.exe` dans le répertoire "C:\Program Files\Bitcoin" (replacer par votre répertoire si différent). Choisissez “bitcoin” (ou le répertoire que vous souhaitez utiliser pour stocker les données de Bitcoin) comme répertoire de données (_data-dir_).
+Exécuter le fichier d'installation de Bitcoin Core (il est possible que deviez faire un clic-droit et à sélectionner "Exécuter en tant qu'administrateur") et lancer l'installation avec les paramètres par défaut. Lancez le programme `bitcoin-qt.exe` dans le répertoire "C:\Program Files\Bitcoin" (remplacer par votre répertoire si différent). Choisissez “bitcoin” (ou le répertoire que vous souhaitez utiliser pour stocker les données de Bitcoin) comme répertoire de données (_data-dir_).
 
 ![Bitcoin Core directory selection](images/10_bitcoinqt_directory.png)
 

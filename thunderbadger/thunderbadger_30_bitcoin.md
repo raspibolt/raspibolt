@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations]() ] -- [ [Raspberry Pi]() ] -- [ **Bitcoin** ] 
+[ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ **Bitcoin** ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ]
 
 -------
 ### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
