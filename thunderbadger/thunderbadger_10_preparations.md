@@ -110,8 +110,8 @@ b37f738ab17a93e24028fa74280b74c353653cf03fc2fb7da6ead8669e440b1a
 
 Comparer la valeur que vous obtenez avec celle que vous trouverez [ici](https://bitcoincore.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc) (**Attention, ce lien est pour la version 17.0, faites attention si vous téléchargez une autre version**. Pour les fichiers Windows v0.17.0, vous devriez voir :
 ```
-32 bit:  1f4091f6f32685aac3f790edae8657abe0c96448720b165762399a31499f8ee7
-64 bit:  b37f738ab17a93e24028fa74280b74c353653cf03fc2fb7da6ead8669e440b1a
+1f4091f6f32685aac3f790edae8657abe0c96448720b165762399a31499f8ee7  bitcoin-0.17.0-win32-setup.exe
+b37f738ab17a93e24028fa74280b74c353653cf03fc2fb7da6ead8669e440b1a  bitcoin-0.17.0-win64-setup.exe
 ```
 **TO DO : vérification de la signature du fichier sous Windows**
 
@@ -138,4 +138,4 @@ Voilà, vous pouvez désormais laisser la blockchain se synchroniser toute seule
 
 ---
 
-[ [Intro](README.md) ] -- [ [Page suivante](thunderbadger_20_ThunderBadger.md) ]
+[ [Page précédente](README.md) ] -- [ [Page suivante](thunderbadger_20_ThunderBadger.md) ]

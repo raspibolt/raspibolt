@@ -1,7 +1,7 @@
 [ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ **LND** ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ]
 
 -------
-### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
+### Thunder Badger : un nœud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
 --------
 
 # Lightning: LND
@@ -13,25 +13,18 @@ Nous allons télécharger et installer LND (Lightning Network Daemon) de [Lightn
 ### Installer LND
 Maintenant, les choses sérieuses : télécharger, vérifier, et installer le fichier binaire de LND.
 
-Nous sommes toujours connecté avec l'utilisateur principal (administrateur).
-
-Tout d'abord, allons dans le dossier de l'utilisateur `bitcoin` :
-`$ cd /home/bitcoin`
-
-Puis créons un dossier pour LND :
-```
-$ mkdir LND
-$ cd LND
-```
+Connecté en tant que `bitcoin`, créons un dossier pour LND dans le répertoire utilisateur :
+`$ mkdir LND`
+`$ cd LND`
 
 Ensuite, téléchargeons :
-* La dernière release stable de LND (0.4.2 au moment de la rédaction de cet article, vous pouvez vérifier sur [cette page](https://github.com/lightningnetwork/lnd/releases)) :
-`$ sudo wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-amd64-v0.5-beta.tar.gz`
+* La dernière release stable de LND (0.5 au moment de la rédaction de cet article, vous pouvez vérifier sur [cette page](https://github.com/lightningnetwork/lnd/releases)) :
+`$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-amd64-v0.5-beta.tar.gz`
+
 * Les empreintes cryptographiques qui vont nous permettre de vérifier que le logiciel que nous avons téléchargé est bien identique à celui signé par les développeurs :
-```
-$ sudo wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt
-$ sudo wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig
-```
+`$ sudo wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt`
+`$ sudo wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig`
+
 * La clé de Roasbeef, qui est le principal développeur du projet, ce qui permet de vérifier qu'il a bien signé le fichier :
 `$ sudo wget https://keybase.io/roasbeef/pgp_keys.asc | gpg --import`
 
@@ -49,9 +42,7 @@ Empreinte de clef principale : BD59 9672 C804 AF27 7086  9A04 8B80 CD2B B8BD 81
 ```
 
 * Puis l'intégrité du fichier télécharger en comparant le résultat de cette commande :
-`$ shasum -a 256 lnd-linux-amd64-v0.5-beta.tar.gz`
-* Avec la ligne correspondant à `lnd-linux-amd64-v0.5-beta.tar.gz` dans le fichier `manifest-v0.5-beta.txt` :
-`7e80f0daec6e8a2589f0a1d3d220b5f562792d1ec1fe3fcf10432a827cefeb54  lnd-linux-amd64-v0.5-beta.tar.gz`
+`$ sha256sum --check manifest-v0.5-beta.txt --ignore-missing`
 
 Maintenant que nous sommes sûrs que notre fichier n'a pas été corrompu, nous pouvons l'extraire grâce à la commande `tar` que nous avons déjà vue :
 `$ tar -xzf lnd-linux-amd64-v0.4.2-beta.tar.gz`
@@ -59,18 +50,17 @@ Maintenant que nous sommes sûrs que notre fichier n'a pas été corrompu, nous 
 Vérifier que le nouveau dossier a bien été créé :
 `$ ls`
 
-Puis installer LND :
+Puis installer LND (nous avons besoin de basculer sur l'utilisateur admin) :
 ```
+$ su [ADMIN]
 $ sudo install -m 0755 -o bitcoin -g bitcoin -t /usr/local/bin lnd-linux-arm-v0.5-beta/*
 $ lnd --version`
 > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
+$ exit
 ```
 
 ### configuration de LND 
 Maintenant que LND est installé, nous devons le configurer pour qu'il fonctionne avec Bitcoin Core.
-
-* Basculer sur l'utilisateur `bitcoin` (vous devrez saisir le mot de passe de cet utilisateur) :  
-`$ su bitcoin` 
 
 * Dans le dossier de l'utilisateur, créer le répertoire de configuration pour LND et le fichier de configuration :  
 ```
@@ -86,7 +76,8 @@ Copier/coller le texte ci-dessous :
 debuglevel=info
 debughtlc=true
 maxpendingchannels=5
-alias=Thunder_Badger [LND] # il s'agit de votre pseudonyme sur le réseau Lightning, soyez créatif
+alias=Thunder_Badger [LND] 
+# il s'agit de votre pseudonyme sur le réseau Lightning, soyez créatif
 color=#68F442
 
 [Bitcoin]
@@ -101,15 +92,12 @@ bitcoin.node=bitcoind
 
 [autopilot]
 # l'autopilot ouvre et ferme des canaux de paiement en fonction des quelques paramètres ci-dessous, vous pouvez les modifier ou complètement désactiver cette fonctionnalité en neutralisant la 1ère ligne
-autopilot.active=1
+#autopilot.active=1
 autopilot.maxchannels=5
 autopilot.allocation=0.6
 ```
 
-:point_right: des informations supplémentaires sont disponibles sur [le Github du projet](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf).
-
-* Quitter la session de l'utilisateur `bitcoin` et retourner sur l'utilisateur principal :  
-`$ exit`  
+:point_right: des informations supplémentaires sur les configuration sont disponibles sur [le Github du projet](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf).
 
 :point_right: Plus tard vous pourrez suivre les logs de LND en tapant la commande suivante (`Ctrl-C` pour sortir) :  
 `$ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log`
@@ -122,7 +110,7 @@ Tout d'abord, nous devons nous assurer que Bitcoin Core a terminé sa synchronis
 * Interroger `bitcoind` sur l'avancement de la synchronisation :
 `$ bitcoin-cli getblockchaininfo`
 
-Les informations qui nous intéressent sont `blocks` et `headers`. Si ces deux valeurs sont identiques, alors votre noeud est synchronisé avec le réseau. 
+Les informations qui nous intéressent sont `blocks` et `headers`. Si ces deux valeurs sont identiques, alors votre nœud est synchronisé avec le réseau. 
 
 Maintenant que LND est configuré, nous allons pouvoir effectuer le premier lancement sur le testnet.
 
@@ -137,14 +125,14 @@ Créer le portefeuille LND :
 * Tapez la commande ci-dessous :
 `$ lncli create` 
 * Entrez le mot de passe #3 pour l'accès à votre portefeuille.
-* Quand LND vous demande si vous souhaitez restaurer un portefeuille existant, tapez `n`. Vous pouvez taper un mot de passe pour protéger la seed, mais ce n'est vraiment pas nécessaire, surtout pour un portefeuille de test. 
+* Quand LND vous demande si vous souhaitez restaurer un portefeuille existant, tapez `n`. Vous pouvez taper un mot de passe pour protéger la seed, mais c'est facultatif. 
 * Une liste de 24 mots apparaît à l'écran. 
 
 Ces 24 mots sont appelés "seed", car ils permettent de restaurer le portefeuille lié à LND. Ainsi, grâce à lui, vous n'avez pas à craindre de tout perdre si votre Thunder Badger venait à rendre l'âme, vous pourriez retrouver vos fonds sur une autre machine. 
 
 ![LND new cipher seed](images/40_cipher_seed.png)
 
-:warning: Cette information est extrêmement sensible, et doit être garder secrète. **Copiez soigneusement à la main ces 24 mots et éventuellement votre mot de passe sur une feuille de papier que vous conserverez dans un endroit sûr**. Un pirate qui viendrait à mettre la main sur ce bout de papier pourrait vider intégralement votre portefeuille ! Ne stockez pas cette liste sur un ordinateur. Ne prenez pas une photo avec votre téléphone. **Ces informations ne doivent jamais être conservées numériquement**.
+:warning: Cette information est extrêmement sensible, et doit être garder secrète. **Copiez soigneusement à la main ces 24 mots et éventuellement votre mot de passe sur une feuille de papier que vous conserverez dans un endroit sûr**. Quiconque viendrait à mettre la main sur ce bout de papier pourrait vider intégralement votre portefeuille ! Ne stockez pas cette liste sur un ordinateur. Ne prenez pas une photo avec votre téléphone. **Ces informations ne doivent jamais être conservées numériquement**.
 
 ### Ouvrir votre portefeuille et lancer LND
 
@@ -156,7 +144,7 @@ Ces 24 mots sont appelés "seed", car ils permettent de restaurer le portefeuill
 
 ### Récupérer des bitcoins de test
 
-Votre noeud Lightning est prêt. Pour jouer un peu sur le testnet, vous pouvez vous faire envoyer des bitcoins de test gratuits depuis un site que l'on appelle un "faucet".
+Votre nœud Lightning est prêt. Pour jouer un peu sur le testnet, vous pouvez vous faire envoyer des bitcoins de test gratuits depuis un site que l'on appelle un "faucet".
 * Générer une nouvelle adresse Bitcoin pour recevoir des fonds sur le portefeuille LND :  
 `$ lncli newaddress np2wkh`  
 `> "address": "2NCoq9q7............dkuca5LzPXnJ9NQ"` 
@@ -171,7 +159,7 @@ Votre noeud Lightning est prêt. Pour jouer un peu sur le testnet, vous pouvez v
 
 ### Ouvrir des canaux de paiement
 
-Il faudra attendre quelques confirmations pour que vos fonds soient accessibles sur le portefeuille. Vous pourrez alors ouvrir des canaux vers d'autres noeuds et effectuer des paiements à la vitesse de l'éclair !
+Il faudra attendre quelques confirmations pour que vos fonds soient accessibles sur le portefeuille. Vous pourrez alors ouvrir des canaux vers d'autres nœuds et effectuer des paiements à la vitesse de l'éclair !
 
 (Si vous aviez activé l'autopilot dans le ficher `lnd.conf`, le logiciel s'en chargera lui-même, vous n'avez rien à faire)
 
@@ -179,11 +167,11 @@ Un bon point de départ est [satoshi's place](https://testnet.satoshis.place/). 
 
 Quand vous aurez fini de vous amuser, cliquez sur "Submit" en bas à droite de la page. Vous verrez alors une fenêtre de paiement contenant deux informations :
 * Un énorme bloc de caractères inintelligibles appelé "payment request". C'est un peu comme une facture : elle contient le destinataire, le montant du paiement et un certain nombre d'informations qui lui permettront d'arriver à bon port.
-* Une ligne appelé "node information". Il s'agit des données qui permettent de retrouver et d'identifier un noeud Lightning, et surtout de s'y connecter et d'ouvrir un canal avec lui. La première information est une longue série de caractères en apparence aléatoire et qui sont en réalité une clé cryptographique qui permet d'identifier le noeud sur le réseau. Après le "@", il y a l'adresse IP du noeud, et derrière les deux points le port réseau utilisé (ici celui par défaut).
+* Une ligne appelé "node information". Il s'agit des données qui permettent de retrouver et d'identifier un nœud Lightning, et surtout de s'y connecter et d'ouvrir un canal avec lui. La première information est une longue série de caractères en apparence aléatoire et qui sont en réalité une clé cryptographique qui permet d'identifier le nœud sur le réseau. Après le "@", il y a l'adresse IP du nœud, et derrière les deux points le port réseau utilisé (ici celui par défaut).
 
 Si vous n'avez toujours pas de canaux ouverts, c'est donc une bonne occasion de commencer.
 
-* Se connecter avec le noeud de Satoshi's place :
+* Se connecter avec le nœud de Satoshi's place :
 `$ lncli connect 035fc91a8ba32729da031bde4543c7f247de3c8e67b483825ea64b32fd9664233d@51.15.113.51:9735`
 
 * Ouvrir un canal :
@@ -191,7 +179,7 @@ Si vous n'avez toujours pas de canaux ouverts, c'est donc une bonne occasion de 
 
 Le deuxième argument est le montant avec lequel vous souhaitez initialiser le canal avec ce pair. Il sera déduit du montant disponible dans votre portefeuille. **Ce montant n'est pas exprimé en bitcoins, mais en satoshis**, ici j'envoie donc 0,00100000, soit un millième de bitcoin, pour initialiser le canal.
 
-:warning: L'expérience Lightning sur le testnet peut être un peu frustrante, il est plus difficile de trouver des noeuds avec lesquels ouvrir un canal et les paiements échouent souvent faute de pouvoir trouver un chemin. Cela est dû au fait que, paradoxalement, **il y a beaucoup moins de noeuds sur le testnet que sur le mainnet, et que ces noeuds sont beaucoup plus souvent hors-ligne**, ce qui rend le réseau beaucoup moins fiable. 
+:warning: L'expérience Lightning sur le testnet peut être un peu frustrante, il est plus difficile de trouver des nœuds avec lesquels ouvrir un canal et les paiements échouent souvent faute de pouvoir trouver un chemin. Cela est dû au fait que, paradoxalement, **il y a beaucoup moins de nœuds sur le testnet que sur le mainnet, et que ces nœuds sont beaucoup plus souvent hors-ligne**, ce qui rend le réseau beaucoup moins fiable. 
 
 ### Listes des commandes utiles de LND
 
@@ -203,10 +191,10 @@ C'est le moment idéal pour vous familiariser avec les principales commandes de 
 * Obtenir une aide plus détaillée sur une commande précise :  
    `$ lncli help [COMMANDE]`
 
-* Obtenir une vue d'ensemble du fonctionnement de votre noeud :  
+* Obtenir une vue d'ensemble du fonctionnement de votre nœud :  
    `$ lncli getinfo`  
 
-* Se connecter à un pair (vous pouvez trouver quelques noeuds auquel vous connecter sur [https://1ml.com/](https://1ml.com/)) :  
+* Se connecter à un pair (vous pouvez trouver quelques nœuds auquel vous connecter sur [https://1ml.com/](https://1ml.com/)) :  
    `$ lncli connect [NODE_URI]`  
 
 * Lister les pairs auxquels vous êtes connectés :  
@@ -252,13 +240,13 @@ C'est le moment idéal pour vous familiariser avec les principales commandes de 
 
 ### Avant d'aller dans le grand bain
 
-Vous avez maintenant un noeud Bitcoin + Lightning parfaitement opérationnel... sauf que vous jouez avec des billets de Monopoly ! 
+Vous avez maintenant un nœud Bitcoin + Lightning parfaitement opérationnel... sauf que vous jouez avec des billets de Monopoly ! 
 
 Si quelque chose tourne mal, vous pouvez toujours tout effacer et recommencer à zéro. Alors profitez-en pour faire toutes les bêtises possibles, quand vous serez sur le mainnet elles pourraient vous coûter cher !
 
-Ouvrez et fermez des canaux avec différents noeuds, essayez de trouver des démos qui utilisent le testnet (il y en a plusieurs) et d'effectuer des paiements.
+Ouvrez et fermez des canaux avec différents nœuds, essayez de trouver des démos qui utilisent le testnet (il y en a plusieurs) et d'effectuer des paiements.
 
-Faites aussi quelques transactions "on-chain" avec votre noeud Bitcoin, voyez si vous êtes à l'aise avec les deux logiciels.
+Faites aussi quelques transactions "on-chain" avec votre nœud Bitcoin, voyez si vous êtes à l'aise avec les deux logiciels.
 
 Arrêtez LND (`$ lncli stop`) et Bitcoin (`$ bitcoin-cli stop`), assurez-vous que vous savez les relancer et que tout fonctionne correctement. Redémarrez plusieurs fois le Thunder Badger et vérifiez que cela n'impacte pas vos applications.
 
@@ -267,3 +255,7 @@ Quand vous lancez un programme dans un terminal, fermer ce dernier provoque l'in
 `$ nohup lnd`
 
 Quand vous serez prêt vous n'aurez qu'une ligne à changer dans votre fichier de configuration pour activer le mainnet, et "jouer votre peau" :smile:.
+
+--- 
+
+[ [Page précédente](thunderbadger_30_bitcoin.md) ] -- [ [Page suivante](thunderbadger_50_mainnet.md) ]
