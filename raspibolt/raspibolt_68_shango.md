@@ -68,6 +68,10 @@ Open port 10009 so that Shango wallet can talk to your Lightning node. To be **s
 ```
 echo -e "$(curl -s ipinfo.io/ip),\n$(xxd -p -c2000 admin.macaroon)," > qr.txt && cat tls.cert >>qr.txt && qrencode -t ANSIUTF8 < qr.txt
 ```
+For LND 0.5 use the command below:
+```
+echo -e "$(curl -s ipinfo.io/ip),\n$(xxd -p -c2000 ~/.lnd/data/chain/bitcoin/mainnet/admin.macaroon)," > qr.txt && cat ~/.lnd/tls.cert >>qr.txt && qrencode -t ANSIUTF8 < qr.txt
+```
 * The input field "IP:Port" is filled with your external ip address. If you want to run Shango in **safe mode** (internal network only), make sure to replace it with your internal ip address (eg. 192.168.0.20).  
 * Click on "Connect" and the app should sync with your RaspiBolt.
 
