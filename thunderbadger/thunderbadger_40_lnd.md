@@ -14,8 +14,8 @@ Nous allons télécharger et installer LND (Lightning Network Daemon) de [Lightn
 Maintenant, les choses sérieuses : télécharger, vérifier, et installer le fichier binaire de LND.
 
 Connecté en tant que `bitcoin`, créons un dossier pour LND dans le répertoire utilisateur :
-`$ mkdir LND`
-`$ cd LND`
+  `$ mkdir LND`
+  `$ cd LND`
 
 Ensuite, téléchargeons :
 * La dernière release stable de LND (0.5 au moment de la rédaction de cet article, vous pouvez vérifier sur [cette page](https://github.com/lightningnetwork/lnd/releases)) :
