@@ -13,16 +13,16 @@ Nous allons télécharger et installer LND (Lightning Network Daemon) de [Lightn
 ### Installer LND
 Maintenant, les choses sérieuses : télécharger, vérifier, et installer le fichier binaire de LND.
 
-Connecté en tant que `bitcoin`, créons un dossier pour LND dans le répertoire utilisateur :
+* Connecté en tant que `bitcoin`, créez un dossier pour LND dans le répertoire utilisateur :
   `$ mkdir LND`
   `$ cd LND`
 
 Ensuite, téléchargeons :
 * La dernière release stable de LND (0.5 au moment de la rédaction de cet article, vous pouvez vérifier sur [cette page](https://github.com/lightningnetwork/lnd/releases)) :
-`$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-amd64-v0.5-beta.tar.gz`
+  `$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-amd64-v0.5-beta.tar.gz`
 
 * Les empreintes cryptographiques qui vont nous permettre de vérifier que le logiciel que nous avons téléchargé est bien identique à celui signé par les développeurs :
-`$ sudo wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt`
+	`$ sudo wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt`
 `$ sudo wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig`
 
 * La clé de Roasbeef, qui est le principal développeur du projet, ce qui permet de vérifier qu'il a bien signé le fichier :
