@@ -1,7 +1,7 @@
 [ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ **Mainnet** ]
 
 -------
-### Thunder Badger : un noeud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
+### Thunder Badger : un nœud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
 --------
 
 # Mainnet
@@ -47,9 +47,11 @@ Nous allons utiliser "Secure Copy" (SCP). Sous Windows, vous devez [télécharge
 
 :point_right: Si l'ordinateur sur lequel vous avez téléchargé la blockchain est déjà sous Linux, vous pouvez utiliser la commande `rsync` au lieu de `scp`. Plus performante, cette dernière a notamment l'avantage de permettre l'interruption du téléchargement.
 
+_To Do : chercher une meilleure alternative, par exemple une qui pourrait utiliser rsync_
+
 ### Désactiver à nouveau l'authentification par mot de passe
 
-* Sur votre Thunder Badger, en tant qu'utilisateur "admin", vous pouvez à nouveau supprimer le `#` devant "PasswordAuthentication no". Enregistrez vos modifications.
+* Sur votre Thunder Badger, en tant qu'utilisateur "admin", vous pouvez à nouveau supprimer le `#` devant "PasswordAuthentication no". Enregistrez vos modifications.  
   `$ sudo nano /etc/ssh/sshd_config`  
   `PasswordAuthentication no` 
 
@@ -64,10 +66,10 @@ Il est de coûtume de renvoyer les bitcoins du testnet dont nous n'avons plus us
 * `$ lncli closeallchannels`
 
 * Il faut ensuite attendre quelques temps pour que tous les canaux se ferment et que les fonds soient à nouveau disponibles (cela dépend notamment du fait que vos pairs sont en ligne ou non, s'ils sont hors-ligne la fermeture d'un canal peut être assez longue). Vérifiez que les fonds sont bien tous arrivés sur votre portefeuille avec les commandes suivantes :  
-  `$ lncli channelbalance`  (doit être à 0)
+  `$ lncli channelbalance`  (doit être à 0)  
   `$ lncli walletbalance`
 
-* Envoyez le montant indiqué par `walletbalance` moins 500 satoshis pour les frais de transactions. Si vous voyez une erreur "insufficient funds", réessayez en enlevant un peu plus de satoshis jusqu'à ce que la transaction passe.  
+* Envoyez le montant indiqué par `walletbalance` moins 500 satoshis pour les frais de transactions. Si vous voyez une erreur `insufficient funds`, réessayez en enlevant un peu plus de satoshis jusqu'à ce que la transaction passe.  
   `$ lncli sendcoins [ADRESSE] [MONTANT]`
 
 ## Ajustez la configuration 
@@ -77,11 +79,11 @@ Il est de coûtume de renvoyer les bitcoins du testnet dont nous n'avons plus us
   `$ bitcoin-cli stop` 
   
 * Modifiez "bitcoin.conf" en ajoutant un `#` devant `testnet=1`. Enregistrez et fermez le fichier.  
-`$ nano /home/bitcoin/.bitcoin/bitcoin.conf`
+`$ nano /home/bitcoin/.bitcoin/bitcoin.conf`  
 `#testnet=1` 
 
 * Modifiez "lnd.conf" en ajoutant `#` devant `bitcoin.testnet=1` et en le retirant de `bitcoin.mainnet=1`. Enregistrez et quittez.  
-`$ nano /home/bitcoin/.lnd/lnd.conf`
+`$ nano /home/bitcoin/.lnd/lnd.conf`  
 ```
 # enable either testnet or mainnet
 #bitcoin.testnet=1
@@ -93,35 +95,39 @@ bitcoin.mainnet=1
 
 * Démarrez Bitcoind et vérifiez que vous êtes bien sur le mainnet  
 
-  `$ nohup bitcoind --daemon` 
+  `$ nohup bitcoind`  
   `$ tail -f /home/bitcoin/.bitcoin/debug.log`  (quittez avec `Ctrl-C`)  
   `$ bitcoin-cli getblockchaininfo` 
 
-* **Vérifiez que vous êtes bien synchronisé** : il faut que la valeur indiquée derrière "blocks" soit égale à celle de "headers", si vous lancez LND alors que ce n'est pas le cas ça pourrait poser quelques problèmes.
+* **Vérifiez que vous êtes bien synchronisé** : il faut que la valeur indiquée derrière "blocks" soit égale à celle de "headers", si vous lancez LND alors que ce n'est pas le cas cela pourrait poser quelques problèmes.
 
 * Démarrez LND et vérifiez que tout fonctionne
 
-  `$ nohup lnd`
+  `$ nohup lnd`  
   `$ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log`  
 
-* Si tout à l'air de fonctionner, arrêtez tout et redémarrez le Thunder Badger. Répétez les commandes ci-dessus et assurez-vous qu'il n'y a pas d'erreur.
+* Si tout à l'air de fonctionner, arrêtez tout et redémarrez le Thunder Badger. Répétez les commandes ci-dessus et assurez-vous qu'il n'y a pas d'erreur.  
   `$ sudo shutdown -r now`  
 
 * Créer un portefeuille pour le mainnet en utilisant **le même mot de passe** #3 que pour le testnet.  
-  `$ lncli create`
+  `$ lncli create`  
 
 * Redémarrez `lnd` et déverouillez votre portefeuille (entrez le mot de passe)  
-  `$ lncli stop`
-  `$ nohup lnd`
+  `$ lncli stop`  
+  `$ nohup lnd`  
   `$ lncli unlock`   
 
-* Vous pouvez maintenant suivre la synchronisation initiale de LND. Cela peut prendre jusqu'à 2 heures.  
+* Vous pouvez maintenant suivre la synchronisation initiale de LND. Cela peut prendre jusqu'à 2 heures.    
   `$ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log`
 
-* Vérifiez que la commande `lncli` fonctionne  
+* Vérifiez que la commande `lncli` fonctionne   
   `$ lncli getinfo`
 
-:point_right: **Important** : il est nécessaire de déverouiller manuellement le portefeuille LND après chaque lancement. 
+:point_right: **Important** : il est nécessaire de déverouiller manuellement le portefeuille LND à chaque lancement. 
+
+:warning: si vous avez un message d'erreur sur les commandes `lncli`, c'est peut-être que vous avez créé un alias pour éviter de retaper `--network=testnet`. Dans ce cas, ouvrez le fichier `.bash_aliases` et supprimez l'alias :  
+`$ nano .bash_aliases`  
+`$ source .bashrc`
 
 ## Se lancer sur le réseau Lightning
 
@@ -145,7 +151,7 @@ Félicitations, le Thunder Badger est désormais opérationnel sur le mainnet ! 
 
 Si vous avez activé "Autopilot" dans le fichier `lnd.conf`, LND commencera à créer des canaux de paiements aussitôt que votre transaction aura été minée et confirmée. Sinon vous pouvez désactiver l'autopilote et créer les canaux vous-mêmes, les commandes sont les mêmes que celles que nous avons vues pour le testnet. 
 
-Pour étrenner votre noeud Lightning tout neuf, vous pouvez envoyer quelques sats à :  
+Pour étrenner votre nœud Lightning tout neuf, vous pouvez envoyer quelques sats à :  
 * [Stadicus](https://mainnet.yalls.org/articles/97d67df1-d721-417d-a6c0-11d793739be9:0965AC5E-56CD-4870-9041-E69616660E6F/70858a49-d91c-40fb-ae34-bddc2e938704) l'auteur des deux guides pionniers [Raspibolt](https://github.com/Stadicus/guides/tree/master/raspibolt) et [Thundroid](https://github.com/Stadicus/guides/tree/master/thundroid),
 * [Moi-même](https://www.sosthene.net/tip/), qui ai adapté ces guides en français pour le Thunder Badger.
 * L'une des personnes qui a contribué à ce guide :
