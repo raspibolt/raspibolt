@@ -53,7 +53,7 @@ Vérifier que le nouveau dossier a bien été créé :
 Puis installer LND (nous avons besoin de basculer sur l'utilisateur admin) :  
 ```
 $ su [ADMIN]
-$ sudo install -m 0755 -o bitcoin -g bitcoin -t /usr/local/bin lnd-linux-arm-v0.5-beta/*
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm-v0.5-beta/*
 $ lnd --version`
 > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
 $ exit

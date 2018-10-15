@@ -51,7 +51,7 @@ Pour la prochaine étape, il nous faut les droits d'administrateur. Basculer d'a
 
 * Extraire et installer le fichier binaire de l'archive que vous avez téléchargée (commande `tar`) :  
   `$ tar -xvf bitcoin-0.17.0-x86_64-linux-gnu.tar.gz`  
-  `$ sudo install -m 0755 -o bitcoin -g bitcoin -t /usr/local/bin bitcoin-0.17.0/bin`  
+  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin`  
 * Vérifier qu'il est bien installé avec la bonne version :
   `$ bitcoind --version`  
   `> Bitcoin Core Daemon version v0.17.0`
