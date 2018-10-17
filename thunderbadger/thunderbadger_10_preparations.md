@@ -37,7 +37,7 @@ Vous êtes aujourd'hui probablement comme moi il n'y a pas si longtemps que ça 
 Comme pour moi, installer un nœud Bitcoin sur votre vieux portable est donc l'occasion rêvée de vous y mettre !
 
 De toutes façons, vous n'avez pas vraiment le choix :
-* Si vous utilisez un ordinateur un peu ancien, Linux est bien plus léger que Windows qui a tendance à faire tourner un peu n'importe quoi en arrière-plan. Installez Linux augmentera significativement les performances que vous pourrez tirer d'un matériel obsolète. 
+* Si vous utilisez un ordinateur un peu ancien, Linux est bien plus léger que Windows qui a tendance à faire tourner un peu n'importe quoi en arrière-plan. Installer Linux augmentera significativement les performances que vous pourrez tirer d'un matériel obsolète. 
 
 * Linux est bien supérieur à Windows en termes de sécurité et de stabilité, vous n'aurez pas à vous embêtez avec un antivirus et vous aurez beaucoup moins de plantages.
 
