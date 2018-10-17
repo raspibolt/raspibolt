@@ -85,7 +85,7 @@ Si vous avez prévu d'utiliser un disque dur externe, vous pourriez aussi faire 
 
 Bitcoin Core est l'implémentation de référence de Bitcoin. Comme Bitcoin est un logiciel libre, n'importe qui peut écrire sa propre version du logiciel, et plusieurs l'ont déjà fait. Quand vous serez devenu un expert, vous pourrez expérimenter avec d'autres implémentations, mais en attendant il est plus sage de ne pas sortir des sentiers battus.
 
-Télécharger le fichier d'installation de Bitcoin Core depuirs [bitcoin.org/download](bitcoin.org/download) et déplacez-le dans le répertoire dans lequel vous souhaitez télécharger la blockchain. 
+Télécharger le fichier d'installation de Bitcoin Core depuirs [bitcoin.org/download](https://bitcoincore.org/en/download/) et déplacez-le dans le répertoire dans lequel vous souhaitez télécharger la blockchain. 
 
 Une bonne habitude à prendre est de vérifier l'authenticité d'un programme que vous venez de télécharger, surtout quand il y a potentiellement beaucoup d'argent en jeu. Pour ce faire, nous allons calculer son _checksum_ et le comparer avec celui fourni par le développeur du logiciel. Cela permet de s'assurer que ce que vous avez téléchargé est bien conforme au logiciel d'origine, et qu'il ne lui a pas été substitué une version piratée. 
 
@@ -113,10 +113,9 @@ Comparer la valeur que vous obtenez avec celle que vous trouverez [ici](https://
 1f4091f6f32685aac3f790edae8657abe0c96448720b165762399a31499f8ee7  bitcoin-0.17.0-win32-setup.exe
 b37f738ab17a93e24028fa74280b74c353653cf03fc2fb7da6ead8669e440b1a  bitcoin-0.17.0-win64-setup.exe
 ```
-**TO DO : vérification de la signature du fichier sous Windows**
 
 ### Installer Bitcoin Core
-Exécuter le fichier d'installation de Bitcoin Core (clic-droit et "Exécuter en tant qu'administrateur") et lancer l'installation avec les paramètres par défaut. Lancez le programme `bitcoin-qt.exe` dans le répertoire "C:\Program Files\Bitcoin" (remplacer par votre répertoire si différent). Choisissez “bitcoin” (ou le répertoire que vous souhaitez utiliser pour stocker les données de Bitcoin) comme répertoire de données (_data-dir_).
+Exécuter le fichier d'installation de Bitcoin Core (clic-droit et "Exécuter en tant qu'administrateur") et lancer l'installation avec les paramètres par défaut. Lancez le programme `bitcoin-qt.exe` qui se trouve par défaut dans le répertoire "C:\Program Files\Bitcoin". Choisissez “D:\bitcoin_mainnet”  comme répertoire de données (_data-dir_).
 
 ![Bitcoin Core directory selection](images/10_bitcoinqt_directory.png)
 
