@@ -175,7 +175,7 @@ RestartSec=60
 WantedBy=multi-user.target
 ```
 * enable and start LND  
-  `$ sudo systemctl enable lnd`  
+  `$ sudo systemctl enable lnd.service`  
   `$ sudo systemctl start lnd`  
   `$ systemctl status lnd`  
 
