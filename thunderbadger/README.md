@@ -3,6 +3,8 @@
 -----
 # Thunder Badger : un nœud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
 
+_:warning: **Ce guide est encore en construction, et peut contenir des erreurs**. Si vous avez détecté une erreur, ou tout simplement que vous avez une proposition pour l'améliorer, merci d'ouvrir un ticket ci-dessus ("issue")._
+
 Ce guide est en grande partie basé sur le travail de [Stadicus](https://github.com/Stadicus/guides), qui a réalisé deux tutoriels très complet expliquant comment installer un nœud Bitcoin ET Lightning sur du matériel très abordable, à savoir le Raspberry Pi et l'Odroid.
 
 Je ne reviendrai pas sur les raisons de faire tourner son propre nœud Bitcoin, [j'en ai déjà parlé ici](https://en.bitcoin.it/wiki/Full_node). En revanche, il peut être utile d'expliquer pourquoi il est intéressant de l'installer sur un ordinateur à part et dédié à cela :
