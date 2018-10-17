@@ -7,7 +7,7 @@ _:warning: **Ce guide est encore en construction, et peut contenir des erreurs**
 
 Ce guide est en grande partie basé sur le travail de [Stadicus](https://github.com/Stadicus/guides), qui a réalisé deux tutoriels très complet expliquant comment installer un nœud Bitcoin ET Lightning sur du matériel très abordable, à savoir le Raspberry Pi et l'Odroid.
 
-Je ne reviendrai pas sur les raisons de faire tourner son propre nœud Bitcoin, [j'en ai déjà parlé ici](https://en.bitcoin.it/wiki/Full_node). En revanche, il peut être utile d'expliquer pourquoi il est intéressant de l'installer sur un ordinateur à part et dédié à cela :
+Je ne reviendrai pas sur les raisons de faire tourner son propre nœud Bitcoin, [j'en ai déjà parlé ici](https://www.sosthene.net/histoire-noeud/). En revanche, il peut être utile d'expliquer pourquoi il est intéressant de l'installer sur un ordinateur à part et dédié à cela :
 * En l'état actuel de son développement, Lightning nécessite d'être en ligne en permanence afin de pouvoir servir de relai dans les transactions,
 * La blockchain de Bitcoin croît à un rythme certes raisonnable, mais représente aujourd'hui plus de 200Go, ce qui peut être rédhibitoire sur l'ordinateur que vous utilisez quotidiennement (vous pouvez certes la pruner, même si cela risque de limiter votre utilisation de Lightning, en tout cas en l'état actuel de son développement),
 * Un ordinateur polyvalent est soumis à davantage de risques de sécurité (virus, intrusion, vol...), utiliser un hardware dédié minimise ces risques. 
