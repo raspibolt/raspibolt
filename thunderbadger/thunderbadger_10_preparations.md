@@ -16,11 +16,11 @@ Votre ordinateur n'a certainement pas les mêmes caractéristiques que le mien, 
 
 * Processeur : si vous souhaitez faire la synchronisation initiale sur la machine-même, veillez à ce que votre machine dispose au minimum d'un quad-core de milieu-haut de gamme pas trop ancien. De mon expérience, un quad-core i7 de 2013 s'en sort à peu près honorablement, mais sur le vieux dual-core de mon Thunder Badger c'était la catastrophe !
 
-* RAM : De ma propre expérience, je dirai qu'avec 8Go de mémoire vive allouées en quasi-totalité à bitcoin, on ne s'en sort pas trop mal. Si vous avez moins de 4Go, cela risque de vous ralentir considérablement pour la synchronisation initiale. En phase de run Bitcoin Core et LND ne consomment presque rien, vous vous en sortirez très bien même avec 1Go de RAM. 
+* RAM : De ma propre expérience, je dirai qu'avec 8Go de mémoire vive allouées en quasi-totalité à bitcoin, on ne s'en sort pas trop mal. Si vous avez moins de 4Go, cela risque de vous ralentir considérablement pour la synchronisation initiale. En phase d'exécution Bitcoin Core et LND ne consomment presque rien, vous vous en sortirez très bien même avec 1Go de RAM.
 
 * Votre disque dur contient-il 500Go ou davantage ? Si oui, vous pouvez envisager de vous passer d'un disque dur externe. Sinon, je vous conseille fortement d'investir dans un petit HDD de 500Go minimum. Si vous avez davantage de moyens et que vous êtes bricoleur, vous pouvez même carrément changer le disque dur interne pour un SDD, ce qui améliorera sensiblement les performances générales (mais pensez bien à prendre au moins 500Go).
 
-* Une connexion internet. Placez votre nœud dans un endroit où il capte bien le signal wifi de votre box. Si vous pouvez le brancher en filaire, c'est encore mieux. Là encore, voulez-vous synchroniser votre nœud directement sur cette machine ? Si oui, alors il vous faut une connection plutôt bonne car Bitcoin va télécharger plus de 200 Go en quelques heures/jours. Sinon, la consommation de Bitcoin en _run_ est très modeste. 
+* Une connexion internet. Placez votre nœud dans un endroit où il capte bien le signal wifi de votre box. Si vous pouvez le brancher en filaire, c'est encore mieux. Là encore, voulez-vous synchroniser votre nœud directement sur cette machine ? Si oui, alors il vous faut une connection plutôt bonne car Bitcoin va télécharger plus de 200 Go en quelques heures/jours. Sinon, la consommation de Bitcoin en _exécution_ est très modeste.
 
 En fait, vous devez maintenant vous poser la question de la façon dont vous allez effectuer votre synchronisation initiale de la blockchain de Bitcoin, c'est-à-dire le téléchargement et la validation de l'intégralité de l'historique de transactions sur (quasiment) 10 ans !
 
@@ -28,7 +28,7 @@ En effet, c'est cette opération de synchronisation initiale qui peut être doul
 
 Par conséquent, évaluez bien votre ordinateur avec les différents points ci-dessus pour déterminer s'il est raisonnable de lui faire effectuer cette opération. 
 
-Dans ce guide, je vais partir du principe que vous la synchronisation initiale sera faite sur une machine à part, non seulement car je pense que ce sera souvent plus raisonnable (sauf si vous êtes très riche et que vous changez d'ordinateur haut-de-gamme tous les 2 ans :smile:), mais aussi car cela nous permet de jouer un peu avec le testnet pendant la synchronisation initiale.
+Dans ce guide, je vais partir du principe que la synchronisation initiale sera faite sur une machine à part, non seulement car je pense que ce sera souvent plus raisonnable (sauf si vous êtes très riche et que vous changez d'ordinateur haut-de-gamme tous les 2 ans :smile:), mais aussi car cela nous permet de jouer un peu avec le testnet pendant la synchronisation initiale.
 
 ## Installer Linux
 
