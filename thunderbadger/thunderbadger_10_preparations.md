@@ -28,7 +28,7 @@ En effet, c'est cette opération de synchronisation initiale qui peut être doul
 
 Par conséquent, évaluez bien votre ordinateur avec les différents points ci-dessus pour déterminer s'il est raisonnable de lui faire effectuer cette opération. 
 
-Dans ce guide, je vais partir du principe que pour vous la synchronisation initiale sera faite sur une machine à part, non seulement car je pense que ce sera souvent plus raisonnable (sauf si vous êtes très riche et que vous changez d'ordinateur haut-de-gamme tous les 2 ans :smile:), mais aussi car cela nous permet de jouer un peu avec le testnet pendant la synchronisation initiale.
+Dans ce guide, je vais partir du principe que la synchronisation initiale sera faite sur une machine à part, non seulement car je pense que ce sera souvent plus raisonnable (sauf si vous êtes très riche et que vous changez d'ordinateur haut-de-gamme tous les 2 ans :smile:), mais aussi car cela nous permet de jouer un peu avec le testnet pendant la synchronisation initiale.
 
 ## Installer Linux
 
