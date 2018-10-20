@@ -109,12 +109,12 @@ Attendez quelques instants, et essayez les commandes suivantes :
 `$ bitcoin-cli getblockchaininfo`
 `$ bitcoin-cli getnetworkinfo`
 
-![message_erreur](images/thunderbadger_30_bitcoin-cli1.png)
+![message_erreur](images/thunderbadger_30_bitcoin-cli1.png)  
 _Si vous voyez ce message, cela signifie que `bitcoind` n'a pas encore démarré, réessayez dans une ou deux minutes._
 
 Vous devriez voir un certain nombre d'informations, si vous ne comprenez rien ce n'est pas grave, l'essentiel c'est que vous n'ayez pas de message d'erreur. 
 
-![bitcoin-cli getblockchaininfo](images/thunderbadger_30_bitcoin-cli2.png)
+![bitcoin-cli getblockchaininfo](images/thunderbadger_30_bitcoin-cli2.png)  
 _Remarquez que sur la première ligne, il y a `test`. Si nous étions sur le mainnet, ce serait `main`
 
 ![bitcoin-cli getnetworkinfo](images/thunderbadger_30_bitcoin-cli3.png)
