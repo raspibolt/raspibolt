@@ -115,7 +115,7 @@ _Si vous voyez ce message, cela signifie que `bitcoind` n'a pas encore démarré
 Vous devriez voir un certain nombre d'informations, si vous ne comprenez rien ce n'est pas grave, l'essentiel c'est que vous n'ayez pas de message d'erreur. 
 
 ![bitcoin-cli getblockchaininfo](images/thunderbadger_30_bitcoin-cli2.png)  
-_Remarquez que sur la première ligne, il y a `test`. Si nous étions sur le mainnet, ce serait `main`
+_Remarquez que sur la première ligne, il y a `test`. Si nous étions sur le mainnet, ce serait `main`_
 
 ![bitcoin-cli getnetworkinfo](images/thunderbadger_30_bitcoin-cli3.png)
 
