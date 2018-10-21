@@ -148,6 +148,7 @@ Lorsque votre nœud est synchronisé, passez à l'étape suivante.
 ---
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## Mettre à jour Bitcoin Core
 
 Bitcoin Core est en développement permanent, et de nouvelles versions apportant diverses améliorations et corrections de bug voient régulièrement le jour.  
@@ -165,6 +166,9 @@ Si vous faites une mise à jour depuis une version particulièrement ancienne, i
 ---
 
 [ [Page précédente](thunderbadger_20_ThunderBadger.md) ] -- [ [Page suivante](thunderbadger_40_lnd.md) ]
+=======
+[ [Page précédente](thunderbadger_20_ThunderBadger.md) ] -- [ [Page suivante](thunderbadger_40_lnd.md) ]
+>>>>>>> 071c0636a1a12b95b5492cba1464309b1208f561
 =======
 [ [Page précédente](thunderbadger_20_ThunderBadger.md) ] -- [ [Page suivante](thunderbadger_40_lnd.md) ]
 >>>>>>> 071c0636a1a12b95b5492cba1464309b1208f561
