@@ -1,43 +1,60 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [**Bonus**](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ] -- [ **Bonus** ]
 
 ------
 
-### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
+### Thunder Badger : un nœud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
 
 ------
 
-## Bonus guide: Electrum Personal Server
+## Bonus : Electrum Personal Server
 
-*Difficulty: intermediate*
+*Difficulté: moyenne*
 
 ### Introduction
 
-The best way to safekeep your bitcoin (meaning the best combination of security and usability) is to use a hardware wallet (like [Ledger](https://www.ledgerwallet.com/) or [Trezor](https://trezor.io/)) in combination with your own Bitcoin node. This gives you security, privacy and eliminates the need to trust a third party to verify transactions.
+Le meilleur moyen de conserver vos bitcoins avec un bon compromis entre sécurité et accessibilité est d'utiliser un portefeuille _matériel_ (_hardware wallet_), comme [Ledger](https://www.ledgerwallet.com/) ou [Trezor](https://trezor.io/) en combinaison de votre noeud Bitcoin. En faisant ainsi, vous éliminez le besoin de passer par un tiers pour vérifier vos transactions.
 
-With the RaspiBolt setup, the Bitcoin Core wallet on the node can only be used from the command line as no graphical user interface is installed. As Bitcoin Core does not offer support for hardware wallets, only a "hot wallet" (exposed to the internet) can be realized. 
+Bien que rien ne vous empêche d'utiliser l'interface graphique avec votre Thunder Badger, dans la pratique cela sera souvent pénible. Bitcoin Core ne supporte pas à l'heure actuelle les portefeuilles matériels. Avec votre noeud, vous ne pouvez donc qu'utiliser par défaut un portefeuille _chaud_, c'est à dire exposé sur internet. 
 
-One possibility to use Bitcoin Core with more functionality is to set up an additional [ElectrumX](https://github.com/kyuupichan/electrumx) server and then use the great [Electrum wallet](https://electrum.org/) (on your regular computer) that integrates with hardware wallets. But this setup is not easy, and the overhead is more than a Raspberry Pi can handle.
+Une possibilité pour profiter d'une interface graphique plus agréable et du support d'un portefeuille matériel serait d'installer un serveur [ElectrumX](https://github.com/kyuupichan/electrumx) sur le Thunder Badger et [Electrum](https://electrum.org/) sur votre ordinateur habituel. Cela peut toutefois s'avérer assez complexe, et pourrait également être trop gourmand pour les possibilités sans doute assez limité du Thunder Badger.
 
-The new [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) makes it possible to connect Electrum (using your hardware wallet) directly to your RaspiBolt. In contrast to ElectrumX, this is not a full server that serves multiple users, but your own dedicated backend. 
+[Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) vous permet de connecter Electrum (et avec lui votre portefeuille matériel) directement au Thunder Badger. Contrairement à ElectrumX, ce n'est pas un serveur destiné à répondre aux requêtes de multiples utilisateurs, mais uniquement aux vôtres.
 
-Before using this setup, please familiarize yourself with all components by setting up your own Electrum wallet, visiting the linked project websites and reading [The Electrum Personal Server Will Give Users the Full Node Security They Need](https://bitcoinmagazine.com/articles/electrum-personal-server-will-give-users-full-node-security-they-need/) in Bitcoin Magazine.
+Avant de commencer, il est recommandé de télécharger et de se familiariser avec [Electrum](https://electrum.org/#download). Vous pouvez aussi lire [cet article]((https://bitcoinmagazine.com/articles/electrum-personal-server-will-give-users-full-node-security-they-need/).
 
-### Install Electrum Personal Server
+### Installer Electrum Personal Server
 
-* Open a "bitcoin" user session and change into the home directory  
-  `$ sudo su bitcoin`  
-  `$ cd`
-* Clone the EPS GitHub repository  
-  `$ git clone https://github.com/chris-belcher/electrum-personal-server`
-* To get the latest stable release, check the EPS [releases page](https://github.com/chris-belcher/electrum-personal-server/releases), list the available tags of the repository and check out the desired tag  (you might want to use a newer one than `v0.1.1`, if available)  
-  `$ cd electrum-personal-server`   
-  `$ git tag -l`  
-  `$ git checkout tags/v0.1.1`
-* Copy and edit configuration template  
+* Depuis votre ordinateur habituel, ouvrir une session via SSH avec l'utilisateur "bitcoin"  
+  `$ ssh bitcoin@[VOTRE_IP]`  
+* Télécharger, vérifier et extraire la dernière release (voir [cette page](https://github.com/chris-belcher/electrum-personal-server/releases) pour voir quelle est la plus récente et obtenir le bon lien)  
+
+  ```
+  # créer un nouveau répertoire
+  $ mkdir electrum-personal-server
+  $ cd electrum-personal-server
+  
+  # télécharger le code et les signatures
+  $ wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.1.5.tar.gz
+  $ wget https://github.com/chris-belcher/electrum-personal-server/releases/download/eps-v0.1.5/eps-v0.1.5.tar.gz.asc
+  $ wget https://raw.githubusercontent.com/chris-belcher/electrum-personal-server/master/pgp/pubkeys/belcher.asc
+  
+  # vérifier la signature de Chris Belcher et l'intégrité du fichier téléchargé
+  $ gpg belcher.asc
+  > 0A8B038F5E10CC2789BFCFFFEF734EA677F31129
+  
+  $ gpg --import belcher.asc
+  $ gpg --verify eps-v0.1.3.tar.gz.asc
+  > gpg: Good signature from "Chris Belcher <false@email.com>" [unknown]
+  > Primary key fingerprint: 0A8B 038F 5E10 CC27 89BF  CFFF EF73 4EA6 77F3 1129
+  
+  # Décompresser le fichier
+  $ tar -xvf eps-v0.1.5.tar.gz  
+  ```
+* Faire une copie du fichier de configuration ; l'ouvrir  
   `$ cp config.cfg_sample config.cfg`  
   `$ nano config.cfg` 
 
-  * Add your wallet master public keys or watch-only addresses to the `[master-public-keys]` and `[watch-only-addresses]` sections. Master public keys for an Electrum wallet can be found in the Electrum client menu `Wallet` -> `Information`.
+  * Ajouter la clé publique principale ou adresse lecture seule (_watch only_) dans les se `[master-public-keys]` and `[watch-only-addresses]` sections. Master public keys for an Electrum wallet can be found in the Electrum client menu `Wallet` -> `Information`.
 
   * Uncomment and complete the lines  
     `rpc_user = raspibolt`  

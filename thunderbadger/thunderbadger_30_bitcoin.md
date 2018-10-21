@@ -109,13 +109,13 @@ Attendez quelques instants, et essayez les commandes suivantes :
 `$ bitcoin-cli getblockchaininfo`
 `$ bitcoin-cli getnetworkinfo`
 
-![message_erreur](images/thunderbadger_30_bitcoin-cli1.png)
+![message_erreur](images/thunderbadger_30_bitcoin-cli1.png)  
 _Si vous voyez ce message, cela signifie que `bitcoind` n'a pas encore démarré, réessayez dans une ou deux minutes._
 
 Vous devriez voir un certain nombre d'informations, si vous ne comprenez rien ce n'est pas grave, l'essentiel c'est que vous n'ayez pas de message d'erreur. 
 
-![bitcoin-cli getblockchaininfo](images/thunderbadger_30_bitcoin-cli2.png)
-_Remarquez que sur la première ligne, il y a `test`. Si nous étions sur le mainnet, ce serait `main`
+![bitcoin-cli getblockchaininfo](images/thunderbadger_30_bitcoin-cli2.png)  
+_Remarquez que sur la première ligne, il y a `test`. Si nous étions sur le mainnet, ce serait `main`_
 
 ![bitcoin-cli getnetworkinfo](images/thunderbadger_30_bitcoin-cli3.png)
 
@@ -147,4 +147,24 @@ Lorsque votre nœud est synchronisé, passez à l'étape suivante.
 
 ---
 
+<<<<<<< HEAD
+## Mettre à jour Bitcoin Core
+
+Bitcoin Core est en développement permanent, et de nouvelles versions apportant diverses améliorations et corrections de bug voient régulièrement le jour.  
+
+Certaines mises à jour de sécurité doivent être effectuées au plus vite, comme celle qui a corrigé [le très grave bug](https://bitcoincore.org/en/2018/09/20/notice/) identifié en septembre 2018. Mais la plupart du temps, vous n'êtes pas obligé de vous ruer sur la dernière version.  
+
+En cas de mise à jour urgente de sécurité, si vous ne fréquentez pas assidûment d'autres bitcoiners sur les réseaux sociaux, s'inscrire sur la [mailing list](https://bitcoincore.org/en/list/announcements/join/) de Bitcoin Core permettra d'être tenu au courant.
+
+Vous trouverez toutes les _releases_ sur [le Github de Bitcoin Core](https://github.com/bitcoin/bitcoin/releases). Pensez à lire les notes qui accompagnent chacune d'entre elles. En effet, ces notes vous donnent des informations sur les diverses améliorations apportées à chaque nouvelle version, mais aussi si des problèmes ont déjà été identifiés ou bien si la mise à jour implique une précaution particulière.
+
+Dans la plupart des cas, il suffit d'arrêter Bitcoin Core (`$ bitcoin-cli stop`), puis de répéter la procédure d'installation plus haut sur cette page, et enfin de le relancer (`$ nohup bitcoind`).  
+
+Si vous faites une mise à jour depuis une version particulièrement ancienne, il est possible qu'une réindexation de la blockchain soit nécessaire (ajouter l'option `--reindex` derrière `bitcoind`). Cela est généralement indiqué dans les notes qui accompagnent chaque version.
+
+---
+
 [ [Page précédente](thunderbadger_20_ThunderBadger.md) ] -- [ [Page suivante](thunderbadger_40_lnd.md) ]
+=======
+[ [Page précédente](thunderbadger_20_ThunderBadger.md) ] -- [ [Page suivante](thunderbadger_40_lnd.md) ]
+>>>>>>> 071c0636a1a12b95b5492cba1464309b1208f561
