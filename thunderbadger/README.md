@@ -1,4 +1,4 @@
-[ **Intro** ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ]
+[ **Intro** ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ] -- [ [Bonus](thunderbadger_60_bonus.md) ]
 
 -----
 # Thunder Badger : un nœud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
@@ -38,6 +38,7 @@ Stadicus a inauguré la tradition de donner un petit nom bien tarte à ce type d
 3. [Bitcoin](thunderbadger_30_bitcoin.md)
 4. [LND](thunderbadger_40_lnd.md)
 5. [Mainnet](thunderbadger_50_mainnet.md)
+6. [Bonus](thunderbadger_60_bonus.md)
 
 ### Objectifs
 

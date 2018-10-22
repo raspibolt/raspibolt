@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ **Bitcoin** ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ]
+[ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ **Bitcoin** ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ [Mainnet](thunderbadger_50_mainnet.md) ] -- [ [Bonus](thunderbadger_60_bonus.md) ]
 
 -------
 ### Thunder Badger : un nœud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
@@ -14,23 +14,27 @@ Le testnet fonctionne presque complètement de la même façon que le mainnet, e
 ### Installation
 Nous allons tout d'abord télécharger le dernier [fichier binaire](https://fr.wikipedia.org/wiki/Fichier_binaire) de Bitcoin Core (17.0 en octobre 2018), et comparer l'empreinte du fichier téléchargé avec le [checksum signé](https://bitcoin.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc) (souvenez-vous, nous l'avons fait également lorsque nous avons téléchargé Bitcoin Core pour Windows à [l'étape 1](thunderbadger_10_preparations.md)).
 
-* Se connecter en tant qu'utilisateur "bitcoin" sur le Thunder Badger :
+* Se connecter en tant qu'utilisateur "bitcoin" sur le Thunder Badger :  
 `$ ssh [UTILISATEUR]@[IP]`
-* Dans le répertoire de l'utilisateur, créer un nouveau dossier `bitcoin` :
+* Dans le répertoire de l'utilisateur, créer un nouveau dossier `bitcoin` :  
 `$ mkdir bitcoin`
-* Entrer dans le dossier `bitcoin` :
+* Entrer dans le dossier `bitcoin` :  
 `$ cd bitcoin`
 
 **Note** : le nom de l'utilisateur avec lequel vous êtes connecté apparaît toujours dans le terminal sous la forme `user@host`. Si vous ne savez plus dans quel dossier vous vous trouvez, regardez ce qu'il y a avant le symbole `$`. Si besoin, la commande `$ pwd` vous donnera votre emplacement.
 
 * Télécharger les différents fichiers dont nous avons besoin grâce à la commande `wget`. **Attention, le lien ci-dessous est valable pour la version actuelle (17.0)**, pensez à vous rendre sur [bitcoincore.org/en/download/](https://bitcoincore.org/en/download/) pour vérifier quelle est la dernière version.  
-`$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-x86_64-linux-gnu.tar.gz`  
-`$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc`  
-`$ wget https://bitcoincore.org/keys/laanwj-releases.asc`
+```
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-x86_64-linux-gnu.tar.gz
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc
+$ wget https://bitcoincore.org/keys/laanwj-releases.asc`
+```
 
-* Vérifier que le checksum de référence correspond à celui du fichier téléchargé :  
-`$ sha256sum --check SHA256SUMS.asc --ignore-missing`  
-`> bitcoin-0.17.0-x86_64-linux-gnu.tar.gz: Réussi`
+* Vérifier que le checksum de référence correspond à celui du fichier téléchargé :    
+```
+$ sha256sum --check SHA256SUMS.asc --ignore-missing 
+> bitcoin-0.17.0-x86_64-linux-gnu.tar.gz: Réussi
+```
 
 :warning: Si jamais vous ne voyez pas le même message suite à cette dernière commande, **quelque chose ne va pas**, n'allez pas plus loin tant que vous n'avez pas compris ce qu'il se passe.
 
@@ -52,7 +56,7 @@ Pour la prochaine étape, il nous faut les droits d'administrateur. Basculer d'a
 * Extraire et installer le fichier binaire de l'archive que vous avez téléchargée (commande `tar`) :  
   `$ tar -xvf bitcoin-0.17.0-x86_64-linux-gnu.tar.gz`  
   `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin`  
-* Vérifier qu'il est bien installé avec la bonne version :
+* Vérifier qu'il est bien installé avec la bonne version :  
   `$ bitcoind --version`  
   `> Bitcoin Core Daemon version v0.17.0`
 * Revenir sur l'utilisateur `bitcoin`
@@ -128,15 +132,15 @@ Quittez avec `Ctrl-C`.
 
 Bitcoin-cli est le programme qui vous permet de communiquer avec votre nœud. Grâce à lui, vous pouvez lui donner des ordres très simples (comme les commandes que nous avons faites ci-dessus), mais aussi plus tard d'autres affreusement compliquées (comme construire vos propres transactions avec un contrôle total sur tous les paramètres). 
 
-Les commandes sont toutes construites sur le modèle suivant :
+Les commandes sont toutes construites sur le modèle suivant :  
 `$ bitcoin-cli [COMMANDE] [ARG1] [ARG2] [ARG_N]`
 
 Certaines commandes ne font qu'imprimer des informations à l'écran, d'autres exécutent certaines actions. 
 
-Si vous voulez avoir la liste de toutes les commandes :
+Si vous voulez avoir la liste de toutes les commandes :  
 `$ bitcoin-cli help`
 
-Pour avoir des instructions détaillées sur une commande en particulier :
+Pour avoir des instructions détaillées sur une commande en particulier :  
 `$ bitcoin-cli help [commande]`
 
 :point_right: pour avoir plus d'informations sur les différentes commandes, vous pouvez aussi regardez [cette page](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list).

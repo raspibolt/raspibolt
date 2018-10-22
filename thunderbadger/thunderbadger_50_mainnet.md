@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ **Mainnet** ]
+[ [Intro](README.md) ] -- [ [Préparatifs](thunderbadger_10_preparations.md) ] -- [ [Thunder Badger](thunderbadger_20_ThunderBadger.md) ] -- [ [Bitcoin](thunderbadger_30_bitcoin.md) ] -- [ [LND](thunderbadger_40_lnd.md) ] -- [ **Mainnet** ] -- [ [Bonus](thunderbadger_60_bonus.md) ]
 
 -------
 ### Thunder Badger : un nœud Bitcoin et ⚡Lightning️⚡ dans votre vieux portable pourri !
@@ -166,3 +166,7 @@ Il y a déjà un certain nombre de ressources pour vous aider à explorer le mon
 * [Recksplorer](https://rompert.com/recksplorer/): une carte du réseau Lightning
 * [1ML](https://1ml.com): un moteur de recherche et d'analyse du réseau
 * [lnroute.com](http://lnroute.com): une liste très complète des ressources disponibles
+
+---
+
+[ [Page précédente](thunderbadger_40_lnd.md) ] -- [ [Page suivante](thunderbadger_60_bonus.md) ]
