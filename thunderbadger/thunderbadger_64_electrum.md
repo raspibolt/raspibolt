@@ -94,8 +94,8 @@ Sur votre ordinateur habituel, commencez par installer Electrum.
 
   * Ajouter la clé publique principale du portefeuille Electrum que vous lier à votre nœud, ou les adresses en lecture seule (_watch only_) que vous voulez suivre dans les sections `[master-public-keys]` et `[watch-only-addresses]`. La clé publique principale d'un portefeuille Electrum se trouve dans `Portefeuille` -> `Information`.
   
-  ![thunderbadger_64_electrum1](images/thunderbadger_64_electrum1.png)  
-  ![thunderbadger_64_electrum2](images/thunderbadger_64_electrum2.png)  
+  ![thunderbadger_64_electrum1](images/64_electrum1.png)  
+  ![thunderbadger_64_electrum2](images/64_electrum2.png)  
   
   * Remplacer la ligne suivante  
   `#any_name_works = xpub661...`
@@ -128,7 +128,7 @@ Lors du premier lancement, le serveur doit d'abord générer les adresses à par
 * Une fois la génération d'adresse (ou le scan le cas échéant) terminé, relancer le serveur  
  `$ ./server.py`
 
-### Vérifier la connexion de son portefeuille Electrum
+### Vérifier la connexion du portefeuille Electrum
 
 Ouvrez Electrum, le point en bas à droite de l'écran devrait maintenant être vert, ce qui signifie que vous êtes connecté avec votre Thunder Badger. Si vous avez utilisé un portefeuille déjà existant, les transactions antérieures devraient apparaître à l'écran.
 
