@@ -92,7 +92,7 @@ Sur votre ordinateur habituel, commencez par installer Electrum.
   `$ cp config.cfg_sample config.cfg`  
   `$ nano config.cfg` 
 
-  * Ajouter la clé publique principale du portefeuille Electrum que vous lier à votre nœud, ou les adresses en lecture seule (_watch only_) que vous voulez suivre dans les sections `[master-public-keys]` et `[watch-only-addresses]`. La clé publique principale d'un portefeuille Electrum se trouve dans `Portefeuille` -> `Information`.
+  * Ajouter la clé publique principale du portefeuille Electrum, ou les adresses en lecture seule (_watch only_) à suivre dans les sections `[master-public-keys]` et `[watch-only-addresses]`. La clé publique principale d'un portefeuille Electrum se trouve dans `Portefeuille` -> `Information`.
   
   ![thunderbadger_64_electrum1](images/64_electrum1.png)  
   ![thunderbadger_64_electrum2](images/64_electrum2.png)  
