@@ -20,8 +20,6 @@ Une possibilité pour profiter d'une interface graphique plus agréable et du su
 
 [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) vous permet de connecter Electrum (et avec lui votre portefeuille matériel) directement au Thunder Badger. Contrairement à ElectrumX, ce n'est pas un serveur destiné à répondre aux requêtes de multiples utilisateurs, mais uniquement aux vôtres.
 
-Avant de commencer, il est recommandé de télécharger et de se familiariser avec [Electrum](https://electrum.org/#download). Vous pouvez aussi lire [cet article]((https://bitcoinmagazine.com/articles/electrum-personal-server-will-give-users-full-node-security-they-need/).
-
 ### Installer Electrum
 
 Sur votre ordinateur habituel, commencez par installer Electrum.
