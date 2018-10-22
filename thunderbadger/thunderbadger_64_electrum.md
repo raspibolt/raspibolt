@@ -22,6 +22,38 @@ Une possibilité pour profiter d'une interface graphique plus agréable et du su
 
 Avant de commencer, il est recommandé de télécharger et de se familiariser avec [Electrum](https://electrum.org/#download). Vous pouvez aussi lire [cet article]((https://bitcoinmagazine.com/articles/electrum-personal-server-will-give-users-full-node-security-they-need/).
 
+### Installer Electrum
+
+Sur votre ordinateur habituel, commencez par installer Electrum.
+
+* Télécharger l'[installer Windows](https://download.electrum.org/3.2.3/electrum-3.2.3-setup.exe)  
+
+* Lancer l'exécutable et suivez les instructions
+
+* Une fois Electrum installé, lancer-le
+
+* Cliquer sur la petite boule verte en bas à droite de l'écran. Une fenêtre s'ouvre, dans l'onglet "serveur", décocher la case "sélectionner un serveur automatiquement" et dans le champ en-dessous saisissez l'adresse IP locale du Thunder Badger, par exemple `192.168.1.20`.  
+
+![64_electrum4](64_electrum4.png)
+
+* Cliquer sur `Fichier`, puis `Nouveau/Restaurer`  
+
+![64_electrum5](64_electrum5.png)  
+
+* Dans la fenêtre de création de portefeuille, donner un nom au portefeuille (par exemple, `thunder badger`), et sélectionner ensuite "Standard wallet", puis "create a new seed"
+
+![64_electrum6](64_electrum6.png)
+
+* Dans la fenêtre suivante, sélectionner "segwit"
+
+![64_electrum7](64_electrum7.png)
+
+* Une liste de mots apparaît, il s'agit de la _seed_ de votre portefeuille. Si jamais vous perdiez l'accès à votre portefeuille (destruction de votre ordinateur par exemple), la seed vous permettra de retrouver votre portefeuille et toutes ses transactions. **Cela signifie également que quiconque possède cette information peut voler tout ce que contient votre portefeuille !** Recopiez-la sur une feuille de papier, **ne prenez pas de photos avec votre téléphone, ne l'enregistrez pas sous forme électronique.** 
+
+![64_electrum8](64_electrum8.png)
+
+* Saisissez à nouveau votre seed... votre portefeuille est créé
+
 ### Installer Electrum Personal Server
 
 * Depuis votre ordinateur habituel, ouvrir une session via SSH avec l'utilisateur "bitcoin"  
@@ -43,97 +75,69 @@ Avant de commencer, il est recommandé de télécharger et de se familiariser av
   > 0A8B038F5E10CC2789BFCFFFEF734EA677F31129
   
   $ gpg --import belcher.asc
-  $ gpg --verify eps-v0.1.3.tar.gz.asc
-  > gpg: Good signature from "Chris Belcher <false@email.com>" [unknown]
-  > Primary key fingerprint: 0A8B 038F 5E10 CC27 89BF  CFFF EF73 4EA6 77F3 1129
+  $ gpg --verify eps-v0.1.5.tar.gz.asc
+  >  gpg: Signature faite le ven. 07 sept. 2018 15:11:01 CEST
+  >  gpg:                avec la clef RSA EF734EA677F31129
+  >  gpg: Bonne signature de « Chris Belcher <false@email.com> » [inconnu]
+  >  Empreinte de clef principale : 0A8B 038F 5E10 CC27 89BF  CFFF EF73 4EA6 77F3 1129
+
   
   # Décompresser le fichier
   $ tar -xvf eps-v0.1.5.tar.gz  
+  
+  
   ```
+* Renommer le dossier créé  
+`$ mv electrum-personal-server-eps-v0.1.5/ eps`
+
 * Faire une copie du fichier de configuration ; l'ouvrir  
   `$ cp config.cfg_sample config.cfg`  
   `$ nano config.cfg` 
 
-  * Ajouter la clé publique principale ou adresse lecture seule (_watch only_) dans les se `[master-public-keys]` and `[watch-only-addresses]` sections. Master public keys for an Electrum wallet can be found in the Electrum client menu `Wallet` -> `Information`.
+  * Ajouter la clé publique principale du portefeuille Electrum que vous lier à votre noeud, ou les adresses en lecture seule (_watch only_) que vous voulez suivre dans les sections `[master-public-keys]` et `[watch-only-addresses]`. La clé publique principale d'un portefeuille Electrum se trouve dans `Portefeuille` -> `Information`.
+  
+  ![thunderbadger_64_electrum1](thunderbadger_64_electrum1.png)  
+  ![thunderbadger_64_electrum2](thunderbadger_64_electrum2.png)  
+  
+  * Remplacer la ligne suivante  
+  `#any_name_works = xpub661...`
+  
+  * ...par la clé publique que vous avez copiée dans Electrum. Ne pas oublier de retirer le `#`.
 
-  * Uncomment and complete the lines  
-    `rpc_user = raspibolt`  
-    `rpc_password = [PASSWORD_B]`
+  * Activer les lignes suivantes en suppriment le `#`, et ajouter vos propres données d'identification  
+    `rpc_user = [IDENTIFIANT]`  
+    `rpc_password = [MOT_DE_PASSE]`
 
-  * Change the listening `host` to `0.0.0.0`, so that you can reach it from a remote computer. The firewall only accepts connections from within the home network, not from the internet.  
-    `host = 0.0.0.0`
+  * Changer la ligne `host` de la section `[electrum-server]` en `0.0.0.0`. À noter que pour des raisons de sécurité, vous ne pourrez vous connecter que depuis votre réseau privé  
+    `host = 0.0.0.0`  
+  * Bien que cela ne soit pas obligatoire, je vous recommande fortement de restreindre la connexion à l'adresse IP de votre ordinateur sur votre réseau local. Pour cela, il faudra d'abord configurer une adresse IP statique comme vous l'avez déjà fait pour [le Thunder Badger](https://github.com/BobleChinois/guides/blob/master/thunderbadger/thunderbadger_20_ThunderBadger.md#adresse-ip-fixe), puis ajouter cette adresse à la place de `*` à la ligne `ip_whitelist`.  
+  `ip_whitelist = 192.168.1.XX` (remember we need a **local** IP here)
+  
 * Save and exit
 
-### Initial blockchain scan
+### Scan initial de la blockchain
 
-Before starting the server for real, the bitcoin addresses need to be generated and looked up on the blockchain.
+Lors du premier lancement, le serveur doit d'abord générer les adresses à partir de la clé publique que vous avez fournie. Si vous avez déjà effectué des transactions avec ce portefeuille ou les adresses lectures seules que vous suivez, il faudra en plus scanner la blockchain pour retrouver toutes les transactions antérieures.
 
-* Start the server to generate addresses from your master public keys  
+* Démarrer le serveur pour générer les adresses à partir de la clé publique principale  
   `$ ./server.py`
   
-* Scan the blockchain (this can take several hours, depending on the start date you choose)  
+* Scanner la blockchain (cela peut prendre des heures si vous devez remonter très loin dans le temps, **inutile de le faire si vous utilisez des adresses qui n'ont jamais servi**)  
   `$ ./rescan-script.py`
 
-[![initialize server and scan blockchain](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_rescan.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_rescan.png)
+[![initialize server and scan blockchain](images/60_eps_rescan.png)
 
-* Exit the "bitcoin" user session  
-  `$ exit`
+* Une fois la génération d'adresse (ou le scan le cas échéant) terminé, relancer le serveur  
+ `$ ./server.py`
 
-### Automate startup
+### Vérifier la connexion de son portefeuille Electrum
 
-* As "admin", set up the systemd unit for automatic start on boot, save and exit  
-  `$ sudo nano /etc/systemd/system/eps.service`
-
-```
-[Unit]
-Description=Electrum Personal Server
-After=bitcoind.service
-
-[Service]
-ExecStart=/usr/bin/python3 /home/bitcoin/electrum-personal-server/server.py  /home/bitcoin/electrum-personal-server
-User=bitcoin
-Group=bitcoin
-Type=simple
-KillMode=process
-TimeoutSec=60
-Restart=always
-RestartSec=60
-
-[Install]
-WantedBy=multi-user.target
-```
-
-* Enable and start the eps.service unit  
-  `$ sudo systemctl enable eps.service`  
-  `$ sudo systemctl start eps.service`
-  
-* Check the startup process for Electrum Personal Server  
-  `$ tail -f /home/bitcoin/electrum-personal-server/debug.log`
-
-### Connect Electrum
-
-On your regular computer, configure Electrum to use your RaspiBolt:
-
-* In menu: `Tools > Network > Server`
-
-* Uncheck "Select server automatically"
-
-* Enter the IP of your RaspiBolt (eg. 192.168.0.20) in the address field
-
-  [![Connect Electrum to RaspiBolt](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_electrum-connect.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrum-connect.png)
-
-* `Close` and check connection in tab "Console"
-
-  [![Check Electrum console](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_electrumwallet.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrumwallet.png)
-
-
+Ouvrez Electrum, le point en bas à droite de l'écran devrait maintenant être vert, ce qui signifie que vous êtes connecté avec votre Thunder Badger. Si vous avez utilisé un portefeuille déjà existant, les transactions antérieures devraient apparaître à l'écran.
 
 ### Don't trust, verify.
 
-Congratulations, you have now one of the best Bitcoin desktop wallet, capable of securing your bitcoin with support of a hardware wallet, running with your own trustless Bitcoin full node! 
-
-
+Félicitations, vous avez désormais le meilleur portefeuille Bitcoin possible. Ajoutez-y un portefeuille matériel, et vous aurez un excellent compromis entre sécurité, confidentialité et ergonomie !
 
 ---
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md) 
+<< Back: [Bonus](thunderbadger_60_bonus.md) 
