@@ -28,9 +28,9 @@ Sur votre ordinateur habituel, commencez par installer Electrum.
 
 * Lancer l'exécutable et suivez les instructions
 
-* Une fois Electrum installé, lancer-le
+* Une fois Electrum installé, lancez-le
 
-* Cliquer sur la petite boule verte en bas à droite de l'écran. Une fenêtre s'ouvre, dans l'onglet "serveur", décocher la case "sélectionner un serveur automatiquement" et dans le champ en-dessous saisissez l'adresse IP locale du Thunder Badger, par exemple `192.168.1.20`.  
+* Cliquer sur la petite boule verte (ou rouge) en bas à droite de l'écran. Une fenêtre s'ouvre, dans l'onglet "serveur", décocher la case "sélectionner un serveur automatiquement" et dans le champ en-dessous saisissez l'adresse IP locale du Thunder Badger, par exemple `192.168.1.20`.  
 
 ![64_electrum4](images/64_electrum4.png)
 
