@@ -32,23 +32,23 @@ Sur votre ordinateur habituel, commencez par installer Electrum.
 
 * Cliquer sur la petite boule verte en bas à droite de l'écran. Une fenêtre s'ouvre, dans l'onglet "serveur", décocher la case "sélectionner un serveur automatiquement" et dans le champ en-dessous saisissez l'adresse IP locale du Thunder Badger, par exemple `192.168.1.20`.  
 
-![64_electrum4](64_electrum4.png)
+![64_electrum4](images/64_electrum4.png)
 
 * Cliquer sur `Fichier`, puis `Nouveau/Restaurer`  
 
-![64_electrum5](64_electrum5.png)  
+![64_electrum5](images/64_electrum5.png)  
 
 * Dans la fenêtre de création de portefeuille, donner un nom au portefeuille (par exemple, `thunder badger`), et sélectionner ensuite "Standard wallet", puis "create a new seed"
 
-![64_electrum6](64_electrum6.png)
+![64_electrum6](images/64_electrum6.png)
 
 * Dans la fenêtre suivante, sélectionner "segwit"
 
-![64_electrum7](64_electrum7.png)
+![64_electrum7](images/64_electrum7.png)
 
 * Une liste de mots apparaît, il s'agit de la _seed_ de votre portefeuille. Si jamais vous perdiez l'accès à votre portefeuille (destruction de votre ordinateur par exemple), la seed vous permettra de retrouver votre portefeuille et toutes ses transactions. **Cela signifie également que quiconque possède cette information peut voler tout ce que contient votre portefeuille !** Recopiez-la sur une feuille de papier, **ne prenez pas de photos avec votre téléphone, ne l'enregistrez pas sous forme électronique.** 
 
-![64_electrum8](64_electrum8.png)
+![64_electrum8](images/64_electrum8.png)
 
 * Saisissez à nouveau votre seed... votre portefeuille est créé
 
@@ -94,8 +94,8 @@ Sur votre ordinateur habituel, commencez par installer Electrum.
 
   * Ajouter la clé publique principale du portefeuille Electrum que vous lier à votre nœud, ou les adresses en lecture seule (_watch only_) que vous voulez suivre dans les sections `[master-public-keys]` et `[watch-only-addresses]`. La clé publique principale d'un portefeuille Electrum se trouve dans `Portefeuille` -> `Information`.
   
-  ![thunderbadger_64_electrum1](thunderbadger_64_electrum1.png)  
-  ![thunderbadger_64_electrum2](thunderbadger_64_electrum2.png)  
+  ![thunderbadger_64_electrum1](images/thunderbadger_64_electrum1.png)  
+  ![thunderbadger_64_electrum2](images/thunderbadger_64_electrum2.png)  
   
   * Remplacer la ligne suivante  
   `#any_name_works = xpub661...`
