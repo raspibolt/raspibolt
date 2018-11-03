@@ -109,9 +109,24 @@ Sur votre ordinateur habituel, commencez par installer Electrum.
   * Changer la ligne `host` de la section `[electrum-server]` en `0.0.0.0`. À noter que pour des raisons de sécurité, vous ne pourrez vous connecter que depuis votre réseau privé  
     `host = 0.0.0.0`  
   * Bien que cela ne soit pas obligatoire, je vous recommande fortement de restreindre la connexion à l'adresse IP de votre ordinateur sur votre réseau local. Pour cela, il faudra d'abord configurer une adresse IP statique comme vous l'avez déjà fait pour [le Thunder Badger](https://github.com/BobleChinois/guides/blob/master/thunderbadger/thunderbadger_20_ThunderBadger.md#adresse-ip-fixe), puis ajouter cette adresse à la place de `*` à la ligne `ip_whitelist`.  
-  `ip_whitelist = 192.168.1.XX` (remember we need a **local** IP here)
+  `ip_whitelist = 192.168.1.XX` (souvenez-vous c'est bien l'adresse IP **locale** dont nous avons besoin ici)
   
-* Save and exit
+* Sauvegarder et quitter
+
+* Ouvrir le bon port dans ufw
+```
+# Basculer sur votre utilisateur admin
+$ su admin
+
+# Ajouter une règle dans le firewall ufw (n'oubliez pas de mettre l'adresse IP statique définie au-dessus !)
+$ sudo ufw allow from 192.168.1.XX to any port 50002  comment 'allow EPS'
+
+# Redémarrer ufw pour activer les modifications
+$ sudo systemctl restart ufw.service
+
+# Quitter la session admin
+$ exit
+```
 
 ### Scan initial de la blockchain
 
