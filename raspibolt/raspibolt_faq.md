@@ -66,7 +66,7 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
 * As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
 
-* If upgrading from version a version lower than v0.5 delete the macaroon files.  
+* If upgrading from a version lower than v0.5 delete the macaroon files.  
   `$ sudo rm /home/bitcoin/.lnd/*.macaroon`
 
 * Remove old stuff, then download, verify and install the latest LND binaries  
