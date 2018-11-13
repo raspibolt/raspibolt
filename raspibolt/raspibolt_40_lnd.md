@@ -230,7 +230,7 @@ Now your Lightning node is ready. To use it in testnet, you can get some free te
   `> "address": "2NCoq9q7............dkuca5LzPXnJ9NQ"` 
 
 * Get testnet bitcoin:  
-  https://testnet.manu.backend.hamburg/faucet
+  https://testnet-faucet.mempool.co
 
 * Check your LND wallet balance  
   `$ lncli --network=testnet walletbalance`  
