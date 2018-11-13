@@ -77,7 +77,7 @@ We now need to set the fixed (static) IP address for the Pi. Normally, you can f
 
 :point_right: need additional information? Google “[your router brand] configure static dhcp ip address”
 
-### Port Forwarding
+### Port Forwarding / UPnP
 Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port has to be directed. The port forwarding needs to be set up as follows:
 
 | Application name | External port | Internal port | Internal IP address | Protocol (TCP or UDP) |
@@ -87,7 +87,11 @@ Next, “Port Forwarding” needs to be configured. Different applications use d
 
 :point_right: additional information: [setting up port forwarding](https://www.noip.com/support/knowledgebase/general-port-forwarding-guide/).
 
-The Lightning Network Daemon (LND) supports UPnP to configure the port-forwarding automatically and also advertise its own external IP address to the network. To make that work, you need to enable this feature for your router. If you're not sure how, just search ["enable upnp router MY-ROUTER-MODEL"](https://duckduckgo.com/?q=enable+upnp+router+MY-ROUTER-MODEL) for your own router model.
+The Lightning Network Daemon (LND) supports **UPnP** to configure the port-forwarding automatically and also advertise its own external IP address to the network. 
+
+* Enable UPnP for your router.
+
+:point_right: If you're not sure how, search ["enable upnp router MY-ROUTER-MODEL"](https://duckduckgo.com/?q=enable+upnp+router+MY-ROUTER-MODEL) for your own router model.
 
 Save and apply these router settings, we will check them later. Disconnect the Pi from the power supply, wait a few seconds, and plug it in again. The node should now get the new fixed IP address.
 
@@ -274,7 +278,7 @@ $ sudo su
 $ ufw default deny incoming
 $ ufw default allow outgoing
 $ ufw allow from 192.168.0.0/24 to any port 22 comment 'allow SSH from local LAN'
-$ ufw allow from 192.168.0.0/24 to any port 50002 comment 'allow Electrum from local LAN'
+$ ufw allow proto udp from 192.168.0.0/24 port 1900 to any comment 'allow local LAN SSDP for UPnP discovery'
 $ ufw allow 9735  comment 'allow Lightning'
 $ ufw allow 8333  comment 'allow Bitcoin mainnet'
 $ ufw allow 18333 comment 'allow Bitcoin testnet'
@@ -287,7 +291,7 @@ $ exit
 
 :point_right: additional information: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
 
-:information_source: If you find yourself locked out by mistake, you can connect keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
+:point_right: If you find yourself locked out by mistake, you can connect keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
 
 ### fail2ban
 The SSH login to the Pi must be especially protected. The firewall blocks all login attempts from outside your network, but additional steps should be taken to prevent an attacker - maybe from inside your network - to just try out all possible passwords.

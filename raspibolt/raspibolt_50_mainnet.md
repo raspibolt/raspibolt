@@ -12,10 +12,13 @@ Are you feeling comfortable to put real bitcoin on the line? Here's how to do it
 But first: if you are not comfortable with learning Linux more in-depth on your own or even compile a program from source, chances are that you lose some funds sooner or later. The Lightning Network is not production-ready yet and LND is still in beta.
 
 ```
-Personal disclaimer: This guide is provided as-is and without any guarantees. Most components are under development and this guide may contain factual errors that result in the loss of your bitcoin. Use this guide at your own risk.
+Personal disclaimer: This guide is provided as-is and without any guarantees. Most components are 
+under development and this guide may contain factual errors that result in the loss of your bitcoin. 
+Use this guide at your own risk.
 ```
 ```
-Lightning Labs disclaimer: As this is the first mainnet release of lnd, we recommend that users experiment with only small amounts (#craefulgang #craefulgang #craefulgang).
+Lightning Labs disclaimer: As this is the first mainnet release of lnd, we recommend that users 
+experiment with only small amounts (#craefulgang #craefulgang #craefulgang).
 ```
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ 

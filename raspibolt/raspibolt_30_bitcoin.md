@@ -74,7 +74,7 @@ Now, the configuration file for bitcoind needs to be created. Open it with Nano 
 `$ nano /home/bitcoin/.bitcoin/bitcoin.conf`
 
 ```bash
-# RaspiBolt LND Mainnet: bitcoind configuration
+# RaspiBolt: bitcoind configuration
 # /home/bitcoin/.bitcoin/bitcoin.conf
 
 # remove the following line to enable Bitcoin mainnet
@@ -111,7 +111,6 @@ Still logged in as user "bitcoin", let's start "bitcoind" manually. Monitor the 
 ```
 $ bitcoind
 $ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log
-# You can exit the log file monitoring with Ctrl-C
 $ bitcoin-cli getblockchaininfo
 $ bitcoin-cli stop
 ```
