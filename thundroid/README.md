@@ -366,14 +366,14 @@ Get the latest download links at [bitcoin.org/en/download](), they change  with 
 
 ```
 # download Bitcoin Core binary
-$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz
-$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0.1/bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0.1/SHA256SUMS.asc
 $ wget https://bitcoin.org/laanwj-releases.asc
 
 # check that the reference checksum matches the real checksum 
 # (ignore the "lines are improperly formatted" warning)
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
-> bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz: OK
+> bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz: OK
 
 # manually check the fingerprint of the public key
 $ gpg --with-fingerprint ./laanwj-releases.asc  
@@ -392,10 +392,10 @@ $ gpg --verify SHA256SUMS.asc
 Extract the Bitcoin Core binaries, install them and check the version. 
 
 ```
-$ tar -xvf bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.3/bin/*
+$ tar -xvf bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*
 $ bitcoind --version
-> Bitcoin Core Daemon version v0.16.3
+> Bitcoin Core Daemon version v0.17.0.1
 ```
 
 ### Prepare Bitcoin Core directory

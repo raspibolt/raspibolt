@@ -19,13 +19,13 @@ We will download the software directly from bitcoin.org, verify its signature to
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
 * Get the latest download links at bitcoincore.org/en/download (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
-  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz`  
-  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc`  
+  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0.1/bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz`  
+  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0.1/SHA256SUMS.asc`  
   `$ wget https://bitcoin.org/laanwj-releases.asc`
 
 * Check that the reference checksum matches the real checksum  
   `$ sha256sum --check SHA256SUMS.asc --ignore-missing`  
-  `> bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz: OK`
+  `> bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz: OK`
 
 * Manually check the fingerprint of the public key:  
   `$ gpg ./laanwj-releases.asc`  
@@ -48,10 +48,10 @@ bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446  bitcoin-0.16.3
 52469c56222c1b5344065ef2d3ce6fc58ae42939a7b80643a7e3ee75ec237da9  bitcoin-0.16.3-win64.zip
 ```
 * Extract the Bitcoin Core binaries, install them and check the version.  
-  `$ tar -xvf bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz`  
-  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.3/bin/*`  
+  `$ tar -xvf bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz`  
+  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`  
   `$ bitcoind --version`  
-  `> Bitcoin Core Daemon version v0.16.3`
+  `> Bitcoin Core Daemon version v0.17.0.1`
 
 ### Prepare Bitcoin Core directory
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory  `/home/bitcoin/.bitcoin`. Instead of creating a real directory, we create a link that points to a directory on the external hard disk. 
