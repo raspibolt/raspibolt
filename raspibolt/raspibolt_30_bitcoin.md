@@ -14,18 +14,20 @@ We will download the software directly from bitcoin.org, verify its signature to
 
 * Login as "admin" and create a download folder  
   `$ mkdir /home/admin/download`  
-  `$ cd /home/admin/download`  
+  `$ cd /home/admin/download`   
+* If you upgrade and have previously downloaded files, delete them first  
+  `$ rm * `
 
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
-* Get the latest download links at bitcoincore.org/en/download (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
-  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz`  
-  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc`  
+* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download) (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
+  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0.1/bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz`  
+  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0.1/SHA256SUMS.asc`  
   `$ wget https://bitcoin.org/laanwj-releases.asc`
 
 * Check that the reference checksum matches the real checksum  
   `$ sha256sum --check SHA256SUMS.asc --ignore-missing`  
-  `> bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz: OK`
+  `> bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz: OK`
 
 * Manually check the fingerprint of the public key:  
   `$ gpg ./laanwj-releases.asc`  
@@ -42,13 +44,13 @@ We download the latest Bitcoin Core binaries (the application) and compare the f
 * Now we know that the keys from bitcoin.org are valid, so we can also verify the Windows binary checksums. Compare the following output with the checksum of your Windows Bitcoin Core download.  
   `$ cat SHA256SUMS.asc | grep win` 
 ```
-1f4091f6f32685aac3f790edae8657abe0c96448720b165762399a31499f8ee7  bitcoin-0.17.0-win32-setup.exe
-402fd288b0ec851398047e2e986221fe72d7565dc19a2029879b6c28e6fc730d  bitcoin-0.17.0-win32.zip
-b37f738ab17a93e24028fa74280b74c353653cf03fc2fb7da6ead8669e440b1a  bitcoin-0.17.0-win64-setup.exe
-d6312ef594fa701d6bc863415baeccd3a140f200259fcfac56dde81a73d50799  bitcoin-0.17.0-win64.zip
+400c88eae33df6a0754972294769741dce97a706dc22d1438f8091d7647d5506  bitcoin-0.17.0.1-win32-setup.exe
+221ae5af9e029623fd4b3971966cb51d3c91dc1425bcb6d2899b1d7292a91691  bitcoin-0.17.0.1-win32.zip
+a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3  bitcoin-0.17.0.1-win64-setup.exe
+2d0a0aafe5a963beb965b7645f70f973a17f4fa4ddf245b61d532f2a58449f3e  bitcoin-0.17.0.1-win64.zip
 ```
 * Extract the Bitcoin Core binaries, install them and check the version.  
-  `$ tar -xvf bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz`  
+  `$ tar -xvf bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz`  
   `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`  
   `$ bitcoind --version`  
   `> Bitcoin Core Daemon version v0.17.0`
@@ -57,13 +59,12 @@ d6312ef594fa701d6bc863415baeccd3a140f200259fcfac56dde81a73d50799  bitcoin-0.17.0
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory  `/home/bitcoin/.bitcoin`. Instead of creating a real directory, we create a link that points to a directory on the external hard disk. 
 
 * While logged in with user "admin", change to user “bitcoin”  
-  `$ sudo su bitcoin`
+  `$ sudo su - bitcoin`
 
 * We add a symbolic link that points to the external hard disk.  
   `$ ln -s /mnt/hdd/bitcoin /home/bitcoin/.bitcoin`
 
 * Navigate to the home directory an d check the symbolic link (the target must not be red). The content of this directory will actually be on the external hard disk.  
-  `$ cd `  
   `$ ls -la`
 
 ![verify .bitcoin symlink](images/30_show_symlink.png)
@@ -73,7 +74,7 @@ Now, the configuration file for bitcoind needs to be created. Open it with Nano 
 `$ nano /home/bitcoin/.bitcoin/bitcoin.conf`
 
 ```bash
-# RaspiBolt LND Mainnet: bitcoind configuration
+# RaspiBolt: bitcoind configuration
 # /home/bitcoin/.bitcoin/bitcoin.conf
 
 # remove the following line to enable Bitcoin mainnet
@@ -103,7 +104,19 @@ maxuploadtarget=5000
 
 :point_right: additional information: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments) in Bitcoin Wiki
 
+### Start bitcoind
+
+Still logged in as user "bitcoin", let's start "bitcoind" manually. Monitor the log file a few minutes to see if it works fine (it may stop at "dnsseed thread exit", that's ok). Exit the logfile monitoring with `Ctrl-C`, check the blockchain info and, if there are no errors, stop "bitcoind" again.
+
+```
+$ bitcoind
+$ tail -f /home/bitcoin/.bitcoin/testnet3/debug.log
+$ bitcoin-cli getblockchaininfo
+$ bitcoin-cli stop
+```
+
 ### Autostart bitcoind
+
 The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in. We use “systemd“, a daemon that controls the startup process using configuration files.
 
 * Exit the “bitcoin” user session back to user “admin”  
@@ -113,13 +126,12 @@ The system needs to run the bitcoin daemon automatically in the background, even
   `$ sudo nano /etc/systemd/system/bitcoind.service`
 
 ```bash
-# RaspiBolt LND Mainnet: systemd unit for bitcoind
+# RaspiBolt: systemd unit for bitcoind
 # /etc/systemd/system/bitcoind.service
 
 [Unit]
 Description=Bitcoin daemon
-Wants=getpublicip.service
-After=getpublicip.service
+After=network.target
 
 [Service]
 ExecStartPre=/bin/sh -c 'sleep 30'
@@ -172,8 +184,7 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 * A great point to start is the book **Mastering Bitcoin** by Andreas Antonopoulos - which is open source - and in this regard especially chapter 3 (ignore the first part how to compile from source code):
   * you definitely need to have a [real copy](https://bitcoinbook.info/) of this book!
-  * get the [official PDF version](https://conferences.oreilly.com/oscon/oscon-or/public/content/mastering-bitcoin-second-edition) for free
-  * read online on [Github](https://github.com/bitcoinbook/bitcoinbook)
+  * read it online on [Github](https://github.com/bitcoinbook/bitcoinbook)
 
 ![Mastering Bitcoin](images/30_mastering_bitcoin_book.jpg)
 

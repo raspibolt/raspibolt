@@ -6,17 +6,27 @@
 
 # Mainnet
 Are you feeling comfortable to put real bitcoin on the line? Here's how to do it. 
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ 
+
+But first: if you are not comfortable with learning Linux more in-depth on your own or even compile a program from source, chances are that you lose some funds sooner or later. The Lightning Network is not production-ready yet and LND is still in beta.
+
 ```
-Personal disclaimer: This guide is provided as-is and without any guarantees. Most components
-are under development and this guide may contain factual errors that result in the loss of your
-bitcoin. Use this guide at your own risk.
+Personal disclaimer: This guide is provided as-is and without any guarantees. Most components are 
+under development and this guide may contain factual errors that result in the loss of your bitcoin. 
+Use this guide at your own risk.
 ```
 ```
-Lightning Labs disclaimer: As this is the first mainnet release of lnd, we recommend that users
+Lightning Labs disclaimer: As this is the first mainnet release of lnd, we recommend that users 
 experiment with only small amounts (#craefulgang #craefulgang #craefulgang).
 ```
 
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ 
+
+Still want to try it? Proceed at your own risk.
+
 ## Copy the mainnet blockchain
+
 The current setup runs on Bitcoin testnet. Right at the beginning, however, we started downloading the Bitcoin mainnet blockchain on your regular computer. Check the verification progress directly in Bitcoin Core on this computer. To proceed, it  should be fully synced (see status bar). 
 
 As soon as the verification is finished, shut down Bitcoin Core on Windows. We will now copy the whole data structure to the RaspiBolt. This takes about 6 hours.
@@ -60,14 +70,14 @@ We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winsc
 
 To avoid burning our testnet Bitcoin, and as a courtesy to the next testers, we close all our channels and withdraw the funds to the address stated on the website of the [Bitcoin Testnet Faucet](https://testnet.manu.backend.hamburg/faucet).  
 
-* `$ lncli closeallchannels`
+* `$ lncli --network=testnet closeallchannels`
 
 * Wait unitl the the channel balance is zero and the funds to be back in our on-chain wallet.  
-  `$ lncli channelbalance`  
-  `$ lncli walletbalance`
+  `$ lncli --network=testnet channelbalance`  
+  `$ lncli --network=testnet walletbalance`
 
 - Send the amount provided by `walletbalance` minus 500 satoshis to account for fees. If you get an "insufficient funds" error, deduct a bit more until the transaction gets broadcasted.  
-  `$ lncli sendcoins 2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF [amount]`
+  `$ lncli --network=testnet sendcoins 2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF [amount]`
 
 ## Adjust configuration 
 
@@ -208,6 +218,7 @@ Some commands to try:
 * to force close a channel (if your peer is offline or not cooperative), use  
    `$ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX] `
    
+
 👉 see [LND API reference](http://api.lightning.community/) for additional information
 
 ### Try it out 
