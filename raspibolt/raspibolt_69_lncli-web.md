@@ -48,7 +48,7 @@ $ git clone https://github.com/mably/lncli-web.git
 $ cd lncli-web
 $ npm install
 
-# Run the following command, but NOT with the --force option. This would will break stuff.
+# Run the following command, but NOT with the --force option. This would/will break stuff.
 $ npm audit fix
 
 $ exit
