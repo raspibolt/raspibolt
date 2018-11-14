@@ -158,6 +158,16 @@ $ passwd
 
 # update the operating system
 $ apt update
+```
+In case you run into an lock issue like 
+``` 
+E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
+E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
+```
+you can remove the lock by using
+```sudo rm -f /var/lib/dpkg/lock```
+
+```
 $ apt upgrade
 $ apt dist-upgrade
 $ apt install linux-image-xu3 
