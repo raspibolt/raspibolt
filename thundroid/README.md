@@ -450,7 +450,7 @@ disablewallet=1
 rpcuser=bitcoin
 rpcpassword=PASSWORD_[B]
 zmqpubrawblock=tcp://127.0.0.1:29000
-zmqpubrawtx=tcp://127.0.0.1:29000
+zmqpubrawtx=tcp://127.0.0.1:29001
 
 # Optimizations for limited hardware
 dbcache=100
@@ -623,6 +623,13 @@ bitcoin.testnet=1
 #bitcoin.mainnet=1
 
 bitcoin.node=bitcoind
+
+[Bitcoind]
+bitcoind.rpcuser=bitcoin
+bitcoind.rpcpass=PASSWORD_[B]
+bitcoind.zmqpubrawblock=tcp://127.0.0.1:29000
+bitcoind.zmqpubrawtx=tcp://127.0.0.1:29001
+
 
 [autopilot]
 autopilot.active=1
