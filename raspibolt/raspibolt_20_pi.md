@@ -217,7 +217,7 @@ To store the blockchain, we need a lot of space. As a server installation, the L
 
 * Mount all drives and check the file system. Is “/mnt/hdd” listed?  
   `$ sudo mount -a`  
-  `$ df /mnt/hdd`
+  `$ df -h /mnt/hdd`
 ```
 Filesystem     1K-blocks  Used Available Use% Mounted on
 /dev/sda1      479667880 73756 455158568   1% /mnt/hdd

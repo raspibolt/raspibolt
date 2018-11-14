@@ -209,7 +209,7 @@ UUID=123456 /mnt/hdd ext4 noexec,defaults 0 0
 # create mount point, mount, check and set owner
 $ mkdir /mnt/hdd
 $ mount -a
-$ df /mnt/hdd
+$ df -h /mnt/hdd
 Filesystem     1K-blocks      Used Available Use% Mounted on
 /dev/sda1      961300808 600388836 312057600  66% /mnt/hdd
 
