@@ -19,7 +19,7 @@ You will need several passwords and I find it easiest to write them all down in 
 If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass) and keep your original notes out of sight once your system is up and running.
 
 ## Preparing the operating system
-The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used.
+The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used. 
 
 1. Download the [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image
 2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
@@ -53,7 +53,7 @@ network={
 * Start the Pi by connecting it to the mobile phone charger using the Micro USB cable
 
 ## Connecting to the network
-The node is starting and getting a new address from your home network. This address can change over time. To make the Pi reachable from the internet, we assign it a fixed address.
+The Pi is starting and getting a new address from your home network. This address can change over time. To make the Pi reachable from the internet, we assign it a fixed address.
 
 ### Accessing your router
 The fixed address is configured in your network router: this can be the cable modem or the Wifi access point. So we first need to access the router. To find out its address, 
@@ -77,16 +77,21 @@ We now need to set the fixed (static) IP address for the Pi. Normally, you can f
 
 :point_right: need additional information? Google “[your router brand] configure static dhcp ip address”
 
-### Port Forwarding
+### Port Forwarding / UPnP
 Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port has to be directed. The port forwarding needs to be set up as follows:
 
-| Application name  | External port | Internal port | Internal IP address | Protocol (TCP or UDP) |
-| ----------------- | ------------- | ------------- | ------------------- | --------------------- |
-| bitcoin           |          8333 |          8333 |        192.168.0.20 | BOTH                  |
-| bitcoin test      |         18333 |         18333 |        192.168.0.20 | BOTH                  |
-| lightning         |          9735 |          9735 |        192.168.0.20 | BOTH                  |
+| Application name | External port | Internal port | Internal IP address | Protocol (TCP or UDP) |
+| ---------------- | ------------- | ------------- | ------------------- | --------------------- |
+| bitcoin          | 8333          | 8333          | 192.168.0.20        | BOTH                  |
+| bitcoin test     | 18333         | 18333         | 192.168.0.20        | BOTH                  |
 
 :point_right: additional information: [setting up port forwarding](https://www.noip.com/support/knowledgebase/general-port-forwarding-guide/).
+
+The Lightning Network Daemon (LND) supports **UPnP** to configure the port-forwarding automatically and also advertise its own external IP address to the network. 
+
+* Enable UPnP for your router.
+
+:point_right: If you're not sure how, search ["enable upnp router MY-ROUTER-MODEL"](https://duckduckgo.com/?q=enable+upnp+router+MY-ROUTER-MODEL) for your own router model.
 
 Save and apply these router settings, we will check them later. Disconnect the Pi from the power supply, wait a few seconds, and plug it in again. The node should now get the new fixed IP address.
 
@@ -127,7 +132,6 @@ Now it’s time to connect to the Pi via SSH and get to work. For that, a Secure
 - Windows: PuTTY ([Website](https://www.putty.org))
 - Mac OS: built-in SSH client (see [this article](http://osxdaily.com/2017/04/28/howto-ssh-client-mac/))
 - Linux: just use the native command, eg. `ssh pi@192.168.0.20`
-
 - Use the following SSH connection settings: 
   - host name: the static address you set in the router, eg. `192.168.0.20`
   - port: `22`
@@ -163,7 +167,7 @@ It is important to keep the system up-to-date with security patches and applicat
 
 :point_right: Do this regularly every few months to get security related updates.
 
-Make sure, all necessary software packages are installed  
+Make sure that all necessary software packages are installed:  
   `$ sudo apt-get install htop git curl bash-completion jq dphys-swapfile`
 
 ### Adding main user "admin"
@@ -172,24 +176,15 @@ This guide uses the main user "admin" instead of "pi" to make it more reusable w
 * Create the new user, set password [A] and add it to the group "sudo"  
   `$ sudo adduser admin`  
   `$ sudo adduser admin sudo` 
-* Set the standard shell (command line interface) to "bash" (this prevents some potential issues)
-  `$ sudo chsh admin -s /bin/bash`
 * And while you’re at it, change the password of the “root” admin user to your password [A].  
   `$ sudo passwd root`
-* Configure sudo for usage without password entry: comment original and add new line, save & exit  
-  `$ sudo visudo`  
-
-```bash
-#%sudo  ALL=(ALL:ALL) ALL
-%sudo   ALL=(ALL) NOPASSWD:ALL
-```
-
 * Reboot and and log in with the new user "admin"  
   `$ sudo shutdown -r now`
 
 ### Adding the service user “bitcoin”
-The bitcoin and lightning processes will run in the background (as daemon) and use the separate user “bitcoin” for security reasons. This user does not have admin rights and cannot change the system configuration.
+The bitcoin and lightning processes will run in the background (as a "daemon") and use the separate user “bitcoin” for security reasons. This user does not have admin rights and cannot change the system configuration.
 
+* When using the command `sudo` , you will be prompted to enter your admin password from time to time for increased security. 
 * Enter the following command, set your `password [A]` and confirm all questions with the enter/return key.  
   `$ sudo adduser bitcoin`
 
@@ -226,7 +221,7 @@ Filesystem     1K-blocks  Used Available Use% Mounted on
   `$ sudo chown -R bitcoin:bitcoin /mnt/hdd/`
 
 * Switch to user "bitcoin", navigate to the hard disk and create the bitcoin directory.  
-  `$ sudo su bitcoin`  
+  `$ sudo su - bitcoin`  
   `$ cd /mnt/hdd`  
   `$ mkdir bitcoin`  
   `$ ls -la`
@@ -238,7 +233,7 @@ Filesystem     1K-blocks  Used Available Use% Mounted on
 * Exit the "bitcoin" user session  
   `$ exit` 
 
-If this command gives you an error, chances are that your external hard disk is mounted as “read only”. This must be fixed before proceeding. If you cannot fix it, consider formatting the external hard disk using Option 1 above, this should prevent issues like this.
+If this command gives you an error, chances are that your external hard disk is mounted as “read only”. This must be fixed before proceeding. If you cannot fix it, consider reformatting the external hard disk.
 
 👉 additional information: [external storage configuration](https://www.raspberrypi.org/documentation/configuration/external-storage.md)
 
@@ -283,7 +278,7 @@ $ sudo su
 $ ufw default deny incoming
 $ ufw default allow outgoing
 $ ufw allow from 192.168.0.0/24 to any port 22 comment 'allow SSH from local LAN'
-$ ufw allow from 192.168.0.0/24 to any port 50002 comment 'allow Electrum from local LAN'
+$ ufw allow proto udp from 192.168.0.0/24 port 1900 to any comment 'allow local LAN SSDP for UPnP discovery'
 $ ufw allow 9735  comment 'allow Lightning'
 $ ufw allow 8333  comment 'allow Bitcoin mainnet'
 $ ufw allow 18333 comment 'allow Bitcoin testnet'
@@ -295,6 +290,8 @@ $ exit
 ![UFW status](images/20_ufw_status.png)
 
 :point_right: additional information: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
+
+:point_right: If you find yourself locked out by mistake, you can connect keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
 
 ### fail2ban
 The SSH login to the Pi must be especially protected. The firewall blocks all login attempts from outside your network, but additional steps should be taken to prevent an attacker - maybe from inside your network - to just try out all possible passwords.
