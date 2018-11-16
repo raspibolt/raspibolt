@@ -10,8 +10,6 @@
 
 *Difficulty: easy*
 
-> Please note: this guide has not been updated to LND 0.5 yet and might not work as intended.
-
 To get a quick overview over the system status, I created [a shell script](https://github.com/Stadicus/guides/blob/master/raspibolt/resources/20-raspibolt-welcome) that is run as "message of the day" (motd) to be shown on login or on demand.  
 
 ![MotD system overview](images/60_status_overview.png)
