@@ -556,21 +556,20 @@ Now to the good stuff: download, verify and install the LND binaries.
 
 ```
 $ cd /home/admin/download
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-armv7-v0.5-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig
-$ wget https://keybase.io/roasbeef/pgp_keys.asc
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/lnd-linux-armv7-v0.5.1-beta-rc1.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/manifest-v0.5.1-beta-rc1.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/manifest-v0.5.1-beta-rc1.txt.sig
+```
+Get key of roasbeef as well as halseth
+```
+$ curl https://keybase.io/roasbeef/pgp_keys.asc | gpg --import
+$ curl https://keybase.io/halseth/pgp_keys.asc | gpg --import
+```
+```
+$ sha256sum --check manifest-v0.5.1-beta-rc1.txt --ignore-missing
+> lnd-linux-armv7-v0.5.1-beta-rc1.tar.gz: OK
 
-$ sha256sum --check manifest-v0.5-beta.txt --ignore-missing
-> lnd-linux-arm-v0.5-beta.tar.gz: OK
-
-$ gpg ./pgp_keys.asc
-> pub  4096R/DD637C21 2017-09-12 Olaoluwa Osuntokun <laolu32@gmail.com>
-> sub  4096R/5FA079A1 2017-09-12 [expires: 2021-09-12]
-> 65317176B6857F98834EDBE8964EA263DD637C21
-
-$ gpg --import ./pgp_keys.asc
-$ gpg --verify manifest-v0.5-beta.txt.sig
+$ gpg --verify manifest-v0.5.1-beta-rc1.txt.sig
 > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
 > Primary key fingerprint: 6531 7176 B685 7F98 834E  DBE8 964E A263 DD63 7C21
 ```
@@ -578,11 +577,11 @@ $ gpg --verify manifest-v0.5-beta.txt.sig
 ![Checksum LND](images/40_checksum_lnd.png)
 
 ```
-$ tar -xzf lnd-linux-armv7-v0.5-beta.tar.gz
+$ tar -xzf lnd-linux-armv7-v0.5.1-beta-rc1.tar.gz
 $ ls -la
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5-beta/*
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5.1-beta-rc1/*
 $ lnd --version
-> lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
+> lnd version 0.5.0-beta commit=
 ```
 
 
