@@ -20,8 +20,8 @@ for i in "$@"
 do
 case $i in
   --testnet*)
-    lncli="${lncli} --rpcserver=localhost:11009"
-    lnd_pid=$(systemctl show -p MainPID lnd_testnet | awk -F"=" '{print $2}')
+    lncli="${lncli} --network=testnet"
+    lnd_pid=$(systemctl show -p MainPID lnd | awk -F"=" '{print $2}')
     chain='test'
     shift # past argument=value
     ;;
