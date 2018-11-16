@@ -705,9 +705,9 @@ These 24 words, combined with your passphrase (optional `password [D]`)   is all
 ![Check macaroon](images/40_ls_macaroon.png)
 
 * Copy permission files and TLS cert to user "admin" to use `lncli`  
-   `$ mkdir /home/admin/.lnd`  
+   `$ mkdir -p /home/admin/.lnd/data/chain/bitcoin/{mainnet,testnet}` 
    `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
-   `$ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`  
+   `$ sudo cp /home/bitcoin/.lnd/data/chain/bitcoin/testnet/admin.macaroon /home/admin/.lnd/data/chain/bitcoin/testnet`  
    `$ sudo chown -R admin:admin /home/admin/.lnd/`
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.  
    `$ sudo systemctl restart lnd`  
