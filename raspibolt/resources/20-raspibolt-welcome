@@ -12,8 +12,11 @@ color_yellow='\033[0;33m'
 color_gray='\033[0;37m'
 
 # set datadir
-bitcoin_dir="/home/bitcoin/.bitcoin"
-lnd_dir="/home/bitcoin/.lnd"
+bitcoin_dir="/location/of/bitcoinData"
+lnd_dir="/location/of/lightningData"
+
+#set external HDD. Set to mount point of blockchain volume
+ext_hdd="/mnt/hdd" 
 
 # get uptime & load
 load=$(w | grep "load average:" | cut -c11-)
@@ -41,8 +44,8 @@ else
   color_sd=${color_green}
 fi
 
-hdd_free_ratio=$(printf "%d" "$(df -h | grep '/mnt/hdd$' | awk '{ print $4/$2*100 }')") 2>/dev/null
-hdd=$(printf "%s (%s%%)" "$(df -h | grep '/mnt/hdd$' | awk '{ print $4 }')" "${hdd_free_ratio}")
+hdd_free_ratio=$(printf "%d" "$(df -h | grep ${ext_hdd} | awk '{ print $4/$2*100 }')") 2>/dev/null
+hdd=$(printf "%s (%s%%)" "$(df -h | grep ${ext_hdd} | awk '{ print $4 }')" "${hdd_free_ratio}")
 
 if [ ${hdd_free_ratio} -lt 10 ]; then
   color_hdd="${color_red}\e[7m"
