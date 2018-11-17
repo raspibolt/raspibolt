@@ -85,6 +85,7 @@ testnet=1
 server=1
 daemon=1
 txindex=1
+listen=1
 addresstype=bech32
 
 # Informations pour LND
