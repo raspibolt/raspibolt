@@ -94,11 +94,11 @@ listenonion=1
 Redémarrez Bitcoin Core pour que les changements soient pris en compte :
 `$ nohup bitcoind`
 
-:point_right: Une très bonne vidéo qui montre (presque) le même processus
+:point_right: Une [très bonne vidéo](https://youtu.be/57GW5Q2jdvw) qui montre (presque) le même processus
 
 ### Configurer LND
 
-:warning: LND ne fonctionnera qu'avec **la version 3.6.6 ou supérieure de Tor**. Si vous avez bien respecté mes instructions ci-dessus, vous ne devriez pas avoir de problème.
+:warning: LND ne fonctionnera qu'avec **la version 3.6.6 ou supérieure de Tor**. Si vous avez bien respecté mes instructions ci-dessus, vous ne devriez pas avoir de problème.  
 :warning: Je vous recommande d'utiliser dans la mesure du possible un nouveau nœud, ou au minimum de fermer tous vos canaux existant avant de passer sur Tor. En effet, je pense que si votre clé publique est déjà connue par d'autres pairs avec votre URL, il leur sera toujours possible de vous reconnaître même derrière Tor. Je n'ai toutefois jamais rien lu sur le sujet, et je suis preneur de toute information qui confirmerait ou invaliderait mes craintes. 
 
 Toujours avec l'utilisateur "bitcoin", arrêtez LND :  
