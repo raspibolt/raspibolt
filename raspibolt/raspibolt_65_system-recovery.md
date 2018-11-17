@@ -19,8 +19,7 @@ In case everything goes south the recovery should also include essential configu
 ⚠️ Please note that LND cannot be backuped yet: even slightly outdated channels lead to a force closure by your peer and you losing all funds of that channels. Therefore, a manual wallet recovery is needed.
 
 ```bash
-$ sudo su bitcoin
-$ cd
+$ sudo su - bitcoin
 $ mkdir backup_hdd
 $ tar cvf backup_hdd/bitcoin.tar .bitcoin/bitcoin.conf .bitcoin/wallet.dat .bitcoin/peers.dat .bitcoin/banlist.dat
 $ tar cvf backup_hdd/lnd.tar .lnd/lnd.conf
@@ -53,7 +52,7 @@ Only if your external hard disk failed as well, or if you want to quickly set up
 $ sudo systemctl stop lnd.service
 $ sudo systemctl stop bitcoind.service
 
-$ sudo su bitcoin
+$ sudo su - bitcoin
 $ cd /home/bitcoin/backup_hdd/
 $ tar xvf bitcoin.tar -C /home/bitcoin
 $ tar xvf lnd.tar -C /home/bitcoin

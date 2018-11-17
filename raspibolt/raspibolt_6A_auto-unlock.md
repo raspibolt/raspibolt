@@ -15,6 +15,10 @@ It takes a litte getting used to the fact that the LND wallet needs  to be manua
 
 This is why a script that automatically unlocks the wallet is  helpful. The password is stored in a root-only directory as plaintext,  so clearly not so secure, but for reasonable amounts this is a good  middle-ground in my opinion. You can always decide to stick to manual  unlocking, or implement a solution that unlocks the wallet from a remote  machine.
 
+:warning: Important: this works only for "systemd" version 230+. You can check this as follows:  
+`$ systemd --version` 
+
+
 * As user "admin", create a new directory and save your LND wallet password [C] into a text file  
   `$ sudo mkdir /etc/lnd`   
   `$ sudo nano /etc/lnd/pwd` 
@@ -61,7 +65,7 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   `$ sudo nano /etc/systemd/system/lnd.service `
 
   ```bash
-  # remove this line:
+  # remove this line (if present):
   # PIDFile=/home/bitcoin/.lnd/lnd.pid
   
   # add this line directly below ExecStart:
