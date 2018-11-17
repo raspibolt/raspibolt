@@ -12,8 +12,8 @@ color_yellow='\033[0;33m'
 color_gray='\033[0;37m'
 
 # set datadir
-bitcoin_dir="/location/of/bitcoinData"
-lnd_dir="/location/of/lightningData"
+bitcoin_dir="/home/bitcoin/.bitcoin"
+lnd_dir="/home/bitcoin/.lnd"
 
 #set external HDD. Set to mount point of blockchain volume
 ext_hdd="/mnt/hdd" 
