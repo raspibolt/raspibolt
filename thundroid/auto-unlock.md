@@ -22,7 +22,7 @@ This is why a script that automatically unlocks the wallet is helpful. The passw
   curl -s \
           -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/admin.macaroon)" \
           --cacert ${LN_ROOT}/tls.cert \
-          -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
+          -X POST -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
           https://localhost:8080/v1/unlockwallet > /dev/null 2>&1
   
   echo "$? $(date)" >> /etc/lnd/unlocks.log
