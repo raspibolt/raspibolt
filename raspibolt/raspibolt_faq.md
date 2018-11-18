@@ -74,31 +74,39 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
 * Remove old stuff, then download, verify and install the latest LND binaries  
   ```
   $ cd /home/admin/download
-  $  rm -f lnd-linux* manifest* pgp_keys.asc
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-armv7-v0.5-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig
+  $  rm -f lnd-linux* manifest* pgp_keys.asc         
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/lnd-linux-armv7-v0.5.1-beta-rc1.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/manifest-v0.5.1-beta-rc1.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/manifest-v0.5.1-beta-rc1.txt.sig
   $ wget https://keybase.io/roasbeef/pgp_keys.asc
   
-  $ sha256sum --check manifest-v0.5-beta.txt --ignore-missing
-  > lnd-linux-armv7-v0.5-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.5.1-beta-rc1.txt --ignore-missing
+  > lnd-linux-armv7-v0.5.1-beta-rc1.tar.gz: OK
   
   $ gpg ./pgp_keys.asc
   > BD599672C804AF2770869A048B80CD2BB8BD8132
   
   $ gpg --import ./pgp_keys.asc
-  $ gpg --verify manifest-v0.5-beta.txt.sig
+  $ gpg --verify manifest-v0.5.1-beta-rc1.txt.sig
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > Primary key fingerprint: BD59 9672 C804 AF27 7086  9A04 8B80 CD2B B8BD 8132
   >      Subkey fingerprint: F803 7E70 C12C 7A26 3C03  2508 CE58 F7F8 E20F D9A2
   
-  $ tar -xzf lnd-linux-armv7-v0.5-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5-beta/*
+  $ tar -xzf lnd-linux-armv7-v0.5.1-beta-rc1.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5.1-beta-rc1/*
   $ lnd --version
-  > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
+  > lnd version 0.5.1-rc1 commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
   ```
+  
+* If you are updating from version 0.5 or higher you have finished updating after you started LND:
+  ```
+  $ sudo systemctl restart lnd
+  $ lncli unlock
+  ```
+  
+  #### If upgrading from a LND version lower then 0.5 there are some extra steps to take
 
-* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  
+* Starting with the LND-0.5 release , LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf  
   zmqpubrawblock=tcp://127.0.0.1:28332
