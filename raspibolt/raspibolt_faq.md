@@ -59,6 +59,8 @@ https://github.com/bitcoin/bitcoin/releases
 * Start the bitcoind and lnd system units  
   `$ sudo systemctl start bitcoind`  
   `$ sudo systemctl start lnd`
+  
+:information_source: Please be aware that the internal data structure of Bitcoin Core changed from 0.16 to 0.17. If you download the blockchain using a different computer, make sure to use the same version. If you upgrade to 0.17, the data structure is converted automatically (can take a few hours) and it's not possible to use that data with older versions anymore.
 
 ### How to upgrade LND? 
 Upgrading can lead to a number of issues. Please **always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) completely to understand the changes. They also cover a lot of additional topics and many new features not mentioned here. 
