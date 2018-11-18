@@ -28,11 +28,8 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   # 2018 by meeDamian, robclark56 (Updated by zwarbo, martinatime, CodingMuziekwijk)
   
   LN_ROOT=/home/bitcoin/.lnd
-  if [ $chain = "test" ]; then
-    macaroon_path="${lnd_dir}/data/chain/bitcoin/testnet/admin.macaroon"
-  else
-    macaroon_path="${lnd_dir}/data/chain/bitcoin/mainnet/admin.macaroon"
-  fi
+  BITCOIN_DIR="/home/bitcoin/.bitcoin"
+  
   
   upSeconds="$(cat /proc/uptime | grep -o '^[0-9]\+')"
   upMins=$((${upSeconds} / 60))
@@ -44,8 +41,10 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
     /bin/sleep 10s
   fi
   
+  chain="$(bitcoin-cli -datadir=${BITCOIN_DIR} getblockchaininfo | jq -r '.chain')"
+  
   curl -s \
-          -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${macaroon_path})" \
+          -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/data/chain/bitcoin/${chain}net/admin.macaroon))" \
           --cacert ${LN_ROOT}/tls.cert \
           -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
           https://localhost:8080/v1/unlockwallet > /dev/null 2>&1
