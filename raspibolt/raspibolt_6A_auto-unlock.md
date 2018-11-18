@@ -30,7 +30,6 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   LN_ROOT=/home/bitcoin/.lnd
   BITCOIN_DIR="/home/bitcoin/.bitcoin"
   
-  
   upSeconds="$(cat /proc/uptime | grep -o '^[0-9]\+')"
   upMins=$((${upSeconds} / 60))
 
