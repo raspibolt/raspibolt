@@ -50,6 +50,8 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 The latest release can be found on the Github page of the Bitcoin Core project. Make sure to read the Release Notes, as these can include importantupgrade information.  
 https://github.com/bitcoin/bitcoin/releases
 
+* You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first.  
+
 * As "admin" user, stop the lnd and bitcoind system units  
   `$ sudo systemctl stop lnd`  
   `$ sudo systemctl stop bitcoind`  
@@ -64,6 +66,8 @@ https://github.com/bitcoin/bitcoin/releases
 
 ### How to upgrade LND? 
 Upgrading can lead to a number of issues. Please **always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) completely to understand the changes. They also cover a lot of additional topics and many new features not mentioned here. 
+
+* You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first.  
 
 * As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
