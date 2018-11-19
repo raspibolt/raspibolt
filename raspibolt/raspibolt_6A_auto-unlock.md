@@ -27,12 +27,12 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   # LND wallet auto-unlock script (Updated for LND 0.5 and above)
   # 2018 by meeDamian, robclark56 (Updated by zwarbo, martinatime, CodingMuziekwijk)
   
-  LN_ROOT=/home/bitcoin/.lnd
+  LN_ROOT="/home/bitcoin/.lnd"
   BITCOIN_DIR="/home/bitcoin/.bitcoin"
   
   upSeconds="$(cat /proc/uptime | grep -o '^[0-9]\+')"
   upMins=$((${upSeconds} / 60))
-
+  
   if [ "${upMins}" -lt "5" ]
   then
     /bin/sleep 180s
@@ -45,7 +45,7 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   curl -s \
           -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/data/chain/bitcoin/${chain}net/admin.macaroon))" \
           --cacert ${LN_ROOT}/tls.cert \
-          -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
+          -X POST -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
           https://localhost:8080/v1/unlockwallet > /dev/null 2>&1
   
   echo "$? $(date)" >> /etc/lnd/unlocks.log
