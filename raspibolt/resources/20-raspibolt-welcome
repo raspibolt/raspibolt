@@ -12,11 +12,11 @@ color_yellow='\033[0;33m'
 color_gray='\033[0;37m'
 
 # set datadir
-bitcoin_dir="/home/satoshi/.bitcoin"
-lnd_dir="/home/satoshi/.lnd"
+bitcoin_dir="/home/bitcoin/.bitcoin"
+lnd_dir="/home/bitcoin/.lnd"
 
 #Set to mount point of blockchain volume. This is used to calculate USB HDD usage %
-ext_hdd="/media/blockchain" 
+ext_hdd="/mnt/hdd" 
 
 #Set to network device name (usually eth0 for ethernet or wlan0 for wireless on raspberry pi unless you have 'Predictable Network Names' turned on in raspi-config. To get network device name run ifconfig.)
 network_name="eth0"
