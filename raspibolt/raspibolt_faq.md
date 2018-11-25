@@ -69,6 +69,8 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
 
 * You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first.  
 
+* When **upgrading to LND 0.5**, I would also recommend to close your channels first, as there have been a number of issues with stuck funds that require very technical work to resolve them.
+
 * As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
 
