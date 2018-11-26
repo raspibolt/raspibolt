@@ -26,5 +26,5 @@ par Sosthène
 
 **Recycler votre vieux laptop en noeud Bitcoin + Lightning**
 
-[![Travail en cours](thunderbadger/images/thunderbadgerlogo.png)](https://github.com/BobleChinois/guides/tree/master/thunderbadger/README.md)
+[![Travail en cours](thunderbadger/images/thunderbadgersmall.png)](https://github.com/BobleChinois/guides/tree/master/thunderbadger/README.md)
 
