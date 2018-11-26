@@ -15,6 +15,12 @@ color_gray='\033[0;37m'
 bitcoin_dir="/home/bitcoin/.bitcoin"
 lnd_dir="/home/bitcoin/.lnd"
 
+#Set to mount point of blockchain volume. This is used to calculate USB HDD usage %
+ext_hdd="/mnt/hdd" 
+
+#Set to network device name (usually eth0 for ethernet or wlan0 for wireless on raspberry pi unless you have 'Predictable Network Names' turned on in raspi-config. To get network device name run ifconfig.)
+network_name="eth0"
+
 # get uptime & load
 load=$(w | grep "load average:" | cut -c11-)
 
@@ -41,8 +47,8 @@ else
   color_sd=${color_green}
 fi
 
-hdd_free_ratio=$(printf "%d" "$(df -h | grep '/mnt/hdd$' | awk '{ print $4/$2*100 }')") 2>/dev/null
-hdd=$(printf "%s (%s%%)" "$(df -h | grep '/mnt/hdd$' | awk '{ print $4 }')" "${hdd_free_ratio}")
+hdd_free_ratio=$(printf "%d" "$(df -h | grep ${ext_hdd} | awk '{ print $4/$2*100 }')") 2>/dev/null
+hdd=$(printf "%s (%s%%)" "$(df -h | grep ${ext_hdd} | awk '{ print $4 }')" "${hdd_free_ratio}")
 
 if [ ${hdd_free_ratio} -lt 10 ]; then
   color_hdd="${color_red}\e[7m"
@@ -51,8 +57,8 @@ else
 fi
 
 # get network traffic
-network_rx=$(ifconfig eth0 | grep 'RX packets' | awk '{ print $6$7 }' | sed 's/[()]//g')
-network_tx=$(ifconfig eth0 | grep 'TX packets' | awk '{ print $6$7 }' | sed 's/[()]//g')
+network_rx=$(ifconfig ${network_name} | grep 'RX packets' | awk '{ print $6$7 }' | sed 's/[()]//g')
+network_tx=$(ifconfig ${network_name} | grep 'TX packets' | awk '{ print $6$7 }' | sed 's/[()]//g')
 
 # Bitcoin blockchain
 btc_path=$(command -v bitcoin-cli)

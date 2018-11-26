@@ -166,13 +166,13 @@ After=bitcoind.service
 
 [Service]
 ExecStart=/usr/local/bin/lnd
-PIDFile=/home/bitcoin/.lnd/lnd.pid
+
 User=bitcoin
 Group=bitcoin
-LimitNOFILE=128000
 Type=simple
 KillMode=process
-TimeoutSec=180
+LimitNOFILE=128000
+TimeoutSec=240
 Restart=always
 RestartSec=60
 

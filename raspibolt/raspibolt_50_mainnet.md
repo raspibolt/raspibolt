@@ -84,9 +84,9 @@ To avoid burning our testnet Bitcoin, and as a courtesy to the next testers, we 
 * Stop the Bitcoin and Lightning services.  
   `$ sudo systemctl stop lnd`   
   `$ sudo systemctl stop bitcoind` 
-  
+
 * Edit "bitcoin.conf" file by commenting  `testnet=1` out. Save and exit.  
-  `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
+  `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf` 
 ```
 # remove the following line to enable Bitcoin mainnet
 #testnet=1
@@ -107,38 +107,53 @@ bitcoin.mainnet=1
 
 :warning: **Do not proceed** until the copy task of the mainnet blockchain is completely finished.
 
-* Start Bitcoind and check if it's operating on mainnet  
+* Start Bitcoind and check if it's operating on mainnet  (you can exit the debug.log with `Ctrl-C`)
 
-  `$ sudo systemctl start bitcoind`  
-  `$ systemctl status bitcoind.service`  
-  `$ sudo tail -f /home/bitcoin/.bitcoin/debug.log`  (exit with `Ctrl-C`)  
-  `$ bitcoin-cli getblockchaininfo` 
+  ```
+  $ sudo systemctl start bitcoind  
+  $ systemctl status bitcoind.service  
+  $ sudo tail -f /home/bitcoin/.bitcoin/debug.log   
+  $ bitcoin-cli getblockchaininfo 
+  ```
 
 * **Wait until the blockchain is fully synced**: "blocks" = "headers", otherwise you might run into performance / memory issues when creating a new lnd mainnet wallet.
 
-* Start LND and check its operation  
-  `$ sudo systemctl start lnd`   
-  `$ systemctl status lnd`  
-  `$ sudo journalctl -f -u lnd`  
+* Start LND and check its operation
 
-* If everything works fine, restart the RaspiBolt and check the operations again.
+  ```
+  $ sudo systemctl start lnd
+  $ systemctl status lnd
+  $ sudo journalctl -f -u lnd
+  ```
+
+  If everything works fine, restart the RaspiBolt and check the operations again.  
   `$ sudo shutdown -r now`  
 
-* Monitor the startup process of first  `bitcoind` and then `lnd`   
-  `$ sudo tail -f /home/bitcoin/.bitcoin/debug.log`  
-  `$ sudo journalctl -f -u lnd` 
+* Monitor the startup process of first  `bitcoind` and then `lnd` 
+
+  ```
+  $ sudo tail -f /home/bitcoin/.bitcoin/debug.log  
+  $ sudo journalctl -f -u lnd
+  ```
 
 * Create the mainnet wallet with the **exact same** `password [C]` as on testnet. If you use another password, you need to recreate your access credentials.  
   `$ lncli create `
 
-* Copy permission files and TLS cert to user "admin" to use `lncli`  
-  `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`  
-  `$ cd /home/bitcoin/`  
-  `$ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/`  
+* Copy permission files and TLS cert to user "admin" to use `lncli` 
 
-* Restart `lnd` and unlock your wallet (enter `password [C]` )  
-  `$ sudo systemctl restart lnd`  
-  `$ lncli unlock`   
+  ```
+  $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd  
+  $ cd /home/bitcoin/  
+  $ sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/
+  $ sudo chown admin:admin /home/admin/.lnd/ -R  
+  ```
+
+* Restart `lnd` and unlock your wallet (enter `password [C]` ) 
+
+  ``` 
+  $ sudo systemctl restart lnd
+  $ lncli unlock
+  ```
 
 * Monitor the LND startup progress until it caught up with the mainnet blockchain (about 515k blocks at the moment). This can take up to 2 hours, then you see a lot of very fast chatter (exit with `Ctrl-C`).  
   `$ sudo journalctl -f -u lnd`
@@ -217,7 +232,6 @@ Some commands to try:
 
 * to force close a channel (if your peer is offline or not cooperative), use  
    `$ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX] `
-   
 
 👉 see [LND API reference](http://api.lightning.community/) for additional information
 
