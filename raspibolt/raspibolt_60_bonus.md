@@ -68,6 +68,12 @@ Difficulty: easy
 
 These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
 
+## [**Running bitcoind and lnd behind Tor**](raspibolt_69_tor.md)
+
+*Difficulty: medium*
+
+Use Tor network to anonymize your bitcoin trafic.
+
 ## Even more Extras 
 
 **[RaspiBolt-Extras](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md)** by Rob Clark
