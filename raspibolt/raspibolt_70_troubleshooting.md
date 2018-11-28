@@ -1,14 +1,29 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ **Troubleshooting** ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ **Troubleshooting** ]
 
 -------
 ### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
 --------
 
-# Troubleshooting
+# Troubleshooting 
 
 The aim of this additional troubleshooting guide is to help you debug your system, verify all important configurations and find the frikkin' little problem that keeps you from running the perfect Lightning node. 
 
 Where possible, I'll link to the relevant part of the guide. If you see any discrepancies from the expected output, double check how you set up your node in that specific area.
+
+
+
+### [General FAQ](raspibolt_faq.md)
+
+I collected frequent questions not directly related with issues in a separate [General FAQ](raspibolt_faq.md) section:
+
+* Can I get rich by routing Lightning payments?
+* Can I attach the Ext4 formatted hard disk to my Windows computer?
+* What do all the Linux commands do?
+* Where can I get more information?
+* How to upgrade Bitcoin Core or LND?
+* Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 3 with a 64 bit processor?
+
+   
 
 ### Hardware & operating system
 
@@ -49,8 +64,6 @@ tmpfs           489M     0  489M   0% /sys/fs/cgroup
 /dev/sda1       458G  232G  203G  54% /mnt/hdd
 tmpfs            98M     0   98M   0% /run/user/1001
 ```
-
-
 
 ##### Errors resulting from a defective hard disk, eg. when copying the blockchain?
 

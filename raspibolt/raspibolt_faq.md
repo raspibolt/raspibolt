@@ -1,10 +1,10 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ **FAQ** ] -- [ [Troubleshooting](raspibolt_70_troubleshooting.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ **[Troubleshooting](raspibolt_70_troubleshooting.md)** ]
 
 -------
 ### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
 --------
 
-# FAQ
+# General FAQ
 
 ### Can I get rich by routing Lightning payments?
 Nobody knows. Probably not. You will get minimal fees. I don't care. Enjoy the ride! 
@@ -138,3 +138,9 @@ The macaroons are now located under the chain data directory for each supported 
 
 ### Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 3 with a 64 bit processor?
 At the time of this writing (July 2018) there is no 64 bit operating system for the Raspberry Pi developed yet. The 64 bit processors of the Raspberry 3 versions are running in 32 bit compatibility mode with a 32 bit operating system.
+
+
+
+------
+
+<< Back: [Troubleshooting](raspibolt_70_troubleshooting.md) 
