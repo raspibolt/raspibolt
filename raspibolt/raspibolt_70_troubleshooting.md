@@ -248,81 +248,81 @@ $ bitcoind
 Bitcoin server starting
 
 $ tail -f /home/bitcoin/.bitcoin/debug.log
-2018-11-27T16:31:57Z Bitcoin Core version v0.17.0.1 (release build)
-2018-11-27T16:31:57Z InitParameterInteraction: parameter interaction: -whitelistforcerelay=1 -> setting -whitelistrelay=1
-2018-11-27T16:31:57Z Assuming ancestors of block 0000000000000000002e63058c023a9a1de233554f28c7b21380b6c9003f36a8 have valid signatures.
-2018-11-27T16:31:57Z Setting nMinimumChainWork=0000000000000000000000000000000000000000028822fef1c230963535a90d
-2018-11-27T16:31:57Z Using the 'standard' SHA256 implementation
-2018-11-27T16:31:57Z Default data directory /home/bitcoin/.bitcoin
-2018-11-27T16:31:57Z Using data directory /home/bitcoin/.bitcoin
-2018-11-27T16:31:57Z Using config file /home/bitcoin/.bitcoin/bitcoin.conf
-2018-11-27T16:31:57Z Using at most 40 automatic connections (128000 file descriptors available)
-2018-11-27T16:31:57Z Using 16 MiB out of 32/2 requested for signature cache, able to store 524288 elements
-2018-11-27T16:31:57Z Using 16 MiB out of 32/2 requested for script execution cache, able to store 524288 elements
-2018-11-27T16:31:57Z Using 4 threads for script verification
-2018-11-27T16:31:57Z scheduler thread start
-2018-11-27T16:31:57Z HTTP: creating work queue of depth 16
-2018-11-27T16:31:57Z Config options rpcuser and rpcpassword will soon be deprecated. Locally-run instances may remove rpcuser to use cookie-based auth, or may be replaced with rpcauth. Please see share/rpcauth for rpcauth auth generation.
-2018-11-27T16:31:57Z HTTP: starting 4 worker threads
-2018-11-27T16:31:57Z Using wallet directory /home/bitcoin/.bitcoin
-2018-11-27T16:31:57Z init message: Verifying wallet(s)...
-2018-11-27T16:31:57Z Using BerkeleyDB version Berkeley DB 4.8.30: (April  9, 2010)
-2018-11-27T16:31:57Z Using wallet wallet.dat
-2018-11-27T16:31:57Z BerkeleyEnvironment::Open: LogDir=/home/bitcoin/.bitcoin/database ErrorFile=/home/bitcoin/.bitcoin/db.log
-2018-11-27T16:31:57Z Cache configuration:
-2018-11-27T16:31:57Z * Using 2.0MiB for block index database
-2018-11-27T16:31:57Z * Using 8.0MiB for chain state database
-2018-11-27T16:31:57Z * Using 90.0MiB for in-memory UTXO set (plus up to 47.7MiB of unused mempool space)
-2018-11-27T16:31:57Z init message: Loading block index...
-2018-11-27T16:31:57Z Opening LevelDB in /home/bitcoin/.bitcoin/blocks/index
-2018-11-27T16:31:58Z Opened LevelDB successfully
-2018-11-27T16:31:58Z Using obfuscation key for /home/bitcoin/.bitcoin/blocks/index: 0000000000000000
-2018-11-27T16:32:21Z LoadBlockIndexDB: last block file = 1445
-2018-11-27T16:32:21Z LoadBlockIndexDB: last block file info: CBlockFileInfo(blocks=34, size=38568339, heights=551687...551720, time=2018-11-27...2018-11-27)
-2018-11-27T16:32:21Z Checking all blk files are present...
-2018-11-27T16:32:22Z Opening LevelDB in /home/bitcoin/.bitcoin/chainstate
-2018-11-27T16:32:26Z Opened LevelDB successfully
-2018-11-27T16:32:26Z Using obfuscation key for /home/bitcoin/.bitcoin/chainstate: 379f438868caeb46
-2018-11-27T16:32:27Z Loaded best chain: hashBestChain=00000000000000000019f4d6b0a3ac29f65789035e88ca279d2820a33405e056 height=551720 date=2018-11-27T16:22:18Z progress=0.999996
-2018-11-27T16:32:27Z init message: Rewinding blocks...
-2018-11-27T16:32:34Z init message: Verifying blocks...
-2018-11-27T16:32:34Z Verifying last 6 blocks at level 3
-2018-11-27T16:32:34Z [0%]...[16%]...[33%]...[50%]...[66%]...[83%]...[99%]...[DONE].
-2018-11-27T16:32:57Z No coin database inconsistencies in last 6 blocks (10080 transactions)
-2018-11-27T16:32:57Z  block index           60089ms
-2018-11-27T16:32:57Z init message: Loading wallet...
-2018-11-27T16:32:58Z [default wallet] nFileVersion = 170001
-2018-11-27T16:32:58Z [default wallet] Keys: 2001 plaintext, 0 encrypted, 2001 w/ metadata, 2001 total. Unknown wallet records: 1
-2018-11-27T16:32:58Z [default wallet] Wallet completed loading in             432ms
-2018-11-27T16:32:58Z [default wallet] setKeyPool.size() = 2000
-2018-11-27T16:32:58Z [default wallet] mapWallet.size() = 0
-2018-11-27T16:32:58Z [default wallet] mapAddressBook.size() = 0
-2018-11-27T16:32:58Z mapBlockIndex.size() = 551721
-2018-11-27T16:32:58Z nBestHeight = 551720
-2018-11-27T16:32:58Z Bound to [::]:8333
-2018-11-27T16:32:58Z Bound to 0.0.0.0:8333
-2018-11-27T16:32:58Z init message: Loading P2P addresses...
-2018-11-27T16:32:58Z torcontrol thread start
-2018-11-27T16:32:58Z Leaving InitialBlockDownload (latching to false)
-2018-11-27T16:33:00Z Loaded 63097 addresses from peers.dat  1856ms
-2018-11-27T16:33:00Z init message: Loading banlist...
-2018-11-27T16:33:00Z init message: Starting network threads...
-2018-11-27T16:33:00Z net thread start
-2018-11-27T16:33:00Z addcon thread start
-2018-11-27T16:33:00Z init message: Done loading
-2018-11-27T16:33:00Z msghand thread start
-2018-11-27T16:33:00Z dnsseed thread start
-2018-11-27T16:33:00Z opencon thread start
-2018-11-27T16:33:02Z New outbound peer connected: version: 70015, blocks=551720, peer=1
-2018-11-27T16:33:04Z socket recv error Connection reset by peer (104)
-2018-11-27T16:33:11Z Loading addresses from DNS seeds (could take a while)
-2018-11-27T16:33:14Z New outbound peer connected: version: 70015, blocks=551720, peer=7
-2018-11-27T16:33:14Z New outbound peer connected: version: 70015, blocks=551720, peer=9
-2018-11-27T16:33:15Z New outbound peer connected: version: 70015, blocks=551720, peer=10
-2018-11-27T16:33:26Z 255 addresses found from DNS seeds
-2018-11-27T16:33:26Z dnsseed thread exit
-2018-11-27T16:33:28Z New outbound peer connected: version: 70015, blocks=551720, peer=14
-2018-11-27T16:33:29Z New outbound peer connected: version: 70015, blocks=551720, peer=15
+2018-11-25T19:31:57Z Bitcoin Core version v0.17.0.1 (release build)
+2018-11-25T19:31:57Z InitParameterInteraction: parameter interaction: -whitelistforcerelay=1 -> setting -whitelistrelay=1
+2018-11-25T19:31:57Z Assuming ancestors of block 0000000000000000002e63058c023a9a1de233554f28c7b21380b6c9003f36a8 have valid signatures.
+2018-11-25T19:31:57Z Setting nMinimumChainWork=0000000000000000000000000000000000000000028822fef1c230963535a90d
+2018-11-25T19:31:57Z Using the 'standard' SHA256 implementation
+2018-11-25T19:31:57Z Default data directory /home/bitcoin/.bitcoin
+2018-11-25T19:31:57Z Using data directory /home/bitcoin/.bitcoin
+2018-11-25T19:31:57Z Using config file /home/bitcoin/.bitcoin/bitcoin.conf
+2018-11-25T19:31:57Z Using at most 40 automatic connections (128000 file descriptors available)
+2018-11-25T19:31:57Z Using 16 MiB out of 32/2 requested for signature cache, able to store 524288 elements
+2018-11-25T19:31:57Z Using 16 MiB out of 32/2 requested for script execution cache, able to store 524288 elements
+2018-11-25T19:31:57Z Using 4 threads for script verification
+2018-11-25T19:31:57Z scheduler thread start
+2018-11-25T19:31:57Z HTTP: creating work queue of depth 16
+2018-11-25T19:31:57Z Config options rpcuser and rpcpassword will soon be deprecated. Locally-run instances may remove rpcuser to use cookie-based auth, or may be replaced with rpcauth. Please see share/rpcauth for rpcauth auth generation.
+2018-11-25T19:31:57Z HTTP: starting 4 worker threads
+2018-11-25T19:31:57Z Using wallet directory /home/bitcoin/.bitcoin
+2018-11-25T19:31:57Z init message: Verifying wallet(s)...
+2018-11-25T19:31:57Z Using BerkeleyDB version Berkeley DB 4.8.30: (April  9, 2010)
+2018-11-25T19:31:57Z Using wallet wallet.dat
+2018-11-25T19:31:57Z BerkeleyEnvironment::Open: LogDir=/home/bitcoin/.bitcoin/database ErrorFile=/home/bitcoin/.bitcoin/db.log
+2018-11-25T19:31:57Z Cache configuration:
+2018-11-25T19:31:57Z * Using 2.0MiB for block index database
+2018-11-25T19:31:57Z * Using 8.0MiB for chain state database
+2018-11-25T19:31:57Z * Using 90.0MiB for in-memory UTXO set (plus up to 47.7MiB of unused mempool space)
+2018-11-25T19:31:57Z init message: Loading block index...
+2018-11-25T19:31:57Z Opening LevelDB in /home/bitcoin/.bitcoin/blocks/index
+2018-11-25T19:31:58Z Opened LevelDB successfully
+2018-11-25T19:31:58Z Using obfuscation key for /home/bitcoin/.bitcoin/blocks/index: 0000000000000000
+2018-11-25T19:32:21Z LoadBlockIndexDB: last block file = 1445
+2018-11-25T19:32:21Z LoadBlockIndexDB: last block file info: CBlockFileInfo(blocks=34, size=38568339, heights=551687...551720, time=2018-11-25...2018-11-25)
+2018-11-25T19:32:21Z Checking all blk files are present...
+2018-11-25T19:32:22Z Opening LevelDB in /home/bitcoin/.bitcoin/chainstate
+2018-11-25T19:32:26Z Opened LevelDB successfully
+2018-11-25T19:32:26Z Using obfuscation key for /home/bitcoin/.bitcoin/chainstate: 379f438868caeb46
+2018-11-25T19:32:27Z Loaded best chain: hashBestChain=00000000000000000019f4d6b0a3ac29f65789035e88ca279d2820a33405e056 height=551720 date=2018-11-25T19:22:18Z progress=0.999996
+2018-11-25T19:32:27Z init message: Rewinding blocks...
+2018-11-25T19:32:34Z init message: Verifying blocks...
+2018-11-25T19:32:34Z Verifying last 6 blocks at level 3
+2018-11-25T19:32:34Z [0%]...[16%]...[33%]...[50%]...[66%]...[83%]...[99%]...[DONE].
+2018-11-25T19:32:57Z No coin database inconsistencies in last 6 blocks (10080 transactions)
+2018-11-25T19:32:57Z  block index           60089ms
+2018-11-25T19:32:57Z init message: Loading wallet...
+2018-11-25T19:32:58Z [default wallet] nFileVersion = 170001
+2018-11-25T19:32:58Z [default wallet] Keys: 2001 plaintext, 0 encrypted, 2001 w/ metadata, 2001 total. Unknown wallet records: 1
+2018-11-25T19:32:58Z [default wallet] Wallet completed loading in             432ms
+2018-11-25T19:32:58Z [default wallet] setKeyPool.size() = 2000
+2018-11-25T19:32:58Z [default wallet] mapWallet.size() = 0
+2018-11-25T19:32:58Z [default wallet] mapAddressBook.size() = 0
+2018-11-25T19:32:58Z mapBlockIndex.size() = 551721
+2018-11-25T19:32:58Z nBestHeight = 551720
+2018-11-25T19:32:58Z Bound to [::]:8333
+2018-11-25T19:32:58Z Bound to 0.0.0.0:8333
+2018-11-25T19:32:58Z init message: Loading P2P addresses...
+2018-11-25T19:32:58Z torcontrol thread start
+2018-11-25T19:32:58Z Leaving InitialBlockDownload (latching to false)
+2018-11-25T19:33:00Z Loaded 63097 addresses from peers.dat  1856ms
+2018-11-25T19:33:00Z init message: Loading banlist...
+2018-11-25T19:33:00Z init message: Starting network threads...
+2018-11-25T19:33:00Z net thread start
+2018-11-25T19:33:00Z addcon thread start
+2018-11-25T19:33:00Z init message: Done loading
+2018-11-25T19:33:00Z msghand thread start
+2018-11-25T19:33:00Z dnsseed thread start
+2018-11-25T19:33:00Z opencon thread start
+2018-11-25T19:33:02Z New outbound peer connected: version: 70015, blocks=551720, peer=1
+2018-11-25T19:33:04Z socket recv error Connection reset by peer (104)
+2018-11-25T19:33:11Z Loading addresses from DNS seeds (could take a while)
+2018-11-25T19:33:14Z New outbound peer connected: version: 70015, blocks=551720, peer=7
+2018-11-25T19:33:14Z New outbound peer connected: version: 70015, blocks=551720, peer=9
+2018-11-25T19:33:15Z New outbound peer connected: version: 70015, blocks=551720, peer=10
+2018-11-25T19:33:26Z 255 addresses found from DNS seeds
+2018-11-25T19:33:26Z dnsseed thread exit
+2018-11-25T19:33:28Z New outbound peer connected: version: 70015, blocks=551720, peer=14
+2018-11-25T19:33:29Z New outbound peer connected: version: 70015, blocks=551720, peer=15
 ...
 ...
 
@@ -380,12 +380,12 @@ autopilot.allocation=0.6
 $ lnd
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2018-11-28 13:40:03.072 [INF] LTND: Version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
-2018-11-28 13:40:03.072 [INF] LTND: Active chain: Bitcoin (network=mainnet)
-2018-11-28 13:40:03.073 [INF] CHDB: Checking for schema update: latest_version=6, db_version=6
-2018-11-28 13:40:03.107 [INF] RPCS: password RPC server listening on 127.0.0.1:10009
-2018-11-28 13:40:03.107 [INF] RPCS: password gRPC proxy started at 127.0.0.1:8080
-2018-11-28 13:40:03.107 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
+2018-11-25 19:40:03.072 [INF] LTND: Version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
+2018-11-25 19:40:03.072 [INF] LTND: Active chain: Bitcoin (network=mainnet)
+2018-11-25 19:40:03.073 [INF] CHDB: Checking for schema update: latest_version=6, db_version=6
+2018-11-25 19:40:03.107 [INF] RPCS: password RPC server listening on 127.0.0.1:10009
+2018-11-25 19:40:03.107 [INF] RPCS: password gRPC proxy started at 127.0.0.1:8080
+2018-11-25 19:40:03.107 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
 ```
 
 As this "bitcoin" user session is now occupied by LND, open a second SSH session (shown here with prefix `$2`) with your node and unlock your wallet.
@@ -398,49 +398,49 @@ $2 lncli unlock
 Back in your first SSH session, the wallet is shown as unlocked and LND starts connecting to the network (see example output below). Any potential errors will be shown here.
 
 ```-----
-2018-11-28 13:42:57.143 [INF] LNWL: Opened wallet
-2018-11-28 13:42:57.689 [INF] LTND: Primary chain is set to: bitcoin
-2018-11-28 13:42:57.785 [INF] LNWL: Started listening for bitcoind block notifications via ZMQ on tcp://127.0.0.1:28332
-2018-11-28 13:42:57.785 [INF] LTND: Initializing bitcoind backed fee estimator
-2018-11-28 13:42:57.785 [INF] LNWL: Started listening for bitcoind transaction notifications via ZMQ on tcp://127.0.0.1:28333
-2018-11-28 13:43:04.128 [INF] LNWL: The wallet has been unlocked without a time limit
-2018-11-28 13:43:04.129 [INF] LTND: LightningWallet opened
-2018-11-28 13:43:04.178 [INF] LNWL: Started rescan from block 0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93 (height 551831) for 0 addresses
-2018-11-28 13:43:04.178 [INF] LNWL: Starting rescan from block 0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93
-2018-11-28 13:43:04.646 [INF] HSWC: Restoring in-memory circuit state from disk
-2018-11-28 13:43:04.701 [INF] HSWC: Payment circuits loaded: num_pending=0, num_open=0
-2018-11-28 13:43:04.746 [INF] SRVR: Scanning local network for a UPnP enabled device
-2018-11-28 13:43:05.775 [INF] LNWL: Rescan finished at 551831 (0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93)
-2018-11-28 13:43:05.864 [INF] LNWL: Catching up block hashes to height 551831, this might take a while
-2018-11-28 13:43:05.898 [INF] LNWL: Done catching up block hashes
-2018-11-28 13:43:05.898 [INF] LNWL: Finished rescan for 0 addresses (synced to block 0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93, height 551831)
-2018-11-28 13:43:09.030 [INF] SRVR: Automatically set up port forwarding using UPnP to advertise external IP
-2018-11-28 13:43:09.456 [INF] RPCS: RPC server listening on 127.0.0.1:10009
-2018-11-28 13:43:09.456 [INF] RPCS: gRPC proxy started at 127.0.0.1:8080
-2018-11-28 13:43:09.463 [INF] LTND: Waiting for chain backend to finish sync, start_height=551832
-2018-11-28 13:43:09.481 [INF] LTND: Chain backend is fully synced (end_height=551832)!
-2018-11-28 13:43:09.528 [INF] NTFN: New block epoch subscription
-2018-11-28 13:43:09.528 [INF] HSWC: Starting HTLC Switch
-2018-11-28 13:43:09.528 [INF] NTFN: New block epoch subscription
-2018-11-28 13:43:09.529 [INF] NTFN: New block epoch subscription
-2018-11-28 13:43:09.542 [INF] UTXN: Processing outputs from missed blocks. Starting with blockHeight=551831, to current blockHeight=551832
-2018-11-28 13:43:09.542 [INF] UTXN: Attempting to graduate height=551832: num_kids=0, num_babies=0
-2018-11-28 13:43:09.650 [INF] UTXN: UTXO Nursery is now fully synced
-2018-11-28 13:43:09.650 [INF] DISC: Authenticated Gossiper is starting
-2018-11-28 13:43:09.651 [INF] BRAR: Starting contract observer, watching for breaches.
-2018-11-28 13:43:09.651 [INF] NTFN: New block epoch subscription
-2018-11-28 13:43:09.655 [INF] CRTR: FilteredChainView starting
-2018-11-28 13:43:15.542 [INF] CRTR: Filtering chain using 12730 channels active
-2018-11-28 13:43:15.554 [INF] CRTR: Prune tip for Channel Graph: height=551831, hash=0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93
-2018-11-28 13:43:15.559 [INF] CRTR: Syncing channel graph from height=551831 (hash=0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93) to height=551832 (hash=0000000000000000001ab31e179a5e77b16ee0ddb1c8b07ae2b2dc11d06d68fa)
-2018-11-28 13:43:16.452 [INF] CRTR: Block 0000000000000000001ab31e179a5e77b16ee0ddb1c8b07ae2b2dc11d06d68fa (height=551832) closed 0 channels
-2018-11-28 13:43:16.452 [INF] CRTR: Graph pruning complete: 0 channels were closed since height 551831
-2018-11-28 13:43:16.563 [INF] CMGR: Server listening on [::]:9735
-2018-11-28 13:43:16.607 [INF] SRVR: Initializing peer network bootstrappers!
-2018-11-28 13:43:16.607 [INF] SRVR: Creating DNS peer bootstrapper with seeds: [[nodes.lightning.directory soa.nodes.lightning.directory]]
-2018-11-28 13:43:16.608 [INF] DISC: Attempting to bootstrap with: Authenticated Channel Graph
-2018-11-28 13:43:16.630 [INF] DISC: Obtained 3 addrs to bootstrap network with
-2018-11-28 13:43:16.806 [INF] SRVR: Established connection to: 86.70.56.25:9735
+2018-11-25 19:42:57.143 [INF] LNWL: Opened wallet
+2018-11-25 19:42:57.689 [INF] LTND: Primary chain is set to: bitcoin
+2018-11-25 19:42:57.785 [INF] LNWL: Started listening for bitcoind block notifications via ZMQ on tcp://127.0.0.1:28332
+2018-11-25 19:42:57.785 [INF] LTND: Initializing bitcoind backed fee estimator
+2018-11-25 19:42:57.785 [INF] LNWL: Started listening for bitcoind transaction notifications via ZMQ on tcp://127.0.0.1:28333
+2018-11-25 19:43:04.128 [INF] LNWL: The wallet has been unlocked without a time limit
+2018-11-25 19:43:04.129 [INF] LTND: LightningWallet opened
+2018-11-25 19:43:04.178 [INF] LNWL: Started rescan from block 0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93 (height 551831) for 0 addresses
+2018-11-25 19:43:04.178 [INF] LNWL: Starting rescan from block 0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93
+2018-11-25 19:43:04.646 [INF] HSWC: Restoring in-memory circuit state from disk
+2018-11-25 19:43:04.701 [INF] HSWC: Payment circuits loaded: num_pending=0, num_open=0
+2018-11-25 19:43:04.746 [INF] SRVR: Scanning local network for a UPnP enabled device
+2018-11-25 19:43:05.775 [INF] LNWL: Rescan finished at 551831 (0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93)
+2018-11-25 19:43:05.864 [INF] LNWL: Catching up block hashes to height 551831, this might take a while
+2018-11-25 19:43:05.898 [INF] LNWL: Done catching up block hashes
+2018-11-25 19:43:05.898 [INF] LNWL: Finished rescan for 0 addresses (synced to block 0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93, height 551831)
+2018-11-25 19:43:09.030 [INF] SRVR: Automatically set up port forwarding using UPnP to advertise external IP
+2018-11-25 19:43:09.456 [INF] RPCS: RPC server listening on 127.0.0.1:10009
+2018-11-25 19:43:09.456 [INF] RPCS: gRPC proxy started at 127.0.0.1:8080
+2018-11-25 19:43:09.463 [INF] LTND: Waiting for chain backend to finish sync, start_height=551832
+2018-11-25 19:43:09.481 [INF] LTND: Chain backend is fully synced (end_height=551832)!
+2018-11-25 19:43:09.528 [INF] NTFN: New block epoch subscription
+2018-11-25 19:43:09.528 [INF] HSWC: Starting HTLC Switch
+2018-11-25 19:43:09.528 [INF] NTFN: New block epoch subscription
+2018-11-25 19:43:09.529 [INF] NTFN: New block epoch subscription
+2018-11-25 19:43:09.542 [INF] UTXN: Processing outputs from missed blocks. Starting with blockHeight=551831, to current blockHeight=551832
+2018-11-25 19:43:09.542 [INF] UTXN: Attempting to graduate height=551832: num_kids=0, num_babies=0
+2018-11-25 19:43:09.650 [INF] UTXN: UTXO Nursery is now fully synced
+2018-11-25 19:43:09.650 [INF] DISC: Authenticated Gossiper is starting
+2018-11-25 19:43:09.651 [INF] BRAR: Starting contract observer, watching for breaches.
+2018-11-25 19:43:09.651 [INF] NTFN: New block epoch subscription
+2018-11-25 19:43:09.655 [INF] CRTR: FilteredChainView starting
+2018-11-25 19:43:15.542 [INF] CRTR: Filtering chain using 12730 channels active
+2018-11-25 19:43:15.554 [INF] CRTR: Prune tip for Channel Graph: height=551831, hash=0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93
+2018-11-25 19:43:15.559 [INF] CRTR: Syncing channel graph from height=551831 (hash=0000000000000000001166353e32a530830aba5ab1bb1201330ad61d6019be93) to height=551832 (hash=0000000000000000001ab31e179a5e77b16ee0ddb1c8b07ae2b2dc11d06d68fa)
+2018-11-25 19:43:16.452 [INF] CRTR: Block 0000000000000000001ab31e179a5e77b16ee0ddb1c8b07ae2b2dc11d06d68fa (height=551832) closed 0 channels
+2018-11-25 19:43:16.452 [INF] CRTR: Graph pruning complete: 0 channels were closed since height 551831
+2018-11-25 19:43:16.563 [INF] CMGR: Server listening on [::]:9735
+2018-11-25 19:43:16.607 [INF] SRVR: Initializing peer network bootstrappers!
+2018-11-25 19:43:16.607 [INF] SRVR: Creating DNS peer bootstrapper with seeds: [[nodes.lightning.directory soa.nodes.lightning.directory]]
+2018-11-25 19:43:16.608 [INF] DISC: Attempting to bootstrap with: Authenticated Channel Graph
+2018-11-25 19:43:16.630 [INF] DISC: Obtained 3 addrs to bootstrap network with
+2018-11-25 19:43:16.806 [INF] SRVR: Established connection to: 86.70.56.25:9735
 ...
 ```
 
@@ -448,8 +448,8 @@ To get back to normal operations, shut down LND with `Ctrl-C`, then
 
 ```
 ...
-2018-11-28 13:43:27.382 [INF] PEER: Disconnecting 104.196.6.10:9735, reason: server: disconnecting peer 104.196.6.10:9735
-2018-11-28 13:43:27.494 [INF] LTND: Shutdown complete
+2018-11-25 19:43:27.382 [INF] PEER: Disconnecting 104.196.6.10:9735, reason: server: disconnecting peer 104.196.6.10:9735
+2018-11-25 19:43:27.494 [INF] LTND: Shutdown complete
 
 $ exit
 $ sudo systemctl start lnd
