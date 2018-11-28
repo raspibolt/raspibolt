@@ -78,4 +78,4 @@ These additional bash scripts display a balance overview (on-chain & in channels
 
 ------
 
-Next: [FAQ >>](raspibolt_faq.md)
+Next: [Troubleshooting](raspibolt_70_troubleshooting.md) >>
