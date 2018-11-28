@@ -27,11 +27,11 @@ I collected frequent questions not directly related with issues in a separate [G
 
 ### Hardware & operating system
 
-##### Can you login using SSH?
+#### Can you login using SSH?
 
 If you somehow locked yourself out of your Pi, you can connect it to a display and keyboard to log in directly without any certificate.
 
-##### Do you have a compatible Raspberry Pi?
+#### Do you have a compatible Raspberry Pi?
 
 ```
 $ cat /proc/device-tree/model
@@ -43,11 +43,11 @@ Linux RaspiBolt 4.14.71-v7+ #1145 SMP Fri Sep 21 15:38:35 BST 2018 armv7l GNU/Li
 
 Important is that your Raspberry Pi uses the **armv7** CPU architecture.
 
-##### Is you root filesystem read-only?
+#### Is you root filesystem read-only?
 
 If you get an error like `unable to ..... : Read-only file system`, this points to a faulty sd card. If linux detects a corrupt root filesystem, it drops into read-only mode. Try to flash the sd card again, or use a different card.  
 
-##### Is the hard disk mounted?
+#### Is the hard disk mounted?
 
 Check if the hard disk has been mounted to `/mnt/hdd` and if the size is about right. The other lines can vary on your Pi.
 
@@ -65,7 +65,7 @@ tmpfs           489M     0  489M   0% /sys/fs/cgroup
 tmpfs            98M     0   98M   0% /run/user/1001
 ```
 
-##### Errors resulting from a defective hard disk, eg. when copying the blockchain?
+#### Errors resulting from a defective hard disk, eg. when copying the blockchain?
 
 To check the file system of the hard disk, you need to unmount it, and as we also have the swapfile on the hard disk, restart  without `bitcoind` / `lnd` autostart.
 
@@ -99,7 +99,7 @@ UUID=[your_hdd_UUID] /mnt/hdd ext4 noexec,defaults 0 0
 $ sudo shutdown -r now
 ```
 
-##### Are ip ports accessible through the firewall?
+#### Are ip ports accessible through the firewall?
 
 The most important ports are 22, 8333, 9735 and 1900/udp. Others can be necessary for bonus guides, and there may be additional ports open on your Pi (eg. the `(v6)` variants).
 
@@ -122,7 +122,7 @@ Anywhere                   ALLOW       192.168.0.0/24 1900/udp    # allow local 
 
 ### Users & directories
 
-##### Have all users and home directories been created?
+#### Have all users and home directories been created?
 
 ```
 $ cat /etc/passwd
@@ -132,7 +132,7 @@ admin:x:1001:1001:,,,:/home/admin:/bin/bash
 bitcoin:x:1002:1002:,,,:/home/bitcoin:/bin/bash
 ```
 
-##### Are the application directories created and linked correctly?
+#### Are the application directories created and linked correctly?
 
 It's important that the following symbolic links are in the "bitcoin" users' home directory. The should be shown light & dark blue, and must not be red (symbolizing a broken link).
 
@@ -344,7 +344,7 @@ $ sudo systemctl start lnd
 
 
 
-#### LND
+### LND
 
 Let's check the configuration and operations of LND.
 
