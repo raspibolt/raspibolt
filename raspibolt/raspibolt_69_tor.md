@@ -32,17 +32,21 @@ All the above mentioned arguments are of course relevant to both Bitcoin and Lig
 
 ### Installing Tor
 
-**Only Raspberry Pi 3 or better**
+**Only Raspberry Pi 3 or better**  
 This guide assumes that you're running a Raspberry Pi 3 or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at this](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
 
-For additional reference, the original instructions are available on the Tor project website: [https://www.torproject.org/docs/debian.html.en#ubuntu](https://www.torproject.org/docs/debian.html.en#ubuntu).
+For additional reference, the original instructions are available on the 
+[Tor project website](https://www.torproject.org/docs/debian.html.en#ubuntu).
 
 * Connect to the RaspiBolt as user "admin", as [described in the main guide](raspibolt_20_pi.md#connecting-to-the-pi). 
 
-* Add the torproject repository. 
+* Add the following two lines to `sources.list` to add the torproject repository. 
   ```
-  $ sudo echo 'deb https://deb.torproject.org/torproject.org bionic main' >> /etc/apt/sources.list
-  $ sudo echo 'deb-src https://deb.torproject.org/torproject.org bionic main' >> /etc/apt/sources.list
+  $ sudo nano /etc/apt/sources.list
+  ```
+  ```
+  deb https://deb.torproject.org/torproject.org stretch main
+  deb-src https://deb.torproject.org/torproject.org stretch main
   ```
 * In order to check Tor files integrity, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
   ```
@@ -51,67 +55,82 @@ For additional reference, the original instructions are available on the Tor pro
   $ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
   ```
 
-* Now the latest version of Tor can be installed. While not required, `tor-arm` provides a dashboard that you could find useful.
+* The latest version of Tor can now be installed. While not required, `tor-arm` provides a dashboard that you might find useful.
   ```
   $ sudo apt update
-  $ sudo install tor tor-arm
+  $ sudo apt install tor tor-arm
   ```
 
 * Check that Tor is up and running.
   ```
-  $ systemctl status tor.service
+  $ systemctl status tor
   ```
-* Read the tor-service-defaults-torrc file, check the "user" name (must be "debian-tor")
+* Check that within the "tor-service-defaults-torrc" file the "User" name is "debian-tor".
   ```
   $ cat /usr/share/tor/tor-service-defaults-torrc
+  User debian-tor
   ```
 
 * Check which users belong to the debian-tor group. If "bitcoin" is not there, which is most likely the case, you will need to add it and check again.
   ```
   $ cat /etc/group | grep debian-tor
+  debian-tor:x:113:
   $ sudo usermod -a -G debian-tor bitcoin
   $ cat /etc/group | grep debian-tor
   debian-tor:x:123:bitcoin
   ```
 * Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
   ```
-  $ nano /etc/tor/torrc
+  $ sudo nano /etc/tor/torrc
   ```
   ```
+  # uncomment
   ControlPort 9051
   CookieAuthentication 1
+  
+  # add
   CookieAuthFileGroupReadable 1
   ```
 
 * Restart Tor to activate modifications
   ```
-  $ sudo systemctl restart tor.service
+  $ sudo systemctl restart tor
   ```
 
 ### Configure Bitcoin Core
 
-In the "admin" user session, stop Bitcoin and Lightning.
+* In the "admin" user session, stop Bitcoin and Lightning.
+  ``` 
+  $ sudo systemctl stop bitcoind
+  $ sudo systemctl stop lnd
+  ```
 
-``` 
-$ sudo systemctl stop bitcoind
-$ sudo systemctl stop lnd
-```
+* Open the Bitcoin configuration and add or delete the following lines:
+  ```
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  ```
+  ```
+  #add
+  proxy=127.0.0.1:9050
+  bind=127.0.0.1
+  listenonion=1
+  
+  # delete (if present)
+  onlynet=ipv4
+  ```
 
-Open the Bitcoin configuration and add the following lines:
-```
-$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
-```
-```
-proxy=127.0.0.1:9050
-bind=127.0.0.1
-listenonion=1
-```
+* Restart Bitcoin Core and verify operations. You should see your onion address after about one minute.
+  ```
+  $ sudo systemctl start bitcoind
+  $ sudo tail /home/bitcoin/.bitcoin/debug.log -f
+  tor: Got service ID 7qzi7ekmbkhwz36z, advertising service 7q........z36z.onion:8333
+  AddLocal(7q........z36z.onion:8333,4)
+  ```
 
-Restart services:  
-```
-$ sudo systemctl start bitcoind
-$ sudo systemctl start lnd
-```
+* If you're not going to configure LND at the moment, start the service as well. Otherwise you can proceed directly.
+  ```
+  $ sudo systemctl start lnd
+  ```
 
 :point_right: If you're a bit lost, you can watch [this video](https://youtu.be/57GW5Q2jdvw) that is very clear and shows pretty much the same process (there are also some extra optional steps that I describe below).
 
@@ -125,9 +144,9 @@ $ sudo systemctl start lnd
   $ sudo systemctl stop lnd
   ```
 
-* Open the LND configuration file and add the following lines:  
+* Open the LND configuration file and add the following lines.
   ```
-  $ sudo nano /home/bitcoin/.lnd/lnd.conf`
+  $ sudo nano /home/bitcoin/.lnd/lnd.conf
   ```
   ```
   tor.active=1
