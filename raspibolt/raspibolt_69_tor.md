@@ -11,9 +11,9 @@
 
 ### What is Tor?
 
-Tor is free software that allows you to anonymize internet trafic when used properly. The idea is to route trafic through a network of nodes to hide end points location and usage. 
+Tor is a free software that allows you to anonymize internet trafic when used properly. The idea is to route trafic through a network of nodes to hide end points location and usage. 
 
-It is called "Tor" for "The Onion Router" : information is encrypted multiple time with the public keys of the nodes it passes through. Each node decrypt the layer of information that corresponds to its own private key, pretty much like peeling an onion, until the last that will reveal the clear message.
+It is called "Tor" for "The Onion Router" : information is encrypted multiple times with the public keys of the nodes it passes through. Each node decrypt the layer of information that corresponds to its own private key, pretty much like peeling an onion, until the last that will reveal the clear message.
 
 :point_right: To learn more : [Wikipedia](https://en.wikipedia.org/wiki/Tor_%28anonymity_network%29)
 
@@ -24,9 +24,9 @@ Tor is mainly useful as a way to impede trafic analysis, which means analysing y
 Tor allows you to share data on the internet without revealing your location and/or identity, which can definitely be useful when you want to run a Bitcoin node.
 
 Out of all the reasons why you should run Tor, here are the most relevant to Bitcoin:
-* By exposing your home IP address with your node, you are literally saying the whole planet "in this home we run a node". That's only one short step to "in this home, we do have bitcoins", which could potentially turn you and your loved ones into a target for thieves.
+* By exposing your home IP address with your node, you are literally saying the whole planet "in this home we run a node". That's only one short step from "in this home, we do have bitcoins", which could potentially turn you and your loved ones into a target for thieves.
 * In the eventuality of a full fledge ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement.
-* Coupled with other privacy method like Coinjoin, I think you could definitely gain some more privacy for your transactions as it eliminates the risk of someone being able to snoop on your node trafic, analyses which transactions you relay and correlates it with a set of UTXOs that he knows being yours, for example.
+* Coupled with other privacy method like Coinjoin, I think you could definitely gain some more privacy for your transactions as it eliminates the risk of someone being able to snoop on your node trafic, analyse which transactions you relay and try to figure out which UTXOs are yours, for example.
 
 All the above mentioned arguments are of course relevant to both Bitcoin and Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there's a Bitcoin node on the same location. 
 
@@ -37,7 +37,7 @@ Connect to the raspibolt's admin account through SSH:
 
 Instructions are available on the tor project homepage: [https://www.torproject.org/docs/debian.html.en#ubuntu](https://www.torproject.org/docs/debian.html.en#ubuntu)
 
-:warning: I assume that you run a Pi 3 or better. If your Raspibolt is built on an earlier version it won't work as described below.
+:warning: I assume that you're running a Pi 3 or better. If your Raspibolt is built on an earlier version it won't work as described below, and you might want to look at [this](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
 
 ```
 # Add the torproject repo in /etc/apt/sources.list
@@ -60,24 +60,27 @@ $ sudo install tor tor-arm
 
 We should now check that Tor is up and running:
 ```
-# Check there is a tor.service running
+# Check tor.service exists and is active
 $ systemctl status tor.service
 
-# Read the tor-service-defaults-torrc file, chack the "user" name ("debian-tor" in most cases)
+# Read the tor-service-defaults-torrc file, check the "user" name (must be "debian-tor")
 $ cat /usr/share/tor/tor-service-defaults-torrc
 
 # Check which users belong to the debian-tor group
 $ cat /etc/group | grep debian-tor
 
-# If "bitcoin" is not there, you will need to add it
+# If "bitcoin" is not there, which is most likely the case, you will need to add it
 $ sudo usermod -a -G debian-tor bitcoin
+
+# Check again
 $ cat /etc/group | grep debian-tor
 > debian-tor:x:123:bitcoin
 
-# Modify some lines in /etc/tor/torrc
+# Modify those lines in /etc/tor/torrc
 $ nano /etc/tor/torrc
 > #ControlPort 9051 (delete "#")
 > #CookieAuthentication 1 (same)
+
 # Add this line if it is not already there
 > CookieAuthFileGroupReadable 1
 
@@ -99,15 +102,15 @@ bind=127.0.0.1
 listenonion=1
 ```
 
-Restart Bitcoin Core:
+Restart Bitcoin Core:  
 `$ nohup bitcoind`
 
-:point_right: If you're a bit lost, you can watch [this video](https://youtu.be/57GW5Q2jdvw) that shows pretty much the same process (except for some extra configuration that you can ignore), except it's not on a Pi.
+:point_right: If you're a bit lost, you can watch [this video](https://youtu.be/57GW5Q2jdvw) that is very clear and shows pretty much the same process (there is also some extra optional steps that I describe below.
 
 ### Configure LND
 
 :warning: LND needs **Tor3.6.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue.  
-:warning: In case you have been running a node on clearnet before, I recommend you to close all your channels and start a brand new node on Tor, as I suspect that if your public key is known to your peers with your IP address, you would still be pretty easy to deanonymize. I never read anything about that though, if someone knows better I would be very happy to hear from him.. 
+:warning: In case you have been running a node on clearnet before, I recommend you to close all your channels and start a brand new node on Tor, as I suspect that if your public key is known to your peers with your IP address, you would still be pretty easy to deanonymize. I never read anything about that though, if someone knows better I would be very happy to hear from him.
 
 With "bitcoin" user, stop LND:  
 `$ lncli stop`
@@ -166,10 +169,10 @@ Don't freak out if the result is negative, sometimes bitnodes will fail to conta
 * Last but not least, you can check the address that other peers see you with by running this command (if you don't know, the `|` is Alt Gr + 6):  
 `$ bitcoin-cli getpeerinfo | grep  local`
 
-You should know see a list of unknown IP addresses. If you still see your true public IP somewhere, somethings wrong, as **one of your peers is currently connected with you outside of the Tor network, meaning that you're effectively deanonymized**.
+You should know see a list of unknown IP addresses. If you still see your true public IP somewhere, something is wrong, as **one of your peers is currently connected with you on clearnet, meaning that you're effectively deanonymized**.
 
 2. LND
-* The output of `lncli getinfo` ou `lncli getnodeinfo [YOUR_PUBKEY]` commands should not display your IP address anymore. 
+* The output of `lncli getinfo` or `lncli getnodeinfo [YOUR_PUBKEY]` commands should not display your IP address anymore. 
 
 ### Go a little further
 
@@ -183,7 +186,7 @@ Meanwhile, you can still choose to reduce even further your attack surface, the 
 
 For example, you can:
 
-* Accept to connect only with peers with a `.onion` address:
+* Accept to connect only with peers that have a `.onion` address:
 
 In `bitcoin.conf` file, add the following line:
 `onlynet=onion`
@@ -202,7 +205,7 @@ dns=0
 
 If you want to know more about DNS, you can have a look at [Wikipedia](https://fr.wikipedia.org/wiki/Domain_Name_System) or this [very well-done comic](https://wizardzines.com/zines/networking/).
 
-With this configuration, your node is not capable to find peers on its own. That's why it is necessary to give him a hardcoded list of a few nodes he can contact with on startup in the `bitcoin.conf` file:
+With this configuration, your node is not capable to find peers on its own. That's why it is necessary to bootstrap him with a hardcoded list of a few nodes he can contact with on startup in the `bitcoin.conf` file:
 
 `addnode=[ADDRESS].onion(:port)`
 
