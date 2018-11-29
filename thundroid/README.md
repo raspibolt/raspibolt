@@ -854,7 +854,7 @@ In part 2 of this guide, we will transition to the Bitcoin mainnet. This will be
 
 Once you switch to mainnet and send real bitcoin to your Thundroid, you have "skin in the game".
 
-* Make sure your RaspiBolt is working as expected.
+* Make sure your Thundroid is working as expected.
 * Get a some practice with `bitcoin-cli` and its options (see [Bitcoin Core RPC documentation](https://bitcoin-rpc.github.io/))
 * Do a dry run with `lncli` and its many options (see [Lightning API reference](http://api.lightning.community/))
 * Try a few restarts (`sudo shutdown -r now`), is everything starting fine?
