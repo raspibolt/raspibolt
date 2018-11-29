@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [**Bonus**](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [**Bonus**](raspibolt_60_bonus.md) ] -- [ [Troubleshooting](raspibolt_70_troubleshooting.md) ]
 
 ------
 
@@ -15,6 +15,10 @@ It takes a litte getting used to the fact that the LND wallet needs  to be manua
 
 This is why a script that automatically unlocks the wallet is  helpful. The password is stored in a root-only directory as plaintext,  so clearly not so secure, but for reasonable amounts this is a good  middle-ground in my opinion. You can always decide to stick to manual  unlocking, or implement a solution that unlocks the wallet from a remote  machine.
 
+:warning: Important: this works only for "systemd" version 230+. You can check this as follows:  
+`$ systemd --version` 
+
+
 * As user "admin", create a new directory and save your LND wallet password [C] into a text file  
   `$ sudo mkdir /etc/lnd`   
   `$ sudo nano /etc/lnd/pwd` 
@@ -24,14 +28,15 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
 
   ```bash
   #!/bin/sh
-  # LND wallet auto-unlock script
-  # 2018 by meeDamian, robclark56
+  # LND wallet auto-unlock script (Updated for LND 0.5 and above)
+  # 2018 by meeDamian, robclark56 (Updated by zwarbo, martinatime, CodingMuziekwijk)
   
-  LN_ROOT=/home/bitcoin/.lnd
+  LN_ROOT="/home/bitcoin/.lnd"
+  BITCOIN_DIR="/home/bitcoin/.bitcoin"
   
   upSeconds="$(cat /proc/uptime | grep -o '^[0-9]\+')"
   upMins=$((${upSeconds} / 60))
-
+  
   if [ "${upMins}" -lt "5" ]
   then
     /bin/sleep 180s
@@ -39,8 +44,10 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
     /bin/sleep 10s
   fi
   
+  chain="$(bitcoin-cli -datadir=${BITCOIN_DIR} getblockchaininfo | jq -r '.chain')"
+  
   curl -s \
-          -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/data/chain/bitcoin/mainnet/admin.macaroon)" \
+          -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/data/chain/bitcoin/${chain}net/admin.macaroon))" \
           --cacert ${LN_ROOT}/tls.cert \
           -X POST -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
           https://localhost:8080/v1/unlockwallet > /dev/null 2>&1
@@ -61,7 +68,7 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   `$ sudo nano /etc/systemd/system/lnd.service `
 
   ```bash
-  # remove this line:
+  # remove this line (if present):
   # PIDFile=/home/bitcoin/.lnd/lnd.pid
   
   # add this line directly below ExecStart:

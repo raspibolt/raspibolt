@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ **Bonus** ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ **Bonus** ] -- [ [Troubleshooting](raspibolt_70_troubleshooting.md) ]
 
 ------
 
@@ -20,7 +20,7 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 ## [Auto unlock LND on startup](raspibolt_6A_auto-unlock.md)
 
-*Difficulty: easy*
+*Difficulty: medium*
 
 Manually unlocking the LND wallet every time the system starts is not really feasible if your RaspiBolt is meant to run reliably somewhere in a closet. This script automatically unlocks the wallet on startup or service-restart. This comes at a minimal security cost, however, as the password needs to be stored on the device.
 
@@ -41,14 +41,6 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 The iOS & Android app Shango provides a neat interface for the RaspiBolt, to manage peers & channels, make payments and create invoices.
 
 [![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
-
-## [**Lightning web interface**](raspibolt_69_lncli-web.md)
-
-*Difficulty: intermediate*
-
-This web client lets you manage your Lightning node from your browser. Administer channels, send and receive payments. It's configured to be accessible only from inside your home network.
-
-[![Electrum](images/60_lncliweb_gui_small.png)](raspibolt_69_lncli-web.md)
 
 ## [**Pimp the command line**](raspibolt_62_commandline.md)
 
@@ -86,4 +78,4 @@ These additional bash scripts display a balance overview (on-chain & in channels
 
 ------
 
-Next: [FAQ >>](raspibolt_faq.md)
+Next: [Troubleshooting](raspibolt_70_troubleshooting.md) >>

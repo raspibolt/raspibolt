@@ -1,10 +1,10 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ **FAQ** ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [Bonus](raspibolt_60_bonus.md) ] -- [ **[Troubleshooting](raspibolt_70_troubleshooting.md)** ]
 
 -------
 ### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
 --------
 
-# FAQ
+# General FAQ
 
 ### Can I get rich by routing Lightning payments?
 Nobody knows. Probably not. You will get minimal fees. I don't care. Enjoy the ride! 
@@ -50,6 +50,8 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 The latest release can be found on the Github page of the Bitcoin Core project. Make sure to read the Release Notes, as these can include importantupgrade information.  
 https://github.com/bitcoin/bitcoin/releases
 
+* You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first.  
+
 * As "admin" user, stop the lnd and bitcoind system units  
   `$ sudo systemctl stop lnd`  
   `$ sudo systemctl stop bitcoind`  
@@ -59,9 +61,15 @@ https://github.com/bitcoin/bitcoin/releases
 * Start the bitcoind and lnd system units  
   `$ sudo systemctl start bitcoind`  
   `$ sudo systemctl start lnd`
+  
+:information_source: Please be aware that the internal data structure of Bitcoin Core changed from 0.16 to 0.17. If you download the blockchain using a different computer, make sure to use the same version. If you upgrade to 0.17, the data structure is converted automatically (can take a few hours) and it's not possible to use that data with older versions anymore.
 
 ### How to upgrade LND? 
 Upgrading can lead to a number of issues. Please **always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) completely to understand the changes. They also cover a lot of additional topics and many new features not mentioned here. 
+
+* You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first.  
+
+* When **upgrading to LND 0.5**, I would also recommend to close your channels first, as there have been a number of issues with stuck funds that require very technical work to resolve them.
 
 * As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
@@ -138,3 +146,9 @@ The macaroons are now located under the chain data directory for each supported 
 
 ### Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 3 with a 64 bit processor?
 At the time of this writing (July 2018) there is no 64 bit operating system for the Raspberry Pi developed yet. The 64 bit processors of the Raspberry 3 versions are running in 32 bit compatibility mode with a 32 bit operating system.
+
+
+
+------
+
+<< Back: [Troubleshooting](raspibolt_70_troubleshooting.md) 

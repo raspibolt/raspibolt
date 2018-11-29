@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [**Bonus**](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [**Bonus**](raspibolt_60_bonus.md) ] -- [ [Troubleshooting](raspibolt_70_troubleshooting.md) ]
 
 ------
 
@@ -29,7 +29,7 @@ rpclisten=0.0.0.0:10009
 ### Uncomment and ajust these lines for access from public internet
 #tlsextraip=111.222.333.444               # fixed ip is needed
 #tlsextradomain=lightning.yourhost.com    # domain name, works with FreeDNS (https://freedns.afraid.org)
-``` 
+```
 
 Open port 10009 so that Shango wallet can talk to your Lightning node. To be **safe**, open it only from within your own network. If you feel **reckless**, you can open it for access from everywhere to use Shango on the go. I think the connection itself is safe, but this exposes your node to DDoS and other attacks. So make sure you know what you do!  
 
@@ -54,7 +54,7 @@ Open port 10009 so that Shango wallet can talk to your Lightning node. To be **s
   `$ sudo ufw status`
 
 * Restart LND and unlock wallet  
-  `$ sudo systemctl status lnd`  
+  `$ sudo systemctl restart lnd`  
   `$ lncli unlock` 
 
 * Install QR encoder to pass our super-secret admin information to the app  
@@ -62,7 +62,7 @@ Open port 10009 so that Shango wallet can talk to your Lightning node. To be **s
   `$ cd /home/admin/.lnd`  
 
 ### Configure Shango app
-  
+
 * Start app & go to "Settings" / "Connect to other LND Servers"  
 * On your RaspiBolt, enter the following command and "Scan QR" with the app
 ```
