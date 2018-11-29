@@ -168,7 +168,7 @@ The 24 seed words that are displayed, combined with your optional passphrase, is
    ```
    $ exit
    $ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
-   $ sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd
+   $ sudo cp /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/.lnd/data/chain/bitcoin/mainnet
    ```
 
 * Check if it works by getting some node infos  

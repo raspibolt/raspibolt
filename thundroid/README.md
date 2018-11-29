@@ -699,7 +699,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)   is all
 ### Assign LND permissions to "admin"
 
 * Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue [#890](https://github.com/lightningnetwork/lnd/issues/890)).  
-   `$ ls -la /home/bitcoin/.lnd/`
+   `$ ls -la /home/bitcoin/.lnd/data/chain/bitcoin/testnet/`
 
 ![Check macaroon](images/40_ls_macaroon.png)
 
