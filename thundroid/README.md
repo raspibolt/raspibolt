@@ -88,7 +88,7 @@ Assembly is easy, just enter the hard disk and fix it with the the screws includ
 
 We use Ubuntu 16.04.03 LTE (Minimal, Bare OS) that is provided by Hardkernel. Download the image from the Odroid-XU4 section on [wiki.odroid.com](https://wiki.odroid.com/).
 
-Exact file used: [ubuntu-16.04.3-4.14-minimal-odroid-xu4-20171213.img.xz](https://odroid.in/ubuntu_16.04lts/ubuntu-16.04.3-4.14-minimal-odroid-xu4-20171213.img.xz)
+Exact file used: [ubuntu-18.04-4.14-minimal-odroid-xu4-20180531.img.xz](https://de.eu.odroid.in/ubuntu_18.04lts/ubuntu-18.04-4.14-minimal-odroid-xu4-20180531.img.xz)
 
 Download the image, flash it on your MicroSD card, put it into your Thundroid, connect it to your network via cable and connect the power adapter. The initial boot can take several minutes. 
 
@@ -556,9 +556,9 @@ Now to the good stuff: download, verify and install the LND binaries.
 
 ```
 $ cd /home/admin/download
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/lnd-linux-armv7-v0.5.1-beta-rc1.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/manifest-v0.5.1-beta-rc1.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/manifest-v0.5.1-beta-rc1.txt.sig
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta/lnd-linux-armv7-v0.5.1-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta/manifest-v0.5.1-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.1-beta-rc1/manifest-v0.5.1-beta.txt.sig
 ```
 Get key of roasbeef as well as halseth
 ```
