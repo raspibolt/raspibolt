@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ [**Bonus**](raspibolt_60_bonus.md) ] -- [ [FAQ](raspibolt_faq.md) ] -- [ [Updates](raspibolt_updates.md) ]
+[ [Intro](README.md) ] -- [ [Preparations](raspibolt_10_preparations.md) ] -- [ [Raspberry Pi](raspibolt_20_pi.md) ] -- [ [Bitcoin](raspibolt_30_bitcoin.md) ] -- [ [Lightning](raspibolt_40_lnd.md) ] -- [ [Mainnet](raspibolt_50_mainnet.md) ] -- [ **Bonus** ] -- [ [Troubleshooting](raspibolt_70_troubleshooting.md) ]
 
 ------
 
@@ -6,136 +6,146 @@
 
 ------
 
-## Bonus guide: Tor
+## Bonus guide: Anonymous node with Tor
 *Difficulty: medium*
 
 ### What is Tor?
 
-Tor is a free software that allows you to anonymize internet trafic when used properly. The idea is to route trafic through a network of nodes to hide end points location and usage. 
+Tor is a free software that allows you to anonymize internet traffic by routing traffic through a network of nodes to hide the location and usage profile of end points. 
 
-It is called "Tor" for "The Onion Router" : information is encrypted multiple times with the public keys of the nodes it passes through. Each node decrypt the layer of information that corresponds to its own private key, pretty much like peeling an onion, until the last that will reveal the clear message.
+It is called "Tor" for "The Onion Router": information is encrypted multiple times with the public keys of the nodes it passes through. Each node decrypts the layer of information that corresponds to its own private key, pretty much like peeling an onion, until the last that will reveal the clear message.
 
 :point_right: To learn more : [Wikipedia](https://en.wikipedia.org/wiki/Tor_%28anonymity_network%29)
 
 ### Why do you want to run Tor?
 
-Tor is mainly useful as a way to impede trafic analysis, which means analysing your internet activity (websites you're browsing, services you're using, from which IP etc) to learn about you and your interests. Trafic analysis is obviously useful for advertisement, and you might want to hide this kind of information merely out of privacy concerns. But it is also being used by outright malvolent actors, criminals or governments, to harm you in a lot of possible ways.
+Tor is mainly useful as a way to impede traffic analysis, which means analyzing your internet activity (websites you're browsing, services you're using, from which IP address) to learn about you and your interests. Traffic analysis is useful for advertisement and you might want to hide this kind of information merely out of privacy concerns. But it is also being used by outright malvolent actors, criminals or governments, to harm you in a lot of possible ways.
 
-Tor allows you to share data on the internet without revealing your location and/or identity, which can definitely be useful when you want to run a Bitcoin node.
+Tor allows you to share data on the internet without revealing your location or identity, which can definitely be useful when running a Bitcoin node.
 
 Out of all the reasons why you should run Tor, here are the most relevant to Bitcoin:
 * By exposing your home IP address with your node, you are literally saying the whole planet "in this home we run a node". That's only one short step from "in this home, we do have bitcoins", which could potentially turn you and your loved ones into a target for thieves.
-* In the eventuality of a full fledge ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement.
-* Coupled with other privacy method like Coinjoin, I think you could definitely gain some more privacy for your transactions as it eliminates the risk of someone being able to snoop on your node trafic, analyse which transactions you relay and try to figure out which UTXOs are yours, for example.
+* In the eventuality of a full fledged ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement.
+* Coupled with other privacy method like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
 
-All the above mentioned arguments are of course relevant to both Bitcoin and Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there's a Bitcoin node on the same location. 
+All the above mentioned arguments are of course relevant to both Bitcoin and Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there's a Bitcoin node at the same location. 
 
-### Install Tor
+### Installing Tor
 
-Connect to the raspibolt's admin account through SSH:
-`$ ssh admin@[YOUR_IP]`
+**Only Raspberry Pi 3 or better**
+This guide assumes that you're running a Raspberry Pi 3 or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at this](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
 
-Instructions are available on the tor project homepage: [https://www.torproject.org/docs/debian.html.en#ubuntu](https://www.torproject.org/docs/debian.html.en#ubuntu)
+For additional reference, the original instructions are available on the Tor project website: [https://www.torproject.org/docs/debian.html.en#ubuntu](https://www.torproject.org/docs/debian.html.en#ubuntu).
 
-:warning: I assume that you're running a Pi 3 or better. If your Raspibolt is built on an earlier version it won't work as described below, and you might want to look at [this](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
+* Connect to the RaspiBolt as user "admin", as [described in the main guide](raspibolt_20_pi.md#connecting-to-the-pi). 
 
-```
-# Add the torproject repo in /etc/apt/sources.list
-$ sudo echo 'deb https://deb.torproject.org/torproject.org bionic main' >> /etc/apt/sources.list
-$ sudo echo 'deb-src https://deb.torproject.org/torproject.org bionic main' >> /etc/apt/sources.list
+* Add the torproject repository. 
+  ```
+  $ sudo echo 'deb https://deb.torproject.org/torproject.org bionic main' >> /etc/apt/sources.list
+  $ sudo echo 'deb-src https://deb.torproject.org/torproject.org bionic main' >> /etc/apt/sources.list
+  ```
+* In order to check Tor files integrity, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
+  ```
+  $ sudo apt install dirmngr
+  $ gpg --keyserver keys.gnupg.net --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
+  $ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
+  ```
 
-# Install dirmngr
-$ sudo apt install dirmngr
+* Now the latest version of Tor can be installed. While not required, `tor-arm` provides a dashboard that you could find useful.
+  ```
+  $ sudo apt update
+  $ sudo install tor tor-arm
+  ```
 
-# In order to check Tor files integrity, we need to download and add the signing keys of the torproject
-$ gpg --keyserver keys.gnupg.net --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
-$ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
+* Check that Tor is up and running.
+  ```
+  $ systemctl status tor.service
+  ```
+* Read the tor-service-defaults-torrc file, check the "user" name (must be "debian-tor")
+  ```
+  $ cat /usr/share/tor/tor-service-defaults-torrc
+  ```
 
-# We can now install Tor latest version
-$ sudo apt update
-$ sudo install tor tor-arm
-```
+* Check which users belong to the debian-tor group. If "bitcoin" is not there, which is most likely the case, you will need to add it and check again.
+  ```
+  $ cat /etc/group | grep debian-tor
+  $ sudo usermod -a -G debian-tor bitcoin
+  $ cat /etc/group | grep debian-tor
+  debian-tor:x:123:bitcoin
+  ```
+* Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
+  ```
+  $ nano /etc/tor/torrc
+  ```
+  ```
+  ControlPort 9051
+  CookieAuthentication 1
+  CookieAuthFileGroupReadable 1
+  ```
 
-:point_right: while not required, `tor-arm` provides a dashboard that you could find useful.
-
-We should now check that Tor is up and running:
-```
-# Check tor.service exists and is active
-$ systemctl status tor.service
-
-# Read the tor-service-defaults-torrc file, check the "user" name (must be "debian-tor")
-$ cat /usr/share/tor/tor-service-defaults-torrc
-
-# Check which users belong to the debian-tor group
-$ cat /etc/group | grep debian-tor
-
-# If "bitcoin" is not there, which is most likely the case, you will need to add it
-$ sudo usermod -a -G debian-tor bitcoin
-
-# Check again
-$ cat /etc/group | grep debian-tor
-> debian-tor:x:123:bitcoin
-
-# Modify those lines in /etc/tor/torrc
-$ nano /etc/tor/torrc
-> #ControlPort 9051 (delete "#")
-> #CookieAuthentication 1 (same)
-
-# Add this line if it is not already there
-> CookieAuthFileGroupReadable 1
-
-# Save and exit with ^X
-
-# Restart tor.service to activate modifications
-$ sudo systemctl restart tor.service
-```
+* Restart Tor to activate modifications
+  ```
+  $ sudo systemctl restart tor.service
+  ```
 
 ### Configure Bitcoin Core
 
-Open a new session with "bitcoin" user. First, stop bitcoind:  
-`$ bitcoin-cli stop`
+In the "admin" user session, stop Bitcoin and Lightning.
 
-We will now add the following lines in `bitcoin.conf`:
+``` 
+$ sudo systemctl stop bitcoind
+$ sudo systemctl stop lnd
+```
+
+Open the Bitcoin configuration and add the following lines:
+```
+$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+```
 ```
 proxy=127.0.0.1:9050
 bind=127.0.0.1
 listenonion=1
 ```
 
-Restart Bitcoin Core:  
-`$ nohup bitcoind`
+Restart services:  
+```
+$ sudo systemctl start bitcoind
+$ sudo systemctl start lnd
+```
 
-:point_right: If you're a bit lost, you can watch [this video](https://youtu.be/57GW5Q2jdvw) that is very clear and shows pretty much the same process (there is also some extra optional steps that I describe below.
+:point_right: If you're a bit lost, you can watch [this video](https://youtu.be/57GW5Q2jdvw) that is very clear and shows pretty much the same process (there are also some extra optional steps that I describe below).
 
 ### Configure LND
 
 :warning: LND needs **Tor3.6.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue.  
 :warning: In case you have been running a node on clearnet before, I recommend you to close all your channels and start a brand new node on Tor, as I suspect that if your public key is known to your peers with your IP address, you would still be pretty easy to deanonymize. I never read anything about that though, if someone knows better I would be very happy to hear from him.
 
-With "bitcoin" user, stop LND:  
-`$ lncli stop`
+* With the "admin" user, stop LND:
+  ```
+  $ sudo systemctl stop lnd
+  ```
 
-Open conf file:  
-`$ nano .lnd/lnd.conf`
+* Open the LND configuration file and add the following lines:  
+  ```
+  $ sudo nano /home/bitcoin/.lnd/lnd.conf`
+  ```
+  ```
+  tor.active=1
+  tor.v3=1
+  listen=localhost
+  ```
 
-Add the following lines:
-```
-tor.active=1
-tor.v3=1
-listen=localhost
-```
+* Restart LND as usual, give it some time and unlock the wallet:
+  ```
+  $ sudo systemctl start lnd
+  $ lncli unlock
+  ```
 
-Restart LND as usual:
-```
-$ nohup lnd
-$ lncli unlock
-```
+:point_right: More information is available [on the LND project Github repository](https://github.com/lightningnetwork/lnd/blob/master/docs/configuring_tor.md).
 
-:point_right: More information [here](https://github.com/lightningnetwork/lnd/blob/master/docs/configuring_tor.md).
+### How do I check my Bitcoin traffic is correctly routed through Tor?
 
-### How do I check my Bitcoin trafic is correctly routed through Tor?
-
-1. Bitcoin :
+####1. Bitcoin
 * You can check some lines are printed in the `debug.log` file on startup:
 ```
 InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
@@ -150,7 +160,7 @@ addlocal([YOUR_ID].onion:8333,4)
 ![startup](./images/69_startup.png)
 
 ![startup2](./images/69_startup2.png)
-	
+​	
 * You can also check the output of `getnetworkinfo`:
 
 ![networkinfo](./images/69_networkinfo.png)
