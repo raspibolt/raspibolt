@@ -24,8 +24,6 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 Manually unlocking the LND wallet every time the system starts is not really feasible if your RaspiBolt is meant to run reliably somewhere in a closet. This script automatically unlocks the wallet on startup or service-restart. This comes at a minimal security cost, however, as the password needs to be stored on the device.
 
-
-
 ## [**Electrum Personal Server**](raspibolt_64_electrum.md)
 
 *Difficulty: intermediate*
@@ -41,6 +39,14 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 The iOS & Android app Shango provides a neat interface for the RaspiBolt, to manage peers & channels, make payments and create invoices.
 
 [![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
+
+## [**Anonymous RaspiBolt using Tor**](raspibolt_69_tor.md)
+
+*Difficulty: medium*
+
+Route all your Bitcoin traffic over the Tor network to stay anonymous and avoid leaking private information like your public IP address.
+
+[![Tor](images/69_tor.png)](raspibolt_69_tor.md)
 
 ## [**Pimp the command line**](raspibolt_62_commandline.md)
 
@@ -67,12 +73,6 @@ In case your SD card gets corrupted or you brick your node, it's handy to have a
 Difficulty: easy
 
 These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
-
-## [**Running bitcoind and lnd behind Tor**](raspibolt_69_tor.md)
-
-*Difficulty: medium*
-
-Use Tor network to anonymize your bitcoin trafic.
 
 ## Even more Extras 
 
