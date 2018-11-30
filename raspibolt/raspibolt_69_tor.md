@@ -15,7 +15,7 @@ Tor is a free software that allows you to anonymize internet traffic by routing 
 
 It is called "Tor" for "The Onion Router": information is encrypted multiple times with the public keys of the nodes it passes through. Each node decrypts the layer of information that corresponds to its own private key, pretty much like peeling an onion, until the last that will reveal the clear message.
 
-:point_right: To learn more : [Wikipedia](https://en.wikipedia.org/wiki/Tor_%28anonymity_network%29)
+:point_right: Learn more on [Wikipedia](https://en.wikipedia.org/wiki/Tor_%28anonymity_network%29).
 
 ### Why do you want to run Tor?
 
@@ -97,7 +97,9 @@ For additional reference, the original instructions are available on the
   $ sudo systemctl restart tor
   ```
 
-### Configure Bitcoin Core
+### Setup Tor for Bitcoin Core
+
+#### Configuration
 
 * In the "admin" user session, stop Bitcoin and Lightning.
   ``` 
@@ -119,22 +121,59 @@ For additional reference, the original instructions are available on the
   onlynet=ipv4
   ```
 
-* Restart Bitcoin Core and verify operations. You should see your onion address after about one minute.
+* Archive the current logfile and restart Bitcoin Core to use the adjusted configuration.
   ```
+  $ sudo mv /home/bitcoin/.bitcoin/debug.log /home/bitcoin/.bitcoin/debug.log.old
   $ sudo systemctl start bitcoind
-  $ sudo tail /home/bitcoin/.bitcoin/debug.log -f
-  tor: Got service ID 7qzi7ekmbkhwz36z, advertising service 7q........z36z.onion:8333
-  AddLocal(7q........z36z.onion:8333,4)
   ```
 
+#### Validation  
+Bitcoin Core is starting and we now need to if all connections are truly routet over Tor. 
+
+* Verify operations in the `debug.log` file. You should see your onion address after about one minute.
+
+  ```
+  $ sudo tail /home/bitcoin/.bitcoin/debug.log -f
+  InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
+  InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
+  [...]
+  torcontrol thread start
+  [...]
+  tor: Got service ID [YOUR_ID] advertising service [YOUR_ID].onion:8333
+  addlocal([YOUR_ID].onion:8333,4)
+  ```
+  ![debug.log output for Tor setup](./images/69_startup.png)  
+  ![debug.log output for Tor setup 2](./images/69_startup2.png)  
+  
+* List the Bitcoin network info to verify that the different network protocols are bound to proxy `127.0.0.1:9050`, which is Tor on your localhost. Note the `onion` network is now `reachable: true`.
+  ```
+  $ bitcoin-cli getnetworkinfo
+  ```
+  ![bitcoin-cli getnetworkinfo listing network protocol bindings](./images/69_networkinfo.png)
+
+* Verify that your node is reachable within the Bitcoin network.  
+  * Go to [bitnodes.earn.com](https://bitnodes.earn.com/) and copy/paste your `.onion` address here:  
+    ![bitnodes](./images/69_bitnodes.png)
+	
+  * If the result is negative, just try again a minute later as sometimes the lookup will fail to contact your node for some reasons. If your node is persistently not reachable, verify your [port forwarding](raspibolt_20_pi.md#port-forwarding--upnp) and [firewall](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall) settings.
+  
+* Check the ip address that other peers use to connect to your node. First, get your public ip address and then verify that it is not used as `localaddr` by Bitcoin.
+  ```
+  $ curl icanhazip.com
+  $ bitcoin-cli getpeerinfo | grep  local
+  ```
+  
+  :warning: If you still see your true public ip address listed, something is wrong as one of your peers are currently connected with you on clearnet. This means that you're effectively deanonymized.
+  
 * If you're not going to configure LND at the moment, start the service as well. Otherwise you can proceed directly.
   ```
   $ sudo systemctl start lnd
   ```
 
+**Additional video guide**
 :point_right: If you're a bit lost, you can watch [this video](https://youtu.be/57GW5Q2jdvw) that is very clear and shows pretty much the same process (there are also some extra optional steps that I describe below).
 
-### Configure LND
+### Setup Tor for LND
 
 :warning: LND needs **Tor3.6.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue.  
 :warning: In case you have been running a node on clearnet before, I recommend you to close all your channels and start a brand new node on Tor, as I suspect that if your public key is known to your peers with your IP address, you would still be pretty easy to deanonymize. I never read anything about that though, if someone knows better I would be very happy to hear from him.
@@ -160,87 +199,51 @@ For additional reference, the original instructions are available on the
   $ lncli unlock
   ```
 
+* The output of `lncli getinfo` or `lncli getnodeinfo [YOUR_PUBKEY]` commands should not display your IP address anymore.
+
 :point_right: More information is available [on the LND project Github repository](https://github.com/lightningnetwork/lnd/blob/master/docs/configuring_tor.md).
-
-### How do I check my Bitcoin traffic is correctly routed through Tor?
-
-####1. Bitcoin
-* You can check some lines are printed in the `debug.log` file on startup:
-```
-InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
-InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
-[...]
-torcontrol thread start
-[...]
-tor: Got service ID [YOUR_ID] advertising service [YOUR_ID]:8333
-addlocal([YOUR_ID].onion:8333,4)
-```
-
-![startup](./images/69_startup.png)
-
-![startup2](./images/69_startup2.png)
-​	
-* You can also check the output of `getnetworkinfo`:
-
-![networkinfo](./images/69_networkinfo.png)
-
-If you see the 3 different networks are all binded to proxy `127.0.0.1:9050`, which is Tor on your localhost, then it should be fine. Note the `onion` network is now `reachable: true`.
-
-* Are you reachable by other nodes in the network?
-
-To find out, go to [this site](https://bitnodes.earn.com/) and copy/paste your `.onion` address here:
-
-![bitnodes](./images/69_bitnodes.png)
-
-Don't freak out if the result is negative, sometimes bitnodes will fail to contact your node for some reasons, just try again a minute later and most of the time it will come up green. 
-
-
-* Last but not least, you can check the address that other peers see you with by running this command (if you don't know, the `|` is Alt Gr + 6):  
-`$ bitcoin-cli getpeerinfo | grep  local`
-
-You should know see a list of unknown IP addresses. If you still see your true public IP somewhere, something is wrong, as **one of your peers is currently connected with you on clearnet, meaning that you're effectively deanonymized**.
-
-2. LND
-* The output of `lncli getinfo` or `lncli getnodeinfo [YOUR_PUBKEY]` commands should not display your IP address anymore. 
 
 ### Go a little further
 
-Your Bitcoin and Lightning nodes are now connected to the world through Tor network, and are much harder to isolate and identify with a geographical location. 
+Your Bitcoin and Lightning nodes are now connected to the world through Tor network, and are much harder to isolate and identify with a geographical location. But you should be aware that Tor is no [silver bullet](https://security.stackexchange.com/questions/147402/how-do-traffic-correlation-attacks-against-tor-users-work), and that you are still vulnerable to a range of attacks that go from "simple" DoS to total deanonymization of users. This configuration aims to be a good compromise between performance and security for an average user that is exposed to average risks.
 
-But you should be aware that Tor is no [silver bullet](https://security.stackexchange.com/questions/147402/how-do-traffic-correlation-attacks-against-tor-users-work), and that you are still vulnerable to a range of attacks that go from "simple" DoS to total deanonymization of users.
-
-I hope that the configuration proposed here would be a good compromise between performance and security for an average user that is exposed to average risks.
-
-Meanwhile, you can still choose to reduce even further your attack surface, the price to pay being your ability to connect with other peers, which can be a very serious risk as it could potentially makes you fall out-of-sync with the rest of the network.
+The attack surface can be reduced even further, but that can impede your ability to connect with other peers. However, this could make you fall out-of-sync with the rest of the network.
 
 For example, you can:
 
-* Accept to connect only with peers that have a `.onion` address:
+* **Connect only to Tor nodes**
+  Accept to connect only with peers that have a `.onion` address. In the Bitcoin configuration file, add the following line:
+  ```
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  ```
+  ```
+  onlynet=onion
+  ```
 
-In `bitcoin.conf` file, add the following line:
-`onlynet=onion`
+  If you check `bitcoin-cli getnetworkinfo` you will notice that `ipv4` and `ipv6` networks are no longer reachable. You can connect now only to peers on the Tor network.
 
-You will notice that `ipv4` and `ipv6` networks are now unreachable, meaning that you can connect only to peers on the Tor network.
+* **Deactivate DNS lookup**
+  DNS lookups for other peers could potentially be used to deanonymize you, at least it happened in the past. Some people might want to deactivate DNS request that are usually used to find other nodes on the network. 
 
-* Deactivate DNS for look-up for other peers:
+  With this configuration, your node is not capable to find peers on its own. That's why it is necessary to bootstrap it with a hardcoded list of a few nodes to contact on startup by specifying `addnode`. You need to add one line for each address. You can find address lists online, for example [here](https://bitcoin.stackexchange.com/questions/70069/how-can-i-setup-bitcoin-to-be-anonymous-with-tor), but it raises other risks so be careful...
 
-DNS could potentially be used to deanonymize you, or at least it happened in the past, and some people might want to deactivate DNS request usually used to find other nodes on the network.
 
-In `bitcoin.conf`, add the following lines:
-```
-dnsseed=0
-dns=0
-```
+  In the Bitcoin configuration file, add the following lines:
+  ```
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  ```
+  ```
+  dnsseed=0
+  dns=0
+  addnode=[ADDRESS].onion(:port)
+  addnode=[ADDRESS].onion(:port)
+  ...
+  ```
 
-If you want to know more about DNS, you can have a look at [Wikipedia](https://fr.wikipedia.org/wiki/Domain_Name_System) or this [very well-done comic](https://wizardzines.com/zines/networking/).
+  If you want to know more about DNS, you can have a look at [Wikipedia](https://fr.wikipedia.org/wiki/Domain_Name_System) or this [very well-done comic](https://wizardzines.com/zines/networking/).
 
-With this configuration, your node is not capable to find peers on its own. That's why it is necessary to bootstrap him with a hardcoded list of a few nodes he can contact with on startup in the `bitcoin.conf` file:
 
-`addnode=[ADDRESS].onion(:port)`
-
-You need to add one line for each address. You can find address lists online, for example [here](https://bitcoin.stackexchange.com/questions/70069/how-can-i-setup-bitcoin-to-be-anonymous-with-tor), but it raises other risks so be careful...
-
-Don't forget to restart bitcoind each time you change something. 
+Don't forget to restart bitcoind with `sudo systemctl restart bitcoind` each time you change something. 
 
 ------
 
