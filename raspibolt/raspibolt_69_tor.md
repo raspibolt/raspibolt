@@ -11,7 +11,7 @@
 
 ### What is Tor?
 
-Tor is a free software that allows you to anonymize internet traffic by routing traffic through a network of nodes to hide the location and usage profile of end points. 
+Tor is a free software that allows you to anonymize internet traffic by routing it through a network of nodes to hide the location and usage profile of end points. 
 
 It is called "Tor" for "The Onion Router": information is encrypted multiple times with the public keys of the nodes it passes through. Each node decrypts the layer of information that corresponds to its own private key, pretty much like peeling an onion, until the last that will reveal the clear message.
 
@@ -19,26 +19,25 @@ It is called "Tor" for "The Onion Router": information is encrypted multiple tim
 
 ### Why do you want to run Tor?
 
-Tor is mainly useful as a way to impede traffic analysis, which means analyzing your internet activity (websites you're browsing, services you're using, from which IP address) to learn about you and your interests. Traffic analysis is useful for advertisement and you might want to hide this kind of information merely out of privacy concerns. But it is also being used by outright malvolent actors, criminals or governments, to harm you in a lot of possible ways.
+Tor is mainly useful as a way to impede traffic analysis, which means analyzing your internet activity (logging you IP address on websites you're browsing and services you're using) to learn about you and your interests. Traffic analysis is useful for advertisement and you might want to hide this kind of information merely out of privacy concerns. But it might also be used by outright malevolent actors, criminals or governments to harm you in a lot of possible ways.
 
 Tor allows you to share data on the internet without revealing your location or identity, which can definitely be useful when running a Bitcoin node.
 
 Out of all the reasons why you should run Tor, here are the most relevant to Bitcoin:
 * By exposing your home IP address with your node, you are literally saying the whole planet "in this home we run a node". That's only one short step from "in this home, we do have bitcoins", which could potentially turn you and your loved ones into a target for thieves.
 * In the eventuality of a full fledged ban and crackdown on Bitcoin owners in the country where you live, you will be an obvious target for law enforcement.
-* Coupled with other privacy method like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
+* Coupled with other privacy methods like CoinJoin you can gain more privacy for your transactions, as it eliminates the risk of someone being able to snoop on your node traffic, analyze which transactions you relay and try to figure out which UTXOs are yours, for example.
 
-All the above mentioned arguments are of course relevant to both Bitcoin and Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there's a Bitcoin node at the same location. 
+All the above mentioned arguments are also relevant when using Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there's a Bitcoin node at the same location. 
 
 ### Installing Tor
 
 **Only Raspberry Pi 3 or better**  
-This guide assumes that you're running a Raspberry Pi 3 or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at this](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
+This guide assumes that you're running a Raspberry Pi 3 or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at these instructions](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
 
-For additional reference, the original instructions are available on the 
-[Tor project website](https://www.torproject.org/docs/debian.html.en#ubuntu).
+For additional reference, the original instructions are available on the [Tor project website](https://www.torproject.org/docs/debian.html.en#ubuntu).
 
-* Connect to the RaspiBolt as user "admin", as [described in the main guide](raspibolt_20_pi.md#connecting-to-the-pi). 
+* Connect to the RaspiBolt via SSH as user "admin", as [described in the main guide](raspibolt_20_pi.md#connecting-to-the-pi). 
 
 * Add the following two lines to `sources.list` to add the torproject repository. 
   ```
@@ -48,7 +47,7 @@ For additional reference, the original instructions are available on the
   deb https://deb.torproject.org/torproject.org stretch main
   deb-src https://deb.torproject.org/torproject.org stretch main
   ```
-* In order to check Tor files integrity, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
+* In order to verify the integrity of the Tor files, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
   ```
   $ sudo apt install dirmngr
   $ gpg --keyserver keys.gnupg.net --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
@@ -83,12 +82,13 @@ For additional reference, the original instructions are available on the
   ```
   $ sudo nano /etc/tor/torrc
   ```
+  *uncomment:*
   ```
-  # uncomment
   ControlPort 9051
   CookieAuthentication 1
-  
-  # add
+  ```
+  *add:*
+  ```
   CookieAuthFileGroupReadable 1
   ```
 
@@ -101,24 +101,21 @@ For additional reference, the original instructions are available on the
 
 #### Configuration
 
-* In the "admin" user session, stop Bitcoin and Lightning.
+* In the "admin" user session, stop Bitcoin and LND.
   ``` 
-  $ sudo systemctl stop bitcoind
   $ sudo systemctl stop lnd
+  $ sudo systemctl stop bitcoind
   ```
 
-* Open the Bitcoin configuration and add or delete the following lines:
+* Open the Bitcoin configuration and add the following lines. The argument `onlynet` should not be specified (delete this line if present).
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
   ```
+  *add:*
   ```
-  #add
   proxy=127.0.0.1:9050
   bind=127.0.0.1
   listenonion=1
-  
-  # delete (if present)
-  onlynet=ipv4
   ```
 
 * Archive the current logfile and restart Bitcoin Core to use the adjusted configuration.
@@ -133,50 +130,52 @@ Bitcoin Core is starting and we now need to if all connections are truly routet 
 * Verify operations in the `debug.log` file. You should see your onion address after about one minute.
 
   ```
-  $ sudo tail /home/bitcoin/.bitcoin/debug.log -f
+  $ sudo tail /home/bitcoin/.bitcoin/debug.log -f -n 200
   InitParameterInteraction: parameter interaction: -proxy set -> setting -upnp=0
   InitParameterInteraction: parameter interaction: -proxy set -> setting -discover=0
-  [...]
+  ...
   torcontrol thread start
-  [...]
+  ...
   tor: Got service ID [YOUR_ID] advertising service [YOUR_ID].onion:8333
   addlocal([YOUR_ID].onion:8333,4)
   ```
   ![debug.log output for Tor setup](./images/69_startup.png)  
   ![debug.log output for Tor setup 2](./images/69_startup2.png)  
   
-* List the Bitcoin network info to verify that the different network protocols are bound to proxy `127.0.0.1:9050`, which is Tor on your localhost. Note the `onion` network is now `reachable: true`.
+* Display the Bitcoin network info to verify that the different network protocols are bound to proxy `127.0.0.1:9050`, which is Tor on your localhost. Note the `onion` network is now `reachable: true`.
   ```
   $ bitcoin-cli getnetworkinfo
   ```
   ![bitcoin-cli getnetworkinfo listing network protocol bindings](./images/69_networkinfo.png)
 
-* Verify that your node is reachable within the Bitcoin network.  
-  * Go to [bitnodes.earn.com](https://bitnodes.earn.com/) and copy/paste your `.onion` address here:  
-    ![bitnodes](./images/69_bitnodes.png)
-	
-  * If the result is negative, just try again a minute later as sometimes the lookup will fail to contact your node for some reasons. If your node is persistently not reachable, verify your [port forwarding](raspibolt_20_pi.md#port-forwarding--upnp) and [firewall](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall) settings.
+* Verify that your node is reachable within the Bitcoin network. Go to [bitnodes.earn.com](https://bitnodes.earn.com/) and copy/paste your `.onion` address here:  
+  ![bitnodes](./images/69_bitnodes.png)
   
-* Check the ip address that other peers use to connect to your node. First, get your public ip address and then verify that it is not used as `localaddr` by Bitcoin.
+  If the result is negative, just try again a minute later as sometimes the lookup will fail to contact your node for some reasons. If your node is persistently not reachable, verify your [port forwarding](raspibolt_20_pi.md#port-forwarding--upnp) and [firewall](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall) settings.
+  
+* Check the IP address that other peers use to connect to your node. First, get your real public IP address and then verify that it is not used as `localaddr` by Bitcoin.
   ```
   $ curl icanhazip.com
   $ bitcoin-cli getpeerinfo | grep  local
   ```
   
-  :warning: If you still see your true public ip address listed, something is wrong as one of your peers are currently connected with you on clearnet. This means that you're effectively deanonymized.
+  :warning: If you still see your real public IP address listed, something is wrong as one of your peers are currently connected with you on clearnet. This means that you're effectively deanonymized.
   
-* If you're not going to configure LND at the moment, start the service as well. Otherwise you can proceed directly.
+* If you're not going to configure LND at the moment, start the service as well. Otherwise you can skip this step.
   ```
   $ sudo systemctl start lnd
   ```
 
-**Additional video guide**
+**Additional video guide**  
 :point_right: If you're a bit lost, you can watch [this video](https://youtu.be/57GW5Q2jdvw) that is very clear and shows pretty much the same process (there are also some extra optional steps that I describe below).
 
 ### Setup Tor for LND
 
-:warning: LND needs **Tor3.6.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue.  
-:warning: In case you have been running a node on clearnet before, I recommend you to close all your channels and start a brand new node on Tor, as I suspect that if your public key is known to your peers with your IP address, you would still be pretty easy to deanonymize. I never read anything about that though, if someone knows better I would be very happy to hear from him.
+Two important points:
+* LND needs **Tor3.6.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue.  
+* In case you have been running a node on clearnet before, it is recommended to close all Lightning channels and start a brand new node on Tor. Your existing public key is already associated with your real IP address and known to your peers, so with this data you're pretty easy to deanonymize. 
+
+Ok, let's get to work.
 
 * With the "admin" user, stop LND:
   ```
@@ -205,7 +204,7 @@ Bitcoin Core is starting and we now need to if all connections are truly routet 
 
 ### Go a little further
 
-Your Bitcoin and Lightning nodes are now connected to the world through Tor network, and are much harder to isolate and identify with a geographical location. But you should be aware that Tor is no [silver bullet](https://security.stackexchange.com/questions/147402/how-do-traffic-correlation-attacks-against-tor-users-work), and that you are still vulnerable to a range of attacks that go from "simple" DoS to total deanonymization of users. This configuration aims to be a good compromise between performance and security for an average user that is exposed to average risks.
+Your Bitcoin and Lightning nodes are now connected to the world through the Tor network, and are much harder to isolate and associate with a geographical location. But you should be aware that Tor is no [silver bullet](https://security.stackexchange.com/questions/147402/how-do-traffic-correlation-attacks-against-tor-users-work) and that you are still vulnerable to a range of attacks from "simple" DoS to total deanonymization of users. This configuration aims to be a good compromise between performance and security for an average user that is exposed to average risks.
 
 The attack surface can be reduced even further, but that can impede your ability to connect with other peers. However, this could make you fall out-of-sync with the rest of the network.
 
@@ -213,6 +212,7 @@ For example, you can:
 
 * **Connect only to Tor nodes**
   Accept to connect only with peers that have a `.onion` address. In the Bitcoin configuration file, add the following line:
+
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
   ```
@@ -227,7 +227,6 @@ For example, you can:
 
   With this configuration, your node is not capable to find peers on its own. That's why it is necessary to bootstrap it with a hardcoded list of a few nodes to contact on startup by specifying `addnode`. You need to add one line for each address. You can find address lists online, for example [here](https://bitcoin.stackexchange.com/questions/70069/how-can-i-setup-bitcoin-to-be-anonymous-with-tor), but it raises other risks so be careful...
 
-
   In the Bitcoin configuration file, add the following lines:
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
@@ -240,8 +239,9 @@ For example, you can:
   ...
   ```
 
-  If you want to know more about DNS, you can have a look at [Wikipedia](https://fr.wikipedia.org/wiki/Domain_Name_System) or this [very well-done comic](https://wizardzines.com/zines/networking/).
+  If you want to know more about DNS, you can have a look at [Wikipedia](https://fr.wikipedia.org/wiki/Domain_Name_System) or the incredible (comic booklet) Zine [Networking](https://wizardzines.com/zines/networking/) by Julia Evans.
 
+------
 
 Don't forget to restart bitcoind with `sudo systemctl restart bitcoind` each time you change something. 
 
