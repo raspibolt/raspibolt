@@ -125,7 +125,7 @@ For additional reference, the original instructions are available on the [Tor pr
   ```
 
 #### Validation  
-Bitcoin Core is starting and we now need to if all connections are truly routet over Tor. 
+Bitcoin Core is starting and we now need to check if all connections are truly routed over Tor. 
 
 * Verify operations in the `debug.log` file. You should see your onion address after about one minute.
 
@@ -159,7 +159,7 @@ Bitcoin Core is starting and we now need to if all connections are truly routet 
   $ bitcoin-cli getpeerinfo | grep  local
   ```
   
-  :warning: If you still see your real public IP address listed, something is wrong as one of your peers are currently connected with you on clearnet. This means that you're effectively deanonymized.
+  :warning: If you still see your real public IP address listed, something is wrong as one or many of your peers are currently connected with you on clearnet. This means that you're effectively deanonymized.
   
 * If you're not going to configure LND at the moment, start the service as well. Otherwise you can skip this step.
   ```
