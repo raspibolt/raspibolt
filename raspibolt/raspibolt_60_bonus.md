@@ -40,7 +40,7 @@ The iOS & Android app Shango provides a neat interface for the RaspiBolt, to man
 
 [![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
 
-## [**Anonymous RaspiBolt using Tor**](raspibolt_69_tor.md)
+## [**Anonymous node with Tor**](raspibolt_69_tor.md)
 
 *Difficulty: medium*
 
