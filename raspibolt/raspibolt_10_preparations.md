@@ -56,7 +56,7 @@ a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3
 ```
 ![Windows Command Prompt: verify checksum](images/10_blockchain_wincheck.png)
 
-Compare this value with the [release signatures](https://bitcoin.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc). For the Windows v0.17.0.1 setup binaries, its
+Compare this value with the [release signatures](https://bitcoin.org/bin/bitcoin-core-0.17.0.1/SHA256SUMS.asc). For the Windows v0.17.0.1 setup binaries, its
 ```
 32 bit:  400c88eae33df6a0754972294769741dce97a706dc22d1438f8091d7647d5506
 64 bit:  a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3
