@@ -172,7 +172,7 @@ Bitcoin Core is starting and we now need to check if all connections are truly r
 ### Setup Tor for LND
 
 Two important points:
-* LND needs **Tor3.6.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue.  
+* LND needs **Tor0.3.3.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue.  
 * In case you have been running a node on clearnet before, it is recommended to close all Lightning channels and start a brand new node on Tor. Your existing public key is already associated with your real IP address and known to your peers, so with this data you're pretty easy to deanonymize. 
 
 Ok, let's get to work.
@@ -186,10 +186,16 @@ Ok, let's get to work.
   ```
   $ sudo nano /home/bitcoin/.lnd/lnd.conf
   ```
+  *add:*
   ```
+  [Tor]
   tor.active=1
   tor.v3=1
   listen=localhost
+  ```
+  *comment out:*
+  ```
+  nat=true
   ```
 
 * Restart LND as usual, give it some time and unlock the wallet:
