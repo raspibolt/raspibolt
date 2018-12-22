@@ -60,6 +60,8 @@ debuglevel=info
 maxpendingchannels=5
 alias=YOUR_NAME [LND]
 color=#68F442
+
+# Your router must support and enable UPnP, otherwise delete this line  
 nat=true
 
 [Bitcoin]
@@ -76,6 +78,10 @@ autopilot.active=1
 autopilot.maxchannels=5
 autopilot.allocation=0.6
 ```
+The configuration option **nat=true** expects your internet router to support Universal Plug'n'Play (UPnP) and have it enabled. This allows LND to make your node reachable from outside your network by setting up port forwarding, announce your external ip address and update this information if your ip address changes. This is currently the only reliable configuration to have a routing Lightning node. 
+
+**If your router does not support UPnP**, LND will still work, but your node will be a private Lightning node for your own payments and not able to route payments for others. In this case, you need to delete the `nat=true` line in the configuration file above, otherwise LND will not start.  
+
 :point_right: Additional information: [sample-lnd.conf](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf) in the LND project repository
 
 ### Run LND
