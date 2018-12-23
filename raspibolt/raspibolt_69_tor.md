@@ -61,8 +61,10 @@ For additional reference, the original instructions are available on the [Tor pr
   $ sudo apt install tor tor-arm
   ```
 
-* Check that Tor is up and running.
+* Check the version of Tor (it should be 0.3.3.6 or newer) and that the service is up and running.
   ```
+  $ tor --version
+  Tor version 0.3.4.9 (git-074ca2e0054fded1).
   $ systemctl status tor
   ```
 * Check that within the "tor-service-defaults-torrc" file the "User" name is "debian-tor".
@@ -172,7 +174,7 @@ Bitcoin Core is starting and we now need to check if all connections are truly r
 ### Setup Tor for LND
 
 Two important points:
-* LND needs **Tor0.3.3.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue (you can check with `tor --version`).  
+* LND needs Tor version 0.3.3.6 or newer. If you followed this tutorial to install Tor this shouldn't be an issue.  
 * In case you have been running a node on clearnet before, it is recommended to close all Lightning channels and start a brand new node on Tor. Your existing public key is already associated with your real IP address and known to your peers, so with this data you're pretty easy to deanonymize. 
 
 Ok, let's get to work.
