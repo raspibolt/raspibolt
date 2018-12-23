@@ -31,8 +31,7 @@ Out of all the reasons why you should run Tor, here are the most relevant to Bit
 All the above mentioned arguments are also relevant when using Lightning, as someone that sees a Lightning node running on your home IP address could easily infer that there's a Bitcoin node at the same location. 
 
 ### Installing Tor
-
-**Only Raspberry Pi 3 or better**  
+ 
 This guide assumes that you're running a **Raspberry Pi 3** or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at these instructions](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
 
 Also, this guide builds on top of the RaspiBolt guide that runs with **Raspbian Stretch Lite**. If you run a different operating system, you may need to build Tor from source and paths may vary.  
