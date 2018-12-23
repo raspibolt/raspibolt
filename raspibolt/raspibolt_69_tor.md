@@ -33,7 +33,9 @@ All the above mentioned arguments are also relevant when using Lightning, as som
 ### Installing Tor
 
 **Only Raspberry Pi 3 or better**  
-This guide assumes that you're running a Raspberry Pi 3 or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at these instructions](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
+This guide assumes that you're running a **Raspberry Pi 3** or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at these instructions](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
+
+Also, this guide builds on top of the RaspiBolt guide that runs with **Raspbian Stretch Lite**. If you run a different operating system, some paths may vary.  
 
 For additional reference, the original instructions are available on the [Tor project website](https://www.torproject.org/docs/debian.html.en#ubuntu).
 
@@ -82,13 +84,12 @@ For additional reference, the original instructions are available on the [Tor pr
   ```
   $ sudo nano /etc/tor/torrc
   ```
-  *uncomment:*
   ```
+  # uncomment:
   ControlPort 9051
   CookieAuthentication 1
-  ```
-  *add:*
-  ```
+
+  # add:
   CookieAuthFileGroupReadable 1
   ```
 
@@ -111,8 +112,7 @@ For additional reference, the original instructions are available on the [Tor pr
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
   ```
-  *add:*
-  ```
+  # add / change:
   proxy=127.0.0.1:9050
   bind=127.0.0.1
   listenonion=1
@@ -182,20 +182,19 @@ Ok, let's get to work.
   $ sudo systemctl stop lnd
   ```
 
-* Open the LND configuration file and add the following lines.
+* Open the LND configuration file and add / change the following lines.
   ```
   $ sudo nano /home/bitcoin/.lnd/lnd.conf
   ```
-  *add:*
   ```
-  [Tor]
-  tor.active=1
-  tor.v3=1
+  # add / change the following options within [Application Options]
   listen=localhost
-  ```
-  *comment out:*
-  ```
-  nat=true
+  nat=false
+
+  # add new section Tor
+  [Tor]
+  tor.active=true
+  tor.v3=true
   ```
 
 * Restart LND as usual, give it some time and unlock the wallet:
