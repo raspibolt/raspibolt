@@ -78,9 +78,13 @@ autopilot.active=1
 autopilot.maxchannels=5
 autopilot.allocation=0.6
 ```
-The configuration option **nat=true** expects your internet router to support Universal Plug'n'Play (UPnP) and have it enabled. This allows LND to make your node reachable from outside your network by setting up port forwarding, announce your external ip address and update this information if your ip address changes. This is currently the only reliable configuration to have a routing Lightning node. 
+Some explanations about this configuration:
 
-**If your router does not support UPnP**, LND will still work, but your node will be a private Lightning node for your own payments and not able to route payments for others. In this case, you need to delete the `nat=true` line in the configuration file above, otherwise LND will not start. Another option is to pass your ip address on LND start (see [external guide](https://github.com/robclark56/RaspiBolt-Extras/blob/master/RB_extra_02.md)).
+* The configuration option **nat=true** expects your internet router to support Universal Plug'n'Play (UPnP) and have it enabled. This allows LND to make your node reachable from outside your network by setting up port forwarding, announce your external ip address and update this information if your ip address changes. This is currently the only reliable configuration to have a routing Lightning node. 
+
+  **If your router does not support UPnP**, LND will still work, but your node will be a private Lightning node for your own payments and not able to route payments for others. In this case, you need to delete the `nat=true` line in the configuration file above, otherwise LND will not start. Another option is to pass your ip address on LND start (see [external guide](https://github.com/robclark56/RaspiBolt-Extras/blob/master/RB_extra_02.md)).
+
+* The configuration above has **autopilot** enabled and will automatically open up to **5** channels with **60%** of your funds. You might want to adjust this to suit your needs. With `autopilot.active=0` you can disable the autopilot completely and manage channels manually.
 
 :point_right: Additional information: [sample-lnd.conf](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf) in the LND project repository
 
