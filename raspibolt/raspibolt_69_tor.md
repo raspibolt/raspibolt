@@ -35,7 +35,7 @@ All the above mentioned arguments are also relevant when using Lightning, as som
 **Only Raspberry Pi 3 or better**  
 This guide assumes that you're running a **Raspberry Pi 3** or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at these instructions](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
 
-Also, this guide builds on top of the RaspiBolt guide that runs with **Raspbian Stretch Lite**. If you run a different operating system, some paths may vary.  
+Also, this guide builds on top of the RaspiBolt guide that runs with **Raspbian Stretch Lite**. If you run a different operating system, you may need to build Tor from source and paths may vary.  
 
 For additional reference, the original instructions are available on the [Tor project website](https://www.torproject.org/docs/debian.html.en#ubuntu).
 
@@ -112,6 +112,7 @@ For additional reference, the original instructions are available on the [Tor pr
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
   ```
+  ```
   # add / change:
   proxy=127.0.0.1:9050
   bind=127.0.0.1
@@ -172,7 +173,7 @@ Bitcoin Core is starting and we now need to check if all connections are truly r
 ### Setup Tor for LND
 
 Two important points:
-* LND needs **Tor0.3.3.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue.  
+* LND needs **Tor0.3.3.6 or newer**. If you followed this tutorial to install Tor this shouldn't be an issue (you can check with `tor --version`).  
 * In case you have been running a node on clearnet before, it is recommended to close all Lightning channels and start a brand new node on Tor. Your existing public key is already associated with your real IP address and known to your peers, so with this data you're pretty easy to deanonymize. 
 
 Ok, let's get to work.
@@ -187,11 +188,11 @@ Ok, let's get to work.
   $ sudo nano /home/bitcoin/.lnd/lnd.conf
   ```
   ```
-  # add / change the following options within [Application Options]
+  # add / change the following options within [Application Options]:
   listen=localhost
   nat=false
 
-  # add new section Tor
+  # add:
   [Tor]
   tor.active=true
   tor.v3=true
