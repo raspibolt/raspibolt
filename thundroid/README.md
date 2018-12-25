@@ -364,38 +364,38 @@ We download the latest Bitcoin Core binaries (the application) and  compare the 
 
 Get the latest download links at [bitcoin.org/en/download](), they change  with each update. Then run the following  commands (with adjusted  filenames) and check the output where indicated.
 
-```
+```bash
 # download Bitcoin Core binary
-$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz
-$ wget https://bitcoincore.org/bin/bitcoin-core-0.16.3/SHA256SUMS.asc
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.1/SHA256SUMS.asc
 $ wget https://bitcoin.org/laanwj-releases.asc
 
-# check that the reference checksum matches the real checksum 
+# check that the reference checksum matches the real checksum
 # (ignore the "lines are improperly formatted" warning)
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
-> bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz: OK
+> bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz: OK
 
 # manually check the fingerprint of the public key
-$ gpg --with-fingerprint ./laanwj-releases.asc  
-> 01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964  
+$ gpg --with-fingerprint ./laanwj-releases.asc
+> 01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964
 
-# import the public key of Wladimir van der Laan, verify the signed  checksum file 
-# and check the fingerprint again in case of malicious keys  
-$ gpg --import ./laanwj-releases.asc  
-$ gpg --verify SHA256SUMS.asc  
-> gpg: Good signature from Wladimir ...  
+# import the public key of Wladimir van der Laan, verify the signed  checksum file
+# and check the fingerprint again in case of malicious keys
+$ gpg --import ./laanwj-releases.asc
+$ gpg --verify SHA256SUMS.asc
+> gpg: Good signature from "Wladimir J. van der Laan ..."
 > Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 ```
 
 ![commands to check bitcoind signature](images/30_verify_signature.png)
 
-Extract the Bitcoin Core binaries, install them and check the version. 
+Extract the Bitcoin Core binaries, install them and check the version.
 
-```
-$ tar -xvf bitcoin-0.16.3-arm-linux-gnueabihf.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.3/bin/*
+```bash
+$ tar -xvf bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.1/bin/*
 $ bitcoind --version
-> Bitcoin Core Daemon version v0.16.3
+> Bitcoin Core Daemon version v0.17.1
 ```
 
 ### Prepare Bitcoin Core directory
@@ -784,27 +784,27 @@ In Windows, I’ll preface all commands you need to enter with `>` , so with the
 
 Open the Windows command prompt (`Win+R`, enter `cmd`, hit `Enter`), navigate to the bitcoin directory (for me, it's on drive `D:`, check in Windows Explorer) and create the new directory `bitcoin_mainnet`. Then calculate the checksum of the already downloaded program.
 
-```
+```bash
 > G:
 > cd \bitcoin
 > mkdir bitcoin_mainnet
 > dir
-> certutil -hashfile bitcoin-0.16.3-win64-setup.exe sha256
-bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446
+> certutil -hashfile bitcoin-0.17.1-win64-setup.exe sha256
+fa1e80c5e4ecc705549a8061e5e7e0aa6b2d26967f99681b5989d9bd938d8467
 ```
 
 ![Windows Command Prompt: verify checksum](images/10_blockchain_wincheck.png)
 
-You can check this checksums with the the reference checksums on your Thundroid, from the file we downloaded previously and have already checked for authenticity. Compare the following output with  the checksum of your Windows Bitcoin Core download. 
+You can check this checksums with the the reference checksums on your Thundroid, from the file we downloaded previously and have already checked for authenticity. Compare the following output with  the checksum of your Windows Bitcoin Core download.
 
-```
+```bash
 # on Thundroid, with user "admin"
 $ cat /home/admin/download/SHA256SUMS.asc | grep win
 
-1fe280a78b8796ca02824c6e49d7873ec71886722021871bdd489cbddc37b1f3  bitcoin-0.16.3-win32-setup.exe
-e3d6a962a4c2cbbd4798f7257a0f85d54cec095e80d9b0f543f4c707b06c8839  bitcoin-0.16.3-win32.zip
-bd48ec4b7e701b19f993098db70d69f2bdc03473d403db2438aca5e67a86e446  bitcoin-0.16.3-win64-setup.exe
-52469c56222c1b5344065ef2d3ce6fc58ae42939a7b80643a7e3ee75ec237da9  bitcoin-0.16.3-win64.zip
+e9245e682126ef9fa4998eabbbdd1c3959df811dc10df60be626a5e5ffba9b78  bitcoin-0.17.1-win32-setup.exe
+6464aa2d338f3697950613bb88124e58d6ce78ead5e9ecacb5ba79d1e86a4e30  bitcoin-0.17.1-win32.zip
+fa1e80c5e4ecc705549a8061e5e7e0aa6b2d26967f99681b5989d9bd938d8467  bitcoin-0.17.1-win64-setup.exe
+1abbe6aa170ce7d8263d262f8cb0ae2a5bb3993aacd2f0c7e5316ae595fe81d7  bitcoin-0.17.1-win64.zip
 ```
 
 ### Installing Bitcoin Core

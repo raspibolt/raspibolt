@@ -20,40 +20,52 @@ We will download the software directly from bitcoin.org, verify its signature to
 
 We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
-* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download) (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:  
-  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0.1/bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz`  
-  `$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.0.1/SHA256SUMS.asc`  
-  `$ wget https://bitcoin.org/laanwj-releases.asc`
+* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download) (ARM Linux 32 bit), they change with each update. Then run the following  commands (with adjusted filenames) and check the output where indicated:
 
-* Check that the reference checksum matches the real checksum  
-  `$ sha256sum --check SHA256SUMS.asc --ignore-missing`  
-  `> bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz: OK`
+```bash
+# download Bitcoin Core binary
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.1/SHA256SUMS.asc
+$ wget https://bitcoin.org/laanwj-releases.asc
 
-* Manually check the fingerprint of the public key:  
-  `$ gpg ./laanwj-releases.asc`  
-  `> 01EA5486DE18A882D4C2684590C8019E36C2E964`
+# check that the reference checksum matches the real checksum
+# (ignore the "lines are improperly formatted" warning)
+$ sha256sum --check SHA256SUMS.asc --ignore-missing
+> bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz: OK
 
-* Import the public key of Wladimir van der Laan, verify the signed checksum file and check the fingerprint again in case of malicious keys  
-  `$ gpg --import ./laanwj-releases.asc`  
-  `$ gpg --verify SHA256SUMS.asc`  
-  `> gpg: Good signature from Wladimir ...`  
-  `> Primary key fingerprint: 01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964`  
+# manually check the fingerprint of the public key
+$ gpg --with-fingerprint ./laanwj-releases.asc
+> 01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964
+
+# import the public key of Wladimir van der Laan, verify the signed  checksum file
+# and check the fingerprint again in case of malicious keys
+$ gpg --import ./laanwj-releases.asc
+$ gpg --verify SHA256SUMS.asc
+> gpg: Good signature from "Wladimir J. van der Laan ..."
+> Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
+```
 
 ![commands to check bitcoind signature](images/30_checksum.png)
 
-* Now we know that the keys from bitcoin.org are valid, so we can also verify the Windows binary checksums. Compare the following output with the checksum of your Windows Bitcoin Core download.  
-  `$ cat SHA256SUMS.asc | grep win` 
+* Now we know that the keys from bitcoin.org are valid, so we can also verify the Windows binary checksums. Compare the following output with the checksum of your Windows Bitcoin Core download.
+
+```bash
+$ cat /home/admin/download/SHA256SUMS.asc | grep win
+
+e9245e682126ef9fa4998eabbbdd1c3959df811dc10df60be626a5e5ffba9b78  bitcoin-0.17.1-win32-setup.exe
+6464aa2d338f3697950613bb88124e58d6ce78ead5e9ecacb5ba79d1e86a4e30  bitcoin-0.17.1-win32.zip
+fa1e80c5e4ecc705549a8061e5e7e0aa6b2d26967f99681b5989d9bd938d8467  bitcoin-0.17.1-win64-setup.exe
+1abbe6aa170ce7d8263d262f8cb0ae2a5bb3993aacd2f0c7e5316ae595fe81d7  bitcoin-0.17.1-win64.zip
 ```
-400c88eae33df6a0754972294769741dce97a706dc22d1438f8091d7647d5506  bitcoin-0.17.0.1-win32-setup.exe
-221ae5af9e029623fd4b3971966cb51d3c91dc1425bcb6d2899b1d7292a91691  bitcoin-0.17.0.1-win32.zip
-a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3  bitcoin-0.17.0.1-win64-setup.exe
-2d0a0aafe5a963beb965b7645f70f973a17f4fa4ddf245b61d532f2a58449f3e  bitcoin-0.17.0.1-win64.zip
+
+* Extract the Bitcoin Core binaries, install them and check the version.
+
+```bash
+$ tar -xvf bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.1/bin/*
+$ bitcoind --version
+> Bitcoin Core Daemon version v0.17.1
 ```
-* Extract the Bitcoin Core binaries, install them and check the version.  
-  `$ tar -xvf bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz`  
-  `$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`  
-  `$ bitcoind --version`  
-  `> Bitcoin Core Daemon version v0.17.0`
 
 ### Prepare Bitcoin Core directory
 We use the Bitcoin daemon, called “bitcoind”, that runs in the background without user interface and stores all data in a the directory  `/home/bitcoin/.bitcoin`. Instead of creating a real directory, we create a link that points to a directory on the external hard disk. 
