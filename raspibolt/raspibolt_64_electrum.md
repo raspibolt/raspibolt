@@ -24,20 +24,23 @@ Before using this setup, please familiarize yourself with all components by sett
 
 ### Install Electrum Personal Server
 
+* With user 'admin', make sure Python3 and PIP are installed
+  `$ sudo apt install -y python3 python3-pip`
+
 * Open a "bitcoin" user session and change into the home directory  
-  `$ sudo su bitcoin`  
-  `$ cd`
+  `$ sudo su - bitcoin`  
 
 * Download, verify and extract the latest release (check the [Releases page](https://github.com/chris-belcher/electrum-personal-server/releases) on Github for the correct links)  
 
   ```
-  # create new directory
-  $ mkdir electrum-personal-server
+  # create new directory on external hdd
+  $ mkdir /mnt/hdd/electrum-personal-server
+  $ ln -s /mnt/hdd/electrum-personal-server electrum-personal-server
   $ cd electrum-personal-server
   
   # download release
-  $ wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.1.3.tar.gz
-  $ wget https://github.com/chris-belcher/electrum-personal-server/releases/download/eps-v0.1.3/eps-v0.1.3.tar.gz.asc
+  $ wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.1.6.tar.gz
+  $ wget https://github.com/chris-belcher/electrum-personal-server/releases/download/eps-v0.1.6/eps-v0.1.6.tar.gz.asc
   $ wget https://raw.githubusercontent.com/chris-belcher/electrum-personal-server/master/pgp/pubkeys/belcher.asc
   
   # verify the signature of Chris Belcher and the release: check the reference values!
@@ -45,33 +48,42 @@ Before using this setup, please familiarize yourself with all components by sett
   > 0A8B038F5E10CC2789BFCFFFEF734EA677F31129
   
   $ gpg --import belcher.asc
-  $ gpg --verify eps-v0.1.3.tar.gz.asc
+  $ gpg --verify eps-v0.1.6.tar.gz.asc
   > gpg: Good signature from "Chris Belcher <false@email.com>" [unknown]
   > Primary key fingerprint: 0A8B 038F 5E10 CC27 89BF  CFFF EF73 4EA6 77F3 1129
   
-  $ tar -xvf eps-v0.1.3.tar.gz  
+  $ tar -xvf eps-v0.1.6.tar.gz  
+  $ rm *.gz*
   ```
 
-* Rename the folder to not show the release   
-  `$ mv electrum-personal-server-eps-v0.1.3/ eps`
+* #Rename the folder to not show the release   
+  `#$ mv electrum-personal-server-eps-v0.1.3/ eps`
 
 * Copy and edit configuration template  
-  `$ cd eps`  
-  `$ cp config.cfg_sample config.cfg`  
+  `#$ cd eps`  
+  `$ cp electrum-personal-server-eps-v0.1.6/config.cfg_sample config.cfg`  
   `$ nano config.cfg` 
 
   * Add your wallet master public keys or watch-only addresses to the `[master-public-keys]` and `[watch-only-addresses]` sections. Master public keys for an Electrum wallet can be found in the Electrum client menu `Wallet` -> `Information`.
 
-  * Uncomment and complete the lines  
+  * In [bitcoin-rpc], uncomment and complete the lines.  
     `rpc_user = raspibolt`  
     `rpc_password = [PASSWORD_B]`
 
-  * Change the listening `host` to `0.0.0.0`, so that you can reach it from a remote computer. The firewall only accepts connections from within the home network, not from the internet.  
+  * In [electrum-server], change the listening `host` to `0.0.0.0`, so that you can reach it from a remote computer. The firewall only accepts connections from within the home network, not from the internet.  
     `host = 0.0.0.0`
 
 * Save and exit
 
-* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_20_pi.md#enabling-the-uncomplicated-firewall))
+* Install Electrum Personal Server
+  ```
+  $ cd electrum-personal-server-eps-v0.1.6/
+  $ pip3 install --user .
+  ```
+  
+  [![Install Electrum Personal Server with Python Pip](./images/60_eps_pip_install.png)
+
+* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall))
   ```
   $ sudo ufw allow from 192.168.0.0/24 to any port 50002 comment 'allow EPS from local network'
   $ sudo ufw enable
@@ -81,18 +93,25 @@ Before using this setup, please familiarize yourself with all components by sett
 ### Enable Bitcoin Core wallet 
 Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresses to monitor the blockchain for you.
 
-* Edit "bitcoin.conf" file by altering `disablewallet` to value `0`. Save and exit.  
+* Make sure that in "bitcoin.conf", `disablewallet=1` is not set (it can be either missing, or set to `0`). Save and exit.  
   `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
 ```
 # Bitcoind options
 disablewallet=0
 ```
 
-* Copy updated "bitcoin.conf" to user "admin" for credentials  
-  `$ sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`
-  
 * Restart bitcoind
   `$ sudo systemctl restart bitcoind`
+
+### First start 
+The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately in Raspbian, this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path), but it's not necessary in this guide.
+
+  * The first time the server is run it will import all configured addresses as watch-only into the Bitcoin node. Wait a bit and exit with `Ctrl-C`.  
+  `$ ~/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg`
+  
+  * If your wallet has previous transactions, Electrum Personal Server needs to rescan the Bitcoin blockchain to get the historical information. This can take some time, therefore you can set the start date of the scan.
+  ```
+  $ ~/.local/bin/electrum-personal-server-rescan /home/bitcoin/electrum-personal-server/config.cfg
 
 ### Initial blockchain scan
 
