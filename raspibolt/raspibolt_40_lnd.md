@@ -10,7 +10,7 @@ We will now download and install the LND (Lightning Network Daemon) by [Lightnin
 
 ```
 $ cd /home/admin/download
-$ rm -rf *
+$ rm -rf /home/admin/download/*
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/lnd-linux-armv7-v0.5-beta.tar.gz
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5-beta/manifest-v0.5-beta.txt.sig
