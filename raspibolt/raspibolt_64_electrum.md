@@ -103,7 +103,7 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
 
   * The first time the server is run it will import all configured addresses as watch-only into the Bitcoin node. This can take up to 10 minutes, after that the program will exit. 
     ```
-    $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg`
+    $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg
     ```
   
   * If your wallet has previous transactions, Electrum Personal Server needs to rescan the Bitcoin blockchain to get the historical information. This can take a long time for the whole blockchain, therefore you can set the start date of the scan (it will still take more than 1 hour per year of history).
@@ -113,12 +113,12 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
   
   * You can monitor the rescan progress in the Bitcoin Core logfile from a second SSH session:  
     ```
-    $ tail -f /home/bitcoin/.bitcoin/debug.log`
+    $ tail -f /home/bitcoin/.bitcoin/debug.log
     ```
 
   * Run Electrum Personal Server again and connect your Electrum wallet from your regular computer.
     ```
-    $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg`
+    $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg
     ``` 
 
   [![Run Electrum Personal Server manually](images/60_eps_first-start.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_first-start.png)
@@ -131,11 +131,11 @@ On your regular computer, configure Electrum to use your RaspiBolt:
 * Uncheck "Select server automatically"
 * Enter the IP of your RaspiBolt (eg. 192.168.0.20) in the address field
 
-  [![Connect Electrum to RaspiBolt](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_electrum-connect.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrum-connect.png)
+  [![Connect Electrum to RaspiBolt](images/60_eps_electrum-connect.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrum-connect.png)
 
 * `Close` and check connection in tab "Console"
 
-  [![Check Electrum console](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_electrumwallet.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrumwallet.png)
+  [![Check Electrum console](images/60_eps_electrumwallet.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrumwallet.png)
   
 * This can also be achived by starting the Electrum wallet with the following command line arguments:  
   `--oneserver --server 192.168.0.20:50002:s`
