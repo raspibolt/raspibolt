@@ -35,7 +35,7 @@ Before using this setup, please familiarize yourself with all components by sett
   ```
   # create new directory on external hdd
   $ mkdir /mnt/hdd/electrum-personal-server
-  $ ln -s /mnt/hdd/electrum-personal-server electrum-personal-server
+  $ ln -s /mnt/hdd/electrum-personal-server /home/bitcoin/electrum-personal-server
   $ cd electrum-personal-server
   
   # download release
@@ -43,10 +43,7 @@ Before using this setup, please familiarize yourself with all components by sett
   $ wget https://github.com/chris-belcher/electrum-personal-server/releases/download/eps-v0.1.6/eps-v0.1.6.tar.gz.asc
   $ wget https://raw.githubusercontent.com/chris-belcher/electrum-personal-server/master/pgp/pubkeys/belcher.asc
   
-  # verify the signature of Chris Belcher and the release: check the reference values!
-  $ gpg belcher.asc
-  > 0A8B038F5E10CC2789BFCFFFEF734EA677F31129
-  
+  # verify that the release is signed by Chris Belcher (check the fingerprint)
   $ gpg --import belcher.asc
   $ gpg --verify eps-v0.1.6.tar.gz.asc
   > gpg: Good signature from "Chris Belcher <false@email.com>" [unknown]
@@ -56,7 +53,7 @@ Before using this setup, please familiarize yourself with all components by sett
   $ rm *.gz*
   ```
 
-* Copy and edit configuration template  
+* Copy and edit configuration template (skip this step when updating)  
   ``` 
   $ cp electrum-personal-server-eps-v0.1.6/config.cfg_sample config.cfg
   $ nano config.cfg
@@ -98,7 +95,7 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
 * Make sure that in "bitcoin.conf", `disablewallet=1` is not set (it can be either missing, or set to `0`). Save and exit.  
   `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
 
-* Restart bitcoind   
+* If you changed the configuation, restart bitcoind   
   `$ sudo systemctl restart bitcoind`
 
 ### First start 
@@ -106,12 +103,12 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
 
   * The first time the server is run it will import all configured addresses as watch-only into the Bitcoin node. This can take up to 10 minutes, after that the program will exit. 
     ```
-    $ ~/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg`
+    $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg`
     ```
   
   * If your wallet has previous transactions, Electrum Personal Server needs to rescan the Bitcoin blockchain to get the historical information. This can take a long time for the whole blockchain, therefore you can set the start date of the scan (it will still take more than 1 hour per year of history).
     ```
-    $ ~/.local/bin/electrum-personal-server-rescan /home/bitcoin/electrum-personal-server/config.cfg
+    $ /home/bitcoin/.local/bin/electrum-personal-server-rescan /home/bitcoin/electrum-personal-server/config.cfg
     ```  
   
   * You can monitor the rescan progress in the Bitcoin Core logfile from a second SSH session:  
@@ -121,10 +118,10 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
 
   * Run Electrum Personal Server again and connect your Electrum wallet from your regular computer.
     ```
-    $ ~/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg`
+    $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg`
     ``` 
 
-  [![Run Electrum Personal Server manually](https://github.com/Stadicus/guides/raw/master/raspibolt/images/60_eps_first-start.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_first-start.png)
+  [![Run Electrum Personal Server manually](images/60_eps_first-start.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_first-start.png)
 
 ### Connect Electrum
 
