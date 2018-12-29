@@ -22,10 +22,27 @@ The new [Electrum Personal Server](https://github.com/chris-belcher/electrum-per
 
 Before using this setup, please familiarize yourself with all components by setting up your own Electrum wallet, visiting the linked project websites and reading [The Electrum Personal Server Will Give Users the Full Node Security They Need](https://bitcoinmagazine.com/articles/electrum-personal-server-will-give-users-full-node-security-they-need/) in Bitcoin Magazine.
 
-### Install Electrum Personal Server
+### Preparations
 
 * With user 'admin', make sure Python3 and PIP are installed  
   `$ sudo apt install -y python3 python3-pip`
+
+* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall))
+  ```
+  $ sudo ufw allow from 192.168.0.0/24 to any port 50002 comment 'allow EPS from local network'
+  $ sudo ufw enable
+  $ sudo ufw status
+  ```
+
+Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresses to monitor the blockchain for you.
+
+* Make sure that in "bitcoin.conf", `disablewallet=1` is not set (it can be either missing, or set to `0`). Save and exit.  
+  `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
+
+* If you changed `bitcoin.conf`, restart bitcoind   
+  `$ sudo systemctl restart bitcoind`
+
+### Install Electrum Personal Server
 
 * Open a "bitcoin" user session and change into the home directory  
   `$ sudo su - bitcoin`  
@@ -82,22 +99,6 @@ Before using this setup, please familiarize yourself with all components by sett
   
   ![Install Electrum Personal Server with Python Pip](./images/60_eps_pip_install.png)
 
-* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall))
-  ```
-  $ sudo ufw allow from 192.168.0.0/24 to any port 50002 comment 'allow EPS from local network'
-  $ sudo ufw enable
-  $ sudo ufw status
-  ```
-
-### Enable Bitcoin Core wallet 
-Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresses to monitor the blockchain for you.
-
-* Make sure that in "bitcoin.conf", `disablewallet=1` is not set (it can be either missing, or set to `0`). Save and exit.  
-  `$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
-
-* If you changed the configuation, restart bitcoind   
-  `$ sudo systemctl restart bitcoind`
-
 ### First start 
 The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately, in Raspbian this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path), but it's not necessary in this guide.
 
@@ -141,9 +142,13 @@ On your regular computer, configure Electrum to use your RaspiBolt:
   `--oneserver --server 192.168.0.20:50002:s`
 
 ### Automate startup
-If everything works as expected, we will now automate the start of Electrum Personal Server.
+If everything works as expected, we will now automate the start of Electrum Personal Server on the RaspiBolt.
 
-* Exit the program by pressing `Ctrl-C`  
+* On the Pi, exit Electrum Personal Server by pressing `Ctrl-C`  
+
+* Exit the "bitcoin" user session back to user "admin"
+  `exit`
+
 * As "admin", set up the systemd unit for automatic start on boot, save and exit  
   `$ sudo nano /etc/systemd/system/eps.service`
 
