@@ -33,10 +33,6 @@ $ wget https://bitcoin.org/laanwj-releases.asc
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
 > bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz: OK
 
-# manually check the fingerprint of the public key
-$ gpg --with-fingerprint ./laanwj-releases.asc
-> 01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964
-
 # import the public key of Wladimir van der Laan, verify the signed  checksum file
 # and check the fingerprint again in case of malicious keys
 $ gpg --import ./laanwj-releases.asc
