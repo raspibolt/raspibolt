@@ -91,7 +91,6 @@ testnet=1
 # Bitcoind options
 server=1
 daemon=1
-txindex=1
 
 # Connection settings
 rpcuser=raspibolt

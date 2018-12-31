@@ -68,18 +68,7 @@ Execute the Bitcoin Core installation file (you might need to right-click and ch
 
 ![Bitcoin Core directory selection](images/10_bitcoinqt_directory.png)
 
-:warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning:
-
-**IMPORTANT: The next step is crucial, otherwise your whole Bitcoin blockchain might be useless!**
-
-Bitcoin Core opens and starts immediately syncing the blockchain, but we need to set one additional setting in the “bitcoin.conf” file. Using the menu, open `Settings` / `Options` and click the button `Open Configuration File`. Enter the following line:
-
-```
-txindex=1
-```
-⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️   
-
-If your computer has a lot of memory, you can increase the database in-memory cache by adding the following line (with megabytes of memory to use, adjusted to your computer) as well:
+Bitcoin Core opens and starts immediately syncing the blockchain. If your computer has a lot of memory, you can increase the database in-memory cache by adding the following line (with megabytes of memory to use, adjusted to your computer) as well:
 
 ```
 dbcache=6000
