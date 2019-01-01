@@ -109,7 +109,7 @@ You will need several passwords and I find it easiest to write them all down in 
 [ D ] Lightning seed passphrase
 ```
 
-Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass or LastPast) and keep your original notes out of sight once your system is up and running. 
+Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass or LastPass) and keep your original notes out of sight once your system is up and running. 
 
 ### The command line
 
