@@ -38,6 +38,9 @@ $ lnd --version
 ### LND configuration
 Now that LND is installed, we need to configure it to work with Bitcoin Core and run automatically on startup.
 
+* Still as user 'admin', create a symbolic link to the `ip` binary located in `/bin/ip`, as it seems as LND cannot find it in some cases.  
+  `$ sudo ln -s /bin/ip /usr/bin/ip`
+
 * Open a "bitcoin" user session  
   `$ sudo su - bitcoin` 
 
@@ -47,9 +50,6 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   `$ ls -la`
 
 ![Check symlink LND](images/40_symlink_lnd.png)
-
-* Create a symbolic link to the `ip` binary located in `/bin/ip`, as it seems as LND cannot find it in some cases.  
-  `$ sudo ln -s /bin/ip /usr/bin/ip`
 
 * Create the LND configuration file and paste the following content (adjust to your alias). Save and exit.  
   `$ nano /home/bitcoin/.lnd/lnd.conf`
