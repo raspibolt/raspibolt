@@ -114,7 +114,7 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
   
   * You can monitor the rescan progress in the Bitcoin Core logfile from a second SSH session:  
     ```
-    $ tail -f /home/bitcoin/.bitcoin/debug.log
+    $ sudo tail -f /home/bitcoin/.bitcoin/debug.log
     ```
 
   * Run Electrum Personal Server again and connect your Electrum wallet from your regular computer.
