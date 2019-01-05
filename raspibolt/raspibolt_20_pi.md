@@ -336,7 +336,7 @@ One of the best options to secure the SSH login is to completely disable the pas
    `$ ssh-keygen -t rsa -b 4096`
    * When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.
 
-   * Next, to enforce keys security you can choose a passphrase to protect your keys, but you might want to avoid entering a password because it will ask you to enter the password key every time you login.
+   * Next, to enforce key security, use password [A] to protect your keys. Enter again to confirm.
 
 * Let's make sure that the `~/.ssh` directory exists on the Raspberry pi (Be sure to swap the IP of your Raspberry Pi in for RASPBERRY_PI_IP below):
 
