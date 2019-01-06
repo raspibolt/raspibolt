@@ -60,32 +60,17 @@ alias peers='lncli --network=testnet listpeers'
 alias channels='lncli --network=testnet listchannels'
 alias channelbalance='lncli --network=testnet channelbalance'
 alias pendingchannels='lncli --network=testnet pendingchannels'
+alias openchannel='lncli --network=testnet openchannel'
+alias connect='lncli --network=testnet connect'
+alias payinvoice='lncli --network=testnet payinvoice'
+alias addinvoice='lncli --network=testnet addinvoice'
 ```
 * Execute a source command to register changes to the .bashrc file
 ``` > source /home/admin/.bashrc ```
-* Add new file called "openchannel" in /usr/local/bin and set to executable
-``` > sudo nano /usr/local/bin/openchannel; chmod +x /usr/local/bin/openchannel ```
-* Add the following lines to the "openchannel" file
-```
-#!/bin/bash
-
-# Opens a channel with connected peer for specified sat amount
-# param ${1} : remote node's pub_key, param ${2} : local sat amt
-lncli --network=testnet openchannel ${1} ${2}
-```
-* Add new file called "connect" in /usr/local/bin and set to executable
-``` > sudo nano /usr/local/bin/connect; chmod +x /usr/local/bin/connect ```
-* Add the following lines to the "connect" file
-```
-#!/bin/bash
-
-# Connects to peer
-# param ${1} : remote node's URI (format of pub_key@ip:port)
-lncli --network=testnet connect ${1}
-```
 
 ##### -- Mainnet
 When switching to mainnet, follow the **Testnet** section but removing all instances of --network=testnet from the code.
+
 ------
 
 << Back: [Bonus guides](raspibolt_60_bonus.md) 
