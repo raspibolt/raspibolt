@@ -224,7 +224,7 @@ Now your Lightning node is ready. To use it in testnet, you can get some free te
 ### LND in action
 As soon as your funding transaction is mined and confirmed, LND will start to open and maintain channels. This feature is called "Autopilot" and is configured in the "lnd.conf" file. If you would like to maintain your channels manually, you can disable the autopilot.
 
-Get yourself a payment request on [StarBlocks](https://starblocks.acinq.co/#/) or [Y’alls](https://yalls.org/) and move some coins!
+Get yourself a payment request on [StarBlocks](https://starblocks.acinq.co/#/) or [Y’alls](https://testnet.yalls.org/) and move some coins!
 
 * `$ lncli --network=testnet listpeers`  
 * `$ lncli --network=testnet listchannels`  
@@ -232,6 +232,9 @@ Get yourself a payment request on [StarBlocks](https://starblocks.acinq.co/#/) o
 * `$ lncli --network=testnet listpayments`  
 
 :point_right: see [Lightning API reference](http://api.lightning.community/) for additional information
+
+### (Optional) Add aliases for easier commands
+If you don't want to type out the full commands each time, aliases will help. See the [Additional scripts](raspibolt_67_additional-scripts.md) section for alias setup.
 
 -----
 

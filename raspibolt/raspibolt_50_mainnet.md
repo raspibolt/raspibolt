@@ -246,5 +246,8 @@ There are a lot of great resources to explore the Lightning mainnet in regard to
 * [1ML](https://1ml.com): Lightning Network Search and Analysis Engine
 * [lnroute.com](http://lnroute.com): comprehensive Lightning Network resources list
 
+### (Optional) Add aliases for easier commands
+If you don't want to type out the full commands each time, aliases will help. See the [Additional scripts](raspibolt_67_additional-scripts.md) section for alias setup.
+
 ---
 Next: [Bonus >>](raspibolt_60_bonus.md)
