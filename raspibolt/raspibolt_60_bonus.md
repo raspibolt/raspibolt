@@ -18,7 +18,7 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 [![MotD system overview](images/60_status_overview.png)](raspibolt_61_system-overview.md)
 
-## [Auto unlock LND on startup](raspibolt_6A_auto-unlock.md)
+## [**Auto unlock LND on startup**](raspibolt_6A_auto-unlock.md)
 
 *Difficulty: medium*
 
@@ -68,7 +68,7 @@ Difficulty: easy
 
 In case your SD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand. It's not a full backup solution, but allows a system recovery.
 
-## [Additional scripts: show balance & channels](raspibolt_67_additional-scripts.md)
+## [**Additional scripts: show balance & channels**](raspibolt_67_additional-scripts.md)
 
 Difficulty: easy
 
