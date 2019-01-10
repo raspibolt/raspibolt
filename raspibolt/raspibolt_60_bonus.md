@@ -32,6 +32,17 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 
 [![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md)
 
+## [**Performance Monitoring**](raspibolt_71_monitoring.md)
+
+*Difficulty: intermediate*
+
+Adding a Grafana Web UI to monitor your Raspberri Pi for 
+performance metrics. 
+
+Get a useful insights on Bitcoin and Lightning metrics
+
+[![Grafana](images/71_grafana.png)](raspibolt_71_monitoring.md)
+
 ## [**Shango Mobile Wallet**](raspibolt_68_shango.md)
 
 *Difficulty: intermediate*
