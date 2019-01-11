@@ -24,10 +24,10 @@ how many open channels does your lightning node have, etc.
 ### Overview
 
 There are a few required pieces to get this working
-- Grafana
 - Docker
-- Telegraf
 - InfluxDB
+- Telegraf
+- Grafana
 - dotNet Influx Metrics Publisher
 
 ### Reference:
@@ -48,25 +48,23 @@ $ sudo docker --version
 Docker version 18.09.0, build 4d60db4
 ```
 
+If you're willing to take the security risk as [outlined here](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface) you can execute `docker` commands without the `sudo` prefix
+
+```
+$ sudo usermod -aG docker $USER
+```
+
+Logout and connect again for the changes to take effect, and test with the command below
+```
+$ docker run hello-world
+```
+
 # [InfluxDB](https://www.influxdata.com/)
 
 Running InfluxDB with auto-restart in the event of a 
 restart
 ```
 $ sudo docker run -d --name=influxdb --net=host --restart always --volume=/var/influxdb:/data hypriot/rpi-influxdb 
-```
-
-# [Grafana](https://grafana.com/)
-
-Persistent storage for Grafana so it all comes back to
-life when we reboot 
-```
-$ sudo docker run -d -v /var/lib/grafana --name grafana-storage busybox:latest
-```
-
-Running Grafana with auto-restart
-```
-$ sudo docker run -d --net=host --restart always --name grafana --volumes-from grafana-storage fg2it/grafana-armhf:v4.1.2
 ```
 
 # [Telegraf](https://docs.influxdata.com/telegraf)
@@ -85,7 +83,50 @@ $ sudo systemctl status telegraf
 
 Note the `-config` parameter value of `/etc/telegraf/telegraf.conf`. We are going to want to update this.
 
+# [Grafana](https://grafana.com/)
 
+```
+[ A ] Grafana Admin password
+```
+
+Persistent storage for Grafana so it all comes back to
+life when we reboot, or when the docker image is upgraded in future 
+```
+$ sudo docker run -d -v /var/lib/grafana --name grafana-storage busybox:latest
+```
+Running Grafana with auto-restart
+
+> Consider using the official Grafana Docker imagine instead.
+Currently it's yet to be released so need to pull the master image. Replace the `fg2it/grafana-armhf:v4.1.2` with `grafana/grafana:master`
+
+```
+$ sudo docker run -d --net=host --restart always --name grafana --volumes-from grafana-storage fg2it/grafana-armhf:v4.1.2
+```
+
+## Bleeding edge
+```
+docker volume create grafana-storage-master
+```
+
+> You can add the `-e "GF_SECURITY_ADMIN_PASSWORD=PASSWORD_[A]" \` right after the `-d \` argument to change the `admin` user's default password of `admin`. 
+
+```
+ docker run \
+    -d \
+    --name grafana-master \
+    -v grafana-storage-master:/var/lib/grafana \
+    --restart always \
+    --net=host \
+    grafana/grafana:master
+```
+
+# Handy commands
+
+Copy putty text to clipboard
+* *Clear Scrollback*
+* *Reset Terminal*
+* cat file.txt
+* *Copy All to Clipboard*
 
 ------
 
