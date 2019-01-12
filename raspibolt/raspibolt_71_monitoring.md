@@ -61,8 +61,7 @@ $ docker run hello-world
 
 # [InfluxDB](https://www.influxdata.com/)
 
-Running InfluxDB with auto-restart in the event of a 
-restart
+Running InfluxDB with auto-restart in the event of a system restart
 ```
 $ sudo docker run -d --name=influxdb --net=host --restart always --volume=/var/influxdb:/data hypriot/rpi-influxdb 
 ```
@@ -81,7 +80,18 @@ This would have installed Telegraf as a service, so let's confirm this:
 $ sudo systemctl status telegraf
 ```
 
-Note the `-config` parameter value of `/etc/telegraf/telegraf.conf`. We are going to want to update this.
+Enter `Ctrl-C` or `q` to exit after entering the status command above
+
+We need to update the `telegraf.conf` so it publishes the data we'll be using later in our Grafana dashboard
+
+```
+cd /etc/telegraf/
+sudo cp telegraf.conf telegraf.conf.bak
+sudo rm telegraf.conf
+sudo wget https://raw.githubusercontent.com/badokun/guides/master/raspibolt/resources/telegraf.conf
+sudo systemctl restart telegraf
+```
+
 
 # [Grafana](https://grafana.com/)
 
@@ -89,44 +99,84 @@ Note the `-config` parameter value of `/etc/telegraf/telegraf.conf`. We are goin
 [ A ] Grafana Admin password
 ```
 
-Persistent storage for Grafana so it all comes back to
-life when we reboot, or when the docker image is upgraded in future 
+Create persistent storage for Grafana so when it's upgraded in future you won't lose all your configuration
 ```
-$ sudo docker run -d -v /var/lib/grafana --name grafana-storage busybox:latest
-```
-Running Grafana with auto-restart
-
-> Consider using the official Grafana Docker imagine instead.
-Currently it's yet to be released so need to pull the master image. Replace the `fg2it/grafana-armhf:v4.1.2` with `grafana/grafana:master`
-
-```
-$ sudo docker run -d --net=host --restart always --name grafana --volumes-from grafana-storage fg2it/grafana-armhf:v4.1.2
+sudo docker volume create grafana-storage
 ```
 
-## Bleeding edge
-```
-docker volume create grafana-storage-master
-```
-
-> You can add the `-e "GF_SECURITY_ADMIN_PASSWORD=PASSWORD_[A]" \` right after the `-d \` argument to change the `admin` user's default password of `admin`. 
+Run the Grafana's docker image, replacing the `admin` password setting `PASSWORD_[A]` with your password. This will be used when logging into Grafana's UI
 
 ```
- docker run \
+ sudo docker run \
     -d \
+    -e "GF_SECURITY_ADMIN_PASSWORD=PASSWORD_[A]" \
     --name grafana-master \
-    -v grafana-storage-master:/var/lib/grafana \
+    -v grafana-storage:/var/lib/grafana \
     --restart always \
     --net=host \
     grafana/grafana:master
 ```
 
-# Handy commands
+Confirm Grafana is running by running 
+```
+sudo docker ps
+```
 
-Copy putty text to clipboard
-* *Clear Scrollback*
-* *Reset Terminal*
-* cat file.txt
-* *Copy All to Clipboard*
+You should see something like this:
+```
+CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS               NAMES
+3194df6aff01        grafana/grafana:master   "/run.sh"                About a minute ago   Up About a minute                       grafana-master
+b9f31d893601        hypriot/rpi-influxdb     "/usr/bin/entry.sh /…"   38 hours ago         Up 2 hours                              influxdb
+
+```
+
+At this point we can start to setup a Grafana's Dashboard.
+
+Go to `http://192.168.1.40:3000` replacing the IP address with your RaspiBolt's.
+
+After logging  into the Grafana website with `admin` and `PASSWORD_[A]` you should see this
+
+![Grafana Home](images/71_grafana-home.jpg)
+
+## Add a data source
+
+Click on Add data source, then InfluxDB
+
+![Grafana Data Source](images/71_grafana-datasource.jpg)
+
+## Add a Dashboard
+
+### Locate the shortcut to the left of the page and click on Manage
+
+![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-menu.jpg)
+
+###  We will be importing an existing Dashboard
+
+> The import process will be improved once the latest release of the Grafana docker container is used. 
+In order to get the official Grafana version (which supports Rasberry Pi) we had to use a pre-released one.
+
+
+![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-menu.jpg)
+
+###   Copy the contents of RaspiBolt's [Grafana Dashboard Json](https://raw.githubusercontent.com/badokun/guides/master/raspibolt/resources/grafana-dashboard.json) into the JSON input field. 
+
+> In a future update we'll be referencing a Grafana dashboard id instead
+
+
+![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import.jpg)
+
+### You may leave the properties unmodified and click on Import
+
+![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-done.jpg)
+
+### You should see the dashboard in all its glory
+
+![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-success.jpg)
+
+
+# Future enhancements
+
+* Support for Bitcoin and Lightning metrics, e.g. mempool size, number of open channels, etc
 
 ------
 
