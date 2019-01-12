@@ -9,29 +9,21 @@
 ## Bonus guide: Performance Monitoring
 *Difficulty: intermediate*
 
-> Please note: this guide has not been updated to LND 0.5 yet and might not work as intended.
+It's useful to have insights into RaspiBolt's performance metrics. This may help in debugging all sorts of potential problems, e.g. network latency, CPU performance, block propagation etc. 
 
-It's useful to have insights into the performance of your
-bitcoin and lightning node.
+Observing anomolies and doing performance tuning is greatly improved when you have these insights.
 
-Observing anomolies and doing performance tuning is greatly
-improved when you know what is running.
-
-As an added bonus feature you can now have high level 
-blockchain analysis and metrics. How big is the mempool,
-how many open channels does your lightning node have, etc.
+A future enhancements would include bitcoin and lightning specific metrics like mempool statistics, lightning channel count etc.
 
 ### Overview
 
-There are a few required pieces to get this working
+There are a few required pieces to get this working. They are:
 - Docker
 - InfluxDB
 - Telegraf
 - Grafana
-- dotNet Influx Metrics Publisher
 
-### Reference:
-Thanks to Pete Shima's [medium post](https://medium.com/@petey5000/monitoring-your-home-network-with-influxdb-on-raspberry-pi-with-docker-78a23559ffea) that helped greatly in setting this up.
+> Reference: Thanks to Pete Shima's [medium post](https://medium.com/@petey5000/monitoring-your-home-network-with-influxdb-on-raspberry-pi-with-docker-78a23559ffea) that helped greatly in setting this up.
 
 # [Docker](https://www.docker.com)
 
@@ -48,7 +40,7 @@ $ sudo docker --version
 Docker version 18.09.0, build 4d60db4
 ```
 
-If you're willing to take the security risk as [outlined here](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface) you can execute `docker` commands without the `sudo` prefix
+If you're willing to take the security risk as [outlined here](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface) you can execute `docker` commands without the `sudo` prefix, alternatively include `sudo` before all docker commands that follow in this guide
 
 ```
 $ sudo usermod -aG docker $USER
@@ -63,7 +55,7 @@ $ docker run hello-world
 
 Running InfluxDB with auto-restart in the event of a system restart
 ```
-$ sudo docker run -d --name=influxdb --net=host --restart always --volume=/var/influxdb:/data hypriot/rpi-influxdb 
+$ docker run -d --name=influxdb --net=host --restart always --volume=/var/influxdb:/data hypriot/rpi-influxdb 
 ```
 
 # [Telegraf](https://docs.influxdata.com/telegraf)
@@ -75,7 +67,7 @@ $ rm telegraf_1.7.0-1_armhf.deb
 $ sudo systemctl status telegraf
 ```
 
-This would have installed Telegraf as a service, so let's confirm this:
+This would have installed Telegraf as a service. Confirm by running:
 ```
 $ sudo systemctl status telegraf
 ```
@@ -92,7 +84,6 @@ sudo wget https://raw.githubusercontent.com/badokun/guides/master/raspibolt/reso
 sudo systemctl restart telegraf
 ```
 
-
 # [Grafana](https://grafana.com/)
 
 ```
@@ -101,13 +92,13 @@ sudo systemctl restart telegraf
 
 Create persistent storage for Grafana so when it's upgraded in future you won't lose all your configuration
 ```
-sudo docker volume create grafana-storage
+docker volume create grafana-storage
 ```
 
 Run the Grafana's docker image, replacing the `admin` password setting `PASSWORD_[A]` with your password. This will be used when logging into Grafana's UI
 
 ```
- sudo docker run \
+ docker run \
     -d \
     -e "GF_SECURITY_ADMIN_PASSWORD=PASSWORD_[A]" \
     --name grafana-master \
@@ -119,7 +110,7 @@ Run the Grafana's docker image, replacing the `admin` password setting `PASSWORD
 
 Confirm Grafana is running by running 
 ```
-sudo docker ps
+docker ps
 ```
 
 You should see something like this:
@@ -132,7 +123,7 @@ b9f31d893601        hypriot/rpi-influxdb     "/usr/bin/entry.sh /…"   38 hours
 
 At this point we can start to setup a Grafana's Dashboard.
 
-Go to `http://192.168.1.40:3000` replacing the IP address with your RaspiBolt's.
+Browse to `http://192.168.1.40:3000` in your favorite browser and replace the IP address with your RaspiBolt's.
 
 After logging  into the Grafana website with `admin` and `PASSWORD_[A]` you should see this
 
