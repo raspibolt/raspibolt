@@ -13,8 +13,6 @@ It's useful to have insights into RaspiBolt's performance metrics. This may help
 
 Observing anomolies and doing performance tuning is greatly improved when you have these insights.
 
-A future enhancements would include bitcoin and lightning specific metrics like mempool statistics, lightning channel count etc.
-
 ### Overview
 
 There are a few required pieces to get this working. They are:
@@ -143,20 +141,12 @@ Click on Add data source, then InfluxDB
 
 ###  We will be importing an existing Dashboard
 
-> The import process will be improved once the latest release of the Grafana docker container is used. 
-In order to get the official Grafana version (which supports Rasberry Pi) we had to use a pre-released one.
-
-
 ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-menu.jpg)
 
-###   Copy the contents of RaspiBolt's [Grafana Dashboard Json](https://raw.githubusercontent.com/badokun/guides/master/raspibolt/resources/grafana-dashboard.json) into the JSON input field. 
-
-> In a future update we'll be referencing a Grafana dashboard id instead
-
-
+### Enter the Grafana Dashboard Id of `9653` and click Load
 ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import.jpg)
 
-### You may leave the properties unmodified and click on Import
+### Select the InfluxDB from the drop down list and click on Import
 
 ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-done.jpg)
 
@@ -164,10 +154,8 @@ In order to get the official Grafana version (which supports Rasberry Pi) we had
 
 ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-success.jpg)
 
-
-# Future enhancements
-
-* Support for Bitcoin and Lightning metrics, e.g. mempool size, number of open channels, etc
+> Once you've successfully completed this guide on performance monitoring, you can take things to the next level by following 
+[Running on RaspiBolt](https://github.com/badokun/lightning-metrics#running-on-raspibolt) section of the [lightning-metrics](https://github.com/badokun/lightning-metrics) project. This will give you additional metrics on the Lightning Network's status.
 
 ------
 
