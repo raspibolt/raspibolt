@@ -106,7 +106,7 @@ Run the Grafana's docker image, replacing the `admin` password setting `PASSWORD
     grafana/grafana:master
 ```
 
-Confirm Grafana is running by running 
+Confirm Grafana is running as a docker container by executing 
 ```
 docker ps
 ```
@@ -121,7 +121,7 @@ b9f31d893601        hypriot/rpi-influxdb     "/usr/bin/entry.sh /…"   38 hours
 
 At this point we can start to setup a Grafana's Dashboard.
 
-Browse to `http://192.168.1.40:3000` in your favorite browser and replace the IP address with your RaspiBolt's.
+Browse to `http://192.168.1.40:3000` in your browser and replace the IP address with your RaspiBolt's.
 
 After logging  into the Grafana website with `admin` and `PASSWORD_[A]` you should see this
 
@@ -129,7 +129,7 @@ After logging  into the Grafana website with `admin` and `PASSWORD_[A]` you shou
 
 ## Add a data source
 
-Click on Add data source, then InfluxDB
+Click on Add data source, then InfluxDB. Enter `telegraf` into the Database field
 
 ![Grafana Data Source](images/71_grafana-datasource.jpg)
 
@@ -139,7 +139,7 @@ Click on Add data source, then InfluxDB
 
 ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-menu.jpg)
 
-###  We will be importing an existing Dashboard
+###  Importing an existing Dashboard
 
 ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-menu.jpg)
 
