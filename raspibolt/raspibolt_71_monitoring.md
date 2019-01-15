@@ -99,11 +99,11 @@ Run the Grafana's docker image, replacing the `admin` password setting `PASSWORD
  docker run \
     -d \
     -e "GF_SECURITY_ADMIN_PASSWORD=PASSWORD_[A]" \
-    --name grafana-master \
+    --name grafana \
     -v grafana-storage:/var/lib/grafana \
     --restart always \
     --net=host \
-    grafana/grafana:master
+    grafana/grafana:5.4.3
 ```
 
 Confirm Grafana is running as a docker container by executing 
@@ -114,7 +114,7 @@ docker ps
 You should see something like this:
 ```
 CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS               NAMES
-3194df6aff01        grafana/grafana:master   "/run.sh"                About a minute ago   Up About a minute                       grafana-master
+3194df6aff01        grafana/grafana:master   "/run.sh"                About a minute ago   Up About a minute                       grafana
 b9f31d893601        hypriot/rpi-influxdb     "/usr/bin/entry.sh /…"   38 hours ago         Up 2 hours                              influxdb
 
 ```
