@@ -142,6 +142,7 @@ On your regular computer, configure Electrum to use your RaspiBolt:
   
 * This can also be achived by starting the Electrum wallet with the following command line arguments:  
   `--oneserver --server 192.168.0.20:50002:s`
+  > If you're running against testnet add `--testnet` to the command above, else the Electrum Wallet will remain disconnected
 
 ### Automate startup
 If everything works as expected, we will now automate the start of Electrum Personal Server on the RaspiBolt.
