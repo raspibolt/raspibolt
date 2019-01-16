@@ -16,7 +16,7 @@ You will need several passwords and I find it easiest to write them all down in 
 ```
 ![xkcd: Password Strength](images/20_xkcd_password_strength.png)
 
-If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like KeePass) and keep your original notes out of sight once your system is up and running.
+If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like [KeePass](https://keepass.info/)) and keep your original notes out of sight once your system is up and running.
 
 ## Preparing the operating system
 The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used. 
