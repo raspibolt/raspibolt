@@ -190,10 +190,11 @@ RestartSec=60
 WantedBy=multi-user.target
 ```
 
-* Enable and start LND  
+* Enable, start and unlock LND  
   `$ sudo systemctl enable lnd`  
   `$ sudo systemctl start lnd`  
-  `$ systemctl status lnd`  
+  `$ systemctl status lnd`
+  `$ lncli --network=testnet unlock`
 
 * Now, the daemon information is no longer displayed on the command line but written into the system journal. You can monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).  
   `$ sudo journalctl -f -u lnd`
