@@ -344,7 +344,7 @@ One of the best options to secure the SSH login is to completely disable the pas
 
 * Copy over your public key to the Raspberry Pi and set the file mode of the .ssh directory (Again, swap out your Pi's IP for RASPBERRY_PI_IP below). If your public key file is something other than `id_rsa.pub`, substitute its filename below:
 
-   `$ cat ~/.ssh/id_rsa.pub | ssh admin@RASPBERRY_PI_IP 'cat >> ~/.ssh/authorized_keys && sudo chmod -R 700 ~/.ssh/'`
+   `$ cat ~/.ssh/id_rsa.pub | ssh admin@RASPBERRY_PI_IP 'cat >> ~/.ssh/authorized_keys && sudo -S chmod -R 700 ~/.ssh/'`
 
 **Once the Raspberry Pi has a copy of your public key, we'll now disable password login:**
 
