@@ -19,7 +19,7 @@ This script will run as root, so please check it before blindly trusting me.
 ```
 $ sudo apt-get install jq
 $ cd /home/admin/download/
-$ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/20-raspibolt-welcome
+$ sudo wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/20-raspibolt-welcome
   
 # check script & exit
 $ nano 20-raspibolt-welcome
