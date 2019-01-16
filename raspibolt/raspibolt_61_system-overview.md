@@ -40,7 +40,7 @@ $ touch /root/.hushlogin
 $ exit
 ```
 
-You can now start the script with `raspibolt` and it is shown every time you log in.
+You can now start the script with `sudo raspibolt` and it is shown every time you log in.
 
 ------
 
