@@ -93,9 +93,12 @@ Some explanations about this configuration:
 
 ### Run LND
 
-Again, we first start the program manually as user "bitcoin" to check if everything works fine.
+Again, we switch to the user "bitcoin" and first start the program manually to check if everything works fine.
 
-`$ lnd`
+```
+$ sudo su - bitcoin
+$ lnd
+```
 
 The daemon prints the status information directly to the command line. This means that we cannot use that session without stopping the server. We need to open a second SSH session.
 
