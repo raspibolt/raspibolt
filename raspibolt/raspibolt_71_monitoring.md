@@ -56,6 +56,27 @@ Running InfluxDB with auto-restart in the event of a system restart
 $ docker run -d --name=influxdb --net=host --restart always --volume=/var/influxdb:/data hypriot/rpi-influxdb 
 ```
 
+Add a retention policy so we don't have to worry about the InfluxDb growing in size
+```
+admin@RaspiBolt:~ $ docker ps
+CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS               NAMES
+0d209e38b24f        badokun/lnd-metrics:arm32   "./lnd-metrics --inf…"   43 hours ago        Up 5 hours                              lnd-metrics-arm32
+9557f9e7ad87        grafana/grafana:5.4.3       "/run.sh"                45 hours ago        Up 5 hours                              grafana
+b9f31d893601        hypriot/rpi-influxdb        "/usr/bin/entry.sh /…"   6 days ago          Up 5 hours                              influxdb
+a
+```
+
+Use the influxDb's `CONTAINER ID`. In the example above it's `b9f31d893601`
+
+```
+docker exec -it b9f31d893601 /usr/bin/influx
+USE telegraf
+CREATE RETENTION POLICY "six_months" ON "telegraf" DURATION 180d REPLICATION 1 DEFAULT
+SHOW RETENTION POLICIES ON "telegraf"
+```
+
+Enter `exit` to quit
+
 # [Telegraf](https://docs.influxdata.com/telegraf)
 
 ```
