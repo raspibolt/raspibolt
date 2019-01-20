@@ -93,9 +93,12 @@ Some explanations about this configuration:
 
 ### Run LND
 
-Again, we first start the program manually as user "bitcoin" to check if everything works fine.
+Again, we switch to the user "bitcoin" and first start the program manually to check if everything works fine.
 
-`$ lnd`
+```
+$ sudo su - bitcoin
+$ lnd
+```
 
 The daemon prints the status information directly to the command line. This means that we cannot use that session without stopping the server. We need to open a second SSH session.
 
@@ -193,10 +196,11 @@ RestartSec=60
 WantedBy=multi-user.target
 ```
 
-* Enable and start LND  
+* Enable, start and unlock LND  
   `$ sudo systemctl enable lnd`  
   `$ sudo systemctl start lnd`  
-  `$ systemctl status lnd`  
+  `$ systemctl status lnd`
+  `$ lncli --network=testnet unlock`
 
 * Now, the daemon information is no longer displayed on the command line but written into the system journal. You can monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).  
   `$ sudo journalctl -f -u lnd`
