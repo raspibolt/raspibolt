@@ -70,6 +70,7 @@ Use the influxDb's `CONTAINER ID`. In the example above it's `b9f31d893601`
 
 ```
 docker exec -it b9f31d893601 /usr/bin/influx
+CREATE DATABASE telegraf
 USE telegraf
 CREATE RETENTION POLICY "six_months" ON "telegraf" DURATION 180d REPLICATION 1 DEFAULT
 SHOW RETENTION POLICIES ON "telegraf"
