@@ -17,7 +17,7 @@ To get a quick overview over the system status, I created [a shell script](https
 This script will run as root, so please check it before blindly trusting me.
 
 ```
-$ sudo apt-get install jq
+$ sudo apt-get install jq net-tools
 $ cd /home/admin/download/
 $ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/20-raspibolt-welcome
   
@@ -40,7 +40,7 @@ $ touch /root/.hushlogin
 $ exit
 ```
 
-You can now start the script with `raspibolt` and it is shown every time you log in.
+You can now start the script with `sudo raspibolt` and it is shown every time you log in.
 
 ------
 
