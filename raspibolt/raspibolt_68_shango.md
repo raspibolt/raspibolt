@@ -60,7 +60,7 @@ This guide describes how to use Shango from within your own network, the same th
   echo -e "$(curl -s ipinfo.io/ip),\n$(xxd -p -c2000 ~/.lnd/data/chain/bitcoin/$NETWORK/admin.macaroon)," > qr.txt && qrencode -t ANSIUTF8 < qr.txt
   ```
 
-* In the app, the input field "IP:Port" is filled with your external ip address. Make sure to replace it with your internal ip address (eg. 192.168.0.20).  
+* In the app, the input field "IP:Port" is filled with your external ip address. Make sure to replace it with your internal ip address (eg. `192.168.0.20:10009`).  
 * Click on "Connect" and the app should sync with your RaspiBolt.
 
 ---
