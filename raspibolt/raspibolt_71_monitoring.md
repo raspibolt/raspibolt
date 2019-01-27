@@ -141,6 +141,13 @@ b9f31d893601        hypriot/rpi-influxdb     "/usr/bin/entry.sh /…"   38 hours
 
 ```
 
+We need to modify the firewall configuration to allow for port 3000. 
+> Note the IP address range, yours may be 192.168.0.0/24
+
+```
+ufw allow from 192.168.1.0/24 to any port 3000 comment 'allow grafana from local LAN'
+```
+
 At this point we can start to setup a Grafana's Dashboard.
 
 Browse to `http://192.168.1.40:3000` in your browser and replace the IP address with your RaspiBolt's.
