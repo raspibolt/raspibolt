@@ -92,14 +92,14 @@ We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winsc
 
 
 * Fill in the next screen:  
-  `your.RaspiBolt.LAN.IP:10009`  
-  `~/tls.cert`  
-  `~/admin.macaroon`  
+  Host: `192.168.0.20:10009` (use your own RaspiBolt ip address)  
+  TLS Certificate: `C:\path\to\your\tls.cert`  
+  Macaroon: `C:\path\to\your\admin.macaroon`  
   ![Zap connection configuration](images/71_zap_desktop2.png)
-
+ 
 * Confirm the settings on the following screen and you are done!
 
-![Zap Desktop wallet](images/71_zap_desktop.png)
+![Zap Desktop wallet](images/71_zap_desktop4.png)
 
 ------
 
