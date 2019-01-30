@@ -24,30 +24,35 @@ There are a few required pieces to get this working. They are:
 > Reference: Thanks to Pete Shima's [medium post](https://medium.com/@petey5000/monitoring-your-home-network-with-influxdb-on-raspberry-pi-with-docker-78a23559ffea) that helped greatly in setting this up.
 
 # [Docker](https://www.docker.com)
+Docker is a computer program that performs operating-system-level virtualization, also known as "containerization". It was first released in 2013 and is developed by Docker, Inc. (source: [Wikipedia](https://en.wikipedia.org/wiki/Docker_(software)))
 
-Install docker by running the following commands
-```
-$ cd download/
-$ curl -fsSL get.docker.com -o get-docker.sh
-$ sudo sh get-docker.sh
-```
+* Install Docker by executing the official install script.
+  ```
+  $ cd download/
+  $ curl -fsSL get.docker.com -o get-docker.sh
+  $ sudo sh get-docker.sh
+  ```
 
-Confirm that it's working
-```
-$ sudo docker --version
-Docker version 18.09.0, build 4d60db4
-```
+* Confirm that Docker is installed correctly.
+  ```
+  $ docker --version
+  Docker version 18.09.0, build 4d60db4
+  ```
 
-If you're willing to take the security risk as [outlined here](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface) you can execute `docker` commands without the `sudo` prefix, alternatively include `sudo` before all docker commands that follow in this guide
+* If you're willing to take the security risk as [outlined here](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface) you can execute `docker` commands without the `sudo` prefix, alternatively include `sudo` before all docker commands that follow in this guide.
+  ```
+  $ sudo usermod -aG docker $USER
+  ```
 
-```
-$ sudo usermod -aG docker $USER
-```
-
-Logout and connect again for the changes to take effect, and test with the command below
-```
-$ docker run hello-world
-```
+* Restart your RaspiBolt for the changes to take effect and connect as user "admin".
+  ```
+  $ sudo shutdown -r now
+  ```
+* Now test Docker by running the "Hello world" image. As it is not yet locally available, Docker automatically retrieves it from the [Docker Hub](https://hub.docker.com/), starts it up and executes the container. You might need to use "sudo" if you skipped the "usermod" step above.
+  ```
+    $ docker run hello-world
+  ```
+  ![Output of Docker hello-world container](images/71_Docker_hello-world.png)
 
 # [InfluxDB](https://www.influxdata.com/)
 
