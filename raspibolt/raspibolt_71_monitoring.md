@@ -9,6 +9,9 @@
 ## Bonus guide: Performance Monitoring
 *Difficulty: intermediate*
 
+> Guide by [Badokun](https://github.com/badokun)  
+> Reference: Thanks to Pete Shima's [medium post](https://medium.com/@petey5000/monitoring-your-home-network-with-influxdb-on-raspberry-pi-with-docker-78a23559ffea) that helped greatly in setting this up.
+
 It's useful to have insights into RaspiBolt's performance metrics. This may help in debugging all sorts of potential problems, e.g. network latency, CPU performance, block propagation etc. 
 
 Observing anomolies and doing performance tuning is greatly improved when you have these insights.
@@ -21,14 +24,12 @@ There are a few required pieces to get this working. They are:
 - Telegraf
 - Grafana
 
-> Reference: Thanks to Pete Shima's [medium post](https://medium.com/@petey5000/monitoring-your-home-network-with-influxdb-on-raspberry-pi-with-docker-78a23559ffea) that helped greatly in setting this up.
-
-# [Docker](https://www.docker.com)
-Docker is a computer program that performs operating-system-level virtualization, also known as "containerization". It was first released in 2013 and is developed by Docker, Inc. (source: [Wikipedia](https://en.wikipedia.org/wiki/Docker_(software)))
+## Docker
+[Docker](https://www.docker.com) is a computer program that performs operating-system-level virtualization, also known as "containerization". It was first released in 2013 and is developed by Docker, Inc. (source: [Wikipedia](https://en.wikipedia.org/wiki/Docker_(software)))
 
 * Install Docker by executing the official install script.
   ```
-  $ cd download/
+  $ cd /home/admin/download
   $ curl -fsSL get.docker.com -o get-docker.sh
   $ sudo sh get-docker.sh
   ```
@@ -39,152 +40,142 @@ Docker is a computer program that performs operating-system-level virtualization
   Docker version 18.09.0, build 4d60db4
   ```
 
-* If you're willing to take the security risk as [outlined here](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface) you can execute `docker` commands without the `sudo` prefix, alternatively include `sudo` before all docker commands that follow in this guide.
-  ```
-  $ sudo usermod -aG docker $USER
-  ```
-
 * Restart your RaspiBolt for the changes to take effect and connect as user "admin".
   ```
   $ sudo shutdown -r now
   ```
+
 * Now test Docker by running the "Hello world" image. As it is not yet locally available, Docker automatically retrieves it from the [Docker Hub](https://hub.docker.com/), starts it up and executes the container. You might need to use "sudo" if you skipped the "usermod" step above.
   ```
-    $ docker run hello-world
+    $ sudo docker run hello-world
   ```
   ![Output of Docker hello-world container](images/71_Docker_hello-world.png)
 
-# [InfluxDB](https://www.influxdata.com/)
+## InfluxDB
+[InfluxDB](https://www.influxdata.com/) is an open-source time series database (TSDB) developed by InfluxData. It is written in Go and optimized for fast, high-availability storage and retrieval of time series data in fields such as operations monitoring, application metrics, Internet of Things sensor data, and real-time analytics. (source: [Wikipedia](https://en.wikipedia.org/wiki/InfluxDB)) 
 
-Running InfluxDB with auto-restart in the event of a system restart
-```
-$ docker run -d --name=influxdb --net=host --restart always --volume=/var/influxdb:/data hypriot/rpi-influxdb 
-```
+* Start the InfluxDB Docker image with auto-restart in the event of a system restart.
+  ```
+  $ sudo docker run -d --name=influxdb --net=host --restart always --volume=/var/influxdb:/data hypriot/rpi-influxdb 
+  ```
 
-Add a retention policy so we don't have to worry about the InfluxDb growing in size
-```
-admin@RaspiBolt:~ $ docker ps
-CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS               NAMES
-0d209e38b24f        badokun/lnd-metrics:arm32   "./lnd-metrics --inf…"   43 hours ago        Up 5 hours                              lnd-metrics-arm32
-9557f9e7ad87        grafana/grafana:5.4.3       "/run.sh"                45 hours ago        Up 5 hours                              grafana
-b9f31d893601        hypriot/rpi-influxdb        "/usr/bin/entry.sh /…"   6 days ago          Up 5 hours                              influxdb
-a
-```
+* Add a retention policy so we don't have to worry about the InfluxDb growing in size
+  ```
+  $ sudo docker ps
+  CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS               NAMES
+  b9f31d893601        hypriot/rpi-influxdb        "/usr/bin/entry.sh /…"   5 minutes ago       Up 5 minutes                              influxdb
+  ```
 
-Use the influxDb's `CONTAINER ID`. In the example above it's `b9f31d893601`
+* Use the influxdb `CONTAINER ID`, in the example above it's `b9f31d893601`, to open the Influx commandline interface. Enter the commands on lines with `>` directly into the CLI, without the `>`. 
+  ```
+  $ docker exec -it b9f31d893601 /usr/bin/influx
+  > CREATE DATABASE telegraf
+  > USE telegraf
+  Using database telegraf
+  > CREATE RETENTION POLICY "six_months" ON "telegraf" DURATION 180d REPLICATION 1 DEFAULT
+  > SHOW RETENTION POLICIES ON "telegraf"
+  name       duration  shardGroupDuration replicaN default
+  ----       --------  ------------------ -------- -------
+  autogen    0s        168h0m0s           1        false
+  six_months 4320h0m0s 168h0m0s           1        true
+  
+  > exit
+  ```
 
-```
-docker exec -it b9f31d893601 /usr/bin/influx
-CREATE DATABASE telegraf
-USE telegraf
-CREATE RETENTION POLICY "six_months" ON "telegraf" DURATION 180d REPLICATION 1 DEFAULT
-SHOW RETENTION POLICIES ON "telegraf"
-```
+## Telegraf 
+[Telegraf](https://docs.influxdata.com/telegraf) is a plugin-driven server agent for collecting & reporting metrics. It has output plugins to send metrics to a variety of other datastores, services, and message queues, including InfluxDB. 
 
-Enter `exit` to quit
+* Download and install the Telegraf package.
+  ```
+  $ cd /home/admin/download
+  $ wget https://dl.influxdata.com/telegraf/releases/telegraf_1.7.0-1_armhf.deb
+  $ sudo dpkg -i telegraf_1.7.0-1_armhf.deb
+  $ rm telegraf_1.7.0-1_armhf.deb
+  ```
 
-# [Telegraf](https://docs.influxdata.com/telegraf)
+* Telegraf is now installed service. Confirm and check if the program has been started successfully. Press `Ctrl-C` to exit.
+  ```
+  $ sudo systemctl status telegraf
+  ```
 
-```
-$ wget https://dl.influxdata.com/telegraf/releases/telegraf_1.7.0-1_armhf.deb
-$ sudo dpkg -i telegraf_1.7.0-1_armhf.deb
-$ rm telegraf_1.7.0-1_armhf.deb
-$ sudo systemctl status telegraf
-```
+* Configure Telegraf by downloading this custom [`telegraf.conf`](https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/telegraf.conf) so that it publishes the data we can use later in the Grafana dashboard.
 
-This would have installed Telegraf as a service. Confirm by running:
-```
-$ sudo systemctl status telegraf
-```
+  ```
+  $ cd /etc/telegraf/
+  $ sudo mv telegraf.conf telegraf.conf.bak
+  $ sudo wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/telegraf.conf
+  $ sudo systemctl restart telegraf
+  ```
 
-Enter `Ctrl-C` or `q` to exit after entering the status command above
+## Grafana
+[Grafana](https://grafana.com/) is an open source platform for time series analytics and monitoring. 
 
-We need to update the `telegraf.conf` so it publishes the data we'll be using later in our Grafana dashboard
+* Write down a strong password to access Grafana administration features
+  ```
+  [ E ] Grafana Admin password
+  ```
 
-```
-cd /etc/telegraf/
-sudo cp telegraf.conf telegraf.conf.bak
-sudo rm telegraf.conf
-sudo wget https://raw.githubusercontent.com/badokun/guides/master/raspibolt/resources/telegraf.conf
-sudo systemctl restart telegraf
-```
+* Create persistent storage for your Grafana configurationso, keeping it also during future upgrades.
+  ```
+  $ sudo docker volume create grafana-storage
+  ```
 
-# [Grafana](https://grafana.com/)
+* Run the Grafana's docker image, replacing the `admin` password setting `PASSWORD_[E]` with your password. This will be used when logging into Grafana's UI. Copy / paste all lines at once into your terminal.
 
-```
-[ A ] Grafana Admin password
-```
-
-Create persistent storage for Grafana so when it's upgraded in future you won't lose all your configuration
-```
-docker volume create grafana-storage
-```
-
-Run the Grafana's docker image, replacing the `admin` password setting `PASSWORD_[A]` with your password. This will be used when logging into Grafana's UI
-
-```
- docker run \
+  ```
+  $ sudo docker run \
     -d \
-    -e "GF_SECURITY_ADMIN_PASSWORD=PASSWORD_[A]" \
+    -e "GF_SECURITY_ADMIN_PASSWORD=PASSWORD_[E]" \
     --name grafana \
     -v grafana-storage:/var/lib/grafana \
-    --restart always \
+    --restart always \d
     --net=host \
     grafana/grafana:5.4.3
-```
+  ```
 
-Confirm Grafana is running as a docker container by executing 
-```
-docker ps
-```
+* Confirm Grafana is running as a docker container. 
+  ```
+  $ sudo docker ps
+  ```
+  ```
+  CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS               NAMES
+  3194df6aff01        grafana/grafana:master   "/run.sh"                About a minute ago   Up About a minute                       grafana
+  b9f31d893601        hypriot/rpi-influxdb     "/usr/bin/entry.sh /…"   30 minutes ago         Up 30 minutes                              influxdb
+  ```
 
-You should see something like this:
-```
-CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS               NAMES
-3194df6aff01        grafana/grafana:master   "/run.sh"                About a minute ago   Up About a minute                       grafana
-b9f31d893601        hypriot/rpi-influxdb     "/usr/bin/entry.sh /…"   38 hours ago         Up 2 hours                              influxdb
+* To access the analytics webpage, we need to modify the firewall configuration to allow incomming connections to port 3000. 
+> Note the IP address range, yours may be 192.168.1.0/24 or different (see [base guide](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall) for further information).
+  ```
+  $ sudo ufw allow from 192.168.0.0/24 to any port 3000 comment 'allow grafana from local LAN'
+  ```
 
-```
-
-We need to modify the firewall configuration to allow for port 3000. 
-> Note the IP address range, yours may be 192.168.0.0/24
-
-```
-ufw allow from 192.168.1.0/24 to any port 3000 comment 'allow grafana from local LAN'
-```
-
-At this point we can start to setup a Grafana's Dashboard.
-
-Browse to `http://192.168.1.40:3000` in your browser and replace the IP address with your RaspiBolt's.
-
-After logging  into the Grafana website with `admin` and `PASSWORD_[A]` you should see this
+At this point the basic setup is complete and we can start to setup a Grafana Dashboard. Browse to `http://192.168.0.20:3000` in your browser (use the IP address of your RaspiBolt) and log in with `admin` and `PASSWORD_[E]`. 
 
 ![Grafana Home](images/71_grafana-home.jpg)
 
-## Add a data source
+### Add a data source
 
-Click on Add data source, then InfluxDB. Enter `telegraf` into the Database field
+Click on "Add data source", then "InfluxDB". Enter `telegraf` into the Database field
 
 ![Grafana Data Source](images/71_grafana-datasource.jpg)
 
-## Add a Dashboard
+### Add a Dashboard
 
-### Locate the shortcut to the left of the page and click on Manage
+* Locate the shortcut to the left of the page and click on Manage
 
-![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-menu.jpg)
+  ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-menu.jpg)
 
-###  Importing an existing Dashboard
+* Importing an existing Dashboard
 
-![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-menu.jpg)
+  ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-menu.jpg)
 
-### Enter the Grafana Dashboard Id of `9653` and click Load
-![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import.jpg)
+* Enter the Grafana Dashboard Id of `9653` and click Load
+  ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import.jpg)
 
-### Select the InfluxDB from the drop down list and click on Import
+* Select the InfluxDB from the drop down list and click on Import
+  ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-done.jpg)
 
-![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-import-done.jpg)
-
-### You should see the dashboard in all its glory
+## You should see the dashboard in all its glory
 
 ![Grafana Dashboard Menu](images/71_grafana-manage-dashboard-success.jpg)
 
