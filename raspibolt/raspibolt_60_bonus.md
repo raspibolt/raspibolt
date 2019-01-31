@@ -82,15 +82,6 @@ Difficulty: easy
 
 These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
 
-## [**Zap Desktop Lightning Wallet**](raspibolt_71_zap.md)
-
-*Difficulty: medium*
-
-
-The desktop app ZAP (https://github.com/LN-Zap/zap-desktop) is a cross platform Lightning Network wallet focused on user experience and ease of use.
-
-![](images/71_zap1_cropped.png)
-
 ## Even more Extras 
 
 **[RaspiBolt-Extras](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md)** by Rob Clark
