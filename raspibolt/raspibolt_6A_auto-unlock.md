@@ -23,8 +23,14 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   `$ sudo mkdir /etc/lnd`   
   `$ sudo nano /etc/lnd/pwd` 
 
-* The following script unlocks the LND wallet through its web service (REST interface). Copy it into a new file. The initial sleep delay waits for `lnd` to be ready. 3 minutes (180s) seem to work fine, but that can be adjusted if you run into timeout issues.   
-  `$ sudo nano /etc/lnd/unlock`   
+* The following script unlocks the LND wallet through its web service (REST interface). Some additional information:
+  * The script checks if the Pi has just booted or if just the service restarted. Depending on that, it waits for either 3 minutes (180s) or 10 seconds for `lnd` to be ready. This seem to work fine, but you can be adjust the sleep time if you run into timeout issues.
+  * This script automatically detects whether you are on Bitcoin testnet or mainnet.
+  * The output of the API call is appended to the file `debug.log`. Check here first if your wallet just does not unlock (you won't see another error).
+  * All automatic unlocks are recorded in `audit.log`.
+
+* Copy the following script it into a new file.  
+ `$ sudo nano /etc/lnd/unlock`   
 
   ```bash
   #!/bin/sh
@@ -50,9 +56,9 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
           -H "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000 ${LN_ROOT}/data/chain/bitcoin/${chain}net/admin.macaroon))" \
           --cacert ${LN_ROOT}/tls.cert \
           -X POST -d "{\"wallet_password\": \"$(cat /etc/lnd/pwd | tr -d '\n' | base64 -w0)\"}" \
-          https://localhost:8080/v1/unlockwallet > /dev/null 2>&1
+          https://localhost:8080/v1/unlockwallet >> /etc/lnd/debug.log 2>&1
   
-  echo "$? $(date)" >> /etc/lnd/unlocks.log
+  echo "$? $(date)" >> /etc/lnd/audit.log
   exit 0
   ```
 

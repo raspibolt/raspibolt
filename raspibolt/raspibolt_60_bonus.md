@@ -24,6 +24,14 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 Manually unlocking the LND wallet every time the system starts is not really feasible if your RaspiBolt is meant to run reliably somewhere in a closet. This script automatically unlocks the wallet on startup or service-restart. This comes at a minimal security cost, however, as the password needs to be stored on the device.
 
+## [**Anonymous node with Tor**](raspibolt_69_tor.md)
+
+*Difficulty: medium*
+
+Route all your Bitcoin traffic over the Tor network to stay anonymous and avoid leaking private information like your public IP address.
+
+[![Tor](images/69_tor.png)](raspibolt_69_tor.md)
+
 ## [**Electrum Personal Server**](raspibolt_64_electrum.md)
 
 *Difficulty: intermediate*
@@ -32,6 +40,14 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 
 [![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md)
 
+## [**Zap Desktop Lightning Wallet**](raspibolt_71_zap.md)
+
+*Difficulty: easy*
+
+The Zap desktop app (https://github.com/LN-Zap/zap-desktop) is a cross platform Lightning Network wallet focused on user experience and ease of use.
+
+![Zap Desktop](images/71_zap1_cropped.png)
+
 ## [**Shango Mobile Wallet**](raspibolt_68_shango.md)
 
 *Difficulty: intermediate*
@@ -39,14 +55,6 @@ The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain
 The iOS & Android app Shango provides a neat interface for the RaspiBolt, to manage peers & channels, make payments and create invoices.
 
 [![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
-
-## [**Anonymous node with Tor**](raspibolt_69_tor.md)
-
-*Difficulty: medium*
-
-Route all your Bitcoin traffic over the Tor network to stay anonymous and avoid leaking private information like your public IP address.
-
-[![Tor](images/69_tor.png)](raspibolt_69_tor.md)
 
 ## [**Pimp the command line**](raspibolt_62_commandline.md)
 
