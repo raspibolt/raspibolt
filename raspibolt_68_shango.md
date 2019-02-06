@@ -25,6 +25,7 @@ This guide describes how to use Shango from within your own network, the same th
 
    ```bash
    rpclisten=0.0.0.0:10009
+   tlsextraip=192.168.0.0/24  #<-- change this to fit your ip mask, if might bit 192.168.1.0/24
    ```
 
 * Open port 10009 so that Shango wallet can talk to your Lightning node, but only from within the local network (The line ```sudo ufw allow from 192.168.0.0/24…``` below assumes that the IP address of your Pi is something like ```192.168.0.???```, the ??? being any number from 0 to 255. If, for example, your IP address is ```12.34.56.78```, you must adapt this line to ```sudo ufw allow from 12.34.56.0/24…```., see [more details](raspibolt_20_pi.md#hardening-your-pi))  
