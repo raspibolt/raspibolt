@@ -25,6 +25,7 @@ This guide describes how to use Shango from within your own network, the same th
   `$ sudo nano /home/bitcoin/.lnd/lnd.conf`
    ```
    rpclisten=0.0.0.0:10009
+   tlsextraip=192.168.0.0/24  #<-- change this to fit your ip mask, if might bit 192.168.1.0/24
    ```
 
 * Open port 10009 so that Shango wallet can talk to your Lightning node, but only from within the local network (you might need to adjust the ip mask, see [more details](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_20_pi.md#hardening-your-pi))  
