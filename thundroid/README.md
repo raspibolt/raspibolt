@@ -362,7 +362,7 @@ We will download the software directly from bitcoin.org, verify its signature to
 
 We download the latest Bitcoin Core binaries (the application) and  compare the file with the signed checksum. This is a precaution to make  sure that this is an official release and not a malicious version trying  to steal our money.
 
-Get the latest download links at [bitcoin.org/en/download](), they change  with each update. Then run the following  commands (with adjusted  filenames) and check the output where indicated.
+Get the latest download links at [bitcoin.org/en/download](https://bitcoin.org/en/download), they change  with each update. Then run the following  commands (with adjusted  filenames) and check the output where indicated.
 
 ```bash
 # download Bitcoin Core binary
