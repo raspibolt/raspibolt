@@ -82,7 +82,7 @@ We are using "Secure Copy" (SCP), so [download and install WinSCP](https://winsc
   `$ scp admin@your.RaspiBolt.LAN.IP:/home/admin/.lnd/tls.cert ~/`
 
 * Copy the admin.macaroon to your home directory:  
-  `$ scp admin@your.RaspiBolt.LAN.IP:/home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon ~/`
+  `$ scp root@your.RaspiBolt.LAN.IP:/home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon ~/`
 
 ### Configure Zap
 
