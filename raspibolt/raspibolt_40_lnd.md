@@ -31,7 +31,7 @@ $ gpg --verify manifest-v0.5.2-beta.txt.sig
 $ tar -xzf lnd-linux-armv7-v0.5.2-beta.tar.gz
 $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5.2-beta/*
 $ lnd --version
-> lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
+> lnd version 0.5.2-beta commit=v0.5.2-beta-rc7
 ```
 ![Checksum LND](images/40_checksum_lnd.png)
 
