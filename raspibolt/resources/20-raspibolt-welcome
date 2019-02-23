@@ -39,7 +39,7 @@ else
 fi
 
 # get storage
-sd_free_ratio=$(printf "%d" "$(df -h | grep "/$" | awk '{ print $4/$2*100 }')") 2>/dev/null
+sd_free_ratio=$(printf "%d" "$(df | grep "/$" | awk '{ print $4/$2*100 }')") 2>/dev/null
 sd=$(printf "%s (%s%%)" "$(df -h | grep '/$' | awk '{ print $4 }')" "${sd_free_ratio}")
 if [ ${sd_free_ratio} -lt 10 ]; then
   color_sd="${color_red}"
@@ -47,7 +47,7 @@ else
   color_sd=${color_green}
 fi
 
-hdd_free_ratio=$(printf "%d" "$(df -h | grep ${ext_hdd} | awk '{ print $4/$2*100 }')") 2>/dev/null
+hdd_free_ratio=$(printf "%d" "$(df  | grep ${ext_hdd} | awk '{ print $4/$2*100 }')") 2>/dev/null
 hdd=$(printf "%s (%s%%)" "$(df -h | grep ${ext_hdd} | awk '{ print $4 }')" "${hdd_free_ratio}")
 
 if [ ${hdd_free_ratio} -lt 10 ]; then
