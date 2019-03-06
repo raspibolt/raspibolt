@@ -184,10 +184,10 @@ fi
 
 sum_balance=0
 if [ ! -z "$ln_channelbalance" ]; then
- sum_balance=$(expr $ln_channelbalance + $sum_balance))
+ sum_balance=$(expr $ln_channelbalance + $sum_balance )
 fi
 if [ ! -z "$ln_walletbalance" ]; then
- sum_balance=$(expr $ln_walletbalance + $sum_balance))
+ sum_balance=$(expr $ln_walletbalance + $sum_balance )
 fi
 if [ ! -z "$ln_pendinglocal" ]; then
   sum_balance=$(expr $sum_balance + $ln_pendinglocal )
