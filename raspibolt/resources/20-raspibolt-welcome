@@ -136,7 +136,7 @@ else
   macaroon_path="${lnd_dir}/data/chain/bitcoin/mainnet/readonly.macaroon"
 fi
 
-$lncli="/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert"
+lncli="/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert"
 $lncli getinfo 2>&1 | grep "Please unlock" >/dev/null
 wallet_unlocked=$?
 if [ "$wallet_unlocked" -eq 0 ] ; then
