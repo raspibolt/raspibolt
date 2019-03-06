@@ -153,17 +153,45 @@ else
  ln_walletbalance="$($lncli walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
  ln_channelbalance="$($lncli channelbalance | jq -r '.balance')" 2>/dev/null
 
-fi
-ln_channels_online="$($lncli getinfo | jq -r '.num_active_channels')" 2>/dev/null
-ln_channels_total="$($lncli listchannels | jq '.[] | length')" 2>/dev/null
-ln_external="$($lncli getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
-ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
-if [ "$ln_external_ip" = "$public_ip" ]; then
+ ln_channels_online="$($lncli getinfo | jq -r '.num_active_channels')" 2>/dev/null
+ ln_channels_total="$($lncli listchannels | jq '.[] | length')" 2>/dev/null
+ ln_external="$($lncli getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
+ ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
+ if [ "$ln_external_ip" = "$public_ip" ]; then
   external_color="${color_grey}"
-else
+ else
   external_color="${color_red}"
+ fi
+
+ ln_pendingopen=$($lncli pendingchannels  | jq '.pending_open_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_pendingopen ]; then
+  ln_pendingopen=0
+ fi  
+
+ ln_pendingforce=$($lncli pendingchannels  | jq '.pending_force_closing_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_pendingforce ]; then
+  ln_pendingforce=0
+ fi
+
+ ln_waitingclose=$($lncli pendingchannels  | jq '.waiting_close_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_waitingclose ]; then
+  ln_waitingclose=0
+ fi
+
+ ln_pendinglocal=$(expr $ln_pendingopen + $ln_pendingforce + $ln_pendingclose + $ln_waitingclose)
+
 fi
 
+sum_balance=0
+if [ ! -z "$ln_channelbalance" ]; then
+ sum_balance=$(expr $ln_channelbalance + $sum_balance))
+fi
+if [ ! -z "$ln_walletbalance" ]; then
+ sum_balance=$(expr $ln_walletbalance + $sum_balance))
+fi
+if [ ! -z "$ln_pendinglocal" ]; then
+  sum_balance=$(expr $sum_balance + $ln_pendinglocal )
+fi
 
 printf "
 ${color_green}    .~~.   .~~.      ${color_yellow}%s: ${color_gray}Bitcoin Core & LND
