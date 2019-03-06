@@ -102,6 +102,11 @@ if [ -n ${btc_path} ]; then
 
     # get mem pool transactions
     mempool="$(bitcoin-cli -datadir=${bitcoin_dir} getmempoolinfo | jq -r '.size')"
+    
+    # get connection info
+    connections="$(bitcoin-cli -datadir=${bitcoin_dir} getnetworkinfo | jq .connections)"
+    inbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == true)' | jq -s 'length')"
+    outbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == false)' | jq -s 'length')"
 
   else
     btc_line2="${color_red}NOT RUNNING\t\t"
@@ -171,6 +176,8 @@ ${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_g
 ${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s ${color_gray}%s/%s Channels
 ${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ฿ %12s sat
 ${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool %-14s 🗲 %12s sat
+${color_grey}                                              Connections %-10s ⌛%12s sat
+${color_grey}                                                   In/Out %-10s ∑ %12s sat
 ${color_red}                     ${color_yellow}%s
 %s %s
 " \
@@ -183,6 +190,8 @@ ${color_red}                     ${color_yellow}%s
 "${hdd}" "${public}" "${ln_channels_online}" "${ln_channels_total}" \
 "${network_tx}" "${public_addr}" "${ln_walletbalance}" \
 "${network_rx}" "${mempool} tx" "${ln_channelbalance}" \
+"$connections" "$ln_pendinglocal" \
+"$inbound/$outbound" "$sum_balance" \
 ""
 
 echo "$(tput -T xterm sgr0)"
