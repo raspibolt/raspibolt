@@ -9,6 +9,7 @@ Login as admin onto the LND node.
 Add the following line to your lnd configuration file in the section [Application Options]
 
 $ sudo nano /home/bitcoin/.lnd/lnd.conf
+
 rpclisten=0.0.0.0:10009
 
 Open UFW port 10009 so that ZAP-IOS wallet can talk to your Lightning node.
