@@ -102,6 +102,11 @@ if [ -n ${btc_path} ]; then
 
     # get mem pool transactions
     mempool="$(bitcoin-cli -datadir=${bitcoin_dir} getmempoolinfo | jq -r '.size')"
+    
+    # get connection info
+    connections="$(bitcoin-cli -datadir=${bitcoin_dir} getnetworkinfo | jq .connections)"
+    inbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == true)' | jq -s 'length')"
+    outbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == false)' | jq -s 'length')"
 
   else
     btc_line2="${color_red}NOT RUNNING\t\t"
@@ -136,28 +141,57 @@ else
   macaroon_path="${lnd_dir}/data/chain/bitcoin/mainnet/readonly.macaroon"
 fi
 
-/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert getinfo 2>&1 | grep "Please unlock" >/dev/null
+lncli="/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert"
+$lncli getinfo 2>&1 | grep "Please unlock" >/dev/null
 wallet_unlocked=$?
 if [ "$wallet_unlocked" -eq 0 ] ; then
  alias_color="${color_red}"
  ln_alias="Wallet Locked"
 else
  alias_color="${color_grey}"
-ln_alias="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.alias')" 2>/dev/null
- ln_walletbalance="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
- ln_channelbalance="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert channelbalance | jq -r '.balance')" 2>/dev/null
+ ln_alias="$($lncli getinfo | jq -r '.alias')" 2>/dev/null
+ ln_walletbalance="$($lncli walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
+ ln_channelbalance="$($lncli channelbalance | jq -r '.balance')" 2>/dev/null
 
-fi
-ln_channels_online="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.num_active_channels')" 2>/dev/null
-ln_channels_total="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert listchannels | jq '.[] | length')" 2>/dev/null
-ln_external="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
-ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
-if [ "$ln_external_ip" = "$public_ip" ]; then
+ ln_channels_online="$($lncli getinfo | jq -r '.num_active_channels')" 2>/dev/null
+ ln_channels_total="$($lncli listchannels | jq '.[] | length')" 2>/dev/null
+ ln_external="$($lncli getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
+ ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
+ if [ "$ln_external_ip" = "$public_ip" ]; then
   external_color="${color_grey}"
-else
+ else
   external_color="${color_red}"
+ fi
+
+ ln_pendingopen=$($lncli pendingchannels  | jq '.pending_open_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_pendingopen ]; then
+  ln_pendingopen=0
+ fi  
+
+ ln_pendingforce=$($lncli pendingchannels  | jq '.pending_force_closing_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_pendingforce ]; then
+  ln_pendingforce=0
+ fi
+
+ ln_waitingclose=$($lncli pendingchannels  | jq '.waiting_close_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_waitingclose ]; then
+  ln_waitingclose=0
+ fi
+
+ ln_pendinglocal=$(expr $ln_pendingopen + $ln_pendingforce + $ln_pendingclose + $ln_waitingclose)
+
 fi
 
+sum_balance=0
+if [ ! -z "$ln_channelbalance" ]; then
+ sum_balance=$(expr $ln_channelbalance + $sum_balance )
+fi
+if [ ! -z "$ln_walletbalance" ]; then
+ sum_balance=$(expr $ln_walletbalance + $sum_balance )
+fi
+if [ ! -z "$ln_pendinglocal" ]; then
+  sum_balance=$(expr $sum_balance + $ln_pendinglocal )
+fi
 
 printf "
 ${color_green}    .~~.   .~~.      ${color_yellow}%s: ${color_gray}Bitcoin Core & LND
@@ -170,6 +204,8 @@ ${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_g
 ${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s ${color_gray}%s/%s Channels
 ${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ฿ %12s sat
 ${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool %-14s 🗲 %12s sat
+${color_grey}                                              Connections %-10s ⌛%12s sat
+${color_grey}                                                   In/Out %-10s ∑ %12s sat
 ${color_red}                     ${color_yellow}%s
 %s %s
 " \
@@ -182,6 +218,8 @@ ${color_red}                     ${color_yellow}%s
 "${hdd}" "${public}" "${ln_channels_online}" "${ln_channels_total}" \
 "${network_tx}" "${public_addr}" "${ln_walletbalance}" \
 "${network_rx}" "${mempool} tx" "${ln_channelbalance}" \
+"$connections" "$ln_pendinglocal" \
+"$inbound/$outbound" "$sum_balance" \
 ""
 
 echo "$(tput -T xterm sgr0)"
