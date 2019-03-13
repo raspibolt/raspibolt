@@ -18,19 +18,23 @@ Modify UFW to only from within the local network (The line sudo ufw allow from 1
 $ sudo ufw allow from 192.168.0.0/24 to any port 10009 comment 'allow LND grpc from local LAN'
 
 $ sudo ufw enable
+
 $ sudo ufw status
 
 Restart LND and unlock wallet
 
 $ sudo systemctl restart lnd
+
 $ lncli unlock
 
 Step B: Install Go…
+
 Install Go on Raspberry Pi….
 
 Update your Pi...
 
 $ sudo apt-get update
+
 $ sudo apt-get upgrade
 
 download Go binaries…
@@ -49,13 +53,17 @@ $ sudo mv go /usr/local
 Setup environment variables…(for this session only)
 
 $ export GOROOT=/usr/local/go
+
 $ export GOPATH=$HOME/gocode
+
 $ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
  
 Step C: Install LND Connect….
 
 $ go get -d github.com/LN-Zap/lndconnect
+
 $ cd $GOPATH/src/github.com/LN-Zap/lndconnect
+
 $ make
 
 Step D: Create QR code to read with ZAP for IOS wallet…
