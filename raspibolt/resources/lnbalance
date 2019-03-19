@@ -106,8 +106,8 @@ ${margin}${color_gray}%-25s|${color_green}%12s${color_gray}|%12s|%15s|
 ${margin}${color_gray}%-25s|${color_red}%12s${color_gray}|%12s|%15s|
 ${margin}${color_gray}%-22s%3s|${color_green}%12s${color_gray}|${color_yellow}%12s${color_gray}|${color_red}%15s${color_gray}|
 ${margin}${color_gray}%-22s%3s|${color_red}%12s${color_gray}|${color_red}%12s${color_gray}|${color_red}%15s${color_gray}|
-${margin}${color_gray}%-22s%3s|${color_red}%12s${color_gray}|${color_red}%12s${color_gray}|${color_red}%15s${color_gray}|
 ${margin}${color_gray}%-22s%3s|${color_green}%12s${color_gray}|${color_yellow}%12s${color_gray}|${color_red}%15s${color_gray}|
+${margin}${color_gray}%-22s%3s|${color_red}%12s${color_gray}|${color_red}%12s${color_gray}|${color_red}%15s${color_gray}|
 ${margin}${color_gray}%-22s%3s|${color_red}%12s${color_gray}|${color_red}%12s${color_gray}|${color_red}%15s${color_gray}|
 ${margin}${color_gray}%-22s%3s|${color_red}%12s${color_gray}|${color_red}%12s${color_gray}|${color_red}%15s${color_gray}|
 ${margin}${color_gray}%-22s%3s|%12s|%12s|${color_red}%15s${color_gray}|
@@ -117,8 +117,8 @@ ${margin}${color_gray}%-22s%3s|%12s|%12s|${color_red}%15s${color_gray}|
 "Wallet Unconfirmed" "${ln_unconfirmed_walletbalance}" "" "" \
 "Active Channels" "${ln_channels_active}" "${active_local}" "${active_remote}" "${active_fees}" \
 "Inactive Channels" "${ln_channels_inactive}" "${inactive_local}"  "${inactive_remote}" "${inactive_fees}" \
-"Wait Closing Channel" "${ln_channels_waiting_closing}" "${waiting_closing_local_lnballance}"  "${waiting_closing_remote_lnballance}" "" \
 "Opening Channels" "${ln_channels_open}" "${pending_open_channels_lnballance}" "" "${pending_open_channels_fees}" \
+"Wait Closing Channel" "${ln_channels_waiting_closing}" "${waiting_closing_local_lnballance}"  "${waiting_closing_remote_lnballance}" "" \
 "Closing Channel" "${pending_closing_local_lnballance}" "${pending_closing_local_lnballance}"  "${pending_closing_remote_lnballance}" "" \
 "Force Closing Channel" "${ln_channels_force_closing}" "${pending_force_closing_local_lnballance}" "${pending_force_closing_remote_lnballance}" "" \
 "Total" "${ln_channels}" "${total_local}" "${total_remote}" "${total_fees}"
