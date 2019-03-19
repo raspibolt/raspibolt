@@ -92,6 +92,7 @@ if [ "$lnd_pid" -ne "0" ]; then
  total_remote=$(( ${active_remote} + ${inactive_remote} + ${waiting_closing_remote_lnballance} + ${waiting_closing_remote_lnballance} + ${pending_force_closing_remote_lnballance} + ${pending_closing_remote_lnballance} ))
  total_fees=$(( ${active_fees} + ${inactive_fees} + ${pending_open_channels_fees} ))
  ln_channels=$(( ${ln_channels_active} + ${ln_channels_inactive} + ${ln_channels_open} + ${ln_channels_force_closing} + ${pending_closing_local_lnballance} ))
+ grand_total=$(( ${total_local} + ${total_remote} - ${total_fees} ))
 
  fi
 else
@@ -101,7 +102,7 @@ fi
 
 margin=''
 printf "
-${margin}${color_yellow}%-25s${color_gray}|       ${color_yellow}Local${color_gray}|      ${color_yellow}Remote${color_gray}|${color_yellow}Commitment Fees${color_gray}|
+${margin}${color_yellow}%-25s${color_gray}|       ${color_yellow}Local${color_gray}|      ${color_yellow}Remote${color_gray}|${color_yellow}Commitment Fees${color_gray}| ${color_yellow}Grand Total${color_gray}
 ${margin}${color_gray}%-25s|${color_green}%12s${color_gray}|%12s|%15s|
 ${margin}${color_gray}%-25s|${color_red}%12s${color_gray}|%12s|%15s|
 ${margin}${color_gray}%-22s%3s|${color_green}%12s${color_gray}|${color_yellow}%12s${color_gray}|${color_red}%15s${color_gray}|
@@ -110,7 +111,7 @@ ${margin}${color_gray}%-22s%3s|${color_green}%12s${color_gray}|${color_yellow}%1
 ${margin}${color_gray}%-22s%3s|${color_red}%12s${color_gray}|${color_red}%12s${color_gray}|${color_red}%15s${color_gray}|
 ${margin}${color_gray}%-22s%3s|${color_red}%12s${color_gray}|${color_red}%12s${color_gray}|${color_red}%15s${color_gray}|
 ${margin}${color_gray}%-22s%3s|${color_red}%12s${color_gray}|${color_red}%12s${color_gray}|${color_red}%15s${color_gray}|
-${margin}${color_gray}%-22s%3s|%12s|%12s|${color_red}%15s${color_gray}|
+${margin}${color_gray}%-22s%3s|%12s|%12s|${color_red}%15s${color_gray}|%12s
 " \
 "${chain}net (sat)" \
 "Wallet Confirmed" "${ln_walletbalance}" "" "" \
@@ -121,6 +122,6 @@ ${margin}${color_gray}%-22s%3s|%12s|%12s|${color_red}%15s${color_gray}|
 "Wait Closing Channel" "${ln_channels_waiting_closing}" "${waiting_closing_local_lnballance}"  "${waiting_closing_remote_lnballance}" "" \
 "Closing Channel" "${pending_closing_local_lnballance}" "${pending_closing_local_lnballance}"  "${pending_closing_remote_lnballance}" "" \
 "Force Closing Channel" "${ln_channels_force_closing}" "${pending_force_closing_local_lnballance}" "${pending_force_closing_remote_lnballance}" "" \
-"Total" "${ln_channels}" "${total_local}" "${total_remote}" "${total_fees}"
+"Total" "${ln_channels}" "${total_local}" "${total_remote}" "${total_fees}" "${grand_total}"
 
 echo "$(tput -T xterm sgr0)"
