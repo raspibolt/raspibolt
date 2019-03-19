@@ -63,8 +63,10 @@ if [ "$lnd_pid" -ne "0" ]; then
   inactive_fees="$(${lncli} listchannels --inactive_only | jq -r '.channels |.[] | .commit_fee ' | jq -s 'add')"
   inactive_local="$(${lncli} listchannels --inactive_only | jq -r '.channels |.[] | .local_balance ' | jq -s 'add')"
   pending_open_channels_lnballance="$(${lncli} pendingchannels |jq -r '.pending_open_channels | .[] | .channel | .capacity ' | jq -s 'add')"
-  pending_force_closing_lnballance="$(${lncli} pendingchannels |jq -r '.pending_force_closing_channels | .[] | .limbo_balance ' | jq -s 'add')"
-  pending_closing_lnballance="$(${lncli} pendingchannels |jq -r '.pending_closing_channels | .[] | .limbo_balance ' | jq -s 'add')"
+  pending_force_closing_local_lnballance="$(${lncli} pendingchannels |jq -r '.pending_force_closing_channels | .[] | .channel | .local_balance ' | jq -s 'add')"
+  pending_force_closing_remote_lnballance="$(${lncli} pendingchannels |jq -r '.pending_force_closing_channels | .[] | .channel | .remote_balance ' | jq -s 'add')"
+  pending_closing_local_lnballance="$(${lncli} pendingchannels |jq -r '.pending_closing_channels | .[] | .channel | .local_balance ' | jq -s 'add')"
+  pending_closing_remote_lnballance="$(${lncli} pendingchannels |jq -r '.pending_closing_channels | .[] | .channel | .remote_balance ' | jq -s 'add')"
   waiting_closing_local_lnballance="$(${lncli} pendingchannels |jq -r '.waiting_close_channels | .[] | .channel | .local_balance ' | jq -s 'add')"
   waiting_closing_remote_lnballance="$(${lncli} pendingchannels |jq -r '.waiting_close_channels | .[] | .channel | .remote_balance ' | jq -s 'add')"
 
@@ -77,15 +79,17 @@ if [ "$lnd_pid" -ne "0" ]; then
  if [ "${ln_walletbalance}" = 'Locked' ];then ln_walletbalance=0;fi
  if [ "${ln_walletbalance}" = 'null' ];then ln_unconfirmed_walletbalance=0;fi
  if [ "${pending_open_channels_lnballance}" = 'null' ];then pending_open_channels_lnballance=0;fi
- if [ "${pending_closing_lnballance}" = 'null' ];then pending_closing_lnballance=0;fi
- if [ "${pending_force_closing_lnballance}" = 'null' ];then pending_force_closing_lnballance=0;fi
+ if [ "${pending_closing_local_lnballance}" = 'null' ];then pending_closing_local_lnballance=0;fi
+ if [ "${pending_closing_remote_lnballance}" = 'null' ];then pending_closing_remote_lnballance=0;fi
+ if [ "${pending_force_closing_local_lnballance}" = 'null' ];then pending_force_closing_local_lnballance=0;fi
+ if [ "${pending_force_closing_remote_lnballance}" = 'null' ];then pending_force_closing_remote_lnballance=0;fi
  if [ "${waiting_closing_local_lnballance}" = 'null' ];then waiting_closing_local_lnballance=0;fi
  if [ "${waiting_closing_remote_lnballance}" = 'null' ];then waiting_closing_remote_lnballance=0;fi
   
- total_local=$(( ${ln_walletbalance} + ${ln_unconfirmed_walletbalance} + ${active_local} + ${inactive_local} + ${pending_closing_lnballance} + ${pending_force_closing_lnballance} + ${pending_open_channels_lnballance} + ${waiting_closing_local_lnballance} ))
- total_remote=$(( ${active_remote} + ${inactive_remote} + ${waiting_closing_remote_lnballance} + ${waiting_closing_remote_lnballance} ))
+ total_local=$(( ${ln_walletbalance} + ${ln_unconfirmed_walletbalance} + ${active_local} + ${inactive_local} + ${pending_closing_local_lnballance} + ${pending_force_closing_local_lnballance} + ${pending_open_channels_lnballance} + ${waiting_closing_local_lnballance} ))
+ total_remote=$(( ${active_remote} + ${inactive_remote} + ${waiting_closing_remote_lnballance} + ${waiting_closing_remote_lnballance} + ${pending_force_closing_remote_lnballance} + ${pending_closing_remote_lnballance} ))
  total_fees=$(( ${active_fees} + ${inactive_fees} ))
- ln_channels=$(( ${ln_channels_active} + ${ln_channels_inactive} + ${ln_channels_open} + ${ln_channels_force_closing} + ${pending_closing_lnballance} ))
+ ln_channels=$(( ${ln_channels_active} + ${ln_channels_inactive} + ${ln_channels_open} + ${ln_channels_force_closing} + ${pending_closing_local_lnballance} ))
 
  fi
 else
@@ -113,8 +117,8 @@ ${margin}${color_gray}%-22s%3s|%12s|%12s|${color_red}%15s${color_gray}|
 "Inactive Channels" "${ln_channels_inactive}" "${inactive_local}"  "${inactive_remote}" "${inactive_fees}" \
 "Wait Closing Channel" "${ln_channels_waiting_closing}" "${waiting_closing_local_lnballance}"  "${waiting_closing_remote_lnballance}" "" \
 "Opening Channels" "${ln_channels_open}" "${pending_open_channels_lnballance}" "" "" \
-"Closing Channel" "${pending_closing_lnballance}" "${pending_closing_lnballance}"  "" "" \
-"Force Closing Channel" "${ln_channels_force_closing}" "${pending_force_closing_lnballance}"  "" "" \
+"Closing Channel" "${pending_closing_local_lnballance}" "${pending_closing_local_lnballance}"  "${pending_closing_remote_lnballance}" "" \
+"Force Closing Channel" "${ln_channels_force_closing}" "${pending_force_closing_local_lnballance}" "${pending_force_closing_remote_lnballance}" "" \
 "Total" "${ln_channels}" "${total_local}" "${total_remote}" "${total_fees}"
 
 echo "$(tput -T xterm sgr0)"
