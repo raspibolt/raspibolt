@@ -44,15 +44,12 @@ $ gpg --verify SHA256SUMS.asc
 
 ![commands to check bitcoind signature](images/30_checksum.png)
 
-* Now we know that the keys from bitcoin.org are valid, so we can also verify the Windows binary checksums. Compare the following output with the checksum of your Windows Bitcoin Core download.
+* Now we know that the keys from bitcoin.org are valid, so we can also verify the Linux arm binary checksums. Compare the following output with the checksum of your Linux arm Bitcoin Core download.
 
 ```bash
-$ cat /home/admin/download/SHA256SUMS.asc | grep win
+$ cat /home/admin/download/SHA256SUMS.asc | grep arm
 
-e9245e682126ef9fa4998eabbbdd1c3959df811dc10df60be626a5e5ffba9b78  bitcoin-0.17.1-win32-setup.exe
-6464aa2d338f3697950613bb88124e58d6ce78ead5e9ecacb5ba79d1e86a4e30  bitcoin-0.17.1-win32.zip
-fa1e80c5e4ecc705549a8061e5e7e0aa6b2d26967f99681b5989d9bd938d8467  bitcoin-0.17.1-win64-setup.exe
-1abbe6aa170ce7d8263d262f8cb0ae2a5bb3993aacd2f0c7e5316ae595fe81d7  bitcoin-0.17.1-win64.zip
+aab3c1fb92e47734fadded1d3f9ccf0ac5a59e3cdc28c43a52fcab9f0cb395bc  bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz
 ```
 
 * Extract the Bitcoin Core binaries, install them and check the version.
