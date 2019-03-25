@@ -65,7 +65,7 @@ STEP B)  "Install GO"
   `$ wget https://dl.google.com/go/go1.12.linux-armv6l.tar.gz`  
   
 * Next, let’s extract the files from the downloaded link and copy to env folder:  
-  `$ sudo tar -xvf go1.11.linux-armv6l.tar.gz`  
+  `$ sudo tar -xvf go1.12.linux-armv6l.tar.gz`  
   `$ sudo mv go /usr/local`  
   
 * Setup environment variables (for this session only)  
@@ -119,7 +119,7 @@ STEP C)  " Install LND Connect"
 
 * Now simply run lndconnect to generate the QRCode we’ll scan from our iPhone
   ```
-  $ lndconnect --lnddir=/home/bitcoin/.lnd
+  $ lndconnect --lnddir=/home/admin/.lnd
   ```
   This will generate a QRCode.  
   Depending on your screen size use cmd + and cmd - to adjust the size of the QRCode  
