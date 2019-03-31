@@ -57,7 +57,7 @@ All components of the Lightning network are still under development  and we are 
 
 After publishing the "Beginner's Guide to Lightning on a Raspberry Pi", I started to explore other hardware, as the Pi has drawbacks, mainly in the area of performance and the the hassle with attaching external storage which is important when storing the big Bitcoin blockchain. 
 
-The [Hardkernel Odroid HC2](http://www.hardkernel.com/main/products/prdt_info.php) (or the HC1 for a smaller form factor) as a Linux-based mini PC is a perfect fit. Compared to a Rasperry Pi, it has the following advantages:
+The [Hardkernel Odroid HC2](https://www.hardkernel.com/shop/odroid-hc2-home-cloud-two/) (or the HC1 for a smaller form factor) as a Linux-based mini PC is a perfect fit. Compared to a Rasperry Pi, it has the following advantages:
 
 * price comparable to Raspberry Pi
 * more powerful (8 core CPU, 2 GB RAM, Gigabit Ethernet)
@@ -70,11 +70,11 @@ Not available are features like HDMI output, built-in Wifi or GPIO pins, but the
 
 I decided to try this setup, ordered the Odroid HC2 and, after setting it up and running it for two month now, I think this is as good as it gets for a low-cost Bitcoin / Lightning node. As this project needs a cheesy name as well, I’ll call my node **Thundroid**. :-)
 
-I ordered the following items directly with Hardkernel in Singapore. There are [resellers](http://www.hardkernel.com/main/distributor.php) available worldwide, but not for Switzerland, unfortunately.
+I ordered the following items directly with Hardkernel in Singapore. There are [resellers](https://www.hardkernel.com/distributors/) available worldwide.
 
-* [Hardkernel Odroid HC2](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G151505170472) ($54)
-* [Power adapter & cord](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G151578376044) ($7)
-* optional: [Odroid HC2 case](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G151596669222) ($5)
+* [Hardkernel Odroid HC2](https://www.hardkernel.com/shop/odroid-hc2-home-cloud-two/) ($54)
+* [Power adapter](https://www.hardkernel.com/shop/12v-2a-power-supply-unit/) & [cord](https://www.hardkernel.com/shop/2pin-us-power-cord/) ($5.90, $0.7)
+* optional: [Odroid HC2 case](https://www.hardkernel.com/shop/odroid-hc2-case-clear/) ($5)
 
 You also need the following:
 
@@ -362,7 +362,7 @@ We will download the software directly from bitcoin.org, verify its signature to
 
 We download the latest Bitcoin Core binaries (the application) and  compare the file with the signed checksum. This is a precaution to make  sure that this is an official release and not a malicious version trying  to steal our money.
 
-Get the latest download links at [bitcoin.org/en/download](), they change  with each update. Then run the following  commands (with adjusted  filenames) and check the output where indicated.
+Get the latest download links at [bitcoin.org/en/download](https://bitcoin.org/en/download), they change  with each update. Then run the following  commands (with adjusted  filenames) and check the output where indicated.
 
 ```bash
 # download Bitcoin Core binary

@@ -50,8 +50,8 @@ For additional reference, the original instructions are available on the [Tor pr
   ```
 * In order to verify the integrity of the Tor files, download and add the signing keys of the torproject using the network certificate management service (dirmngr).
   ```
-  $ sudo apt install dirmngr
-  $ gpg --keyserver keys.gnupg.net --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
+  $ sudo apt install dirmngr apt-transport-https
+  $ curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
   $ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
   ```
 
@@ -150,14 +150,23 @@ Bitcoin Core is starting and we now need to check if all connections are truly r
   ```
   ![bitcoin-cli getnetworkinfo listing network protocol bindings](./images/69_networkinfo.png)
 
-* Verify that your node is reachable within the Bitcoin network. Go to [bitnodes.earn.com](https://bitnodes.earn.com/) and copy/paste your `.onion` address here:  
+* Verify that your node is reachable within the Bitcoin network. Bitnodes' check for .onion addresses is very unreliable, generally the API method works better. 
+  
+  If the result is negative, just try again a minute later as sometimes the lookup will fail to contact your node for some reasons. If your node is persistently not reachable, verify your [port forwarding](raspibolt_20_pi.md#port-forwarding--upnp) and [firewall](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall) settings. Even if all say "not reachable" or "down", but you get 8 or more peers, you're just fine.
+
+  * Go to [bitnodes.earn.com](https://bitnodes.earn.com/) and copy/paste your `.onion` address here:  
   ![bitnodes](./images/69_bitnodes.png)
+  * Check directly using the API by using this link (insert your own .onion address, like https://bitnodes.earn.com/nodes/627jdioviypreq7v.onion-8333/):
+    ```
+    https://bitnodes.earn.com/nodes/[your-onion-adress.onion]-8333/
+    ```
   
-  If the result is negative, just try again a minute later as sometimes the lookup will fail to contact your node for some reasons. If your node is persistently not reachable, verify your [port forwarding](raspibolt_20_pi.md#port-forwarding--upnp) and [firewall](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall) settings.
-  
-* Check the IP address that other peers use to connect to your node. First, get your real public IP address and then verify that it is not used as `localaddr` by Bitcoin.
+* Check the IP address that other peers use to connect to your node. First, get your real public IP address:
   ```
   $ curl icanhazip.com
+  ```
+* and then verify that it is not used as `localaddr` by Bitcoin.
+  ```
   $ bitcoin-cli getpeerinfo | grep  local
   ```
   

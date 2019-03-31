@@ -20,7 +20,7 @@ You can prettify your command prompt for each user by enabling color output and 
 force_color_prompt=yes
 
 # pimp prompt (replace the PS1 line)
-PS1="${debian_chroot:+($debian_chroot)}\[\e[33m\]\u \[\033[01;34m\]\w\[\e[33;40m\] ฿\[\e[m\] "
+PS1="${debian_chroot:+($debian_chroot)}\[\e[33m\]\u \[\033[01;34m\]\w\[\e[33;40m\] ₿\[\e[m\] "
 
 # set "ls" to always use the -la option (insert at the end of the file)
 alias ls='ls -la --color=always'

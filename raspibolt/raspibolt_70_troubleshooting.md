@@ -454,11 +454,11 @@ $ exit
 $ sudo systemctl start lnd
 ```
 
-
+Log files are located in the directory `/home/bitcoin/.lnd/logs/bitcoin/mainnet` (or `testnet`), you can check them as follows:
+```
+$ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log
+```
 
 -----
 
 I will extend this troubleshooting guide constantly with findings that have been or will be reported in the issues section. 
-
-
-

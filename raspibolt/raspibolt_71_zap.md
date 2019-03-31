@@ -20,8 +20,11 @@ Install instructions: https://github.com/LN-Zap/zap-desktop#install
 * Allow connections to the RaspiBolt from your own network. Check how the ip address of your Pi is starting with, eg. 192.168.0 or 192.168.1 , and use the address accordingly. Ending with .0/24 will allow all IP addresses from that network.  
     `$ sudo nano /home/bitcoin/.lnd/lnd.conf`  
 
-    Add the following line to the section `[Application Options]`:  
-   `tlsextraip=192.168.0.0/24`
+    Add the following lines to the section `[Application Options]`:  
+   ```
+   tlsextraip=192.168.0.0/24
+   rpclisten=0.0.0.0:10009
+   ```
   
 * Delete tls.cert (restarting LND will recreate it):  
     `$ sudo rm /home/bitcoin/.lnd/tls.*`
