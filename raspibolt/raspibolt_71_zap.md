@@ -45,7 +45,38 @@ Install instructions: https://github.com/LN-Zap/zap-desktop#install
   `$ sudo ufw enable`  
   `$ sudo ufw status`
 
-### Copying the authentication files
+---
+
+
+### Connect with a Connection String 
+
+This option is available from  Zap 0.4.0 beta.
+
+#### On the Pi:
+
+* Install LndConnect:  
+  `$ cd ~`  
+  `$ go get -d github.com/LN-Zap/lndconnect`  - this can take a couple of minutes  
+  `$ cd ~/go/src/github.com/LN-Zap/lndconnect`  
+  `$ make install`  
+
+* Generate the Connection String  
+  `$ cd ~/go/bin`  
+  `$ ./lndconnect --lnddir=/home/admin/.lnd --image   --host=your.RaspiBolt.LAN.IP --port=10009`
+
+  Copy the resulting text starting with `lndconnect://...`
+
+#### Set up Zap: 
+
+  * Start Zap on your desktop
+  * Create a new wallet
+  * Connect to your node
+  * Paste the Connection String generated with LndConnect
+  * Confirm and Connect
+
+---
+
+### Connect by copying the authentication files
 For Zap to access your Lightning node, it needs to authenticate itself. For that, the two files `tls.cert` (for Transport Layer Security) and `admin.macaroon` (to access LND) are necessary.
 
 #### On Windows
