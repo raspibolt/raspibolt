@@ -24,7 +24,7 @@ Before using this setup, please familiarize yourself with all components by sett
 ### Preparations
 
 * With user 'admin', make sure Python3 and PIP are installed. Also the 'setuptools' package is required.
-  ```sh
+  ```
   $ sudo apt install -y python3 python3-pip
   $ sudo pip3 install setuptools
   ```
@@ -94,8 +94,8 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
 * Save and exit
 
 * Install Electrum Personal Server
-  ```sh
-  $ cd electrum-personal-server-electrum-personal-server-v0.1.7/
+  ```
+  $ cd electrum-personal-server-eps-v0.1.7/
   # Install the wheel package first, which is required
   $ pip3 install wheel
   $ pip3 install --user .
