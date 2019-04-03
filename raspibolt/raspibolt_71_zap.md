@@ -47,7 +47,6 @@ Install instructions: https://github.com/LN-Zap/zap-desktop#install
 
 ---
 
-
 ### Connect with a Connection String 
 
 This option is available from  Zap 0.4.0 beta.
@@ -59,7 +58,6 @@ This option is available from  Zap 0.4.0 beta.
   `$ go version `
 
   If need to install Go, run these:
-
 
   `$ wget https://storage.googleapis.com/golang/go1.11.linux-armv6l.tar.gz`  
   `$ sudo tar -C /usr/local -xzf go1.11.linux-armv6l.tar.gz`  
