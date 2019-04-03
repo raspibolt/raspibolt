@@ -54,6 +54,23 @@ This option is available from  Zap 0.4.0 beta.
 
 #### On the Pi:
 
+* Make sure Go is installed (should be v1.11 or higher) :  
+
+  `$ go version `
+
+  If need to install Go, run these:
+
+
+  `$ wget https://storage.googleapis.com/golang/go1.11.linux-armv6l.tar.gz`  
+  `$ sudo tar -C /usr/local -xzf go1.11.linux-armv6l.tar.gz`  
+  `$ sudo rm *.gz`  
+  `$ sudo mkdir /usr/local/gocode`  
+  `$ sudo chmod 777 /usr/local/gocode`  
+  `$ export GOROOT=/usr/local/go`  
+  `$ export PATH=$PATH:$GOROOT/bin`  
+  `$ export GOPATH=/usr/local/gocode`  
+  `$ export PATH=$PATH:$GOPATH/bin`  
+
 * Install LndConnect:  
   `$ cd ~`  
   `$ go get -d github.com/LN-Zap/lndconnect`  - this can take a couple of minutes  
@@ -62,7 +79,7 @@ This option is available from  Zap 0.4.0 beta.
 
 * Generate the Connection String  
   `$ cd ~/go/bin`  
-  `$ ./lndconnect --lnddir=/home/admin/.lnd --image   --host=your.RaspiBolt.LAN.IP --port=10009`
+  `$ ./lndconnect -j --lnddir=/home/admin/.lnd --host=your.RaspiBolt.LAN.IP --port=10009`
 
   Copy the resulting text starting with `lndconnect://...`
 
@@ -70,7 +87,7 @@ This option is available from  Zap 0.4.0 beta.
 
   * Start Zap on your desktop
   * Create a new wallet
-  * Connect to your node
+  * Choose the `Connect to your node` option
   * Paste the Connection String generated with LndConnect
   * Confirm and Connect
 
