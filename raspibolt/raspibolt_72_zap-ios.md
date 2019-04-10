@@ -11,29 +11,25 @@
 
 This guide describes how to use Zap IOS from within your own network, the same that also connects your RaspiBolt.
 
-<p align='center'>
-![Zap IOS](images/72_zapios.png)
-</p>
+![Zap iOS](images/72_zapios.png)
 
-Zap is a free Lightning Network wallet focused on user experience and ease of use.  
-👉 More details here: https://github.com/LN-Zap/zap-iOS  
-⚠️ At the moment this app is in alpha testing.  
-👉 If you find bugs, you can contribute to this project by reporting them here: https://github.com/LN-Zap/zap-iOS/issues  
+Zap is a free Lightning Network wallet focused on good user experience and ease of use. It is in alpha testing, so **use it at your own risk**. Ycan find more details in the [Zap iOS GitHub repository](https://github.com/LN-Zap/zap-iOS). If you find bugs, you can contribute to this project by [reporting issues](https://github.com/LN-Zap/zap-iOS/issues).  
 
-### Preparation on the Pi 
+### Preparation on the RaspiBolt
 
-STEP A)  "Prepare LND Node for gRPC access"  
+#### Prepare LND Node for gRPC access"  
+First we make sure that LND is listening for connections from other computers on the gRPC interface.
 
-* Login as admin 
+* Login as user "admin" 
 
 * Allow connections to the RaspiBolt from your own network. Check how the ip address of your Pi is starting with, eg. 192.168.0 or 192.168.1 , and use the address accordingly. Ending with .0/24 will allow all IP addresses from that network.  
 
-   Add the following lines to the section `[Application Options]`:  
-   `$ sudo nano /home/bitcoin/.lnd/lnd.conf` 
-   ```
-   tlsextraip=192.168.0.0/24
-   rpclisten=0.0.0.0:10009
-   ```
+  Add the following lines to the section `[Application Options]`:  
+  `$ sudo nano /home/bitcoin/.lnd/lnd.conf` 
+  ```
+  tlsextraip=192.168.0.0/24
+  rpclisten=0.0.0.0:10009
+  ```
    
 * Delete tls.cert (restarting LND will recreate it):  
   `$ sudo rm /home/bitcoin/.lnd/tls.*`
@@ -54,65 +50,18 @@ STEP A)  "Prepare LND Node for gRPC access"
   `$ sudo ufw enable`  
   `$ sudo ufw status`  
 
-STEP B)  "Install GO"  
+#### Install LND Connect
+The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, encoding connection and authorization information either into a QR code or a connection string.
 
-* First let’s ensure we have the latest security updates:  
-  `$ sudo apt update`  
-  `$ sudo apt upgrade`  
-  
-* Next , let’s download Go last version:  
-  `$ cd download`  
-  `$ wget https://dl.google.com/go/go1.12.linux-armv6l.tar.gz`  
-  
-* Next, let’s extract the files from the downloaded link and copy to env folder:  
-  `$ sudo tar -xvf go1.12.linux-armv6l.tar.gz`  
-  `$ sudo mv go /usr/local`  
-  
-* Setup environment variables (for this session only)  
-  `$ export GOROOT=/usr/local/go`  
-  `$ export GOPATH=$HOME/gocode`  
-  `$ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH`  
-  
-* Verify Go installation  
-  `$ go version`  
-  ```> go version go1.12 linux/arm```
-  
-  `$ go env`  
+* As user "admin", download, extract and install the current release from the [release page](https://github.com/LN-Zap/lndconnect/releases). 
   ```
-  > GOARCH="arm"
-  > GOBIN=""
-  > GOCACHE="/home/admin/.cache/go-build"
-  > GOEXE=""
-  > GOFLAGS=""
-  > GOHOSTARCH="arm"
-  > GOHOSTOS="linux"
-  > GOOS="linux"
-  > GOPATH="/home/admin/gocode"
-  > GOPROXY=""
-  > GORACE=""
-  > GOROOT="/usr/local/go"
-  > GOTMPDIR=""
-  > GOTOOLDIR="/usr/local/go/pkg/tool/linux_arm"
-  > GCCGO="gccgo"
-  > GOARM="6"
-  > CC="gcc"
-  > CXX="g++"
-  > CGO_ENABLED="1"
-  > GOMOD=""
-  > CGO_CFLAGS="-g -O2"
-  > CGO_CPPFLAGS=""
-  > CGO_CXXFLAGS="-g -O2"
-  > CGO_FFLAGS="-g -O2"
-  > CGO_LDFLAGS="-g -O2"
-  > PKG_CONFIG="pkg-config"
-  > GOGCCFLAGS="-fPIC -marm -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build652420973=/tmp/go-build -gno-record-gcc-switches"
+  $ cd /tmp
+  $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.1.0/lndconnect-linux-armv7-v0.1.0.tar.gz
+  $ sudo tar -xvf lndconnect-linux-armv7-v0.1.0.tar.gz --strip=1 -C /usr/local/bin
   ```
-  
-STEP C)  " Install LND Connect"  
+* Display the help page to make sure it works.  
   ```
-  $ go get -d github.com/LN-Zap/lndconnect
-  $ cd $GOPATH/src/github.com/LN-Zap/lndconnect
-  $ make
+  $ lndconnect -h
   ```
   
 ### Generate QR code and read from Zap iphone app
