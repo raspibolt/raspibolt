@@ -6,14 +6,14 @@
 
 ------
 
-## Bonus guide: Zap IOS Lightning Wallet
+## Bonus guide: Zap iOS Lightning Wallet
 *Difficulty: medium*
 
-This guide describes how to use Zap IOS from within your own network, the same that also connects your RaspiBolt.
+This guide describes how to use Zap iOS from within your own network, the same that also connects your RaspiBolt.
 
 ![Zap iOS](images/72_zapios.png)
 
-Zap is a free Lightning Network wallet focused on good user experience and ease of use. It is in alpha testing, so **use it at your own risk**. Ycan find more details in the [Zap iOS GitHub repository](https://github.com/LN-Zap/zap-iOS). If you find bugs, you can contribute to this project by [reporting issues](https://github.com/LN-Zap/zap-iOS/issues).  
+Zap is a free Lightning Network wallet focused on good user experience and ease of use. It is in alpha testing, so **use it at your own risk**. You can find more details in the [Zap iOS GitHub repository](https://github.com/LN-Zap/zap-iOS). If you find bugs, you can contribute to this project by [reporting issues](https://github.com/LN-Zap/zap-iOS/issues).  
 
 ### Preparation on the RaspiBolt
 
