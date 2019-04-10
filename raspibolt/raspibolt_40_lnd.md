@@ -205,7 +205,7 @@ WantedBy=multi-user.target
 * Now, the daemon information is no longer displayed on the command line but written into the system journal. You can monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).  
   `$ sudo journalctl -f -u lnd`
 
-![LND startup log](C:/Users_withBackup/Roland/Documents/GitHub/guides/raspibolt/images/40_start_lnd.png)
+![LND startup log](images/40_start_lnd.png)
 
 
 
