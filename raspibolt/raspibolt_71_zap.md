@@ -54,11 +54,9 @@ This option is available from  Zap 0.4.0 beta.
 #### On the Pi:
 
 * Make sure Go is installed (should be v1.11 or higher) :  
-
   `$ go version `
 
-  If need to install Go, run these:
-
+  If need to install Go, run these:  
   `$ wget https://storage.googleapis.com/golang/go1.11.linux-armv6l.tar.gz`  
   `$ sudo tar -C /usr/local -xzf go1.11.linux-armv6l.tar.gz`  
   `$ sudo rm *.gz`  
@@ -70,10 +68,9 @@ This option is available from  Zap 0.4.0 beta.
   `$ export PATH=$PATH:$GOPATH/bin`  
 
 * Install LndConnect:  
-  `$ cd ~`  
-  `$ go get -d github.com/LN-Zap/lndconnect`  - this can take a couple of minutes  
-  `$ cd ~/go/src/github.com/LN-Zap/lndconnect`  
-  `$ make install`  
+  `$ cd /tmp`  
+  `$ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.1.0/lndconnect-linux-armv7-v0.1.0.tar.gz`  
+  `$ sudo tar -xvf lndconnect-linux-armv7-v0.1.0.tar.gz --strip=1 -C /usr/local/bin `
 
 * Generate the Connection String  
   `$ cd ~/go/bin`  
