@@ -17,7 +17,7 @@ Zap is a free Lightning Network wallet focused on good user experience and ease 
 
 ### Preparation on the RaspiBolt
 
-#### Prepare LND Node for gRPC access"  
+#### Prepare LND Node for gRPC access 
 First we make sure that LND is listening for connections from other computers on the gRPC interface.
 
 * Login as user "admin" 
@@ -37,8 +37,11 @@ First we make sure that LND is listening for connections from other computers on
 * Restart LND :  
   `$ sudo systemctl restart lnd`  
   
-* Copy the new tls.cert to user "admin", as it is needed for lncli:  
-  `$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`
+* Copy the files `tls.cert` and `lnd.conf` to user "admin", as it is needed for lncli:  
+  ```
+  $ sudo cp /home/bitcoin/.lnd/{tls.cert,lnd.conf} /home/admin/.lnd
+  $ sudo cp /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/.lnd/data/chain/bitcoin/mainnet
+  ```
 
 * Unlock wallet  
   `$ lncli unlock` 
@@ -64,32 +67,32 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
   $ lndconnect -h
   ```
   
-### Generate QR code and read from Zap iphone app
+### Connect Zap iOS to your RaspiBolt
 
-* Now simply run lndconnect to generate the QRCode we’ll scan from our iPhone
+* Now simply run lndconnect to generate the QR code we’ll scan from our iPhone
   ```
-  $ lndconnect --lnddir=/home/admin/.lnd
+  $ lndconnect --lnddir=/home/admin/.lnd -i
   ```
-  This will generate a QRCode.  
-  Depending on your screen size use cmd + and cmd - to adjust the size of the QRCode  
-  If you can't resize or have visualization problem you can add -j to display url instead of a QRCode  
+  Depending on your screen size use `CMD`+`+` and `CMD`+`-` to adjust the size of the QR code. 
+  
+* If you can't resize the QR code or have visualization problems, you can 
+  * add the option `-j` to the above command and generate a code you can copy/paste into the app
+  * or use the option `-o` to write the QR code into a PNG image.
+  
   See https://github.com/LN-Zap/lndconnect for more details.  
 
-* Open ZAP APP from your phone  
+* Open the Zap iOS on your phone.  
 
-* Scan the QR code and check/modify the IP address you want to use to connect. (example 192.168.x.x)  
-
-<p align='center'> ![Zap IOS scan example](images/72_zapios_scan.png) </p>
+* Scan the QR code and check/modify the ip address you want to use to connect. It should be something like `192.168.x.x`.  
+  ![Zap IOS scan example](images/72_zapios_scan.png)
 
 * A successful connection will take you into the Zap iOS application:
+  ![Zap iOS succesful example](images/72_zapios_succesful.png)
 
-<p align='center'> ![Zap IOS succesful example](images/72_zapios_succesful.png) </p>
+⚠️ REMEMBER: If you change `lnd.conf` you need to delete & recreate the `tls.cert`, and also re-create and re-scan the QR code from the Zap iOS app. Do not forget to copy the new `tls.cert` and `admin.macaroon` files to the admin user.  
 
+👉 It is perfectly possible to use Zap iOS on-the-go (from the public internet) and connect to your node at home, but this involves creating new TLS certificates and reduces security. You need to set `tlsextraip=<YOUR_PUBLIC_IP>` and allow the ufw firewall to listen on 10009 from everywhere.
 
-⚠️
-REMEMBER: If you change lnd.conf you need to recreate tls.cert and also to re-create and re-scan qr from zap app.  
-         In that case remeber also to copy the new TLS cert and admin macaroon files to the admin user.  
-         If you log out from the session you need to setup go environment variables again to execute lndconnect or it will give you  
-         `> -bash: lndconnect: command not found`.   
+------
 
-👉 It is perfectly possible to use Zap on-the-go (from internet) and connect to your node at home, but this involves creating new TLS certificates and reduce security. You need to set tlsextraip=<YOUR_PUBLIC_IP> and allow the ufw firewall to listen on 10009 from evrywhere.
+<< Back: [Bonus guides](raspibolt_60_bonus.md) 
