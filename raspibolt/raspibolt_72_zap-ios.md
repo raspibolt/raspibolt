@@ -86,7 +86,7 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 * Scan the QR code and check/modify the ip address you want to use to connect. It should be something like `192.168.x.x`.  
   ![Zap IOS scan example](images/72_zapios_scan.png)
 
-* A successful connection will take you into the Zap iOS application:
+* A successful connection will take you into the Zap iOS application:  
   ![Zap iOS succesful example](images/72_zapios_succesful.png)
 
 ⚠️ REMEMBER: If you change `lnd.conf` you need to delete & recreate the `tls.cert`, and also re-create and re-scan the QR code from the Zap iOS app. Do not forget to copy the new `tls.cert` and `admin.macaroon` files to the admin user.  
