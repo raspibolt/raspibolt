@@ -27,8 +27,8 @@ First we make sure that LND is listening for connections from other computers on
   Add the following lines to the section `[Application Options]`:  
   `$ sudo nano /home/bitcoin/.lnd/lnd.conf` 
   ```
-  tlsextraip=192.168.0.0/24
   rpclisten=0.0.0.0:10009
+  tlsextraip=0.0.0.0
   ```
    
 * Delete tls.cert (restarting LND will recreate it):  
