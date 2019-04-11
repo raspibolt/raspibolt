@@ -48,6 +48,14 @@ The Zap desktop app (https://github.com/LN-Zap/zap-desktop) is a cross platform 
 
 ![Zap Desktop](images/71_zap1_cropped.png)
 
+## [**Zap iOS Lightning Wallet**](raspibolt_72_zap-ios.md)
+
+*Difficulty: medium*
+
+The Zap iOS app (https://zap.jackmallers.com) provides a neat interface for the RaspiBolt to manage peers & channels, make payments and create invoices.
+
+![Zap iOS](images/72_zapios.png)
+
 ## [**Shango Mobile Wallet**](raspibolt_68_shango.md)
 
 *Difficulty: intermediate*
