@@ -11,7 +11,7 @@
 
 ![LN Terminal Dashboard](images/73_lntop.png)
 
-```lntop``` is an interactive text-mode channels viewer for Unix systems.
+```lntop``` is an interactive text-mode channels viewer for Unix systems created by [Edouard Paris](https://github.com/edouardparis/lntop).
 
 Login as ```admin``` and install the required [golang](https://golang.org/) (version >= 1.11).
 
