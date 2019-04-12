@@ -18,6 +18,14 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 [![MotD system overview](images/60_status_overview.png)](raspibolt_61_system-overview.md)
 
+## [**LN Terminal Dashboard**](raspibolt_61_system-overview.md)
+
+*Difficulty: easy*
+
+View your channels in an interactive text-mode viewer for Unix systems.
+
+[![LN Terminal Dashboard](images/60_status_overview.png)](raspibolt_73_lntop.md)
+
 ## [Auto unlock LND on startup](raspibolt_6A_auto-unlock.md)
 
 *Difficulty: medium*
