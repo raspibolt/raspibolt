@@ -2,9 +2,11 @@
 
 ------
 
-### LN Terminal Dashboard
+### Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi
 
 ------
+
+## Bonus guide: LN Terminal Dashboard
 *Difficulty: easy*
 
 ![LN Terminal Dashboard](images/73_lntop.png)
