@@ -5,7 +5,7 @@
 ### LN Terminal Dashboard
 
 ------
-*Difficulty: medium*
+*Difficulty: easy*
 
 ![LN Terminal Dashboard](images/73_lntop.png)
 
@@ -32,36 +32,36 @@ export PATH=$PATH:/usr/local/go/bin
 
 At this point, you should set in ```.bashrc``` your ```$GOPATH``` environment variable, which represents the path to your workspace. You will also need to add ```$GOPATH/bin``` to your ```PATH```. This ensures that your shell will be able to detect the binaries you install.
 
-```sudo nano ~/.bashrc```
+```$ sudo nano ~/.bashrc```
 
 Add the following to the end of the ```.bashrc``` file.
 
 ```
-export GOPATH=~/gocode
-export PATH=$PATH:$GOPATH/bin
+$ export GOPATH=~/gocode
+$ export PATH=$PATH:$GOPATH/bin
 ```
 
 Reload both .bashrc and .profile
 
 ```
-source ~/.bashrc
-source ~./profile
+$ source ~/.bashrc
+$ source ~./profile
 ```
 
 Now that you have installed the required latest go programming language, it is time to install ```lntop```.
 
 ```
-git clone https://github.com/edouardparis/lntop.git
-cd lntop
-export GO111MODULE=on
-go install ./...
+$ git clone https://github.com/edouardparis/lntop.git
+$ cd lntop
+$ export GO111MODULE=on
+$ go install ./...
 ```
 
 The first time running ```lntop``` a config file .lntop/config.toml is created in the user home directory. ```lntop``` may stall upon first use. Just ```ctrl+c``` your way out and reopen. It will load properly the second time around.
 
 ```
 # run lntop
-lntop
+$ lntop
 ```
 
 ------
