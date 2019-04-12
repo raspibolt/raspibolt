@@ -57,7 +57,7 @@ $ export GO111MODULE=on
 $ go install ./...
 ```
 
-The first time running ```lntop``` a config file .lntop/config.toml is created in the user home directory. No modification of config is necessary. ```lntop``` may stall upon first use. If so, ```ctrl+c``` your way out and reopen. It will load properly the second time around.
+The first time running ```lntop``` a config file ```.lntop/config.toml``` is created in the user home directory. No modification of config is necessary. ```lntop``` may stall upon first use. If so, ```ctrl+c``` your way out and reopen. It will load properly the second time around.
 
 ```
 # run lntop
