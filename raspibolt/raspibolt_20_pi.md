@@ -77,11 +77,43 @@ We now need to set the fixed (static) IP address for the Pi. Normally, you can f
 
 :point_right: need additional information? Google “[your router brand] configure static dhcp ip address”
 
+#### Setting a fixed adress on the Raspberry pi
+
+If your router does not support setting a static adress for a single device, you could also do this on the Raspberry pi.
+
+This can be done, by configuring the DHCP-Client(Raspberry pi) to advertise a static IP-adress to the DHCP-Server(Often the router) before it automatically assigns a different one to the Raspberry Pi.
+
+1. Get the default gateway(Router):
+
+Run `netstat -r -n` and choose the IP-adress from the Gateway column which is not `0.0.0.0`. In my occasion it's `192.168.178.1`
+
+2. Configure the static IP-adress for the pi, the gateway path and a DNS-Server:
+
+The configuration for the DHCP-Client(Raspberry Pi) is located in the `/etc/dhcpcd.conf` file:
+
+`sudo nano /etc/dhcpcd.conf`
+
+The following snippet is an example of a sample configuration. Change the value of `static routers` and `static domain_name_servers` to the IP of your Router(Default gateway) from step 1. Be aware of giving the Raspberry pi an adress, which is **OUTSIDE** the range of adresses which are given by the DHCP server. You can get this range, by looking under the router configurations page and checking for the range of the DHCP adresses. This means, that if the DHCP range goes from `192.168.178.1` to `192.168.2.99` you're good to go with the IP `192.168.178.100` for your Raspberry pi.
+
+Add the following to the `/etc/dhcpcd.conf` file:
+
+```
+# Configuration static IP-adress(CHANGE THE VALUES TO FIT FOR YOUR NETWORK)
+interface eth0
+static ip_address=192.168.178.100/24
+static routers=192.168.178.1
+static domain_name_servers=192.168.178.1
+```
+
+3. Restart networking system
+
+`sudo /etc/init.d/networking restart`
+
 ### Port Forwarding / UPnP
 Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port has to be directed. The port forwarding needs to be set up as follows:
 
 | Application name | External port | Internal port | Internal IP address | Protocol (TCP or UDP) |
-| ---------------- | ------------- | ------------- | ------------------- | --------------------- |
+|------------------|---------------|---------------|---------------------|-----------------------|
 | bitcoin          | 8333          | 8333          | 192.168.0.20        | BOTH                  |
 | bitcoin test     | 18333         | 18333         | 192.168.0.20        | BOTH                  |
 
