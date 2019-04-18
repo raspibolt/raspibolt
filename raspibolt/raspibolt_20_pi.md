@@ -168,7 +168,7 @@ It is important to keep the system up-to-date with security patches and applicat
 :point_right: Do this regularly every few months to get security related updates.
 
 Make sure that all necessary software packages are installed:  
-  `$ sudo apt-get install htop git curl bash-completion jq dphys-swapfile`
+  `$ sudo apt-get install htop git curl bash-completion jq dphys-swapfile sudo dirmngr --install-recommends`
 
 ### Adding main user "admin"
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
