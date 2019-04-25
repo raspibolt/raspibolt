@@ -205,7 +205,7 @@ To store the blockchain, we need a lot of space. As a server installation, the L
 
 * Edit the fstab file and the following as a new line (replace `UUID=123456`) at the end  
   `$ sudo nano /etc/fstab`  
-  `UUID=123456 /mnt/hdd rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2` 
+  `UUID=123456 /mnt/hdd ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2` 
   
   (see the [complete fstab guide](http://www.linuxstall.com/fstab) for details on all the options) 
 
