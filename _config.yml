@@ -1,0 +1,6 @@
+#theme: jekyll-theme-minimal
+remote_theme: pmarsceill/just-the-docs
+search_enabled: true
+aux_links:
+    "Issues / Knowledge Base":
+      - "https://github.com/Stadicus/guides/issues"

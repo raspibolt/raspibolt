@@ -1,0 +1,225 @@
+#!/bin/sh
+# RaspiBolt LND Mainnet: systemd unit for getpublicip.sh script
+# /etc/systemd/system/20-raspibolt-welcome.sh
+
+# make executable and copy script to /etc/update-motd.d/
+# root must be able to execute bitcoin-cli and lncli
+
+# set colors
+color_red='\033[0;31m'
+color_green='\033[0;32m'
+color_yellow='\033[0;33m'
+color_gray='\033[0;37m'
+
+# set datadir
+bitcoin_dir="/home/bitcoin/.bitcoin"
+lnd_dir="/home/bitcoin/.lnd"
+
+#Set to mount point of blockchain volume. This is used to calculate USB HDD usage %
+ext_hdd="/mnt/hdd" 
+
+#Set to network device name (usually eth0 for ethernet or wlan0 for wireless on raspberry pi unless you have 'Predictable Network Names' turned on in raspi-config. To get network device name run ifconfig.)
+network_name="eth0"
+
+# get uptime & load
+load=$(w | grep "load average:" | cut -c11-)
+
+# get CPU temp
+cpu=$(cat /sys/class/thermal/thermal_zone0/temp)
+temp=$((cpu/1000))
+
+# get memory
+ram_avail=$(free -m | grep Mem | awk '{ print $7 }')
+ram=$(printf "%sM / %sM" "${ram_avail}" "$(free -m | grep Mem | awk '{ print $2 }')")
+
+if [ ${ram_avail} -lt 100 ]; then
+  color_ram="${color_red}\e[7m"
+else
+  color_ram=${color_green}
+fi
+
+# get storage
+sd_free_ratio=$(printf "%d" "$(df | grep "/$" | awk '{ print $4/$2*100 }')") 2>/dev/null
+sd=$(printf "%s (%s%%)" "$(df -h | grep '/$' | awk '{ print $4 }')" "${sd_free_ratio}")
+if [ ${sd_free_ratio} -lt 10 ]; then
+  color_sd="${color_red}"
+else
+  color_sd=${color_green}
+fi
+
+hdd_free_ratio=$(printf "%d" "$(df  | grep ${ext_hdd} | awk '{ print $4/$2*100 }')") 2>/dev/null
+hdd=$(printf "%s (%s%%)" "$(df -h | grep ${ext_hdd} | awk '{ print $4 }')" "${hdd_free_ratio}")
+
+if [ ${hdd_free_ratio} -lt 10 ]; then
+  color_hdd="${color_red}\e[7m"
+else
+  color_hdd=${color_green}
+fi
+
+# get network traffic
+network_rx=$(ifconfig ${network_name} | grep 'RX packets' | awk '{ print $6$7 }' | sed 's/[()]//g')
+network_tx=$(ifconfig ${network_name} | grep 'TX packets' | awk '{ print $6$7 }' | sed 's/[()]//g')
+
+# Bitcoin blockchain
+btc_path=$(command -v bitcoin-cli)
+if [ -n ${btc_path} ]; then
+  btc_title="฿itcoin"
+  chain="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.chain')"
+  if [ -n $chain ]; then
+    btc_title="${btc_title} (${chain}net)"
+
+    # get sync status
+    block_chain="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.headers')"
+    block_verified="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.blocks')"
+    block_diff=$(expr ${block_chain} - ${block_verified})
+
+    progress="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.verificationprogress')"
+    sync_percentage=$(printf "%.2f%%" "$(echo $progress | awk '{print 100 * $1}')")
+
+    if [ ${block_diff} -eq 0 ]; then    # fully synced
+      sync="OK"
+      sync_color="${color_green}"
+      sync_behind=" "
+    elif [ ${block_diff} -eq 1 ]; then          # fully synced
+      sync="OK"
+      sync_color="${color_green}"
+      sync_behind="-1 block"
+    elif [ ${block_diff} -le 10 ]; then    # <= 2 blocks behind
+      sync="Catching up"
+      sync_color="${color_red}"
+      sync_behind="-${block_diff} blocks"
+    else
+      sync="In progress"
+      sync_color="${color_red}"
+      sync_behind="${sync_percentage}"
+    fi
+
+    # get last known block
+    last_block="$(bitcoin-cli -datadir=${bitcoin_dir} getblockcount)"
+    if [ ! -z "${last_block}" ]; then
+      btc_line2="${btc_line2} ${color_gray}(block ${last_block})"
+    fi
+
+    # get mem pool transactions
+    mempool="$(bitcoin-cli -datadir=${bitcoin_dir} getmempoolinfo | jq -r '.size')"
+    
+    # get connection info
+    connections="$(bitcoin-cli -datadir=${bitcoin_dir} getnetworkinfo | jq .connections)"
+    inbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == true)' | jq -s 'length')"
+    outbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == false)' | jq -s 'length')"
+
+  else
+    btc_line2="${color_red}NOT RUNNING\t\t"
+  fi
+fi
+
+# get public IP address & port
+public_ip=$(curl -s ipinfo.io/ip)
+public_port=$(cat ${bitcoin_dir}/bitcoin.conf 2>/dev/null | grep port= | awk -F"=" '{print $2}')
+if [ "${public_port}" = "" ]; then
+  if [ $chain  = "test" ]; then
+    public_port=18333
+  else
+    public_port=8333
+  fi
+fi
+
+public_check=$(timeout 2s nc -z ${public_ip} ${public_port}; echo $?)
+if [ $public_check = "0" ]; then
+  public="Yes"
+  public_color="${color_green}"
+else
+  public="Not reachable"
+  public_color="${color_red}"
+fi
+public_addr="${public_ip}:${public_port}"
+
+# get LND info
+if [ $chain = "test" ]; then
+  macaroon_path="${lnd_dir}/data/chain/bitcoin/testnet/readonly.macaroon"
+else
+  macaroon_path="${lnd_dir}/data/chain/bitcoin/mainnet/readonly.macaroon"
+fi
+
+lncli="/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert"
+$lncli getinfo 2>&1 | grep "Please unlock" >/dev/null
+wallet_unlocked=$?
+if [ "$wallet_unlocked" -eq 0 ] ; then
+ alias_color="${color_red}"
+ ln_alias="Wallet Locked"
+else
+ alias_color="${color_grey}"
+ ln_alias="$($lncli getinfo | jq -r '.alias')" 2>/dev/null
+ ln_walletbalance="$($lncli walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
+ ln_channelbalance="$($lncli channelbalance | jq -r '.balance')" 2>/dev/null
+
+ ln_channels_online="$($lncli getinfo | jq -r '.num_active_channels')" 2>/dev/null
+ ln_channels_total="$($lncli listchannels | jq '.[] | length')" 2>/dev/null
+ ln_external="$($lncli getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
+ ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
+ if [ "$ln_external_ip" = "$public_ip" ]; then
+  external_color="${color_grey}"
+ else
+  external_color="${color_red}"
+ fi
+
+ ln_pendingopen=$($lncli pendingchannels  | jq '.pending_open_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_pendingopen ]; then
+  ln_pendingopen=0
+ fi  
+
+ ln_pendingforce=$($lncli pendingchannels  | jq '.pending_force_closing_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_pendingforce ]; then
+  ln_pendingforce=0
+ fi
+
+ ln_waitingclose=$($lncli pendingchannels  | jq '.waiting_close_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+ if [ -z $ln_waitingclose ]; then
+  ln_waitingclose=0
+ fi
+
+ ln_pendinglocal=$(expr $ln_pendingopen + $ln_pendingforce + $ln_pendingclose + $ln_waitingclose)
+
+fi
+
+sum_balance=0
+if [ ! -z "$ln_channelbalance" ]; then
+ sum_balance=$(expr $ln_channelbalance + $sum_balance )
+fi
+if [ ! -z "$ln_walletbalance" ]; then
+ sum_balance=$(expr $ln_walletbalance + $sum_balance )
+fi
+if [ ! -z "$ln_pendinglocal" ]; then
+  sum_balance=$(expr $sum_balance + $ln_pendinglocal )
+fi
+
+printf "
+${color_green}    .~~.   .~~.      ${color_yellow}%s: ${color_gray}Bitcoin Core & LND
+${color_green}   '. \ ' ' / .'     ${color_yellow}%s
+${color_red}    .~ .~~~..~.      ${color_gray}%s, CPU Temp %s°C
+${color_red}   : .~.'~'.~. :
+${color_red}  ~ (   ) (   ) ~    ${color_yellow}%-24s %-24s %-20s
+${color_red} ( : '~'.~.'~' : )   ${color_gray}Memory   ${color_ram}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} ${alias_color}%s
+${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}        %-14s ${external_color}%s
+${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s ${color_gray}%s/%s Channels
+${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ฿ %12s sat
+${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool %-14s 🗲 %12s sat
+${color_grey}                                              Connections %-10s ⌛%12s sat
+${color_grey}                                                   In/Out %-10s ∑ %12s sat
+${color_red}                     ${color_yellow}%s
+%s %s
+" \
+"RaspiBolt" \
+"-------------------------------------------------------------------" \
+"${load}" "${temp}" \
+"Resources free" "${btc_title}" "Lightning (LND)" \
+"${ram}" "${sync}" "${ln_alias}" \
+"${sd}" "${sync_behind}" "${ln_external}" \
+"${hdd}" "${public}" "${ln_channels_online}" "${ln_channels_total}" \
+"${network_tx}" "${public_addr}" "${ln_walletbalance}" \
+"${network_rx}" "${mempool} tx" "${ln_channelbalance}" \
+"$connections" "$ln_pendinglocal" \
+"$inbound/$outbound" "$sum_balance" \
+""
+
+echo "$(tput -T xterm sgr0)"
