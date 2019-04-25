@@ -153,7 +153,32 @@ The macaroons are now located under the chain data directory for each supported 
 ## Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 3 with a 64 bit processor?
 At the time of this writing (July 2018) there is no 64 bit operating system for the Raspberry Pi developed yet. The 64 bit processors of the Raspberry 3 versions are running in 32 bit compatibility mode with a 32 bit operating system.
 
+### Setting a fixed address on the Raspberry Pi
+If your router does not support setting a static ip address for a single device, you can also do this directly on the Raspberry Pi.
 
+This can be done by configuring the DHCP-Client (on the Pi) to advertise a static IP address to the DHCP-Server (often the router) before it automatically assigns a different one to the Raspberry Pi.
+
+1. Get ip address of default gateway (router).  
+   Run `netstat -r -n` and choose the IP address from the gateway column which is not `0.0.0.0`. In my occasion it's `192.168.178.1`.
+
+2. Configure the static IP address for the Pi, the gateway path and a DNS server.  
+   The configuration for the DHCP client (Pi) is located in the `/etc/dhcpcd.conf` file:  
+   ```
+   sudo nano /etc/dhcpcd.conf
+   ```
+   The following snippet is an example of a sample configuration. Change the value of `static routers` and `static domain_name_servers` to the IP of your router (default gateway) from step 1. Be aware of giving the Raspberry Pi an address which is **OUTSIDE** the range of addresses which are assigned by the DHCP server. You can get this range by looking under the router configurations page and checking for the range of the DHCP addresses. This means, that if the DHCP range goes from `192.168.178.1` to `192.168.2.99` you're good to go with the IP `192.168.178.100` for your Raspberry Pi.
+  
+   Add the following to the `/etc/dhcpcd.conf` file:
+   ```
+   # Configuration static IP adress (CHANGE THE VALUES TO FIT FOR YOUR NETWORK)
+   interface eth0
+   static ip_address=192.168.178.100/24
+   static routers=192.168.178.1
+   static domain_name_servers=192.168.178.1
+   ```
+   
+3. Restart networking system  
+  `sudo /etc/init.d/networking restart`
 
 ------
 
