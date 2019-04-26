@@ -62,7 +62,7 @@ https://github.com/bitcoin/bitcoin/releases
   `$ sudo systemctl stop lnd`  
   `$ sudo systemctl stop bitcoind`  
 
-* Download, verify, extract and install the Bitcoin Core binaries as described in the [Bitcoin section](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_30_bitcoin.md) of this guide.
+* Download, verify, extract and install the Bitcoin Core binaries as described in the [Bitcoin section](raspibolt_30_bitcoin.md) of this guide.
 
 * Start the bitcoind and lnd system units  
   `$ sudo systemctl start bitcoind`  
@@ -133,7 +133,7 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
 The macaroons are now located under the chain data directory for each supported network. For example, the mainnet admin macaroon for Bitcoin is now located here:  
   `/home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon`  
 
-* Copy the new set of macaroons to your admin user, otherwise this user cannot use `lncli`. The new macaroon location also affects the [auto-unlock script](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_6A_auto-unlock.md) you might be running.  
+* Copy the new set of macaroons to your admin user, otherwise this user cannot use `lncli`. The new macaroon location also affects the [auto-unlock script](raspibolt_6A_auto-unlock.md) you might be running.  
   * For **mainnet** use these commands:  
     ```
     $ rm /home/admin/.lnd/admin.macaroon
