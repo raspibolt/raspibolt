@@ -215,7 +215,7 @@ Once the blockchain is synced on testnet, the Lightning node can be set up.
 
 ## Bitcoin Core upgrade
 If you want to upgrade to a new release of Bitcoin Core in the future, check out the FAQ section:  
-[How to upgrade Bitcoin Core](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_faq.md#how-to-upgrade-bitcoin-core)
+[How to upgrade Bitcoin Core](raspibolt_faq.md#how-to-upgrade-bitcoin-core)
 
 -----
 Next: [Lightning >>](raspibolt_40_lnd.md)
