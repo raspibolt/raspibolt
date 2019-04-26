@@ -126,7 +126,7 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
     $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg
     ``` 
 
-  [![Run Electrum Personal Server manually](images/60_eps_first-start.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_first-start.png)
+  [![Run Electrum Personal Server manually](images/60_eps_first-start.png)](images/60_eps_first-start.png)
 
 ### Connect Electrum
 
@@ -136,11 +136,11 @@ On your regular computer, configure Electrum to use your RaspiBolt:
 * Uncheck "Select server automatically"
 * Enter the IP of your RaspiBolt (eg. 192.168.0.20) in the address field
 
-  [![Connect Electrum to RaspiBolt](images/60_eps_electrum-connect.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrum-connect.png)
+  [![Connect Electrum to RaspiBolt](images/60_eps_electrum-connect.png)](images/60_eps_electrum-connect.png)
 
 * `Close` and check connection in tab "Console"
 
-  [![Check Electrum console](images/60_eps_electrumwallet.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/images/60_eps_electrumwallet.png)
+  [![Check Electrum console](images/60_eps_electrumwallet.png)](images/60_eps_electrumwallet.png)
   
 * This can also be achived by starting the Electrum wallet with the following command line arguments:  
   `--oneserver --server 192.168.0.20:50002:s`

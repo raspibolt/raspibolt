@@ -19,7 +19,7 @@ As user "admin", download the scripts, make them executable and copy them to the
 
 ```
 $ cd /home/admin/download/
-$ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/lnbalance
+$ wget https://raw.githubusercontent.com/Stadicus/RaspiBolt/master/resources/lnbalance
 $ chmod +x lnbalance
 $ sudo cp lnbalance /usr/local/bin
 $ cd
@@ -33,7 +33,7 @@ $ lnbalance
 
 ```
 $ cd /home/admin/download/
-$ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/lnchannels
+$ wget https://raw.githubusercontent.com/Stadicus/RaspiBolt/master/resources/lnchannels
 $ chmod +x lnchannels
 $ sudo cp lnchannels /usr/local/bin
 $ cd
@@ -59,7 +59,7 @@ alias peers='lncli --network=testnet listpeers'
 alias channels='lncli --network=testnet listchannels'
 alias channelbalance='lncli --network=testnet channelbalance'
 alias pendingchannels='lncli --network=testnet pendingchannels'
-alias openchannel='lncli --network=testnet openchannel'
+alias openchannel='lncli --etwork=testnet openchannel'
 alias connect='lncli --network=testnet connect'
 alias payinvoice='lncli --network=testnet payinvoice'
 alias addinvoice='lncli --network=testnet addinvoice'
@@ -72,4 +72,4 @@ When switching to mainnet, follow the **Testnet** section but removing all insta
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md) 
+<< Back: [Bonus guides](raspibolt_60_bonus.md)

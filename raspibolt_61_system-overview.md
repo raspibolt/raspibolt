@@ -9,7 +9,7 @@ has_toc: false
 
 *Difficulty: easy*
 
-To get a quick overview over the system status, I created [a shell script](https://github.com/Stadicus/guides/blob/master/raspibolt/resources/20-raspibolt-welcome) that is run as "message of the day" (motd) to be shown on login or on demand.  
+To get a quick overview over the system status, I created [a shell script](resources/20-raspibolt-welcome) that is run as "message of the day" (motd) to be shown on login or on demand.  
 
 ![MotD system overview](images/60_status_overview.png)
 
@@ -18,7 +18,7 @@ This script will run as root, so please check it before blindly trusting me.
 ```
 $ sudo apt-get install jq net-tools
 $ cd /home/admin/download/
-$ wget https://raw.githubusercontent.com/Stadicus/guides/master/raspibolt/resources/20-raspibolt-welcome
+$ wget https://raw.githubusercontent.com/Stadicus/RaspiBolt/master/resources/20-raspibolt-welcome
   
 # check script & exit
 $ nano 20-raspibolt-welcome
