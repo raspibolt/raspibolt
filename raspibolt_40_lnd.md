@@ -253,7 +253,7 @@ If you don't want to type out the full commands each time, aliases will help. Se
 
 ### LND upgrade
 If you want to upgrade to a new release of LND in the future, check out the FAQ section:  
-[How to upgrade LND](https://github.com/Stadicus/guides/blob/master/raspibolt/raspibolt_faq.md#how-to-upgrade-lnd-bin-)
+[How to upgrade LND](raspibolt_faq.md#how-to-upgrade-lnd-bin-)
 
 -----
 
