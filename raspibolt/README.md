@@ -1,3 +1,6 @@
+---
+nav_exclude: true
+---
 ### The RaspiBolt Guide is now available on GitHub Pages:
 
 https://stadicus.github.io/RaspiBolt/
