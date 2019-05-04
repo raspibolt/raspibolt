@@ -31,14 +31,14 @@ We download the latest Bitcoin Core binaries (the application) and compare the f
 
 ```bash
 # download Bitcoin Core binary
-$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.1/bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz
-$ wget https://bitcoincore.org/bin/bitcoin-core-0.17.1/SHA256SUMS.asc
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.18.0/bitcoin-0.18.0-arm-linux-gnueabihf.tar.gz
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.18.0/SHA256SUMS.asc
 $ wget https://bitcoin.org/laanwj-releases.asc
 
 # check that the reference checksum matches the real checksum
 # (ignore the "lines are improperly formatted" warning)
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
-> bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz: OK
+> bitcoin-0.18.0-arm-linux-gnueabihf.tar.gz: OK
 
 # import the public key of Wladimir van der Laan, verify the signed  checksum file
 # and check the fingerprint again in case of malicious keys
@@ -56,19 +56,17 @@ $ gpg --verify SHA256SUMS.asc
 ```bash
 $ cat /home/admin/download/SHA256SUMS.asc | grep win
 
-e9245e682126ef9fa4998eabbbdd1c3959df811dc10df60be626a5e5ffba9b78  bitcoin-0.17.1-win32-setup.exe
-6464aa2d338f3697950613bb88124e58d6ce78ead5e9ecacb5ba79d1e86a4e30  bitcoin-0.17.1-win32.zip
-fa1e80c5e4ecc705549a8061e5e7e0aa6b2d26967f99681b5989d9bd938d8467  bitcoin-0.17.1-win64-setup.exe
-1abbe6aa170ce7d8263d262f8cb0ae2a5bb3993aacd2f0c7e5316ae595fe81d7  bitcoin-0.17.1-win64.zip
+e2478cd7955c36a5b0d31133d876cc602fb47142e65ca367c0cf21ea6dce04db  bitcoin-0.18.0-win64-setup.exe
+29f449e2d1986a924b512e043893f932170830a45981323d8943ba6410848153  bitcoin-0.18.0-win64.zip
 ```
 
 * Extract the Bitcoin Core binaries, install them and check the version.
 
 ```bash
-$ tar -xvf bitcoin-0.17.1-arm-linux-gnueabihf.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.1/bin/*
+$ tar -xvf bitcoin-0.18.0-arm-linux-gnueabihf.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.0/bin/*
 $ bitcoind --version
-> Bitcoin Core Daemon version v0.17.1
+> Bitcoin Core Daemon version v0.18.0
 ```
 
 ## Prepare Bitcoin Core directory
