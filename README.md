@@ -1,20 +1,4 @@
-# Cryptocurrency guides 
-by Stadicus
+### The RaspiBolt Guide is now available on GitHub Pages:
+https://stadicus.github.io/RaspiBolt/
 
----
-
-**Beginner’s Guide to ️⚡Lightning️⚡ on a Raspberry Pi**  
-https://github.com/Stadicus/guides/blob/master/raspibolt/README.md
-
-[![RaspiBolt banner](raspibolt/images/00_raspibolt_banner_440.png)](https://github.com/Stadicus/guides/blob/master/raspibolt/README.md)
-
----
-
-**The perfect Bitcoin ⚡️Lightning️⚡ node**  
-based on a Hardkernel Odroid HC2  
-https://github.com/Stadicus/guides/blob/master/thundroid/README.md
-
-[![Thundroid banner](https://github.com/Stadicus/guides/raw/master/thundroid/images/thundroid_banner_440.jpg)](https://github.com/Stadicus/guides/blob/master/thundroid/README.md)
-
-
-Feedback, issues and pull requests welcome!
+This repository contains all sources and is used for Issue tracking.
