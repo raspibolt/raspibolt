@@ -71,16 +71,37 @@ https://github.com/bitcoin/bitcoin/releases
 :information_source: Please be aware that the internal data structure of Bitcoin Core changed from 0.16 to 0.17. If you download the blockchain using a different computer, make sure to use the same version. If you upgrade to 0.17, the data structure is converted automatically (can take a few hours) and it's not possible to use that data with older versions anymore.
 
 ## How to upgrade LND? 
-Upgrading can lead to a number of issues. Please **always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases/tag/v0.5-beta) completely to understand the changes. They also cover a lot of additional topics and many new features not mentioned here. 
 
-* You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first.  
+* You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first
 
-* When **upgrading to LND 0.5**, I would also recommend to close your channels first, as there have been a number of issues with stuck funds that require very technical work to resolve them.
+* Check your lnd version 
+  `$ lnd --version`
+
+IF upgrading from a version lower than v0.5 follow the detail procedure in the section below, else you can do a normal update.
+Upgrading can lead to a number of issues. Please **always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases) completely to understand the changes. They also cover a lot of additional topics and many new features not mentioned here. 
 
 * As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
 
-* If upgrading from a version lower than v0.5 delete the macaroon files.  
+* Remove old stuff, then download, verify and install the latest LND binaries as described in the [Lightning section](raspibolt_40_lnd.md) of this guide. 
+
+* Restart the services with the new configuration and unlock the wallet with the "bitcoin" user.
+  ```
+  $ sudo systemctl restart bitcoind
+  $ sudo systemctl restart lnd
+  $ sudo su - bitcoin
+  $ lncli unlock
+  $ exit
+  ```
+
+## Upgrading LND Version < 0.5
+
+* I would recommend to close your channels first, as there have been a number of issues with stuck funds that require very technical work to resolve them.
+
+* As "admin" user, stop lnd system unit.  
+  `$ sudo systemctl stop lnd`
+
+* delete the macaroon files.  
   `$ sudo rm /home/bitcoin/.lnd/*.macaroon`
 
 * Remove old stuff, then download, verify and install the latest LND binaries  
@@ -110,7 +131,7 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
   > lnd version 0.5.0-beta commit=3b2c807288b1b7f40d609533c1e96a510ac5fa6d
   ```
 
-* Starting with this release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  
+* Starting with 0.5 release, LND expects two different ZMQ sockets for blocks and transactions. Edit `bitcoin.conf`, save and exit.  
   ```
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf  
   zmqpubrawblock=tcp://127.0.0.1:28332
