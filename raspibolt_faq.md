@@ -94,7 +94,7 @@ Upgrading can lead to a number of issues. Please **always** read the [LND releas
   $ exit
   ```
 
-## Upgrading LND Version < 0.5
+### Upgrading LND Version < 0.5
 
 * I would recommend to close your channels first, as there have been a number of issues with stuck funds that require very technical work to resolve them.
 
