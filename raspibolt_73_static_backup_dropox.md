@@ -81,9 +81,11 @@ Run at boot
 `$ sudo systemctl enable backup-channels`
 
 ### Test 
-You will now cause the channel.backup to change and see if the copy gets uploaded to your webserver.
-`$ sudo touch /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/channel.backup`
-Logon to your dropbox and see if you have a new file.
+You will now cause the channel.backup to change and see if the copy gets uploaded to your webserver.  
+
+`$ sudo touch /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/channel.backup`  
+
+Logon to your dropbox and see if you have a new file.  
 
 ------
 
