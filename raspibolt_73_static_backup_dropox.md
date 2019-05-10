@@ -4,10 +4,12 @@
 Since lnd V0.6, Static Channel Backups (SCB) is supported. In a nutshell, every time a channel changes, lnd writes a new copy of the channels.backup file. For more details, see v0.6-beta Release Notes
 This guide explains one way to automatically upload the channels.backup file on changes, to your Dropbox
 The following scripts were created by [Vindard](https://github.com/vindard)
-#### Risk
-Minimal. The channels.backup file is encrypted so that it is safe to transmit over the Internet and to store on (e.g.) a cloud server.
-#### Requirements
-lnd version higher than 0.6
+
+#### *Risk : Minimal* 
+The channels.backup file is encrypted so that it is safe to transmit over the Internet and to store on (e.g.) a cloud server.
+
+#### *Requirements: lnd version higher than 0.6*
+
 
 
 ### Setup Dropbox API Key
