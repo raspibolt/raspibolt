@@ -19,27 +19,27 @@ Download and install LND
 ```
 $ cd /home/admin/download
 $ rm -rf /home/admin/download/*
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.2-beta/lnd-linux-armv7-v0.5.2-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.2-beta/manifest-v0.5.2-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.5.2-beta/manifest-v0.5.2-beta.txt.sig
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.6.1-beta/lnd-linux-armv7-v0.6.1-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.6.1-beta/manifest-v0.6.1-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.6.1-beta/manifest-v0.6.1-beta.txt.sig
 $ wget https://keybase.io/roasbeef/pgp_keys.asc
 
-$ sha256sum --check manifest-v0.5.2-beta.txt --ignore-missing
-> lnd-linux-armv7-v0.5.2-beta.tar.gz: OK
+$ sha256sum --check manifest-v0.6.1-beta.txt --ignore-missing
+> lnd-linux-armv7-v0.6.1-beta.tar.gz: OK
 
 $ gpg ./pgp_keys.asc
 > BD599672C804AF2770869A048B80CD2BB8BD8132
 
 $ gpg --import ./pgp_keys.asc
-$ gpg --verify manifest-v0.5.2-beta.txt.sig
+$ gpg --verify manifest-v0.6.1-beta.txt.sig
 > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
 > Primary key fingerprint: BD59 9672 C804 AF27 7086  9A04 8B80 CD2B B8BD 8132
 >      Subkey fingerprint: F803 7E70 C12C 7A26 3C03  2508 CE58 F7F8 E20F D9A2
 
-$ tar -xzf lnd-linux-armv7-v0.5.2-beta.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.5.2-beta/*
+$ tar -xzf lnd-linux-armv7-v0.6.1-beta.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.6.1-beta/*
 $ lnd --version
-> lnd version 0.5.2-beta commit=v0.5.2-beta-rc7
+> lnd version 0.6.1-beta commit=v0.6.1-beta
 ```
 ![Checksum LND](images/40_checksum_lnd.png)
 
