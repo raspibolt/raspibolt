@@ -71,14 +71,14 @@ https://github.com/bitcoin/bitcoin/releases
 :information_source: Please be aware that the internal data structure of Bitcoin Core changed from 0.16 to 0.17. If you download the blockchain using a different computer, make sure to use the same version. If you upgrade to 0.17, the data structure is converted automatically (can take a few hours) and it's not possible to use that data with older versions anymore.
 
 ## How to upgrade LND? 
+Upgrading LND can lead to a number of issues. Please **always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases) completely to understand the changes. These also cover a lot of additional topics and many new features not mentioned here. 
 
 * You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first
 
 * Check your lnd version 
   `$ lnd --version`
 
-IF upgrading from a version lower than v0.5 follow the detail procedure in the section below, else you can do a normal update.
-Upgrading can lead to a number of issues. Please **always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases) completely to understand the changes. They also cover a lot of additional topics and many new features not mentioned here. 
+Starting with version 0.5, pgrading LND got more reliable. When upgrading from an earlier version (< v0.5), please follow the detailed procedure in the next section, otherwise you can do a standard update described here.
 
 * As "admin" user, stop lnd system unit  
   `$ sudo systemctl stop lnd`
