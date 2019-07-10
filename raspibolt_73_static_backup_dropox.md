@@ -1,3 +1,10 @@
+---
+layout: default
+title: Static Channel Backups
+parent: Bonus Section
+nav_order: 45
+has_toc: false
+---
 ## Bonus guide: Automatic backup of static.channel to your Dropbox
 *Difficulty: easy*
 
@@ -40,7 +47,7 @@ In your web browser, do the following:
 ### Preparation on the RaspiBolt
 As user "admin", download the script, make it executable and move to the global bin folder.
 
-```
+```bash
 $ cd /home/admin/download/
 $ wget https://gist.githubusercontent.com/vindard/e0cd3d41bb403a823f3b5002488e3f90/raw/4bcf3c0163f77443a6f7c00caae0750b1fa0d63d/lnd-channel-backup.sh
 
@@ -92,3 +99,4 @@ Logon to your dropbox and see if you have a new file.
 ------
 
 << Back: [Bonus guides](raspibolt_60_bonus.md) 
+
