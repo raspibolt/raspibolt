@@ -27,9 +27,9 @@ You will need several passwords and I find it easiest to write them all down in 
 If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like [KeePass](https://keepass.info/)) and keep your original notes out of sight once your system is up and running.
 
 ## Preparing the operating system
-The node runs headless, that means without keyboard or display, so the operating system Raspbian Stretch Lite is used. 
+The node runs headless, that means without keyboard or display, so the operating system Raspbian Buster Lite is used.
 
-1. Download the [Raspbian Stretch Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image
+1. Download the [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image
 2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
 ### Enable Secure Shell
