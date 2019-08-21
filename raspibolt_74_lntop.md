@@ -2,13 +2,15 @@
 layout: default
 title: Static Channel Backups
 parent: Bonus Section
-nav_order: 46
+nav_order: 100
 has_toc: false
 ---
 ## Bonus guide: lntop: LN terminal dashboard
 *Difficulty: easy*
 
-lntop is an interactive text-mode channels viewer for Unix systems.
+[lntop](https://github.com/edouardparis/lntop) is an interactive text-mode channels viewer for Unix systems.
+
+![lntop](images/74_lntop.png)
 
 ### Install lntop
 
