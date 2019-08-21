@@ -70,6 +70,14 @@ The iOS & Android app Shango provides a neat interface for the RaspiBolt, to man
 
 [![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
 
+## [lntop](raspibolt_74_lntop.md)
+
+*Difficulty: easy*
+
+lntop is an interactive text-mode channels viewer for Unix systems.
+
+![lntop](images/74_lntop.png)
+
 ## [Pimp the command line](raspibolt_62_commandline.md)
 
 *Difficulty: easy*
