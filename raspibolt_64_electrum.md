@@ -101,7 +101,7 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
   $ pip3 install --user .
   ```
   
-  ![Install Electrum Personal Server with Python Pip](https://user-images.githubusercontent.com/32176650/64073511-9a708b00-cc8e-11e9-891d-9a2051083809.png)
+  ![Install Electrum Personal Server with Python Pip](./images/60_eps_pip_install.png)
 
 ### First start 
 The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately, in Raspbian this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path), but it's not necessary in this guide.
