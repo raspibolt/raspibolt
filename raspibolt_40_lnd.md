@@ -37,7 +37,7 @@ $ gpg --verify manifest-v0.7.1-beta.txt.sig
 >      Subkey fingerprint: F803 7E70 C12C 7A26 3C03  2508 CE58 F7F8 E20F D9A2
 
 $ tar -xzf lnd-linux-armv7-v0.7.1-beta.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0..1-beta/*
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.7.1-beta/*
 $ lnd --version
 > lnd version 0.7.1-beta commit=v0.7.1-beta
 ```
