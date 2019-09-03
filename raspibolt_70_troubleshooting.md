@@ -258,7 +258,7 @@ $ bitcoind
 Bitcoin server starting
 
 $ tail -f /home/bitcoin/.bitcoin/debug.log
-2018-11-25T19:31:57Z Bitcoin Core version v0.17.0.1 (release build)
+2018-11-25T19:31:57Z Bitcoin Core version v0.18.0.1 (release build)
 2018-11-25T19:31:57Z InitParameterInteraction: parameter interaction: -whitelistforcerelay=1 -> setting -whitelistrelay=1
 2018-11-25T19:31:57Z Assuming ancestors of block 0000000000000000002e63058c023a9a1de233554f28c7b21380b6c9003f36a8 have valid signatures.
 2018-11-25T19:31:57Z Setting nMinimumChainWork=0000000000000000000000000000000000000000028822fef1c230963535a90d

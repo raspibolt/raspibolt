@@ -57,14 +57,14 @@ Open the Windows command prompt (`Win+R`, enter `cmd`, hit `Enter`), navigate to
 > cd \bitcoin
 > mkdir bitcoin_mainnet
 > dir
-> certutil -hashfile bitcoin-0.18.0-win64-setup-setup.exe sha256
-a624de6c915871fed12cbe829d54474e3c8a1503b6d703ba168d32d3dd8ac0d3
+> certutil -hashfile bitcoin-0.18.1-win64-setup.exe sha256
+3bac0674c0786689167be2b9f35d2d6e91d5477dee11de753fe3b6e22b93d47c
 ```
 ![Windows Command Prompt: verify checksum](images/10_blockchain_wincheck.png)
 
-Compare this value with the [release signatures](https://bitcoin.org/bin/bitcoin-core-0.18.0/SHA256SUMS.asc). For the Windows v0.18.0 setup binaries, its
+Compare this value with the [release signatures](https://bitcoin.org/bin/bitcoin-core-0.18.1/SHA256SUMS.asc). For the Windows v0.18.1 setup binaries, its
 ```
-64 bit:  e2478cd7955c36a5b0d31133d876cc602fb47142e65ca367c0cf21ea6dce04db
+64 bit:  3bac0674c0786689167be2b9f35d2d6e91d5477dee11de753fe3b6e22b93d47c
 ```
 Usually, you would also need to check the signature of this file, but it's a pain on Windows, so we will do it on the Pi later on.
 
