@@ -31,14 +31,14 @@ We download the latest Bitcoin Core binaries (the application) and compare the f
 
 ```bash
 # download Bitcoin Core binary
-$ wget https://bitcoincore.org/bin/bitcoin-core-0.18.0/bitcoin-0.18.0-arm-linux-gnueabihf.tar.gz
-$ wget https://bitcoincore.org/bin/bitcoin-core-0.18.0/SHA256SUMS.asc
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.18.1/bitcoin-0.18.1-arm-linux-gnueabihf.tar.gz
+$ wget https://bitcoincore.org/bin/bitcoin-core-0.18.1/SHA256SUMS.asc
 $ wget https://bitcoin.org/laanwj-releases.asc
 
 # check that the reference checksum matches the real checksum
 # (ignore the "lines are improperly formatted" warning)
 $ sha256sum --check SHA256SUMS.asc --ignore-missing
-> bitcoin-0.18.0-arm-linux-gnueabihf.tar.gz: OK
+> bitcoin-0.18.1-arm-linux-gnueabihf.tar.gz: OK
 
 # import the public key of Wladimir van der Laan, verify the signed  checksum file
 # and check the fingerprint again in case of malicious keys
@@ -56,17 +56,17 @@ $ gpg --verify SHA256SUMS.asc
 ```bash
 $ cat /home/admin/download/SHA256SUMS.asc | grep win
 
-e2478cd7955c36a5b0d31133d876cc602fb47142e65ca367c0cf21ea6dce04db  bitcoin-0.18.0-win64-setup.exe
-29f449e2d1986a924b512e043893f932170830a45981323d8943ba6410848153  bitcoin-0.18.0-win64.zip
+3bac0674c0786689167be2b9f35d2d6e91d5477dee11de753fe3b6e22b93d47c  bitcoin-0.18.1-win64-setup.exe
+b0f94ab43c068bac9c10a59cb3f1b595817256a00b84f0b724f8504b44e1314f  bitcoin-0.18.1-win64.zip
 ```
 
 * Extract the Bitcoin Core binaries, install them and check the version.
 
 ```bash
-$ tar -xvf bitcoin-0.18.0-arm-linux-gnueabihf.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.0/bin/*
+$ tar -xvf bitcoin-0.18.1-arm-linux-gnueabihf.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.18.1/bin/*
 $ bitcoind --version
-> Bitcoin Core Daemon version v0.18.0
+> Bitcoin Core Daemon version v0.18.1
 ```
 
 ## Prepare Bitcoin Core directory
