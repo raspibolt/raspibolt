@@ -115,7 +115,7 @@ fi
 
 # get public IP address & port
 public_ip=$(curl -s ipinfo.io/ip)
-public_port=$(cat ${bitcoin_dir}/bitcoin.conf 2>/dev/null | grep port= | awk -F"=" '{print $2}')
+public_port=$(cat ${bitcoin_dir}/bitcoin.conf 2>/dev/null | grep ^port= | awk -F"=" '{print $2}')
 if [ "${public_port}" = "" ]; then
   if [ $chain  = "test" ]; then
     public_port=18333
