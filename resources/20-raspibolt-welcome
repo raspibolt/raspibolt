@@ -124,6 +124,9 @@ if [ "${public_port}" = "" ]; then
   fi
 fi
 
+#Choose the top two lines if you experience 'not reachable' while blockchain syncs. Could be due to nat-loopback being not available. 
+#public_check=$(curl -s https://bitnodes.earn.com/api/v1/nodes/me-${public_port}/ | jq .success)
+#if [ $public_check = "true" ]; then
 public_check=$(timeout 2s nc -z ${public_ip} ${public_port}; echo $?)
 if [ $public_check = "0" ]; then
   public="Yes"
