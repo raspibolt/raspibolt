@@ -137,6 +137,16 @@ else
 fi
 public_addr="${public_ip}:${public_port}"
 
+#create variable btcversion
+btcpi=$(bitcoin-cli -version | sed 's/.*\(.......\)/\1/')
+btcgit=$(curl -s https://api.github.com/repos/bitcoin/bitcoin/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+
+if [ "$btcpi" = "$btcgit" ]; then
+btcversion="$btcpi"
+else
+btcversion="$btcpi"", update available"
+fi
+
 # get LND info
 if [ $chain = "test" ]; then
   macaroon_path="${lnd_dir}/data/chain/bitcoin/testnet/readonly.macaroon"
@@ -196,6 +206,16 @@ if [ ! -z "$ln_pendinglocal" ]; then
   sum_balance=$(expr $sum_balance + $ln_pendinglocal )
 fi
 
+#create variable lndversion
+lndpi=$(lncli -version | sed 's/.*\(...........\)/\1/')
+lndgit=$(curl -s https://api.github.com/repos/lightningnetwork/lnd/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+
+if [ "$lndpi" = "$lndgit" ]; then
+lndversion="$lndpi"
+else
+lndversion="$lndpi"", update available"
+fi
+
 printf "
 ${color_green}    .~~.   .~~.      ${color_yellow}%s: ${color_gray}Bitcoin Core & LND
 ${color_green}   '. \ ' ' / .'     ${color_yellow}%s
@@ -205,11 +225,13 @@ ${color_red}  ~ (   ) (   ) ~    ${color_yellow}%-24s %-24s %-20s
 ${color_red} ( : '~'.~.'~' : )   ${color_gray}Memory   ${color_ram}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} ${alias_color}%s
 ${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}        %-14s ${external_color}%s
 ${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s ${color_gray}%s/%s Channels
-${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ฿ %12s sat
-${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool %-14s 🗲 %12s sat
+${color_red}    '~ .~~~. ~'      ${color_gray}HDD      
+${color_red}        '~'          ${color_gray}Traffic  ▲ %-12s  %-20s   ฿ %12s sat
+${color_red}        '~'                                ▼ %-12s  Mempool %-14s 🗲 %12s sat
 ${color_grey}                                              Connections %-10s ⌛%12s sat
 ${color_grey}                                                   In/Out %-10s ∑ %12s sat
 ${color_red}                     ${color_yellow}%s
+
 %s %s
 " \
 "RaspiBolt" \
