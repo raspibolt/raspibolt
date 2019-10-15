@@ -138,7 +138,7 @@ fi
 public_addr="${public_ip}:${public_port}"
 
 #create variable btcversion
-btcpi=$(bitcoin-cli -version | sed 's/.*\(.......\)/\1/')
+btcpi=$(bitcoin-cli -version |sed -n 's/^.*version //p')
 btcgit=$(curl -s https://api.github.com/repos/bitcoin/bitcoin/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
 
 if [ "$btcpi" = "$btcgit" ]; then
@@ -209,7 +209,7 @@ if [ ! -z "$ln_pendinglocal" ]; then
 fi
 
 #create variable lndversion
-lndpi=$(lncli -version | sed 's/.*\(...........\)/\1/')
+lndpi=$(lncli -version | sed -n 's/^.*commit=//p')
 lndgit=$(curl -s https://api.github.com/repos/lightningnetwork/lnd/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
 
 if [ "$lndpi" = "$lndgit" ]; then
