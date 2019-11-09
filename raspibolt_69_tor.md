@@ -205,6 +205,7 @@ Ok, let's get to work.
   [Tor]
   tor.active=true
   tor.v3=true
+  tor.streamisolation=true
   ```
 
 * Restart LND as usual, give it some time and unlock the wallet:
