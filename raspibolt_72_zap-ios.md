@@ -58,8 +58,8 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 * As user "admin", download, extract and install the current release from the [release page](https://github.com/LN-Zap/lndconnect/releases). 
   ```
   $ cd /tmp
-  $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.1.0/lndconnect-linux-armv7-v0.1.0.tar.gz
-  $ sudo tar -xvf lndconnect-linux-armv7-v0.1.0.tar.gz --strip=1 -C /usr/local/bin
+  $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.2.0/lndconnect-linux-armv7-v0.2.0.tar.gz
+  $ sudo tar -xvf lndconnect-linux-armv7-v0.2.0.tar.gz --strip=1 -C /usr/local/bin
   ```
 * Display the help page to make sure it works.  
   ```
@@ -91,6 +91,48 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 ⚠️ REMEMBER: If you change `lnd.conf` you need to delete & recreate the `tls.cert`, and also re-create and re-scan the QR code from the Zap iOS app. Do not forget to copy the new `tls.cert` and `admin.macaroon` files to the admin user.  
 
 👉 It is perfectly possible to use Zap iOS on-the-go (from the public internet) and connect to your node at home, but this involves creating new TLS certificates and reduces security. You need to set `tlsextraip=<YOUR_PUBLIC_IP>` and allow the ufw firewall to listen on 10009 from everywhere.
+
+### Connect Zap iOS to RaspiBolt over Tor
+
+* [Install Tor](raspibolt_69_tor.md#installing-tor)
+
+* Edit LND config file to enable REST interface on port 8080
+  ```
+  $ sudo nano /home/bitcoin/.lnd/lnd.conf
+  ```
+
+  ```
+  # add the following line in the [Application Options] section
+  restlisten=localhost:8080
+  ```
+
+* Add a hidden service to torrc
+  ```
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```
+  # add to the hidden service section
+  HiddenServiceDir /var/lib/tor/lnd/
+  HiddenServicePort 8080 127.0.0.1:8080
+  ```
+
+* Restart tor
+  ```
+  $ sudo systemctl restart tor
+  ```
+
+* Find and copy onion hostname
+  ```
+  $ sudo cat /var/lib/tor/lnd/hostname
+  ```
+
+* Display LNDConnect QR code
+  ```
+  $ lndconnect --host=ENTER_ONION_ADDRESS --port=8080
+  ```
+
+* Create new wallet in Zap iOS and scan QR code
 
 ------
 
