@@ -287,8 +287,8 @@ $ sudo apt-get install ufw
 $ sudo su
 $ ufw default deny incoming
 $ ufw default allow outgoing
-$ ufw allow from 192.168.0.0/24 to any port 22 comment 'allow SSH from local LAN'
-$ ufw allow proto udp from 192.168.0.0/24 port 1900 to any comment 'allow local LAN SSDP for UPnP discovery'
+$ ufw allow from 192.168.0.0/24 to any port 22 comment 'allow SSH from LAN'
+$ ufw allow proto udp from 192.168.0.0/24 port 1900 to any comment 'allow LAN SSDP for UPnP discovery'
 $ ufw allow 9735  comment 'allow Lightning'
 $ ufw allow 8333  comment 'allow Bitcoin mainnet'
 $ ufw allow 18333 comment 'allow Bitcoin testnet'
