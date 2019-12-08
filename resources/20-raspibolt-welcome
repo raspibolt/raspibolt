@@ -124,6 +124,9 @@ if [ "${public_port}" = "" ]; then
   fi
 fi
 
+#Choose the top two lines if you experience 'not reachable' while blockchain syncs. Could be due to nat-loopback being not available. 
+#public_check=$(curl -s https://bitnodes.earn.com/api/v1/nodes/me-${public_port}/ | jq .success)
+#if [ $public_check = "true" ]; then
 public_check=$(timeout 2s nc -z ${public_ip} ${public_port}; echo $?)
 if [ $public_check = "0" ]; then
   public="Yes"
@@ -133,6 +136,18 @@ else
   public_color="${color_red}"
 fi
 public_addr="${public_ip}:${public_port}"
+
+#create variable btcversion
+btcpi=$(bitcoin-cli -version |sed -n 's/^.*version //p')
+btcgit=$(curl -s https://api.github.com/repos/bitcoin/bitcoin/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+
+if [ "$btcpi" = "$btcgit" ]; then
+btcversion="$btcpi"
+btcversion_color="${color_green}"
+else
+btcversion="$btcpi"" Update!"
+btcversion_color="${color_red}"
+fi
 
 # get LND info
 if [ $chain = "test" ]; then
@@ -193,19 +208,34 @@ if [ ! -z "$ln_pendinglocal" ]; then
   sum_balance=$(expr $sum_balance + $ln_pendinglocal )
 fi
 
+#create variable lndversion
+lndpi=$(lncli -version | sed -n 's/^.*commit=//p')
+lndgit=$(curl -s https://api.github.com/repos/lightningnetwork/lnd/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+
+if [ "$lndpi" = "$lndgit" ]; then
+lndversion="$lndpi"
+lndversion_color="${color_green}"
+else
+lndversion="$lndpi"" Update!"
+lndversion_color="${color_red}"
+
+fi
+
 printf "
 ${color_green}    .~~.   .~~.      ${color_yellow}%s: ${color_gray}Bitcoin Core & LND
 ${color_green}   '. \ ' ' / .'     ${color_yellow}%s
 ${color_red}    .~ .~~~..~.      ${color_gray}%s, CPU Temp %s°C
 ${color_red}   : .~.'~'.~. :
 ${color_red}  ~ (   ) (   ) ~    ${color_yellow}%-24s %-24s %-20s
-${color_red} ( : '~'.~.'~' : )   ${color_gray}Memory   ${color_ram}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} ${alias_color}%s
-${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}        %-14s ${external_color}%s
-${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s ${color_gray}%s/%s Channels
-${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  %-20s   ฿ %12s sat
-${color_red}        '~'          ${color_gray}         ▼ %-12s  Mempool %-14s 🗲 %12s sat
+${color_red} ( : '~'.~.'~' : )   ${color_gray}Memory   ${color_ram}%-16s${btcversion_color}%-23s${lndversion_color}%s
+${color_red}  ~ .~ (   ) ~. ~    ${color_gray}SSD      ${color_sd}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} ${alias_color}%s
+${color_red}   (  : '~' :  )     ${color_gray}HDD      ${color_hdd}%-16s${color_gray}        %-14s ${external_color}%s
+${color_red}    '~ .~~~. ~'      ${color_gray}Traffic  ▲ %-12s  ${color_gray}Public  ${public_color}%-14s ${color_gray}%s/%s Channels
+${color_red}        '~'          ${color_gray}         ▼ %-12s  %-20s   ฿ %12s sat
+${color_grey}                                              Mempool %-14s 🗲 %12s sat
 ${color_grey}                                              Connections %-10s ⌛%12s sat
 ${color_grey}                                                   In/Out %-10s ∑ %12s sat
+
 ${color_red}                     ${color_yellow}%s
 %s %s
 " \
@@ -213,11 +243,12 @@ ${color_red}                     ${color_yellow}%s
 "-------------------------------------------------------------------" \
 "${load}" "${temp}" \
 "Resources free" "${btc_title}" "Lightning (LND)" \
-"${ram}" "${sync}" "${ln_alias}" \
-"${sd}" "${sync_behind}" "${ln_external}" \
-"${hdd}" "${public}" "${ln_channels_online}" "${ln_channels_total}" \
-"${network_tx}" "${public_addr}" "${ln_walletbalance}" \
-"${network_rx}" "${mempool} tx" "${ln_channelbalance}" \
+"${ram}" "$btcversion" "$lndversion" \
+"${sd}" "${sync}" "${ln_alias}" \
+"${hdd}" "${sync_behind}" "${ln_external}" \
+"${network_tx}" "${public}" "${ln_channels_online}" "${ln_channels_total}" \
+"${network_rx}" "${public_addr}" "${ln_walletbalance}" \
+"${mempool} tx" "${ln_channelbalance}" \
 "$connections" "$ln_pendinglocal" \
 "$inbound/$outbound" "$sum_balance" \
 ""
