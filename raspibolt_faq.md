@@ -53,7 +53,7 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 
 ## How to upgrade Bitcoin Core? 
-The latest release can be found on the Github page of the Bitcoin Core project. Make sure to read the Release Notes, as these can include importantupgrade information.  
+The latest release can be found on the Github page of the Bitcoin Core project. Make sure to read the Release Notes, as these can include important upgrade information.  
 https://github.com/bitcoin/bitcoin/releases
 
 * You might want to create a [backup of your system](raspibolt_65_system-recovery.md) first.  
