@@ -35,7 +35,7 @@ This causes the Secure Shell (ssh) to be enabled from the start and we will be a
 
 * Create a file `ssh` in the boot partition of the MicroSD card
 
-### Prepare Wifi 
+### Prepare Wifi
 
 You can run it with a wireless network connection.
 To avoid using a network cable for the initial setup, you can pre-configure the wireless settings:
@@ -43,15 +43,15 @@ To avoid using a network cable for the initial setup, you can pre-configure the 
 * Create a file `wpa_supplicant.conf` on the MicroSD card with the following content.
   Note that the network name (ssid) and password need to be in double-quotes (like `psk="password"`)
 
-  ```console
-country=[COUNTRY_CODE]
-ctrl_interface=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-network={
+  ```
+  country=[COUNTRY_CODE]
+  ctrl_interface=/var/run/wpa_supplicant GROUP=netdev
+  update_config=1
+  network={
     ssid="[WIFI_SSID]"
     psk="[WIFI_PASSWORD]"
-}
-```
+  }
+  ```
 
 * Replace `[COUNTRY_CODE]` with the [ISO2 code](https://www.iso.org/obp/ui/#search) of your country (eg. `US`)
 * Replace `[WIFI_SSID]` and `[WIFI_PASSWORD]` with the credentials for your own WiFi.
@@ -63,54 +63,60 @@ network={
 * If you did not already setup Wifi: connect the Pi to your network with an ethernet cable
 * Start the Pi by connecting it to the power adapter using the USB-C cable
 
-## Connecting to the network
-The Pi is starting and getting a new address from your home network. This address can change over time. To make the Pi reachable from the internet, we assign it a fixed address.
+---
 
-### Accessing your router
-The fixed address is configured in your network router: this can be the cable modem or the Wifi access point. So we first need to access the router. To find out its address, 
+## Connecting to the Raspberry Pi
 
-* start the Command Prompt on a computer that is connected to your home network (in Windows, click on the Start Menu and type cmd directly or in the search box, and hit Enter)
-* enter the command `ipconfig` (or `ifconfig` on Mac / Linux)
-* look for “Default Gateway” and note the address (eg. “192.168.0.1")
+### Find it
 
-:point_right: additional information: [accessing your router](http://www.noip.com/support/knowledgebase/finding-your-default-gateway/).
+The Pi is starting and gets a new address from your home network.
+Finding it can be a bit tricky without a screen.
+If you're lucky, you don't need to know this address and can just connect using mDNS.
 
-Now open your web browser and access your router by entering the address, like a regular web address. You need so sign in, and now you can look up all network clients in your home network. One of these should be listed as “raspberrypi”, together with its address (eg. “192.168.0.240”).
+* On your regular computer, open the Terminal (also known as "command line").
+  Here are a few links with additional details for [Windows](https://www.computerhope.com/issues/chusedos.htm), [MacOS](https://macpaw.com/how-to/use-terminal-on-mac) and [Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
 
-![Router client list](images/20_net1_clientlist.png)
+* Try to ping the Raspberry Pi local hostname (press `Ctrl`-`C` to )
 
-:point_right: don’t know your router password? Try [routerpasswords.com](http://www.routerpasswords.com/).  
-:warning: If your router still uses the initial password: change it!
+  ```sh
+  $ ping raspberrypi.local
+  > PING raspberrypi.local (192.168.1.192) 56(84) bytes of data.
+  > 64 bytes from 192.168.1.192 (192.168.1.192): icmp_seq=1 ttl=64 time=88.1 ms
+  > 64 bytes from 192.168.1.192 (192.168.1.192): icmp_seq=2 ttl=64 time=61.5 ms
+  ```
 
-### Setting a fixed address
+* If you get a response like above, mDNS works within your local network.
+  Proceed directly to the next section.
 
-We now need to set the fixed (static) IP address for the Pi. Normally, you can find this setting under “DHCP server”. The manual address should be the same as the current address, just change the last part to a lower number (e.g. 192.168.0.240 → 192.168.0.20).
+* If the `ping` command fails or does not return anything, you need to manually look for your Pi.
+  As this is a common challenge, just follow the official Raspberry Pi guideance on how to find your [IP Address](https://www.raspberrypi.org/documentation/remote-access/ip-address.md.)
 
-:point_right: need additional information? Google “[your router brand] configure static dhcp ip address”
+* You should now be able to reach your Pi, either with the hostname `raspberrypi.local` or an IP address like `192.168.0.20`.
 
-### Port Forwarding / UPnP
-Next, “Port Forwarding” needs to be configured. Different applications use different network ports, and the router needs to know to which internal network device the traffic of a specific port has to be directed. The port forwarding needs to be set up as follows:
+### Access with Secure Shell
 
-| Application name | External port | Internal port | Internal IP address | Protocol (TCP or UDP) |
-| ---------------- | ------------- | ------------- | ------------------- | --------------------- |
-| bitcoin          | 8333          | 8333          | 192.168.0.20        | BOTH                  |
-| bitcoin test     | 18333         | 18333         | 192.168.0.20        | BOTH                  |
+Now it’s time to connect to the Pi via SSH and get to work.
+For that, a Secure Shell (SSH) client is needed.
 
-:point_right: additional information: [setting up port forwarding](https://www.noip.com/support/knowledgebase/general-port-forwarding-guide/).
+If you need to provide connection details, use the following settings:
 
-The Lightning Network Daemon (LND) supports **UPnP** to configure the port-forwarding automatically and also advertise its own external IP address to the network. 
+* host name: `raspberrypi.local` or the ip address like `192.168.0.20`
+* port: `22`
+* username: `pi`
+* password:  `raspberry`.
 
-* Enable UPnP for your router.
+Install and start the SSH client for your operating system:
 
-:point_right: If you're not sure how, search ["enable upnp router MY-ROUTER-MODEL"](https://duckduckgo.com/?q=enable+upnp+router+MY-ROUTER-MODEL) for your own router model.
+* Windows: PuTTY ([Website](https://www.putty.org))
+* MacOS and Linux: from the Terminal, use the native command:
+  * `ssh pi@raspberrypi.local` or
+  * `ssh pi@192.168.0.20`
 
-Save and apply these router settings, we will check them later. Disconnect the Pi from the power supply, wait a few seconds, and plug it in again. The node should now get the new fixed IP address.
+<script id="asciicast-UxufwsDLfdhIfitCfBbHXx4mA" src="https://asciinema.org/a/UxufwsDLfdhIfitCfBbHXx4mA.js" async></script>
 
-![Fixed network address](images/20_net2_fixedip.png)
+🔍 *more: [using SSH with Raspberry Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md)*
 
-## Working on the Raspberry Pi
-### Introduction to the command line
-We are going to work on the command line of the Pi, which may be new to you. Find some basic information below, it will help you navigate and interact with your Pi.
+---
 
 ## The command line
 
@@ -175,10 +181,10 @@ $ sudo raspi-config
 
 * First, on `1` change your password to your `password [A]`.
 * Next, choose Update `8` to get the latest configuration tool
-* Network Options `2`: 
+* Network Options `2`:
   * you can give your node a cute hostname like “raspibolt”
   * configure your Wifi connection
-* Boot Options `3`: 
+* Boot Options `3`:
   * choose `Desktop / CLI` → `B1 Console` and
   * `Wait for network at boot`
 * Localisation `4`: set your timezone
@@ -204,12 +210,10 @@ $ sudo apt upgrade
 Make sure that all necessary software packages are installed:
 
 ```sh
-$ sudo apt install htop git curl bash-completion jq dphys-swapfile dirmngr --install-recommends
+$ sudo apt install htop git curl bash-completion jq qrencode dphys-swapfile hdparm --install-recommends
 ```
 
-* When using the command `sudo` , you will be prompted to enter your admin password from time to time for increased security. 
-* Enter the following command, set your `password [A]` and confirm all questions with the enter/return key.  
-  `$ sudo adduser bitcoin`
+<script id="asciicast-hg9s5u5vzv04OpUPwTFfqqrLy" src="https://asciinema.org/a/hg9s5u5vzv04OpUPwTFfqqrLy.js" async></script>
 
 ### Add user "admin"
 
@@ -229,7 +233,7 @@ This guide uses the main user "admin" instead of "pi" to make it more reusable w
   ```
 
 ### Add the service user “bitcoin”
-  
+
 The bitcoin and lightning processes will run in the background (as a "daemon") and use the separate user “bitcoin” for security reasons.
 This user does not have admin rights and cannot change the system configuration.
 
@@ -237,7 +241,7 @@ This user does not have admin rights and cannot change the system configuration.
 
   ```sh
   $ adduser bitcoin
-```
+  ```
 
 * Shut your RaspiBolt down.
 
@@ -245,184 +249,157 @@ This user does not have admin rights and cannot change the system configuration.
   $ sudo shutdown now
   ```
 
-* Exit the "bitcoin" user session  
-  `$ exit` 
-
-If this command gives you an error, chances are that your external hard disk is mounted as “read only”. This must be fixed before proceeding. If you cannot fix it, consider reformatting the external hard disk.
-
-👉 additional information: [external storage configuration](https://www.raspberrypi.org/documentation/configuration/external-storage.md)
-
-### Moving the Swap File
-
-The usage of a swap file can degrade your SD card very quickly. Therefore, we will move it to the external hard disk.  
-
-* As user "admin", delete the old swap file  
-  `$ sudo dphys-swapfile swapoff`  
-  `$ sudo dphys-swapfile uninstall`  
-
-* Edit the configuration file and replace existing entries with the ones below. Save and exit.  
-  `$ sudo nano /etc/dphys-swapfile`
-
-```
-CONF_SWAPFILE=/mnt/hdd/swapfile
-
-# comment or delete the CONF_SWAPSIZE line. It will then be created dynamically 
-#CONF_SWAPSIZE=
-```
-
-* Manually create new swap file  
-  `$ sudo dd if=/dev/zero of=/mnt/hdd/swapfile count=1000 bs=1MiB`  
-  `$ sudo chmod 600 /mnt/hdd/swapfile`  
-  `$ sudo mkswap /mnt/hdd/swapfile`  
-
-* Enable new swap configuration  
-  `$ sudo dphys-swapfile setup`  
-  `$ sudo dphys-swapfile swapon`
-
-## Hardening your Pi
-
-The following steps need admin privileges and must be executed with the user "admin".
-
-### Enabling the Uncomplicated Firewall
-The Pi will be visible from the internet and therefore needs to be secured against attacks. A firewall controls what traffic is permitted and closes possible security holes.
-
-The line `ufw allow from 192.168.0.0/24…` below assumes that the IP address of your Pi is something like `192.168.0.???`, the ??? being any number from 0 to 255. If your IP address is `12.34.56.78`, you must adapt this line to `ufw allow from 12.34.56.0/24…`.
-```
-$ sudo apt-get install ufw
-$ sudo su
-$ ufw default deny incoming
-$ ufw default allow outgoing
-$ ufw allow from 192.168.0.0/24 to any port 22 comment 'allow SSH from LAN'
-$ ufw allow proto udp from 192.168.0.0/24 port 1900 to any comment 'allow LAN SSDP for UPnP discovery'
-$ ufw allow 9735  comment 'allow Lightning'
-$ ufw allow 8333  comment 'allow Bitcoin mainnet'
-$ ufw allow 18333 comment 'allow Bitcoin testnet'
-$ ufw enable
-$ systemctl enable ufw
-$ ufw status
-$ exit
-```
-![UFW status](images/20_ufw_status.png)
-
-:point_right: additional information: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
-
-:point_right: If you find yourself locked out by mistake, you can connect keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
-
-### fail2ban
-The SSH login to the Pi must be especially protected. The firewall blocks all login attempts from outside your network, but additional steps should be taken to prevent an attacker - maybe from inside your network - to just try out all possible passwords.
-
-The first measure is to install “fail2ban”, a service that cuts off any system with five failed login attempts for ten minutes. This makes a brute-force attack unfeasible, as it would simply take too long.
-
-![fail2ban](images/20_fail2ban.png)
-*Me locking myself out by entering wrong passwords* :wink:
-
-`$ sudo apt-get install fail2ban`
-
-The initial configuration should be fine as it is enabled for SSH by default. If you want to dive deeper, you can  
-:point_right: [customize the configuration](https://linode.com/docs/security/using-fail2ban-for-security/).
-
-### Login with SSH keys
-One of the best options to secure the SSH login is to completely disable the password login and require a SSH key certificate. Only someone with physical possession of the private key can login. 
-
-**_Set up SSH keys for the "admin" user:_**
-
-**For Windows Users**: [Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers](https://www.tecmint.com/ssh-passwordless-login-with-putty)
-
-* You should have generated three new files. Keep them safe!
-
-![SSH keys files](images/20_ssh_keys_filelist.png)
-
-**For Mac / Linux Users:**
-
-* Back on the machine you’re working on (an easy way to make sure this is the case is to open a new tab in your terminal window) we first need to check for an existing private / public key pair:
-
-   `$ ls -la ~/.ssh/*.pub`
-
-* If files are listed, your public key should be one of the following files (by default):
-
-   ```
-   id_dsa.pub
-   id_ecdsa.pub
-   id_ed25519.pub
-   id_rsa.pub
-   ```
-* If one of these files exist, skip ahead to the "Let's make sure..." bullet point below. If none of those files exist, or you get a ` No such file or directory` do the following to create a new pair:
-  
-   `$ ssh-keygen -t rsa -b 4096`
-   * When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.
-
-   * Next, to enforce key security, use password [A] to protect your keys. Enter again to confirm.
-
-* Let's make sure that the `~/.ssh` directory exists on the Raspberry pi (Be sure to swap the IP of your Raspberry Pi in for RASPBERRY_PI_IP below):
-
-   `ssh admin@RASPBERRY_PI_IP 'mkdir -p ~/.ssh'`
-
-* Copy over your public key to the Raspberry Pi and set the file mode of the .ssh directory (Again, swap out your Pi's IP for RASPBERRY_PI_IP below). If your public key file is something other than `id_rsa.pub`, substitute its filename below:
-
-   `$ cat ~/.ssh/id_rsa.pub | ssh admin@RASPBERRY_PI_IP 'cat >> ~/.ssh/authorized_keys && chmod -R 700 ~/.ssh/'`
-
-**Once the Raspberry Pi has a copy of your public key, we'll now disable password login:**
-
-* Log in to the Raspberry Pi as "admin" with your SSH key (you shouldn't be prompted for admin's password anymore).
-
-* Edit ssh config file  
-`$ sudo nano /etc/ssh/sshd_config`
-
-* Change settings "ChallengeResponseAuthentication" and "PasswordAuthentication" to "no" (uncomment the line by removing # if necessary)  
-  ![SSH config](images/20_ssh_config.png)
-
-* Save config file and exit 
-
-* Copy the SSH public key for user "root", just in case  
-  `$ sudo mkdir /root/.ssh`  
-  `$ sudo cp /home/admin/.ssh/authorized_keys /root/.ssh/`  
-  `$ sudo chown -R root:root /root/.ssh/`  
-  `$ sudo chmod -R 700 /root/.ssh/`  
-  `$ sudo systemctl restart ssh`  
-
-* Exit and log in again. You can no longer log in with "pi" or "bitcoin", only "admin" and "root" have the necessary SSH keys.  
-  `$ exit`
-
-:warning: **Backup your SSH keys!** You will need to attach a screen and keyboard to your Pi if you lose it.
-
-### Increase your open files limit
-
-In case your RaspiBolt is swamped with internet requests (honest or malicious due to a DDoS attack), you will quickly encounter the `can't accept connection: too many open files` error. This is due to a limit on open files (representing individual tcp connections) that is set too low.
-
-Edit the following three files, add the additional line(s) right before the end comment, save and exit.
-
-```
-$ sudo nano /etc/security/limits.conf
-*    soft nofile 128000
-*    hard nofile 128000
-root soft nofile 128000
-root hard nofile 128000
-
-
-```
-
-![Edit pam.d/limits.conf](images/20_nofile_limits.png)
-
-
-
-```
-$ sudo nano /etc/pam.d/common-session
-session required pam_limits.so
-```
-
-![Edit pam.d/common-session](images/20_nofile_common-session.png)
-
-
-
-```
-$ sudo nano /etc/pam.d/common-session-noninteractive
-session required pam_limits.so
-```
-
-![Edit pam.d/common-session-noninteractive](images/20_nofile_common-session-noninteractive.png)
-
-
+<script id="asciicast-8uhMDvDcDNf3cUT6A3FcqN4lo" src="https://asciinema.org/a/8uhMDvDcDNf3cUT6A3FcqN4lo.js" async></script>
 
 ---
 
-Next: [Bitcoin >>](raspibolt_30_bitcoin.md)
+## Attach external drive
+
+To store the blockchain, we need a lot of space.
+As a server installation, the Linux native file system Ext4 is the best choice for the external hard disk, so we will format the hard disk, erasing all previous data.
+The external hard disk is then attached to the file system and can be accessed as a regular folder (this is called “mounting”).
+
+🚨 **Existing data on this drive will be deleted!**
+
+* Connect your external drive to the blue USB3 ports of the Raspberry Pi, preferably with a good cable that came with the drive.k
+
+### Log in as "admin"
+
+* Start your Raspberry Pi by unplugging it and connecting the power cable again.
+* Log in using SSH, but now with the user `admin`, your `password [A]` and the new hostname (e.g. `raspibolt.local`) or the IP address.
+
+  ```sh
+  $ ssh admin@raspibolt.local
+  ```
+
+* To change system configuration and files that don't belong to the "admin", you have to prefix command with `sudo`.
+  You will be prompted to enter your admin password from time to time for increased security.
+
+### Format external drive and mount
+
+* List all block devices with additional information.
+  The list shows the devices (e.g. `sda`) and the partitions they contain (e.g. `sda1`).
+
+  ```sh
+  $ lsblk -o NAME,MOUNTPOINT,UUID,FSTYPE,SIZE,LABEL,MODEL
+  > NAME        MOUNTPOINT UUID                                 FSTYPE   SIZE LABEL  MODEL
+  > sda                                                                447.1G        SATA_III_SSD
+  > └─sda1                 9ec0b784-d448-4757-a3b2-8abd57c544f3 ext4   447.1G
+  > mmcblk0                                                             14.9G
+  > ├─mmcblk0p1 /boot      5203-DB74                            vfat     256M boot
+  > └─mmcblk0p2 /          2ab3f8e1-7dc6-43f5-b0db-dd5759d51d4e ext4    14.6G rootfs
+  ```
+
+* Format the partition on the external drive with Ext4 (use `[NAME]` from above, e.g `sda1`)
+
+  ```sh
+  $ sudo mkfs.ext4 /dev/[NAME]
+  ```
+
+* List the devices once more and copy the `UUID` into a text editor on your local computer.
+
+  ```sh
+  $ lsblk -o NAME,MOUNTPOINT,UUID,FSTYPE,SIZE,LABEL,MODEL
+  ```
+
+* Edit the `fstab` file and add the following as a new line at the end, replacing `123456` with your own `UUID`.
+
+  ```sh
+  $ sudo nano /etc/fstab
+  ```
+
+  ```
+  UUID=123456 /mnt/ext ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2
+  ```
+
+  🔍 *more: [complete fstab guide](http://www.linuxstall.com/fstab)*
+
+* Create the directory to add the hard disk and set the correct owner
+
+  ```sh
+  $ sudo mkdir /mnt/ext
+  ```
+
+* Mount all drives and check the file system. Is “/mnt/ext” listed?
+
+  ```sh
+  $ sudo mount -a
+  $ df -h /mnt/ext
+  > Filesystem      Size  Used Avail Use% Mounted on
+  > /dev/sda1       440G   73M  417G   1% /mnt/ext
+  ```
+
+### Create bitcoin directory
+
+* Set the owner
+
+  ```sh
+  $ sudo chown -R bitcoin:bitcoin /mnt/ext/
+  ```
+
+* Switch to user "bitcoin", navigate to the external drive and create the bitcoin directory.
+
+  ```sh
+  $ sudo su - bitcoin
+  $ cd /mnt/ext
+  $ mkdir bitcoin
+  $ ls -la
+  > total 28
+  > drwxr-xr-x 4 bitcoin bitcoin  4096 Dec 12 17:43 .
+  > drwxr-xr-x 4 root    root     4096 Dec 12 17:38 ..
+  > drwxr-xr-x 2 bitcoin bitcoin  4096 Dec 12 17:43 bitcoin
+  > drwx------ 2 bitcoin bitcoin 16384 Dec 12 17:30 lost+found
+  ```
+
+* Create a testfile in the new directory and delete it.
+
+  ```sh
+  $ touch bitcoin/test.file
+  $ rm bitcoin/test.file
+  ```
+
+  If this command gives you an error, chances are that your external hard disk is mounted as “read only”.
+  This must be fixed before proceeding.
+  If you cannot fix it, consider reformatting the external drive.
+
+* Exit the "bitcoin" user session
+
+  ```sh
+  $ exit
+  ```
+
+<script id="asciicast-c75NG00m72iaguULOzzVc9Z3v" src="https://asciinema.org/a/c75NG00m72iaguULOzzVc9Z3v.js" async></script>
+
+🔍 *more: [external storage configuration](https://www.raspberrypi.org/documentation/configuration/external-storage.md)*
+
+---
+
+## Move swap file
+
+The usage of a swap file can degrade your SD card very quickly.
+Therefore, we will move it to the external drive.
+
+* Edit the configuration file and replace existing entries with the ones below. Save and exit.
+
+  ```sh
+  $ sudo nano /etc/dphys-swapfile
+  ```
+
+   ```
+   CONF_SWAPFILE=/mnt/ext/swapfile
+
+   # comment or delete the CONF_SWAPSIZE line. It will then be created dynamically
+   #CONF_SWAPSIZE=
+   ```
+
+* Recreate new swapfile on ssd (will be active after reboot)
+
+  ```sh
+  $ sudo dphys-swapfile install
+  ```
+
+<script id="asciicast-p7I8GeTfxOk15dFWHu8FVV83q" src="https://asciinema.org/a/p7I8GeTfxOk15dFWHu8FVV83q.js" async></script>
+
+---
+
+Next: [Security >>](raspibolt_21_security.md)
