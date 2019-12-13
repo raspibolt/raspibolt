@@ -58,21 +58,22 @@ I am not a systems specialist, so please feel free to point out improvements.
 ### Structure
 
 1. Introduction (this page)
-2. [Preparations](raspibolt_10_preparations.md): get all required parts
-3. [Raspberry Pi](raspibolt_20_pi.md): set up and configure the Pi as a Linux server
-4. [Security](raspibolt_21_security.md): secure and harden your installation
-4. [Bitcoin](raspibolt_30_bitcoin.md): install and configure Bitcoin Core as a fully validating node
-5. [Lightning](raspibolt_40_lnd.md): install and configure the Lightning Network Daemon (LND)
-7. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
-8. [Updates](raspibolt_updates.md): keep track of changes
+1. [Preparations](raspibolt_10_preparations.md): get all required parts
+1. [Raspberry Pi](raspibolt_20_pi.md): set up and configure the Pi as a Linux server
+1. [Security](raspibolt_21_security.md): secure and harden your installation
+1. [Privacy](raspibolt_22_privacy.md): configure Tor networking for improved privacy
+1. [Bitcoin](raspibolt_30_bitcoin.md): install and configure Bitcoin Core as a fully validating node
+1. [Lightning](raspibolt_40_lnd.md): install and configure the Lightning Network Daemon (LND)
+1. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
+1. [Updates](raspibolt_updates.md): keep track of changes
 
 ### Purpose
 
 My aim is to set up a Bitcoin and Lightning node that
 
 * is as fully validating Bitcoin Full Node and does not require any trust in a 3rd party,
-* is reliably running 24/7, 
-* is part of and supports the decentralization of the Lightning network by routing payments and 
+* is reliably running 24/7,
+* is part of and supports the decentralization of the Lightning network by routing payments and
 * can be used to send and receive personal payments using the command line interface.
 
 This server is set up without graphical user interface and is used remotely using the Secure Shell (SSH) command line.
