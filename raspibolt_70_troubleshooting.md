@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Troubleshooting
-nav_order: 9
+nav_order: 80
 ---
-# Troubleshooting 
+# Troubleshooting
 {: .no_toc }
 
 ## Table of contents
@@ -12,7 +12,7 @@ nav_order: 9
 1. TOC
 {:toc}
 
-The aim of this additional troubleshooting guide is to help you debug your system, verify all important configurations and find the frikkin' little problem that keeps you from running the perfect Lightning node. 
+The aim of this additional troubleshooting guide is to help you debug your system, verify all important configurations and find the frikkin' little problem that keeps you from running the perfect Lightning node.
 
 Where possible, I'll link to the relevant part of the guide. If you see any discrepancies from the expected output, double check how you set up your node in that specific area.
 
@@ -29,7 +29,7 @@ I collected frequent questions not directly related with issues in a separate [G
 
 ### Issues / Knowledge Base on Github
 
-When running into problems, you (and many before you) can open an issue on GitHub.  
+When running into problems, you (and many before you) can open an issue on GitHub.
 https://github.com/Stadicus/guides/issues
 
 1. Please check this Troubleshooting Guide first.
@@ -56,11 +56,11 @@ Important is that your Raspberry Pi uses the **armv7** CPU architecture.
 
 #### Is you root filesystem read-only?
 
-If you get an error like `unable to ..... : Read-only file system`, this points to a faulty sd card. If linux detects a corrupt root filesystem, it drops into read-only mode. Try to flash the sd card again, or use a different card.  
+If you get an error like `unable to ..... : Read-only file system`, this points to a faulty sd card. If linux detects a corrupt root filesystem, it drops into read-only mode. Try to flash the sd card again, or use a different card.
 
 #### Is the hard disk mounted?
 
-Check if the hard disk has been mounted to `/mnt/hdd` and if the size is about right. The other lines can vary on your Pi.
+Check if the hard disk has been mounted to `/mnt/ext` and if the size is about right. The other lines can vary on your Pi.
 
 ```
 admin@RaspiBolt:~ $ df -h
@@ -72,7 +72,7 @@ tmpfs           489M   50M  440M  11% /run
 tmpfs           5.0M  4.0K  5.0M   1% /run/lock
 tmpfs           489M     0  489M   0% /sys/fs/cgroup
 /dev/mmcblk0p1   43M   22M   21M  52% /boot
-/dev/sda1       458G  232G  203G  54% /mnt/hdd
+/dev/sda1       458G  232G  203G  54% /mnt/ext
 tmpfs            98M     0   98M   0% /run/user/1001
 ```
 
@@ -86,11 +86,11 @@ Disable the services and add a `#` in front of your mount entry in `/etc/fstab`,
 $ sudo systemctl disable bitcoind
 $ sudo systemctl disable lnd
 $ sudo nano /etc/fstab
-#UUID=[your_hdd_UUID] /mnt/hdd ext4 noexec,defaults 0 0
+#UUID=[your_hdd_UUID] /mnt/ext ext4 noexec,defaults 0 0
 $ sudo shutdown -r now
 ```
 
-Now, let's check if the hdd is really not mounted any more (no entry for `/mnt/hdd`), get the NAME of the device (eg. `sda1`) and check the file system.
+Now, let's check if the hdd is really not mounted any more (no entry for `/mnt/ext`), get the NAME of the device (eg. `sda1`) and check the file system.
 
 ```
 $ df -h
@@ -106,7 +106,7 @@ To get back up and running, reverse the first steps:
 $ sudo systemctl enable bitcoind
 $ sudo systemctl enable lnd
 $ sudo nano /etc/fstab
-UUID=[your_hdd_UUID] /mnt/hdd ext4 noexec,defaults 0 0
+UUID=[your_hdd_UUID] /mnt/ext ext4 noexec,defaults 0 0
 $ sudo shutdown -r now
 ```
 
@@ -154,8 +154,8 @@ $ sudo su - bitcoin
 $ touch /home/bitcoin/test
 $ ls -la /home/bitcoin/
 .
-lrwxrwxrwx 1 bitcoin bitcoin   16 Nov 13 21:47 .bitcoin -> /mnt/hdd/bitcoin
-lrwxrwxrwx 1 bitcoin bitcoin   12 Nov 13 22:28 .lnd -> /mnt/hdd/lnd
+lrwxrwxrwx 1 bitcoin bitcoin   16 Nov 13 21:47 .bitcoin -> /mnt/ext/bitcoin
+lrwxrwxrwx 1 bitcoin bitcoin   12 Nov 13 22:28 .lnd -> /mnt/ext/lnd
 -rw-r--r-- 1 bitcoin bitcoin    0 Nov 27 18:36 test
 .
 ```
@@ -472,4 +472,4 @@ $ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log
 
 -----
 
-I will extend this troubleshooting guide constantly with findings that have been or will be reported in the issues section. 
+I will extend this troubleshooting guide constantly with findings that have been or will be reported in the issues section.

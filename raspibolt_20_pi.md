@@ -1,10 +1,16 @@
 ---
 layout: default
 title: Raspberry Pi
-nav_order: 3
+nav_order: 20
 ---
+<!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
+
 # Raspberry Pi
 {: .no_toc }
+
+We configure the Raspberry Pi and install the Linux operating system.
+
+---
 
 ## Table of contents
 {: .no_toc .text-delta }
@@ -12,36 +18,32 @@ nav_order: 3
 1. TOC
 {:toc}
 
-In this section, we will configure the Raspberry Pi and install the Linux operating system.
-
-## Write down your passwords
-You will need several passwords and I find it easiest to write them all down in the beginning, instead of bumping into them throughout the guide. They should be unique and very secure, at least 12 characters in length. Do **not use uncommon special characters**, spaces or quotes (‘ or “).
-```
-[ A ] Master user password
-[ B ] Bitcoin RPC password
-[ C ] LND wallet password
-[ D ] LND seed password (optional)
-```
-![xkcd: Password Strength](images/20_xkcd_password_strength.png)
-
-If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth. Store a copy of your passwords somewhere safe (preferably in a password manager like [KeePass](https://keepass.info/)) and keep your original notes out of sight once your system is up and running.
+---
 
 ## Preparing the operating system
+
 The node runs headless, that means without keyboard or display, so the operating system Raspbian Buster Lite is used.
 
 1. Download the [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image
 2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
 ### Enable Secure Shell
-Without keyboard or screen, no direct interaction with the Pi is possible during the initial setup. After writing the image to the Micro SD card, create an empty file called “ssh” (without extension) in the main directory of the card. This causes the Secure Shell (ssh) to be enabled from the start and we will be able to login remotely. 
+
+Without keyboard or screen, no direct interaction with the Pi is possible during the initial setup.
+After writing the image to the Micro SD card, create an empty file called “ssh” (without extension) in the main directory of the card.
+This causes the Secure Shell (ssh) to be enabled from the start and we will be able to login remotely.
 
 * Create a file `ssh` in the boot partition of the MicroSD card
 
 ### Prepare Wifi 
-I would not recommend it, but you can run your RaspiBolt with a wireless network connection. To avoid using a network cable for the initial setup, you can pre-configure the wireless settings:
 
-* Create a file `wpa_supplicant.conf` on the MicroSD card with the following content. Note that the network name (ssid) and password need to be in double-quotes (like `psk="password"`)  
-```
+You can run it with a wireless network connection.
+To avoid using a network cable for the initial setup, you can pre-configure the wireless settings:
+
+* Create a file `wpa_supplicant.conf` on the MicroSD card with the following content.
+  Note that the network name (ssid) and password need to be in double-quotes (like `psk="password"`)
+
+  ```console
 country=[COUNTRY_CODE]
 ctrl_interface=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
@@ -50,15 +52,16 @@ network={
     psk="[WIFI_PASSWORD]"
 }
 ```
+
 * Replace `[COUNTRY_CODE]` with the [ISO2 code](https://www.iso.org/obp/ui/#search) of your country (eg. `US`)
 * Replace `[WIFI_SSID]` and `[WIFI_PASSWORD]` with the credentials for your own WiFi.
 
-
 ### Start your Pi
+
 * Safely eject the sd card from your computer
 * Insert the sd card into the Pi
 * If you did not already setup Wifi: connect the Pi to your network with an ethernet cable
-* Start the Pi by connecting it to the mobile phone charger using the Micro USB cable
+* Start the Pi by connecting it to the power adapter using the USB-C cable
 
 ## Connecting to the network
 The Pi is starting and getting a new address from your home network. This address can change over time. To make the Pi reachable from the internet, we assign it a fixed address.
@@ -109,136 +112,138 @@ Save and apply these router settings, we will check them later. Disconnect the P
 ### Introduction to the command line
 We are going to work on the command line of the Pi, which may be new to you. Find some basic information below, it will help you navigate and interact with your Pi.
 
-#### Entering commands
-You enter commands and the Pi answers by printing the results below your command. To make it clear where a command begins, every command in this guide starts with the `$` sign. The system response is marked with the `>` character.
+## The command line
+
+We are going to work on the command line of the Pi, which may be new to you.
+Find some basic information below, it will help you navigate and interact with your Pi.
+
+You enter commands and the Pi answers by printing the results below your command.
+To make it clear where a command begins, every command in this guide starts with the `$` sign. The system response is marked with the `>` character.
 
 In the following example, just enter `ls -la` and press the enter/return key:
-```
+
+```sh
 $ ls -la
 > example system response
+# This is a comment, don't enter this on the command line
 ```
-![command ls -la](images/20_command_ls-la.png)
 
-* **Auto-complete commands**: When you enter commands, you can use the `Tab` key for auto-completion, eg. for commands, directories or filenames.
+* **Auto-complete commands**:
+  When you enter commands, you can use the `Tab` key for auto-completion, eg. for commands, directories or filenames.
 
-* **Command history**: by pressing :arrow_up: and :arrow_down: on your keyboard, you can recall your previously entered commands.
+* **Command history**:
+  by pressing ⬆️ (arrow up) and ⬇️ (arrow down) on your keyboard, you can recall your previously entered commands.
 
-* **Common Linux commands**: For a very selective reference list of Linux commands, please refer to the [FAQ](raspibolt_faq.md) page.
+* **Common Linux commands**:
+  For a very selective reference list of Linux commands, please refer to the [FAQ](raspibolt_faq.md) page.
 
-* **Use admin privileges**: Our regular user has no admin privileges. If a command needs to edit the system configuration, we need to use the `sudo` ("superuser do") command as prefix. Instead of editing a system file with `nano /etc/fstab`, we use `sudo nano /etc/fstab`.   
+* **Use admin privileges**:
+  Our regular user has no admin privileges.
+  If a command needs to edit the system configuration, we need to use the `sudo` ("superuser do") command as prefix.
+  Instead of editing a system file with `nano /etc/fstab`, we use `sudo nano /etc/fstab`.
+
   For security reasons, the user "bitcoin" cannot use the `sudo` command.
 
-* **Using the Nano text editor**: We use the Nano editor to create new text files or edit existing ones. It's not complicated, but to save and exit is not intuitive. 
+* **Using the Nano text editor**:
+  We use the Nano editor to create new text files or edit existing ones.
+  It's not complicated, but to save and exit is not intuitive.
+
   * Save: hit `Ctrl-O` (for Output), confirm the filename, and hit the `Enter` key
   * Exit: hit `Ctrl-X`
 
-* **Copy / Paste**: If you are using Windows and the PuTTY SSH client, you can copy text from the shell by selecting it with your mouse (no need to click anything), and paste stuff at the cursor position with a right-click anywhere in the ssh window.
+* **Copy / Paste**:
+  If you are using Windows and the PuTTY SSH client, you can copy text from the shell by selecting it with your mouse (no need to click anything), and paste stuff at the cursor position with a right-click anywhere in the ssh window.
 
-### Connecting to the Pi
-Now it’s time to connect to the Pi via SSH and get to work. For that, a Secure Shell (SSH) client is needed. Install, start and connect:
+  In other Terminal programs, copy/paste usually works with `Ctrl`-`Shift`-`C` and `Ctrl`-`Shift`-`V`.
 
-- Windows: PuTTY ([Website](https://www.putty.org))
-- Mac OS: built-in SSH client (see [this article](http://osxdaily.com/2017/04/28/howto-ssh-client-mac/))
-- Linux: just use the native command, eg. `ssh pi@192.168.0.20`
-- Use the following SSH connection settings: 
-  - host name: the static address you set in the router, eg. `192.168.0.20`
-  - port: `22`
-  - username: `pi` 
-  - password:  `raspberry`.
+<script id="asciicast-mfa3ZyTE3K1RdbAXowaFjEJZK" src="https://asciinema.org/a/mfa3ZyTE3K1RdbAXowaFjEJZK.js" async></script>
 
-![login](images/20_login.png)
+---
 
-:point_right: additional information: [using SSH with Raspberry Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md)
+## Working on the Raspberry Pi
+
+You are now on the command line of your own Bitcoin node.
+Let's start with the configuration.
 
 ### Raspi-Config
-You are now on the command line of your own Bitcoin node. First we finish the Pi configuration. Enter the following command:  
-`$ sudo raspi-config`
 
-![raspi-config](images/20_raspi-config.png)
+Enter the following command:
+
+```sh
+$ sudo raspi-config
+```
 
 * First, on `1` change your password to your `password [A]`.
 * Next, choose Update `8` to get the latest configuration tool
 * Network Options `2`: 
-  * you can give your node a cute name (like “RaspiBolt”) and
-  * configure your Wifi connection (Pi 3 only)
+  * you can give your node a cute hostname like “raspibolt”
+  * configure your Wifi connection
 * Boot Options `3`: 
-  * choose `Desktop / CLI` → `Console` and
+  * choose `Desktop / CLI` → `B1 Console` and
   * `Wait for network at boot`
 * Localisation `4`: set your timezone
-* Advanced `7`: run `Expand Filesystem` and set `Memory Split` to 16
+* Advanced `7`: run `Expand Filesystem`
 * Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
 
+<script id="asciicast-1oSmvJaZLCuN3hUIn33OZCtJy" src="https://asciinema.org/a/1oSmvJaZLCuN3hUIn33OZCtJy.js" async></script>
+
+ **Important**: if you connected using the hostname `raspberrypi.local`, you now need to use the new hostname (e.g. `raspibolt.local`)
+
 ### Software update
-It is important to keep the system up-to-date with security patches and application updates. The “Advanced Packaging Tool” (apt) makes this easy:  
-`$ sudo apt-get update`  
-`$ sudo apt-get upgrade`  
 
-:point_right: Do this regularly every few months to get security related updates.
+It is important to keep the system up-to-date with security patches and application updates.
+The “Advanced Packaging Tool” (apt) makes this easy.
 
-Make sure that all necessary software packages are installed:  
-  `$ sudo apt-get install htop git curl bash-completion jq dphys-swapfile dirmngr --install-recommends`
+💡 Do this regularly every few months to get security related updates.
 
-### Adding main user "admin"
-This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms. 
+```sh
+$ sudo apt update
+$ sudo apt upgrade
+```
 
-* Create the new user, set password [A] and add it to the group "sudo"  
-  `$ sudo adduser admin`  
-  `$ sudo adduser admin sudo` 
-* And while you’re at it, change the password of the “root” admin user to your password [A].  
-  `$ sudo passwd root`
-* Reboot and and log in with the new user "admin"  
-  `$ sudo shutdown -r now`
+Make sure that all necessary software packages are installed:
 
-### Adding the service user “bitcoin”
-The bitcoin and lightning processes will run in the background (as a "daemon") and use the separate user “bitcoin” for security reasons. This user does not have admin rights and cannot change the system configuration.
+```sh
+$ sudo apt install htop git curl bash-completion jq dphys-swapfile dirmngr --install-recommends
+```
 
 * When using the command `sudo` , you will be prompted to enter your admin password from time to time for increased security. 
 * Enter the following command, set your `password [A]` and confirm all questions with the enter/return key.  
   `$ sudo adduser bitcoin`
 
-### Mounting external hard disk
-To store the blockchain, we need a lot of space. As a server installation, the Linux native file system Ext4 is the best choice for the external hard disk, so we will format the hard disk, erasing all previous data. The external hard disk is then attached to the file system and can be accessed as a regular folder (this is called “mounting”). 
+### Add user "admin"
 
-:warning: **Previous data on this hard disk will be deleted!**
+This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms.
 
-* Plug your hard disk into the running Pi and power the drive up. 
+* Create the new user "admin", set `password [A]` and add it to the group "sudo"
 
-* Get the NAME for main partition on the external hard disk  
-  `$ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL` 
+  ```sh
+  $ sudo adduser admin
+  $ sudo adduser admin sudo
+  ```
 
-* Format the external hard disk with Ext4 (use [NAME] from above, e.g `/dev/sda1`)  
-  `$ sudo mkfs.ext4 /dev/[NAME]`
+* And while you’re at it, change the password of the “root” admin user to your `password [A]`.
 
-* Copy the UUID that is provided as a result of this format command to your local (Windows) notepad. 
+  ```sh
+  $ sudo passwd root
+  ```
 
-* Edit the fstab file and the following as a new line (replace `UUID=123456`) at the end  
-  `$ sudo nano /etc/fstab`  
-  `UUID=123456 /mnt/hdd ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2` 
+### Add the service user “bitcoin”
   
-  (see the [complete fstab guide](http://www.linuxstall.com/fstab) for details on all the options) 
+The bitcoin and lightning processes will run in the background (as a "daemon") and use the separate user “bitcoin” for security reasons.
+This user does not have admin rights and cannot change the system configuration.
 
-* Create the directory to add the hard disk and set the correct owner  
-  `$ sudo mkdir /mnt/hdd`
+* Enter the following command, set your `password [A]` and confirm all questions with the enter/return key.
 
-* Mount all drives and check the file system. Is “/mnt/hdd” listed?  
-  `$ sudo mount -a`  
-  `$ df /mnt/hdd`
+  ```sh
+  $ adduser bitcoin
 ```
-Filesystem     1K-blocks  Used Available Use% Mounted on
-/dev/sda1      479667880 73756 455158568   1% /mnt/hdd
-```
-*  Set the owner  
-  `$ sudo chown -R bitcoin:bitcoin /mnt/hdd/`
 
-* Switch to user "bitcoin", navigate to the hard disk and create the bitcoin directory.  
-  `$ sudo su - bitcoin`  
-  `$ cd /mnt/hdd`  
-  `$ mkdir bitcoin`  
-  `$ ls -la`
+* Shut your RaspiBolt down.
 
-* Create a testfile in the new directory and delete it.  
-  `$ touch bitcoin/test.file`  
-  `$ rm bitcoin/test.file`
+  ```sh
+  $ sudo shutdown now
+  ```
 
 * Exit the "bitcoin" user session  
   `$ exit` 
