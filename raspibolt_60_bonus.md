@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Bonus Section
-nav_order: 7
+nav_order: 60
 has_children: true
 has_toc: false
 ---
@@ -104,7 +104,7 @@ Difficulty: easy
 
 These additional bash scripts display a balance overview (on-chain & in channels, active & inactive) as well as a nicely formatted channels overview.
 
-## Even more Extras 
+## Even more Extras
 
 **[RaspiBolt-Extras](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md)** by Rob Clark
 * Lights-Out: automatic unlocking of wallet and dynamic ip

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Mainnet
-nav_order: 6
+nav_order: 50
 ---
 # Mainnet
 {: .no_toc }
@@ -189,6 +189,7 @@ Congratulations, your RaspiBolt is live on the Bitcoin mainnet! To open channels
   https://smartbit.com.au
 
 ### LND in action
+
 As soon as your funding transaction is mined and confirmed, LND will start to open and maintain channels. This feature is called "Autopilot" and is configured in the "lnd.conf" file. If you would like to maintain your channels manually, you can disable the autopilot.
 
 Some commands to try:  

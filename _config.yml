@@ -6,3 +6,6 @@ aux_links:
       - "https://github.com/Stadicus/RaspiBolt/issues"
     "Contribute! Source on GitHub":
       - "https://github.com/Stadicus/RaspiBolt/"
+
+# enable theme for local usage
+#theme: "just-the-docs"

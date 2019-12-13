@@ -16,7 +16,7 @@ bitcoin_dir="/home/bitcoin/.bitcoin"
 lnd_dir="/home/bitcoin/.lnd"
 
 #Set to mount point of blockchain volume. This is used to calculate USB HDD usage %
-ext_hdd="/mnt/hdd" 
+ext_hdd="/mnt/ext"
 
 #Set to network device name (usually eth0 for ethernet or wlan0 for wireless on raspberry pi unless you have 'Predictable Network Names' turned on in raspi-config. To get network device name run ifconfig.)
 network_name="eth0"
@@ -102,7 +102,7 @@ if [ -n ${btc_path} ]; then
 
     # get mem pool transactions
     mempool="$(bitcoin-cli -datadir=${bitcoin_dir} getmempoolinfo | jq -r '.size')"
-    
+
     # get connection info
     connections="$(bitcoin-cli -datadir=${bitcoin_dir} getnetworkinfo | jq .connections)"
     inbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == true)' | jq -s 'length')"
@@ -166,7 +166,7 @@ else
  ln_pendingopen=$($lncli pendingchannels  | jq '.pending_open_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
  if [ -z $ln_pendingopen ]; then
   ln_pendingopen=0
- fi  
+ fi
 
  ln_pendingforce=$($lncli pendingchannels  | jq '.pending_force_closing_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
  if [ -z $ln_pendingforce ]; then

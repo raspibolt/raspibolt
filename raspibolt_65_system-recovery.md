@@ -15,7 +15,7 @@ In case your SD card gets corrupted or you brick your node, it's handy to have a
 
 In case everything goes south the recovery should also include essential configuration files from the external hard disk. The blockchain cannot be backed up this way and needs to be copied using SCP again as  described in the [main guide](raspibolt_50_mainnet.md).
 
-⚠️ Please note that LND cannot be backuped yet: even slightly outdated channels lead to a force closure by your peer and you losing all funds of that channels. Therefore, a manual wallet recovery is needed.
+🚨 Please note that LND cannot be backuped yet: even slightly outdated channels lead to a force closure by your peer and you losing all funds of that channels. Therefore, a manual wallet recovery is needed.
 
 ```bash
 $ sudo su - bitcoin
@@ -27,10 +27,10 @@ $ exit
 
 ### Create SD card image
 
-* Shut down your RaspiBolt  
+* Shut down your RaspiBolt
   `$ sudo shutdown now`
 * Remove the SD card and connect it to your regular computer
-* Follow this guide to create a disk image:  
+* Follow this guide to create a disk image:
   https://lifehacker.com/how-to-clone-your-raspberry-pi-sd-card-for-super-easy-r-1261113524
 
 ### System recovery
@@ -58,15 +58,15 @@ $ tar xvf lnd.tar -C /home/bitcoin
 $ exit
 ```
 
-* :warning: Before starting the services, make sure that you have an up-to-date copy of the Bitcoin blockchain ready on your external hard disk. Even catching up a few weeks can take days on the Raspberry Pi. Please refer to the [main guide](raspibolt_50_mainnet.md) on how to download and copy the data via SCP.
+* Before starting the services, make sure that you have an up-to-date copy of the Bitcoin blockchain ready on your external hard disk. Even catching up a few weeks can take days on the Raspberry Pi. Please refer to the [main guide](raspibolt_50_mainnet.md) on how to download and copy the data via SCP.
 
 
-* Once you're all set, restart the services  
-  `$ sudo systemctl start bitcoind.service `  
+* Once you're all set, restart the services
+  `$ sudo systemctl start bitcoind.service `
   `$ sudo systemctl start lnd.service `
 
 Your node should now be catching up and soon be operational again.
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md) 
+<< Back: [Bonus guides](raspibolt_60_bonus.md)
