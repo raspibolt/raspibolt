@@ -3,6 +3,8 @@ layout: default
 title: Intro
 nav_order: 1
 ---
+<!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
+
 ## Beginner’s Guide to ️Lightning️ on a Raspberry Pi
 {: .no_toc }
 
@@ -58,6 +60,7 @@ I am not a systems specialist, so please feel free to point out improvements.
 1. Introduction (this page)
 2. [Preparations](raspibolt_10_preparations.md): get all required parts
 3. [Raspberry Pi](raspibolt_20_pi.md): set up and configure the Pi as a Linux server
+4. [Security](raspibolt_21_security.md): secure and harden your installation
 4. [Bitcoin](raspibolt_30_bitcoin.md): install and configure Bitcoin Core as a fully validating node
 5. [Lightning](raspibolt_40_lnd.md): install and configure the Lightning Network Daemon (LND)
 7. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
