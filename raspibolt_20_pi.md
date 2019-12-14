@@ -261,10 +261,9 @@ The external hard disk is then attached to the file system and can be accessed a
 
 🚨 **Existing data on this drive will be deleted!**
 
-* Connect your external drive to the blue USB3 ports of the Raspberry Pi, preferably with a good cable that came with the drive.k
-
 ### Log in as "admin"
 
+* Do not yet connect the external drive to your Pi, we need to check some things first.
 * Start your Raspberry Pi by unplugging it and connecting the power cable again.
 * Log in using SSH, but now with the user `admin`, your `password [A]` and the new hostname (e.g. `raspibolt.local`) or the IP address.
 
@@ -275,10 +274,56 @@ The external hard disk is then attached to the file system and can be accessed a
 * To change system configuration and files that don't belong to the "admin", you have to prefix command with `sudo`.
   You will be prompted to enter your admin password from time to time for increased security.
 
-### Format external drive and mount
+### Make sure USB3 is performant
+
+The Raspberry Pi 4 supports USB3 drives, but is very picky.
+A lot of USB3 adapters for external drives are not compatible and need a manual workaround to be usable.
+We will now check if your drive works well as-is, or if additional configuration is needed.
+
+🔍 *more: [Raspberry Pi forum: bad performance with USB3 SSDs](https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=245931)*
+
+* First, lets get some information about your drive from the kernel messages.
+  Clear the kernel buffer, and follow the new messages (let the last command run):
+
+  ```sh
+  $ sudo dmesg -C
+  $ sudo dmesg -w
+  ```
+
+* Connect your external drive to the blue USB3 ports of the running Raspberry Pi, preferably with a good cable that came with the drive.
+
+  Once the system recognizes it, details are automatically displayed by the `dmesg` command.
+
+  ```
+  [  726.547907] usb 2-1: new SuperSpeed Gen 1 USB device number 3 using xhci_hcd
+  [  726.579304] usb 2-1: New USB device found, idVendor=152d, idProduct=0578, bcdDevice= 3.01
+  [  726.579321] usb 2-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+  [  726.579333] usb 2-1: Product: USB 3.0 Device
+  [  726.579346] usb 2-1: Manufacturer: USB 3.0 Device
+  [  726.579357] usb 2-1: SerialNumber: 000000005B3E
+  [  726.582254] usb 2-1: UAS is blacklisted for this device, using usb-storage instead
+  [  726.582350] usb 2-1: UAS is blacklisted for this device, using usb-storage instead
+  [  726.582364] usb-storage 2-1:1.0: USB Mass Storage device detected
+  [  726.582674] usb-storage 2-1:1.0: Quirks match for vid 152d pid 0578: 1800000
+  [  726.582783] scsi host0: usb-storage 2-1:1.0
+  [  727.598422] scsi 0:0:0:0: Direct-Access     INTENSO  SATA III SSD     0301 PQ: 0 ANSI: 6
+  [  727.599182] sd 0:0:0:0: Attached scsi generic sg0 type 0
+  [  727.605796] sd 0:0:0:0: [sda] 937703088 512-byte logical blocks: (480 GB/447 GiB)
+  [  727.606519] sd 0:0:0:0: [sda] Write Protect is off
+  [  727.606536] sd 0:0:0:0: [sda] Mode Sense: 47 00 00 08
+  [  727.607982] sd 0:0:0:0: [sda] Disabling FUA
+  [  727.607998] sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+  [  727.611337]  sda: sda1
+  [  727.614890] sd 0:0:0:0: [sda] Attached SCSI disk
+  ```
+
+* Make a note of the values shown for `idVendor` and `idProduct` (in this case "152d" and "0578").
+  Then, exit `dmesg` with `Ctrl`-`C`.
 
 * List all block devices with additional information.
   The list shows the devices (e.g. `sda`) and the partitions they contain (e.g. `sda1`).
+
+  Make a note of the partition name you want to use (in this case "sda1").
 
   ```sh
   $ lsblk -o NAME,MOUNTPOINT,UUID,FSTYPE,SIZE,LABEL,MODEL
@@ -289,6 +334,59 @@ The external hard disk is then attached to the file system and can be accessed a
   > ├─mmcblk0p1 /boot      5203-DB74                            vfat     256M boot
   > └─mmcblk0p2 /          2ab3f8e1-7dc6-43f5-b0db-dd5759d51d4e ext4    14.6G rootfs
   ```
+
+* Now, let's test the read performance of your drive.
+  Make sure to use the right partition name (used with the `/dev/` prefix).
+
+  ```sh
+  $ sudo hdparm -t --direct /dev/sda1
+
+  /dev/sda1:
+  Timing O_DIRECT disk reads:   2 MB in 31.18 seconds =  65.69 kB/sec
+  ```
+
+* In this case, the performance is really bad: 65 kB/sec is so 1990's.
+  If the measured speed is more than 50 MB/s, you can skip the rest of this section and go directly to formatting the external drive.
+
+  Otherwise we need to configure the USB driver to ignore the UAS interface of your drive.
+  This configuration must be passed to the Linux kernel on boot:
+
+  * Open the `cmdline.txt` file of the bootloader.
+
+    ```sh
+    $ sudo nano /boot/cmdline.txt
+    ```
+
+  * At the start of the line of parameters, add the text `usb-storage.quirks=aaaa:bbbb:u` where `aaaa` is the "idVendor" and `bbbb` is the "idProduct" value.
+    Make sure that there is a single space character (` `) between our addition and the next parameter.
+    Save and exit.
+
+    ```
+    usb-storage.quirks=2152d:0578:u ..............
+    ```
+
+  * Reboot the Raspberry Pi with the external drive still attached.
+
+    ```sh
+    $ sudo reboot
+    ```
+
+  * After you logged in as "admin" again, let's test the read performance once more.
+
+    ```sh
+    $ sudo hdparm -t --direct /dev/sda1
+
+    /dev/sda1:
+    Timing O_DIRECT disk reads: 510 MB in  3.01 seconds = 169.59 MB/sec
+    ```
+
+  * You should see a significant increase in performance.
+  If the test still shows a very slow read speed, your drive or USB adapter might not be compatible with the Raspberry Pi.
+  In that case I recommend visiting the Raspberry Pi [Troubleshooting forum](https://www.raspberrypi.org/forums/viewforum.php?f=28&sid=5ec5f1c6932c834c8222dfbbb3d5c9ef) or simply try out hardware alternatives.
+
+<script id="asciicast-NiOhoAsu2g9kltfHXzfU6GLnq" src="https://asciinema.org/a/NiOhoAsu2g9kltfHXzfU6GLnq.js" async></script>
+
+### Format external drive and mount
 
 * Format the partition on the external drive with Ext4 (use `[NAME]` from above, e.g `sda1`)
 
