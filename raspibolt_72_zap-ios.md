@@ -90,7 +90,7 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 
 🚨 REMEMBER: If you change `lnd.conf` you need to delete & recreate the `tls.cert`, and also re-create and re-scan the QR code from the Zap iOS app. Do not forget to copy the new `tls.cert` and `admin.macaroon` files to the admin user.
 
-👉 It is perfectly possible to use Zap iOS on-the-go (from the public internet) and connect to your node at home, but this involves creating new TLS certificates and reduces security. You need to set `tlsextraip=<YOUR_PUBLIC_IP>` and allow the ufw firewall to listen on 10009 from everywhere.
+💡 It is perfectly possible to use Zap iOS on-the-go (from the public internet) and connect to your node at home, but this involves creating new TLS certificates and reduces security. You need to set `tlsextraip=<YOUR_PUBLIC_IP>` and allow the ufw firewall to listen on 10009 from everywhere.
 
 ### Connect Zap iOS to RaspiBolt over Tor
 

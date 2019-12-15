@@ -21,7 +21,7 @@ We configure Tor to run your node anonymously.
 
 Running your own Bitcoin and Lightning node at home makes you a direct, sovereign peer on the Bitcoin network.
 If not configured without privacy in mind, it also tells the world that there is someone with Bitcoin at that address.
-True, it's only your IP address that is visible to others, but using services like [iplocation.net](https://www.iplocation.net), your physical address can be determined quite accurately.
+True, it's only your IP address that is visible to others, but using services like [iplocation.net](https://www.iplocation.net){:target="_blank"}, your physical address can be determined quite accurately.
 
 Especially with Lightning, your IP address is widely used, so we need to make sure that you keep your privacy.
 
@@ -29,7 +29,7 @@ Especially with Lightning, your IP address is widely used, so we need to make su
 
 ## Tor Project
 
-We will use Tor, a free software built by the [Tor Project](https://www.torproject.org), that allows you to anonymize internet traffic by routing it through a network of nodes, hiding your location and usage profile.
+We will use Tor, a free software built by the [Tor Project](https://www.torproject.org){:target="_blank"}, that allows you to anonymize internet traffic by routing it through a network of nodes, hiding your location and usage profile.
 
 It is called "Tor" for "The Onion Router": information is encrypted multiple times with the public keys of the nodes it passes through. Each node decrypts the layer of information that corresponds to its own private key, knowing only the last and next hop of the route, like peeling an onion, until the data reaches its destination.
 

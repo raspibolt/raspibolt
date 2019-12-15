@@ -26,22 +26,21 @@ This amazing piece of hardware is a tiny computer-on-a-chip, costs about $35 and
 
 It is advisable to get the latest Raspberry Pi for good performance:
 
-* Raspberry Pi 4, 2+ GB RAM
+* Raspberry Pi 4, with 4 GB RAM
 * Micro SD card: 8 GB or more, incl. adapter to your regular computer
 * strong USB power adapter: 5V/3A + USB-C cable
-* External hard disk: 500 GB or more
-* Optional: Raspberry Pi case
+* external hard disk: 500 GB or more
+* optional: Raspberry Pi case
 
 ![Raspberry Pi](images/10_raspberrypi_hardware.png)
-*Raspberry Pi 4: a tiny computer for $50*
+
+*Raspberry Pi 4: a tiny but quite powerful computer for $50*
 
 To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is ~250 GB and growing.
 You can buy a cheap hard disk enclosure and reuse an old 500 GB hard disk.
 I recommend getting a modern 2.5" SSD that can be powered through the USB connection to the Pi directly, which also speeds up initial sync time significantly.
 
-## Assembly
-
-TODO
+---
 
 ## Write down your passwords
 
