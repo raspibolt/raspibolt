@@ -52,7 +52,7 @@ $ exit
 
 <script id="asciicast-vRmJZZMgzolgH3ooLCGS5RCj8" src="https://asciinema.org/a/vRmJZZMgzolgH3ooLCGS5RCj8.js" async></script>
 
-🔍 *more: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)*
+🔍 *more: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands){:target="_blank"}*
 
 💡 If you find yourself locked out by mistake, you can connect keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
 
@@ -66,7 +66,7 @@ The firewall blocks all login attempts from outside your network, but additional
 The first measure is to install “fail2ban”, a service that cuts off any system with five failed login attempts for ten minutes.
 This makes a brute-force attack unfeasible, as it would simply take too long.
 
-![fail2ban](images/20_fail2ban.png)
+![fail2ban](images/20_fail2ban.png){:target="_blank"}
 *Me locking myself out by entering wrong passwords*
 
 ```sh
@@ -77,7 +77,7 @@ The initial configuration should be fine as it is enabled for SSH by default.
 
 <script id="asciicast-013bxZ8R7LktqzhP6O27LrorA" src="https://asciinema.org/a/013bxZ8R7LktqzhP6O27LrorA.js" async></script>
 
-🔍 *more: [customize fail2ban configuration](https://linode.com/docs/security/using-fail2ban-for-security/)*
+🔍 *more: [customize fail2ban configuration](https://linode.com/docs/security/using-fail2ban-for-security/){:target="_blank"}*
 
 ---
 
@@ -88,11 +88,11 @@ Only someone with physical possession of the private key can login.
 
 ### Generate keys on Windows
 
-Follow this guide [Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers](https://www.tecmint.com/ssh-passwordless-login-with-putty)
+Follow this guide [Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers](https://www.tecmint.com/ssh-passwordless-login-with-putty){:target="_blank"}
 
 * You should have generated three new files. Keep them safe!
 
-  ![SSH keys files](images/20_ssh_keys_filelist.png)
+  ![SSH keys files](images/20_ssh_keys_filelist.png){:target="_blank"}
 
 ### Generate keys on Mac / Linux
 
@@ -165,21 +165,21 @@ root soft nofile 128000
 root hard nofile 128000
 ```
 
-![Edit pam.d/limits.conf](images/20_nofile_limits.png)
+![Edit pam.d/limits.conf](images/20_nofile_limits.png){:target="_blank"}
 
 ```sh
 $ sudo nano /etc/pam.d/common-session
 session required pam_limits.so
 ```
 
-![Edit pam.d/common-session](images/20_nofile_common-session.png)
+![Edit pam.d/common-session](images/20_nofile_common-session.png){:target="_blank"}
 
 ```sh
 $ sudo nano /etc/pam.d/common-session-noninteractive
 session required pam_limits.so
 ```
 
-![Edit pam.d/common-session-noninteractive](images/20_nofile_common-session-noninteractive.png)
+![Edit pam.d/common-session-noninteractive](images/20_nofile_common-session-noninteractive.png){:target="_blank"}
 
 ---
 

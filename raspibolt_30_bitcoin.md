@@ -22,7 +22,7 @@ Let's get your Bitcoin full node operational.
 ## Bitcoin Core
 
 The base of a sovereign Bitcoin node is a fully validating Bitcoin client.
-We are using [Bitcoin Core](https://bitcoin.org/en/bitcoin-core/), the reference implementation, but not the only option available.
+We are using [Bitcoin Core](https://bitcoin.org/en/bitcoin-core/){:target="_blank"}, the reference implementation, but not the only option available.
 This application will download the whole blockchain from other peers and validate every single transaction that ever happened.
 After validation, the client can check all future transactions whether they are valid or not.
 
@@ -44,7 +44,7 @@ This is a precaution to make sure that this is an official release and not a mal
   cd /tmp
   ```
 
-* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download) (ARM Linux 32 bit), they change with each update.
+* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download){:target="_blank"} (ARM Linux 32 bit), they change with each update.
   Then run the following  commands (with adjusted filenames) and check the output where indicated:
 
   ```sh
@@ -137,7 +137,7 @@ maxuploadtarget=5000
 
 <script id="asciicast-gQJ1dSWPdcavFcZs5PRuYS4Ad" src="https://asciinema.org/a/gQJ1dSWPdcavFcZs5PRuYS4Ad.js" async></script>
 
-🔍 *more: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments) in Bitcoin Wiki*
+🔍 *more: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments){:target="_blank"} in Bitcoin Wiki*
 
 ---
 
@@ -304,17 +304,17 @@ This can take up to a week when using a Raspberry Pi 4, depending mostly on your
 
 If everything is running smoothly, this is the perfect time to familiarize yourself with Bitcoin, the technical aspects of Bitcoin Core and play around with `bitcoin-cli` until the blockchain is up-to-date.
 
-* [**The Little Bitcoin Book**](https://littlebitcoinbook.com) is a fantastic introduction to Bitcoin, focusing on the "why" and less on the "how".
+* [**The Little Bitcoin Book**](https://littlebitcoinbook.com){:target="_blank"} is a fantastic introduction to Bitcoin, focusing on the "why" and less on the "how".
 
-* [**Mastering Bitcoin**](https://bitcoinbook.info) by Andreas Antonopoulos is a great point to start, especially chapter 3 (ignore the first part how to compile from source code):
-  * you definitely need to have a [real copy](https://bitcoinbook.info/) of this book!
-  * read it online on [Github](https://github.com/bitcoinbook/bitcoinbook)
+* [**Mastering Bitcoin**](https://bitcoinbook.info){:target="_blank"} by Andreas Antonopoulos is a great point to start, especially chapter 3 (ignore the first part how to compile from source code):
+  * you definitely need to have a [real copy](https://bitcoinbook.info/){:target="_blank"} of this book!
+  * read it online on [Github](https://github.com/bitcoinbook/bitcoinbook){:target="_blank"}
 
-  ![Mastering Bitcoin](images/30_mastering_bitcoin_book.jpg)
+  ![Mastering Bitcoin](images/30_mastering_bitcoin_book.jpg){:target="_blank"}
 
-* [**Learning Bitcoin from the Command Line**](https://github.com/ChristopherA/Learning-Bitcoin-from-the-Command-Line/blob/master/README.md) by Christopher Allen gives a thorough deep dive into understanding the technical aspects of Bitcoin.
+* [**Learning Bitcoin from the Command Line**](https://github.com/ChristopherA/Learning-Bitcoin-from-the-Command-Line/blob/master/README.md){:target="_blank"} by Christopher Allen gives a thorough deep dive into understanding the technical aspects of Bitcoin.
 
-* Also, check out the [bitcoin-cli reference](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
+* Also, check out the [bitcoin-cli reference](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list){:target="_blank"}
 
 ---
 

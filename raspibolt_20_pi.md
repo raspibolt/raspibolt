@@ -24,8 +24,8 @@ We configure the Raspberry Pi and install the Linux operating system.
 
 The node runs headless, that means without keyboard or display, so the operating system Raspbian Buster Lite is used.
 
-1. Download the [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/) disk image
-2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
+1. Download the [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/){:target="_blank"} disk image
+2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md){:target="_blank"}
 
 ### Enable Secure Shell
 
@@ -53,7 +53,7 @@ To avoid using a network cable for the initial setup, you can pre-configure the 
   }
   ```
 
-* Replace `[COUNTRY_CODE]` with the [ISO2 code](https://www.iso.org/obp/ui/#search) of your country (eg. `US`)
+* Replace `[COUNTRY_CODE]` with the [ISO2 code](https://www.iso.org/obp/ui/#search){:target="_blank"} of your country (eg. `US`)
 * Replace `[WIFI_SSID]` and `[WIFI_PASSWORD]` with the credentials for your own WiFi.
 
 ### Start your Pi
@@ -74,7 +74,7 @@ Finding it can be a bit tricky without a screen.
 If you're lucky, you don't need to know this address and can just connect using mDNS.
 
 * On your regular computer, open the Terminal (also known as "command line").
-  Here are a few links with additional details for [Windows](https://www.computerhope.com/issues/chusedos.htm), [MacOS](https://macpaw.com/how-to/use-terminal-on-mac) and [Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
+  Here are a few links with additional details for [Windows](https://www.computerhope.com/issues/chusedos.htm), [MacOS](https://macpaw.com/how-to/use-terminal-on-mac){:target="_blank"} and [Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/){:target="_blank"}.
 
 * Try to ping the Raspberry Pi local hostname (press `Ctrl`-`C` to )
 
@@ -89,7 +89,7 @@ If you're lucky, you don't need to know this address and can just connect using 
   Proceed directly to the next section.
 
 * If the `ping` command fails or does not return anything, you need to manually look for your Pi.
-  As this is a common challenge, just follow the official Raspberry Pi guideance on how to find your [IP Address](https://www.raspberrypi.org/documentation/remote-access/ip-address.md.)
+  As this is a common challenge, just follow the official Raspberry Pi guideance on how to find your [IP Address](https://www.raspberrypi.org/documentation/remote-access/ip-address.md.){:target="_blank"}.
 
 * You should now be able to reach your Pi, either with the hostname `raspberrypi.local` or an IP address like `192.168.0.20`.
 
@@ -107,14 +107,14 @@ If you need to provide connection details, use the following settings:
 
 Install and start the SSH client for your operating system:
 
-* Windows: PuTTY ([Website](https://www.putty.org))
+* Windows: PuTTY ([Website](https://www.putty.org){:target="_blank"})
 * MacOS and Linux: from the Terminal, use the native command:
   * `ssh pi@raspberrypi.local` or
   * `ssh pi@192.168.0.20`
 
 <script id="asciicast-UxufwsDLfdhIfitCfBbHXx4mA" src="https://asciinema.org/a/UxufwsDLfdhIfitCfBbHXx4mA.js" async></script>
 
-🔍 *more: [using SSH with Raspberry Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md)*
+🔍 *more: [using SSH with Raspberry Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md){:target="_blank"}*
 
 ---
 
@@ -215,7 +215,7 @@ $ sudo apt install htop git curl bash-completion jq qrencode dphys-swapfile hdpa
 
 <script id="asciicast-hg9s5u5vzv04OpUPwTFfqqrLy" src="https://asciinema.org/a/hg9s5u5vzv04OpUPwTFfqqrLy.js" async></script>
 
-### Add user "admin"
+### Add users
 
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms.
 
@@ -231,8 +231,6 @@ This guide uses the main user "admin" instead of "pi" to make it more reusable w
   ```sh
   $ sudo passwd root
   ```
-
-### Add the service user “bitcoin”
 
 The bitcoin and lightning processes will run in the background (as a "daemon") and use the separate user “bitcoin” for security reasons.
 This user does not have admin rights and cannot change the system configuration.
@@ -280,7 +278,7 @@ The Raspberry Pi 4 supports USB3 drives, but is very picky.
 A lot of USB3 adapters for external drives are not compatible and need a manual workaround to be usable.
 We will now check if your drive works well as-is, or if additional configuration is needed.
 
-🔍 *more: [Raspberry Pi forum: bad performance with USB3 SSDs](https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=245931)*
+🔍 *more: [Raspberry Pi forum: bad performance with USB3 SSDs](https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=245931){:target="_blank"}*
 
 * First, lets get some information about your drive from the kernel messages.
   Clear the kernel buffer, and follow the new messages (let the last command run):
@@ -382,7 +380,7 @@ We will now check if your drive works well as-is, or if additional configuration
 
   * You should see a significant increase in performance.
   If the test still shows a very slow read speed, your drive or USB adapter might not be compatible with the Raspberry Pi.
-  In that case I recommend visiting the Raspberry Pi [Troubleshooting forum](https://www.raspberrypi.org/forums/viewforum.php?f=28&sid=5ec5f1c6932c834c8222dfbbb3d5c9ef) or simply try out hardware alternatives.
+  In that case I recommend visiting the Raspberry Pi [Troubleshooting forum](https://www.raspberrypi.org/forums/viewforum.php?f=28&sid=5ec5f1c6932c834c8222dfbbb3d5c9ef){:target="_blank"} or simply try out hardware alternatives.
 
 <script id="asciicast-NiOhoAsu2g9kltfHXzfU6GLnq" src="https://asciinema.org/a/NiOhoAsu2g9kltfHXzfU6GLnq.js" async></script>
 
@@ -410,7 +408,7 @@ We will now check if your drive works well as-is, or if additional configuration
   UUID=123456 /mnt/ext ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2
   ```
 
-  🔍 *more: [complete fstab guide](http://www.linuxstall.com/fstab)*
+  🔍 *more: [complete fstab guide](http://www.linuxstall.com/fstab){:target="_blank"}*
 
 * Create the directory to add the hard disk and set the correct owner
 
@@ -468,7 +466,7 @@ We will now check if your drive works well as-is, or if additional configuration
 
 <script id="asciicast-c75NG00m72iaguULOzzVc9Z3v" src="https://asciinema.org/a/c75NG00m72iaguULOzzVc9Z3v.js" async></script>
 
-🔍 *more: [external storage configuration](https://www.raspberrypi.org/documentation/configuration/external-storage.md)*
+🔍 *more: [external storage configuration](https://www.raspberrypi.org/documentation/configuration/external-storage.md){:target="_blank"}*
 
 ---
 

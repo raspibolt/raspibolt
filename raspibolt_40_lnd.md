@@ -7,7 +7,7 @@ nav_order: 40
 # Lightning: LND
 {: .no_toc }
 
-We set up LND, the Lightning Network Daemon by [Lightning Labs](http://lightning.engineering/).
+We set up LND, the Lightning Network Daemon by [Lightning Labs](http://lightning.engineering/){:target="_blank"}.
 
 ---
 
@@ -21,7 +21,7 @@ We set up LND, the Lightning Network Daemon by [Lightning Labs](http://lightning
 
 ## Installation
 
-The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [Github repository](https://github.com/lightningnetwork/lnd/blob/master/README.md) for a wealth of information about their open-source project and Lightning in general.
+The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [Github repository](https://github.com/lightningnetwork/lnd/blob/master/README.md){:target="_blank"} for a wealth of information about their open-source project and Lightning in general.
 
 ### Dowload
 
@@ -99,7 +99,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   tor.streamisolation=true
   ```
 
-🔍 *more: [sample-lnd.conf](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf) with all possible options in the LND project repository*
+🔍 *more: [sample-lnd.conf](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf){:target="_blank"} with all possible options in the LND project repository*
 
 <script id="asciicast-BIhZQuGGoUKtKDsawTpysYa3o" src="https://asciinema.org/a/BIhZQuGGoUKtKDsawTpysYa3o.js" async></script>
 
@@ -150,7 +150,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
 
 <script id="asciicast-xv9Gq3G5Pu5A1Jtxu2bACRvjQ" src="https://asciinema.org/a/xv9Gq3G5Pu5A1Jtxu2bACRvjQ.js" async></script>
 
-💡 _In this screencast I use the awesome [`tmux`](https://www.ocf.berkeley.edu/~ckuehl/tmux/) to run multiple Terminal sessions in parallel.
+💡 _In this screencast I use the awesome [`tmux`](https://www.ocf.berkeley.edu/~ckuehl/tmux/){:target="_blank"} to run multiple Terminal sessions in parallel.
 But you can just connect to your RaspiBolt with two separate SSH sessions._
 
 ### Authorization for "admin"
@@ -310,7 +310,7 @@ Up until now, you can just start over.
 Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
 
 * Make sure your RaspiBolt is working as expected.
-* Get a little practice with `bitcoin-cli` and its options (see [Bitcoin Core RPC documentation](https://bitcoin-rpc.github.io/))
+* Get a little practice with `bitcoin-cli` and its options (see [Bitcoin Core RPC documentation](https://bitcoin-rpc.github.io/){:target="_blank"})
 * Try a few restarts (`sudo reboot`), is everything starting fine?
 
 ### Funding your Lightning node

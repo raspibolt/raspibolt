@@ -12,7 +12,11 @@ I love to tinker and build stuff.
 I am also fascinated with digital currencies, so I recently built my own Bitcoin / Lightning Full Node with a simple low-cost Raspberry Pi.
 I now basically run my own bank using free open-source software and some cheap hardware.
 
-![RaspiBolt Logo](images/00_raspibolt_banner_440.png)
+![RaspiBolt Logo](images/00_raspibolt_v2_banner_440.png){:target="_blank"}
+
+---
+
+The **RaspiBolt version 2** builds on the Raspberry Pi 4. If you're looking for the old version: [check out the old source files on GitHub](https://github.com/Stadicus/RaspiBolt/blob/1.0/index.md).
 
 ---
 
@@ -62,8 +66,9 @@ I am not a systems specialist, so please feel free to point out improvements.
 1. [Raspberry Pi](raspibolt_20_pi.md): set up and configure the Pi as a Linux server
 1. [Security](raspibolt_21_security.md): secure and harden your installation
 1. [Privacy](raspibolt_22_privacy.md): configure Tor networking for improved privacy
-1. [Bitcoin](raspibolt_30_bitcoin.md): install and configure Bitcoin Core as a fully validating node
-1. [Lightning](raspibolt_40_lnd.md): install and configure the Lightning Network Daemon (LND)
+1. [Bitcoin](raspibolt_30_bitcoin.md): run Bitcoin Core as a fully validating node
+1. [Lightning](raspibolt_40_lnd.md): spin up the Lightning Network Daemon (LND)
+1. [Electrum](raspibolt_50_electrs.md): use your node with Hardware Wallets
 1. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
 1. [Updates](raspibolt_updates.md): keep track of changes
 
@@ -80,7 +85,7 @@ This server is set up without graphical user interface and is used remotely usin
 
 **The good old days**: this was the original goal of this guide, back in 2017, simply buying a Blockaccino.
 
-[![Buying a Blockaccino](images/00_blockaccino_goal.png)](https://vimeo.com/258395303)
+[![Buying a Blockaccino](images/00_blockaccino_goal.png)](https://vimeo.com/258395303){:target="_blank"}
 
 ### Target audience
 
