@@ -98,7 +98,7 @@ The whole process takes about 30 minutes.
   $ cargo build --release
 
   # install
-  $ sudo cp ./target/release/electrs /usr/bin/
+  $ sudo cp ./target/release/electrs /usr/local/bin/
   ```
 
 <script id="asciicast-PyEVzc5P0i4QX8mVu4zyKicgx" src="https://asciinema.org/a/PyEVzc5P0i4QX8mVu4zyKicgx.js" async></script>
@@ -236,7 +236,7 @@ Electrs need to start automatically on system boot.
   # Service execution
   ###################
 
-  ExecStart=/usr/bin/electrs --conf /mnt/ext/electrs/electrs.conf
+  ExecStart=/usr/local/bin/electrs --conf /mnt/ext/electrs/electrs.conf
 
 
   # Process management

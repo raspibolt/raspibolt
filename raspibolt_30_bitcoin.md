@@ -71,7 +71,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   $ tar -xvf bitcoin-0.19.0.1-arm-linux-gnueabihf.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/bin bitcoin-0.19.0.1/bin/*
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.19.0.1/bin/*
   $ bitcoind --version
   > Bitcoin Core version v0.19.0.1
   ```
@@ -186,10 +186,10 @@ We use “systemd“, a daemon that controls the startup process using configura
   # Service execution
   ###################
 
-  ExecStart=/usr/bin/bitcoind -daemon \
-                              -pid=/run/bitcoind/bitcoind.pid \
-                              -conf=/mnt/ext/bitcoin/bitcoin.conf \
-                              -datadir=/mnt/ext/bitcoin
+  ExecStart=/usr/local/bin/bitcoind -daemon \
+                                    -pid=/run/bitcoind/bitcoind.pid \
+                                    -conf=/mnt/ext/bitcoin/bitcoin.conf \
+                                    -datadir=/mnt/ext/bitcoin
 
 
   # Process management
