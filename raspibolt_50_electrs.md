@@ -72,13 +72,13 @@ As there are no binaries available, we will compile the application directly fro
   $ mkdir /home/admin/rust
   $ tar --strip-components 1 -C /home/admin/rust -xzvf rust.tar.gz
   $ cd /home/admin/rust
-  $ sudo ./install
+  $ sudo ./install.sh
   ```
 
 * Install build tools
 
   ```sh
-  $ apt install clang cmake
+  $ sudo apt install clang cmake
   ```
 
 <script id="asciicast-IQ8ZYiBUxbHZM6AxL41oS2Hbd" src="https://asciinema.org/a/IQ8ZYiBUxbHZM6AxL41oS2Hbd.js" async></script>
