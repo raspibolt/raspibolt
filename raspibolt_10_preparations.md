@@ -20,25 +20,32 @@ Let's get all the required parts and assemble the Raspberry Pi.
 ---
 
 This guide builds on the easily available and very flexible Raspberry Pi 4.
-This amazing piece of hardware is a tiny computer-on-a-chip, costs about $35 and consumes very little energy.
+This amazing piece of hardware is a tiny computer-on-a-chip, costs about $60 and consumes very little energy.
 
 ## Hardware requirements
 
-It is advisable to get the latest Raspberry Pi for good performance:
+This guide is written for the fastest Raspberry Pi, as it makes a lot of hacks and workarounds obsolete.
+You need
 
 * Raspberry Pi 4, with 4 GB RAM
-* Micro SD card: 8 GB or more, incl. adapter to your regular computer
+* microSD card: 8 GB or more, incl. adapter to your regular computer
 * strong USB power adapter: 5V/3A + USB-C cable
 * external hard disk: 500 GB or more
 * optional: Raspberry Pi case
 
 ![Raspberry Pi](images/10_raspberrypi_hardware.png)
 
-*Raspberry Pi 4: a tiny but quite powerful computer for $50*
-
 To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is ~250 GB and growing.
 You can buy a cheap hard disk enclosure and reuse an old 500 GB hard disk.
 I recommend getting a modern 2.5" SSD that can be powered through the USB connection to the Pi directly, which also speeds up initial sync time significantly.
+
+---
+
+## Other computing platforms
+
+This guide works with most Debian-based Linux distributions, be it on other computing platforms, a real laptop or a virtual machine.
+Only the "Raspberry Pi" part is quite specific, but easily adaptable to other environments.
+Over time, it would be great to describe the differences that need to be considered when using other environments like [Odroid](https://www.hardkernel.com/), [Pine64](https://www.pine64.org/) or [Libre Computer](https://libre.computer/).
 
 ---
 

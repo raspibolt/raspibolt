@@ -28,7 +28,7 @@ After validation, the client can check all future transactions whether they are 
 
 The validated blocks are also the base layer for other applications, like Electrs (to use with hardware wallets) or LND (the Lightning Network client).
 
-Be already warned that the dowloading and validation of all transactions since 2009, more than 600'000 blocks with a size of over 250 GB, is not an easy task.
+Be already warned that the downloading and validation of all transactions since 2009, more than 600'000 blocks with a size of over 250 GB, is not an easy task.
 It's great that the Raspberry Pi 4 can do it, even if it takes a few days, as this was simply not possible with the Raspberry Pi 3.
 
 ---

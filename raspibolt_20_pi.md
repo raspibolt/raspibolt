@@ -30,17 +30,17 @@ The node runs headless, that means without keyboard or display, so the operating
 ### Enable Secure Shell
 
 Without keyboard or screen, no direct interaction with the Pi is possible during the initial setup.
-After writing the image to the Micro SD card, create an empty file called “ssh” (without extension) in the main directory of the card.
+After writing the image to the microSD card, create an empty file called “ssh” (without extension) in the main directory of the card.
 This causes the Secure Shell (ssh) to be enabled from the start and we will be able to login remotely.
 
-* Create a file `ssh` in the boot partition of the MicroSD card
+* Create a file `ssh` in the boot partition of the microSD card
 
 ### Prepare Wifi
 
-You can run it with a wireless network connection.
+You can run your RaspiBolt over Wifi.
 To avoid using a network cable for the initial setup, you can pre-configure the wireless settings:
 
-* Create a file `wpa_supplicant.conf` on the MicroSD card with the following content.
+* Create a file `wpa_supplicant.conf` on the microSD card with the following content.
   Note that the network name (ssid) and password need to be in double-quotes (like `psk="password"`)
 
   ```
@@ -269,7 +269,7 @@ The external hard disk is then attached to the file system and can be accessed a
   $ ssh admin@raspibolt.local
   ```
 
-* To change system configuration and files that don't belong to the "admin", you have to prefix command with `sudo`.
+* To change system configuration and files that don't belong to the "admin", you have to prefix commands with `sudo`.
   You will be prompted to enter your admin password from time to time for increased security.
 
 ### Make sure USB3 is performant

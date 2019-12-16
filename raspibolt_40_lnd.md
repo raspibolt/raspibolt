@@ -23,7 +23,7 @@ We set up LND, the Lightning Network Daemon by [Lightning Labs](http://lightning
 
 The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [Github repository](https://github.com/lightningnetwork/lnd/blob/master/README.md){:target="_blank"} for a wealth of information about their open-source project and Lightning in general.
 
-### Dowload
+### Download
 
 Download and install LND
 
