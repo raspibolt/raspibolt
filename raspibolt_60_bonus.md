@@ -106,7 +106,7 @@ Control your Lightning node from a different computer within you network, eg. fr
 
 Difficulty: easy
 
-In case your SD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand. It's not a full backup solution, but allows a system recovery.
+In case your microSD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand. It's not a full backup solution, but allows a system recovery.
 
 ## [Additional scripts: show balance & channels](raspibolt_67_additional-scripts.md)
 

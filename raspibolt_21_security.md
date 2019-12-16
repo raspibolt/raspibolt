@@ -61,7 +61,7 @@ $ exit
 ## fail2ban
 
 The SSH login to the Pi must be especially protected.
-The firewall blocks all login attempts from outside your network, but additional steps should be taken to prevent an attacker - maybe from inside your network - to just try out all possible passwords.
+Additional steps should be taken to prevent an attacker to just try out all possible passwords.
 
 The first measure is to install “fail2ban”, a service that cuts off any system with five failed login attempts for ten minutes.
 This makes a brute-force attack unfeasible, as it would simply take too long.
@@ -137,12 +137,14 @@ Follow this guide [Configure “No Password SSH Keys Authentication” with PuTT
   $ sudo nano /etc/ssh/sshd_config
   ```
 
-* Exit and log in again. You can no longer log in with "pi" or "bitcoin", only "admin" has the necessary SSH keys.
+* Restart the SSH daemon, then exit and log in again.
 
   ```sh
   $ sudo systemctl restart sshd
   $ exit
   ```
+
+  You can no longer log in with "pi" or "bitcoin", only "admin" has the necessary SSH keys.
 
 <script id="asciicast-tm3A2UmR65pc63rHSAmHl2eHZ" src="https://asciinema.org/a/tm3A2UmR65pc63rHSAmHl2eHZ.js" async></script>
 
@@ -165,21 +167,17 @@ root soft nofile 128000
 root hard nofile 128000
 ```
 
-![Edit pam.d/limits.conf](images/20_nofile_limits.png){:target="_blank"}
-
 ```sh
 $ sudo nano /etc/pam.d/common-session
 session required pam_limits.so
 ```
-
-![Edit pam.d/common-session](images/20_nofile_common-session.png){:target="_blank"}
 
 ```sh
 $ sudo nano /etc/pam.d/common-session-noninteractive
 session required pam_limits.so
 ```
 
-![Edit pam.d/common-session-noninteractive](images/20_nofile_common-session-noninteractive.png){:target="_blank"}
+<script id="asciicast-ZWxK6wLjrRs1AAnEJpXfIoyPb" src="https://asciinema.org/a/ZWxK6wLjrRs1AAnEJpXfIoyPb.js" async></script>
 
 ---
 

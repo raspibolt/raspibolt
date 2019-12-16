@@ -9,7 +9,7 @@ has_toc: false
 
 *Difficulty: easy*
 
-In case your SD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand so you can quickly flash the SD card to a previous state. It's not a full backup solution, but allows a system recovery.
+In case your microSD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand so you can quickly flash the microSD card to a previous state. It's not a full backup solution, but allows a system recovery.
 
 ### Backup essential files on external hard disk
 
@@ -25,19 +25,19 @@ $ tar cvf backup_hdd/lnd.tar .lnd/lnd.conf
 $ exit
 ```
 
-### Create SD card image
+### Create microSD card image
 
 * Shut down your RaspiBolt
   `$ sudo shutdown now`
-* Remove the SD card and connect it to your regular computer
+* Remove the microSD card and connect it to your regular computer
 * Follow this guide to create a disk image:
   https://lifehacker.com/how-to-clone-your-raspberry-pi-sd-card-for-super-easy-r-1261113524
 
 ### System recovery
 
-If you have a spare SD card, you should test the system recovery by writing the disk image to the backup SD card and booting your RaspiBolt with it.
+If you have a spare microSD card, you should test the system recovery by writing the disk image to the backup microSD card and booting your RaspiBolt with it.
 
-If just the SD card was defective, there's no need to restore the files on your external hard disk. In fact it would cause more harm than good. :heavy_check_mark:
+If just the microSD card was defective, there's no need to restore the files on your external hard disk. In fact it would cause more harm than good. :heavy_check_mark:
 
 ---
 

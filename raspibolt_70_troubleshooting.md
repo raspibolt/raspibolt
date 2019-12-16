@@ -56,7 +56,7 @@ Important is that your Raspberry Pi uses the **armv7** CPU architecture.
 
 #### Is you root filesystem read-only?
 
-If you get an error like `unable to ..... : Read-only file system`, this points to a faulty sd card. If linux detects a corrupt root filesystem, it drops into read-only mode. Try to flash the sd card again, or use a different card.
+If you get an error like `unable to ..... : Read-only file system`, this points to a faulty microSD card. If linux detects a corrupt root filesystem, it drops into read-only mode. Try to flash the microSD card again, or use a different card.
 
 #### Is the hard disk mounted?
 
