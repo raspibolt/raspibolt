@@ -238,7 +238,7 @@ This user does not have admin rights and cannot change the system configuration.
 * Enter the following command, set your `password [A]` and confirm all questions with the enter/return key.
 
   ```sh
-  $ adduser bitcoin
+  $ sudo adduser bitcoin
   ```
 
 * Shut your RaspiBolt down.
