@@ -78,7 +78,7 @@ Upgrading LND can lead to a number of issues. Please **always** read the [LND re
 * Check your lnd version
   `$ lnd --version`
 
-Starting with version 0.5, pgrading LND got more reliable. When upgrading from an earlier version (< v0.5), please follow the detailed procedure in the next section, otherwise you can do a standard update described here.
+Starting with version 0.5, upgrading LND got more reliable. When upgrading from an earlier version (< v0.5), please follow the detailed procedure in the next section, otherwise you can do a standard update described here.
 
 * As "admin" user, stop lnd system unit
   `$ sudo systemctl stop lnd`
@@ -191,7 +191,7 @@ This can be done by configuring the DHCP-Client (on the Pi) to advertise a stati
 
    Add the following to the `/etc/dhcpcd.conf` file:
    ```
-   # Configuration static IP adress (CHANGE THE VALUES TO FIT FOR YOUR NETWORK)
+   # Configuration static IP address (CHANGE THE VALUES TO FIT FOR YOUR NETWORK)
    interface eth0
    static ip_address=192.168.178.100/24
    static routers=192.168.178.1
