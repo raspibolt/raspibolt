@@ -132,7 +132,7 @@ The whole process takes about 30 minutes.
   daemon_rpc_addr = "127.0.0.1:8332"
 
   # Electrs settings
-  electrum-rpc-addr = "127.0.0.1:50001"
+  electrum_rpc_addr = "127.0.0.1:50001"
   db_dir = "/mnt/ext/electrs/db"
   txid_limit = 1000
 
