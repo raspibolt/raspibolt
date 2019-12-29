@@ -281,7 +281,7 @@ Electrs needs to start automatically on system boot.
   MemoryDenyWriteExecute=true
 
   [Install]
-  WantedBy=bitboxbase.target
+  WantedBy=multi-user.target
   ```
 
 * Enable and start Electrs.
