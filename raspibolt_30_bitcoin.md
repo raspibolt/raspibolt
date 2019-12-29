@@ -120,6 +120,7 @@ server=1
 listen=1
 listenonion=1
 proxy=127.0.0.1:9050
+bind=127.0.0.1
 
 # Connections
 rpcuser=raspibolt
