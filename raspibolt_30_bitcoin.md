@@ -248,13 +248,11 @@ We use “systemd“, a daemon that controls the startup process using configura
   $ sudo systemctl enable bitcoind.service
   ```
 
-* Copy `bitcoin.conf` to user "admin" home directory for RPC credentials.
-  We also set the `/home/admin/.bitcoin` directory to 'read-only', so that if the "admin" user starts `bitcoind`, it does not accidentally download the whole blockchain onto the microSD card.
+* Link the Bitcoin data directory in the user "admin" home.
+  As a member or the group "bitcoin", admin has read-only access to certain files.
 
   ```sh
-  $ mkdir /home/admin/.bitcoin
-  $ sudo cp /mnt/ext/bitcoin/bitcoin.conf /home/admin/.bitcoin/
-  $ sudo chmod 550 /home/admin/.bitcoin
+  $ ln -s /mnt/ext/bitcoin/ /home/admin/.bitcoin
   ```
 
 * Restart the Raspberry Pi

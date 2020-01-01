@@ -224,6 +224,7 @@ This guide uses the main user "admin" instead of "pi" to make it more reusable w
   ```sh
   $ sudo adduser admin
   $ sudo adduser admin sudo
+  $ sudo adduser admin bitcoin
   ```
 
 * And while you’re at it, change the password of the “root” admin user to your `password [A]`.
