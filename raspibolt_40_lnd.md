@@ -169,13 +169,14 @@ Let's authorize the "admin" user to work with LND using the command line interfa
   $2 sudo ls -la /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/
   ```
 
-* Copy permission files and TLS cert to user "admin"
+* Link the LND data directory in the user "admin" home.
+  As a member or the group "bitcoin", admin has read-only access to certain files.
+  We also need to make all directories browsable for the group (with `g+X`) and allow it to read the `admin.macaroon`.
 
   ```sh
-  $2 cd /home/bitcoin/
-  $2 sudo cp --parents .lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/admin/
-  $2 sudo cp .lnd/tls.cert /home/admin/.lnd
-  $2 sudo chown -R admin:admin /home/admin/.lnd/
+  $2 ln -s /mnt/ext/lnd /home/admin/.lnd
+  $2 sudo chmod -R g+X /home/admin/.lnd/data/
+  $2 sudo chmod g+r /home/admin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
   ```
 
 * Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.
