@@ -42,7 +42,7 @@ $ ufw status
 >
 > To                         Action      From
 > --                         ------      ----
-> 22                         ALLOW       Anywhere                   # allow SSH from LAN
+> 22                         ALLOW       Anywhere                   # allow SSH
 > 8333                       ALLOW       Anywhere                   # allow Bitcoin
 > 9735                       ALLOW       Anywhere                   # allow Lightning
 > 50002                      ALLOW       Anywhere                   # allow Electrum
