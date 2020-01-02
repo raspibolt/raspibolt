@@ -224,7 +224,6 @@ This guide uses the main user "admin" instead of "pi" to make it more reusable w
   ```sh
   $ sudo adduser admin
   $ sudo adduser admin sudo
-  $ sudo adduser admin bitcoin
   ```
 
 * And while you’re at it, change the password of the “root” admin user to your `password [A]`.
@@ -240,6 +239,12 @@ This user does not have admin rights and cannot change the system configuration.
 
   ```sh
   $ sudo adduser bitcoin
+  ```
+
+* For convenience, the user "admin" is also a member of the group "bitcoin", giving it read-only privileges to configuration files.
+
+  ```sh
+  $ sudo adduser admin bitcoin
   ```
 
 * Shut your RaspiBolt down.
