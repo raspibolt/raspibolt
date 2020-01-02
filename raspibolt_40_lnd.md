@@ -359,7 +359,7 @@ Just grab the whole URI above the big QR code and use it as follows:
   [🕮 `connect`](https://api.lightning.community/#connectpeer){:target="_blank"}
 
   ```sh
-  $ lcli connect 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde@112.33.44.123:9735
+  $ lncli connect 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde@112.33.44.123:9735
   ```
 
 * **Open a channel** using the `<pubkey>` and the channel capacity in satoshis.
@@ -369,7 +369,7 @@ Just grab the whole URI above the big QR code and use it as follows:
   To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/btc-to-satoshi).
 
   ```sh
-  $ lcli openchannel 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde 100000 0
+  $ lncli openchannel 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde 100000 0
   ```
 
 * **Check your funds**, both in the on-chain wallet and the channel balances.
@@ -377,8 +377,8 @@ Just grab the whole URI above the big QR code and use it as follows:
   [🕮 `channelbalance`](https://api.lightning.community/#channelbalance){:target="_blank"}
 
   ```sh
-  $ lcli walletbalance
-  $ lcli channelbalance
+  $ lncli walletbalance
+  $ lncli channelbalance
   ```
 
 * **List active channels**. Once the channel funding transaction has been mined and gained enough confirmations, your channel is fully operational.
@@ -386,7 +386,7 @@ Just grab the whole URI above the big QR code and use it as follows:
   [🕮 `listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
 
   ```sh
-  $ lcli listchannels
+  $ lncli listchannels
   ```
 
 * **Make a Lightning payment**. These work with invoices, so everytime you buy something or want to send money, you need to get an invoice first.
