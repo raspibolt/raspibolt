@@ -23,6 +23,8 @@ We make sure that your RaspiBolt is secure and reliable.
 
 The Pi will be visible from the internet and therefore needs to be secured against attacks.
 A firewall controls what traffic is permitted and closes possible security holes.
+Only SSH and the Electrum server are reachable from the outside.
+Bitcoin Core and LND are using Tor and don't need incoming ports.
 
 The following steps need admin privileges and must be executed with the user "admin".
 
@@ -31,9 +33,7 @@ $ sudo apt install ufw
 $ sudo su
 $ ufw default deny incoming
 $ ufw default allow outgoing
-$ ufw allow 22    comment 'allow SSH from LAN'
-$ ufw allow 8333  comment 'allow Bitcoin'
-$ ufw allow 9735  comment 'allow Lightning'
+$ ufw allow 22    comment 'allow SSH'
 $ ufw allow 50002 comment 'allow Electrum SSL'
 $ ufw enable
 $ systemctl enable ufw
@@ -43,8 +43,6 @@ $ ufw status
 > To                         Action      From
 > --                         ------      ----
 > 22                         ALLOW       Anywhere                   # allow SSH
-> 8333                       ALLOW       Anywhere                   # allow Bitcoin
-> 9735                       ALLOW       Anywhere                   # allow Lightning
 > 50002                      ALLOW       Anywhere                   # allow Electrum
 > ...
 $ exit
