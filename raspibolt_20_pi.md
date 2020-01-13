@@ -76,7 +76,7 @@ If you're lucky, you don't need to know this address and can just connect using 
 * On your regular computer, open the Terminal (also known as "command line").
   Here are a few links with additional details for [Windows](https://www.computerhope.com/issues/chusedos.htm), [MacOS](https://macpaw.com/how-to/use-terminal-on-mac){:target="_blank"} and [Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/){:target="_blank"}.
 
-* Try to ping the Raspberry Pi local hostname (press `Ctrl`-`C` to )
+* Try to ping the Raspberry Pi local hostname (press `Ctrl`-`C` to interrupt)
 
   ```sh
   $ ping raspberrypi.local
