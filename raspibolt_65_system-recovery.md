@@ -2,7 +2,7 @@
 layout: default
 title: System recovery
 parent: Bonus Section
-nav_order: 100
+nav_order: 110
 has_toc: false
 ---
 ## Bonus guide: System recovery
