@@ -2,7 +2,7 @@
 layout: default
 title: BTC RPC Explorer
 parent: Bonus Section
-nav_order: 110
+nav_order: 100
 has_toc: false
 ---
 ## Bonus guide: BTC RPC Explorer
