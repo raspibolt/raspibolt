@@ -1,2 +1,4 @@
-
-thundroid/images/50_bitcoind_sync.png
+.sass-cache
+_site
+cast/tmp*
+*.xcf
