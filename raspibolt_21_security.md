@@ -43,7 +43,7 @@ $ ufw status
 > To                         Action      From
 > --                         ------      ----
 > 22                         ALLOW       Anywhere                   # allow SSH
-> 50002                      ALLOW       Anywhere                   # allow Electrum
+> 50002                      ALLOW       Anywhere                   # allow Electrum SSL
 > ...
 $ exit
 ```
