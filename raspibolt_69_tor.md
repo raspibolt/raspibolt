@@ -82,7 +82,7 @@ For additional reference, the original instructions are available on the [Tor pr
   ```
   $ cat /etc/group | grep debian-tor
   debian-tor:x:113:
-  $ sudo usermod -a -G debian-tor bitcoin
+  $ sudo adduser bitcoin debian-tor
   $ cat /etc/group | grep debian-tor
   debian-tor:x:123:bitcoin
   ```
