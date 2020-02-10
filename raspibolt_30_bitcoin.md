@@ -278,7 +278,7 @@ After rebooting, the bitcoind should start and begin to sync and validate the Bi
 * See bitcoind in action by monitoring its log file (exit with `Ctrl-C`)
 
   ```sh
-  $ sudo tail -f /mnt/ext/bitcoin/debug.log
+  $ tail -f /mnt/ext/bitcoin/debug.log
   ```
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain
