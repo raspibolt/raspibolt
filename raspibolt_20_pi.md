@@ -43,7 +43,7 @@ To avoid using a network cable for the initial setup, you can pre-configure the 
 * Create a file `wpa_supplicant.conf` in the boot partition of the microSD card with the following content.
   Note that the network name (ssid) and password need to be in double-quotes (like `psk="password"`)
 
-  ```
+  ```conf
   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
   update_config=1
   country=[COUNTRY_CODE]
@@ -489,7 +489,7 @@ Therefore, we will move it to the external drive.
   $ sudo nano /etc/dphys-swapfile
   ```
 
-   ```
+   ```ini
    CONF_SWAPFILE=/mnt/ext/swapfile
 
    # comment or delete the CONF_SWAPSIZE line. It will then be created dynamically

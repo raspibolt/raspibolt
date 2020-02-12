@@ -119,7 +119,7 @@ The whole process takes about 30 minutes.
   $ nano /mnt/ext/electrs/electrs.conf
   ```
 
-  ```toml
+  ```ini
   # RaspiBolt: electrs configuration
   # /mnt/ext/electrs/electrs.conf
 
@@ -222,7 +222,7 @@ Electrs needs to start automatically on system boot.
   $ sudo nano /etc/systemd/system/electrs.service
   ```
 
-  ```console
+  ```ini
   # RaspiBolt: systemd unit for electrs
   # /etc/systemd/system/electrs.service
 
@@ -383,7 +383,7 @@ Note that the remote device needs to have Tor installed.
   $ sudo nano /etc/tor/torrc
   ```
 
-  ```
+  ```conf
   ############### This section is just for location-hidden services ###
 
   HiddenServiceDir /var/lib/tor/hidden_service_electrs/
