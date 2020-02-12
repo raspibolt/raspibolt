@@ -109,7 +109,7 @@ Still as user "bitcoin", open it with Nano and paste the configuration below. Sa
 $ nano /mnt/ext/bitcoin/bitcoin.conf
 ```
 
-```
+```ini
 # RaspiBolt: bitcoind configuration
 # /mnt/ext/bitcoin/bitcoin.conf
 
@@ -174,7 +174,7 @@ We use “systemd“, a daemon that controls the startup process using configura
   $ sudo nano /etc/systemd/system/bitcoind.service
   ```
 
-  ```
+  ```ini
   # RaspiBolt: systemd unit for bitcoind
   # /etc/systemd/system/bitcoind.service
 
@@ -330,7 +330,7 @@ A bigger cache speeds up the initial block download, now we want to reduce memor
   $ sudo nano /mnt/ext/bitcoin/bitcoin.conf
   ```
 
-  ```sh
+  ```ini
   #dbcache=2000
   ```
 

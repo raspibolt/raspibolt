@@ -28,7 +28,7 @@ root@RaspiBolt:/home/admin#  exit
 - Add one new line in the [Application Options] section of lnd.conf to allow rpc from more than just the default localhost  
   `admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
 
-```
+```ini
 [Application Options]
 rpclisten=0.0.0.0:10009
 ```

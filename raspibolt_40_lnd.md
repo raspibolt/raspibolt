@@ -78,7 +78,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   $ nano /mnt/ext/lnd/lnd.conf
   ```
 
-  ```
+  ```ini
   # RaspiBolt: lnd configuration
   # /mnt/ext/lnd/lnd.conf
 
@@ -220,7 +220,7 @@ Now, let's set up LND to start automatically on system startup.
   $ sudo nano /etc/systemd/system/lnd.service
   ```
 
-  ```
+  ```ini
   # RaspiBolt: systemd unit for lnd
   # /etc/systemd/system/lnd.service
 

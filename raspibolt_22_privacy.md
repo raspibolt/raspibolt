@@ -96,7 +96,7 @@ Log in your RaspiBolt via SSH as user "admin".
   $ sudo nano /etc/tor/torrc
   ```
 
-  ```
+  ```conf
   # uncomment:
   ControlPort 9051
   CookieAuthentication 1
