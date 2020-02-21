@@ -102,6 +102,12 @@ Make your command line prompt shine with a golden ฿ and use more colors overal
 
 Control your Lightning node from a different computer within you network, eg. from a Windows machine.
 
+## [SSH using Trezor (or other hardware wallet)](raspibolt_65_trezor-agent.md)
+
+*Difficulty: easy*
+
+Harden your Raspibolt by requiring your hardware wallet to SSH to your Pi
+
 ## [System recovery](raspibolt_65_system-recovery.md)
 
 Difficulty: easy
