@@ -102,7 +102,7 @@ Make your command line prompt shine with a golden ฿ and use more colors overal
 
 Control your Lightning node from a different computer within you network, eg. from a Windows machine.
 
-## [SSH using Trezor (or other hardware wallet)](raspibolt_65_trezor-agent.md)
+## [SSH using Trezor (or other hardware wallet)](raspibolt_75_trezor-agent.md)
 
 *Difficulty: easy*
 
