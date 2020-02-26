@@ -18,6 +18,12 @@ A good way of improving your privacy and reliance in your own node, is to use it
 
 ### Preparations
 
+ * For a better functioning of the explorer, you will want your full node to index all transactions. Otherwise, the only transactions your full node will store are the ones pertaining to the node's wallets (which you probably are not going to use). In order to do that, you need to set the following parameter in your Bitcoin Core configuration file (`bitcoin.conf`):
+   ```
+   txindex=1
+   ```
+   If you didn't have that enabled already, you might need to rebuild the index, which will take a while because your node has to **reindex** everything from the blocks.
+
 * With user 'admin', make sure [Node JS](https://nodejs.org) is installed. We'll use version 12 which is the most recent stable one.
   ```
   # switch to su to make sure the command to add the source works
@@ -82,6 +88,12 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   * Make sure the RPC methods are not all allowed, to avoid unnecessary security leaks. (However, if you want to use the BTC RPC Explorer to send RPC commands to your node you might want to activate this with caution)
     ```
     BTCEXP_RPC_ALLOWALL=false
+    ```
+  * By default, the BTC RPC Explorer listens for local requests (localhost / 127.0.0.1). However, if you would like to access it from your local network or from somewhere else, make sure you configure the proper host and port by changing these parameters:
+    ```
+    # Example listening on the local network IP, with the default port
+    BTCEXP_HOST=192.168.0.1
+    BTCEXP_PORT=3002
     ```
   * Additionally, if you want or need to see more logs related to the functioning of the explorer, you can enable them by changing this line with the proper parameter:
     ```
