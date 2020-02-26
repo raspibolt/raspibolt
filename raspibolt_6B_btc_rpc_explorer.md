@@ -18,11 +18,8 @@ A good way of improving your privacy and reliance in your own node, is to use it
 
 ### Preparations
 
- * For a better functioning of the explorer, you will want your full node to index all transactions. Otherwise, the only transactions your full node will store are the ones pertaining to the node's wallets (which you probably are not going to use). In order to do that, you need to set the following parameter in your Bitcoin Core configuration file (`bitcoin.conf`):
-   ```
-   txindex=1
-   ```
-   If you didn't have that enabled already, you might need to rebuild the index, which will take a while because your node has to **reindex** everything from the blocks.
+ * For a better functioning of the explorer, you will want your full node to index all transactions. Otherwise, the only transactions your full node will store are the ones pertaining to the node's wallets (which you probably are not going to use). In order to do that, you need to set the `txindex` parameter in your Bitcoin Core configuration file (`bitcoin.conf`):
+ [Bitcoin node configuration](raspibolt_30_bitcoin.md#transaction-indexing-optional)
 
 * With user 'admin', make sure [Node JS](https://nodejs.org) is installed. We'll use version 12 which is the most recent stable one.
   ```

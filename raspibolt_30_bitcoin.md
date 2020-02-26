@@ -144,7 +144,7 @@ maxuploadtarget=5000
 
 #### Transaction indexing (optional)
 
-Full transaction indexing is usually not necessary for basic usage of your node. However if you wish to install a block explorer like the [BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer), or take advantage of the node for some develoment or analytics capabilities, you might consider adding the following line in the `bitcoin.conf` file that enables the full index for all transactions:
+Full transaction indexing is usually not necessary for basic usage of your node. However if you wish to install a block explorer like the [BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer.md), or take advantage of the node for some develoment or analytics capabilities, you might consider adding the following line in the `bitcoin.conf` file that enables the full index for all transactions:
 ```
 txindex=1
 ```
