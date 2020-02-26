@@ -143,6 +143,16 @@ blocksonly=1
 
 🔍 *more: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments){:target="_blank"} in Bitcoin Wiki*
 
+
+
+#### Transaction indexing (optional)
+
+Full transaction indexing is usually not necessary for basic usage of your node. However if you wish to install a block explorer like the [BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer), or take advantage of the node for some develoment or analytics capabilities, you might consider adding the following line in the `bitcoin.conf` file that enables the full index for all transactions:
+```
+txindex=1
+```
+You can enable this later, but that will require that the node reindex all transactions from the start and that could take a while (similar to the initial blockchain download).
+
 ---
 
 ## Running bitcoind
