@@ -15,7 +15,7 @@ To get a quick overview over the system status, I created [a shell script](resou
 
 This script will run as root, so please check it before blindly trusting me.
 
-```
+```sh
 $ sudo apt install jq net-tools
 $ cd /home/admin/download/
 $ wget https://raw.githubusercontent.com/Stadicus/RaspiBolt/master/resources/20-raspibolt-welcome
@@ -33,7 +33,7 @@ $ sudo ln -s /etc/update-motd.d/20-raspibolt-welcome /usr/local/bin/raspibolt
 
 In case the script runs into problems, it could theoretically prevent you from logging in. We therefore disable all motd execution for the "root" user, so you will always be able to login as "root" to disable it.
 
-```
+```sh
 $ sudo su
 $ touch /root/.hushlogin
 $ exit
@@ -42,7 +42,7 @@ $ exit
 You can now start the script with `sudo raspibolt` and it is shown every time you log in.
 
 If the script is showing 'Public Not reachable' but you do have incoming connections and the blockchain is syncing, you might have a router that does not support NAT Loopback. Please check your node at https://bitnodes.earn.com, if it displays your node as available remove the # on lines 128 and 129 and put them before 130 and 131 by editing the file:
-```
+```sh
 $ sudo nano /etc/update-motd.d/20-raspibolt-welcome
 ```
 Both methods work, but the original method does not rely on third party applications and the earn.com method obviously does, but it is better than no working method at all.

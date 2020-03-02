@@ -106,7 +106,14 @@ Control your Lightning node from a different computer within you network, eg. fr
 
 *Difficulty: easy*
 
-Browse the blockchain in a private and autonomous way using data from your own node. You can also check different stats of your node and network.
+Browse the blockchain in a private and autonomous way using data from your own node. 
+You can also check different stats of your node and network.
+
+## [SSH using Trezor (or other hardware wallet)](raspibolt_75_trezor-agent.md)
+
+*Difficulty: easy*
+
+Harden your Raspibolt by requiring your hardware wallet to SSH to your Pi
 
 ## [System recovery](raspibolt_65_system-recovery.md)
 

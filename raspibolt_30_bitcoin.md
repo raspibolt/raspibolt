@@ -109,7 +109,7 @@ Still as user "bitcoin", open it with Nano and paste the configuration below. Sa
 $ nano /mnt/ext/bitcoin/bitcoin.conf
 ```
 
-```
+```ini
 # RaspiBolt: bitcoind configuration
 # /mnt/ext/bitcoin/bitcoin.conf
 
@@ -129,9 +129,12 @@ zmqpubrawblock=tcp://127.0.0.1:28332
 zmqpubrawtx=tcp://127.0.0.1:28333
 
 # Raspberry Pi optimizations
-dbcache=2000
 maxconnections=40
 maxuploadtarget=5000
+
+# Initial block download optimizations
+dbcache=2000
+blocksonly=1
 ```
 
 🚨 **Change the rpcpassword** to your secure `password [B]`.
@@ -184,7 +187,7 @@ We use “systemd“, a daemon that controls the startup process using configura
   $ sudo nano /etc/systemd/system/bitcoind.service
   ```
 
-  ```
+  ```ini
   # RaspiBolt: systemd unit for bitcoind
   # /etc/systemd/system/bitcoind.service
 
@@ -331,8 +334,9 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 Once Bitcoin Core is fully synced, we can reduce the size of the database cache.
 A bigger cache speeds up the initial block download, now we want to reduce memory consumption to allow LND and Electrs to run in parallel.
+We also now want to enable the node to listent to and relay transactions.
 
-* As user "admin", comment the following line out (add a `#` at the beginning) in the Bitcoin settings file.
+* As user "admin", comment the following lines out (add a `#` at the beginning) in the Bitcoin settings file.
   Bitcoin Core will then just use the default of 300 MB instead of 2 GB.
   Save and exit.
 
@@ -340,8 +344,9 @@ A bigger cache speeds up the initial block download, now we want to reduce memor
   $ sudo nano /mnt/ext/bitcoin/bitcoin.conf
   ```
 
-  ```sh
+  ```ini
   #dbcache=2000
+  #blocksonly=1
   ```
 
 * Restart Bitcoin Core for the settings to take effect.

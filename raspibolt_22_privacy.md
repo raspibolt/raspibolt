@@ -85,7 +85,7 @@ Log in your RaspiBolt via SSH as user "admin".
   ```sh
   $ cat /etc/group | grep debian-tor
   > debian-tor:x:114:
-  $ sudo usermod -a -G debian-tor bitcoin
+  $ sudo adduser bitcoin debian-tor
   $ cat /etc/group | grep debian-tor
   > debian-tor:x:114:bitcoin
   ```
@@ -96,7 +96,7 @@ Log in your RaspiBolt via SSH as user "admin".
   $ sudo nano /etc/tor/torrc
   ```
 
-  ```
+  ```conf
   # uncomment:
   ControlPort 9051
   CookieAuthentication 1

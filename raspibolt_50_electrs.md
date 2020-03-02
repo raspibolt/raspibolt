@@ -54,8 +54,8 @@ As there are no binaries available, we will compile the application directly fro
   ```sh
   # download
   $ cd /tmp
-  $ curl https://static.rust-lang.org/dist/rust-1.39.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
-  $ curl https://static.rust-lang.org/dist/rust-1.39.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
+  $ curl https://static.rust-lang.org/dist/rust-1.41.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
+  $ curl https://static.rust-lang.org/dist/rust-1.41.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
   $ curl https://keybase.io/rust/pgp_keys.asc | gpg --import
 
   # verify
@@ -91,7 +91,7 @@ The whole process takes about 30 minutes.
   ```sh
   # download
   $ cd /home/admin/rust
-  $ git clone --depth=1 -b v0.8.2 https://github.com/romanz/electrs.git
+  $ git clone --depth=1 -b v0.8.3 https://github.com/romanz/electrs.git
   $ cd electrs
 
   # compile
@@ -119,7 +119,7 @@ The whole process takes about 30 minutes.
   $ nano /mnt/ext/electrs/electrs.conf
   ```
 
-  ```toml
+  ```ini
   # RaspiBolt: electrs configuration
   # /mnt/ext/electrs/electrs.conf
 
@@ -222,7 +222,7 @@ Electrs needs to start automatically on system boot.
   $ sudo nano /etc/systemd/system/electrs.service
   ```
 
-  ```console
+  ```ini
   # RaspiBolt: systemd unit for electrs
   # /etc/systemd/system/electrs.service
 
@@ -320,10 +320,10 @@ This means that NGINX provides secure communication to the outside and routes it
   $ sudo apt install nginx
   ```
 
-* Create a self-signed TLS certificate
+* Create a self-signed TLS certificate (valid for 10 years)
 
   ```sh
-  $ sudo openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/CN=localhost"
+  $ sudo openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/CN=localhost" -days 3650
   ```
 
 * To completely disable the NGINX webserver and configure the TCP reverse proxy for Electrs, remove the default configuration and paste the following into the `nginx.conf` file.
@@ -383,7 +383,7 @@ Note that the remote device needs to have Tor installed.
   $ sudo nano /etc/tor/torrc
   ```
 
-  ```
+  ```conf
   ############### This section is just for location-hidden services ###
 
   HiddenServiceDir /var/lib/tor/hidden_service_electrs/

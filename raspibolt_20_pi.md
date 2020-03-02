@@ -40,10 +40,10 @@ This causes the Secure Shell (ssh) to be enabled from the start and we will be a
 You can run your RaspiBolt over Wifi.
 To avoid using a network cable for the initial setup, you can pre-configure the wireless settings:
 
-* Create a file `wpa_supplicant.conf` on the microSD card with the following content.
+* Create a file `wpa_supplicant.conf` in the boot partition of the microSD card with the following content.
   Note that the network name (ssid) and password need to be in double-quotes (like `psk="password"`)
 
-  ```
+  ```conf
   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
   update_config=1
   country=[COUNTRY_CODE]
@@ -187,13 +187,12 @@ $ sudo raspi-config
 * Boot Options `3`:
   * choose `Desktop / CLI` → `B1 Console` and
   * `Wait for network at boot`
-* Localisation `4`: set your timezone
 * Advanced `7`: run `Expand Filesystem`
 * Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
 
 <script id="asciicast-1oSmvJaZLCuN3hUIn33OZCtJy" src="https://asciinema.org/a/1oSmvJaZLCuN3hUIn33OZCtJy.js" async></script>
 
- **Important**: if you connected using the hostname `raspberrypi.local`, you now need to use the new hostname (e.g. `raspibolt.local`)
+**Important**: if you connected using the hostname `raspberrypi.local`, you now need to use the new hostname (e.g. `raspibolt.local`)
 
 ### Software update
 
@@ -338,6 +337,9 @@ We will now check if your drive works well as-is, or if additional configuration
   > ├─mmcblk0p1 /boot      5203-DB74                            vfat     256M boot
   > └─mmcblk0p2 /          2ab3f8e1-7dc6-43f5-b0db-dd5759d51d4e ext4    14.6G rootfs
   ```
+
+* If your external drive (e.g. `sda`) does not contain any partitions (e.g. no `sda1`), create a partition first using as described here:
+  <https://superuser.com/questions/643765/creating-ext4-partition-from-console>
 
 * Now, let's test the read performance of your drive.
   Make sure to use the right partition name (used with the `/dev/` prefix).
@@ -487,7 +489,7 @@ Therefore, we will move it to the external drive.
   $ sudo nano /etc/dphys-swapfile
   ```
 
-   ```
+   ```ini
    CONF_SWAPFILE=/mnt/ext/swapfile
 
    # comment or delete the CONF_SWAPSIZE line. It will then be created dynamically

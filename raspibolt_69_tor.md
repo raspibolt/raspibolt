@@ -8,6 +8,9 @@ has_toc: false
 ## Bonus guide: Anonymous node with Tor
 *Difficulty: medium*
 
+*Note:* this is the standalone version of the Tor configuration guide.
+If you already followed the RaspiBolt2 guide (which is Tor-only by default), you do not need to follow this guide.
+
 ### What is Tor?
 
 Tor is a free software that allows you to anonymize internet traffic by routing it through a network of nodes to hide the location and usage profile of end points.
@@ -79,7 +82,7 @@ For additional reference, the original instructions are available on the [Tor pr
   ```
   $ cat /etc/group | grep debian-tor
   debian-tor:x:113:
-  $ sudo usermod -a -G debian-tor bitcoin
+  $ sudo adduser bitcoin debian-tor
   $ cat /etc/group | grep debian-tor
   debian-tor:x:123:bitcoin
   ```
