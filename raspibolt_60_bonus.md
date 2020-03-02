@@ -5,7 +5,7 @@ nav_order: 60
 has_children: true
 has_toc: false
 ---
-<!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
+<!-- markdownlint-disable MD014 MD022 MD025 MD033 MD036 MD040 -->
 
 # Bonus Section
 {: .no_toc }
@@ -42,7 +42,7 @@ Manually unlocking the LND wallet every time the system starts is not really fea
 
 ## [Install a BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer.md)
 
-*Difficulty: easy*
+*Difficulty: medium*
 
 Browse the blockchain in a private and autonomous way using data from your own node. You can also check different stats of your node and network.
 
@@ -51,14 +51,17 @@ Browse the blockchain in a private and autonomous way using data from your own n
 *Difficulty: medium*
 
 Route all your Bitcoin traffic over the Tor network to stay anonymous and avoid leaking private information like your public IP address.
+Only for older configurations, the latest RaspiBolt v2 has this already enabled by default.
 
 [![Tor](images/69_tor.png)](raspibolt_69_tor.md)
 
 ## [Electrum Personal Server](raspibolt_64_electrum.md)
 
-*Difficulty: intermediate*
+*Difficulty: medium*
 
-The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain transactions. Together with the Electrum wallet, it works even with your Ledger or Trezor hardware wallet.
+The RaspiBolt is the perfect trustless Bitcoin backend for your regular on-chain transactions.
+Together with the Electrum wallet, it works even with your Ledger or Trezor hardware wallet.
+Mostly for older configurations, the latest RaspiBolt v2 already has a full Electrum server included by default.
 
 [![Electrum](images/60_eps_electrumwallet.png)](raspibolt_64_electrum.md)
 
@@ -80,7 +83,7 @@ The Zap iOS app (https://zap.jackmallers.com) provides a neat interface for the 
 
 ## [Shango Mobile Wallet](raspibolt_68_shango.md)
 
-*Difficulty: intermediate*
+*Difficulty: medium*
 
 The iOS & Android app Shango provides a neat interface for the RaspiBolt, to manage peers & channels, make payments and create invoices.
 
@@ -108,12 +111,6 @@ Make your command line prompt shine with a golden ฿ and use more colors overal
 
 Control your Lightning node from a different computer within you network, eg. from a Windows machine.
 
-## [SSH using Trezor (or other hardware wallet)](raspibolt_75_trezor-agent.md)
-
-*Difficulty: easy*
-
-Harden your Raspibolt by requiring your hardware wallet to SSH to your Pi
-
 ## [System recovery](raspibolt_65_system-recovery.md)
 
 Difficulty: easy
@@ -129,11 +126,12 @@ These additional bash scripts display a balance overview (on-chain & in channels
 ## Even more Extras
 
 **[RaspiBolt-Extras](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md)** by Rob Clark
+
 * Lights-Out: automatic unlocking of wallet and dynamic ip
 * RaspiBoltDuo: testnet & mainnet running simultaneously
 * Using REST access
 * Receiving Lightning payments: automatically create invoices / qr codes
 
-------
+---
 
 Next: [Troubleshooting](raspibolt_70_troubleshooting.md) >>
