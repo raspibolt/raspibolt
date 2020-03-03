@@ -45,6 +45,8 @@ As reindexing can take more than a day, you can follow the progress using `sudo 
   $ sudo apt-get install nodejs
   ```
 
+#### Firewall
+
 * Configure firewall to allow incoming HTTP requests from your local network to the web server.
 
   ```sh
@@ -97,9 +99,9 @@ You can install it in the external drive instead, if you like.
   The following configuration also works with Electrum Personal Server or ElectrumX.
 
   ```sh
-  # Example using Electrs or any other Electrum server
+  # Example using Electrs or any other local Electrum server
   BTCEXP_ADDRESS_API=electrumx
-  BTCEXP_ELECTRUMX_SERVERS=tls://127.0.0.1:50002,tcp://127.0.0.1:50002
+  BTCEXP_ELECTRUMX_SERVERS=tcp://127.0.0.1:50001
   ```
 
 * You can go further improve your privacy by enabling privacy mode, but you won't get certain feature like price exchange rates.
@@ -151,7 +153,7 @@ Test starting the explorer manually first to make sure it works.
   You should see the home page of the BTC RPC Explorer.
   ![BTC RPC Explorer home screen with dark theme](images/6B_btcrpcexplorer_home.png)
 
-* If you see a lot of errors on the RaspiBolt command line, including the following message, then Bitcoin Core is still indexing the blockchain.
+* If you see a lot of errors on the RaspiBolt command line, then Bitcoin Core might still be indexing the blockchain.
   You need to wait until reindexing is done before using the BTC RPC Explorer.
 
 * Stop the Explorer in the terminal with `Ctrl`-`C`.
@@ -164,7 +166,6 @@ In order to do that we'll use `systemd`.
 * Create the service file
 
   ```sh
-  # Create and edit the service file
   $ sudo nano /etc/systemd/system/btcrpcexplorer.service
   ```
 
