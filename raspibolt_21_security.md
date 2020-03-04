@@ -19,66 +19,6 @@ We make sure that your RaspiBolt is secure and reliable.
 
 ---
 
-## Enabling the Uncomplicated Firewall
-
-The Pi will be visible from the internet and therefore needs to be secured against attacks.
-A firewall controls what traffic is permitted and closes possible security holes.
-Only SSH and the Electrum server are reachable from the outside.
-Bitcoin Core and LND are using Tor and don't need incoming ports.
-
-The following steps need admin privileges and must be executed with the user "admin".
-
-```sh
-$ sudo apt install ufw
-$ sudo su
-$ ufw default deny incoming
-$ ufw default allow outgoing
-$ ufw allow 22    comment 'allow SSH'
-$ ufw allow 50002 comment 'allow Electrum SSL'
-$ ufw enable
-$ systemctl enable ufw
-$ ufw status
-> Status: active
->
-> To                         Action      From
-> --                         ------      ----
-> 22                         ALLOW       Anywhere                   # allow SSH
-> 50002                      ALLOW       Anywhere                   # allow Electrum SSL
-> ...
-$ exit
-```
-
-<script id="asciicast-vRmJZZMgzolgH3ooLCGS5RCj8" src="https://asciinema.org/a/vRmJZZMgzolgH3ooLCGS5RCj8.js" async></script>
-
-🔍 *more: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands){:target="_blank"}*
-
-💡 If you find yourself locked out by mistake, you can connect keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
-
----
-
-## fail2ban
-
-The SSH login to the Pi must be especially protected.
-Additional steps should be taken to prevent an attacker to just try out all possible passwords.
-
-The first measure is to install “fail2ban”, a service that cuts off any system with five failed login attempts for ten minutes.
-This makes a brute-force attack unfeasible, as it would simply take too long.
-
-![fail2ban](images/20_fail2ban.png){:target="_blank"}
-*Me locking myself out by entering wrong passwords*
-
-```sh
-$ sudo apt install fail2ban
-```
-
-The initial configuration should be fine as it is enabled for SSH by default.
-
-<script id="asciicast-013bxZ8R7LktqzhP6O27LrorA" src="https://asciinema.org/a/013bxZ8R7LktqzhP6O27LrorA.js" async></script>
-
-🔍 *more: [customize fail2ban configuration](https://linode.com/docs/security/using-fail2ban-for-security/){:target="_blank"}*
-
----
-
 ## Login with SSH keys
 
 One of the best options to secure the SSH login is to completely disable the password login and require a SSH key certificate.
@@ -147,6 +87,66 @@ Follow this guide [Configure “No Password SSH Keys Authentication” with PuTT
 <script id="asciicast-tm3A2UmR65pc63rHSAmHl2eHZ" src="https://asciinema.org/a/tm3A2UmR65pc63rHSAmHl2eHZ.js" async></script>
 
 🚨 **Backup your SSH keys!** You will need to attach a screen and keyboard to your Pi if you lose it.
+
+---
+
+## Enabling the Uncomplicated Firewall
+
+The Pi will be visible from the internet and therefore needs to be secured against attacks.
+A firewall controls what traffic is permitted and closes possible security holes.
+Only SSH and the Electrum server are reachable from the outside.
+Bitcoin Core and LND are using Tor and don't need incoming ports.
+
+The following steps need admin privileges and must be executed with the user "admin".
+
+```sh
+$ sudo apt install ufw
+$ sudo su
+$ ufw default deny incoming
+$ ufw default allow outgoing
+$ ufw allow 22    comment 'allow SSH'
+$ ufw allow 50002 comment 'allow Electrum SSL'
+$ ufw enable
+$ systemctl enable ufw
+$ ufw status
+> Status: active
+>
+> To                         Action      From
+> --                         ------      ----
+> 22                         ALLOW       Anywhere                   # allow SSH
+> 50002                      ALLOW       Anywhere                   # allow Electrum SSL
+> ...
+$ exit
+```
+
+<script id="asciicast-vRmJZZMgzolgH3ooLCGS5RCj8" src="https://asciinema.org/a/vRmJZZMgzolgH3ooLCGS5RCj8.js" async></script>
+
+🔍 *more: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands){:target="_blank"}*
+
+💡 If you find yourself locked out by mistake, you can connect keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
+
+---
+
+## fail2ban
+
+The SSH login to the Pi must be especially protected.
+Additional steps should be taken to prevent an attacker to just try out all possible passwords.
+
+The first measure is to install “fail2ban”, a service that cuts off any system with five failed login attempts for ten minutes.
+This makes a brute-force attack unfeasible, as it would simply take too long.
+
+![fail2ban](images/20_fail2ban.png){:target="_blank"}
+*Me locking myself out by entering wrong passwords*
+
+```sh
+$ sudo apt install fail2ban
+```
+
+The initial configuration should be fine as it is enabled for SSH by default.
+
+<script id="asciicast-013bxZ8R7LktqzhP6O27LrorA" src="https://asciinema.org/a/013bxZ8R7LktqzhP6O27LrorA.js" async></script>
+
+🔍 *more: [customize fail2ban configuration](https://linode.com/docs/security/using-fail2ban-for-security/){:target="_blank"}*
 
 ---
 
