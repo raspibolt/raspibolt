@@ -25,7 +25,7 @@ I collected frequent questions not directly related with issues in a separate [G
 * What do all the Linux commands do?
 * Where can I get more information?
 * How to upgrade Bitcoin Core or LND?
-* Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 3 with a 64 bit processor?
+* Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 4 with a 64 bit processor?
 
 ### Issues / Knowledge Base on Github
 
