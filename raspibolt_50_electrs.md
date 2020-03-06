@@ -91,7 +91,7 @@ The whole process takes about 30 minutes.
   ```sh
   # download
   $ cd /home/admin/rust
-  $ git clone --depth=1 -b v0.8.3 https://github.com/romanz/electrs.git
+  $ git clone --depth=1 --branch v0.8.3 https://github.com/romanz/electrs.git
   $ cd electrs
 
   # compile

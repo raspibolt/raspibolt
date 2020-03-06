@@ -69,7 +69,7 @@ You can install it in the external drive instead, if you like.
   Since the program is written in Javascript, there is no need to compile.
 
   ```sh
-  $ git clone --branch v1.1.9 https://github.com/janoside/btc-rpc-explorer.git
+  $ git clone --depth=1 --branch v1.1.9 https://github.com/janoside/btc-rpc-explorer.git
   $ cd btc-rpc-explorer
   $ npm install
   ```
@@ -85,7 +85,7 @@ You can install it in the external drive instead, if you like.
 
 * Make sure you point to your Bitcoin Node by uncommenting and changing the following lines with the proper values:
 
-  ```sh
+  ```conf
   BTCEXP_BITCOIND_HOST=127.0.0.1
   BTCEXP_BITCOIND_PORT=8832
   BTCEXP_BITCOIND_USER=raspibolt
@@ -98,7 +98,7 @@ You can install it in the external drive instead, if you like.
   It is important to use local RaspiBolt Electrs server, no real privacy is gained when we query external services anyway.
   The following configuration also works with Electrum Personal Server or ElectrumX.
 
-  ```sh
+  ```conf
   # Example using Electrs or any other local Electrum server
   BTCEXP_ADDRESS_API=electrumx
   BTCEXP_ELECTRUMX_SERVERS=tcp://127.0.0.1:50001
@@ -106,21 +106,21 @@ You can install it in the external drive instead, if you like.
 
 * You can go further improve your privacy by enabling privacy mode, but you won't get certain feature like price exchange rates.
 
-  ```sh
+  ```conf
   BTCEXP_PRIVACY_MODE=true
   ```
 
 * Make sure the RPC methods are not all allowed to avoid unnecessary security leaks.
   However, if you want to use the BTC RPC Explorer to send RPC commands to your node you might want to activate this with caution.
 
-  ```sh
+  ```conf
   BTCEXP_RPC_ALLOWALL=false
   ```
 
 * By default, the BTC RPC Explorer listens for local requests (localhost / 127.0.0.1).
   However, if you would like to access it from your local network or from somewhere else, make sure you configure the proper host and port by changing these parameters:
 
-  ```sh
+  ```conf
   # Example listening on the local network IP, with the default port
   BTCEXP_HOST=192.168.0.1
   BTCEXP_PORT=3002
@@ -128,7 +128,7 @@ You can install it in the external drive instead, if you like.
 
 * Additionally, if you want or need to see more logs related to the functioning of the explorer, you can enable them by changing this line with the proper parameter:
 
-  ```sh
+  ```conf
   # Here we are adding logs from the 'www' (http server) module
   DEBUG=btcexp:app,btcexp:error,www
   ```
@@ -171,7 +171,7 @@ In order to do that we'll use `systemd`.
 
 * Paste the following configuration. Save and exit.
 
-  ```sh
+  ```ini
   # RaspiBolt: systemd unit for BTC RPC Explorer
   # /etc/systemd/system/btcrpcexplorer.service
 
@@ -218,7 +218,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
   $ sudo nano /etc/tor/torrc
   ```
 
-  ```sh
+  ```conf
   ############### This section is just for location-hidden services ###
 
   HiddenServiceDir /var/lib/tor/hidden_service_btcrpcexplorer/
@@ -237,7 +237,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 * With the [Tor browser](https://www.torproject.org), you can access this onion address from any device.
   Please be aware that this access is not password protected and should not be shared widely.
 
-**Contratulations!**
+**Congratulations!**
 You now have the BTC RPC Explorer running to check the Bitcoin network information directly from your node.
 
 ---
