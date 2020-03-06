@@ -171,10 +171,10 @@ The macaroons are now located under the chain data directory for each supported 
   `$ lncli unlock`
   `$ sudo journalctl -u lnd -f`
 
-## Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 3 with a 64 bit processor?
-At the time of this writing (July 2018) there is no 64 bit operating system for the Raspberry Pi developed yet. The 64 bit processors of the Raspberry 3 versions are running in 32 bit compatibility mode with a 32 bit operating system.
+## Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 4 with a 64 bit processor?
+At the time of this writing (March 2020) there is no 64 bit operating system for the Raspberry Pi developed yet. The 64 bit processors of the Raspberry Pi 4 versions are running in 32 bit compatibility mode with a 32 bit operating system.
 
-### Setting a fixed address on the Raspberry Pi
+## Setting a fixed address on the Raspberry Pi
 If your router does not support setting a static ip address for a single device, you can also do this directly on the Raspberry Pi.
 
 This can be done by configuring the DHCP-Client (on the Pi) to advertise a static IP address to the DHCP-Server (often the router) before it automatically assigns a different one to the Raspberry Pi.
