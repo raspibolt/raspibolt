@@ -69,7 +69,7 @@ You can install it in the external drive instead, if you like.
   Since the program is written in Javascript, there is no need to compile.
 
   ```sh
-  $ git clone --depth=1 --branch v1.1.9 https://github.com/janoside/btc-rpc-explorer.git
+  $ git clone --branch v1.1.9 https://github.com/janoside/btc-rpc-explorer.git
   $ cd btc-rpc-explorer
   $ npm install
   ```
