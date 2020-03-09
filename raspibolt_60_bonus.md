@@ -46,6 +46,8 @@ Manually unlocking the LND wallet every time the system starts is not really fea
 
 Browse the blockchain in a private and autonomous way using data from your own node. You can also check different stats of your node and network.
 
+![BTC RPC Explorer](images/6B_btcrpcexplorer_thumbnail.png)
+
 ## [Anonymous node with Tor](raspibolt_69_tor.md)
 
 *Difficulty: medium*
