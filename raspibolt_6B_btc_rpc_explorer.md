@@ -30,8 +30,8 @@ As reindexing can take more than a day, you can follow the progress using `sudo 
 
 #### Install NodeJS
 
-* Starting with user 'admin', we switch to user 'root' and add the [Node JS](https://nodejs.org) package repository.
-  We'll use version 12 which is the most recent stable one. Then, exit the 'root' user session.
+* Starting with user "admin", we switch to user "root" and add the [Node JS](https://nodejs.org) package repository.
+  We'll use version 12 which is the most recent stable one. Then, exit the "root" user session.
 
   ```sh
   $ sudo su
@@ -56,17 +56,19 @@ As reindexing can take more than a day, you can follow the progress using `sudo 
 
 ### Install BTC RPC Explorer
 
-We are going to install the BTC RPC Explorer in the home directory since it doesn't take much space and don't use a database.
-You can install it in the external drive instead, if you like.
+We do not want to run the explorer code alongside `bitcoind` and `lnd` because of security reasons.
+For that we will create a separate user and we will be running the code as the new user.
+We are going to install the BTC RPC Explorer in the home directory since it doesn't take much space and doesn't use a database.
 
-* Open a 'bitcoin' user session and change into the home directory
+* Create a new user and open a user session
 
   ```sh
-  $ sudo su - bitcoin
+  $ sudo adduser btcrpcexplorer
+  $ sudo su - btcrpcexplorer
   ```
 
 * Download the source code directly from GitHub and install all dependencies using NPM.
-  Since the program is written in Javascript, there is no need to compile.
+  Since the program is written in JavaScript, there is no need to compile.
 
   ```sh
   $ git clone --branch v1.1.9 https://github.com/janoside/btc-rpc-explorer.git
@@ -121,8 +123,7 @@ You can install it in the external drive instead, if you like.
   However, if you would like to access it from your local network or from somewhere else, make sure you configure the proper host and port by changing these parameters:
 
   ```conf
-  # Example listening on the local network IP, with the default port
-  BTCEXP_HOST=192.168.0.1
+  BTCEXP_HOST=0.0.0.0
   BTCEXP_PORT=3002
   ```
 
@@ -183,9 +184,9 @@ In order to do that we'll use `systemd`.
   # After=electrs.service
 
   [Service]
-  WorkingDirectory=/home/bitcoin/btc-rpc-explorer
+  WorkingDirectory=/home/btcrpcexplorer/btc-rpc-explorer
   ExecStart=/usr/bin/npm start
-  User=bitcoin
+  User=btcrpcexplorer
 
   # Restart on failure but no more than 2 time every 10 minutes (600 seconds). Otherwise stop
   Restart=on-failure
