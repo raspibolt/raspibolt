@@ -12,10 +12,10 @@ has_toc: false
 
 ### Introduction
 
-A good way of improving your privacy and reliance in your own node, is to use it's data when you need to check some information in the blockchain like an address balance or transactions information.
+A good way of improving your privacy and reliance in your own node, is to use its data when you need to check some information in the blockchain like an address balance or transactions information.
 
-[BTC RPC Explorer](https://github.com/janoside/btc-rpc-explorer) provides a lightweight and easy to use web platform to accomplish just that.
-It's a database-free, self-hosted Bitcoin block explorer, via RPC.
+[BTC RPC Explorer](https://github.com/janoside/btc-rpc-explorer) provides a lightweight and easy to use web interface to accomplish just that.
+It's a database-free, self-hosted Bitcoin block explorer, querying Bitcoin Core and optionally Electrs via RPC.
 Built with Node.js, express, bootstrap-v4.
 
 ### Preparations
@@ -85,14 +85,26 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   $ nano .env
   ```
 
-* Make sure you point to your Bitcoin Node by uncommenting and changing the following lines with the proper values:
+* By default, the BTC RPC Explorer listens for local requests (localhost / 127.0.0.1).
+  If you would like to access it from your local network or from somewhere else, make sure you configure the proper host and port by changing these parameters:
+
+  ```conf
+  BTCEXP_HOST=0.0.0.0
+  BTCEXP_PORT=3002
+  ```
+
+* We instruct BTC RPC Explorer to connect to local Bitcoin Core by uncommenting and changing the following lines:
 
   ```conf
   BTCEXP_BITCOIND_HOST=127.0.0.1
   BTCEXP_BITCOIND_PORT=8332
   BTCEXP_BITCOIND_USER=raspibolt
   BTCEXP_BITCOIND_PASS=PASSWORD_[B]
-  # To compensate for the Raspberry Pi low processing capabilities, let's extend the timeout period
+  ```
+
+* To compensate for the limited resources of the Raspberry Pi, let's extend the timeout period.
+
+  ```conf
   BTCEXP_BITCOIND_RPC_TIMEOUT=10000
   ```
 
@@ -101,7 +113,6 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   The following configuration also works with Electrum Personal Server or ElectrumX.
 
   ```conf
-  # Example using Electrs or any other local Electrum server
   BTCEXP_ADDRESS_API=electrumx
   BTCEXP_ELECTRUMX_SERVERS=tcp://127.0.0.1:50001
   ```
@@ -119,18 +130,10 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   BTCEXP_RPC_ALLOWALL=false
   ```
 
-* By default, the BTC RPC Explorer listens for local requests (localhost / 127.0.0.1).
-  However, if you would like to access it from your local network or from somewhere else, make sure you configure the proper host and port by changing these parameters:
+* Additionally, if you want or need to see more logs related to the functioning of the explorer, you can enable them by changing this line with the proper parameter.
+  Here we are adding logs from the 'www' (http server) module.
 
   ```conf
-  BTCEXP_HOST=0.0.0.0
-  BTCEXP_PORT=3002
-  ```
-
-* Additionally, if you want or need to see more logs related to the functioning of the explorer, you can enable them by changing this line with the proper parameter:
-
-  ```conf
-  # Here we are adding logs from the 'www' (http server) module
   DEBUG=btcexp:app,btcexp:error,www
   ```
 
@@ -141,12 +144,10 @@ We are going to install the BTC RPC Explorer in the home directory since it does
 Test starting the explorer manually first to make sure it works.
 
 * Let's do a first start to make sure it's running as expected.
+  Make sure we are in the BTC RPC Explorer directory and start the web server.
 
   ```sh
-  # Make sure we are in the BTC RPC Explorer directory
   $ cd ~/btc-rpc-explorer
-
-  # Start the web server
   $ npm run start
   ```
 
@@ -157,14 +158,18 @@ Test starting the explorer manually first to make sure it works.
 * If you see a lot of errors on the RaspiBolt command line, then Bitcoin Core might still be indexing the blockchain.
   You need to wait until reindexing is done before using the BTC RPC Explorer.
 
-* Stop the Explorer in the terminal with `Ctrl`-`C`.
+* Stop the Explorer in the terminal with `Ctrl`-`C` and exit the "btcrpcexplorer" user session.
+
+  ```sh
+  $ exit
+  ```
 
 ### Configure systemd service
 
 Now we'll make sure our block explorer starts as a service on the Raspberry Pi so it's always running.
-In order to do that we'll use `systemd`.
+In order to do that we create a systemd unit that starts the service on boot directly after Bitcoin Core.
 
-* Create the service file
+* As user "admin", create the service file.
 
   ```sh
   $ sudo nano /etc/systemd/system/btcrpcexplorer.service
