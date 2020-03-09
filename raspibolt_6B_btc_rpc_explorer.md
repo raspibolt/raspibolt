@@ -87,7 +87,7 @@ You can install it in the external drive instead, if you like.
 
   ```conf
   BTCEXP_BITCOIND_HOST=127.0.0.1
-  BTCEXP_BITCOIND_PORT=8832
+  BTCEXP_BITCOIND_PORT=8332
   BTCEXP_BITCOIND_USER=raspibolt
   BTCEXP_BITCOIND_PASS=PASSWORD_[B]
   # To compensate for the Raspberry Pi low processing capabilities, let's extend the timeout period
