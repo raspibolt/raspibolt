@@ -7,7 +7,7 @@ nav_order: 40
 # Lightning: LND
 {: .no_toc }
 
-We set up LND, the Lightning Network Daemon by [Lightning Labs](http://lightning.engineering/){:target="_blank"}.
+We set up LND, the Lightning Network Daemon by [Lightning Labs](https://lightning.engineering/){:target="_blank"}.
 
 ---
 
@@ -494,7 +494,7 @@ A quick reference with common commands to play around with:
   $ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX]
   ```
 
-🔍 _more: full [LND API reference](http://api.lightning.community/)_
+🔍 _more: full [LND API reference](https://api.lightning.community/)_
 
 ---
 
