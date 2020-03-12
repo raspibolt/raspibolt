@@ -48,7 +48,7 @@ If you want to learn more about Bitcoin and are curious about the inner workings
 
 * [What is Bitcoin?](https://bitcoinmagazine.com/guides/what-bitcoin)
 * [Understanding the Lightning Network](https://bitcoinmagazine.com/articles/understanding-the-lightning-network-part-building-a-bidirectional-payment-channel-1464710791/)
-* Bitcoin resources: http://lopp.net/bitcoin.html
+* [Bitcoin resources](https://www.lopp.net/bitcoin-information.html) and [Lightning Network resources](https://www.lopp.net/lightning-information.html) by Jameson Lopp
 * Lightning Network resources: [lnroute.com](http://lnroute.com)
 
 

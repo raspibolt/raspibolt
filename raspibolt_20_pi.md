@@ -74,7 +74,7 @@ Finding it can be a bit tricky without a screen.
 If you're lucky, you don't need to know this address and can just connect using mDNS.
 
 * On your regular computer, open the Terminal (also known as "command line").
-  Here are a few links with additional details for [Windows](https://www.computerhope.com/issues/chusedos.htm), [MacOS](https://macpaw.com/how-to/use-terminal-on-mac){:target="_blank"} and [Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/){:target="_blank"}.
+  Here are a few links with additional details for [Windows](https://www.computerhope.com/issues/chusedos.htm){:target="_blank"}, [MacOS](https://macpaw.com/how-to/use-terminal-on-mac){:target="_blank"} and [Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/){:target="_blank"}.
 
 * Try to ping the Raspberry Pi local hostname (press `Ctrl`-`C` to interrupt)
 
@@ -89,7 +89,7 @@ If you're lucky, you don't need to know this address and can just connect using 
   Proceed directly to the next section.
 
 * If the `ping` command fails or does not return anything, you need to manually look for your Pi.
-  As this is a common challenge, just follow the official Raspberry Pi guideance on how to find your [IP Address](https://www.raspberrypi.org/documentation/remote-access/ip-address.md.){:target="_blank"}.
+  As this is a common challenge, just follow the official Raspberry Pi guideance on how to find your [IP Address](https://www.raspberrypi.org/documentation/remote-access/ip-address.md){:target="_blank"}.
 
 * You should now be able to reach your Pi, either with the hostname `raspberrypi.local` or an IP address like `192.168.0.20`.
 
@@ -388,7 +388,7 @@ We will now check if your drive works well as-is, or if additional configuration
 
   * You should see a significant increase in performance.
   If the test still shows a very slow read speed, your drive or USB adapter might not be compatible with the Raspberry Pi.
-  In that case I recommend visiting the Raspberry Pi [Troubleshooting forum](https://www.raspberrypi.org/forums/viewforum.php?f=28&sid=5ec5f1c6932c834c8222dfbbb3d5c9ef){:target="_blank"} or simply try out hardware alternatives.
+  In that case I recommend visiting the Raspberry Pi [Troubleshooting forum](https://www.raspberrypi.org/forums/viewforum.php?f=28){:target="_blank"} or simply try out hardware alternatives.
 
 <script id="asciicast-NiOhoAsu2g9kltfHXzfU6GLnq" src="https://asciinema.org/a/NiOhoAsu2g9kltfHXzfU6GLnq.js" async></script>
 
