@@ -445,7 +445,7 @@ The blue LED in the bottom right indicates an active Tor connection.
 You can force Electrum to only use your own server on startup with the following command line arguments:
 
 ```sh
-$ electrum --oneserver --server <your-onion-address>.onion:50002:t --proxy socks5:127.0.0.1:9050
+$ electrum --oneserver --server <your-onion-address>.onion:50002:s --proxy socks5:127.0.0.1:9050
 ```
 
 ---
