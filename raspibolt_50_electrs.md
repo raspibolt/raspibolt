@@ -348,7 +348,7 @@ This means that NGINX provides secure communication to the outside and routes it
     ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
     ssl_session_cache shared:SSL:1m;
     ssl_session_timeout 4h;
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
 
     upstream electrs {
