@@ -69,8 +69,9 @@ I am not a systems specialist, so please feel free to point out improvements.
 1. [Bitcoin](raspibolt_30_bitcoin.md): run Bitcoin Core as a fully validating node
 1. [Lightning](raspibolt_40_lnd.md): spin up the Lightning Network Daemon (LND)
 1. [Electrum](raspibolt_50_electrs.md): use your node with Hardware Wallets
+1. [Bonus Section](raspibolt_60_bonus.md): go beyond with optional topics
+1. [Troubleshooting](raspibolt_70_troubleshooting.md): debug your system if you have problems
 1. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
-1. [Updates](raspibolt_updates.md): keep track of changes
 
 ### Purpose
 
