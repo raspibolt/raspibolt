@@ -19,6 +19,8 @@ We make sure that your RaspiBolt is secure and reliable.
 
 ---
 
+The RaspiBolt will be visible from the internet and therefore needs to be secured against attacks using various methods.
+
 ## Login with SSH keys
 
 One of the best options to secure the SSH login is to completely disable the password login and require a SSH key certificate.
@@ -92,7 +94,6 @@ Follow this guide [Configure “No Password SSH Keys Authentication” with PuTT
 
 ## Enabling the Uncomplicated Firewall
 
-The Pi will be visible from the internet and therefore needs to be secured against attacks.
 A firewall controls what traffic is permitted and closes possible security holes.
 Only SSH and the Electrum server are reachable from the outside.
 Bitcoin Core and LND are using Tor and don't need incoming ports.
