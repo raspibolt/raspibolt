@@ -194,6 +194,33 @@ $ sudo raspi-config
 
 **Important**: if you connected using the hostname `raspberrypi.local`, you now need to use the new hostname (e.g. `raspibolt.local`)
 
+The following two potential error messages are expected:
+
+* After changing the hostname, e.g. to `raspibolt`, a reboot is required to get rid of this error message.
+  It can be safely ignored for now.
+
+  ```
+  sudo: unable to resolve host raspberrypi: Name or service not known
+  ```
+
+* The `raspi-config` automatically sets your location, but does not generate the corresponding `locale` files:
+
+  ```sh
+  perl: warning: Setting locale failed.
+  perl: warning: Please check that your locale settings:
+  ...
+  LC_NUMERIC = "de_CH.UTF-8",
+  ...
+  are supported and installed on your system.
+  ```
+
+  This error is safe to ignore.
+  If you want to get rid of it, note the setting for `LC_NUMERIC` (e.g. `de_CH.UTF-8`), select this locale in the following configuration screen and configure it as default.
+
+  ```sh
+  $ sudo dpkg-reconfigure locales
+  ```
+
 ### Software update
 
 It is important to keep the system up-to-date with security patches and application updates.
