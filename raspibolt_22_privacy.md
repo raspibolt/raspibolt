@@ -80,11 +80,9 @@ Log in your RaspiBolt via SSH as user "admin".
   > User debian-tor
   ```
 
-* Check which users belong to the "debian-tor" group. If "bitcoin" is not there, which is most likely the case, you will need to add it and check again.
+* Make sure that user "bitcoin" belongs to the "debian-tor" group.
 
   ```sh
-  $ cat /etc/group | grep debian-tor
-  > debian-tor:x:114:
   $ sudo adduser bitcoin debian-tor
   $ cat /etc/group | grep debian-tor
   > debian-tor:x:114:bitcoin

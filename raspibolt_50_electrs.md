@@ -54,8 +54,8 @@ As there are no binaries available, we will compile the application directly fro
   ```sh
   # download
   $ cd /tmp
-  $ curl https://static.rust-lang.org/dist/rust-1.41.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
-  $ curl https://static.rust-lang.org/dist/rust-1.41.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
+  $ curl https://static.rust-lang.org/dist/rust-1.42.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
+  $ curl https://static.rust-lang.org/dist/rust-1.42.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
   $ curl https://keybase.io/rust/pgp_keys.asc | gpg --import
 
   # verify
@@ -105,12 +105,20 @@ The whole process takes about 30 minutes.
 
 ### Configuration & indexing
 
+* Add user "electrs"
+
+  ```sh
+  $ sudo adduser electrs
+  $ sudo adduser electrs bitcoin
+  ```
+
 * Create the Electrs data directory on the external drive and link it to the "bitcoin" user home.
 
   ```sh
-  sudo su - bitcoin
-  mkdir /mnt/ext/electrs
-  ln -s /mnt/ext/electrs /home/bitcoin/.electrs
+  $ mkdir /mnt/ext/electrs
+  $ sudo chown -R electrs:bitcoin /mnt/ext/electrs
+  $ sudo su - electrs
+  $ ln -s /mnt/ext/electrs /home/bitcoin/.electrs
   ```
 
 * Create config file

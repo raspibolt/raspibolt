@@ -273,10 +273,10 @@ This user does not have admin rights and cannot change the system configuration.
   $ sudo adduser admin bitcoin
   ```
 
-* Shut your RaspiBolt down.
+* Restart your RaspiBolt.
 
   ```sh
-  $ sudo shutdown now
+  $ sudo reboot
   ```
 
 <script id="asciicast-8uhMDvDcDNf3cUT6A3FcqN4lo" src="https://asciinema.org/a/8uhMDvDcDNf3cUT6A3FcqN4lo.js" async></script>
