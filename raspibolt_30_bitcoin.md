@@ -115,6 +115,7 @@ $ nano /mnt/ext/bitcoin/bitcoin.conf
 
 # Bitcoin daemon
 server=1
+txindex=1
 
 # Network
 listen=1
@@ -145,13 +146,13 @@ blocksonly=1
 
 #### Transaction indexing (optional)
 
-Full transaction indexing is usually not necessary for basic usage of your node. However if you wish to install a block explorer like the [BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer.md), or take advantage of the node for some develoment or analytics capabilities, you might consider adding the following line in the `bitcoin.conf` file that enables the full index for all transactions:
+By default the above configuration enables transaction indexing.
+This allows other applications to query Bitcoin Core about any transaction.
+One example that needs this feature is the [BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer.md), your personal blockchain explorer.
 
-```config
-txindex=1
-```
-
-You can enable this later, but that will require that the node reindex all transactions from the start and that could take a while (similar to the initial blockchain download).
+If you know that you don't need this feature, you can delete the line `txindex=1` in the configuration above.
+This results in a faster initial blockchain verification, and saves about 20 GB of storage.
+If in doubt, just leave it as-is, otherwise you might need to enable it later and reindex the whole blockchain again.
 
 ---
 
