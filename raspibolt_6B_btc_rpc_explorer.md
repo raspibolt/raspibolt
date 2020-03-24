@@ -25,7 +25,9 @@ Built with Node.js, express, bootstrap-v4.
 For the BTC RPC Explorer to work, you need your full node to index all transactions.
 Otherwise, the only transactions your full node will store are the ones pertaining to the node's wallets (which you probably are not going to use).
 In order to do that, you need to set the `txindex` parameter in your Bitcoin Core configuration file (`bitcoin.conf`): [Bitcoin node configuration](raspibolt_30_bitcoin.md#transaction-indexing-optional).
+
 After adding the parameter, just restart Bitcoin Core with `sudo systemctl restart bitcoind`.
+
 As reindexing can take more than a day, you can follow the progress using `sudo tail -f /mnt/ext/bitcoin/debug.log`.
 
 #### Install NodeJS
