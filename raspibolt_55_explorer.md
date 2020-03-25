@@ -1,18 +1,14 @@
 ---
 layout: default
-title: BTC RPC Explorer
-parent: Bonus Section
-nav_order: 25
-has_toc: false
+title: Block Explorer
+nav_order: 55
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD036 MD040 -->
-## Bonus guide: BTC RPC Explorer
+## Block Explorer
 
-*Difficulty: medium*
-
-### Introduction
-
-A good way of improving your privacy and reliance in your own node, is to use its data when you need to check some information in the blockchain like an address balance or transactions information.
+After the RaspiBolt runs your own fully validated node, and maybe even acts as a backend for your hardware wallet with Electrs, the last important puzzle piece to improve privacy and financial sovereignty is your own Block Explorer.
+This lets you query transactions, addresses and blocks of your choice.
+You no longer need to leak information by querying a third-party block explorer that can be used to get your location and cluster addresses.
 
 [BTC RPC Explorer](https://github.com/janoside/btc-rpc-explorer) provides a lightweight and easy to use web interface to accomplish just that.
 It's a database-free, self-hosted Bitcoin block explorer, querying Bitcoin Core and optionally Electrs via RPC.
@@ -155,6 +151,7 @@ Test starting the explorer manually first to make sure it works.
 
 * Now point your browser to `http://raspibolt.local:3002` (or whatever you chose as hostname) or the ip address (e.g. `http://192.168.0.20:3002`).
   You should see the home page of the BTC RPC Explorer.
+
   ![BTC RPC Explorer home screen with dark theme](images/6B_btcrpcexplorer_home.png)
 
 * If you see a lot of errors on the RaspiBolt command line, then Bitcoin Core might still be indexing the blockchain.
@@ -250,4 +247,33 @@ You now have the BTC RPC Explorer running to check the Bitcoin network informati
 
 ---
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+## BTC RPC Explorer upgrade
+
+Updating a [new release](https://github.com/janoside/btc-rpc-explorer/releases){:target="_blank"} should be straight-forward, but make sure to check out the [change log](https://github.com/janoside/btc-rpc-explorer/blob/master/CHANGELOG.md){:target="_blank"} first.
+
+* From user "admin", stop the service and open a "btcrpcexplorer" user session.
+
+  ```sh
+  $ sudo systemctl stop btcrpcexplorer
+  $ sudo su - btcrpcexplorer
+  ```
+
+* Fetch the latest GitHub repository information and check out the new release:
+
+  ```sh
+  $ cd ~/btc-rpc-explorer
+  $ git fetch
+  $ git checkout v1.1.9
+  $ npm install
+  $ exit
+  ```
+
+* Start the service again.
+
+  ```sh
+  $ sudo systemctl start btcrpcexplorer
+  ```
+
+---
+
+Next: [Bonus guides >>](raspibolt_60_bonus.md)
