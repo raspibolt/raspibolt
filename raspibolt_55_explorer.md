@@ -4,7 +4,23 @@ title: Block Explorer
 nav_order: 55
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD036 MD040 -->
-## Block Explorer
+
+# Block Explorer
+{: .no_toc }
+
+Run your own block explorer without depending on external services.
+
+---
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## Run your own block explorer
 
 After the RaspiBolt runs your own fully validated node, and maybe even acts as a backend for your hardware wallet with Electrs, the last important puzzle piece to improve privacy and financial sovereignty is your own Block Explorer.
 This lets you query transactions, addresses and blocks of your choice.
@@ -14,19 +30,19 @@ You no longer need to leak information by querying a third-party block explorer 
 It's a database-free, self-hosted Bitcoin block explorer, querying Bitcoin Core and optionally Electrs via RPC.
 Built with Node.js, express, bootstrap-v4.
 
-### Preparations
+## Preparations
 
-#### Transaction indexing
+### Transaction indexing
 
 For the BTC RPC Explorer to work, you need your full node to index all transactions.
 Otherwise, the only transactions your full node will store are the ones pertaining to the node's wallets (which you probably are not going to use).
-In order to do that, you need to set the `txindex` parameter in your Bitcoin Core configuration file (`bitcoin.conf`): [Bitcoin node configuration](raspibolt_30_bitcoin.md#transaction-indexing-optional).
+If not already enabled, you need to set the `txindex` parameter in your Bitcoin Core configuration file (`bitcoin.conf`): [Bitcoin node configuration](raspibolt_30_bitcoin.md#configuration).
 
 After adding the parameter, just restart Bitcoin Core with `sudo systemctl restart bitcoind`.
 
 As reindexing can take more than a day, you can follow the progress using `sudo tail -f /mnt/ext/bitcoin/debug.log`.
 
-#### Install NodeJS
+### Install NodeJS
 
 * Starting with user "admin", we switch to user "root" and add the [Node JS](https://nodejs.org) package repository.
   We'll use version 12 which is the most recent stable one. Then, exit the "root" user session.
@@ -43,7 +59,7 @@ As reindexing can take more than a day, you can follow the progress using `sudo 
   $ sudo apt-get install nodejs
   ```
 
-#### Firewall
+### Firewall
 
 * Configure firewall to allow incoming HTTP requests from your local network to the web server.
 
@@ -52,7 +68,9 @@ As reindexing can take more than a day, you can follow the progress using `sudo 
   $ sudo ufw status
   ```
 
-### Install BTC RPC Explorer
+## BTC RPC Explorer
+
+### Installation
 
 We do not want to run the explorer code alongside `bitcoind` and `lnd` because of security reasons.
 For that we will create a separate user and we will be running the code as the new user.
@@ -163,7 +181,7 @@ Test starting the explorer manually first to make sure it works.
   $ exit
   ```
 
-### Configure systemd service
+### Autostart on boot
 
 Now we'll make sure our block explorer starts as a service on the Raspberry Pi so it's always running.
 In order to do that we create a systemd unit that starts the service on boot directly after Bitcoin Core.
@@ -247,9 +265,9 @@ You now have the BTC RPC Explorer running to check the Bitcoin network informati
 
 ---
 
-## BTC RPC Explorer upgrade
+## Upgrade
 
-Updating a [new release](https://github.com/janoside/btc-rpc-explorer/releases){:target="_blank"} should be straight-forward, but make sure to check out the [change log](https://github.com/janoside/btc-rpc-explorer/blob/master/CHANGELOG.md){:target="_blank"} first.
+Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/releases){:target="_blank"} should be straight-forward, but make sure to check out the [change log](https://github.com/janoside/btc-rpc-explorer/blob/master/CHANGELOG.md){:target="_blank"} first.
 
 * From user "admin", stop the service and open a "btcrpcexplorer" user session.
 
