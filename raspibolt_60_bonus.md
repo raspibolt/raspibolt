@@ -40,14 +40,6 @@ Your RaspiBolt will greet you with a quick system summary on login:
 
 Manually unlocking the LND wallet every time the system starts is not really feasible if your RaspiBolt is meant to run reliably somewhere in a closet. This script automatically unlocks the wallet on startup or service-restart. This comes at a minimal security cost, however, as the password needs to be stored on the device.
 
-## [Install a BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer.md)
-
-*Difficulty: medium*
-
-Browse the blockchain in a private and autonomous way using data from your own node. You can also check different stats of your node and network.
-
-![BTC RPC Explorer](images/6B_btcrpcexplorer_thumbnail.png)
-
 ## [Anonymous node with Tor](raspibolt_69_tor.md)
 
 *Difficulty: medium*
