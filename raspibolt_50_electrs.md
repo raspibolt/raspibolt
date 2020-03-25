@@ -460,7 +460,7 @@ $ electrum --oneserver --server <your-onion-address>.onion:50002:s --proxy socks
 
 ## Connect BitBoxApp
 
-[BitBoxApp](shiftcrypto.ch/app/) is a beginner-friendly companion app to the BitBox02 hardware wallet by Shift Cryptosecurity.
+[BitBoxApp](shiftcrypto.ch/app/){:target="_blank"} is a beginner-friendly companion app to the BitBox02 hardware wallet by Shift Cryptosecurity.
 
 ### General
 
@@ -491,4 +491,32 @@ Congratulations, you have now one of the best Bitcoin desktop wallet, capable of
 
 ---
 
-Next: [Bonus guides >>](raspibolt_60_bonus.md)
+## Electrs upgrade
+
+Updating a [new release](https://github.com/romanz/electrs/releases){:target="_blank"} should be straight-forward, but make sure to check out the [release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md){:target="_blank"} first.
+
+* With user "admin", fetch the latest GitHub repository information and check out the new release.
+
+  ```sh
+  $ cd ~/rust/electrs
+  $ git fetch
+  $ git checkout v0.8.3
+  ```
+
+* Compile the new release.
+
+  ```
+  $ cargo build --release
+  ```
+
+* Stop the service, install new binaries and start the service again.
+
+  ```sh
+  $ sudo systemctl stop electrs
+  $ sudo cp ./target/release/electrs /usr/local/bin/
+  $ sudo systemctl start electrs
+  ```
+
+---
+
+Next: [Block Explorer >>](raspibolt_55_explorer.md)
