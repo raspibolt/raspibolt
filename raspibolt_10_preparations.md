@@ -35,7 +35,7 @@ You need
 
 ![Raspberry Pi](images/10_raspberrypi_hardware.png)
 
-To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is ~250 GB and growing.
+To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is ~300 GB and growing.
 You can buy a cheap hard disk enclosure and reuse an old 500 GB hard disk.
 I recommend getting a modern 2.5" SSD that can be powered through the USB connection to the Pi directly, which also speeds up initial sync time significantly.
 
