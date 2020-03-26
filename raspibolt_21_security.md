@@ -53,13 +53,15 @@ Follow this guide [Configure “No Password SSH Keys Authentication” with PuTT
 
   When you're prompted to "Enter a file in which to save the key," press Enter to use the default file location. Optionally, for maximum security, use `password [A]` to protect your key.
 
-* The public key now needs to be copied to the Pi:
-
-  We use `ssh-copy-id`, it copies your public key to the remote machine (and creates files and directories, if needed).
+* The public key now needs to be copied to the Pi. 
+  We use the command `ssh-copy-id`, which copies your public key to the remote machine (and creates files and directories, if needed).
   You will be prompted for your password once.
+
   ```sh
   $ ssh-copy-id admin@raspibolt.local
   ```
+
+  💡 If you are on macOS and encounter an error, you might need to enable `ssh-copy-id` first, using [this guide](https://devtip.io/ssh-keys-remote-server).
 
 <script id="asciicast-BvuWd8S8hvBLmsXBW4L2EEeRZ" src="https://asciinema.org/a/BvuWd8S8hvBLmsXBW4L2EEeRZ.js" async></script>
 
