@@ -105,20 +105,12 @@ The whole process takes about 30 minutes.
 
 ### Configuration & indexing
 
-* Add user "electrs"
-
-  ```sh
-  $ sudo adduser electrs
-  $ sudo adduser electrs bitcoin
-  ```
-
 * Create the Electrs data directory on the external drive and link it to the "bitcoin" user home.
 
   ```sh
-  $ mkdir /mnt/ext/electrs
-  $ sudo chown -R electrs:bitcoin /mnt/ext/electrs
-  $ sudo su - electrs
-  $ ln -s /mnt/ext/electrs /home/bitcoin/.electrs
+  sudo su - bitcoin
+  mkdir /mnt/ext/electrs
+  ln -s /mnt/ext/electrs /home/bitcoin/.electrs
   ```
 
 * Create config file
