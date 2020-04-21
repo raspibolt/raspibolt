@@ -395,7 +395,7 @@ We will now check if your drive works well as-is, or if additional configuration
     Save and exit.
 
     ```
-    usb-storage.quirks=2152d:0578:u ..............
+    usb-storage.quirks=152d:0578:u ..............
     ```
 
   * Reboot the Raspberry Pi with the external drive still attached.
