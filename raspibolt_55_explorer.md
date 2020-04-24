@@ -76,7 +76,7 @@ We do not want to run the explorer code alongside `bitcoind` and `lnd` because o
 For that we will create a separate user and we will be running the code as the new user.
 We are going to install the BTC RPC Explorer in the home directory since it doesn't take much space and doesn't use a database.
 
-* Create a new user and open a user session
+* Create a new user with  your password [ A ] and open a new session
 
   ```sh
   $ sudo adduser btcrpcexplorer
@@ -87,7 +87,7 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   Since the program is written in JavaScript, there is no need to compile.
 
   ```sh
-  $ git clone --branch v1.1.9 https://github.com/janoside/btc-rpc-explorer.git
+  $ git clone --branch v2.0.0 https://github.com/janoside/btc-rpc-explorer.git
   $ cd btc-rpc-explorer
   $ npm install
   ```
@@ -281,7 +281,7 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
   ```sh
   $ cd ~/btc-rpc-explorer
   $ git fetch
-  $ git checkout v1.1.9
+  $ git checkout v2.0.0
   $ npm install
   $ exit
   ```
