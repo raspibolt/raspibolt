@@ -58,23 +58,23 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
   $ cd electrum-personal-server
 
   # download release
-  $ wget https://github.com/chris-belcher/electrum-personal-server/archive/electrum-personal-server-v0.1.7.tar.gz
-  $ wget https://github.com/chris-belcher/electrum-personal-server/releases/download/electrum-personal-server-v0.1.7/electrum-personal-server-v0.1.7.tar.gz.asc
+  $ wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.0.tar.gz
+  $ wget https://github.com/chris-belcher/electrum-personal-server/releases/download/eps-v0.2.0/eps-v0.2.0.tar.gz.asc
   $ wget https://raw.githubusercontent.com/chris-belcher/electrum-personal-server/master/docs/pubkeys/belcher.asc
 
   # verify that the release is signed by Chris Belcher (check the fingerprint)
   $ gpg --import belcher.asc
-  $ gpg --verify electrum-personal-server-v0.1.7.tar.gz.asc
+  $ gpg --verify eps-v0.2.0.tar.gz.asc
   > gpg: Good signature from "Chris Belcher <false@email.com>" [unknown]
   > Primary key fingerprint: 0A8B 038F 5E10 CC27 89BF  CFFF EF73 4EA6 77F3 1129
 
-  $ tar -xvf electrum-personal-server-v0.1.7.tar.gz
+  $ tar -xvf eps-v0.2.0.tar.gz
   $ rm *.gz*
   ```
 
 * Copy and edit configuration template (skip this step when updating)
   ```sh
-  $ cp electrum-personal-server-electrum-personal-server-v0.1.7/config.ini_sample config.cfg
+  $ cp electrum-personal-server-eps-v0.2.0/config.ini_sample config.cfg
   $ nano config.cfg
   ```
 
@@ -95,7 +95,7 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
 
 * Install Electrum Personal Server
   ```
-  $ cd electrum-personal-server-eps-v0.1.7/
+  $ cd electrum-personal-server-eps-v0.2.0/
   # Install the wheel package first, which is required
   $ pip3 install wheel
   $ pip3 install --user .
@@ -113,7 +113,7 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
 
   * If your wallet has previous transactions, Electrum Personal Server needs to rescan the Bitcoin blockchain to get the historical information. This can take a long time for the whole blockchain, therefore you can set the start date of the scan (it will still take more than 1 hour per year of history).
     ```sh
-    $ /home/bitcoin/.local/bin/electrum-personal-server-rescan /home/bitcoin/electrum-personal-server/config.cfg
+    $ /home/bitcoin/.local/bin/electrum-personal-server --rescan /home/bitcoin/electrum-personal-server/config.cfg
     ```
 
   * You can monitor the rescan progress in the Bitcoin Core logfile from a second SSH session:
