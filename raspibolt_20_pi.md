@@ -230,7 +230,7 @@ The “Advanced Packaging Tool” (apt) makes this easy.
 
 ```sh
 $ sudo apt update
-$ sudo apt upgrade
+$ sudo apt full-upgrade
 ```
 
 Make sure that all necessary software packages are installed:
