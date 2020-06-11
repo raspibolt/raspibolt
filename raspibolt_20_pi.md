@@ -220,6 +220,16 @@ The following two potential error messages are expected:
   ```sh
   $ sudo dpkg-reconfigure locales
   ```
+  If the above fix does not remove the locale error, it is probably your host machine that you use to SSH from pushing its locale onto the Pi. What you need to do is very simple: make Pi stop accepting locale over SSH regardless of origin. You do that by editing sshd_config file in nano editor:
+
+```sh
+  $ sudo nano /etc/ssh/sshd_config
+  ```
+All you need to do now is find the AcceptEnv LANG LC_* and make sure to comment it out so it looks like this:
+```sh
+  #AcceptEnv LANG LC_*
+  ```
+Now CTRL+X (save) and exit, and the error will be gone.
 
 ### Software update
 
