@@ -162,6 +162,7 @@ Bitcoin Core is starting and we now need to check if all connections are truly r
   * Go to [bitnodes.earn.com](https://bitnodes.earn.com/) and copy/paste your `.onion` address here:
   ![bitnodes](./images/69_bitnodes.png)
   * Check directly using the API by using this link (insert your own .onion address, like https://bitnodes.earn.com/nodes/627jdioviypreq7v.onion-8333/):
+  * If you dont see it as connectable, it does not mean that everything is not OK. Bitnode's site in combination with your new node sometimes takes some time to show properly. Try it again in few hours (or tomorrow).
     ```
     https://bitnodes.earn.com/nodes/[your-onion-adress.onion]-8333/
     ```
