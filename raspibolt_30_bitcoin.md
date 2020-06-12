@@ -163,12 +163,28 @@ If in doubt, just leave it as-is, otherwise you might need to enable it later an
 ## Running bitcoind
 
 Still logged in as user "bitcoin", let's start "bitcoind" manually.
-Monitor the log file a few minutes to see if it works fine (it may stop at "dnsseed thread exit", that's ok).
-Exit the logfile monitoring with `Ctrl-C`, check the blockchain info and, if there are no errors, stop "bitcoind" again.
 
 ```sh
 $ bitcoind
 ```
+Monitor the output for few minutes to see if it works fine (it may stop at "dnsseed thread exit", that's ok).
+
+Now it is time that we stop bitcoind. To safely stop your node, run the following "bitcoin-cli stop" command, in a new terminal SSH window logged in as user "bitcoin. 
+Open new terminal window and initiate new SSH session:
+
+```sh
+$ ssh admin@raspibolt.local or ssh admin@local-Pi-IP
+```
+Now in this window run the following command, while watching what will happen in the session where bitcoind is running:
+
+```sh
+$ bitcoin-cli stop
+```
+After the command is executed, type "exit" to close the second session from where you ran the stop command.
+
+We can also stop it with `Ctrl+C` which will result in stopping the process and proceeding with the shutdown but it is better to practice safe hygine right away in terms of stopping to make sure that database does not get corrupted while stopping and just to get familiar with bitcoin-cli right away, because that is you will be using later on.
+
+🔍 *more: [safely stopping the node](https://bitcoin.org/en/full-node#other-linux-daemon){:target="_blank"} in Bitcoin.org* 
 
 _Note: the following screencast skips longer waiting times, the initial start is longer in real life._
 
