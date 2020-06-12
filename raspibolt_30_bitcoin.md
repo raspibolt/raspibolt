@@ -121,6 +121,9 @@ $ nano /mnt/ext/bitcoin/bitcoin.conf
 server=1
 txindex=1
 
+# Do not trust - verify everything from the genesis block
+assumevalid=0
+
 # Network
 listen=1
 listenonion=1
