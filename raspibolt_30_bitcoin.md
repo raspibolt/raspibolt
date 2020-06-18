@@ -164,7 +164,7 @@ If in doubt, just leave it as-is, otherwise you might need to enable it later an
 
 Still logged in as user "bitcoin", let's start "bitcoind" manually.
 Monitor the log file a few minutes to see if it works fine (it may stop at "dnsseed thread exit", that's ok).
-Stop "bitcoind" with `Ctrl-C`, check the blockchain info and, if there are no errors, start "bitcoind" again.
+Stop "bitcoind" with `Ctrl-C`.
 
 ```sh
 $ bitcoind
