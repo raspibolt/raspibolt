@@ -17,7 +17,7 @@ This script will run as root, so please check it before blindly trusting me.
 
 ```sh
 $ sudo apt install jq net-tools
-$ cd /home/admin/download/
+$ cd /tmp/
 $ wget https://raw.githubusercontent.com/Stadicus/RaspiBolt/master/resources/20-raspibolt-welcome
 
 # check script & exit
