@@ -428,14 +428,14 @@ You can force Electrum to only use your own server on startup with the following
 $ electrum --oneserver --server raspibolt.local:50002:s
 ```
 BONUS INFO:
-On Mac, you can use Script Editor and create a new App with the following content:
+On Mac, you can use Script Editor to automate this and create a new App with the following content:
 ```sh
 tell application "Terminal"
 	activate
-	do script "/Applications/Electrum.app/Contents/MacOS/Electrum --oneserver --server Raspibolt-IP-Goes-Here:50002:s"
+	do script "/Applications/Electrum.app/Contents/MacOS/run_electrum --oneserver --server Raspibolt-IP-Goes-Here:50002:s"
 end tell
 ```
-This "app" will basically do same thing as if you took the command line from it that is specific to Electrum's location on Mac and just ran it in your Terminal.
+This "app" will basically do same thing with Electrum 4.0.2 as if you took the command line from above that is specific to Electrum's location on Mac and just ran it in your Terminal.
 Make sure you save it in Script Editor as an .app file. 
 Now you can run Electrum by clicking on this app which will force only connection to your Raspibolt. You will know it is working if Terminal opens (which needs to stay open as long as Electrum is running) and in Electrum's Network section, everything is grayed out except direct IP if your Raspibolt. This means everything is working as expected.
 
