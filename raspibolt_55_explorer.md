@@ -118,8 +118,6 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   BTCEXP_BITCOIND_PASS=PASSWORD_[B]
   ```
 
-* Find the `BTCEXP_BASIC_AUTH_PASSWORD=mypassword` and uncomment it and set your password. This is password protection for site via basic auth (enter any username when logging in, only the password is checked).
-
 * To compensate for the limited resources of the Raspberry Pi, let's extend the timeout period.
 
   ```conf
@@ -260,7 +258,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
   ```
 
 * With the [Tor browser](https://www.torproject.org), you can access this onion address from any device.
-  Please be aware that this TOR link should not be shared widely on the side of caution.
+  Please be aware that this access is not password protected and should not be shared widely.
 
 **Congratulations!**
 You now have the BTC RPC Explorer running to check the Bitcoin network information directly from your node.
