@@ -41,7 +41,7 @@ $ exit
 
 You can now start the script with `sudo raspibolt` and it is shown every time you log in.
 
-If the script is showing 'Public Not reachable' but you do have incoming connections and the blockchain is syncing, you might have a router that does not support NAT Loopback. Please check your node at https://bitnodes.earn.com, if it displays your node as available remove the # on lines 128 and 129 and put them before 130 and 131 by editing the file:
+If the script is showing 'Public Not reachable' but you do have incoming connections and the blockchain is syncing, you might have a router that does not support NAT Loopback. Please check your node at https://bitnodes.earn.com, if it displays your node as available remove the # on lines 147 and 148 and put them before 149 and 150 by editing the file:
 ```sh
 $ sudo nano /etc/update-motd.d/20-raspibolt-welcome
 ```
