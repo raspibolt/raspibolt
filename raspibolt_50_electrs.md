@@ -452,7 +452,7 @@ $ electrum --oneserver --server <your-onion-address>.onion:50002:s --proxy socks
 
 ## Connect BitBoxApp
 
-[BitBoxApp](shiftcrypto.ch/app/){:target="_blank"} is a beginner-friendly companion app to the BitBox02 hardware wallet by Shift Cryptosecurity.
+[BitBoxApp](https://shiftcrypto.ch/app/){:target="_blank"} is a beginner-friendly companion app to the BitBox02 hardware wallet by Shift Cryptosecurity.
 
 ### General
 
