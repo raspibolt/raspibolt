@@ -170,7 +170,7 @@ if [ "${gitupdate}" -eq "1" ]; then
   lndgit=$(curl -s https://api.github.com/repos/lightningnetwork/lnd/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
   # Electrs and RPC Explorer dont have a latest release, just tags
   electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
-  btcrcpexplorergit=$(cur -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
+  btcrcpexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
   # write to file TODO: convert to JSON for sanity
   printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
 else
