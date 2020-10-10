@@ -8,10 +8,9 @@ nav_order: 78
 # Run The Numbers
 {: .no_toc }
 
+Based on BashCo's [RunTheNumbers](https://github.com/BashCo/RunTheNumbers) script.
 
-Based on ... URL and name of script
-
-By default, this script will `Run The Numbers` every 5000 blocks, saving output in the /run/runthenumbers folder, accessible by the bitcoin user.  
+Run The Numbers is part of a synchronized decentralized audit of the Bitcoin supply.  A target block height is agreed upon whereby many participants will simultaneously run a similar script on their node.  This version is setup to automatically run as a service, and by default, run the numbers every 5000 blocks, or about once every 34 to 35 days based on a target of 10 minute block times.  Results are saved in the /home/bitcoin/.runthenumbers folder. Instructions for reviewing the results are also outlined below.
 
 ---
 
@@ -25,7 +24,7 @@ By default, this script will `Run The Numbers` every 5000 blocks, saving output 
 
 ## Simplified Script
 
-As user "admin", create the runthenumbers script by copy/paste the following. Save and exit.
+* As user "admin", create the runthenumbers script by copy/paste the following. Save and exit.
 ```sh
 sudo nano /usr/local/bin/runthenumbers
 ```
@@ -39,20 +38,37 @@ NBLOCK=5000
 last_run_block=-1
 while true
 do
+    # Get the current block height
     current_block=$(bitcoin-cli getblockcount)
     current_block=$(expr $current_block + 1 - 1)
+    # Determine if it matches our N blocks condition
     mod_block=$(expr $current_block % $NBLOCK)
     if [[ $mod_block -eq "0" ]]; then
+        # Make sure we didnt just run the numbers of the same block
         if [[ $current_block -gt $last_run_block ]]; then
+            # Run the numbers and store the output!
             last_run_block=$current_block
             txoutsetinfo=$(bitcoin-cli gettxoutsetinfo)
-            echo "${txoutsetinfo}" > "the_numbers_${current_block}.txt"
-            echo "${txoutsetinfo}" > "the_numbers_latest.txt"
+            echo "${txoutsetinfo}" > "/home/bitcoin/.runthenumbers/the_numbers_${current_block}.txt"
+            echo "${txoutsetinfo}" > "/home/bitcoin/.runthenumbers/the_numbers_latest.txt"
         fi
     fi
-    # Query block height every n seconds
+    # Wait a few seconds before checking again
     sleep 5
 done
+```
+
+* Make it executable
+```sh
+sudo chmod +x /usr/local/run/runthenumbers
+```
+
+* Create a data directory on the external drive and link it to the "bitcoin" user home.
+
+```sh
+sudo su - bitcoin
+mkdir /mnt/ext/runthenumbers
+ln -s /mnt/ext/runthenumbers /home/bitcoin/.runthenumbers
 ```
 
 
@@ -143,6 +159,12 @@ We want this script to start automatically on system boot.
 The latest results from running the numbers can be displayed as follows
 
 ```sh
-cat /run/runthenumbers/the_numbers_latest.txt
+cat /home/bitcoin/.runthenumbers/the_numbers_latest.txt
+```
+
+If you just want the total supply as of the last time the numbers were ran
+
+```sh
+cat /home/bitcoin/.runthenumbers/the_numbers_latest.txt | jq '.total_amount'
 ```
 
