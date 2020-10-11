@@ -50,16 +50,17 @@ Exit orbot and reopen it. Turn on `VPN Mode`.
 Start your connection to the Tor network by clicking on the big onion (if it has not automatically connected already)
 
 
-On your Raspibolt, make sure Go is installed (should be v1.11 or higher):  
+On your Raspibolt, make sure Go is installed (should be v1.15 or higher):  
 ```
 $ go version 
 ```
 If need to install Go, run these:
 
 ```
-$ wget https://storage.googleapis.com/golang/go1.11.linux-armv6l.tar.gz
-$ sudo tar -C /usr/local -xzf go1.11.linux-armv6l.tar.gz
-$ sudo rm *.gz
+$ cd /tmp
+$ wget https://golang.org/dl/go1.15.2.linux-armv6l.tar.gz
+$ sudo tar -C /usr/local -xzf go1.15.2.linux-armv6l.tar.gz
+$ sudo rm go1.15.2.linux-armv6l.tar.gz
 $ sudo mkdir /usr/local/gocode
 $ sudo chmod 777 /usr/local/gocode
 $ export GOROOT=/usr/local/go
@@ -70,9 +71,9 @@ $ export PATH=$PATH:$GOPATH/bin
 
 Install [lndconnect](https://github.com/LN-Zap/lndconnect):
 ```
-$ cd ~/download
-$ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.1.0/lndconnect-linux-armv7-v0.1.0.tar.gz
-$ sudo tar -xvf lndconnect-linux-armv7-v0.1.0.tar.gz --strip=1 -C /usr/local/bin
+$ cd /tmp
+$ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.2.0/lndconnect-linux-armv7-v0.2.0.tar.gz
+$ sudo tar -xvf lndconnect-linux-armv7-v0.2.0.tar.gz --strip=1 -C /usr/local/bin
 ```
 Switch to user `bitcoin` and generate the LND connect URI QR code:  
 It will be a big QR code so maximize your terminal window and use CTRL - to shrink the code further to fit the screen.
