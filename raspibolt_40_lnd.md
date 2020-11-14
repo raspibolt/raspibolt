@@ -33,18 +33,16 @@ $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/ln
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt.sig
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/roasbeef-manifest-v0.11.1-beta.txt.sig
-$ wget -o roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
-$ wget -o bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
+
+$ gpg --receive-keys 9769140D255C759B1EB77B46A96387A57CAAE94D
+$ wget -O bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
 
 $ sha256sum --check manifest-v0.11.1-beta.txt --ignore-missing
 > lnd-linux-armv7-v0.11.1-beta.tar.gz: OK
 
-$ pgp ./roasbeef.asc
-> 9769140D255C759B1EB77B46A96387A57CAAE94D
 $ gpg ./bitconner.asc
 > 9C8D61868A7C492003B2744EE7D737B67FA592C7
 
-$ gpg --import ./roasbeef.asc
 $ gpg --import ./bitconner.asc
 $ gpg --verify manifest-v0.11.1-beta.txt.sig
 > gpg: Good signature from "Conner Fromknecht <conner@lightning.engineering>" [unknown]
