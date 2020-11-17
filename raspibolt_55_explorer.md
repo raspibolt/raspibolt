@@ -87,7 +87,7 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   Since the program is written in JavaScript, there is no need to compile.
 
   ```sh
-  $ git clone --branch v2.0.1 https://github.com/janoside/btc-rpc-explorer.git
+  $ git clone --branch v2.1.0 https://github.com/janoside/btc-rpc-explorer.git
   $ cd btc-rpc-explorer
   $ npm install
   ```
@@ -281,7 +281,7 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
   ```sh
   $ cd ~/btc-rpc-explorer
   $ git fetch
-  $ git checkout v2.0.1
+  $ git checkout v2.1.0
   $ npm install
   $ exit
   ```
