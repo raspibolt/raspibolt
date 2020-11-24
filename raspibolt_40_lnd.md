@@ -33,8 +33,8 @@ $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/ln
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt.sig
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/roasbeef-manifest-v0.11.1-beta.txt.sig
-$ wget -o roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
-$ wget -o bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
+$ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
+$ wget -O bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
 
 $ sha256sum --check manifest-v0.11.1-beta.txt --ignore-missing
 > lnd-linux-armv7-v0.11.1-beta.tar.gz: OK
@@ -378,16 +378,16 @@ Just grab the whole URI above the big QR code and use it as follows:
   One Bitcoin equals 100 million satoshis, so at $10'000/BTC, $10 amount to 0.001 BTC or 100'000 satoshis.
   To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/btc-to-satoshi).
 
-  This will open a channel with fees using the built in estimator 
+  This will open a channel with fees using the built in estimator
   ```sh
   $ lncli openchannel 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde 100000 0
   ```
-  
+
   You can manually control the fees for the funding transaction by using the `sat_per_byte` argument as follows
   ```sh
   $ lncli openchannel --sat_per_byte 8 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde 100000 0
   ```
-  
+
 
 * **Check your funds**, both in the on-chain wallet and the channel balances.
   [🕮 `walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"}
