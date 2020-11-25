@@ -32,28 +32,19 @@ $ cd /tmp
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/lnd-linux-armv7-v0.11.1-beta.tar.gz
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt.sig
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/roasbeef-manifest-v0.11.1-beta.txt.sig
-$ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
 $ wget -O bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
 
 $ sha256sum --check manifest-v0.11.1-beta.txt --ignore-missing
 > lnd-linux-armv7-v0.11.1-beta.tar.gz: OK
 
-$ pgp ./roasbeef.asc
-> 9769140D255C759B1EB77B46A96387A57CAAE94D
 $ gpg ./bitconner.asc
-> 9C8D61868A7C492003B2744EE7D737B67FA592C7
+> pub   rsa4096/0xE7D737B67FA592C7 2018-03-06 [SC] [expires: 2021-03-06]
+>      Key fingerprint = 9C8D 6186 8A7C 4920 03B2  744E E7D7 37B6 7FA5 92C7
 
-$ gpg --import ./roasbeef.asc
 $ gpg --import ./bitconner.asc
 $ gpg --verify manifest-v0.11.1-beta.txt.sig
 > gpg: Good signature from "Conner Fromknecht <conner@lightning.engineering>" [unknown]
 > Primary key fingerprint: 9C8D 6186 8A7C 4920 03B2  744E E7D7 37B6 7FA5 92C7
-$ gpg --verify roasbeef-manifest-v0.11.1-beta.txt.sig manifest-v0.11.1-beta.txt
-> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [expired]
-> gpg: Note: This key has expired!
-> Primary key fingerprint: 9769 140D 255C 759B 1EB7  7B46 A963 87A5 7CAA E94D
->      Subkey fingerprint: 4AB7 F8DA 6FAE BB3B 70B1  F903 BC13 F65E 2DC8 4465
 
 $ tar -xzf lnd-linux-armv7-v0.11.1-beta.tar.gz
 $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.11.1-beta/*
