@@ -171,6 +171,38 @@ The macaroons are now located under the chain data directory for each supported 
   `$ lncli unlock`
   `$ sudo journalctl -u lnd -f`
 
+## How to upgrade Electrs
+
+For upgrading from a prior version, first check what version you have
+
+```
+$ cd /home/admin/rust
+$ currentelectrs=$(head -n 1 electrs/RELEASE-NOTES.md | awk '{print v$2}')
+$ echo "Current = ${currentelectrs}"
+$ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
+$ echo "Available = ${electrsgit}"
+```
+
+If the available version is newer, then you can proceed with the following 
+
+```
+$ # backup the current one
+$ mv electrs electrs-v${currentelectrs};
+
+$ # clone the most recent tagged version
+$ git clone --branch ${electrsgit} https://github.com/romanz/electrs.git
+
+$ # Build it
+$ cd electrs
+$ cargo build --locked --release
+
+$ # Stop the service, copy the binary over, and start the service back up
+$ sudo systemctl stop electrs
+$ sudo cp ./target/release/electrs /usr/local/bin/
+$ sudo systemctl start electrs
+```
+
+
 ## Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 4 with a 64 bit processor?
 At the time of this writing (March 2020) there is no 64 bit operating system for the Raspberry Pi developed yet. The 64 bit processors of the Raspberry Pi 4 versions are running in 32 bit compatibility mode with a 32 bit operating system.
 

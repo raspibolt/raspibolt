@@ -91,11 +91,12 @@ The whole process takes about 30 minutes.
   ```sh
   # download
   $ cd /home/admin/rust
-  $ git clone --branch v0.8.5 https://github.com/romanz/electrs.git
+  $ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
+  $ git clone --branch ${electrsgit} https://github.com/romanz/electrs.git
   $ cd electrs
 
   # compile
-  $ cargo build --release
+  $ cargo build --locked --release
 
   # install
   $ sudo cp ./target/release/electrs /usr/local/bin/
