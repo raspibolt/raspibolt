@@ -54,8 +54,8 @@ As there are no binaries available, we will compile the application directly fro
   ```sh
   # download
   $ cd /tmp
-  $ curl https://static.rust-lang.org/dist/rust-1.44.1-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
-  $ curl https://static.rust-lang.org/dist/rust-1.44.1-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
+  $ curl https://static.rust-lang.org/dist/rust-1.48.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
+  $ curl https://static.rust-lang.org/dist/rust-1.48.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
   $ curl https://keybase.io/rust/pgp_keys.asc | gpg --import
 
   # verify
@@ -91,7 +91,8 @@ The whole process takes about 30 minutes.
   ```sh
   # download
   $ cd /home/admin/rust
-  $ git clone --branch v0.8.5 https://github.com/romanz/electrs.git
+  # latest electrs version can always be checked (in case guide is not updated in time) at: https://github.com/romanz/electrs and clicking master > tags
+  $ git clone --branch v0.8.6 https://github.com/romanz/electrs.git
   $ cd electrs
 
   # compile
