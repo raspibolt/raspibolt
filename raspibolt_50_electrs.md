@@ -54,8 +54,8 @@ As there are no binaries available, we will compile the application directly fro
   ```sh
   # download
   $ cd /tmp
-  $ curl https://static.rust-lang.org/dist/rust-1.42.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
-  $ curl https://static.rust-lang.org/dist/rust-1.42.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
+  $ curl https://static.rust-lang.org/dist/rust-1.44.1-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
+  $ curl https://static.rust-lang.org/dist/rust-1.44.1-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
   $ curl https://keybase.io/rust/pgp_keys.asc | gpg --import
 
   # verify
@@ -78,7 +78,7 @@ As there are no binaries available, we will compile the application directly fro
 * Install build tools
 
   ```sh
-  $ sudo apt install clang cmake
+  $ sudo apt install -y clang cmake
   ```
 
 <script id="asciicast-IQ8ZYiBUxbHZM6AxL41oS2Hbd" src="https://asciinema.org/a/IQ8ZYiBUxbHZM6AxL41oS2Hbd.js" async></script>
@@ -91,7 +91,7 @@ The whole process takes about 30 minutes.
   ```sh
   # download
   $ cd /home/admin/rust
-  $ git clone --branch v0.8.3 https://github.com/romanz/electrs.git
+  $ git clone --branch v0.8.5 https://github.com/romanz/electrs.git
   $ cd electrs
 
   # compile
@@ -145,65 +145,71 @@ The whole process takes about 30 minutes.
   🚨 **Change the password**, otherwise Electrs is not able to talk to Bitcoin Core.
 
 * Let's start Electrs manually first, to check if it's running as expected.
-  It will immediately start with the initial indexing of the Bitcoin blocks, that should take around 6 hours.
+  It will immediately start with the initial indexing of the Bitcoin blocks.
+  That should take around 6 hours with a modern SSD.  The timestamps in sample output below are following this process with an older non-SSD drive.
 
   ```sh
   $ electrs --conf /mnt/ext/electrs/electrs.conf
   ```
 
     ```bash
-  Config { log: StdErrLog { verbosity: Trace, quiet: false, timestamp: Millisecond, modules: [], writer: "stderr", color_choice: Auto }, network_type: bitcoin, db_path: "/mnt/ext/electrs/db/mainnet", daemon_dir: "/mnt/ext/bitcoin", daemon_rpc_addr: V4(127.0.0.1:8332), electrum_rpc_addr: V4(127.0.0.1:50001), monitoring_addr: V4(127.0.0.1:4224), jsonrpc_import: false, index_batch_size: 100, bulk_index_threads: 4, tx_cache_size: 10485760, txid_limit: 1000, server_banner: "Welcome to electrs 0.8.2 (Electrum Rust Server)!", blocktxids_cache_size: 10485760 }
-  2019-12-15T13:07:26.637+00:00 - DEBUG - Server listening on 127.0.0.1:4224
-  2019-12-15T13:07:26.640+00:00 - DEBUG - Running accept thread
-  2019-12-15T13:07:26.641+00:00 - INFO - NetworkInfo { version: 190001, subversion: "/Satoshi:0.19.0.1/" }
-  2019-12-15T13:07:26.643+00:00 - INFO - BlockchainInfo { chain: "main", blocks: 608221, headers: 608221, bestblockhash: "0000000000000000000c7ebb3bdb8c8eb891c11d89802d8208c12bdc5527ac44", pruned: false, initialblockdownload: false }
-  2019-12-15T13:07:26.645+00:00 - DEBUG - opening DB at "/mnt/ext/electrs/db/mainnet"
-  2019-12-15T13:07:26.685+00:00 - TRACE - lastest indexed blockhash: 0000000000000000000000000000000000000000000000000000000000000000
-  2019-12-15T13:07:26.685+00:00 - INFO - listing block files at "/mnt/ext/bitcoin/blocks/blk*.dat"
-  2019-12-15T13:07:26.739+00:00 - INFO - indexing 1898 blk*.dat files
-  2019-12-15T13:07:26.739+00:00 - DEBUG - found 0 indexed blocks
-  2019-12-15T13:07:26.746+00:00 - TRACE - downloading 100000 block headers
-  2019-12-15T13:07:37.955+00:00 - TRACE - downloading 100000 block headers
-  2019-12-15T13:07:48.885+00:00 - TRACE - downloading 100000 block headers
-  2019-12-15T13:08:00.758+00:00 - TRACE - downloading 100000 block headers
-  2019-12-15T13:08:10.992+00:00 - TRACE - downloading 100000 block headers
-  2019-12-15T13:08:20.937+00:00 - TRACE - downloading 100000 block headers
-  2019-12-15T13:08:31.377+00:00 - TRACE - downloading 8222 block headers
-  2019-12-15T13:08:37.708+00:00 - DEBUG - applying 608222 new headers from height 0
-  2019-12-15T13:08:59.327+00:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk00001.dat": 1650583 rows
-  2019-12-15T13:09:02.667+00:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk00000.dat": 1712019 rows
-  2019-12-15T13:09:09.553+00:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk00003.dat": 1717830 rows
-  2019-12-15T13:09:17.543+00:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk00002.dat": 1742548 rows
+  Config { log: StdErrLog { verbosity: Trace, quiet: false, timestamp: Millisecond, modules: [], writer: "stderr", color_choice: Auto }, network_type: bitcoin, db_path: "/mnt/ext/electrs/db/mainnet", daemon_dir: "/mnt/ext/bitcoin", blocks_dir: "/mnt/ext/bitcoin/blocks", daemon_rpc_addr: V4(127.0.0.1:8332), electrum_rpc_addr: V4(127.0.0.1:50001), monitoring_addr: V4(127.0.0.1:4224), jsonrpc_import: false, index_batch_size: 100, bulk_index_threads: 4, tx_cache_size: 10485760, txid_limit: 1000, server_banner: "Welcome to electrs 0.8.5 (Electrum Rust Server)!", blocktxids_cache_size: 10485760 }
+  2020-07-11T17:24:15.776+01:00 - DEBUG - Server listening on 127.0.0.1:4224
+  2020-07-11T17:24:15.778+01:00 - DEBUG - Running accept thread
+  2020-07-11T17:24:15.779+01:00 - INFO - NetworkInfo { version: 200000, subversion: "/Satoshi:0.20.0/", relayfee: 0.00001 }
+  2020-07-11T17:24:15.780+01:00 - INFO - BlockchainInfo { chain: "main", blocks: 638792, headers: 638792, verificationprogress: 0.999998834745944, bestblockhash: "00000000000000000007bcaf73926092f8765725795fba82fd8c9f0bd5df27fd", pruned: false, initialblockdownload: false }
+  2020-07-11T17:24:15.781+01:00 - DEBUG - opening DB at "/mnt/ext/electrs/db/mainnet"
+  2020-07-11T17:24:26.706+01:00 - TRACE - latest indexed blockhash: 0000000000000000000000000000000000000000000000000000000000000000
+  2020-07-11T17:24:26.706+01:00 - INFO - listing block files at "/mnt/ext/bitcoin/blocks/blk*.dat"
+  2020-07-11T17:24:27.836+01:00 - INFO - indexing 2150 blk*.dat files
+  2020-07-11T17:24:27.837+01:00 - DEBUG - found 0 indexed blocks
+  2020-07-11T17:24:27.855+01:00 - TRACE - downloading 100000 block headers
+  2020-07-11T17:25:10.765+01:00 - TRACE - downloading 100000 block headers
+  2020-07-11T17:25:39.281+01:00 - TRACE - downloading 100000 block headers
+  2020-07-11T17:26:25.260+01:00 - TRACE - downloading 100000 block headers
+  2020-07-11T17:26:43.626+01:00 - TRACE - downloading 100000 block headers
+  2020-07-11T17:27:04.621+01:00 - TRACE - downloading 100000 block headers
+  2020-07-11T17:27:38.230+01:00 - TRACE - downloading 38793 block headers
+  2020-07-11T17:27:49.807+01:00 - DEBUG - applying 638793 new headers from height 0
+  2020-07-11T17:28:12.078+01:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk00000.dat": 1711986 rows
+  2020-07-11T17:28:23.918+01:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk00001.dat": 1652333 rows
+  2020-07-11T17:28:38.673+01:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk00002.dat": 1742359 rows
   ```
 
-* Wait until the initial sync is completed and the database is compacted.
+* Wait until the initial sync is completed and the database is compacted.  The space used on disk will grow to over 125 GB before reducing to about 60 GB at the time of this writing.  
 
   ```bash
-  2019-12-15T17:37:33.183+00:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk01896.dat": 1607188 rows
-  2019-12-15T17:37:37.242+00:00 - DEBUG - last indexed block: best=0000000000000000000c7ebb3bdb8c8eb891c11d89802d8208c12bdc5527ac44 height=608221 @ 2019-12-15T13:04:31Z
-  2019-12-15T17:37:38.953+00:00 - INFO - starting full compaction
-  2019-12-15T19:39:51.332+00:00 - INFO - finished full compaction
-  2019-12-15T19:39:51.346+00:00 - INFO - enabling auto-compactions
-  2019-12-15T19:39:51.417+00:00 - TRACE - lastest indexed blockhash: 0000000000000000000c7ebb3bdb8c8eb891c11d89802d8208c12bdc5527ac44
-  2019-12-15T19:39:59.507+00:00 - DEBUG - applying 608222 new headers from height 0
-  2019-12-15T19:40:00.271+00:00 - INFO - enabling auto-compactions
-  2019-12-15T19:40:00.352+00:00 - DEBUG - downloading new block headers (608222 already indexed) from 0000000000000000000c0eb4fd31adc376c08bc312f0c09faca8474f5e2efe8a
-  2019-12-15T19:40:00.374+00:00 - TRACE - downloaded 31 block headers
-  2019-12-15T19:40:00.375+00:00 - INFO - best=0000000000000000000c0eb4fd31adc376c08bc312f0c09faca8474f5e2efe8a height=608252 @ 2019-12-15T19:26:51Z (31 left to index)
-  2019-12-15T19:40:13.267+00:00 - DEBUG - applying 31 new headers from height 608222
-  2019-12-15T19:40:22.427+00:00 - INFO - Electrum RPC server running on 127.0.0.1:50001 (protocol 1.4)
+  2020-07-12T08:32:08.581+01:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk02148.dat": 1471934 rows
+  2020-07-12T08:32:26.334+01:00 - DEBUG - no more blocks to index
+  2020-07-12T08:32:27.771+01:00 - DEBUG - no more blocks to index
+  2020-07-12T08:32:27.822+01:00 - DEBUG - no more blocks to index
+  2020-07-12T08:32:28.990+01:00 - DEBUG - no more blocks to index
+  2020-07-12T08:32:28.990+01:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk02149.dat": 73105 rows
+  2020-07-12T08:32:29.410+01:00 - DEBUG - last indexed block: best=00000000000000000007bcaf73926092f8765725795fba82fd8c9f0bd5df27fd height=638792 @ 2020-07-11T16:21:02Z
+  2020-07-12T08:32:31.864+01:00 - INFO - starting full compaction
+  2020-07-12T22:00:13.361+01:00 - INFO - finished full compaction
+  2020-07-12T22:00:13.377+01:00 - INFO - enabling auto-compactions
+  2020-07-12T22:00:16.577+01:00 - TRACE - latest indexed blockhash: 00000000000000000007bcaf73926092f8765725795fba82fd8c9f0bd5df27fd
+  2020-07-12T22:01:58.360+01:00 - DEBUG - applying 638793 new headers from height 0
+  2020-07-12T22:01:59.154+01:00 - INFO - enabling auto-compactions
+  2020-07-12T22:06:38.385+01:00 - DEBUG - relayfee: 0.00001 BTC
+  2020-07-12T22:06:38.410+01:00 - DEBUG - downloading new block headers (638793 already indexed) from 0000000000000000000581d1a3b9fadd27bfaae4797fc6e195617bc689615e86
+  2020-07-12T22:06:38.827+01:00 - TRACE - downloaded 119 block headers
+  2020-07-12T22:06:38.828+01:00 - INFO - best=0000000000000000000581d1a3b9fadd27bfaae4797fc6e195617bc689615e86 height=638911 @ 2020-07-12T11:58:10Z (119 left to index)
+  2020-07-12T23:00:53.250+01:00 - DEBUG - applying 119 new headers from height 638793
+  2020-07-12T23:00:53.251+01:00 - WARN - reconnecting to bitcoind: disconnected from daemon while receiving
+  2020-07-12T23:03:07.478+01:00 - INFO - Electrum RPC server running on 127.0.0.1:50001 (protocol 1.4)
   ```
 
 * Stop Electrs with `Ctrl`-`C` and exit the "bitcoin" user session.
 
   ```sh
-  2019-12-15T19:43:20.012+00:00 - INFO - stopping server: Interrupted by signal 2
-  2019-12-15T19:43:20.017+00:00 - TRACE - stop accepting new RPCs
-  2019-12-15T19:43:20.017+00:00 - TRACE - closing 0 RPC connections
-  2019-12-15T19:43:20.017+00:00 - TRACE - waiting for 0 RPC handling threads
-  2019-12-15T19:43:20.017+00:00 - TRACE - RPC connections are closed
-  2019-12-15T19:43:20.017+00:00 - TRACE - RPC server is stopped
-  2019-12-15T19:43:20.091+00:00 - TRACE - closing DB at "/mnt/ext/electrs/db/mainnet"
+  2020-07-12T23:22:37.498+01:00 - TRACE - notified via SIG2
+  2020-07-12T23:22:37.498+01:00 - TRACE - stop accepting new RPCs
+  2020-07-12T23:22:37.499+01:00 - TRACE - closing 0 RPC connections
+  2020-07-12T23:22:37.499+01:00 - TRACE - RPC connections are closed
+  2020-07-12T23:22:37.499+01:00 - TRACE - RPC server is stopped
+  2020-07-12T23:22:37.499+01:00 - TRACE - closing DB at "/mnt/ext/electrs/db/mainnet"
   ```
 
   ```sh
@@ -317,7 +323,7 @@ This means that NGINX provides secure communication to the outside and routes it
   💡 _Hint: NGINX is pronounced "Engine X"_
 
   ```sh
-  $ sudo apt install nginx
+  $ sudo apt install -y nginx
   ```
 
 * Create a self-signed TLS certificate (valid for 10 years)
@@ -464,7 +470,7 @@ $ electrum --oneserver --server <your-onion-address>.onion:50002:s --proxy socks
 
 ## Connect BitBoxApp
 
-[BitBoxApp](shiftcrypto.ch/app/){:target="_blank"} is a beginner-friendly companion app to the BitBox02 hardware wallet by Shift Cryptosecurity.
+[BitBoxApp](https://shiftcrypto.ch/app/){:target="_blank"} is a beginner-friendly companion app to the BitBox02 hardware wallet by Shift Cryptosecurity.
 
 ### General
 
@@ -504,7 +510,7 @@ Updating a [new release](https://github.com/romanz/electrs/releases){:target="_b
   ```sh
   $ cd ~/rust/electrs
   $ git fetch
-  $ git checkout v0.8.3
+  $ git checkout v0.8.5
   ```
 
 * Compile the new release.

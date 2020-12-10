@@ -30,13 +30,13 @@ You need
 * Raspberry Pi 4, with 4 GB RAM
 * microSD card: 8 GB or more, incl. adapter to your regular computer
 * strong USB power adapter: 5V/3A + USB-C cable
-* external hard disk: 500 GB or more
+* external hard disk: 500 GB or more (1 TB recommended)
 * optional: Raspberry Pi case
 
 ![Raspberry Pi](images/10_raspberrypi_hardware.png)
 
-To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is ~300 GB and growing.
-You can buy a cheap hard disk enclosure and reuse an old 500 GB hard disk.
+To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is over 300 GB and growing.
+You can buy a cheap hard disk enclosure and reuse an old 500 GB hard disk or larger.  If you also plan to run Electrs and the Block Explorer, you should use a 1TB disk or larger.
 I recommend getting a modern 2.5" SSD that can be powered through the USB connection to the Pi directly, which also speeds up initial sync time significantly.
 
 ---
