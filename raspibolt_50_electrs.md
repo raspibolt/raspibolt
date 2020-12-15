@@ -54,8 +54,8 @@ As there are no binaries available, we will compile the application directly fro
   ```sh
   # download
   $ cd /tmp
-  $ curl https://static.rust-lang.org/dist/rust-1.44.1-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
-  $ curl https://static.rust-lang.org/dist/rust-1.44.1-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
+  $ curl https://static.rust-lang.org/dist/rust-1.48.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
+  $ curl https://static.rust-lang.org/dist/rust-1.48.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
   $ curl https://keybase.io/rust/pgp_keys.asc | gpg --import
 
   # verify
@@ -85,7 +85,7 @@ As there are no binaries available, we will compile the application directly fro
 
 ### Build from source code
 
-Now we download a specific release of the Electrs source code, compile it to an executable binary and install it.
+Now we download the latest release of the Electrs source code, compile it to an executable binary and install it.
 The whole process takes about 30 minutes.
 
   ```sh
@@ -177,7 +177,7 @@ The whole process takes about 30 minutes.
   2020-07-11T17:28:38.673+01:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk00002.dat": 1742359 rows
   ```
 
-* Wait until the initial sync is completed and the database is compacted.  The space used on disk will grow to over 125 GB before reducing to about 60 GB at the time of this writing.  
+* Wait until the initial sync is completed and the database is compacted.  The space used on disk will grow to over 125 GB before reducing to about 60 GB at the time of this writing.
 
   ```bash
   2020-07-12T08:32:08.581+01:00 - TRACE - indexed "/mnt/ext/bitcoin/blocks/blk02148.dat": 1471934 rows
