@@ -51,6 +51,8 @@ As there are no binaries available, we will compile the application directly fro
 
 * Install the Rust programming language
 
+  🚨 This Rust installation is for Linux ARM32 systems only. Don't install the following binaries on other platforms, it could damage your system.
+
   ```sh
   # download
   $ cd /tmp
