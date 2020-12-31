@@ -29,27 +29,36 @@ Download and install LND
 
 ```sh
 $ cd /tmp
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.10.4-beta/lnd-linux-armv7-v0.10.4-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.10.4-beta/manifest-v0.10.4-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.10.4-beta/manifest-v0.10.4-beta.txt.sig
-$ wget https://keybase.io/roasbeef/pgp_keys.asc
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/lnd-linux-armv7-v0.11.1-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt.sig
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/roasbeef-manifest-v0.11.1-beta.txt.sig
+$ wget -o roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
+$ wget -o bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
 
-$ sha256sum --check manifest-v0.10.4-beta.txt --ignore-missing
-> lnd-linux-armv7-v0.10.4-beta.tar.gz: OK
+$ sha256sum --check manifest-v0.11.1-beta.txt --ignore-missing
+> lnd-linux-armv7-v0.11.1-beta.tar.gz: OK
 
-$ gpg ./pgp_keys.asc
+$ pgp ./roasbeef.asc
 > 9769140D255C759B1EB77B46A96387A57CAAE94D
+$ gpg ./bitconner.asc
+> 9C8D61868A7C492003B2744EE7D737B67FA592C7
 
-$ gpg --import ./pgp_keys.asc
-$ gpg --verify manifest-v0.10.4-beta.txt.sig
-> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
+$ gpg --import ./roasbeef.asc
+$ gpg --import ./bitconner.asc
+$ gpg --verify manifest-v0.11.1-beta.txt.sig
+> gpg: Good signature from "Conner Fromknecht <conner@lightning.engineering>" [unknown]
+> Primary key fingerprint: 9C8D 6186 8A7C 4920 03B2  744E E7D7 37B6 7FA5 92C7
+$ gpg --verify roasbeef-manifest-v0.11.1-beta.txt.sig manifest-v0.11.1-beta.txt
+> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [expired]
+> gpg: Note: This key has expired!
 > Primary key fingerprint: 9769 140D 255C 759B 1EB7  7B46 A963 87A5 7CAA E94D
 >      Subkey fingerprint: 4AB7 F8DA 6FAE BB3B 70B1  F903 BC13 F65E 2DC8 4465
 
-$ tar -xzf lnd-linux-armv7-v0.10.4-beta.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.10.4-beta/*
+$ tar -xzf lnd-linux-armv7-v0.11.1-beta.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.11.1-beta/*
 $ lnd --version
-> lnd version 0.10.4-beta commit=v0.10.4-beta
+> lnd version 0.11.1-beta commit=v0.11.1-beta
 ```
 
 <script id="asciicast-DvuCHl1ibT4eursipO0Z53xf5" src="https://asciinema.org/a/DvuCHl1ibT4eursipO0Z53xf5.js" async></script>
@@ -84,6 +93,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
 
   [Application Options]
   alias=YOUR_FANCY_ALIAS
+  color=#FFFF00
   debuglevel=info
   maxpendingchannels=5
   listen=localhost

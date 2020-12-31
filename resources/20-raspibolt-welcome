@@ -329,7 +329,7 @@ if [ -z "${electrs_running##*inactive*}" ]; then
   electrsversion_color="${color_red}"
 else
   electrs_running="up"
-  electrspi=$(echo '{"jsonrpc": "2.0", "method": "server.version", "id": 0}' | netcat 127.0.0.1 50001 -q 1 | jq -r '.result[0]' | awk '{print "v"$2}')
+  electrspi=$(echo '{"jsonrpc": "2.0", "method": "server.version", "params": [ "raspibolt", "1.4" ], "id": 0}' | netcat 127.0.0.1 50001 -q 1 | jq -r '.result[0]' | awk '{print "v"$2}')
   if [ "$electrspi" = "$electrsgit" ]; then
     electrsversion="$electrspi"
     electrsversion_color="${color_green}"
