@@ -29,36 +29,33 @@ Download and install LND
 
 ```sh
 $ cd /tmp
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/lnd-linux-armv7-v0.11.1-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt.sig
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/roasbeef-manifest-v0.11.1-beta.txt.sig
-$ wget -o roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
-$ wget -o bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.12.0-beta/lnd-linux-armv7-v0.12.0-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.12.0-beta/manifest-v0.12.0-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.12.0-beta/manifest-roasbeef-v0.12.0-beta.txt.asc
+$ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
 
-$ sha256sum --check manifest-v0.11.1-beta.txt --ignore-missing
-> lnd-linux-armv7-v0.11.1-beta.tar.gz: OK
+$ sha256sum --check manifest-v0.12.0-beta.txt --ignore-missing
+> lnd-linux-armv7-v0.12.0-beta.tar.gz: OK
 
-$ pgp ./roasbeef.asc
-> 9769140D255C759B1EB77B46A96387A57CAAE94D
-$ gpg ./bitconner.asc
-> 9C8D61868A7C492003B2744EE7D737B67FA592C7
+$ gpg ./roasbeef.asc
+> E4D85299674B2D31FAA1892E372CBD7633C61696
 
 $ gpg --import ./roasbeef.asc
-$ gpg --import ./bitconner.asc
-$ gpg --verify manifest-v0.11.1-beta.txt.sig
-> gpg: Good signature from "Conner Fromknecht <conner@lightning.engineering>" [unknown]
-> Primary key fingerprint: 9C8D 6186 8A7C 4920 03B2  744E E7D7 37B6 7FA5 92C7
-$ gpg --verify roasbeef-manifest-v0.11.1-beta.txt.sig manifest-v0.11.1-beta.txt
-> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [expired]
-> gpg: Note: This key has expired!
-> Primary key fingerprint: 9769 140D 255C 759B 1EB7  7B46 A963 87A5 7CAA E94D
->      Subkey fingerprint: 4AB7 F8DA 6FAE BB3B 70B1  F903 BC13 F65E 2DC8 4465
+$ gpg --verify manifest-v0.12.0-beta.txt.asc
+$ gpg --verify manifest-roasbeef-v0.12.0-beta.txt.asc
+> gpg: Signature made Wed Jan 27 04:41:19 2021 CET
+> gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
+> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
+> gpg: WARNING: This key is not certified with a trusted signature!
+> gpg:          There is no indication that the signature belongs to the owner.
+> Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
+>      Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
 
-$ tar -xzf lnd-linux-armv7-v0.11.1-beta.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.11.1-beta/*
+
+$ tar -xzf lnd-linux-armv7-v0.12.0-beta.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.12.0-beta/*
 $ lnd --version
-> lnd version 0.11.1-beta commit=v0.11.1-beta
+> lnd version 0.12.0-beta commit=v0.12.0-beta
 ```
 
 <script id="asciicast-DvuCHl1ibT4eursipO0Z53xf5" src="https://asciinema.org/a/DvuCHl1ibT4eursipO0Z53xf5.js" async></script>
