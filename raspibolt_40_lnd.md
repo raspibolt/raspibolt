@@ -32,7 +32,11 @@ $ cd /tmp
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.12.0-beta/lnd-linux-armv7-v0.12.0-beta.tar.gz
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.12.0-beta/manifest-v0.12.0-beta.txt
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.12.0-beta/manifest-roasbeef-v0.12.0-beta.txt.asc
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.12.0-beta/manifest-bitconner-v0.12.0-beta.txt.asc
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.12.0-beta/manifest-guggero-v0.12.0-beta.txt.asc
 $ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
+$ wget -O bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
+$ wget -O guggero.asc https://keybase.io/guggero/pgp_keys.asc
 
 $ sha256sum --check manifest-v0.12.0-beta.txt --ignore-missing
 > lnd-linux-armv7-v0.12.0-beta.tar.gz: OK
@@ -40,8 +44,13 @@ $ sha256sum --check manifest-v0.12.0-beta.txt --ignore-missing
 $ gpg ./roasbeef.asc
 > E4D85299674B2D31FAA1892E372CBD7633C61696
 
+$ gpg ./bitconner.asc	
+> 9C8D61868A7C492003B2744EE7D737B67FA592C7
+
+$ gpg ./guggero.asc
+> F4FC70F07310028424EFC20A8E4256593F177720
+
 $ gpg --import ./roasbeef.asc
-$ gpg --verify manifest-v0.12.0-beta.txt.asc
 $ gpg --verify manifest-roasbeef-v0.12.0-beta.txt.asc
 > gpg: Signature made Wed Jan 27 04:41:19 2021 CET
 > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
@@ -51,6 +60,24 @@ $ gpg --verify manifest-roasbeef-v0.12.0-beta.txt.asc
 > Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
 >      Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
 
+$ gpg --import ./bitconner.asc
+$ gpg --verify manifest-bitconner-v0.12.0-beta.txt.asc
+> gpg: Signature made Mi 27 Jan 2021 07:10:05 CET
+> gpg:                using RSA key 9C8D61868A7C492003B2744EE7D737B67FA592C7
+> gpg: Good signature from "Conner Fromknecht <conner@lightning.engineering>" [unknown]
+> gpg: WARNING: This key is not certified with a trusted signature!
+> gpg:          There is no indication that the signature belongs to the owner.
+> Primary key fingerprint: 9C8D 6186 8A7C 4920 03B2  744E E7D7 37B6 7FA5 92C7
+
+$ gpg --import ./guggero.asc
+$ gpg --verify manifest-guggero-v0.12.0-beta.txt.asc
+> gpg: Signature made Mi 27 Jan 2021 10:16:24 CET
+> gpg:                using RSA key 6E01EEC9656903B0542B8F1003DB6322267C373B
+> gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [undefined]
+> gpg: WARNING: This key is not certified with a trusted signature!
+> gpg:          There is no indication that the signature belongs to the owner.
+> Primary key fingerprint: F4FC 70F0 7310 0284 24EF  C20A 8E42 5659 3F17 7720
+>      Subkey fingerprint: 6E01 EEC9 6569 03B0 542B  8F10 03DB 6322 267C 373B
 
 $ tar -xzf lnd-linux-armv7-v0.12.0-beta.tar.gz
 $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.12.0-beta/*
