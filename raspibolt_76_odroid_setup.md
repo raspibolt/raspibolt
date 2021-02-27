@@ -44,9 +44,7 @@ Now it's time to boot your Odroid for the first time.
 1. Insert the newly flashed SD card into your Odroid
 2. Connect the Odroid via LAN cable to your router
 3. Connect the Odroid to the power supply and wait a few min
-4. Search for the IP address of your Odroid and write it down. You can do this in multiple ways, e.g.:
-  * Using `ifconfig/ipconfig`in your terminal.
-  * Alternatively look for new Internet devices from the admin backend of your router. If your router allows, ensure that your Odroid will continue to use the same IP address. You might find a checkbox that is called "Always assign this network device the same IP address"
+4. Search for the IP address of your Odroid and write it down. You can do this by using the admin backend of your router and locate your Internet device. If your router allows, ensure that your Odroid will continue to use the same IP address. You might find a checkbox that is called "Always assign this network device the same IP address"
 5. Connect to your Odroid via ssh
   * Open the terminal application on your computer. This can also be called cmd or bash.
   * `ssh root@<your Odroid IP>`
@@ -98,7 +96,7 @@ You will likely let your Odroid run at all times. These are some helpful command
   * `shutdown`
 
 ### Bitcoin Node
-Now that our Odroid OS is running, we want to install a full Bitcoin node with the Bitcoin Blockchain on the Odroid. The blockchain is continuously growing with every block, see [chain size](https://bitcoinvisuals.com/chain-size(), hence we will use the hard disk for the blockchain data.
+Now that our Odroid OS is running, we want to install a full Bitcoin node with the Bitcoin Blockchain on the Odroid. The blockchain is continuously growing with every block, see [chain size](https://bitcoinvisuals.com/chain-size), hence we will use the hard disk for the blockchain data.
 
 #### Prepare Hard Disk
 If you haven't connected your hard disk yet, please connect it now after you shutdown your Odroid and disconnected it from the power supply.
