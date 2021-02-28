@@ -106,8 +106,19 @@ Instead of creating a real directory, we create a link that points to a director
 
 ### Configuration
 
+First we neet to generate a password for rpcpassword:
+
+```wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/share/rpcauth/rpcauth.py
+   $ python ./rpcuser.py raspibolt
+     String to be appended to bitcoin.conf:
+     rpcauth=raspibolt:[hashed password]
+     Your password:
+     [rpcpassword]
+
+Keep note of the rpcpassword, needed for block explorer
+
 Now, the configuration file for bitcoind needs to be created.
-Still as user "bitcoin", open it with Nano and paste the configuration below. Save and exit.
+Still as user "bitcoin", open it with Nano and paste the configuration below. Modify the rpcauth=[hashed password] line accordingly with the value generated above. Save and exit.
 
 ```sh
 $ nano /mnt/ext/bitcoin/bitcoin.conf
@@ -128,8 +139,7 @@ proxy=127.0.0.1:9050
 bind=127.0.0.1
 
 # Connections
-rpcuser=raspibolt
-rpcpassword=PASSWORD_[B]
+rpcauth=raspibolt:[hashed password]
 zmqpubrawblock=tcp://127.0.0.1:28332
 zmqpubrawtx=tcp://127.0.0.1:28333
 
@@ -141,12 +151,6 @@ maxuploadtarget=5000
 dbcache=2000
 blocksonly=1
 ```
-
-🚨 **Change the rpcpassword** to your secure `password [B]`.
-
-<script id="asciicast-gQJ1dSWPdcavFcZs5PRuYS4Ad" src="https://asciinema.org/a/gQJ1dSWPdcavFcZs5PRuYS4Ad.js" async></script>
-
-🔍 *more: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments){:target="_blank"} in Bitcoin Wiki*
 
 #### Transaction indexing (optional)
 
