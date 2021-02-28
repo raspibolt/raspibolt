@@ -115,8 +115,9 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   BTCEXP_BITCOIND_HOST=127.0.0.1
   BTCEXP_BITCOIND_PORT=8332
   BTCEXP_BITCOIND_USER=raspibolt
-  BTCEXP_BITCOIND_PASS=PASSWORD_[B]
+  BTCEXP_BITCOIND_PASS=rpcpassword
   ```
+  Modify BTCEXP_BITCOIND_PASS using your rpcpassword generated when setting up bitcoind
 
 * To compensate for the limited resources of the Raspberry Pi, let's extend the timeout period.
 
