@@ -106,7 +106,7 @@ Instead of creating a real directory, we create a link that points to a director
 
 ### Configuration
 
-First we neet to generate a password for rpcpassword:
+First we need to generate a password for rpcpassword:
 
 ```wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/share/rpcauth/rpcauth.py
    $ python ./rpcuser.py raspibolt
