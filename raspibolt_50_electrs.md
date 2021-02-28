@@ -126,8 +126,8 @@ The whole process takes about 30 minutes.
   # RaspiBolt: electrs configuration
   # /mnt/ext/electrs/electrs.conf
 
-  # RPC user / password
-  cookie = "raspibolt:PASSWORD_[B]"
+  # RPC cookie file
+  cookie_file = "/mnt/ext/bitcoin/.cookie
 
   # Bitcoin Core settings
   network = "bitcoin"
