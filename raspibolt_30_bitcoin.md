@@ -114,7 +114,8 @@ First we neet to generate a password for rpcpassword:
      rpcauth=raspibolt:[hashed password]
      Your password:
      [rpcpassword]
-
+     ```
+     
 Keep note of the rpcpassword, needed for block explorer
 
 Now, the configuration file for bitcoind needs to be created.
