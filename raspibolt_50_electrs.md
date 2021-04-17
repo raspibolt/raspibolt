@@ -500,7 +500,7 @@ Updating a [new release](https://github.com/romanz/electrs/releases){:target="_b
 
   ```sh
   $ cd /home/admin/rust
-  $ currentelectrs=$(head -n 1 electrs/RELEASE-NOTES.md | awk '{print v$2}')
+  $ currentelectrs=$(head -n 1 electrs/RELEASE-NOTES.md | awk '{print "v"$2}')
   $ echo "Current = ${currentelectrs}"
   $ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
   $ echo "Available = ${electrsgit}"
