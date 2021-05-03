@@ -53,14 +53,14 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/bitcoin-core-0.20.1/bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz
-  $ wget https://bitcoincore.org/bin/bitcoin-core-0.20.1/SHA256SUMS.asc
+  $ wget https://bitcoincore.org/bin/bitcoin-core-0.21.1/bitcoin-0.21.1-arm-linux-gnueabihf.tar.gz
+  $ wget https://bitcoincore.org/bin/bitcoin-core-0.21.1/SHA256SUMS.asc
   $ wget https://bitcoin.org/laanwj-releases.asc
 
   # check that the reference checksum matches the real checksum
   # (ignore the "lines are improperly formatted" warning)
   $ sha256sum --check SHA256SUMS.asc --ignore-missing
-  > bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz: OK
+  > bitcoin-0.21.1-arm-linux-gnueabihf.tar.gz: OK
 
   # import the public key of Wladimir van der Laan, verify the signed  checksum file
   # and check the fingerprint again in case of malicious keys
@@ -74,10 +74,10 @@ This is a precaution to make sure that this is an official release and not a mal
 * Extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.20.1/bin/*
+  $ tar -xvf bitcoin-0.21.1-arm-linux-gnueabihf.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.21.1/bin/*
   $ bitcoind --version
-  > Bitcoin Core version v0.20.1
+  > Bitcoin Core version v0.21.1
   ```
 
 <script id="asciicast-Ivlf954BGJNmOuJoj7FQ6qNKt" src="https://asciinema.org/a/Ivlf954BGJNmOuJoj7FQ6qNKt.js" async></script>
