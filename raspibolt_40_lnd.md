@@ -33,8 +33,8 @@ $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/ln
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt.sig
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/roasbeef-manifest-v0.11.1-beta.txt.sig
-$ wget -o roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
-$ wget -o bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
+$ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
+$ wget -O bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
 
 $ sha256sum --check manifest-v0.11.1-beta.txt --ignore-missing
 > lnd-linux-armv7-v0.11.1-beta.tar.gz: OK
