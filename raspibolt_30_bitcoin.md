@@ -339,7 +339,7 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 Once Bitcoin Core is fully synced, we can reduce the size of the database cache.
 A bigger cache speeds up the initial block download, now we want to reduce memory consumption to allow LND and Electrs to run in parallel.
-We also now want to enable the node to listent to and relay transactions.
+We also now want to enable the node to listen to and relay transactions.
 
 * As user "admin", comment the following lines out (add a `#` at the beginning) in the Bitcoin settings file.
   Bitcoin Core will then just use the default of 300 MB instead of 2 GB.
