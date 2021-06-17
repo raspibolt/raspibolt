@@ -58,10 +58,12 @@ We do not want to run the thunderhub code alongside `bitcoind` and `lnd` because
 For that we will create a separate user and we will be running the code as the new user.
 We are going to install thunderhub in the home directory since it doesn't take much space.
 
-* Create a new user with  your `password[A]` and open a new session
+* Create a new user with  your `password[A]`. The new user needs read-only access to the `tls.cert` and our `admin.macaroon`, 
+  so we add him to the "bitcoin" group. Open a new session.
 
   ```
   $ sudo adduser thunderhub
+  $ sudo adduser thunderhub bitcoin
   $ sudo su - thunderhub
   ```
 
@@ -73,6 +75,8 @@ $ cd thunderhub
 $ npm install
 $ npm run build
 ```
+
+* Cancel the process with `Ctrl`-`C`.
 
 ### Configuration
 
@@ -115,3 +119,135 @@ $ npm run build
       certificatePath: '/home/bitcoin/.lnd/tls.cert'
       password: 'accountpassword'
   ```
+
+## First Start
+
+Test starting thunderhub manually first to make sure it works.
+
+* Let's do a first start to make sure it's running as expected.
+  Make sure we are in the thunderhub directory and start the web server.
+
+ ```
+  $ cd ~/thunderhub
+  $ npm run start -- -p 3010
+  ```
+
+* Now point your browser to `http://raspibolt.local:3010` (or whatever you chose as hostname) or the ip address (e.g. `http://192.168.0.20:3010`).
+  You should see the home page of ThunderHub.
+
+* If you see a lot of errors on the RaspiBolt command line, then you have to change file permissions maybe,  
+  because thunderhub can't "access" the `.lnd` directory.
+
+* Stop ThunderHub in the terminal with `Ctrl`-`C` and exit the "thunderhub" user session.
+
+  ```
+  $ exit
+  ```
+
+### Autostart on boot
+
+Now we'll make sure ThunderHub starts as a service on the Raspberry Pi so it's always running.
+In order to do that we create a systemd unit that starts the service on boot directly after LND.
+
+* As user "admin", create the service file.
+
+  ```
+  $ sudo nano /etc/systemd/system/btcrpcexplorer.service
+  ```
+
+* Paste the following configuration. Save and exit.
+
+  ```
+  # RaspiBolt: systemd unit for Thunderhub
+  # /etc/systemd/system/thunderhub.service
+
+  [Unit]
+  Description=Thunderhub
+  Wants=lnd.service
+  After=network.target lnd.service
+
+  [Service]
+  WorkingDirectory=/home/thunderhub/thunderhub
+  ExecStart=/usr/bin/npm run start -- -p 3010
+  User=thunderhub
+  Restart=always
+  TimeoutSec=120
+  RestartSec=30
+  StandardOutput=null
+  StandardError=journal
+
+  [Install]
+  WantedBy=multi-user.target
+  ```
+
+* Enable the service, start it and check log logging output.
+
+  ```
+  $ sudo systemctl enable thunderhub.service
+  $ sudo systemctl start thunderhub.service
+  $ sudo journalctl -f -u thunderhub
+  ```
+
+* You can now access ThunderHub from within your local network by browsing to <http://raspibolt.local:3010> (or your equivalent ip address).
+
+### Remote access over Tor (optional)
+
+Do you want to access ThunderHub remotely?
+You can easily do so by adding a Tor hidden service on the RaspiBolt and accessing ThunderHub with the Tor browser from any device.
+
+* Add the following three lines in the section for "location-hidden services" in the `torrc` file.
+  Save and exit.
+
+ ```
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```
+  HiddenServiceDir /var/lib/tor/thunderhub
+  HiddenServiceVersion 3
+  HiddenServicePort 80 127.0.0.1:3010
+  ```
+
+* Restart Tor and get your connection address.
+
+  ```
+  $ sudo systemctl restart tor
+  $ sudo cat /var/lib/tor/thunderhub/hostname
+  > abcdefg..............xyz.onion
+  ```
+
+* With the [Tor browser](https://www.torproject.org), you can access this onion address from any device.
+  Please be aware that this access is not password protected and should not be shared widely.
+
+**Congratulations!**
+You now have the BTC RPC Explorer running to check the Bitcoin network information directly from your node.
+
+## Upgrade
+
+Updating to a [new release](https://github.com/apotdevin/thunderhub/releases) should be straight-forward.
+
+* From user "admin", stop the service and open a "btcrpcexplorer" user session.
+
+  ```
+  $ sudo systemctl stop thunderhub
+  $ sudo su - thunderhub
+  ```
+
+* Fetch the latest GitHub repository information and check out the new release:
+
+  ```
+  $ cd thunderhub
+  $ git pull
+  $ npm install
+  $ npm run build
+  $ exit
+  ```
+
+* Start the service again.
+
+  ```
+  $ sudo systemctl start thunderhub
+  ```
+---
+
+Next: [Bonus guides >>](raspibolt_60_bonus.md)
