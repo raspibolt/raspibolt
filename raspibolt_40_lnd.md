@@ -33,13 +33,13 @@ $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/ln
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt.sig
 $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/roasbeef-manifest-v0.11.1-beta.txt.sig
-$ wget -o roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
-$ wget -o bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
+$ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
+$ wget -O bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
 
 $ sha256sum --check manifest-v0.11.1-beta.txt --ignore-missing
 > lnd-linux-armv7-v0.11.1-beta.tar.gz: OK
 
-$ pgp ./roasbeef.asc
+$ gpg ./roasbeef.asc
 > 9769140D255C759B1EB77B46A96387A57CAAE94D
 $ gpg ./bitconner.asc
 > 9C8D61868A7C492003B2744EE7D737B67FA592C7
@@ -97,6 +97,8 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   debuglevel=info
   maxpendingchannels=5
   listen=localhost
+  protocol.anchors=true
+  protocol.wumbo-channels=true
 
   [Bitcoin]
   bitcoin.active=1

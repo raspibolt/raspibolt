@@ -496,23 +496,30 @@ Congratulations, you have now one of the best Bitcoin desktop wallet, capable of
 
 Updating a [new release](https://github.com/romanz/electrs/releases){:target="_blank"} should be straight-forward, but make sure to check out the [release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md){:target="_blank"} first.
 
-* With user "admin", fetch the latest GitHub repository information and check out the new release.
+* With user "admin", check what version you have vs that available as lastest release.
 
   ```sh
-  $ cd ~/rust/electrs
-  $ git fetch
-  $ git checkout v0.8.5
+  $ cd /home/admin/rust
+  $ currentelectrs=$(head -n 1 electrs/RELEASE-NOTES.md | awk '{print "v"$2}')
+  $ echo "Current = ${currentelectrs}"
+  $ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
+  $ echo "Available = ${electrsgit}"
   ```
 
-* Compile the new release.
-
-  ```
-  $ cargo build --release
-  ```
-
-* Stop the service, install new binaries and start the service again.
+* If the available version is newer, then you can proceed with the following 
 
   ```sh
+  $ # backup the current one
+  $ mv electrs electrs-v${currentelectrs};
+
+  $ # clone the most recent tagged version
+  $ git clone --branch ${electrsgit} https://github.com/romanz/electrs.git
+
+  $ # Build it
+  $ cd electrs
+  $ cargo build --locked --release
+
+  $ # Stop the service, copy the binary over, and start the service back up
   $ sudo systemctl stop electrs
   $ sudo cp ./target/release/electrs /usr/local/bin/
   $ sudo systemctl start electrs
