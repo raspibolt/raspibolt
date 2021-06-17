@@ -11,5 +11,7 @@ has_toc: false
 
 This is a guide for the installation of [thunderhub](https://www.thunderhub.io/), manage your Lightning Node through a WebUI.
 
+[](images/75_thunderhub.png)
+
 ---
 
