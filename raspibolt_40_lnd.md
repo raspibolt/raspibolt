@@ -687,6 +687,14 @@ If you wish to look at the daemon information, they are in the system journal
   ```
 ### Using other software packaged in LiT
 
+Others softwares have their own macaroon files too, they are created in `.loop`, `.faraday` and `.pool` directories of bitcoin home by default. So we create symbolic link so that admin user can use them.
+
+  ```sh
+  $2 ln -s /home/bitcoin/.loop /home/admin/.loop
+  $2 ln -s /home/bitcoin/.pool /home/admin/.pool
+  $2 ln -s /home/bitcoin/.faraday /home/admin/.faraday
+  ```
+
 For now, softwares packaged in LiT are all listening to the same port 10009 as LND. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port when using them.
 
 For example, the following will not work to look at the last auction snapshot:
@@ -699,17 +707,17 @@ It will returns the following error:
   ```sh
   > [pool] rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial tcp [::1]:12010: connect: connection refused"
   ```
-It says that the `pool` command try to interact with your pool client on localhost's port 12010. However your instance of Pool is not listening to the default port 12010, but port 10009 !
+It says that the `pool` command try to interact with your pool client on localhost's port 12010. However your instance of Pool is not listening to the default port 12010, but port 10009 ! It also needs to know where the TLS certificate to securely interact with LND is.
 
 That's why this will work:
 
   ```sh
-  $2 pool --rpcserver=localhost:10009 auction snapshot
+  $2 pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert auction snapshot
   ```
 It can be convenient to create alias to not have to type the rpc server address at every command. Use `alias` command in bash for that
 
   ```sh
-  $2 alias poolit="pool --rpcserver=localhost:10009"
+  $2 alias poolit="pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
   $2 poolit auction snapshot
   ```
 You can add your aliases in `.bashrc` file of `admin`
@@ -720,9 +728,9 @@ You can add your aliases in `.bashrc` file of `admin`
 Add the following at the end of the file then save and exit:
   
   ```
-  $2 alias poolit="pool --rpcserver=localhost:10009"
-  $2 alias loopit="loop --rpcserver=localhost:10009"
-  $2 alias frclit="frcli --rpcserver=localhost:10009"
+  $2 alias poolit="pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
+  $2 alias loopit="loop --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
+  $2 alias frclit="frcli --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
   ```
   
 Use `help` and documentation on Pool, Loop and Faraday respectively for information on these command.
@@ -745,7 +753,7 @@ You can now connect from your home to `https://[your_pi_local_ip]:8443` with you
 
 Open a session with "admin". You must stop LiT with `lncli stop` then `sudo systemctl stop litd` before upgrading !
 
-Proceed as LND, but use the binaries of the LiT repo. Replace `wget https://github.com/lightningnetwork/lnd` by `wget https://github.com/lightninglabs/lightning-terminal` when downloading binaries and check signature as the "download" part of this guide.
+Proceed as LND, but use the binaries of the LiT repo and **do not delete the LND macaroons**. Replace `wget https://github.com/lightningnetwork/lnd` by `wget https://github.com/lightninglabs/lightning-terminal` when downloading binaries and check signature as the "download" part of this guide.
 
 ---
 
