@@ -83,7 +83,7 @@ Starting with version 0.5, upgrading LND got more reliable. When upgrading from 
 * As "admin" user, stop lnd system unit
   `$ sudo systemctl stop lnd`
 
-* Remove old stuff `sudo rm /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/*.macaroon`, then download, verify and install the latest LND binaries as described in the [Lightning section](raspibolt_40_lnd.md) of this guide.
+* Download, verify and install the latest LND binaries as described in the [Lightning section](raspibolt_40_lnd.md) of this guide.
 
 * Restart the services with the new configuration and unlock the wallet with the "bitcoin" user.
   ```
