@@ -152,7 +152,7 @@ In order to do that we create a systemd unit that starts the service on boot dir
 * As user "admin", create the service file.
 
   ```
-  $ sudo nano /etc/systemd/system/btcrpcexplorer.service
+  $ sudo nano /etc/systemd/system/thunderhub.service
   ```
 
 * Paste the following configuration. Save and exit.
