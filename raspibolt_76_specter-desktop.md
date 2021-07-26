@@ -99,6 +99,10 @@ These instructions will clone the repo to fetch the latest version and then "pip
   # Create virtualenv
   $ $HOME/.local/bin/virtualenv --python=python3 /home/specter/.env
 
+  # Preparation for versions > v1.5.0 (i18n)
+  $ /home/specter/.env/bin/python3 -m pip install babel
+  $ /home/specter/.env/bin/python3 setup.py install
+
   # pip install to virtualenv
   # Note: make sure to include the trailing dot in the line below
   $ /home/specter/.env/bin/python3 -m pip install .
