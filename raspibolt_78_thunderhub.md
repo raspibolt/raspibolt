@@ -76,17 +76,16 @@ $ npm install
 $ npm run build
 ```
 
-* Cancel the process with `Ctrl`-`C`.
-
 ### Configuration
 
-* Edit the configuration file.
+* Edit the configuration file. Switch to `thunderhub` user for this.
 
   ```
-  $ nano /home/thunderhub/thunderhub/.env
+  $ sudo su - thunderhub
+  $ nano ~/thunderhub/.env
   ```
 
-* Uncomment the following lines:
+* Uncomment the following lines, save and exit:
 
   ```
   # -----------
@@ -104,6 +103,7 @@ $ npm run build
   # -----------
   ACCOUNT_CONFIG_PATH='/home/thunderhub/thubConfig.yaml'
   ```
+
 * Edit your `thubConfig.yaml`. Change your `accountpassword`.
 
   ```
@@ -226,7 +226,7 @@ You now have the BTC RPC Explorer running to check the Bitcoin network informati
 
 Updating to a [new release](https://github.com/apotdevin/thunderhub/releases) should be straight-forward.
 
-* From user "admin", stop the service and open a "btcrpcexplorer" user session.
+* From user "admin", stop the service and open a "thunderhub" user session.
 
   ```
   $ sudo systemctl stop thunderhub
