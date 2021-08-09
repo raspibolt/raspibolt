@@ -10,6 +10,8 @@ has_toc: false
 *Difficulty: medium*
 
 This is a guide for the installation of [thunderhub](https://www.thunderhub.io/), manage your Lightning Node through a WebUI.
+Be careful with this guide and have look at [ThunderHub by "apotdevin"](https://github.com/apotdevin/thunderhub#thunderhub---lightning-node-manager) for more information and a more detailed instruction.
+
 
 ![](images/75_thunderhub.png)
 
