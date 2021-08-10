@@ -179,17 +179,16 @@ Enter the following command:
 $ sudo raspi-config
 ```
 
-* First, on `1` change your password to your `password [A]`.
-* Next, choose Update `8` to get the latest configuration tool
-* Network Options `2`:
-  * you can give your node a cute hostname like “raspibolt”
-  * configure your Wifi connection
-* Boot Options `3`:
-  * choose `Desktop / CLI` → `B1 Console` and
-  * `Wait for network at boot`
-* Advanced `7`: run `Expand Filesystem`
-* Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
+* First, choose `1 System options` (press enter) and navigate to `S3 Password` (down arrow, and press enter) and change your password to your `password [A]`
+* Next, choose `8 Update` to get the latest configuration tool.
+* Next, choose `1 System options` and then `S4 Hostname`. You can give your node a cute hostname like “raspibolt.
+* Next, choose `1 System options` and then `S1 Wireless LAN` and then `B1 Console`.
+* Next, choose `1 System options` and then `S5 Boot/Auto Login` and configure your Wifi connection.
+* Next, choose `1 System options` and then `S6 Network at boot` and select `<Yes>`.
+* Next, choose `6 Advanced options` and then `A1 Expand Filesystem`.
+* Exit by selecting `<Finish>` (right arrow twice), and `<No>` as no reboot is necessary.
 
+_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
 <script id="asciicast-1oSmvJaZLCuN3hUIn33OZCtJy" src="https://asciinema.org/a/1oSmvJaZLCuN3hUIn33OZCtJy.js" async></script>
 
 **Important**: if you connected using the hostname `raspberrypi.local`, you now need to use the new hostname (e.g. `raspibolt.local`)
