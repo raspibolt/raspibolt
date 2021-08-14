@@ -524,4 +524,237 @@ If you want to upgrade to a new release of LND in the future, check out the FAQ 
 
 ---
 
+## Optional: Using LiT (Lightning Terminal) instead of LND
+
+LiT is a software suite of Lightning Labs which contains LND, Faraday (accounting service), Loop (client software for submarine swaps with LOOP node of Lightning Labs) and Pool (client software to submit orders to buy and sell inbound liquidity through unique price auction at each new block found). LiT provides a user interface to make submarine swap easily, it now also features a UI for Pool Market which is a good tool to estimate the price of liquidity.
+
+Because Pool is alpha software, LiT is alpha software too. The LND part is however in beta and the behavior is exactly the same as LND.
+
+You cannot run LiT and LND at the same time.
+
+### Download LiT
+
+Download and install LiT
+
+```sh
+$ cd /tmp
+$ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.5.0-alpha/lightning-terminal-linux-armv7-v0.5.0-alpha.tar.gz
+$ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.5.0-alpha/manifest-v0.5.0-alpha.txt
+$ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.5.0-alpha/manifest-roasbeef-v0.5.0-alpha.sig
+$ wget https://keybase.io/roasbeef/pgp_keys.asc
+
+$ sha256sum --check manifest-v0.5.0-alpha.txt --ignore-missing
+> lightning-terminal-linux-armv7-v0.5.0-alpha.tar.gz: OK
+
+$ gpg ./pgp_keys.asc
+> E4D85299674B2D31FAA1892E372CBD7633C61696
+
+$ gpg --import ./pgp_keys.asc
+$ gpg --verify manifest-roasbeef-v0.5.0-alpha.sig manifest-v0.5.0-alpha.txt
+> gpg: Signature made Tue 22 Jun 2021 00:14:50 CEST
+> gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
+> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
+> gpg: WARNING: This key is not certified with a trusted signature!
+> gpg:          There is no indication that the signature belongs to the owner.
+> Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
+>      Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
+
+$ tar -xzf lightning-terminal-linux-armv7-v0.5.0-alpha.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-armv7-v0.5.0-alpha/*
+$ litd --lnd.version
+> litd version 0.13.0-beta commit=lightning-terminal-v0.5.0-alpha
+```
+
+### Configuration
+
+LiT has its own configuration file. The settings for LND, Pool, Faraday, Loop can all be put in the LiT configuration file 
+
+* Open a "bitcoin" user session
+
+  ```sh
+  $ sudo su - bitcoin
+  ```
+
+* Create the LiT working directory
+
+  ```sh
+  $ mkdir /home/bitcoin/.lit
+  ```
+* Create the LiT configuration file and paste the following content (adjust to your alias). Save and exit.
+
+  ```sh
+  $ nano lit.conf
+  ```
+  ```ini
+  # RaspiBolt: lit configuration
+  # /home/bitcoin/.lit/lit.conf
+  
+  # Feel free to change this IP depending of you need to access the UI
+  # If you want the UI to be available ONLY from your home network,
+  # replace 0.0.0.0 by the local IP of the RaspiBolt
+  # 0.0.0.0 let you access the UI from anywhere
+  httpslisten=0.0.0.0:8443
+  
+  # Your password for the UI must be at least 8 characters long
+  
+  uipassword=PASSWORD_[B]
+  lnd-mode=integrated
+  
+  # LND settings
+  # [Application Options]
+  lnd.lnddir=/mnt/ext/lnd
+  lnd.alias=YOUR_FANCY_ALIAS
+  lnd.color=#FFFF00
+  lnd.debuglevel=info
+  lnd.maxpendingchannels=5
+  lnd.listen=localhost
+  
+  # You may be interested in wumbo channels
+  
+  lnd.protocol.wumbo-channels=1
+  
+  # [Bitcoin]
+  lnd.bitcoin.active=1
+  lnd.bitcoin.mainnet=1
+  lnd.bitcoin.node=bitcoind
+  
+  # [tor]
+  lnd.tor.active=true
+  lnd.tor.v3=true
+  lnd.tor.streamisolation=true
+  
+  # Faraday settings
+  
+  faraday.connect_bitcoin=1
+  faraday.bitcoin.user=raspibolt
+  faraday.bitcoin.password=PASSWORD_[B]
+  ```
+
+
+🔍 *Notice that the options for LND, Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
+  
+### Running LiT
+
+Start your SSH program (eg. PuTTY) a second time, connect to the Pi and log in as “admin”. Commands for the second session start with the prompt $2 (which must not be entered).
+We must never run LND and LiT at the same time to avoid corruption of the channels database. So we must first stop LND and its `systemd` service.
+
+  ```sh
+  $2 lncli stop
+  $2 sudo systemctl stop lnd
+  ```
+
+Once everything is stopped, we can test that LiT is correctly using the LND database.
+
+  ```sh
+  $2 sudo su - bitcoin
+  $2 litd
+  ```
+
+Now go back to the first session and try to unlock your wallet, if you already used your node a lot you must wait for the LND database to be open (you can take a look at the log returned in the second session where LiT is running).
+
+  ```sh
+  $ lncli unlock
+  ```
+  
+  Type your `password [C]` to unlock the wallet. You can check the state with `lncli getinfo`, it should be synced with graph and chain. If it works, you can stop LiT running in the second section using `Ctrl + C` and exit it
+
+  ```sh
+  $2 exit
+  ```
+  
+  
+### Autostart LiT on boot
+
+We stopped lnd service, now that LiT is running we can replace the autostart service for LND by the LiT's one. We modify LND systemd unit:
+
+  ```sh
+  $2 sudo systemctl disable lnd
+  $2 sudo nano /etc/systemd/system/lnd.service
+  ```
+We can just change the line `ExecStart=/usr/local/bin/lnd` for `ExecStart=/usr/local/bin/litd`, rename the file and enable, start, unlock LiT:
+
+  ```sh
+  $2 sudo mv /etc/systemd/system/lnd.service /etc/systemd/system/litd.service
+  $2 sudo systemctl enable litd
+  $2 sudo systemctl start litd
+  $2 systemctl status litd
+  $2 lncli unlock
+  ```
+If you wish to look at the daemon information, they are in the system journal
+
+  ```sh
+  $2 sudo journalctl -f -u litd
+  ```
+### Using other software packaged in LiT
+
+Others softwares have their own macaroon files too, they are created in `.loop`, `.faraday` and `.pool` directories of bitcoin home by default. So we create symbolic link so that admin user can use them.
+
+  ```sh
+  $2 ln -s /home/bitcoin/.loop /home/admin/.loop
+  $2 ln -s /home/bitcoin/.pool /home/admin/.pool
+  $2 ln -s /home/bitcoin/.faraday /home/admin/.faraday
+  ```
+
+For now, softwares packaged in LiT are all listening to the same port 10009 as LND. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port when using them.
+
+For example, the following will not work to look at the last auction snapshot:
+
+  ```sh
+  $2 pool auction snapshot
+  ```
+  
+It will returns the following error:
+  ```sh
+  > [pool] rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial tcp [::1]:12010: connect: connection refused"
+  ```
+It says that the `pool` command try to interact with your pool client on localhost's port 12010. However your instance of Pool is not listening to the default port 12010, but port 10009 ! It also needs to know where the TLS certificate to securely interact with LND is.
+
+That's why this will work:
+
+  ```sh
+  $2 pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert auction snapshot
+  ```
+It can be convenient to create alias to not have to type the rpc server address at every command. Use `alias` command in bash for that
+
+  ```sh
+  $2 alias poolit="pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
+  $2 poolit auction snapshot
+  ```
+You can add your aliases in `.bashrc` file of `admin`
+  ```sh
+  $2 nano ~/.bashrc
+  ```
+  
+Add the following at the end of the file then save and exit:
+  
+  ```
+  $2 alias poolit="pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
+  $2 alias loopit="loop --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
+  $2 alias frclit="frcli --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
+  ```
+  
+Use `help` and documentation on Pool, Loop and Faraday respectively for information on these command.
+  
+### Access LiT UI for easy Loop Out/In and Liquidity trading
+
+LiT provides a UI that allows you to use Loop and Pool conveniently. The UI is running on port 8443. To access it you must be in your home network (or connected through a VPN like WireGuard) and `ufw` should allow access to the port 8443:
+
+  ```sh
+  $2 sudo su
+  # ufw allow 8443 comment 'allow LiT UI'
+  # ufw disable
+  # ufw enable
+  # exit
+  ```
+  
+You can now connect from your home to `https://[your_pi_local_ip]:8443` with your browser and enjoy the nice GUI of LiT ! Use `PASSWORD_[B]` to log in.
+
+### LiT upgrade
+
+Open a session with "admin". You must stop LiT with `lncli stop` then `sudo systemctl stop litd` before upgrading !
+
+Proceed as LND, but use the binaries of the LiT repo and **do not delete the LND macaroons**. Replace `wget https://github.com/lightningnetwork/lnd` by `wget https://github.com/lightninglabs/lightning-terminal` when downloading binaries and check signature as the "download" part of this guide.
+
+---
+
 Next: [Electrum >>](raspibolt_50_electrs.md)
