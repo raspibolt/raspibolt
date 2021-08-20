@@ -143,8 +143,8 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   db.bolt.auto-compact=true
   # How long ago the last compaction of a database file must be for it to be
   # considered for auto compaction again. Can be set to 0 to compact on every
-  # startup. (default: 168h)
-  db.bolt.auto-compact-min-age=168
+  # startup. (default: 168h; the time unit must be present, i.e. s, m or h, except for 0)
+  db.bolt.auto-compact-min-age=168h
 
   [Bitcoin]
   bitcoin.active=1
@@ -712,8 +712,8 @@ LiT has its own configuration file. The settings for LND, Pool, Faraday, Loop ca
   lnd.db.bolt.auto-compact=true
   # How long ago the last compaction of a database file must be for it to be
   # considered for auto compaction again. Can be set to 0 to compact on every
-  # startup. (default: 168h)
-  lnd.db.bolt.auto-compact-min-age=168
+  # startup. (default: 168h; the time unit must be present, i.e. s, m or h, except for 0)
+  lnd.db.bolt.auto-compact-min-age=168h
   
   # [Bitcoin]
   lnd.bitcoin.active=1
