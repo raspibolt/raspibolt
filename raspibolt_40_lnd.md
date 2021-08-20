@@ -97,7 +97,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   debuglevel=info
   maxpendingchannels=5
   listen=localhost
-  protocol.anchors=true
+  protocol.no-anchors=false
   protocol.wumbo-channels=true
 
   [Bitcoin]
