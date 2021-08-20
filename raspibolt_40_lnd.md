@@ -42,6 +42,7 @@ $ gpg ./roasbeef.asc
 > uid Olaoluwa Osuntokun <laolu32@gmail.com>
 
 $ gpg --import ./roasbeef.asc
+$ gpg --verify manifest-roasbeef-v0.13.1-beta.sig manifest-v0.13.1-beta.txt
 >gpg: Signature made Mon 19 Jul 2021 22:41:37 BST
 >gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
 >gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
