@@ -102,9 +102,10 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   # Minimum channel size (in satoshis, default is 20,000 sats)
   minchansize=100000
   
-  # Accept AMP (multi-paths) payments and wumbo channels
+  # Accept AMP (multi-paths) payments, wumbo channels and do not prevent the creation of anchor channel (default value)
   accept-amp=true
   protocol.wumbo-channels=true
+  protocol.no-anchors=false
   
   # Save on closing fees
   ## The target number of blocks in which a cooperative close initiated by a remote peer should be confirmed (default: 10 blocks).
@@ -671,9 +672,10 @@ LiT has its own configuration file. The settings for LND, Pool, Faraday, Loop ca
   # Minimum channel size (in satoshis, default is 20,000 sats)
   lnd.minchansize=100000
   
-  # Accept AMP (multi-paths) payments and wumbo channels
+  # Accept AMP (multi-paths) payments, wumbo channels and do not prevent the creation of anchor channel (default value)
   lnd.accept-amp=true
   lnd.protocol.wumbo-channels=true
+  lnd.protocol.no-anchors=false
   
   # Save on closing fees
   ## The target number of blocks in which a cooperative close initiated by a remote peer should be confirmed (default: 10 blocks).
