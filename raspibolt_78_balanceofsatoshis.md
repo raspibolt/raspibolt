@@ -9,7 +9,7 @@ has_toc: false
 
 *Difficulty: simple*
 
-[Balance of Satoshis](https://github.com/alexbosworth/balanceofsatoshis) (BoS), created and maintained by LND developper Alex Bosworth, is a tool to work with LND channel balances. The project  
+[Balance of Satoshis](https://github.com/alexbosworth/balanceofsatoshis) (BoS), created and maintained by LND developper Alex Bosworth, is a tool to work with LND channel balances.
 
 *Requirements:*
 
@@ -29,7 +29,7 @@ has_toc: false
   >v14.17.4
   ```
 
-* If the version is v12.0 or above, you can move to section ['Create bos user'](https://github.com/VajraOfIndra/RaspiBolt/blob/VajraOfIndra-patch-4-bos/raspibolt_78_bos.md#create-the-bos-user).
+* If the version is v12.0 or above, you can move to section **Create bos user**.
 * If NodeJS is not installed, follow [these commands](https://stadicus.github.io/RaspiBolt/raspibolt_55_explorer.html#install-nodejs) to install it.
 * If NodeJS version is older than v12.0, you can attempt to upgrade it:
 ** First, we need to stop and disable btcrpcexplorer, and then we need to clean the npm cache, install n (Node's version manager) and install the latest stable version.
