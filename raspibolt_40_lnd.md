@@ -29,38 +29,35 @@ Download and install LND
 
 ```sh
 $ cd /tmp
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/lnd-linux-armv7-v0.11.1-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/manifest-v0.11.1-beta.txt.sig
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.11.1-beta/roasbeef-manifest-v0.11.1-beta.txt.sig
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.1-beta/lnd-linux-armv7-v0.13.1-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.1-beta/manifest-v0.13.1-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.1-beta/manifest-roasbeef-v0.13.1-beta.sig
 $ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
-$ wget -O bitconner.asc https://keybase.io/bitconner/pgp_keys.asc
 
-$ sha256sum --check manifest-v0.11.1-beta.txt --ignore-missing
-> lnd-linux-armv7-v0.11.1-beta.tar.gz: OK
+$ sha256sum --check manifest-v0.13.1-beta.txt --ignore-missing
+> lnd-linux-armv7-v0.13.1-beta.tar.gz: OK
 
 $ gpg ./roasbeef.asc
-> 9769140D255C759B1EB77B46A96387A57CAAE94D
-$ gpg ./bitconner.asc
-> 9C8D61868A7C492003B2744EE7D737B67FA592C7
+> pub rsa4096 2019-10-13 [C] E4D85299674B2D31FAA1892E372CBD7633C61696
+> uid Olaoluwa Osuntokun <laolu32@gmail.com>
 
 $ gpg --import ./roasbeef.asc
-$ gpg --import ./bitconner.asc
-$ gpg --verify manifest-v0.11.1-beta.txt.sig
-> gpg: Good signature from "Conner Fromknecht <conner@lightning.engineering>" [unknown]
-> Primary key fingerprint: 9C8D 6186 8A7C 4920 03B2  744E E7D7 37B6 7FA5 92C7
-$ gpg --verify roasbeef-manifest-v0.11.1-beta.txt.sig manifest-v0.11.1-beta.txt
-> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [expired]
-> gpg: Note: This key has expired!
-> Primary key fingerprint: 9769 140D 255C 759B 1EB7  7B46 A963 87A5 7CAA E94D
->      Subkey fingerprint: 4AB7 F8DA 6FAE BB3B 70B1  F903 BC13 F65E 2DC8 4465
+$ gpg --verify manifest-roasbeef-v0.13.1-beta.sig manifest-v0.13.1-beta.txt
+>gpg: Signature made Mon 19 Jul 2021 22:41:37 BST
+>gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
+>gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
+>gpg: WARNING: This key is not certified with a trusted signature!
+>gpg:          There is no indication that the signature belongs to the owner.
+>Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
+>     Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
 
-$ tar -xzf lnd-linux-armv7-v0.11.1-beta.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.11.1-beta/*
+$ tar -xzf lnd-linux-armv7-v0.13.1-beta.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.13.1-beta/*
 $ lnd --version
-> lnd version 0.11.1-beta commit=v0.11.1-beta
+> lnd version 0.13.1 commit=v0.13.1-beta
 ```
 
+_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
 <script id="asciicast-DvuCHl1ibT4eursipO0Z53xf5" src="https://asciinema.org/a/DvuCHl1ibT4eursipO0Z53xf5.js" async></script>
 
 ### Configuration
@@ -97,8 +94,58 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   debuglevel=info
   maxpendingchannels=5
   listen=localhost
-  protocol.anchors=true
+  
+  # Fee settings - default LND base fee = 1000 (mSat), default LND fee rate = 1 (ppm)
+  bitcoin.basefee=1000
+  bitcoin.feerate=1
+  
+  # Minimum channel size (in satoshis, default is 20,000 sats)
+  minchansize=100000
+  
+  # Accept AMP (multi-paths) payments, wumbo channels and do not prevent the creation of anchor channel (default value)
+  accept-amp=true
   protocol.wumbo-channels=true
+  protocol.no-anchors=false
+  
+  # Save on closing fees
+  ## The target number of blocks in which a cooperative close initiated by a remote peer should be confirmed (default: 10 blocks).
+  coop-close-target-confs=24
+
+  #########################
+  # Improve startup speed # (from https://www.lightningnode.info/advanced-tools/lnd.conf by Openoms)
+  #########################
+  # If true, we'll attempt to garbage collect canceled invoices upon start.
+  gc-canceled-invoices-on-startup=true
+  # If true, we'll delete newly canceled invoices on the fly.
+  gc-canceled-invoices-on-the-fly=true
+  # Avoid historical graph data sync
+  ignore-historical-gossip-filters=1
+  # Enable free list syncing for the default bbolt database. This will decrease
+  # start up time, but can result in performance degradation for very large
+  # databases, and also result in higher memory usage. If "free list corruption"
+  # is detected, then this flag may resolve things.
+  sync-freelist=true
+  # Avoid high startup overhead
+  # If true, will apply a randomized staggering between 0s and 30s when
+  # reconnecting to persistent peers on startup. The first 10 reconnections will be
+  # attempted instantly, regardless of the flag's value
+  stagger-initial-reconnect=true
+
+  ########################
+  # Compact the database # (slightly modified from https://www.lightningnode.info/advanced-tools/lnd.conf by Openoms)
+  ########################
+  # Can be used on demand by commenting in/out the two options below: it can take several minutes
+  [bolt]
+  # Whether the databases used within lnd should automatically be compacted on
+  # every startup (and if the database has the configured minimum age). This is
+  # disabled by default because it requires additional disk space to be available
+  # during the compaction that is freed afterwards. In general compaction leads to
+  # smaller database files.
+  db.bolt.auto-compact=true
+  # How long ago the last compaction of a database file must be for it to be
+  # considered for auto compaction again. Can be set to 0 to compact on every
+  # startup. (default: 168h; the time unit must be present, i.e. s, m or h, except for 0)
+  db.bolt.auto-compact-min-age=168h
 
   [Bitcoin]
   bitcoin.active=1
@@ -113,16 +160,16 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
 
 🔍 *more: [sample-lnd.conf](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf){:target="_blank"} with all possible options in the LND project repository*
 
+_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
 <script id="asciicast-BIhZQuGGoUKtKDsawTpysYa3o" src="https://asciinema.org/a/BIhZQuGGoUKtKDsawTpysYa3o.js" async></script>
 
 ---
 
 ## Run LND
 
-Again, we switch to the user "bitcoin" and first start LND manually to check if everything works fine.
+Still with user "bitcoin", we first start LND manually to check if everything works fine.
 
 ```sh
-$ sudo su - bitcoin
 $ lnd
 ```
 
@@ -159,7 +206,7 @@ These 24 words, combined with your passphrase (optional `password [D]`)  is all 
   ```sh
   $2 exit
   ```
-
+  
 <script id="asciicast-xv9Gq3G5Pu5A1Jtxu2bACRvjQ" src="https://asciinema.org/a/xv9Gq3G5Pu5A1Jtxu2bACRvjQ.js" async></script>
 
 💡 _In this screencast I use the awesome [`tmux`](https://www.ocf.berkeley.edu/~ckuehl/tmux/){:target="_blank"} to run multiple Terminal sessions in parallel.
@@ -169,7 +216,7 @@ But you can just connect to your RaspiBolt with two separate SSH sessions._
 
 Let's authorize the "admin" user to work with LND using the command line interface `lncli`. For that to work, we need to copy the Transport Layer Security (TLS) certificate and the permission files (macaroons) to the admin home folder.
 
-* Check if the TLS certificates and `admin.macaroon` have been created.
+* Check if the TLS certificates (`tls.cert` and `tls.key`) have been created.
 
   ```sh
   $2 sudo ls -la /mnt/ext/lnd/
@@ -214,6 +261,7 @@ $2 exit
 
 This should terminate LND "gracefully" in SSH session 1 that can now be used interactively again.
 
+_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
 <script id="asciicast-o7YMV8E3KAWyVXq3VdzATImYX" src="https://asciinema.org/a/o7YMV8E3KAWyVXq3VdzATImYX.js" async></script>
 
 ### Autostart on boot
@@ -324,16 +372,16 @@ Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
 
 * Make sure your RaspiBolt is working as expected.
 * Get a little practice with `bitcoin-cli` and its options (see [Bitcoin Core RPC documentation](https://bitcoin-rpc.github.io/){:target="_blank"})
-* Try a few restarts (`sudo reboot`), is everything starting fine?
+* Try a few restarts (first stop lnd and bitcoind with `lncli stop`, `sudo systemctl stop lnd`, `sudo systemctl stop bitcoind` and then reboot with `sudo reboot`), is everything starting fine (don't forget to unlock the wallet after each reboot with `lncli unlock`)?
 
 ### Funding your Lightning node
 
-* Generate a new Bitcoin address to receive funds on-chain and send a small amount of Bitcoin to it from any wallet of your choice.
+* Generate a new Bitcoin address (p2wkh = native SegWit/Bech32) to receive funds on-chain and send a small amount of Bitcoin to it from any wallet of your choice.
   [🕮 `newaddress`](https://api.lightning.community/#newaddress){:target="_blank"}
-
+  
   ```sh
-  $ lncli newaddress np2wkh
-  > "address": "3JqmUWMD9mqmdPhMr4sQ9XV7p4o9Cn62CG"
+  $ lncli newaddress p2wkh
+  > "address": "bc1..."
   ```
 
 * Check your LND wallet balance
@@ -348,48 +396,44 @@ Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
   }
   ```
 
-As soon as your funding transaction is mined, LND will show its amount as "confirmed_balance".
+As soon as your funding transaction is mined (1 confirmation), LND will show its amount as "confirmed_balance".
 
 💡 If you want to open a few channels, you might want to send a few transactions.
 If you have only one [UTXO](https://bitcoin.org/en/glossary/unspent-transaction-output), you need to wait for the change to return to your wallet after every new channel opening.
 
+
+_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
 <script id="asciicast-8tL55NcHD5zdaHlBJkFbFXaxV" src="https://asciinema.org/a/8tL55NcHD5zdaHlBJkFbFXaxV.js" async></script>
 
 ### Opening channels
 
-Although LND features an "autopilot", we manually open some channels.
-I recommend to go on [1ML.com](https://1ml.com){:target="_blank"} and look for a mix of big and small nodes with decent Node Ranks.
+Although LND features an optional "autopilot", we manually open some channels.
+I recommend to go on [Amboss.Space](https://www.amboss.space/){:target="_blank"} or [1ML.com](https://1ml.com){:target="_blank"} and look for a mix of big and small nodes with decent Node Ranks.
 
 To connect to a remote node, you need its URI that looks like `<pubkey>@host`:
 
-* the `<pubkey>` is just a long hexadecimal number, like `03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde`
+* the `<pubkey>` is just a long hexadecimal number, like `03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f`
 * the `host` can be a domain name, an ip address or a Tor onion address, followed by the port number (usually `:9735`)
 
-Just grab the whole URI above the big QR code and use it as follows:
+Just grab the whole URI above the big QR code and use it as follows (we will use the ACINQ node as an example):
 
 * **Connect** to the remote node, with the full URI.
   [🕮 `connect`](https://api.lightning.community/#connectpeer){:target="_blank"}
 
   ```sh
-  $ lncli connect 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde@112.33.44.123:9735
+  $ lncli connect 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f@34.239.230.56:9735
   ```
 
 * **Open a channel** using the `<pubkey>` and the channel capacity in satoshis.
   [🕮 `openchannel`](https://api.lightning.community/#openchannel){:target="_blank"}
 
   One Bitcoin equals 100 million satoshis, so at $10'000/BTC, $10 amount to 0.001 BTC or 100'000 satoshis.
-  To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/btc-to-satoshi).
+  To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/to-usd/).
 
-  This will open a channel with fees using the built in estimator 
+  The command as a built-in fee estimator, but to avoid overpaying fees, you can manually control the fees for the funding transaction by using the `sat_per_byte` argument as follows (to select the appropriate fee, in sats/vB, check [mempool.space](https://mempool.space/){:target="_blank"}) 
   ```sh
-  $ lncli openchannel 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde 100000 0
+  $ lncli openchannel --sat_per_vbyte 8 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f 100000 0
   ```
-  
-  You can manually control the fees for the funding transaction by using the `sat_per_byte` argument as follows
-  ```sh
-  $ lncli openchannel --sat_per_byte 8 03abc8abc44453abc7b5b64b4f7b1abcdefb18e102db0abcde4b9cfe93763abcde 100000 0
-  ```
-  
 
 * **Check your funds**, both in the on-chain wallet and the channel balances.
   [🕮 `walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"}
@@ -419,6 +463,7 @@ Just grab the whole URI above the big QR code and use it as follows:
     * lncli payinvoice lnbc10n1pw......................gsj59
     ```
 
+_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
 <script id="asciicast-ATudEzl9xUe7wlodVQuVuuUL6" src="https://asciinema.org/a/ATudEzl9xUe7wlodVQuVuuUL6.js" async></script>
 
 ### More commands
@@ -477,7 +522,14 @@ A quick reference with common commands to play around with:
   ```sh
   $ lncli payinvoice [INVOICE]
   ```
+  
+* Send a payment to a node without invoice using AMP (both sender and receiver nodes have to have AMP enabled):
+  [􀀁 `sendpayment`](https://api.lightning.community/#sendpayment){:target="_blank"}
 
+  ```sh
+  $ lncli sendpayment --amp --fee_limit 1 --dest=<node_pubkey> --final_cltv_delta=144 --amt=<amount_in_sats> 
+  ```
+  
 * Check the payments that you sent:
   [🕮 `listpayments`](https://api.lightning.community/#listpayments){:target="_blank"}
 
@@ -504,7 +556,7 @@ A quick reference with common commands to play around with:
 
   ```sh
   $ lncli listchannels
-  $ lncli closechannel [FUNDING_TXID] [OUTPUT_INDEX]
+  $ lncli closechannel --sat_per_vbyte <fee> [FUNDING_TXID] [OUTPUT_INDEX]
   ```
 
 * to force close a channel (if your peer is offline or not cooperative), use `--force`
@@ -531,6 +583,10 @@ LiT is a software suite of Lightning Labs which contains LND, Faraday (accountin
 Because Pool is alpha software, LiT is alpha software too. The LND part is however in beta and the behavior is exactly the same as LND.
 
 You cannot run LiT and LND at the same time.
+
+The Lightning Terminal UI requires a password. Select a new password:
+
+`[ E ] Master user password`
 
 ### Download LiT
 
@@ -580,7 +636,7 @@ LiT has its own configuration file. The settings for LND, Pool, Faraday, Loop ca
   ```sh
   $ mkdir /home/bitcoin/.lit
   ```
-* Create the LiT configuration file and paste the following content (adjust to your alias). Save and exit.
+* Create the LiT configuration file and paste the following content (adjust to your alias and paste password [B] as required in the Faraday section). Save and exit.
 
   ```sh
   $ nano lit.conf
@@ -597,7 +653,7 @@ LiT has its own configuration file. The settings for LND, Pool, Faraday, Loop ca
   
   # Your password for the UI must be at least 8 characters long
   
-  uipassword=PASSWORD_[B]
+  uipassword=PASSWORD_[E]
   lnd-mode=integrated
   
   # LND settings
@@ -609,9 +665,57 @@ LiT has its own configuration file. The settings for LND, Pool, Faraday, Loop ca
   lnd.maxpendingchannels=5
   lnd.listen=localhost
   
-  # You may be interested in wumbo channels
+  # Fee settings - default LND base fee = 1000 (mSat), default LND fee rate = 1 (ppm)
+  lnd.bitcoin.basefee=1000
+  lnd.bitcoin.feerate=10
   
-  lnd.protocol.wumbo-channels=1
+  # Minimum channel size (in satoshis, default is 20,000 sats)
+  lnd.minchansize=100000
+  
+  # Accept AMP (multi-paths) payments, wumbo channels and do not prevent the creation of anchor channel (default value)
+  lnd.accept-amp=true
+  lnd.protocol.wumbo-channels=true
+  lnd.protocol.no-anchors=false
+  
+  # Save on closing fees
+  ## The target number of blocks in which a cooperative close initiated by a remote peer should be confirmed (default: 10 blocks).
+  lnd.coop-close-target-confs=24
+  
+  #########################
+  # Improve startup speed # (from https://www.lightningnode.info/advanced-tools/lnd.conf by Openoms)
+  #########################
+  # If true, we'll attempt to garbage collect canceled invoices upon start.
+  lnd.gc-canceled-invoices-on-startup=true
+  # If true, we'll delete newly canceled invoices on the fly.
+  lnd.gc-canceled-invoices-on-the-fly=true
+  # Avoid historical graph data sync
+  lnd.ignore-historical-gossip-filters=1
+  # Enable free list syncing for the default bbolt database. This will decrease
+  # start up time, but can result in performance degradation for very large
+  # databases, and also result in higher memory usage. If "free list corruption"
+  # is detected, then this flag may resolve things.
+  lnd.sync-freelist=true
+  # Avoid high startup overhead
+  # If true, will apply a randomized staggering between 0s and 30s when
+  # reconnecting to persistent peers on startup. The first 10 reconnections will be
+  # attempted instantly, regardless of the flag's value
+  lnd.stagger-initial-reconnect=true
+  
+  ########################
+  # Compact the database # (slightly modified from https://www.lightningnode.info/advanced-tools/lnd.conf by Openoms)
+  ########################
+  # Can be used on demand by commenting in/out the two options below: it can take several minutes
+  # [bolt]
+  # Whether the databases used within lnd should automatically be compacted on
+  # every startup (and if the database has the configured minimum age). This is
+  # disabled by default because it requires additional disk space to be available
+  # during the compaction that is freed afterwards. In general compaction leads to
+  # smaller database files.
+  lnd.db.bolt.auto-compact=true
+  # How long ago the last compaction of a database file must be for it to be
+  # considered for auto compaction again. Can be set to 0 to compact on every
+  # startup. (default: 168h; the time unit must be present, i.e. s, m or h, except for 0)
+  lnd.db.bolt.auto-compact-min-age=168h
   
   # [Bitcoin]
   lnd.bitcoin.active=1
@@ -623,13 +727,24 @@ LiT has its own configuration file. The settings for LND, Pool, Faraday, Loop ca
   lnd.tor.v3=true
   lnd.tor.streamisolation=true
   
-  # Faraday settings
+  #################
+  # Pool settings #
+  #################
+  # This option avoids the creation of channels with nodes with whom you already have a channel (set to 0 if you don't mind)
+  pool.newnodesonly=1
   
+  ####################
+  # Faraday settings #
+  ####################
+  # If connect_bitcoin is set to 1, Faraday can connect to a bitcoin node (with --txindex set) to provide node accounting services
   faraday.connect_bitcoin=1
+  # The Bitcoin node IP is the IP address of the Raspibolt, i.e. an address like 192.168.0.20
+  faraday.bitcoin.host=[Bitcoin node IP]:8332
+  # bitcoin.user provides to Faraday the bicoind RPC username, as specified in our bitcoin.conf
   faraday.bitcoin.user=raspibolt
+  # bitcoin.password provides to Faraday the bitcoind RPC password, as specified in our bitcoin.conf
   faraday.bitcoin.password=PASSWORD_[B]
   ```
-
 
 🔍 *Notice that the options for LND, Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
   
