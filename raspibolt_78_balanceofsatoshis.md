@@ -32,10 +32,8 @@ has_toc: false
 * If the version is v12.0 or above, you can move to section **Create bos user**.
 * If NodeJS is not installed, follow [these commands](https://stadicus.github.io/RaspiBolt/raspibolt_55_explorer.html#install-nodejs) to install it.
 * If NodeJS version is older than v12.0, you can attempt to upgrade it:
-** First, we need to stop and disable btcrpcexplorer, and then we need to clean the npm cache, install n (Node's version manager) and install the latest stable version.
+** First, we need to clean the npm cache, install n (Node's version manager) and install the latest stable version.
   ```sh
-  $ sudo systemctl stop btcrpcexplorer
-  $ sudo systemctl disable btcrpcexplorer
   $ sudo su
   $ npm cache clean -f
   $ npm install -g n
