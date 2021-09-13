@@ -121,8 +121,8 @@ has_toc: false
 
 ## Upgrade
 
-* When using bos, it will prompt you to upgrade when a new upgrade is available. The command to be run to upgrade (with the bos user) is
+* When using bos, it will prompt you to upgrade when a new upgrade is available. The command to be run to upgrade (with the admin user) is
 
   ```sh
-  $ npm i -g balanceofsatoshis
+  $ sudo npm i -g balanceofsatoshis
   ```
