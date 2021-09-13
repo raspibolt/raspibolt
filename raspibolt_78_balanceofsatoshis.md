@@ -121,8 +121,69 @@ has_toc: false
 
 ## Upgrade
 
-* When using bos, it will prompt you to upgrade when a new upgrade is available. The command to be run to upgrade (with the admin user) is
+* When using bos, it will prompt you to upgrade when a new upgrade is available. The command to be run to upgrade (with the `admin` user) is
 
   ```sh
   $ sudo npm i -g balanceofsatoshis
   ```
+## Optional: connect your node to a Telegram bot
+
+* Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
+* Requirements: a Telegram account
+
+### Create a new TG bot with the BotFather
+
+* Open Telegram, in the general search box look for the [@BotFather](https://t.me/BotFather) bot and start a conversation with the bot.
+* Type `/start`
+* Type `/newbot` and follow the instructions (choose a bot name, username)
+* Once the bot is created, the BotFather will give you a HTTP API token, copy it and keep it somewhere safe (like in a password manager). Note that if you lose this token, you could always get it agin by typing `/myBot` in the BotFather feed.
+* You also get a link to your bot (in the form: t.me/[your_bot_username]) click on it and it will redirect you to your new bot feed. Keep Telegram open.
+
+### Use bos to connect your node to the bot
+
+* Open a SSH session with the `admin` user and change to the `bos` user
+  
+  ```sh
+  $ sudo su - bos
+  ```
+
+* Now, we are going to request bos to connect our node to the TG bot
+  
+  ```sh
+  $ bos Telegram
+  ```
+  
+* When prompted, enter the HTTP API token that the @BotFather gave you earlier
+* Go to your new TG bot feed and type `/connect`. Your bot will give you a connection code
+* Copy the connection code and paste it in your SSH session in the second prompt that bos created. You should get a connection message on both your SSH session and your TG bot feed.
+* Your TG bot will now receive notifications from your nodes for various events as described in the introduction.
+* Leave the temporary session by pressing Ctrl+C
+
+### Establish a permannent connection with TMUX
+
+* Let's install TMUX and create a new session called "bos_tg_bot" (or any name you'd prefer)
+  
+  ```sh
+  $ sudo apt-get install tmux
+  $ tmux new -s bos_tg_bot 
+  ```
+  
+* A TMUX window will open. In this window type the following command (replace <connect_id> by the connection code provided by your TG bot
+  
+  ```sh
+  $ bos telegram --connect <connect id>
+  ```
+  
+* Your bot should now be connected to your node. To leave the wondow but keep the TMUX session active, press `Ctrl+b` and then type `d`. You should get a message that you are now detached from the session
+* You now have a permanent connection between your node and your TG bot. 
+* If you want to make some modifications to the TMUX session, you'll need to re-enter your session, to do this open a SSH session and you can first display the list of all your TMUX sessions and then attach to the one you want ("bos_tg_bot" in this case, or whatever other name you chose)
+  
+  ```sh
+  $ tmux ls
+  $ tmux attach -t bos_tg_bot
+  ``` 
+* To kill the TMUX session, open a SSH session and type (the -t target is the TMUX session name you chose)
+  
+  ```sh
+  $ tmux kill-session -t bos_tg_bot
+  ``` 
