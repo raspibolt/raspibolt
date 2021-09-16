@@ -182,8 +182,8 @@ $ sudo raspi-config
 * First, choose `1 System options` (press enter) and navigate to `S3 Password` (down arrow, and press enter) and change your password to your `password [A]`.
 * Next, choose `8 Update` to get the latest configuration tool
 * Next, choose `1 System options` and then `S4 Hostname`. You can give your node a cute hostname like “raspibolt”
-* Next, choose `1 System options` and then `S1 Wireless LAN` and then `B1 Console`
-* Next, choose `1 System options` and then `S5 Boot/Auto Login` and configure your Wifi connection
+* Next, choose `1 System options` and then `S5 Boot/Auto Login` and then `B1 Console`
+* Next, choose `1 System options` and then `S1 Wireless LAN` and configure your Wifi connection
 * Next, choose `1 System options` and then `S6 Network at boot` and select `<Yes>`
 * Next, choose `6 Advanced options` and then `A1 Expand Filesystem`
 * Exit by selecting `<Finish>` (right arrow twice), and `<No>` as no reboot is necessary
