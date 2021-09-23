@@ -171,7 +171,7 @@ Now we’ll make sure our Telegram Bot command starts as a service on the Raspbe
   
 * Paste the following configuration. Replace <CONNECTION_CODE> with your own connection code. Save and exit.
   
-  ```sh
+  ```ini
   # /etc/systemd/system/bos-telegram.service
 
   [Unit]
@@ -192,7 +192,7 @@ Now we’ll make sure our Telegram Bot command starts as a service on the Raspbe
   WantedBy=multi-user.target 
   ```
   
-* Enable the service, start it and check the status of the service. You should also receive a connection message from your TG bot ('Connect to <your_node_alias>)'.
+* Enable the service, start it and check the status of the service. You should also receive a connection message from your TG bot ('Connect to ...').
   
   ```sh
   $ sudo systemctl enable bos-telegram.service
