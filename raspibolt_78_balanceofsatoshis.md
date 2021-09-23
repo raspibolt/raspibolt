@@ -159,31 +159,43 @@ has_toc: false
 * Your TG bot will now receive notifications from your nodes for various events as described in the introduction.
 * Leave the temporary session by pressing Ctrl+C
 
-### Establish a permannent connection with TMUX
+### Permannent connection and autostart on boot 
 
-* Let's install TMUX and create a new session called "bos_tg_bot" (or any name you'd prefer)
-  
+Now we’ll make sure our Telegram Bot command starts as a service on the Raspberry Pi so it’s always running.
+
+* As user “admin”, create the service file.
+
   ```sh
-  $ sudo apt-get install tmux
-  $ tmux new -s bos_tg_bot 
+  $ sudo nano /etc/systemd/system/bos-telegram.service
   ```
   
-* A TMUX window will open. In this window type the following command (replace <connect_id> by the connection code provided by your TG bot
+* Paste the following configuration. Replace <CONNECTION_CODE> with your own connection code. Save and exit.
   
   ```sh
-  $ bos telegram --connect <connect id>
+  # /etc/systemd/system/bos-telegram.service
+
+  [Unit]
+  Description=bos-telegram
+  Wants=lnd.service
+  After=lnd.service
+
+  [Service] 
+  ExecStart=/home/bos/.npm-global/bin/bos telegram --connect <CONNECTION_CODE>
+  User=bos
+  Restart=always
+  TimeoutSec=120
+  RestartSec=30
+  StandardOutput=null
+  StandardError=journal
+
+  [Install]
+  WantedBy=multi-user.target 
   ```
   
-* Your bot should now be connected to your node. To leave the wondow but keep the TMUX session active, press `Ctrl+b` and then type `d`. You should get a message that you are now detached from the session
-* You now have a permanent connection between your node and your TG bot. 
-* If you want to make some modifications to the TMUX session, you'll need to re-enter your session, to do this open a SSH session and you can first display the list of all your TMUX sessions and then attach to the one you want ("bos_tg_bot" in this case, or whatever other name you chose)
+* Enable the service, start it and check the status of the service. You should also receive a connection message from your TG bot ('Connect to <your_node_alias>)'.
   
   ```sh
-  $ tmux ls
-  $ tmux attach -t bos_tg_bot
-  ``` 
-* To kill the TMUX session, open a SSH session and type (the -t target is the TMUX session name you chose)
-  
-  ```sh
-  $ tmux kill-session -t bos_tg_bot
+  $ sudo systemctl enable bos-telegram.service
+  $ sudo systemctl start bos-telegram.service
+  $ sudo systemctl status bos-telegram.service
   ``` 
