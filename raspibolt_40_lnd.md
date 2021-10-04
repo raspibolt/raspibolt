@@ -29,21 +29,21 @@ Download and install LND
 
 ```sh
 $ cd /tmp
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.1-beta/lnd-linux-armv7-v0.13.1-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.1-beta/manifest-v0.13.1-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.1-beta/manifest-roasbeef-v0.13.1-beta.sig
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.3-beta/lnd-linux-armv7-v0.13.3-beta.tar.gz
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.3-beta/manifest-v0.13.3-beta.txt
+$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.3-beta/manifest-roasbeef-v0.13.3-beta.sig
 $ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
 
-$ sha256sum --check manifest-v0.13.1-beta.txt --ignore-missing
-> lnd-linux-armv7-v0.13.1-beta.tar.gz: OK
+$ sha256sum --check manifest-v0.13.3-beta.txt --ignore-missing
+> lnd-linux-armv7-v0.13.3-beta.tar.gz: OK
 
 $ gpg ./roasbeef.asc
 > pub rsa4096 2019-10-13 [C] E4D85299674B2D31FAA1892E372CBD7633C61696
 > uid Olaoluwa Osuntokun <laolu32@gmail.com>
 
 $ gpg --import ./roasbeef.asc
-$ gpg --verify manifest-roasbeef-v0.13.1-beta.sig manifest-v0.13.1-beta.txt
->gpg: Signature made Mon 19 Jul 2021 22:41:37 BST
+$ gpg --verify manifest-roasbeef-v0.13.3-beta.sig manifest-v0.13.3-beta.txt
+>gpg: Signature made Mon 04 Oct 2021 03:20:20 PM GMT
 >gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
 >gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
 >gpg: WARNING: This key is not certified with a trusted signature!
@@ -51,10 +51,10 @@ $ gpg --verify manifest-roasbeef-v0.13.1-beta.sig manifest-v0.13.1-beta.txt
 >Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
 >     Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
 
-$ tar -xzf lnd-linux-armv7-v0.13.1-beta.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.13.1-beta/*
+$ tar -xzf lnd-linux-armv7-v0.13.3-beta.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.13.3-beta/*
 $ lnd --version
-> lnd version 0.13.1 commit=v0.13.1-beta
+> lnd version 0.13.3 commit=v0.13.3-beta
 ```
 
 _(Warning: the video below is outdated and does not correspond exactly to the commands above)_
