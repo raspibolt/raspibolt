@@ -127,7 +127,7 @@ The whole process takes about 30 minutes.
   # /mnt/ext/electrs/electrs.conf
 
   # RPC user / password
-  cookie = "raspibolt:PASSWORD_[B]"
+  auth = "raspibolt:PASSWORD_[B]"
 
   # Bitcoin Core settings
   network = "bitcoin"
