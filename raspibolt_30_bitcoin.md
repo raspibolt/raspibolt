@@ -59,7 +59,7 @@ This is a precaution to make sure that this is an official release and not a mal
   # download the signatures attesting to validity of the checksums
   $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS.asc
 
-  # dheck that the reference checksum matches the real checksum
+  # check that the reference checksum matches the real checksum
   # (ignore the "lines are improperly formatted" warning)
   $ sha256sum --ignore-missing --check SHA256SUMS
   > bitcoin-22.0-arm-linux-gnueabihf.tar.gz: OK
