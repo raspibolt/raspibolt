@@ -154,9 +154,10 @@ $ exit
 
 We can make the script run automatically at regular time intervals by using a cron job. For example, we could run the charge-lnd program every day at the 21st minute of every hour.
 
-* We the admin user, open the admin user crontab file
+* We the admin user, open the root user crontab file. 
+If asked, select the /bin/nano text editor (type 1 and enter)
 ```sh
-$ crontab -e
+$ sudo crontab -e
 ```
 
 * At the end of the file, paste the following lines. Then save (Ctrl+o) and exit (Ctrl+x)
