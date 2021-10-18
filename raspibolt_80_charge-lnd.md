@@ -17,7 +17,7 @@ has_toc: false
 
 *Acknowledgments:*
 
-* This guide is modified from the [manual install guide](https://gist.github.com/openoms/823f99d1ab6e1d53285e489f7ba38602) for the Raspiblitz by @openoms.
+* This guide was built based on the guides by The Count on [nullcount.com](https://nullcount.com/install-charge-lnd-routing-fees-on-autopilot/) and by the [Plebnet Wiki guide](https://plebnet.wiki/wiki/Fees_And_Profitability#Installing_Charge-Lnd).
 
 ## Install charge-lnd
 
