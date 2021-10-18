@@ -47,58 +47,137 @@ We can create a suitably limited macaroon by issuing
   $ pip3 install -r requirements.txt .
   ```
 
+* Test of the installation was successful by running the program with the --help (or -h) flag
+
+```sh
+~/.local/bin/charge-lnd -h
+>usage: charge-lnd [-h] [--lnddir LNDDIR] [--grpc GRPC]
+>                  [--electrum-server ELECTRUM_SERVER] [--dry-run] [--check]
+>                  [-v] -c CONFIG
+>
+>optional arguments:
+>  -h, --help            show this help message and exit
+>  --lnddir LNDDIR       (default ~/.lnd) lnd directory
+>  --grpc GRPC           (default localhost:10009) lnd gRPC endpoint
+>  --electrum-server ELECTRUM_SERVER
+>                        (optional, no default) electrum server host:port .
+>                        Needed for onchain_fee.
+>  --dry-run             Do not perform actions (for testing), print what we
+>                        would do to stdout
+>  --check               Do not perform actions, only check config file for
+>                        valid syntax
+>  -v, --verbose         Be more verbose
+>  -c CONFIG, --config CONFIG
+>                        path to config file
+```
+
+* We are going to create a simlink to the LND directory.
+We'll place the link in the home directory of the charge-lnd user to match the default LND directory used by charge-lnd (~/.lnd) 
+```sh
+$ ln -s /mnt/ext/lnd/ /home/charge-lnd/.lnd
+```
+
 ## Configuration file
 
 * Create a configuration file that we will call charge-lnd.config
-
 ```sh
 $ nano charge-lnd.config
 ```
 
-* We can test the program by using a very simple config file
+* For this example, we will use a policy that 1) defines some default parameters; 2) then starts by looking at channels with very low outbound (below 200,000 sats) to apply a very large base fee that will prevent any attempted forward through the channel (and therefore avoid failures); then 3) ignores some channels that we want to deal with manually (e.g. a large liquidity sink); and 4) applies a proportional fee rate between 50 and 200 ppm (based on balance ratio) for the remaining channels.
+* Do change the policy in accordance with your own strategy and needs! All the options are listed and described [here](https://github.com/accumulator/charge-lnd)
+```ini
+# place holder for your defaults for your fee policies
+# no strategy, so this only sets some defaults
+[mydefaults]
+min_fee_ppm_delta = 20
+min_htlc_msat = 1000
+max_htlc_msat_ratio = 1
+time_lock_delta = 40
 
-```sh
-$ nano charge.config
-```
+# 9999BaseFee should be evaluated first before other fees are set
+# if local balance is <200,000 sats, increase fees very high
+[1-#9999BaseFee_avoid_failed_forwards]
+chan.max_local_balance = 200000
+strategy = static
+base_fee_msat = 9999000
 
-* As an example, we are going to choose one channel and set up a fee policy that changes proportinally with the channel balance ratio
-* The channel balance ratio is calculated as local_capacity/total_capacity. So the ratio is equal to 1 when all the capacity is on our side (e.g. after initiating a channel opening to a node) and 0 whenn all the capacity is remote.
-* Let's choose a channel that we want to use as a test for this fee policy. Find the channel ID (a 18 digits number)
-* Paste the folliwing in the charge.config file. Change the CHANNEL_IDEA with your own selected channel ID. You can also chosse your own min and max fee rates (in ppm). Then exit with Ctrl+C
+# Ignore some channels
+[2-ignore_two_channels]
+node.id = <node_pubkey_1>,
+	<node_pubkey_2>
+strategy = ignore
 
-```sh
-[ignored_channels]
-# don't let charge-lnd set fees (strategy=ignore) for channels to/from the specified nodes
-node.id = [NODE_1_PUKEY],
-  [NODE_2_PUBKEY],
-  [NODE_3_PUBKEY]
-
-
-[proportional]
-# 'proportional' can also be used to auto balance (lower fee rate when low remote balance & higher rate when higher remote balance)
-# fee_ppm decreases linearly with the channel balance ratio (min_fee_ppm when ratio is 1, max_fee_ppm when ratio is 0)
-chan.id = [CHANNEL_ID]
-
+# Proportional strategy for all other channels
+[3-proportional_for_remaining_channels]
 strategy = proportional
-min_fee_ppm = 10
+base_fee_msat = 0
+min_fee_ppm = 50
 max_fee_ppm = 200
 ```
-
-* Exit the bitcoin user
+* We can first test if the syntax is correct or if it contains some errors using the --check option.
+We also have to indicate where the config file is located using the --config (or -c) option
 
 ```sh
+$  ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config --check
+> Configuration file is valid
+```
+
+* Then we can do a dry-run test which will print out what changes the program would apply of it was to be run.
+A small report will be displayed for each channel policy that should be updated.
+Adding the --verbose (or -v) option would add aditional information such as if the channel is enabled or disabled.
+```sh
+$  ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config --dry-run
+> 700435x675x2  [<noda_alias>|<node_pukkey>]
+>  policy:          1-stop_routing
+>  strategy:        static
+>  base_fee_msat:   0 ➜ 9999000
+>  min_htlc_msat:   1000
+>  max_htlc_msat:   1000000000
+>  time_lock_delta: 40
+>  ...
+```
+
+* Check each channel to see if the proposed updates are the intended one.
+If not, amend the charge-lnd config and re-do dry-run tests until you arrive to the desired results
+
+* Once we are happy with our fee policy and logic, we can manually apply it to our node by running the same command but without the --dry-run test.
+Then exit the charge-lnd user.
+```sh
+$  ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config
 $ exit
 ```
 
+* Double-check the fee policy on all your channels to ensure that you are happy with the changes!
 
-## First run
+## Automatic fee updates
 
-* We are now ready to run the program for the first time 
+We can make the script run automatically at regular time intervals by using a cron job. For example, we could run the charge-lnd program every day at the 21st minute of every hour.
 
+* We the admin user, open the admin user crontab file
 ```sh
-$ sudo -u bitcoin /home/bitcoin/.local/bin/charge-lnd -c /home/bitcoin/charge-lnd/charge.config
+$ crontab -e
 ```
 
-(same in a cronjob)
+* At the end of the file, paste the following lines. Then save (Ctrl+o) and exit (Ctrl+x)
+```ini
+# Run charge-lnd every hour, every day and log the updates in the /tmp/charge-lnd.log log file
+21 */1 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/charge-lnd/charge-lnd/charge-lnd.config > /tmp/charge-lnd.log 2>&1; date >> /tmp/charge-lnd.log
+```
+* The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/4_*_*_*)
+* `/home/umbrel/.local/bin/charge-lnd -c /home/umbrel/charge-lnd/myconfig` is the program to be run and where to find it (its path) together with the required option (here the location of the configuration file)
+* `> /tmp/charge-lnd.log 2>&1; date >> /tmp/charge-lnd.log` records the updates in a charge-lnd.log log file, including the Standard Error and Standard Out and with a timestamp
 
+## Checking the logs
 
+If you need to check the log files
+
+* Print the content of the log file (e.g. the last 100 lines only)
+```sh
+$ cat -n 100 /tmp/charge-lnd.log
+```
+
+* To look for updates of a specific channel
+```sh
+$ cat -n 100 /tmp/charge-lnd.log | grep -A 7 <node_alias>
+```
