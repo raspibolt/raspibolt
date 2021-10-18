@@ -154,31 +154,56 @@ $ exit
 
 We can make the script run automatically at regular time intervals by using a cron job. For example, we could run the charge-lnd program every day at the 21st minute of every hour.
 
-* We the admin user, open the root user crontab file. 
+* We the admin user, create and edit (option -e) the crontab file of the charge-lnd user (option -u). 
 If asked, select the /bin/nano text editor (type 1 and enter)
 ```sh
-$ sudo crontab -e
+$ sudo crontab -u charge-lnd -e
 ```
 
 * At the end of the file, paste the following lines. Then save (Ctrl+o) and exit (Ctrl+x)
 ```ini
-# Run charge-lnd every hour, every day and log the updates in the /tmp/charge-lnd.log log file
-21 */1 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/charge-lnd/charge-lnd/charge-lnd.config > /tmp/charge-lnd.log 2>&1; date >> /tmp/charge-lnd.log
+# Run charge-lnd every four hours, every day; and log the updates in the /tmp/charge-lnd.log log file
+21 */4 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/charge-lnd/charge-lnd/charge-lnd.config > /tmp/charge-lnd.log 2>&1; date >> /tmp/charge-lnd.log
 ```
 * The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/4_*_*_*)
-* `/home/umbrel/.local/bin/charge-lnd -c /home/umbrel/charge-lnd/myconfig` is the program to be run and where to find it (its path) together with the required option (here the location of the configuration file)
+* `/home/umbrel/.local/bin/charge-lnd -c /home/umbrel/charge-lnd/myconfig` is the command to be run and where to find it (its path) together with the required option(s) (here the location of the configuration file)
 * `> /tmp/charge-lnd.log 2>&1; date >> /tmp/charge-lnd.log` records the updates in a charge-lnd.log log file, including the Standard Error and Standard Out and with a timestamp
 
 ## Checking the logs
 
 If you need to check the log files
 
-* Print the content of the log file (e.g. the last 100 lines only)
+* Use less to read the entire log file. Type g to go the start, G to the end, use the arrows to move up and down and exit by pressing q.
+You can search for a specific string by typing ? followed by the string to be searched (e.g. a node alias) and then press enter.
 ```sh
-$ cat -n 100 /tmp/charge-lnd.log
+$ less /tmp/charge-lnd.log
 ```
 
 * To look for updates of a specific channel
 ```sh
-$ cat -n 100 /tmp/charge-lnd.log | grep -A 7 <node_alias>
+$ cat /tmp/charge-lnd.log | grep -A 7 <node_alias>
+```
+
+# Upgrade
+
+* Let's check what is the latest available version at [https://github.com/accumulator/charge-lnd/releases](https://github.com/accumulator/charge-lnd/releases) and let's find what version of charge-lnd we are running
+```sh
+$ sudo su - charge-lnd
+$ pip3 show charge-lnd
+> Name: charge-lnd
+> Version: 0.2.4
+```
+
+* If a newer version exists
+```sh
+$ pip3 install --upgrade charge-lnd
+```
+
+# Uninstall
+
+If you want to uninstall charge-lnd:
+
+* With the root user, delete the charge-lnd user
+```sh
+$ userdel -r charge-lnd
 ```
