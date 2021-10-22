@@ -127,22 +127,22 @@ The whole process takes about 30 minutes.
   # /mnt/ext/electrs/electrs.conf
 
   # RPC user / password
-  cookie = "raspibolt:PASSWORD_[B]"
+  auth = "raspibolt:PASSWORD_[B]"
 
   # Bitcoin Core settings
   network = "bitcoin"
   daemon_dir= "/mnt/ext/bitcoin"
   daemon_rpc_addr = "127.0.0.1:8332"
+  daemon_p2p_addr = "127.0.0.1:8333"
 
   # Electrs settings
   electrum_rpc_addr = "127.0.0.1:50001"
   db_dir = "/mnt/ext/electrs/db"
-  txid_limit = 1000
+  index_lookup_limit = 1000
 
   # Logging
-  verbose = 4
+  verbose = 2
   timestamp = true
-  rust_backtrace = true
   ```
 
   🚨 **Change the password**, otherwise Electrs is not able to talk to Bitcoin Core.
@@ -496,23 +496,30 @@ Congratulations, you have now one of the best Bitcoin desktop wallet, capable of
 
 Updating a [new release](https://github.com/romanz/electrs/releases){:target="_blank"} should be straight-forward, but make sure to check out the [release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md){:target="_blank"} first.
 
-* With user "admin", fetch the latest GitHub repository information and check out the new release.
+* With user "admin", check what version you have vs that available as lastest release.
 
   ```sh
-  $ cd ~/rust/electrs
-  $ git fetch
-  $ git checkout v0.8.5
+  $ cd /home/admin/rust
+  $ currentelectrs=$(head -n 1 electrs/RELEASE-NOTES.md | awk '{print "v"$2}')
+  $ echo "Current = ${currentelectrs}"
+  $ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
+  $ echo "Available = ${electrsgit}"
   ```
 
-* Compile the new release.
-
-  ```
-  $ cargo build --release
-  ```
-
-* Stop the service, install new binaries and start the service again.
+* If the available version is newer, then you can proceed with the following 
 
   ```sh
+  $ # backup the current one
+  $ mv electrs electrs-v${currentelectrs};
+
+  $ # clone the most recent tagged version
+  $ git clone --branch ${electrsgit} https://github.com/romanz/electrs.git
+
+  $ # Build it
+  $ cd electrs
+  $ cargo build --locked --release
+
+  $ # Stop the service, copy the binary over, and start the service back up
   $ sudo systemctl stop electrs
   $ sudo cp ./target/release/electrs /usr/local/bin/
   $ sudo systemctl start electrs

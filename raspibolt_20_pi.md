@@ -22,10 +22,10 @@ We configure the Raspberry Pi and install the Linux operating system.
 
 ## Preparing the operating system
 
-The node runs headless, that means without keyboard or display, so the operating system Raspbian Buster Lite is used.
+The node runs headless, that means without keyboard or display, so the operating system Raspberry Pi OS Lite is used.
 
-1. Download the [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/){:target="_blank"} disk image
-2. Write the disk image to your SD card with [this guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md){:target="_blank"}
+1. Download and install the [Raspberry Pi Imager](https://www.raspberrypi.org/software/){:target="_blank"}
+2. Choose "Raspberry Pi OS (other)" and then "Raspberry Pi OS Lite (32-bit)", choose your SD-card and write the image.
 
 ### Enable Secure Shell
 
@@ -179,17 +179,16 @@ Enter the following command:
 $ sudo raspi-config
 ```
 
-* First, on `1` change your password to your `password [A]`.
-* Next, choose Update `8` to get the latest configuration tool
-* Network Options `2`:
-  * you can give your node a cute hostname like “raspibolt”
-  * configure your Wifi connection
-* Boot Options `3`:
-  * choose `Desktop / CLI` → `B1 Console` and
-  * `Wait for network at boot`
-* Advanced `7`: run `Expand Filesystem`
-* Exit by selecting `<Finish>`, and `<No>` as no reboot is necessary
+* First, choose `1 System options` (press enter) and navigate to `S3 Password` (down arrow, and press enter) and change your password to your `password [A]`.
+* Next, choose `8 Update` to get the latest configuration tool
+* Next, choose `1 System options` and then `S4 Hostname`. You can give your node a cute hostname like “raspibolt”
+* Next, choose `1 System options` and then `S5 Boot/Auto Login` and then `B1 Console`
+* Next, choose `1 System options` and then `S1 Wireless LAN` and configure your Wifi connection
+* Next, choose `1 System options` and then `S6 Network at boot` and select `<Yes>`
+* Next, choose `6 Advanced options` and then `A1 Expand Filesystem`
+* Exit by selecting `<Finish>` (right arrow twice), and `<No>` as no reboot is necessary
 
+_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
 <script id="asciicast-1oSmvJaZLCuN3hUIn33OZCtJy" src="https://asciinema.org/a/1oSmvJaZLCuN3hUIn33OZCtJy.js" async></script>
 
 **Important**: if you connected using the hostname `raspberrypi.local`, you now need to use the new hostname (e.g. `raspibolt.local`)
@@ -251,6 +250,43 @@ $ sudo apt install htop git curl bash-completion jq qrencode dphys-swapfile hdpa
 
 <script id="asciicast-hg9s5u5vzv04OpUPwTFfqqrLy" src="https://asciinema.org/a/hg9s5u5vzv04OpUPwTFfqqrLy.js" async></script>
 
+### Python 3 as default
+Python will not be used to install Bitcoin, LND, Elctrs or BTC-RPC-Explorer but is used by some of the bonus guides.
+The Raspberry Pi OS comes with Python 2 and 3 installed but with Python 2 used as the default one.
+Python 2 is no longer supported and will become a [security risk](https://www.darkreading.com/vulnerabilities-threats/continued-use-of-python-2-will-heighten-security-risks) as time passes. 
+Hence, it is preferable to only use Python 3 when using Python for our node.
+
+* Log in with the root user and check what is the default Python version
+
+  ```sh
+  $ sudo su -
+  $ python --version
+  > Python 2.7.16
+  $ python3 --version
+  > Python 3.7.3
+  ```
+  
+* To change the Python version system-wide, we can use update-alternatives command
+
+  ```sh
+  $ update-alternatives --list python
+  > update-alternatives: error: no alternatives for python
+  ```
+* The error message tells us that no alternatives have been defined so far.
+Update the alternative table using the followong command. The argument at the end indicates the priority (highest priority here is 2, i.e. version 3.7)
+  
+  ```sh
+  $ update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+  > update-alternatives: using /usr/bin/python2.7 to provide /usr/bin/python (python) in auto mode
+  $ update-alternatives --install /usr/bin/python python /usr/bin/python3.7 2
+  > update-alternatives: using /usr/bin/python3.4 to provide /usr/bin/python (python) in auto mode
+  ```
+* Check that the default version of Python is now v3.7
+  ```sh
+  $ python --version
+  > Python 3.7.3
+  ```
+
 ### Add users
 
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms.
@@ -290,6 +326,7 @@ This user does not have admin rights and cannot change the system configuration.
   ```
 
 <script id="asciicast-8uhMDvDcDNf3cUT6A3FcqN4lo" src="https://asciinema.org/a/8uhMDvDcDNf3cUT6A3FcqN4lo.js" async></script>
+
 
 ---
 

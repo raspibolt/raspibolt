@@ -13,11 +13,10 @@ on F-Droid and Google Play.
 
 Log in to your RaspiBolt through ssh.
 
-Edit `torrc` with `sudo nano /etc/tor/torrc` and add the following lines (`myandroid` can be unique):
+Edit `torrc` with `sudo nano /etc/tor/torrc` and add the following lines:
 ```
 HiddenServiceDir /var/lib/tor/lnd_api/
-HiddenServiceVersion 2
-HiddenServiceAuthorizeClient stealth myandroid
+HiddenServiceVersion 3
 HiddenServicePort 8080 127.0.0.1:8080
 HiddenServicePort 10009 127.0.0.1:10009
 ```
@@ -31,26 +30,10 @@ $ sudo systemctl restart tor
 View the private credentials of your new hidden service. The first part is the onion address, the second part is the secret.
 ```
 $ sudo cat /var/lib/tor/lnd_api/hostname
-z1234567890abc.onion AbyZXCfghtG+E0r84y/nR # client: myandroid
+z1234567890abc.onion
 ```
 
-Download Orbot for Android. https://guardianproject.info/apps/orbot/
-
-Open Orbot. Click the `⋮`, select `hidden services ˃`, select `Client cookies`.
-
-Press the + button on the lower right. Type in the the onion address and secret cookie you revealed with `sudo cat /var/lib/tor/lnd_api/hostname`.  
- Must enter onion address and add .onion to end in address area.  
-For the cookie you need all the information including [cookie] # client : [client]  
-So for example:AbyZXCfghtG+E0r84y/nR # client: myandroid
-
-Go back to Orbot's main screen, and select the gear icon under `tor enabled apps`.  
-Add `Zeus`, then press back.  
-Click `stop` on the big onion logo.  
-Exit orbot and reopen it. Turn on `VPN Mode`.  
-Start your connection to the Tor network by clicking on the big onion (if it has not automatically connected already)
-
-
-On your Raspibolt, make sure Go is installed (should be v1.11 or higher):  
+Make sure Go is installed (should be v1.11 or higher):  
 ```
 $ go version 
 ```
@@ -74,12 +57,17 @@ $ cd ~/download
 $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.1.0/lndconnect-linux-armv7-v0.1.0.tar.gz
 $ sudo tar -xvf lndconnect-linux-armv7-v0.1.0.tar.gz --strip=1 -C /usr/local/bin
 ```
-Switch to user `bitcoin` and generate the LND connect URI QR code:  
+Switch to user `bitcoin` and generate the LND connect URI QR code (or String):  
 It will be a big QR code so maximize your terminal window and use CTRL - to shrink the code further to fit the screen.
 Replace the `host` variable with the onion address previously generated.
-
+To generate QR Code:
 ```
 $ sudo su bitcoin
 $ lndconnect --lnddir=/home/bitcoin/.lnd --host=z1234567890abc.onion --port=8080
 ```
-Scan it with Zeus and you are done.
+To generate a String:
+```
+$ sudo su bitcoin
+$ lndconnect --lnddir=/home/bitcoin/.lnd --host=z1234567890abc.onion --port=8080 -j
+```
+Scan or copy paste it with Zeus and you are done.

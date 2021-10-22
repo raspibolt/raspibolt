@@ -53,33 +53,40 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/bitcoin-core-0.20.1/bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz
-  $ wget https://bitcoincore.org/bin/bitcoin-core-0.20.1/SHA256SUMS.asc
-  $ wget https://bitcoin.org/laanwj-releases.asc
+  $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/bitcoin-22.0-arm-linux-gnueabihf.tar.gz
+  # download the list of cryptographic checksum
+  $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS
+  # download the signatures attesting to validity of the checksums
+  $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS.asc
 
   # check that the reference checksum matches the real checksum
   # (ignore the "lines are improperly formatted" warning)
-  $ sha256sum --check SHA256SUMS.asc --ignore-missing
-  > bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz: OK
+  $ sha256sum --ignore-missing --check SHA256SUMS
+  > bitcoin-22.0-arm-linux-gnueabihf.tar.gz: OK
 
-  # import the public key of Wladimir van der Laan, verify the signed  checksum file
-  # and check the fingerprint again in case of malicious keys
-  $ gpg --import ./laanwj-releases.asc
+  # Bitcoin releases are signed by a number of individuals, each with a unique public key 
+  # in order to recognize the validity of signatures, you must use GPG to load these public keys locally
+  # you can find many developer keys listed in the builder-keys repository, which you can then load into your GPG key database
+  $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/builder-keys/keys.txt
+  $ while read fingerprint keyholder_name; do gpg --keyserver hkps://keys.openpgp.org --recv-keys ${fingerprint}; done < ./keys.txt
   $ gpg --refresh-keys
+  # verify that the checksums file is PGP signed by the release signing keys
   $ gpg --verify SHA256SUMS.asc
-  > gpg: Good signature from "Wladimir J. van der Laan ..."
-  > Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
-  ```
+  # the command above will output a series of signature checks for each of the public keys that signed the checksums 
+  # each signature will show the following text: 
+  > gpg: Good signature from ...
+  > Primary key fingerprint: ...
 
 * Extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.20.1/bin/*
+  $ tar -xvf bitcoin-22.0-arm-linux-gnueabihf.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-22.0/bin/*
   $ bitcoind --version
-  > Bitcoin Core version v0.20.1
+  > Bitcoin Core version v22.0
   ```
 
+_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
 <script id="asciicast-Ivlf954BGJNmOuJoj7FQ6qNKt" src="https://asciinema.org/a/Ivlf954BGJNmOuJoj7FQ6qNKt.js" async></script>
 
 ### Prepare data directory
@@ -339,7 +346,7 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 Once Bitcoin Core is fully synced, we can reduce the size of the database cache.
 A bigger cache speeds up the initial block download, now we want to reduce memory consumption to allow LND and Electrs to run in parallel.
-We also now want to enable the node to listent to and relay transactions.
+We also now want to enable the node to listen to and relay transactions.
 
 * As user "admin", comment the following lines out (add a `#` at the beginning) in the Bitcoin settings file.
   Bitcoin Core will then just use the default of 300 MB instead of 2 GB.
