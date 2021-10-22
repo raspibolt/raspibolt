@@ -250,6 +250,43 @@ $ sudo apt install htop git curl bash-completion jq qrencode dphys-swapfile hdpa
 
 <script id="asciicast-hg9s5u5vzv04OpUPwTFfqqrLy" src="https://asciinema.org/a/hg9s5u5vzv04OpUPwTFfqqrLy.js" async></script>
 
+### Python 3 as default
+Python will not be used to install Bitcoin, LND, Elctrs or BTC-RPC-Explorer but is used by some of the bonus guides.
+The Raspberry Pi OS comes with Python 2 and 3 installed but with Python 2 used as the default one.
+Python 2 is no longer supported and will become a [security risk](https://www.darkreading.com/vulnerabilities-threats/continued-use-of-python-2-will-heighten-security-risks) as time passes. 
+Hence, it is preferable to only use Python 3 when using Python for our node.
+
+* Log in with the root user and check what is the default Python version
+
+  ```sh
+  $ sudo su -
+  $ python --version
+  > Python 2.7.16
+  $ python3 --version
+  > Python 3.7.3
+  ```
+  
+* To change the Python version system-wide, we can use update-alternatives command
+
+  ```sh
+  $ update-alternatives --list python
+  > update-alternatives: error: no alternatives for python
+  ```
+* The error message tells us that no alternatives have been defined so far.
+Update the alternative table using the followong command. The argument at the end indicates the priority (highest priority here is 2, i.e. version 3.7)
+  
+  ```sh
+  $ update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+  > update-alternatives: using /usr/bin/python2.7 to provide /usr/bin/python (python) in auto mode
+  $ update-alternatives --install /usr/bin/python python /usr/bin/python3.7 2
+  > update-alternatives: using /usr/bin/python3.4 to provide /usr/bin/python (python) in auto mode
+  ```
+* Check that the default version of Python is now v3.7
+  ```sh
+  $ python --version
+  > Python 3.7.3
+  ```
+
 ### Add users
 
 This guide uses the main user "admin" instead of "pi" to make it more reusable with other platforms.
@@ -289,6 +326,7 @@ This user does not have admin rights and cannot change the system configuration.
   ```
 
 <script id="asciicast-8uhMDvDcDNf3cUT6A3FcqN4lo" src="https://asciinema.org/a/8uhMDvDcDNf3cUT6A3FcqN4lo.js" async></script>
+
 
 ---
 
