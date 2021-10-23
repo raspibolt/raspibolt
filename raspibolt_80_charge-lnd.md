@@ -191,12 +191,14 @@ $ cat /tmp/charge-lnd.log | grep -A 7 <node_alias>
 $ sudo su - charge-lnd
 $ pip3 show charge-lnd
 > Name: charge-lnd
-> Version: 0.2.4
+> Version: 0.2.5
 ```
 
-* If a newer version exists
+* If a newer version exists (e.g. v0.X.X)
 ```sh
-$ pip3 install --upgrade charge-lnd
+$ git fetch
+$ git checkout v0.X.X
+$ python -m pip install --upgrade requirements.txt .
 ```
 
 # Uninstall
