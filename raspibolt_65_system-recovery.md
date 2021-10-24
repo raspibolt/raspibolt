@@ -19,9 +19,13 @@ In case everything goes south the recovery should also include essential configu
 
 ```bash
 $ sudo su - bitcoin
-$ mkdir backup_hdd
-$ tar cvf backup_hdd/bitcoin.tar .bitcoin/bitcoin.conf .bitcoin/wallet.dat .bitcoin/peers.dat .bitcoin/banlist.dat
-$ tar cvf backup_hdd/lnd.tar .lnd/lnd.conf
+$ mkdir backup_ext
+# if you have created bitcoin wallets, you could add their paths to the following command
+$ tar cvf backup_ext/bitcoin.tar .bitcoin/bitcoin.conf .bitcoin/wallet.dat .bitcoin/peers.dat .bitcoin/banlist.dat
+$ tar cvf backup_ext/lnd.tar .lnd/lnd.conf
+$ tar cvf backup_ext/electrs.tar .electrs/electrs.conf
+# if you have installed Lightning Terminal
+$ tar cvf backup_ext/lit.tar .lit/lit.conf
 $ exit
 ```
 
@@ -52,9 +56,13 @@ $ sudo systemctl stop lnd.service
 $ sudo systemctl stop bitcoind.service
 
 $ sudo su - bitcoin
-$ cd /home/bitcoin/backup_hdd/
+$ cd /home/bitcoin/backup_ext/
 $ tar xvf bitcoin.tar -C /home/bitcoin
 $ tar xvf lnd.tar -C /home/bitcoin
+$ tar xvf electrs.tar -C /home/bitcoin
+# next command is only if you have installed Lightning Terminal (integrated or remote)
+$ tar xvf lit.tar -C /home/bitcoin
+# then exit
 $ exit
 ```
 
