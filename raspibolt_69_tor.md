@@ -36,7 +36,7 @@ All the above mentioned arguments are also relevant when using Lightning, as som
 
 This guide assumes that you're running a **Raspberry Pi 3** or better. If your RaspiBolt is built on an earlier version, it won't work as described below and you might want to [look at these instructions](https://tor.stackexchange.com/questions/242/how-to-run-tor-on-raspbian-on-the-raspberry-pi) instead.
 
-Also, this guide builds on top of the RaspiBolt guide that runs with **Raspbian Buster Lite**. If you run a different operating system, you may need to build Tor from source and paths may vary.
+Also, this guide builds on top of the RaspiBolt guide that runs with **Raspberry Pi OS Lite**. If you run a different operating system, you may need to build Tor from source and paths may vary.
 
 For additional reference, the original instructions are available on the [Tor project website](https://www.torproject.org/docs/debian.html.en#ubuntu).
 

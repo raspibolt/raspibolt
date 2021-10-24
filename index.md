@@ -101,6 +101,12 @@ All components of the Lightning network are still under development and we are d
 Unfortunately, nobody uses the Lightning Testnet, so we will go straight for Mainnet.
 But please be aware that you should start with small amounts that you are willing to lose.
 
+## Community Support
+Find help and other Raspibolt users on the following platforms:
+* [Github Issues / Knowledge Base](https://github.com/Stadicus/RaspiBolt/issues)
+* Reddit sub: [r/raspibolt](https://www.reddit.com/r/raspibolt/)
+* Telegram group: [t.me/raspibolt](https://t.me/raspibolt)
+
 ---
 
 Get started: [Preparations >>](raspibolt_10_preparations.md)

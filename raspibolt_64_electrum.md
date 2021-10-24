@@ -104,7 +104,7 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
   ![Install Electrum Personal Server with Python Pip](./images/60_eps_pip_install.png)
 
 ### First start
-The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately, in Raspbian this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path), but it's not necessary in this guide.
+The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately, in Raspberry Pi OS this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path), but it's not necessary in this guide.
 
   * The first time the server is run it will import all configured addresses as watch-only into the Bitcoin node. This can take up to 10 minutes, after that the program will exit.
     ```sh
