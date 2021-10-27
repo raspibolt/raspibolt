@@ -73,7 +73,7 @@ has_toc: false
 * Create symlink to lnd directory
 
   ```sh
-  $ sudo ln -s "/mnt/ext/lnd/" "/home/bos/.lnd"
+  $ sudo ln -s /mnt/ext/lnd/ /home/bos/.lnd
   ```
 
 * Make bos a member of the bitcoin group
@@ -108,6 +108,7 @@ has_toc: false
   ```sh
   $ bos help balance
   ```
+A description of all the commands is also available here: [https://github.com/niteshbalusu11/BOS-Commands-Document](https://github.com/niteshbalusu11/BOS-Commands-Document) (note that this page might not be kept up-to-date)
 
 * To rebalance on your node [A] a channel with high outbound (to node B) and a channel with high inbound (to node C)
 
