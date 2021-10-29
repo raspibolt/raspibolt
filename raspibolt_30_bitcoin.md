@@ -64,7 +64,7 @@ This is a precaution to make sure that this is an official release and not a mal
   $ sha256sum --ignore-missing --check SHA256SUMS
   > bitcoin-22.0-arm-linux-gnueabihf.tar.gz: OK
 
-  # Bitcoin releases are signed by a number of individuals, each with a unique public key 
+  # Bitcoin releases are signed by a number of individuals, each with a unique public key
   # in order to recognize the validity of signatures, you must use GPG to load these public keys locally
   # you can find many developer keys listed in the builder-keys repository, which you can then load into your GPG key database
   $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/builder-keys/keys.txt
@@ -72,10 +72,11 @@ This is a precaution to make sure that this is an official release and not a mal
   $ gpg --refresh-keys
   # verify that the checksums file is PGP signed by the release signing keys
   $ gpg --verify SHA256SUMS.asc
-  # the command above will output a series of signature checks for each of the public keys that signed the checksums 
-  # each signature will show the following text: 
+  # the command above will output a series of signature checks for each of the public keys that signed the checksums
+  # each signature will show the following text:
   > gpg: Good signature from ...
   > Primary key fingerprint: ...
+  ```
 
 * Extract the Bitcoin Core binaries, install them and check the version.
 
