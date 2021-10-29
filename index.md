@@ -16,7 +16,7 @@ I now basically run my own bank using free open-source software and some cheap h
 
 ---
 
-The **RaspiBolt version 2** builds on the Raspberry Pi 4. If you're looking for the old version: [check out the old source files on GitHub](https://github.com/Stadicus/RaspiBolt/blob/1.0/index.md).
+The **RaspiBolt version 2** builds on the Raspberry Pi 4. If you're looking for the old version: [check out the old source files on GitHub](https://github.com/raspibolt/raspibolt/blob/1.0/index.md).
 
 ---
 
@@ -103,7 +103,7 @@ But please be aware that you should start with small amounts that you are willin
 
 ## Community Support
 Find help and other Raspibolt users on the following platforms:
-* [Github Issues / Knowledge Base](https://github.com/Stadicus/RaspiBolt/issues)
+* [Github Issues / Knowledge Base](https://github.com/raspibolt/raspibolt/issues)
 * Reddit sub: [r/raspibolt](https://www.reddit.com/r/raspibolt/)
 * Telegram group: [t.me/raspibolt](https://t.me/raspibolt)
 
