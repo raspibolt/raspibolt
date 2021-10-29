@@ -140,6 +140,19 @@ A description of all the commands is also available here: [https://github.com/ni
 * Once the bot is created, the BotFather will give you a HTTP API token, copy it and keep it somewhere safe (like in a password manager). Note that if you lose this token, you could always get it agin by typing `/myBot` in the BotFather feed.
 * You also get a link to your bot (in the form: t.me/[your_bot_username]) click on it and it will redirect you to your new bot feed. Keep Telegram open.
 
+### Torify
+
+To avoid leaking our node IP address to Telegram, we can force bos to use Tor using the [`torify`](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorifyHOWTO) utility. To do this, we first need to edit the `torsocks.conf` file.
+
+* Edit the `torsocks.conf` file by uncommenting the `AllowOutboundLocalhost` and setting the value to 1. Save (Ctrl+O) and exit (Ctrl+X)
+  
+  ```sh
+  $ sudo nano /etc/tor/torsocks.conf
+  ```
+  ```ini
+  AllowOutboundLocalhost 1
+  ```
+
 ### Use bos to connect your node to the bot
 
 * Open a SSH session with the `admin` user and change to the `bos` user
@@ -151,7 +164,7 @@ A description of all the commands is also available here: [https://github.com/ni
 * Now, we are going to request bos to connect our node to the TG bot
   
   ```sh
-  $ bos Telegram
+  $ /usr/bin/torify bos telegram
   ```
   
 * When prompted, enter the HTTP API token that the @BotFather gave you earlier
@@ -181,7 +194,7 @@ Now we’ll make sure our Telegram Bot command starts as a service on the Raspbe
   After=lnd.service
 
   [Service] 
-  ExecStart=/home/bos/.npm-global/bin/bos telegram --connect <CONNECTION_CODE>
+  ExecStart=/usr/bin/torify /home/bos/.npm-global/bin/bos telegram --connect <CONNECTION_CODE>
   User=bos
   Restart=always
   TimeoutSec=120
