@@ -33,6 +33,19 @@ It is possible to extract the data directly from the blockchain data on your own
   $ ls -la
   > bitcoin.pdf
   ```
+  
+### Send the pdf to your desktop computer (Linux only)
+  
+The pdf can now be sent from the remote node to the local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html) utiliy.
+The following command only works on Linux-based computers.
+
+* On the local computer, open a Terminal window and type the following command (replace <your_node_IP> with the Raspberry Pi IP address and do not forget the dot at the end of the line
+
+  ```sh
+  $ scp admin@<your_node_IP>:~/whitepaper/bitcoin.pdf .
+  ```
+  
+* The file should now be located in the Home folder of the local computer (e.g. /home/<username>).
 
 ### Send the pdf to your Telegram account
 
