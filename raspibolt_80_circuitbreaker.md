@@ -220,13 +220,34 @@ Edit the configuration file:
   > Active: active (running) since Sat 2021-10-30 16:53:04 BST; 6s ago
   > [...]
   ```
-## Test
-
-TBD
 
 ## Upgrade
 
-TBD
+Updating to a new release should be straight-forward, but make sure to check out the [release notes](https://github.com/lightningequipment/circuitbreaker/tags) first.
+
+* From user “admin”, stop the service and open a “circuitbreaker” user session
+
+  ```sh
+  $ sudo systemctl stop circuitbreaker
+  $ sudo su - circuitbreaker
+  ```
+  
+* Fetch the latest GitHub repository information and check out the new release
+ 
+  ```sh
+  $ cd ~/circuitbreaker
+  $ git fetch
+  $ git checkout master
+  $ go install
+  $ exit
+  ```
+  
+* Start the service again
+
+  ```sh
+  $ sudo systemctl start circuitbreaker
+  ```
+
 
 ## Uninstall
 
