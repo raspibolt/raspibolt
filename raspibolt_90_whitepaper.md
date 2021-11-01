@@ -5,7 +5,7 @@ parent: Bonus Section
 nav_order: 90
 has_toc: false
 ---
-## Bonus guide: Download the bitcoin whitepaper from the node
+## Bonus guide: Download the bitcoin whitepaper directly from the node's blockchain data
 
 *Difficulty: easy*
 
