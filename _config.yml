@@ -9,3 +9,5 @@ aux_links:
 
 # enable theme for local usage
 #theme: "just-the-docs"
+
+theme: jekyll-theme-hacker
