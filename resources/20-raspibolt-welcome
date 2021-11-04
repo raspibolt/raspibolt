@@ -323,7 +323,7 @@ else
 fi
 
 #get channel.db size
-channeldb=$(du -h /mnt/ext/lnd/data/graph/mainnet/channel.db | head -c4)
+channel_db_size=$(du -h /mnt/ext/lnd/data/graph/mainnet/channel.db | head -c4)
 
 #electrs
 electrs_running=$(systemctl is-active electrs)
@@ -409,7 +409,7 @@ ${color_grey}%s
 "${mempool} tx" "${ln_pendinglocal}" \
 "${connections} (📥 ${inbound}/📤 ${outbound})" "${sum_balance}" \
 "${ln_channels_online}" "${ln_channels_total}" \
-"${channeldb}" \
+"${channel_db_size}" \
 "Electrum" "${electrs_running}" "Block Explorer" "${btcrpcexplorer_running}" \
 "${electrsversion}" "${btcrpcexplorerversion}" \
 "${ln_connect_guidance}"
