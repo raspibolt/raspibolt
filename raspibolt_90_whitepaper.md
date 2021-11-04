@@ -49,22 +49,24 @@ The following command only works on Linux-based computers.
 
 ### Send the pdf to your Telegram account
 
+**⚠ Privacy warning**: Using this method will leak your IP address to the Telegram server.
+
 * Follow this tutorial to create a new Telegram bot: https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/. 
 Write down the bot ID and the chat ID in a secure location (e.g. a password manager).
 
 * Send the whitepaper to your bot (replace <your_chat_ID> and <your_bot_ID> by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
 
   ```sh
-  $ curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/whitepaper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
+  $ curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/whitepaper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
   ```
   
-* The pdf should now be in your Telegram bot.
+* The pdf should now be available for download in your Telegram bot.
 
 ### Create a bash script 
 
 A bash script can be used to automatically download and send the pdf to your Telegram bot.
 
-* Create a new file and paste the following lines (replace <your_chat_ID> and <your_bot_ID> with your own IDs)
+* Create a new file in the '~/whitepaper' directory and paste the following lines (replace <your_chat_ID> and <your_bot_ID> with your own IDs)
 
   ```sh
   $ nano whitepaper.sh
@@ -76,8 +78,9 @@ A bash script can be used to automatically download and send the pdf to your Tel
   jq -r '.vout[].scriptPubKey.asm' | cut -c3- |
   xxd -p -r | tail +9c | head -c 184292 > bitcoin.pdf
 
-  curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/whitepaper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
+  curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/whitepaper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
   ```
+  
 * Make the file an executable
 
   ```sh
@@ -98,6 +101,3 @@ The BTC-RPC-Explorer has also a functionality to extract the data from the node 
 * Look-up the transaction ID in the explorer: `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713`
 * Click on the link "bitcoin whitepaper" in the top box, this will generate the pdf from the node blockchain and displays it as a pdf file in the browser.
 * Alternatively, use the following URL: http://<node_IP>:3002/bitcoin-whitepaper
-
-
-
