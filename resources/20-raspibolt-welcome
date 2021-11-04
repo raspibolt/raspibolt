@@ -323,7 +323,7 @@ else
 fi
 
 #get channel.db size
-channel_db_size=$(du -h /mnt/ext/lnd/data/graph/mainnet/channel.db | head -c4)
+channel_db_size=$(du -h /mnt/ext/lnd/data/graph/mainnet/channel.db | awk '{print $1}')
 
 #electrs
 electrs_running=$(systemctl is-active electrs)
