@@ -122,11 +122,24 @@ A description of all the commands is also available here: [https://github.com/ni
 
 ## Upgrade
 
-* When using bos, it will prompt you to upgrade when a new upgrade is available. The command to be run to upgrade (with the `admin` user) is
+* Log in with the "bos" and upgrade Balance of Satoshis with `npm`
 
   ```sh
-  $ sudo npm i -g balanceofsatoshis
+  $ sudo su - bos
+  $ npm i -g balanceofsatoshis
   ```
+  
+## Uninstall
+
+If you want to uninstall Balance of Satoshis:
+
+* Log in with the "root" user and delete the "bos" user
+
+  ```sh
+  $ sudo su -
+  $ userdel -r bos
+  ``` 
+  
 ## Optional: connect your node to a Telegram bot
 
 * Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
