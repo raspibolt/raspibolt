@@ -28,7 +28,7 @@ After validation, the client can check all future transactions whether they are 
 
 The validated blocks are also the base layer for other applications, like Electrs (to use with hardware wallets) or LND (the Lightning Network client).
 
-Be already warned that the downloading and validation of all transactions since 2009, more than 600'000 blocks with a size of over 300 GB, is not an easy task.
+Be already warned that the downloading and validation of all transactions since 2009, more than 600'000 blocks with a size of over 400 GB, is not an easy task.
 It's great that the Raspberry Pi 4 can do it, even if it takes a few days, as this was simply not possible with the Raspberry Pi 3.
 
 ---
@@ -37,45 +37,56 @@ It's great that the Raspberry Pi 4 can do it, even if it takes a few days, as th
 
 🚨 **Familiarize yourself with signature verification**
 An important part of the trust-minimization setup is to verify signatures of software you install.
-Take your time to read through [a detailed guide](https://medium.com/@lukedashjr/how-to-securely-install-bitcoin-9bfeca7d3b2a) from Luke-Jr.
+If you're interested, read through the detailed guide [How to securely install Bitcoin](https://medium.com/@lukedashjr/how-to-securely-install-bitcoin-9bfeca7d3b2a) by Luke-Jr.
 
-We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum.
+We download the latest Bitcoin Core binary (the application) and compare the file with the signed checksum.
 This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
-* Login as "admin" and change to the `tmp` directory, which is cleared on reboot.
+* Login as "admin" and change to a temporary directory which is cleared on reboot.
 
   ```sh
-  cd /tmp
+  $ cd /tmp
   ```
 
-* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download){:target="_blank"} (ARM Linux 32 bit), they change with each update.
-  Then run the following  commands (with adjusted filenames) and check the output where indicated:
+* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download){:target="_blank"} (ARM Linux 64 bit), they change with each update.
 
   ```sh
   # download Bitcoin Core binary
   $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/bitcoin-22.0-arm-linux-gnueabihf.tar.gz
+
   # download the list of cryptographic checksum
   $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS
+
   # download the signatures attesting to validity of the checksums
   $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS.asc
+  ```
 
-  # check that the reference checksum matches the real checksum
-  # (ignore the "lines are improperly formatted" warning)
+* Check that the reference checksum in file `SHA256SUMS` matches the checksum calculated by you (ignore the "lines are improperly formatted" warning)
+
+  ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-22.0-arm-linux-gnueabihf.tar.gz: OK
+  ```
 
-  # Bitcoin releases are signed by a number of individuals, each with a unique public key 
-  # in order to recognize the validity of signatures, you must use GPG to load these public keys locally
-  # you can find many developer keys listed in the builder-keys repository, which you can then load into your GPG key database
+* Bitcoin releases are signed by a number of individuals, each their own key.
+  In order to verify the validity of these signatures, you must first import these public keys.
+  You can find many developer keys listed in the builder-keys repository, which you can then load into your GPG key database.
+
+  ```sh
   $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/builder-keys/keys.txt
-  $ while read fingerprint keyholder_name; do gpg --keyserver hkps://keys.openpgp.org --recv-keys ${fingerprint}; done < ./keys.txt
-  $ gpg --refresh-keys
-  # verify that the checksums file is PGP signed by the release signing keys
+  $ while read fingerprint keyholder_name; do gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys ${fingerprint}; done < ./keys.txt
+  ```
+
+* Verify that the checksums file is cryptographically signed by the release signing keys.
+  The following command prints signature checks for each of the public keys that signed the checksums.
+  Each signature will show the following text:
+
+  ```sh
   $ gpg --verify SHA256SUMS.asc
-  # the command above will output a series of signature checks for each of the public keys that signed the checksums 
-  # each signature will show the following text: 
+  # the command above will output a series of signature checks for each of the public keys that signed the checksums
+  # each signature will show the following text:
   > gpg: Good signature from ...
   > Primary key fingerprint: ...
+  ```
 
 * Extract the Bitcoin Core binaries, install them and check the version.
 
@@ -86,14 +97,11 @@ This is a precaution to make sure that this is an official release and not a mal
   > Bitcoin Core version v22.0
   ```
 
-_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
-<script id="asciicast-Ivlf954BGJNmOuJoj7FQ6qNKt" src="https://asciinema.org/a/Ivlf954BGJNmOuJoj7FQ6qNKt.js" async></script>
-
 ### Prepare data directory
 
 We use the Bitcoin daemon, called `bitcoind`, that runs in the background without user interface.
 It stores all data in a the directory `/home/bitcoin/.bitcoin`.
-Instead of creating a real directory, we create a link that points to a directory on the external hard disk.
+Instead of creating a real directory, we create a link that points to a directory on the external drive.
 
 * Change to user “bitcoin” and add a symbolic link that points to the external drive.
 
@@ -109,7 +117,30 @@ Instead of creating a real directory, we create a link that points to a director
   $ ls -la
   ```
 
-<script id="asciicast-zPnMRU6nHPdZZYpFc0kR2vtVs" src="https://asciinema.org/a/zPnMRU6nHPdZZYpFc0kR2vtVs.js" async></script>
+### Generate access credentials
+
+For other programs to query Bitcoin Core they need the proper access credentials.
+To avoid storing username and password in a configuration file in plaintext, the password is hashed.
+This allows Bitcoin Core to accept a password, hash it and compare it to the stored hash, while it is not possible to retrieve the original password.
+
+Bitcoin Core provides a simple Python program to generate the configuration line for the config file.
+
+* In the Bitcoin folder, download the RPCAuth program
+
+  ```sh
+  $ cd ~/.bitcoin
+  $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/share/rpcauth/rpcauth.py
+  ```
+
+* Run the script with the Python3 interpreter, providing username (`raspibolt`) and your `[ Password B ]` as arguments
+
+  ```sh
+  $ python3 rpcauth.py raspibolt YourPasswordB
+  > String to be appended to bitcoin.conf:
+  > rpcauth=raspibolt:00d8682ce66c9ef3dd9d0c0a6516b10e$c31da4929b3d0e092ba1b2755834889f888445923ac8fd69d8eb73efe0699afa
+  ```
+
+* Copy the `rpcauth` line, we'll need to paste it into the Bitcoin config file.
 
 ### Configuration
 
@@ -135,10 +166,10 @@ proxy=127.0.0.1:9050
 bind=127.0.0.1
 
 # Connections
-rpcuser=raspibolt
-rpcpassword=PASSWORD_[B]
+rpcauth=<replace with your own auth line generated by rpcauth.py>
 zmqpubrawblock=tcp://127.0.0.1:28332
 zmqpubrawtx=tcp://127.0.0.1:28333
+whitelist=download@127.0.0.1            # for Electrs
 
 # Raspberry Pi optimizations
 maxconnections=40
@@ -149,21 +180,7 @@ dbcache=2000
 blocksonly=1
 ```
 
-🚨 **Change the rpcpassword** to your secure `password [B]`.
-
-<script id="asciicast-gQJ1dSWPdcavFcZs5PRuYS4Ad" src="https://asciinema.org/a/gQJ1dSWPdcavFcZs5PRuYS4Ad.js" async></script>
-
 🔍 *more: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments){:target="_blank"} in Bitcoin Wiki*
-
-#### Transaction indexing (optional)
-
-By default the above configuration enables transaction indexing.
-This allows other applications to query Bitcoin Core about any transaction.
-One example that needs this feature is the [BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer.md), your personal blockchain explorer.
-
-If you know that you don't need this feature, you can delete the line `txindex=1` in the configuration above.
-This results in a faster initial blockchain verification, and saves about 20 GB of storage.
-If in doubt, just leave it as-is, otherwise you might need to enable it later and reindex the whole blockchain again.
 
 ---
 
@@ -176,10 +193,6 @@ Stop "bitcoind" with `Ctrl-C`.
 ```sh
 $ bitcoind
 ```
-
-_Note: the following screencast skips longer waiting times, the initial start is longer in real life._
-
-<script id="asciicast-U8pYWC4noOazqJgXhoUzDoafC" src="https://asciinema.org/a/U8pYWC4noOazqJgXhoUzDoafC.js" async></script>
 
 ### Autostart on boot
 
@@ -286,8 +299,6 @@ We use “systemd“, a daemon that controls the startup process using configura
   $ sudo reboot
   ```
 
-<script id="asciicast-FY2i276fqYasiaBPr0bktHehE" src="https://asciinema.org/a/FY2i276fqYasiaBPr0bktHehE.js" async></script>
-
 ### Verification of bitcoind operations
 
 After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain.
@@ -318,11 +329,9 @@ After rebooting, the bitcoind should start and begin to sync and validate the Bi
   * Among other infos, the “verificationprogress” is shown.
     Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
 
-<script id="asciicast-ij6r5XKR4Hx2Nr7ViiO7M09kf" src="https://asciinema.org/a/ij6r5XKR4Hx2Nr7ViiO7M09kf.js" async></script>
-
 🚨 **Please let Bitcoin Core sync fully before proceeding.**
 
-This can take up to a week when using a Raspberry Pi 4, depending mostly on your external drive (SSD good, HDD bad; USB3 good, USB2 bad).
+This can take between one day and a week, depending mostly on your external drive (SSD good, HDD bad; USB3 good, USB2 bad).
 
 ### Explore bitcoin-cli
 

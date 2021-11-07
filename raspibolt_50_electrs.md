@@ -30,11 +30,11 @@ As Bitcoin Core does not offer easy support for hardware wallets quite yet, only
 
 One possibility to use Bitcoin Core with more functionality is to use an Electrum Server as middleware.
 It imports data from Bitcoin Core and provides it to software wallets supporting the Electrum protocol.
-Wallets like the [BitBoxApp](https://shiftcrypto.ch/app/){:target="_blank"} or [Electrum wallet](https://electrum.org/){:target="_blank"} that support hardware wallets can then be used with your own sovereign Bitcoin node.
+Wallets like the [BitBoxApp](https://shiftcrypto.ch/app/){:target="_blank"}, [Electrum wallet](https://electrum.org/){:target="_blank"} or [Sparrow Wallet](https://sparrowwallet.com/){:target="_blank"} that support hardware wallets can then be used with your own sovereign Bitcoin node.
 
 The installation of your own Electrum server is optional and not essential for running a Lightning node.
 It is very much recommended, however, as it is an important step to claim back your on-chain sovereignty and enforce the Bitcoin consensus.
-In the article "[We need Bitcoin full nodes. Economic ones.](https://medium.com/shiftcrypto/we-need-bitcoin-full-nodes-economic-ones-fd17efcb61fb){:target="_blank"}", I outline why it is pointless to run an idle Bitcoin full node without using it to verify your own on-chain transactions.
+The article "[We need Bitcoin full nodes. Economic ones.](https://shiftcrypto.ch/blog/we-need-bitcoin-full-nodes-economic-ones/){:target="_blank"}" explains why it is pointless to run an idle Bitcoin full node without using it to verify your own on-chain transactions.
 
 ---
 
@@ -49,41 +49,23 @@ As there are no binaries available, we will compile the application directly fro
 
 ### Install dependencies
 
-* Install the Rust programming language
-
-  🚨 This Rust installation is for Linux ARM32 systems only. Don't install the following binaries on other platforms, it could damage your system.
-
-  ```sh
-  # download
-  $ cd /tmp
-  $ curl https://static.rust-lang.org/dist/rust-1.48.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
-  $ curl https://static.rust-lang.org/dist/rust-1.48.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
-  $ curl https://keybase.io/rust/pgp_keys.asc | gpg --import
-
-  # verify
-  $ gpg --verify rust.tar.gz.asc rust.tar.gz
-  > gpg: Signature made Do 07 Nov 2019 13:25:50 GMT
-  > gpg:                using RSA key C13466B7E169A085188632165CB4A9347B3B09DC
-  > gpg: Good signature from "Rust Language (Tag and Release Signing Key) <rust-key@rust-lang.org>" [unknown]
-  > gpg: WARNING: This key is not certified with a trusted signature!
-  > gpg:          There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: 108F 6620 5EAE B0AA A8DD  5E1C 85AB 96E6 FA1B E5FE
-  >     Subkey fingerprint: C134 66B7 E169 A085 1886  3216 5CB4 A934 7B3B 09DC
-
-  # install
-  $ mkdir /home/admin/rust
-  $ tar --strip-components 1 -C /home/admin/rust -xzvf rust.tar.gz
-  $ cd /home/admin/rust
-  $ sudo ./install.sh
-  ```
-
 * Install build tools
 
   ```sh
-  $ sudo apt install -y clang cmake
+  $ sudo apt install clang cmake
   ```
 
-<script id="asciicast-IQ8ZYiBUxbHZM6AxL41oS2Hbd" src="https://asciinema.org/a/IQ8ZYiBUxbHZM6AxL41oS2Hbd.js" async></script>
+* Install the Rust programming language (select `1` for default)
+
+  ```sh
+  $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  ```
+
+* Update configuration for current user session
+
+  ```sh
+  $ source /home/admin/.bashrc
+  ```
 
 ### Build from source code
 
@@ -92,9 +74,9 @@ The whole process takes about 30 minutes.
 
   ```sh
   # download
-  $ cd /home/admin/rust
-  $ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
-  $ git clone --branch ${electrsgit} https://github.com/romanz/electrs.git
+  $ mkdir /home/admin/sources
+  $ cd /home/admin/sources
+  $ git clone --branch v0.9.2 https://github.com/romanz/electrs.git
   $ cd electrs
 
   # compile
@@ -103,8 +85,6 @@ The whole process takes about 30 minutes.
   # install
   $ sudo cp ./target/release/electrs /usr/local/bin/
   ```
-
-<script id="asciicast-PyEVzc5P0i4QX8mVu4zyKicgx" src="https://asciinema.org/a/PyEVzc5P0i4QX8mVu4zyKicgx.js" async></script>
 
 ### Configuration & indexing
 
@@ -126,9 +106,6 @@ The whole process takes about 30 minutes.
   # RaspiBolt: electrs configuration
   # /mnt/ext/electrs/electrs.conf
 
-  # RPC user / password
-  auth = "raspibolt:PASSWORD_[B]"
-
   # Bitcoin Core settings
   network = "bitcoin"
   daemon_dir= "/mnt/ext/bitcoin"
@@ -145,7 +122,9 @@ The whole process takes about 30 minutes.
   timestamp = true
   ```
 
-  🚨 **Change the password**, otherwise Electrs is not able to talk to Bitcoin Core.
+  🚨 **NEW: Electrs now uses the Bitcoin Core authentitcation cookie**.
+  Bitcoin Core RPC authentication must not use the `rpcuser`/`rpcpassword` options.
+  Please check the [Bitcoin configuration](raspibolt_30_bitcoin.html#configuration) section for a recent change to the `rpcauth` method.
 
 * Let's start Electrs manually first, to check if it's running as expected.
   It will immediately start with the initial indexing of the Bitcoin blocks.
@@ -218,8 +197,6 @@ The whole process takes about 30 minutes.
   ```sh
   $ exit
   ```
-
-<script id="asciicast-YxcQdbYzczkuv8OmAyUSZLske" src="https://asciinema.org/a/YxcQdbYzczkuv8OmAyUSZLske.js" async></script>
 
 ### Autostart on boot
 
@@ -307,8 +284,6 @@ Electrs needs to start automatically on system boot.
   $ sudo journalctl -f -u electrs
   ```
 
-<script id="asciicast-3ogdQBJnXnQ4xDh5GtnDLVdmH" src="https://asciinema.org/a/3ogdQBJnXnQ4xDh5GtnDLVdmH.js" async></script>
-
 ---
 
 ## Secure communication
@@ -326,7 +301,7 @@ This means that NGINX provides secure communication to the outside and routes it
   💡 _Hint: NGINX is pronounced "Engine X"_
 
   ```sh
-  $ sudo apt install -y nginx
+  $ sudo apt install nginx
   ```
 
 * Create a self-signed TLS certificate (valid for 10 years)
@@ -368,7 +343,6 @@ This means that NGINX provides secure communication to the outside and routes it
       proxy_pass electrs;
     }
   }
-
   ```
 
 * Test the NGINX configuration and restart the service.
@@ -378,7 +352,11 @@ This means that NGINX provides secure communication to the outside and routes it
   $ sudo systemctl restart nginx
   ```
 
-<script id="asciicast-jW6Y0tSG9kCWedHWJKJUWJ7dt" src="https://asciinema.org/a/jW6Y0tSG9kCWedHWJKJUWJ7dt.js" async></script>
+* Open port 50002 in UFW to accept incoming connections
+
+  ```sh
+  $ sudo ufw allow 50002 comment 'allow Electrum SSL'
+  ```
 
 ### Remote access
 
@@ -407,8 +385,6 @@ Note that the remote device needs to have Tor installed.
   $ sudo cat /var/lib/tor/hidden_service_electrs/hostname
   > gwdllz5g7vky2q4gr45zGuvopjzf33czreca3a3exosftx72ekppkuqd.onion
   ```
-
-<script id="asciicast-TgwG3Pb0LPTCkb4qcDYlXmEbT" src="https://asciinema.org/a/TgwG3Pb0LPTCkb4qcDYlXmEbT.js" async></script>
 
 ---
 
@@ -499,7 +475,7 @@ Updating a [new release](https://github.com/romanz/electrs/releases){:target="_b
 * With user "admin", check what version you have vs that available as lastest release.
 
   ```sh
-  $ cd /home/admin/rust
+  $ cd /home/admin/sources
   $ currentelectrs=$(head -n 1 electrs/RELEASE-NOTES.md | awk '{print "v"$2}')
   $ echo "Current = ${currentelectrs}"
   $ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
