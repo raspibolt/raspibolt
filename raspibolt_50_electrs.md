@@ -49,56 +49,38 @@ As there are no binaries available, we will compile the application directly fro
 
 ### Install dependencies
 
-* Install the Rust programming language
-
-  🚨 This Rust installation is for Linux ARM32 systems only. Don't install the following binaries on other platforms, it could damage your system.
+Install the Rust programming language and build tools
 
   ```sh
-  # download
-  $ cd /tmp
-  $ curl https://static.rust-lang.org/dist/rust-1.48.0-armv7-unknown-linux-gnueabihf.tar.gz -o rust.tar.gz
-  $ curl https://static.rust-lang.org/dist/rust-1.48.0-armv7-unknown-linux-gnueabihf.tar.gz.asc -o rust.tar.gz.asc
-  $ curl https://keybase.io/rust/pgp_keys.asc | gpg --import
-
-  # verify
-  $ gpg --verify rust.tar.gz.asc rust.tar.gz
-  > gpg: Signature made Do 07 Nov 2019 13:25:50 GMT
-  > gpg:                using RSA key C13466B7E169A085188632165CB4A9347B3B09DC
-  > gpg: Good signature from "Rust Language (Tag and Release Signing Key) <rust-key@rust-lang.org>" [unknown]
-  > gpg: WARNING: This key is not certified with a trusted signature!
-  > gpg:          There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: 108F 6620 5EAE B0AA A8DD  5E1C 85AB 96E6 FA1B E5FE
-  >     Subkey fingerprint: C134 66B7 E169 A085 1886  3216 5CB4 A934 7B3B 09DC
-
-  # install
-  $ mkdir /home/admin/rust
-  $ tar --strip-components 1 -C /home/admin/rust -xzvf rust.tar.gz
-  $ cd /home/admin/rust
-  $ sudo ./install.sh
-  ```
-
-* Install build tools
-
-  ```sh
-  $ sudo apt install -y clang cmake
+  $ sudo apt install -y cargo clang cmake librocksdb-dev
   ```
 
 <script id="asciicast-IQ8ZYiBUxbHZM6AxL41oS2Hbd" src="https://asciinema.org/a/IQ8ZYiBUxbHZM6AxL41oS2Hbd.js" async></script>
 
 ### Build from source code
 
-Now we download the latest release of the Electrs source code, compile it to an executable binary and install it.
+Now we download the latest release of the Electrs source code, verify it, compile it to an executable binary and install it.
 The whole process takes about 30 minutes.
+
+🚨 For maximum security verify the fingerprint from multiple sources! E.g. From [the website of Roman Zeyde](https://romanzey.de/pgp.txt)
+
 
   ```sh
   # download
+  $ mkdir /home/admin/rust
   $ cd /home/admin/rust
-  $ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
-  $ git clone --branch ${electrsgit} https://github.com/romanz/electrs.git
+  $ electrs_tag="$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')"
+  $ echo "Latest known electrs version: $electrs_tag"
+  $ git clone --branch "$electrs_tag" https://github.com/romanz/electrs.git
   $ cd electrs
+  
+  # verify
+  $ gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 15C8C3574AE4F1E25F3F35C587CAE5FA46917CBB
+  $ git verify-tag "$electrs_tag"
+  # Check that it says "Good signature from 15C8C3574AE4F1E25F3F35C587CAE5FA46917CBB"!
 
   # compile
-  $ cargo build --locked --release
+  $ ROCKSDB_INCLUDE_DIR=/usr/include ROCKSDB_LIB_DIR=/usr/lib cargo build --locked --release
 
   # install
   $ sudo cp ./target/release/electrs /usr/local/bin/
@@ -113,7 +95,6 @@ The whole process takes about 30 minutes.
   ```sh
   sudo su - bitcoin
   mkdir /mnt/ext/electrs
-  ln -s /mnt/ext/electrs /home/bitcoin/.electrs
   ```
 
 * Create config file
@@ -122,7 +103,7 @@ The whole process takes about 30 minutes.
   $ nano /mnt/ext/electrs/electrs.conf
   ```
 
-  ```ini
+  ```toml
   # RaspiBolt: electrs configuration
   # /mnt/ext/electrs/electrs.conf
 
@@ -494,35 +475,41 @@ Congratulations, you have now one of the best Bitcoin desktop wallet, capable of
 
 ## Electrs upgrade
 
-Updating a [new release](https://github.com/romanz/electrs/releases){:target="_blank"} should be straight-forward, but make sure to check out the [release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md){:target="_blank"} first.
+Updating a [new release](https://github.com/romanz/electrs/releases){:target="_blank"} should be straight-forward, but **make sure to check out the [release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md){:target="_blank"} first.**
 
 * With user "admin", check what version you have vs that available as lastest release.
+  Note: in theory an attacker could deny you upgrading, it's best to also check the latest version from an independent source.
 
   ```sh
   $ cd /home/admin/rust
-  $ currentelectrs=$(head -n 1 electrs/RELEASE-NOTES.md | awk '{print "v"$2}')
-  $ echo "Current = ${currentelectrs}"
-  $ electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
-  $ echo "Available = ${electrsgit}"
+  $ currentelectrs="$(head -n 1 electrs/RELEASE-NOTES.md | awk '{print "v"$2}')"
+  $ echo "Current electrs version: ${currentelectrs}"
+  $ electrs_tag="$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')"
+  $ echo "Latest electrs version reported by GitHub: $electrs_tag"
   ```
 
 * If the available version is newer, then you can proceed with the following 
 
   ```sh
-  $ # backup the current one
-  $ mv electrs electrs-v${currentelectrs};
+  $ # fetch the most recent tagged version
+  $ cd electrs
+  $ git fetch
+  $ git checkout "$electrs_tag" https://github.com/romanz/electrs.git
 
-  $ # clone the most recent tagged version
-  $ git clone --branch ${electrsgit} https://github.com/romanz/electrs.git
+  $ # Remove old build artefacts
+  $ cargo clean
 
   $ # Build it
-  $ cd electrs
-  $ cargo build --locked --release
+  $ ROCKSDB_INCLUDE_DIR=/usr/include ROCKSDB_LIB_DIR=/usr/lib cargo build --locked --release
 
-  $ # Stop the service, copy the binary over, and start the service back up
-  $ sudo systemctl stop electrs
-  $ sudo cp ./target/release/electrs /usr/local/bin/
-  $ sudo systemctl start electrs
+  $ # Backup the old binary
+  $ sudo cp /usr/local/bin/electrs /usr/local/bin/electrs-old
+  $ # Replace the binary
+  $ sudo mv target/release/electrs /usr/local/bin/electrs
+  $ # IMPORTANT: if the configuration options changed in newer version (see release notes) update configuration here
+  $ nano /mnt/ext/electrs/electrs.conf
+  $ # Restart electrs
+  $ sudo systemctl restart electrs
   ```
 
 ---
