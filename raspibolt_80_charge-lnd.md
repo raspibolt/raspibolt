@@ -177,6 +177,8 @@ Then exit the charge-lnd user.
 
 * Double-check the fee policy on all your channels to ensure that you are happy with the changes!
 
+🔍: _To see all the possible policy types and options and some examples, check the charge-lnd [Github page](https://github.com/accumulator/charge-lnd#charge-lnd)._
+
 ## Automatic fee updates
 
 We can make the script run automatically at regular time intervals by using a cron job. For example, we could run the charge-lnd program every 12 hours.
