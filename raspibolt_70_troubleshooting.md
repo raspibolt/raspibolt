@@ -30,7 +30,7 @@ I collected frequent questions not directly related with issues in a separate [G
 ### Issues / Knowledge Base on Github
 
 When running into problems, you (and many before you) can open an issue on GitHub.
-https://github.com/Stadicus/guides/issues
+https://github.com/raspibolt/raspibolt/issues
 
 1. Please check this Troubleshooting Guide first.
 2. Check the GitHub Issues if it is a known problem. Maybe somebody already solved it?
