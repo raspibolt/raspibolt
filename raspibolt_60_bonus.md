@@ -75,14 +75,6 @@ The Zap iOS app (https://zap.jackmallers.com) provides a neat interface for the 
 
 ![Zap iOS](images/72_zapios.png)
 
-## [Shango Mobile Wallet](raspibolt_68_shango.md)
-
-*Difficulty: medium*
-
-The iOS & Android app Shango provides a neat interface for the RaspiBolt, to manage peers & channels, make payments and create invoices.
-
-[![Electrum](images/60_shango.png)](raspibolt_68_shango.md)
-
 ## [lntop](raspibolt_74_lntop.md)
 
 *Difficulty: easy*
