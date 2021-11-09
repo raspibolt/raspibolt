@@ -181,7 +181,7 @@ Then exit the charge-lnd user.
 
 ## Automatic fee updates
 
-We can make the script run automatically at regular time intervals by using a cron job. For example, we could run the charge-lnd program every 12 hours.
+We can make the script run automatically at regular time intervals by using a cron job. For example, we could run the charge-lnd program every 2 hours.
 
 Warning: It is not in your interest, nor in the interest of the wider network, to set up very short intervals between each policay change. Frequent channel policy update spams the LN gossip network and results in less accurate LN graphs overall as it takes a long time for a policy update to reach most of the nodes in the network.
 
@@ -199,8 +199,8 @@ If asked, select the /bin/nano text editor (type 1 and enter)
   # 1 - Fee policy updates with charge-lnd #
   ##########################################
 
-  # Run charge-lnd every 12 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
-  21 */12 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/charge-lnd/charge-lnd/charge-lnd.config > /tmp/my_charge-lnd.log 2>&1; date >> /tmp/my_charge-lnd.log 
+  # Run charge-lnd every 2 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
+  21 */2 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/charge-lnd/charge-lnd/charge-lnd.config > /tmp/my_charge-lnd.log 2>&1; date >> /tmp/my_charge-lnd.log 
   ```
 
   * The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/4_*_*_*). 
