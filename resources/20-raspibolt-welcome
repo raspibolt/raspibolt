@@ -392,7 +392,7 @@ ${color_red}      ~ (  ${color_yellow}／ /_____${color_red}~      ${color_grey}
 ${color_red}     ( : ${color_yellow}／____   ／${color_red} )     ${color_grey}Mempool %-18s ${color_grey}⏳%14s sat
 ${color_red}      ~ .~ (  ${color_yellow}/ ／${color_red}. ~      ${color_grey}Peers   %-22s ${color_grey}∑%15s sat
 ${color_red}       (  : '${color_yellow}/／${color_red}:  )       ${color_grey}                           ${color_grey}%s/%s channels
-${color_red}        '~ .~${color_yellow}°${color_red}~. ~'        ${color_grey}                           ${color_grey}channel.db size: ${color_green}%s
+${color_red}        '~ .~${color_yellow}°${color_red}~. ~'        ${color_grey}                           ${color_grey}Channel.db size: ${color_green}%s
 ${color_red}            '~'
 ${color_red}                           ${color_yellow}%-20s${electrs_color}%-4s${color_grey}   ${color_yellow}%-18s${color_grey} ${btcrpcexplorer_color}%-4s${color_grey}
 ${color_red}                           ${electrsversion_color}%-26s ${btcrpcexplorerversion_color}%-24s
