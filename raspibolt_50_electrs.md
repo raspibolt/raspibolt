@@ -141,7 +141,7 @@ The whole process takes about 30 minutes.
   index_lookup_limit = 1000
 
   # Logging
-  verbose = 2
+  log_filters = "INFO"
   timestamp = true
   ```
 
