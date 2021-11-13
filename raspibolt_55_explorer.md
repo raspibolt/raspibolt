@@ -26,37 +26,41 @@ After the RaspiBolt runs your own fully validated node, and maybe even acts as a
 This lets you query transactions, addresses and blocks of your choice.
 You no longer need to leak information by querying a third-party block explorer that can be used to get your location and cluster addresses.
 
-[BTC RPC Explorer](https://github.com/janoside/btc-rpc-explorer) provides a lightweight and easy to use web interface to accomplish just that.
-It's a database-free, self-hosted Bitcoin block explorer, querying Bitcoin Core and optionally Electrs via RPC.
-Built with Node.js, express, bootstrap-v4.
+[BTC RPC Explorer](https://github.com/janoside/btc-rpc-explorer){:target="_blank"} provides a lightweight and easy to use web interface to accomplish just that.
+It's a database-free, self-hosted Bitcoin block explorer, querying Bitcoin Core and Electrs via RPC.
 
 ## Preparations
 
 ### Transaction indexing
 
 For the BTC RPC Explorer to work, you need your full node to index all transactions.
-Otherwise, the only transactions your full node will store are the ones pertaining to the node's wallets (which you probably are not going to use).
-If not already enabled, you need to set the `txindex` parameter in your Bitcoin Core configuration file (`bitcoin.conf`): [Bitcoin node configuration](raspibolt_30_bitcoin.md#configuration).
 
-After adding the parameter, just restart Bitcoin Core with `sudo systemctl restart bitcoind`.
+* If you followed this guide, the transaction index parameter is already enabled (`txindex=1`), and you can skip to the next section.
 
-As reindexing can take more than a day, you can follow the progress using `sudo tail -f /mnt/ext/bitcoin/debug.log`.
+* If the tranthis is not the case, you need to set the `txindex=1` parameter in your Bitcoin Core configuration file (`bitcoin.conf`): [Bitcoin node configuration](raspibolt_30_bitcoin.md#configuration).
+
+* After adding the parameter, just restart Bitcoin Core, which will now index the whole blockchain
+
+  ```sh
+  $ sudo systemctl restart bitcoind
+  ```
+
+Please note that reindexing can take more than a day.
+You can follow the progress using `sudo tail -f /mnt/ext/bitcoin/debug.log`.
 
 ### Install NodeJS
 
-* Starting with user "admin", we switch to user "root" and add the [Node JS](https://nodejs.org) package repository.
-  We'll use version 12 which is the most recent stable one. Then, exit the "root" user session.
+* Add the [Node JS](https://nodejs.org){:target="_blank"} package repository from user "admin".
+  We'll use version 14, which is well tested with this application.
 
   ```sh
-  $ sudo su
-  $ curl -sL https://deb.nodesource.com/setup_12.x | bash -
-  $ exit
+  $ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
   ```
 
 * Install NodeJS using the apt package manager.
 
   ```sh
-  $ sudo apt-get install nodejs
+  $ sudo apt install nodejs
   ```
 
 ### Firewall
@@ -76,7 +80,7 @@ We do not want to run the explorer code alongside `bitcoind` and `lnd` because o
 For that we will create a separate user and we will be running the code as the new user.
 We are going to install the BTC RPC Explorer in the home directory since it doesn't take much space and doesn't use a database.
 
-* Create a new user with  your password [ A ] and open a new session
+* Create a new user with  your `password [A]` and open a new session
 
   ```sh
   $ sudo adduser btcrpcexplorer
@@ -84,17 +88,17 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   ```
 
 * Download the source code directly from GitHub and install all dependencies using NPM.
-  Since the program is written in JavaScript, there is no need to compile.
 
   ```sh
-  $ git clone --branch v3.1.0 https://github.com/janoside/btc-rpc-explorer.git
+  $ git clone --branch v3.2.0 https://github.com/janoside/btc-rpc-explorer.git
   $ cd btc-rpc-explorer
   $ npm install
   ```
 
 ### Configuration
 
-* Copy and edit the configuration template (skip this step when updating)
+* Copy and edit the configuration template (skip this step when updating).
+  Activate any setting by removing the `#` at the beginning of the line.
 
   ```sh
   $ cp .env-sample .env
@@ -102,14 +106,14 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   ```
 
 * By default, the BTC RPC Explorer listens for local requests (localhost / 127.0.0.1).
-  If you would like to access it from your local network or from somewhere else, make sure you configure the proper host and port by changing these parameters:
+  If you would like to access it from your local network or from somewhere else, change the following parameters.
 
   ```conf
   BTCEXP_HOST=0.0.0.0
   BTCEXP_PORT=3002
   ```
 
-* We instruct BTC RPC Explorer to connect to local Bitcoin Core by uncommenting and changing the following lines:
+* Instruct BTC RPC Explorer to connect to local Bitcoin Core
 
   ```conf
   BTCEXP_BITCOIND_HOST=127.0.0.1
@@ -118,26 +122,36 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   BTCEXP_BITCOIND_PASS=PASSWORD_[B]
   ```
 
-* To compensate for the limited resources of the Raspberry Pi, let's extend the timeout period.
+* Extend the timeout period due to the limited resources of the Raspberry Pi
 
   ```conf
   BTCEXP_BITCOIND_RPC_TIMEOUT=10000
   ```
 
 * To get address balances, either an Electrum server or an external service is necessary.
-  It is important to use local RaspiBolt Electrs server, no real privacy is gained when we query external services anyway.
-  The following configuration also works with Electrum Personal Server or ElectrumX.
+  Your local Electrs server can provide address transaction lists, balances, and more.
 
   ```conf
-  BTCEXP_ADDRESS_API=electrumx
-  BTCEXP_ELECTRUMX_SERVERS=tcp://127.0.0.1:50001
+  BTCEXP_ADDRESS_API=electrum
+  BTCEXP_ELECTRUM_SERVERS=tcp://127.0.0.1:50001
+  BTCEXP_ELECTRUM_TXINDEX=true
   ```
 
-* You can go further improve your privacy by enabling privacy mode, but you won't get certain feature like price exchange rates.
+* You can decide whether you want to optimize for more information or for more privacy.
 
-  ```conf
-  BTCEXP_PRIVACY_MODE=true
-  ```
+  * More information mode, including Bitcoin exchange rates:
+
+    ```conf
+    BTCEXP_PRIVACY_MODE=false
+    BTCEXP_NO_RATES=true
+    ```
+
+  * More privacy mode, no external queries:
+
+    ```conf
+    BTCEXP_PRIVACY_MODE=true
+    BTCEXP_NO_RATES=false
+    ```
 
 * Make sure the RPC methods are not all allowed to avoid unnecessary security leaks.
   However, if you want to use the BTC RPC Explorer to send RPC commands to your node you might want to activate this with caution.
@@ -146,11 +160,19 @@ We are going to install the BTC RPC Explorer in the home directory since it does
   BTCEXP_RPC_ALLOWALL=false
   ```
 
-* Additionally, if you want or need to see more logs related to the functioning of the explorer, you can enable them by changing this line with the proper parameter.
-  Here we are adding logs from the 'www' (http server) module.
+* Optionally, you can add password protection to the web interface.
+  Simply add a password for the following option, for which the browser will then prompt you.
+  You can enter any user name, only the password is checked.
+  It's best to use a separate password not used anywhere else because it will be transmitted in plain text.
 
   ```conf
-  DEBUG=btcexp:app,btcexp:error,www
+  BTCEXP_BASIC_AUTH_PASSWORD=AnyPassword
+  ```
+
+* Decide whether you prefer a `light` or `dark` theme
+
+  ```conf
+  BTCEXP_UI_THEME=dark
   ```
 
 * Save and exit
@@ -167,7 +189,7 @@ Test starting the explorer manually first to make sure it works.
   $ npm run start
   ```
 
-* Now point your browser to `http://raspibolt.local:3002` (or whatever you chose as hostname) or the ip address (e.g. `http://192.168.0.20:3002`).
+* Now point your browser to [http://raspibolt.local:3002](http://raspibolt.local:3002){:target="_blank"} (or whatever you chose as hostname) or the ip address (e.g. `http://192.168.0.20:3002`).
   You should see the home page of the BTC RPC Explorer.
 
   ![BTC RPC Explorer home screen with dark theme](images/6B_btcrpcexplorer_home.png)
@@ -202,7 +224,7 @@ In order to do that we create a systemd unit that starts the service on boot dir
   Description=BTC RPC Explorer
   After=network.target bitcoind.service
 
-  # If you use an Electrum server, uncomment the following line and make sure to use the correct the service
+  # If you use Electrs server, uncomment the following line
   # After=electrs.service
 
   [Service]
@@ -257,7 +279,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
   > abcdefg..............xyz.onion
   ```
 
-* With the [Tor browser](https://www.torproject.org), you can access this onion address from any device.
+* With the [Tor browser](https://www.torproject.org){:target="_blank"}, you can access this onion address from any device.
   Please be aware that this access is not password protected and should not be shared widely.
 
 **Congratulations!**
@@ -267,7 +289,7 @@ You now have the BTC RPC Explorer running to check the Bitcoin network informati
 
 ## Upgrade
 
-Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/releases){:target="_blank"} should be straight-forward, but make sure to check out the [change log](https://github.com/janoside/btc-rpc-explorer/blob/master/CHANGELOG.md){:target="_blank"} first.
+Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/releases){:target="_blank"} is straight-forward, but make sure to check out the [change log](https://github.com/janoside/btc-rpc-explorer/blob/master/CHANGELOG.md){:target="_blank"} first.
 
 * From user "admin", stop the service and open a "btcrpcexplorer" user session.
 
@@ -276,12 +298,13 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
   $ sudo su - btcrpcexplorer
   ```
 
-* Fetch the latest GitHub repository information and check out the new release:
+* Fetch the latest GitHub repository information, display the latest release tag (`v3.2.0` in this example), and update:
 
   ```sh
   $ cd ~/btc-rpc-explorer
   $ git fetch
-  $ git checkout v3.1.0
+  $ git describe --tags
+  $ git checkout v3.2.0
   $ npm install
   $ exit
   ```
