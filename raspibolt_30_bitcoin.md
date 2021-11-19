@@ -1,13 +1,14 @@
 ---
 layout: default
-title: Bitcoin
-nav_order: 30
+title: Bitcoin Core
+nav_order: 10
+parent: Bitcoin
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-# Bitcoin
+# Bitcoin Core
 {: .no_toc }
 
-Let's get your Bitcoin full node operational.
+We install [Bitcoin Core](https://bitcoin.org/en/bitcoin-core/){:target="_blank"}, the reference client implementation of the Bitcoin network.
 
 ---
 
@@ -19,173 +20,209 @@ Let's get your Bitcoin full node operational.
 
 ---
 
-## Bitcoin Core
+## This may take some time
 
-The base of a sovereign Bitcoin node is a fully validating Bitcoin client.
-We are using [Bitcoin Core](https://bitcoin.org/en/bitcoin-core/){:target="_blank"}, the reference implementation, but not the only option available.
-This application will download the whole blockchain from other peers and validate every single transaction that ever happened.
-After validation, the client can check all future transactions whether they are valid or not.
-
-The validated blocks are also the base layer for other applications, like Electrs (to use with hardware wallets) or LND (the Lightning Network client).
-
-Be already warned that the downloading and validation of all transactions since 2009, more than 600'000 blocks with a size of over 300 GB, is not an easy task.
-It's great that the Raspberry Pi 4 can do it, even if it takes a few days, as this was simply not possible with the Raspberry Pi 3.
+Bitcoin Core will download the full Bitcoin blockchain, and validate all transactions since 2009.
+We're talking more than 700'000 blocks with a size of over 400 GB, so this is not an easy task.
+It's great that the Raspberry Pi 4 can do it, even if it takes a few days, as this was simply not possible with earlier models.
 
 ---
 
 ## Installation
 
-🚨 **Familiarize yourself with signature verification**
-An important part of the trust-minimization setup is to verify signatures of software you install.
-Take your time to read through [a detailed guide](https://medium.com/@lukedashjr/how-to-securely-install-bitcoin-9bfeca7d3b2a) from Luke-Jr.
-
-We download the latest Bitcoin Core binaries (the application) and compare the file with the signed checksum.
+We download the latest Bitcoin Core binary (the application) and compare this file with the signed checksum.
 This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
-* Login as "admin" and change to the `tmp` directory, which is cleared on reboot.
+* Login as "admin" and change to a temporary directory which is cleared on reboot.
 
   ```sh
-  cd /tmp
+  $ cd /tmp
   ```
 
-* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download){:target="_blank"} (ARM Linux 32 bit), they change with each update.
-  Then run the following  commands (with adjusted filenames) and check the output where indicated:
+* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download){:target="_blank"} (ARM Linux 64 bit), they change with each update.
 
   ```sh
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/bitcoin-22.0-arm-linux-gnueabihf.tar.gz
+  $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/bitcoin-22.0-aarch64-linux-gnu.tar.gz
+
   # download the list of cryptographic checksum
   $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS
+
   # download the signatures attesting to validity of the checksums
   $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS.asc
+  ```
 
-  # check that the reference checksum matches the real checksum
-  # (ignore the "lines are improperly formatted" warning)
+* Check that the reference checksum in file `SHA256SUMS` matches the checksum calculated by you (ignore the "lines are improperly formatted" warning)
+
+  ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-22.0-arm-linux-gnueabihf.tar.gz: OK
+  > bitcoin-22.0-aarch64-linux-gnu.tar.gz: OK
+  ```
 
-  # Bitcoin releases are signed by a number of individuals, each with a unique public key
-  # in order to recognize the validity of signatures, you must use GPG to load these public keys locally
-  # you can find many developer keys listed in the builder-keys repository, which you can then load into your GPG key database
+* Bitcoin releases are signed by a number of individuals, each using their own key.
+  In order to verify the validity of these signatures, you must first import the corresponding public keys.
+  You can find many developer keys listed in the builder-keys repository, which you can then load into your GPG key database.
+
+  ```sh
   $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/builder-keys/keys.txt
-  $ while read fingerprint keyholder_name; do gpg --keyserver hkps://keys.openpgp.org --recv-keys ${fingerprint}; done < ./keys.txt
-  $ gpg --refresh-keys
-  # verify that the checksums file is PGP signed by the release signing keys
+  $ while read fingerprint keyholder_name; do gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys ${fingerprint}; done < ./keys.txt
+  ```
+
+* Verify that the checksums file is cryptographically signed by the release signing keys.
+  The following command prints signature checks for each of the public keys that signed the checksums.
+  Each signature will show the following text:
+
+  ```sh
   $ gpg --verify SHA256SUMS.asc
-  # the command above will output a series of signature checks for each of the public keys that signed the checksums
-  # each signature will show the following text:
   > gpg: Good signature from ...
   > Primary key fingerprint: ...
   ```
 
-* Extract the Bitcoin Core binaries, install them and check the version.
+* If you're satisfied with the signature check, extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf bitcoin-22.0-arm-linux-gnueabihf.tar.gz
+  $ tar -xvf bitcoin-22.0-aarch64-linux-gnu.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-22.0/bin/*
   $ bitcoind --version
-  > Bitcoin Core version v22.0
+  > Bitcoin Core version v22.0.0
   ```
 
-_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
-<script id="asciicast-Ivlf954BGJNmOuJoj7FQ6qNKt" src="https://asciinema.org/a/Ivlf954BGJNmOuJoj7FQ6qNKt.js" async></script>
+🔍 *Verifying signed software is important, not only for Bitcoin.
+You can read more on [How to securely install Bitcoin](https://medium.com/@lukedashjr/how-to-securely-install-bitcoin-9bfeca7d3b2a){:target="_blank"} by Luke-Jr.*
 
-### Prepare data directory
 
-We use the Bitcoin daemon, called `bitcoind`, that runs in the background without user interface.
-It stores all data in a the directory `/home/bitcoin/.bitcoin`.
-Instead of creating a real directory, we create a link that points to a directory on the external hard disk.
+### Create data folder
 
-* Change to user “bitcoin” and add a symbolic link that points to the external drive.
+Bitcoin Core uses by default the folder `.bitcoin` in the user's home.
+Instead of creating this directory, we create a data directory in the general data location `/mnt/data` and link to it.
+
+* Switch to user "bitcoin"
 
   ```sh
   $ sudo su - bitcoin
-  $ ln -s /mnt/ext/bitcoin /home/bitcoin/.bitcoin
   ```
 
-* Navigate to the home directory and check the symbolic link (the target must not be red).
-  The content of this directory will actually be on the external drive.
+* Create the Bitcoin data folder
+
+  ```sh
+  $ mkdir /mnt/data/bitcoin
+  ```
+
+* Create the symbolic link `.bitcoin` that points to that directory
+
+  ```sh
+  $ ln -s /mnt/data/bitcoin /home/bitcoin/.bitcoin
+  ```
+
+* Display the link and check that it is not shown in red (this would indicate an error)
 
   ```sh
   $ ls -la
   ```
 
-<script id="asciicast-zPnMRU6nHPdZZYpFc0kR2vtVs" src="https://asciinema.org/a/zPnMRU6nHPdZZYpFc0kR2vtVs.js" async></script>
+### Generate access credentials
+
+For other programs to query Bitcoin Core they need the proper access credentials.
+To avoid storing username and password in a configuration file in plaintext, the password is hashed.
+This allows Bitcoin Core to accept a password, hash it and compare it to the stored hash, while it is not possible to retrieve the original password.
+
+Another option to get access credentials is through the `.cookie` file in the Bitcoin data directory.
+This is created automatically and can be read by all users that are members of the "bitcoin" group.
+
+Bitcoin Core provides a simple Python program to generate the configuration line for the config file.
+
+* In the Bitcoin folder, download the RPCAuth program
+
+  ```sh
+  $ cd .bitcoin
+  $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/share/rpcauth/rpcauth.py
+  ```
+
+* Run the script with the Python3 interpreter, providing username (`raspibolt`) and your `password [B]` as arguments.
+
+  🚨 All commdands entered are stored in the bash history.
+  But we don't want the password to be stored where anyone can find it.
+  For this, put a space (` `) in front of the command shown below.
+
+  ```sh
+  $  python3 rpcauth.py raspibolt YourPasswordB
+  > String to be appended to bitcoin.conf:
+  > rpcauth=raspibolt:00d8682ce66c9ef3dd9d0c0a6516b10e$c31da4929b3d0e092ba1b2755834889f888445923ac8fd69d8eb73efe0699afa
+  ```
+
+* Copy the `rpcauth` line, we'll need to paste it into the Bitcoin config file.
 
 ### Configuration
 
-Now, the configuration file for bitcoind needs to be created.
-Still as user "bitcoin", open it with Nano and paste the configuration below. Save and exit.
+Now, the configuration file for `bitcoind` needs to be created.
+We'll also set the proper access permissions.
 
-```sh
-$ nano /mnt/ext/bitcoin/bitcoin.conf
-```
+* Still as user "bitcoin", open it with Nano and paste the configuration below.
+  Replace the whole line starting with "rpcauth=" with the connection string you just generated.
+  Save and exit.
 
-```ini
-# RaspiBolt: bitcoind configuration
-# /mnt/ext/bitcoin/bitcoin.conf
+  ```sh
+  $ nano /home/bitcoin/.bitcoin/bitcoin.conf
+  ```
 
-# Bitcoin daemon
-server=1
-txindex=1
+  ```sh
+  # RaspiBolt: bitcoind configuration
+  # /home/bitcoin/.bitcoin/bitcoin.conf
 
-# Network
-listen=1
-listenonion=1
-proxy=127.0.0.1:9050
-bind=127.0.0.1
+  # Bitcoin daemon
+  server=1
+  txindex=1
 
-# Connections
-rpcuser=raspibolt
-rpcpassword=PASSWORD_[B]
-zmqpubrawblock=tcp://127.0.0.1:28332
-zmqpubrawtx=tcp://127.0.0.1:28333
+  # File permissions, necessary for cookie authentication
+  sysperms=1
+  disablewallet=1
 
-# Raspberry Pi optimizations
-maxconnections=40
-maxuploadtarget=5000
+  # Network
+  listen=1
+  listenonion=1
+  proxy=127.0.0.1:9050
+  bind=127.0.0.1
 
-# Initial block download optimizations
-dbcache=2000
-blocksonly=1
-```
+  # Connections
+  rpcauth=<replace with your own auth line generated by rpcauth.py>
+  zmqpubrawblock=tcp://127.0.0.1:28332
+  zmqpubrawtx=tcp://127.0.0.1:28333
+  whitelist=download@127.0.0.1          # for Electrs
 
-🚨 **Change the rpcpassword** to your secure `password [B]`.
+  # Raspberry Pi optimizations
+  maxconnections=40
+  maxuploadtarget=5000
 
-<script id="asciicast-gQJ1dSWPdcavFcZs5PRuYS4Ad" src="https://asciinema.org/a/gQJ1dSWPdcavFcZs5PRuYS4Ad.js" async></script>
+  # Initial block download optimizations
+  dbcache=2000
+  blocksonly=1
+  ```
 
-🔍 *more: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments){:target="_blank"} in Bitcoin Wiki*
+  🔍 *more: [configuration options](https://en.bitcoin.it/wiki/Running_Bitcoin#Command-line_arguments){:target="_blank"} in Bitcoin Wiki*
 
-#### Transaction indexing (optional)
+* Set permissions: only the user 'bitcoin' and members of the 'bitcoin' group can read it
 
-By default the above configuration enables transaction indexing.
-This allows other applications to query Bitcoin Core about any transaction.
-One example that needs this feature is the [BTC RPC Explorer](raspibolt_6B_btc_rpc_explorer.md), your personal blockchain explorer.
+  ```sh
+  $ chmod 640 /home/bitcoin/.bitcoin/bitcoin.conf
+  ```
 
-If you know that you don't need this feature, you can delete the line `txindex=1` in the configuration above.
-This results in a faster initial blockchain verification, and saves about 20 GB of storage.
-If in doubt, just leave it as-is, otherwise you might need to enable it later and reindex the whole blockchain again.
+  🔍 *more: [The Chmod Command and Linux File Permissions Explained](https://www.makeuseof.com/tag/chmod-command-linux-file-permissions/){:target="_blank"}
+
 
 ---
 
 ## Running bitcoind
 
 Still logged in as user "bitcoin", let's start "bitcoind" manually.
-Monitor the log file a few minutes to see if it works fine (it may stop at "dnsseed thread exit", that's ok).
-Stop "bitcoind" with `Ctrl-C`.
 
-```sh
-$ bitcoind
-```
+* Start "bitcoind".
+  Monitor the log file a few minutes to see if it works fine (it may stop at "dnsseed thread exit", that's ok).
 
-_Note: the following screencast skips longer waiting times, the initial start is longer in real life._
+  ```sh
+  $ bitcoind
+  ```
 
-<script id="asciicast-U8pYWC4noOazqJgXhoUzDoafC" src="https://asciinema.org/a/U8pYWC4noOazqJgXhoUzDoafC.js" async></script>
-
-### Autostart on boot
-
-The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in.
-We use “systemd“, a daemon that controls the startup process using configuration files.
+* Once everything looks ok, stop "bitcoind" with `Ctrl-C`
 
 * Exit the “bitcoin” user session back to user “admin”
 
@@ -193,14 +230,26 @@ We use “systemd“, a daemon that controls the startup process using configura
   $ exit
   ```
 
+* Link the Bitcoin data directory from the "admin" user home directory as well.
+  This allows "admin" to work with bitcoind directly, for example using the command `bitcoin-cli`
+
+  ```sh
+  $ ln -s /mnt/data/bitcoin /home/admin/.bitcoin
+  ```
+
+### Autostart on boot
+
+The system needs to run the bitcoin daemon automatically in the background, even when nobody is logged in.
+We use “systemd“, a daemon that controls the startup process using configuration files.
+
 * Create the configuration file in the Nano text editor and copy the following paragraph.
   Save and exit.
 
-  ```sh
+  ```
   $ sudo nano /etc/systemd/system/bitcoind.service
   ```
 
-  ```ini
+  ```sh
   # RaspiBolt: systemd unit for bitcoind
   # /etc/systemd/system/bitcoind.service
 
@@ -215,43 +264,33 @@ We use “systemd“, a daemon that controls the startup process using configura
 
   ExecStart=/usr/local/bin/bitcoind -daemon \
                                     -pid=/run/bitcoind/bitcoind.pid \
-                                    -conf=/mnt/ext/bitcoin/bitcoin.conf \
-                                    -datadir=/mnt/ext/bitcoin
-
+                                    -conf=/home/bitcoin/.bitcoin/bitcoin.conf \
+                                    -datadir=/home/bitcoin/.bitcoin
 
   # Process management
   ####################
-
   Type=forking
   PIDFile=/run/bitcoind/bitcoind.pid
   Restart=on-failure
   TimeoutSec=300
   RestartSec=30
 
-
   # Directory creation and permissions
   ####################################
-
-  # Run as bitcoin:bitcoin
   User=bitcoin
-  Group=bitcoin
+  UMask=0027
 
   # /run/bitcoind
   RuntimeDirectory=bitcoind
   RuntimeDirectoryMode=0710
 
-
   # Hardening measures
   ####################
-
   # Provide a private /tmp and /var/tmp.
   PrivateTmp=true
 
   # Mount /usr, /boot/ and /etc read-only for the process.
   ProtectSystem=full
-
-  # Deny access to /home, /root and /run/user
-  ProtectHome=true
 
   # Disallow the process and all of its children to gain
   # new privileges through execve().
@@ -274,37 +313,43 @@ We use “systemd“, a daemon that controls the startup process using configura
   $ sudo systemctl enable bitcoind.service
   ```
 
-* Link the Bitcoin data directory in the user "admin" home.
-  As a member or the group "bitcoin", admin has read-only access to certain files.
-
-  ```sh
-  $ ln -s /mnt/ext/bitcoin/ /home/admin/.bitcoin
-  ```
-
 * Restart the Raspberry Pi
 
   ```sh
   $ sudo reboot
   ```
 
-<script id="asciicast-FY2i276fqYasiaBPr0bktHehE" src="https://asciinema.org/a/FY2i276fqYasiaBPr0bktHehE.js" async></script>
-
 ### Verification of bitcoind operations
 
-After rebooting, the bitcoind should start and begin to sync and validate the Bitcoin blockchain.
+After rebooting, "bitcoind" should start and begin to sync and validate the Bitcoin blockchain.
 
 * Wait a bit, reconnect via SSH and login with the user “admin”.
 
-* Check the status of the bitcoin daemon that was started by systemd (exit with `Ctrl-C`)
+* Check the status of the bitcoin daemon that was started by "systemd".
+  Exit with `Ctrl-C`
 
   ```sh
   $ systemctl status bitcoind.service
+  > * bitcoind.service - Bitcoin daemon
+  >      Loaded: loaded (/etc/systemd/system/bitcoind.service; enabled; vendor preset: enabled)
+  >      Active: active (running) since Thu 2021-11-25 22:50:59 GMT; 7s ago
+  >     Process: 2316 ExecStart=/usr/local/bin/bitcoind -daemon -pid=/run/bitcoind/bitcoind.pid -conf=/home/bitcoin/.bitcoin/bitcoin.> conf -datadir=/home/bitcoin/.bitcoin (code=exited, status=0/SUCCESS)
+  >    Main PID: 2317 (bitcoind)
+  >       Tasks: 12 (limit: 4164)
+  >         CPU: 7.613s
+  >      CGroup: /system.slice/bitcoind.service
+  >              `-2317 /usr/local/bin/bitcoind -daemon -pid=/run/bitcoind/bitcoind.pid -conf=/home/bitcoin/.bitcoin/bitcoin.conf > -datadir=/home/bitcoin/.bitcoin
+  >
+  > Nov 25 22:50:59 raspibolt3 systemd[1]: Starting Bitcoin daemon...
+  > Nov 25 22:50:59 raspibolt3 bitcoind[2316]: Bitcoin Core starting
+  > Nov 25 22:50:59 raspibolt3 systemd[1]: Started Bitcoin daemon.
   ```
 
-* See bitcoind in action by monitoring its log file (exit with `Ctrl-C`)
+* See "bitcoind" in action by monitoring its log file.
+  Exit with `Ctrl-C`
 
   ```sh
-  $ sudo tail -f /mnt/ext/bitcoin/debug.log
+  $ tail -f /home/bitcoin/.bitcoin/debug.log
   ```
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain
@@ -319,11 +364,12 @@ After rebooting, the bitcoind should start and begin to sync and validate the Bi
   * Among other infos, the “verificationprogress” is shown.
     Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
 
-<script id="asciicast-ij6r5XKR4Hx2Nr7ViiO7M09kf" src="https://asciinema.org/a/ij6r5XKR4Hx2Nr7ViiO7M09kf.js" async></script>
+---
 
-🚨 **Please let Bitcoin Core sync fully before proceeding.**
+## Bitcoin Core is syncing
 
-This can take up to a week when using a Raspberry Pi 4, depending mostly on your external drive (SSD good, HDD bad; USB3 good, USB2 bad).
+This can take between one day and a week, depending mostly on your external drive (SSD good, HDD bad; USB3 good, USB2 very bad).
+It's best to wait until the synchronization is complete before going ahead.
 
 ### Explore bitcoin-cli
 
@@ -341,23 +387,21 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 * Also, check out the [bitcoin-cli reference](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list){:target="_blank"}
 
----
-
-## Reduce 'dbcache' after full sync
+### Reduce 'dbcache' after full sync
 
 Once Bitcoin Core is fully synced, we can reduce the size of the database cache.
 A bigger cache speeds up the initial block download, now we want to reduce memory consumption to allow LND and Electrs to run in parallel.
 We also now want to enable the node to listen to and relay transactions.
 
 * As user "admin", comment the following lines out (add a `#` at the beginning) in the Bitcoin settings file.
-  Bitcoin Core will then just use the default of 300 MB instead of 2 GB.
+  Bitcoin Core will then just use the default cache size of 300 MB instead of 2 GB.
   Save and exit.
 
   ```sh
-  $ sudo nano /mnt/ext/bitcoin/bitcoin.conf
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
   ```
 
-  ```ini
+  ```
   #dbcache=2000
   #blocksonly=1
   ```
@@ -370,11 +414,28 @@ We also now want to enable the node to listen to and relay transactions.
 
 ---
 
-## Bitcoin Core upgrade
+## For the future: upgrade Bitcoin Core
 
-If you want to upgrade to a new release of Bitcoin Core in the future, check out the FAQ section:
-[How to upgrade Bitcoin Core](raspibolt_faq.md#how-to-upgrade-bitcoin-core)
+The latest release can be found on the Github page of the Bitcoin Core project:
+
+<https://github.com/bitcoin/bitcoin/releases>
+
+Always read the RELEASE NOTES first!
+When upgrading, there might be breaking changes, or changes in the data structure that need special attention.
+
+* There's no need to stop the application.
+  Simply install the new version and restart the service.
+
+* Download, verify, extract and install the Bitcoin Core binaries as described in the [Bitcoin section](raspibolt_30_bitcoin.md) of this guide.
+
+* Restart the Bitcoin Core systemd unit
+
+  ```sh
+  $ sudo systemctl restart bitcoind
+  ```
+
+<br /><br />
 
 ---
 
-Next: [Lightning >>](raspibolt_40_lnd.md)
+Next: [Electrum >>](raspibolt_50_electrs.md)
