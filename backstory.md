@@ -4,7 +4,7 @@ title: Backstory
 nav_order: 10
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD040 -->
-{% include_relative raspibolt_include_metatags.md %}
+{% include_relative include_metatags.md %}
 
 # Backstory
 {: .no_toc }

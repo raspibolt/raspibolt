@@ -4,7 +4,7 @@ title: Intro
 nav_order: 1
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-{% include_relative raspibolt_include_metatags.md %}
+{% include_relative include_metatags.md %}
 
 ![RaspiBolt Logo](images/raspibolt3-logo.png)
 
@@ -110,4 +110,4 @@ If you're looking for an older version of this guide, you can still check out th
 
 ---
 
-Get started: [Backstory >>](raspibolt_backstory.md)
+Get started: [Backstory >>](backstory.md)

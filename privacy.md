@@ -5,7 +5,7 @@ nav_order: 50
 parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-{% include_relative raspibolt_include_metatags.md %}
+{% include_relative include_metatags.md %}
 
 # Privacy
 {: .no_toc }
@@ -144,4 +144,4 @@ A few examples:
 
 ---
 
-Next: [Bitcoin >>](raspibolt_section_bitcoin.md)
+Next: [Bitcoin >>](bitcoin.md)

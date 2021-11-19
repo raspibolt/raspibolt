@@ -5,7 +5,7 @@ nav_order: 20
 parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-{% include_relative raspibolt_include_metatags.md %}
+{% include_relative include_metatags.md %}
 
 # Operating system
 {: .no_toc }
@@ -93,4 +93,4 @@ It should display a "Success" message after.
 
 ---
 
-Next: [Remote access >>](raspibolt_20_remote-access.md)
+Next: [Remote access >>](remote-access.md)
