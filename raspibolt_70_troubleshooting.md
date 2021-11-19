@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Troubleshooting
-nav_order: 80
+nav_order: 210
 ---
 # Troubleshooting
 {: .no_toc }
