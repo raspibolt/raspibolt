@@ -2,12 +2,15 @@
 layout: default
 title: Preparations
 nav_order: 10
+parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD040 -->
+{% include_relative raspibolt_include_metatags.md %}
+
 # Preparations
 {: .no_toc }
 
-Let's get all the required parts and assemble the Raspberry Pi.
+Let's get all the necessary hardware parts and prepare some passwords.
 
 ---
 
@@ -19,52 +22,49 @@ Let's get all the required parts and assemble the Raspberry Pi.
 
 ---
 
-This guide builds on the easily available and very flexible Raspberry Pi 4.
-This amazing piece of hardware is a tiny computer-on-a-chip, costs about $60 and consumes very little energy.
+## Raspberry Pi & other hardware platforms
+This guide builds on the readily available and very flexible Raspberry Pi 4.
+It is a fantastic piece of hardware, a tiny computer-on-a-chip that costs about $60 and consumes very little energy.
+
+While the Raspberry Pi is the best choice for most, this guide also works with other computing platforms, clouds servers, or virtual machines that run Debian.
+It only uses standard Debian instructions.
 
 ## Hardware requirements
 
-This guide is written for the fastest Raspberry Pi, as it makes a lot of hacks and workarounds obsolete.
-You need
+You need the following hardware:
 
-* Raspberry Pi 4, with 4 GB RAM
-* microSD card: 8 GB or more, incl. adapter to your regular computer
-* strong USB power adapter: 5V/3A + USB-C cable
-* external hard disk: 500 GB or more (1 TB recommended)
+* Raspberry Pi 4, with 4+ GB RAM
+* official Raspberry Pi power adapter: other adapters are a common cause for reliability issues
+* external storage: 1+ TB with USB3, an SSD is recommended
 * optional: Raspberry Pi case
 
-![Raspberry Pi](images/10_raspberrypi_hardware.png)
+Whaaat? No microSD card? Yes, we'll boot the operating system directly to the external drive.
 
-To run a Lightning node, the full Bitcoin blockchain must be stored locally, which is over 300 GB and growing.
-You can buy a cheap hard disk enclosure and reuse an old 500 GB hard disk or larger.  If you also plan to run Electrs and the Block Explorer, you should use a 1TB disk or larger.
-I recommend getting a modern 2.5" SSD that can be powered through the USB connection to the Pi directly, which also speeds up initial sync time significantly.
-
----
-
-## Other computing platforms
-
-This guide works with most Debian-based Linux distributions, be it on other computing platforms, a real laptop or a virtual machine.
-Only the "Raspberry Pi" part is quite specific, but easily adaptable to other environments.
-Over time, it would be great to describe the differences that need to be considered when using other environments like [Odroid](https://www.hardkernel.com/), [Pine64](https://www.pine64.org/) or [Libre Computer](https://libre.computer/).
+The complete Bitcoin blockchain must be stored locally to run a Lightning node, currently about 500 GB and growing.
+You can buy a cheap hard disk enclosure and reuse an old hard disk.
+We recommend getting a modern 2.5" SSD that can be powered through the USB connection to the Pi directly.
+This also speeds up the initial sync time for the blockchain significantly.
 
 ---
 
 ## Write down your passwords
 
-You will need several passwords and I find it easiest to write them all down in the beginning, instead of bumping into them throughout the guide.
-They should be unique and very secure, at least 12 characters in length. Do **not use uncommon special characters**, spaces or quotes (‘ or “).
+You will need several passwords, and it's easiest to write them all down in the beginning, instead of bumping into them throughout the guide.
+They should be unique and very secure, at least 12 characters in length. Do **not use uncommon special characters**, spaces, or quotes (‘ or “).
 
 ```console
 [ A ] Master user password
 [ B ] Bitcoin RPC password
 [ C ] LND wallet password
-[ D ] LND seed password (optional)
 ```
 
-![xkcd: Password Strength](images/20_xkcd_password_strength.png)
+![xkcd: Password Strength](images/preparations_xkcd.png)
 
-If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/) comic is funny and contains a lot of truth.
-Store a copy of your passwords somewhere safe (preferably in an open source password manager like [KeePassXC](https://keepassxc.org/)) and keep your original notes out of sight once your system is up and running.
+If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/){:target="_blank"} comic is funny and contains a lot of truth.
+Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}), or whaterver password manager you're already using, and keep your original notes out of sight once your system is up and running.
+
+<br /><br />
 
 ---
-Next: [Raspberry Pi >>](raspibolt_20_pi.md)
+
+Next: [Operating system >>](raspibolt_20_pi.md)
