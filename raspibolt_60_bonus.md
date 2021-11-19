@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Bonus Section
-nav_order: 60
+nav_order: 100
 has_children: true
 has_toc: false
 ---
@@ -97,12 +97,6 @@ Make your command line prompt shine with a golden ฿ and use more colors overal
 
 Control your Lightning node from a different computer within you network, eg. from a Windows machine.
 
-## [System recovery](raspibolt_65_system-recovery.md)
-
-Difficulty: easy
-
-In case your microSD card gets corrupted or you brick your node, it's handy to have a quick recovery image at hand. It's not a full backup solution, but allows a system recovery.
-
 ## [Additional scripts: show balance & channels](raspibolt_67_additional-scripts.md)
 
 Difficulty: easy
@@ -113,7 +107,7 @@ These additional bash scripts display a balance overview (on-chain & in channels
 
 *Difficulty: advanced*
 
-[JoinMarket](https://github.com/JoinMarket-Org/joinmarket-clientserver) is a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions. It includes it's own Bitcoin wallet, backed by `bitcoind`, and uses market maker / market taker model, which means that either you pay small fee for having CoinJoin privacy fast (taker) or just keep software running and then you get paid for providing liquidity for CoinJoin's, in addition gaining privacy in a longer periods of time (maker). 
+[JoinMarket](https://github.com/JoinMarket-Org/joinmarket-clientserver) is a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions. It includes it's own Bitcoin wallet, backed by `bitcoind`, and uses market maker / market taker model, which means that either you pay small fee for having CoinJoin privacy fast (taker) or just keep software running and then you get paid for providing liquidity for CoinJoin's, in addition gaining privacy in a longer periods of time (maker).
 
 Even if you aren't interested in privacy of your coins, you can use JoinMarket for some little passive income from your bitcoins, without giving up your private keys.
 
