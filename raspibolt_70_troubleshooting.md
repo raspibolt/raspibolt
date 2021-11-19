@@ -12,11 +12,15 @@ nav_order: 80
 1. TOC
 {:toc}
 
+---
+
 The aim of this additional troubleshooting guide is to help you debug your system, verify all important configurations and find the frikkin' little problem that keeps you from running the perfect Lightning node.
 
 Where possible, I'll link to the relevant part of the guide. If you see any discrepancies from the expected output, double check how you set up your node in that specific area.
 
-### [General FAQ](raspibolt_faq.md)
+---
+
+## [General FAQ](raspibolt_faq.md)
 
 I collected frequent questions not directly related with issues in a separate [General FAQ](raspibolt_faq.md) section:
 
@@ -27,7 +31,9 @@ I collected frequent questions not directly related with issues in a separate [G
 * How to upgrade Bitcoin Core or LND?
 * Why do I need the 32 bit version of Bitcoin when I have a Raspberry Pi 4 with a 64 bit processor?
 
-### Issues / Knowledge Base on Github
+---
+
+## Issues / Knowledge Base on Github
 
 When running into problems, you (and many before you) can open an issue on GitHub.
 https://github.com/raspibolt/raspibolt/issues
@@ -36,81 +42,74 @@ https://github.com/raspibolt/raspibolt/issues
 2. Check the GitHub Issues if it is a known problem. Maybe somebody already solved it?
 3. Open a new Issue and provide as much information to reproduce the problem as possible.
 
-### Hardware & operating system
+---
 
-#### Can you login using SSH?
+## Hardware & operating system
+
+### Can you login without using SSH?
 
 If you somehow locked yourself out of your Pi, you can connect it to a display and keyboard to log in directly without any certificate.
 
-#### Do you have a compatible Raspberry Pi?
+---
 
-```
-$ cat /proc/device-tree/model
-Raspberry Pi 3 Model B Rev 1.2
+### Fix bad USB3 performance
 
-$ uname -a
-Linux RaspiBolt 4.14.71-v7+ #1145 SMP Fri Sep 21 15:38:35 BST 2018 armv7l GNU/Linux
-```
+If the speed of your USB3 drive tested with `hdparm` in the [System configuration](system-configuration.md) section is not acceptable, we need to configure the USB driver to ignore the UAS interface.
 
-Important is that your Raspberry Pi uses the **armv7** CPU architecture.
+* Get the Vendor and Product ID for your USB3 drive.
+  Run the following command and look for the name of your drive or adapter.
+  The relevant data is printed as `idVendor:idProduct` (`0bda:9210` in this example).
+  Make a note of these values.
 
-#### Is you root filesystem read-only?
+  ```sh
+  $ lsusb
+  > Bus 002 Device 002: ID 0bda:9210 Realtek Semiconductor Corp. RTL9210 M.2 NVME Adapter
+  > ...
+  ```
 
-If you get an error like `unable to ..... : Read-only file system`, this points to a faulty microSD card. If linux detects a corrupt root filesystem, it drops into read-only mode. Try to flash the microSD card again, or use a different card.
+The additional configuration parameters (called "quirks") for the USB driver must be passed to the Linux kernel during the boot process.
 
-#### Is the hard disk mounted?
+* Open the bootloader configuration file
 
-Check if the hard disk has been mounted to `/mnt/ext` and if the size is about right. The other lines can vary on your Pi.
+  ```sh
+  $ sudo nano /boot/cmdline.txt
+  ```
 
-```
-admin@RaspiBolt:~ $ df -h
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/root        15G  2.9G   12G  21% /
-devtmpfs        484M     0  484M   0% /dev
-tmpfs           489M     0  489M   0% /dev/shm
-tmpfs           489M   50M  440M  11% /run
-tmpfs           5.0M  4.0K  5.0M   1% /run/lock
-tmpfs           489M     0  489M   0% /sys/fs/cgroup
-/dev/mmcblk0p1   43M   22M   21M  52% /boot
-/dev/sda1       458G  232G  203G  54% /mnt/ext
-tmpfs            98M     0   98M   0% /run/user/1001
-```
+* At the start of the line of parameters, add the text `usb-storage.quirks=aaaa:bbbb:u` where `aaaa:bbbb` are the values you noted down from the `lsusb` command above.
+  Make sure that there is a single space character (` `) between our addition and the next parameter.
+  Save and exit.
 
-#### Errors resulting from a defective hard disk, eg. when copying the blockchain?
+  ```sh
+  usb-storage.quirks=0bda:9210:u ..............
+  ```
 
-To check the file system of the hard disk, you need to unmount it, and as we also have the swapfile on the hard disk, restart  without `bitcoind` / `lnd` autostart.
+  ℹ️ *Note:* if you have multiple drives that need these "quirks", add them all to the single directive, separated by commas
 
-Disable the services and add a `#` in front of your mount entry in `/etc/fstab`, save & exit and reboot.
+  ```sh
+  usb-storage.quirks=0bda:9210:u,152d:0578:u ..............
+  ```
 
-```
-$ sudo systemctl disable bitcoind
-$ sudo systemctl disable lnd
-$ sudo nano /etc/fstab
-#UUID=[your_hdd_UUID] /mnt/ext ext4 noexec,defaults 0 0
-$ sudo shutdown -r now
-```
+* Reboot your node
 
-Now, let's check if the hdd is really not mounted any more (no entry for `/mnt/ext`), get the NAME of the device (eg. `sda1`) and check the file system.
+  ```sh
+  $ sudo reboot
+  ```
 
-```
-$ df -h
-$ lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL
-$ sudo fsck /dev/sda1 -f
-```
+* Log in again as "admin" and test the USB3 drive performance again
 
-Try to fix any errors that might be detected. If the hard disk is physically faulty, a replacement might be necessary.
+  ```sh
+  $ sudo hdparm -t --direct /dev/sda2
+  ```
 
-To get back up and running, reverse the first steps:
+You should see a significant increase in performance.
+If the test still shows a very slow read speed, your drive or USB3 adapter might not be compatible with the Raspberry Pi.
+In that case we recommend visiting the [Raspberry Pi Troubleshooting forum](https://forums.raspberrypi.com/viewforum.php?f=28) or simply trying out hardware alternatives.
 
-```
-$ sudo systemctl enable bitcoind
-$ sudo systemctl enable lnd
-$ sudo nano /etc/fstab
-UUID=[your_hdd_UUID] /mnt/ext ext4 noexec,defaults 0 0
-$ sudo shutdown -r now
-```
+🔍 *more: [Raspberry Pi forum: bad performance with USB3 SSDs](https://forums.raspberrypi.com/viewtopic.php?f=28&t=245931)*
 
-#### Are ip ports accessible through the firewall?
+---
+
+### Are ip ports accessible through the firewall?
 
 The most important ports are 22, 8333, 9735 and 1900/udp. Others can be necessary for bonus guides, and there may be additional ports open on your Pi (eg. the `(v6)` variants).
 
@@ -131,9 +130,11 @@ Anywhere                   ALLOW       192.168.0.0/24 1900/udp    # allow local 
 10009                      ALLOW       192.168.0.0/24             # allow LND grpc from local LAN
 ```
 
-### Users & directories
+---
 
-#### Have all users and home directories been created?
+## Users & directories
+
+### Have all users and home directories been created?
 
 ```
 $ cat /etc/passwd
@@ -143,7 +144,9 @@ admin:x:1001:1001:,,,:/home/admin:/bin/bash
 bitcoin:x:1002:1002:,,,:/home/bitcoin:/bin/bash
 ```
 
-#### Are the application directories created and linked correctly?
+---
+
+### Are the application directories created and linked correctly?
 
 It's important that the following symbolic links are in the "bitcoin" users' home directory. The should be shown light & dark blue, and must not be red (symbolizing a broken link).
 
@@ -208,9 +211,9 @@ Don't forget to exit the "bitcoin" user session:
 $ exit
 ```
 
+---
 
-
-### Bitcoin Core
+## Bitcoin Core
 
 First, let's disable the systemd autostart and reboot the Pi to run everything manually.
 
@@ -341,8 +344,6 @@ $ bitcoin-cli stop
 $ exit
 ```
 
-
-
 Back to normal operations: enable & start the services again.
 
 ```
@@ -352,9 +353,9 @@ $ sudo systemctl enable lnd
 $ sudo systemctl start lnd
 ```
 
+---
 
-
-### LND
+## LND
 
 Let's check the configuration and operations of LND.
 
@@ -407,7 +408,7 @@ $2 lncli unlock
 
 Back in your first SSH session, the wallet is shown as unlocked and LND starts connecting to the network (see example output below). Any potential errors will be shown here.
 
-```-----
+```sh
 2018-11-25 19:42:57.143 [INF] LNWL: Opened wallet
 2018-11-25 19:42:57.689 [INF] LTND: Primary chain is set to: bitcoin
 2018-11-25 19:42:57.785 [INF] LNWL: Started listening for bitcoind block notifications via ZMQ on tcp://127.0.0.1:28332
@@ -466,10 +467,13 @@ $ sudo systemctl start lnd
 ```
 
 Log files are located in the directory `/home/bitcoin/.lnd/logs/bitcoin/mainnet` (or `testnet`), you can check them as follows:
+
 ```
 $ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log
 ```
 
------
+---
 
-I will extend this troubleshooting guide constantly with findings that have been or will be reported in the issues section.
+We will extend this troubleshooting guide constantly with findings that have been or will be reported in the issues section.
+
+<br /><br />

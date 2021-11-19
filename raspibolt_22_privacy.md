@@ -1,9 +1,12 @@
 ---
 layout: default
 title: Privacy
-nav_order: 22
+nav_order: 50
+parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
+{% include_relative raspibolt_include_metatags.md %}
+
 # Privacy
 {: .no_toc }
 
@@ -20,81 +23,47 @@ We configure Tor to run your node anonymously.
 ---
 
 Running your own Bitcoin and Lightning node at home makes you a direct, sovereign peer on the Bitcoin network.
-If not configured without privacy in mind, it also tells the world that there is someone with Bitcoin at that address.
-True, it's only your IP address that is visible to others, but using services like [iplocation.net](https://www.iplocation.net){:target="_blank"}, your physical address can be determined quite accurately.
+However, if not configured without privacy in mind, it also tells the world that there is someone with Bitcoin at that address.
 
-Especially with Lightning, your IP address is widely used, so we need to make sure that you keep your privacy.
+True, it's only your IP address that is revealed, but using services like [iplocation.net](https://www.iplocation.net){:target="_blank"}, your physical address can be determined quite accurately.
+Especially with Lightning, your IP address would be widely used.
+We need to make sure that you keep your privacy.
+
+We'll also make it easy to connect to your node from outside your home network as an added benefit.
 
 ---
 
 ## Tor Project
 
-We will use Tor, a free software built by the [Tor Project](https://www.torproject.org){:target="_blank"}, that allows you to anonymize internet traffic by routing it through a network of nodes, hiding your location and usage profile.
+We use Tor, a free software built by the [Tor Project](https://www.torproject.org){:target="_blank"}.
+It allows you to anonymize internet traffic by routing it through a network of nodes, hiding your location and usage profile.
 
-It is called "Tor" for "The Onion Router": information is encrypted multiple times with the public keys of the nodes it passes through. Each node decrypts the layer of information that corresponds to its own private key, knowing only the last and next hop of the route, like peeling an onion, until the data reaches its destination.
+It is called "Tor" for "The Onion Router": information is routed through many hops and encrypted multiple times.
+Each node decrypts only the layer of information addressed to it, learning only the previous and the next hop of the whole route. The data package is peeled like an onion until it reaches the final destination.
 
 ---
 
-## Installing Tor
+## Installation
 
-Log in your RaspiBolt via SSH as user "admin".
-
-* Add the following two lines to `sources.list` to add the torproject repository.
+Log in to your RaspiBolt via SSH as user "admin" and install Tor.
 
   ```sh
-  $ sudo nano /etc/apt/sources.list
-  ```
-
-  ```
-  deb https://deb.torproject.org/torproject.org buster main
-  deb-src https://deb.torproject.org/torproject.org buster main
-  ```
-
-* In order to verify the integrity of the Tor files, download and add the signing keys of the torproject.
-
-  ```sh
-  $ sudo apt install dirmngr apt-transport-https
-  $ curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
-  $ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
-  ```
-
-* The latest version of Tor can now be installed.
-
-  ```sh
-  $ sudo apt update
   $ sudo apt install tor
   ```
 
-* Check the version of Tor (it should be 0.3.3.6 or newer) and that the service is up and running.
+## Configuration
 
-  ```sh
-  $ tor --version
-  > Tor version 0.4.1.6.
-  $ systemctl status tor
-  ```
+Bitcoin Core will communicate directly with the Tor daemon to route all traffic through the Tor network.
+We need to enable Tor to accept instructions through its control port, with the proper authentication.
 
-* Check that within the "tor-service-defaults-torrc" file the "User" name is "debian-tor".
-
-  ```sh
-  $ cat /usr/share/tor/tor-service-defaults-torrc
-  > User debian-tor
-  ```
-
-* Make sure that user "bitcoin" belongs to the "debian-tor" group.
-
-  ```sh
-  $ sudo adduser bitcoin debian-tor
-  $ cat /etc/group | grep debian-tor
-  > debian-tor:x:114:bitcoin
-  ```
-
-* Modify the Tor configuration by uncommenting (removing the #) or adding the following lines.
+* Modify the Tor configuration by uncommenting (removing the `#`) or adding the following lines.
+  Save and exit
 
   ```sh
   $ sudo nano /etc/tor/torrc
   ```
 
-  ```conf
+  ```sh
   # uncomment:
   ControlPort 9051
   CookieAuthentication 1
@@ -103,17 +72,76 @@ Log in your RaspiBolt via SSH as user "admin".
   CookieAuthFileGroupReadable 1
   ```
 
-* Restart Tor to activate modifications
+* Restart Tor to activate the modifications
 
   ```sh
   $ sudo systemctl restart tor
   ```
 
-<script id="asciicast-xeGJH0YDOVZV719yn5rDL9GuP" src="https://asciinema.org/a/xeGJH0YDOVZV719yn5rDL9GuP.js" async></script>
+* Allow the user "bitcoin" to configure Tor directly
+
+  ```sh
+  $ sudo adduser bitcoin debian-tor
+  ```
 
 Not all network traffic is routed over the Tor network.
 But we now have the base to configure sensitive applications to use it.
 
 ---
 
-Next: [Bitcoin >>](raspibolt_30_bitcoin.md)
+## SSH remote access through Tor (optional)
+
+If you want to log into your RaspiBolt with SSH when you're away, you can easily do so by adding a Tor hidden service.
+This makes "calling home" very easy, without the need to configure anything on your internet router.
+
+### SSH server
+
+* Add the following three lines in the "location-hidden services" section of the `torrc` file.
+  Save and exit
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```sh
+  ############### This section is just for location-hidden services ###
+
+  HiddenServiceDir /var/lib/tor/hidden_service_sshd/
+  HiddenServiceVersion 3
+  HiddenServicePort 22 127.0.0.1:22
+  ```
+
+* Restart Tor and look up your Tor connection address
+
+  ```sh
+  $ sudo systemctl restart tor
+  $ sudo cat /var/lib/tor/hidden_service_sshd/hostname
+  > abcdefg..............xyz.onion
+  ```
+
+* Save the Tor address in a secure location, e.g., your password manager.
+
+### SSH client
+
+You also need to have Tor installed on your regular computer where you start the SSH connection.
+Usage of SSH over Tor differs by client and operating system.
+
+A few examples:
+
+* **Windows**: configure PuTTY as described in this guide [Torifying PuTTY](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorifyHOWTO/Putty){:target="_blank"} by the Tor Project.
+
+* **MacOS and Linux**: use `torify` or `torsocks`.
+  Both work similarly; just use whatever you have available:
+
+  ```sh
+  $ torify ssh admin@abcdefg..............xyz.onion
+  ```
+  ```sh
+  $ torsocks ssh admin@abcdefg..............xyz.onion
+  ```
+
+<br /><br />
+
+---
+
+Next: [Bitcoin >>](raspibolt_section_bitcoin.md)

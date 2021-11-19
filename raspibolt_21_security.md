@@ -1,13 +1,16 @@
 ---
 layout: default
 title: Security
-nav_order: 21
+nav_order: 40
+parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
+{% include_relative raspibolt_include_metatags.md %}
+
 # Security
 {: .no_toc }
 
-We make sure that your RaspiBolt is secure and reliable.
+We make sure that your RaspiBolt is secured against unauthorized remote access.
 
 ---
 
@@ -19,133 +22,156 @@ We make sure that your RaspiBolt is secure and reliable.
 
 ---
 
-The RaspiBolt will be visible from the internet and therefore needs to be secured against attacks using various methods.
+The RaspiBolt will be visible from the internet and therefore needs to be secured against online attacks using various methods.
 
 ## Login with SSH keys
 
-One of the best options to secure the SSH login is to completely disable the password login and require a SSH key certificate.
-Only someone with physical possession of the private key can login.
+One of the best options to secure the sensitive SSH login is to disable passwords altogether and require an SSH key certificate.
+Only someone with physical possession of the private certificate key can log in.
 
-### Generate keys on Windows
+### Generate SSH keys on Windows
 
-Follow this guide [Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers](https://www.tecmint.com/ssh-passwordless-login-with-putty){:target="_blank"}
+Follow this guide [Configure “No Password SSH Keys Authentication” with PuTTY on Linux Servers](https://www.tecmint.com/ssh-passwordless-login-with-putty/){:target="_blank"}
 
-* You should have generated three new files. Keep them safe!
+* You have now generated three new files.
+  Keep them safe!
 
-  ![SSH keys files](images/20_ssh_keys_filelist.png){:target="_blank"}
+  * `RaspiBolt-Private-Key.ppk`
+  * `RaspiBolt-Public-Key`
+  * `authorized-Keys.txt`
 
-### Generate keys on Mac / Linux
+* You also copied the content of `authorized-Keys.txt` into the file `~/.ssh/authorized_keys` on your Pi and changed the directory's permissions to `700`.
 
-* In the Terminal on your regular computer, check if there are already existing private / public keys:
+* After specifying your private key file in the PuTTY configuration, you're all set.
+
+### Generate SSH keys on macOS or Linux
+
+* In the terminal on your regular computer, check if keys already exist:
 
   ```sh
   $ ls -la ~/.ssh/*.pub
   ```
 
 * If files are listed, your public key should be named something like `id_dsa.pub`, `id_ecdsa.pub`, `id_ed25519.pub` or `id_rsa.pub`.
-   If one of these files exists, skip the next bullet point.
+   If one of these files already exists, skip the next step.
 
-* If none of those files exist, or you get a `No such file or directory`, create a new key pair:
+* If none of those files exist, or you get a "No such file or directory" error, create a new public / private key pair:
 
   ```sh
   $ ssh-keygen -t rsa -b 4096
   ```
 
-  When you're prompted to "Enter a file in which to save the key," press Enter to use the default file location. Optionally, for maximum security, use `password [A]` to protect your key.
+  When you're prompted to "Enter a file in which to save the key," press Enter to use the default file location.
+  Optionally, for maximum security, use `password [A]` to protect your key.
 
-* The public key now needs to be copied to the Pi. 
-  We use the command `ssh-copy-id`, which copies your public key to the remote machine (and creates files and directories, if needed).
-  You will be prompted for your password once.
+* The public key now needs to be copied to the Pi.
+  Use the command `ssh-copy-id`, which stores your public key on the remote machine (and creates files and directories, if needed).
+  You will be prompted for your SSH login password once.
 
   ```sh
   $ ssh-copy-id admin@raspibolt.local
   ```
 
-  💡 If you are on macOS and encounter an error, you might need to enable `ssh-copy-id` first, using [this guide](https://devtip.io/ssh-keys-remote-server).
+💡 If you are on macOS and encounter an error, you might need install `ssh-copy-id` first by running the following command on your Mac's command line:
 
-<script id="asciicast-BvuWd8S8hvBLmsXBW4L2EEeRZ" src="https://asciinema.org/a/BvuWd8S8hvBLmsXBW4L2EEeRZ.js" async></script>
+* ```sh
+  $ brew install ssh-copy-id
+  ```
 
 ### Disable password login
 
-* Log in to the Raspberry Pi with SSH as "admin" with your SSH key.
-  You shouldn't be prompted for admin's password anymore.
+* Log in to the Raspberry Pi as "admin" using SSH with your SSH key.
+  You shouldn't be prompted for the admin's password anymore.
 
-* Edit ssh configuration by setting "ChallengeResponseAuthentication" and "PasswordAuthentication" to "no" (uncomment the line by removing # if necessary).
+* Edit the ssh configuration file `/etc/ssh/sshd_config` by uncommenting the following two options and setting their value to `no`.
   Save and exit.
 
   ```sh
   $ sudo nano /etc/ssh/sshd_config
   ```
+  ```sh
+  PasswordAuthentication no
+  ChallengeResponseAuthentication no
+  ```
 
-* Restart the SSH daemon, then exit and log in again.
+* Restart the SSH daemon, then exit your session
 
   ```sh
   $ sudo systemctl restart sshd
   $ exit
   ```
 
-  You can no longer log in with "pi" or "bitcoin", only "admin" has the necessary SSH keys.
+* Log in again with user "admin"
 
-<script id="asciicast-tm3A2UmR65pc63rHSAmHl2eHZ" src="https://asciinema.org/a/tm3A2UmR65pc63rHSAmHl2eHZ.js" async></script>
+You can no longer log in with a password.
+User "admin" is the only user that has the necessary SSH keys, no other user can log in remotely.
 
-🚨 **Backup your SSH keys!** You will need to attach a screen and keyboard to your Pi if you lose it.
+🚨 **Backup your SSH keys!**
+You will need to attach a screen and keyboard to your Pi if you lose them.
 
 ---
 
 ## Enabling the Uncomplicated Firewall
 
-A firewall controls what traffic is permitted and closes possible security holes.
-Only SSH and the Electrum server are reachable from the outside.
+A firewall controls what kind of outside traffic your machine accepts and which applications can send data out.
+By default, many network ports are open and listening for incoming connections.
+Closing unnecessary ports can mitigate many potential system vulnerabilities.
+
+For now, only SSH should be reachable from the outside.
 Bitcoin Core and LND are using Tor and don't need incoming ports.
+We'll open the port for Electrs and web applications later if needed.
 
-The following steps need admin privileges and must be executed with the user "admin".
+* With user "admin", configure and enable the firewall rules
 
-```sh
-$ sudo apt install ufw
-$ sudo su
-$ ufw default deny incoming
-$ ufw default allow outgoing
-$ ufw allow 22    comment 'allow SSH'
-$ ufw allow 50002 comment 'allow Electrum SSL'
-$ ufw enable
-$ systemctl enable ufw
-$ ufw status
-> Status: active
->
-> To                         Action      From
-> --                         ------      ----
-> 22                         ALLOW       Anywhere                   # allow SSH
-> 50002                      ALLOW       Anywhere                   # allow Electrum SSL
-> ...
-$ exit
-```
+  ```sh
+  $ sudo apt install ufw
+  $ sudo ufw default deny incoming
+  $ sudo ufw default allow outgoing
+  $ sudo ufw allow SSH
+  $ sudo ufw logging off
+  $ sudo ufw enable
+  ```
 
-<script id="asciicast-vRmJZZMgzolgH3ooLCGS5RCj8" src="https://asciinema.org/a/vRmJZZMgzolgH3ooLCGS5RCj8.js" async></script>
+* Make sure that the UFW is started automatically on boot
+
+  ```sh
+  $ sudo systemctl enable ufw
+  ```
+
+* Check if the UFW is properly configured and active
+
+  ```sh
+  $ sudo ufw status
+  > Status: active
+  >
+  > To                         Action      From
+  > --                         ------      ----
+  > SSH                        ALLOW       Anywhere
+  > SSH (v6)                   ALLOW       Anywhere (v6)
+  ```
 
 🔍 *more: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands){:target="_blank"}*
 
-💡 If you find yourself locked out by mistake, you can connect keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
+💡 If you find yourself locked out by mistake, you can connect a keyboard and screen to your Pi to log in locally and fix these settings (especially for the SSH port 22).
 
 ---
 
 ## fail2ban
 
-The SSH login to the Pi must be especially protected.
-Additional steps should be taken to prevent an attacker to just try out all possible passwords.
+The SSH login to the Pi must be specially protected.
+An additional measure is to install "fail2ban", which prevents an attacker from gaining access via brute force.
+It simply cuts off any remote system with five failed login attempts for ten minutes.
 
-The first measure is to install “fail2ban”, a service that cuts off any system with five failed login attempts for ten minutes.
-This makes a brute-force attack unfeasible, as it would simply take too long.
-
-![fail2ban](images/20_fail2ban.png){:target="_blank"}
+![fail2ban](images/security_fail2ban.png)
 *Me locking myself out by entering wrong passwords*
 
-```sh
-$ sudo apt install fail2ban
-```
+* Install "fail2ban", which activates automatically
 
-The initial configuration should be fine as it is enabled for SSH by default.
+  ```sh
+  $ sudo apt install fail2ban
+  ```
 
-<script id="asciicast-013bxZ8R7LktqzhP6O27LrorA" src="https://asciinema.org/a/013bxZ8R7LktqzhP6O27LrorA.js" async></script>
+The initial configuration is fine, as it protects SSH by default.
 
 🔍 *more: [customize fail2ban configuration](https://linode.com/docs/security/using-fail2ban-for-security/){:target="_blank"}*
 
@@ -153,13 +179,14 @@ The initial configuration should be fine as it is enabled for SSH by default.
 
 ## Increase your open files limit
 
-In case your RaspiBolt is swamped with internet requests (honest or malicious due to a DDoS attack), you will quickly encounter the `can't accept connection: too many open files` error.
-This is due to a limit on open files (representing individual tcp connections) that is set too low.
+If your RaspiBolt is swamped with internet requests (honest or malicious due to a DoS attack), you will quickly encounter the "can't accept connection: too many open files" error.
+This is due to the limit of open files (representing individual TCP connections) set too low.
 
-Edit the following three files, add the additional line(s) right before the end comment, save and exit.
+Edit each of the following three files, add the additional line(s) right before the end comment, save and exit.
 
 ```sh
 $ sudo nano /etc/security/limits.conf
+
 *    soft nofile 128000
 *    hard nofile 128000
 root soft nofile 128000
@@ -168,15 +195,114 @@ root hard nofile 128000
 
 ```sh
 $ sudo nano /etc/pam.d/common-session
-session required pam_limits.so
+session required                        pam_limits.so
 ```
 
 ```sh
 $ sudo nano /etc/pam.d/common-session-noninteractive
-session required pam_limits.so
+session required                        pam_limits.so
 ```
+---
 
-<script id="asciicast-ZWxK6wLjrRs1AAnEJpXfIoyPb" src="https://asciinema.org/a/ZWxK6wLjrRs1AAnEJpXfIoyPb.js" async></script>
+## Prepare NGINX reverse proxy
+
+Several components of this guide will expose a communication port, for example the Electrum server, the Block Explorer, or the "Ride The Lightning" web interface for your Lightning node.
+Even if you use these services only within your own home network, communication should always be encrypted.
+Otherwise, any device in the same network can listen to the exchanged data, including passwords.
+
+We use NGINX to encrypt the communication with SSL/TLS (Transport Layer Security).
+This setup is called a "reverse proxy": NGINX provides secure communication to the outside and routes the traffic back to the internal service without encryption.
+
+💡 _Hint: NGINX is pronounced "Engine X"_ ;)
+
+* Install NGINX
+
+  ```sh
+  $ sudo apt install nginx
+  ```
+
+* Create a self-signed SSL/TLS certificate (valid for 10 years)
+
+  ```sh
+  $ sudo openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/CN=localhost" -days 3650
+  ```
+
+* NGINX is also a full webserver.
+  To use it only as a reverse proxy, remove the default configuration and paste the following configuration into the `nginx.conf` file.
+
+  ```sh
+  $ sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+  $ sudo nano /etc/nginx/nginx.conf
+  ```
+
+  ```nginx
+  user www-data;
+  worker_processes 1;
+  pid /run/nginx.pid;
+  include /etc/nginx/modules-enabled/*.conf;
+
+  events {
+    worker_connections 768;
+  }
+
+  stream {
+    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+    ssl_session_cache shared:SSL:1m;
+    ssl_session_timeout 4h;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    include /etc/nginx/streams-enabled/*.conf;
+
+  }
+  ```
+
+* Create a new directory for future configuration files
+
+  ```sh
+  $ sudo mkdir /etc/nginx/streams-enabled
+  ```
+
+* Test this barebone NGINX configuration
+
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  ```
+
+## Disable wireless interfaces
+
+Raspberry Pis come with Wifi and Bluetooth built-in.
+That's great for most projects, but we should turn off all radios that are not needed for a security-focused device.
+
+* Open the RasPi OS configuration file, go to the following comment and add the applicable options below
+
+  ```sh
+  $ sudo nano /boot/config.txt
+  ```
+
+  ```sh
+  # Additional overlays and parameters are documented /boot/overlays/README
+  ```
+
+  * Disable Bluetooth by adding this line
+
+    ```
+    dtoverlay=disable-bt
+    ```
+
+  * If you're running your RaspiBolt with a network cable, disable wifi by adding this line
+
+    ```
+    dtoverlay=disable-wifi
+    ```
+
+Save and exit.
+The disabled radios will no longer be active on the next reboot.
+
+<br /><br />
 
 ---
 
