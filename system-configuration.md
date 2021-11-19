@@ -5,7 +5,7 @@ nav_order: 30
 parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-{% include_relative raspibolt_include_metatags.md %}
+{% include_relative include_metatags.md %}
 
 # System configuration
 {: .no_toc }
@@ -189,4 +189,4 @@ The standard size of 100M is way too small.
 
 ---
 
-Next: [Security >>](raspibolt_21_security.md)
+Next: [Security >>](security.md)

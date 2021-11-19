@@ -351,5 +351,5 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
 
 ---
 
-Next: [Lightning >>](raspibolt_section_lightning.md)
+Next: [Lightning >>](lightning.md)
 

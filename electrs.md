@@ -449,4 +449,4 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
 ---
 
-Next: [Blockchain Explorer >>](raspibolt_55_explorer.md)
+Next: [Blockchain Explorer >>](btcrpcexplorer.md)

@@ -656,7 +656,7 @@ Upgrading LND can lead to a number of issues.
 * As "admin" user, stop the LND service
   `$ sudo systemctl stop lnd`
 
-* Download, verify and install the latest LND binaries as described in the [Lightning section](raspibolt_40_lnd.md) of this guide.
+* Download, verify and install the latest LND binaries as described in the [LND section](lnd.md) of this guide.
 
 * Restart the services with the new configuration
 
@@ -668,4 +668,4 @@ Upgrading LND can lead to a number of issues.
 
 ---
 
-Next: [Ride The Lightning >>](raspibolt_57_rtl.md)
+Next: [Ride The Lightning >>](rtl.md)

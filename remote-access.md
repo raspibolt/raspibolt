@@ -5,7 +5,7 @@ nav_order: 20
 parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-{% include_relative raspibolt_include_metatags.md %}
+{% include_relative include_metatags.md %}
 
 # Remote access
 {: .no_toc }
@@ -94,7 +94,7 @@ $ ls -la
   by pressing ⬆️ (arrow up) and ⬇️ (arrow down) on your keyboard, you can recall previously entered commands.
 
 * **Common Linux commands**:
-  For a very selective reference list of Linux commands, please refer to the [FAQ](raspibolt_faq.md) page.
+  For a very selective reference list of Linux commands, please refer to the [FAQ](faq.md) page.
 
 * **Use admin privileges**:
   Our regular user has no direct admin privileges.
@@ -119,4 +119,4 @@ $ ls -la
 
 ---
 
-Next: [System configuration >>](raspibolt_20_system-configuration.md)
+Next: [System configuration >>](system-configuration.md)

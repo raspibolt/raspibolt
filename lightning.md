@@ -5,7 +5,7 @@ nav_order: 40
 has_children: true
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD040 -->
-{% include_relative raspibolt_include_metatags.md %}
+{% include_relative include_metatags.md %}
 
 # Lightning
 {: .no_toc }
