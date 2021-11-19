@@ -1,13 +1,14 @@
 ---
 layout: default
-title: Lightning
-nav_order: 40
+title: LND
+nav_order: 10
+parent: Lightning
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
 # Lightning: LND
 {: .no_toc }
 
-We set up LND, the Lightning Network Daemon by [Lightning Labs](https://lightning.engineering/){:target="_blank"}.
+We set up [LND](https://github.com/lightningnetwork/lnd/blob/master/README.md){:target="_blank"}, the Lightning Network Daemon by [Lightning Labs](https://lightning.engineering/){:target="_blank"}.
 
 ---
 
@@ -21,130 +22,180 @@ We set up LND, the Lightning Network Daemon by [Lightning Labs](https://lightnin
 
 ## Installation
 
-The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [Github repository](https://github.com/lightningnetwork/lnd/blob/master/README.md){:target="_blank"} for a wealth of information about their open-source project and Lightning in general.
+The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [GitHub repository](https://github.com/lightningnetwork/lnd/){:target="_blank"} for a wealth of information about their open-source project and Lightning in general.
 
 ### Download
 
-Download and install LND
+We'll download, verify and install LND.
 
-```sh
-$ cd /tmp
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.3-beta/lnd-linux-armv7-v0.13.3-beta.tar.gz
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.3-beta/manifest-v0.13.3-beta.txt
-$ wget https://github.com/lightningnetwork/lnd/releases/download/v0.13.3-beta/manifest-roasbeef-v0.13.3-beta.sig
-$ wget -O roasbeef.asc https://keybase.io/roasbeef/pgp_keys.asc
+* As user "admin", download the application, checksums and signature
 
-$ sha256sum --check manifest-v0.13.3-beta.txt --ignore-missing
-> lnd-linux-armv7-v0.13.3-beta.tar.gz: OK
+  ```sh
+  $ cd /tmp
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.0-beta/lnd-linux-arm64-v0.14.0-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.0-beta/manifest-v0.14.0-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.0-beta/manifest-roasbeef-v0.14.0-beta.sig
+  ```
 
-$ gpg ./roasbeef.asc
-> pub rsa4096 2019-10-13 [C] E4D85299674B2D31FAA1892E372CBD7633C61696
-> uid Olaoluwa Osuntokun <laolu32@gmail.com>
+* Get the public signing keys of Roasbeef and add it to our GPG keyring
 
-$ gpg --import ./roasbeef.asc
-$ gpg --verify manifest-roasbeef-v0.13.3-beta.sig manifest-v0.13.3-beta.txt
->gpg: Signature made Mon 04 Oct 2021 03:20:20 PM GMT
->gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
->gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
->gpg: WARNING: This key is not certified with a trusted signature!
->gpg:          There is no indication that the signature belongs to the owner.
->Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
->     Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
+  ```sh
+  $ curl https://keybase.io/roasbeef/pgp_keys.asc | gpg --import
+  > ...
+  > gpg: key 372CBD7633C61696: public key "Olaoluwa Osuntokun <laolu32@gmail.com>" imported
+  > gpg: Total number processed: 1
+  > gpg:               imported: 1
+  ```
 
-$ tar -xzf lnd-linux-armv7-v0.13.3-beta.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.13.3-beta/*
-$ lnd --version
-> lnd version 0.13.3 commit=v0.13.3-beta
+* Verify the signature of the text file containing the checksums for the application
+
+  ```sh
+  $ gpg --verify manifest-roasbeef-v0.14.0-beta.sig manifest-v0.14.0-beta.txt
+  > gpg: Signature made Fri Nov  5 21:24:10 2021 UTC
+  > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
+  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
+  > gpg: WARNING: This key is not certified with a trusted signature!
+  > gpg:          There is no indication that the signature belongs to the owner.
+  > Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
+  >      Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
+  ```
+
+* Verify the signed checksum against the actual checksum of your download
+
+  ```sh
+  $ sha256sum --check manifest-v0.14.0-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.14.0-beta.tar.gz: OK
+  ```
+
+* Install LND
+
+  ```sh
+  $ tar -xzf lnd-linux-arm64-v0.14.0-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.0-beta/*
+  $ lnd --version
+  > lnd version 0.14.0-beta commit=v0.14.0-beta
 ```
 
-_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
-<script id="asciicast-DvuCHl1ibT4eursipO0Z53xf5" src="https://asciinema.org/a/DvuCHl1ibT4eursipO0Z53xf5.js" async></script>
-
-### Configuration
+### Data directory
 
 Now that LND is installed, we need to configure it to work with Bitcoin Core and run automatically on startup.
 
-* Open a "bitcoin" user session
+* Create the "lnd" service user, and add it to the groups "bitcoin" and "debian-tor"
 
   ```sh
-  $ sudo su - bitcoin
+  $ sudo adduser --disabled-password --gecos "" lnd
+  $ sudo usermod -a -G bitcoin,debian-tor lnd
   ```
 
-* Create the LND working directory and the corresponding symbolic link
+* Create the LND data directory
 
   ```sh
-  $ mkdir /mnt/ext/lnd
-  $ ln -s /mnt/ext/lnd /home/bitcoin/.lnd
+  $ sudo mkdir /mnt/data/lnd
+  $ sudo chown -R lnd:lnd /mnt/data/lnd
+  ```
+
+* Also create a separate directory for the channel backup.
+  Alternatively, you can [mount a USB thumbdrive to this location](https://linuxconfig.org/howto-mount-usb-drive-in-linux){:target="_blank"} for added redundancy.
+
+  ```sh
+  $ sudo mkdir /mnt/lnd-backup
+  $ sudo chown -R lnd:lnd /mnt/lnd-backup
+  ```
+
+* Open a "lnd" user session
+
+  ```sh
+  $ sudo su - lnd
+  ```
+
+* Create symbolic links pointing to the LND and bitcoin data directories
+
+  ```sh
+  $ ln -s /mnt/data/lnd /home/lnd/.lnd
+  $ ln -s /mnt/data/bitcoin /home/lnd/.bitcoin
+  ```
+
+* Display the links and check that they're not shown in red (this would indicate an error)
+
+  ```sh
   $ ls -la
   ```
 
-* Create the LND configuration file and paste the following content (adjust to your alias). Save and exit.
+### Wallet password
+
+LND includes a Bitcoin wallet that manages your on-chain and Lightning coins.
+It is password protected and must be unlocked when LND starts.
+This creates the dilemma that you either manually unlock LND after each restart of your Raspberry Pi, or you store the password somewhere on the node.
+
+For this initial setup, we choose the easy route: we store the password in a file that allows LND to unlock the wallet automatically.
+This is not the most secure setup, but you can improve it later if you want, with the bonus guides linked below.
+To give some perspective: other Lightning implementations like c-lightning or Eclair don't even have a password.
+
+* As user "bitcoin", create a text file and enter your LND wallet `password [C]`. Save and exit.
 
   ```sh
-  $ nano /mnt/ext/lnd/lnd.conf
+  $ nano /mnt/data/lnd/password.txt
   ```
 
-  ```ini
+* Tighten access privileges and make the file readable only for user "lnd":
+
+  ```sh
+  $ chmod 600 /mnt/data/lnd/password.txt
+  ```
+
+To improve the security of your wallet, check out these more advanced methods:
+
+* Example by LND: [using a password manager with named pipe](https://github.com/lightningnetwork/lnd/blob/master/docs/wallet.md#more-secure-example-with-password-manager-and-using-a-named-pipe){:target="_blank"}
+* More to come...
+
+### Configuration
+
+* Create the LND configuration file and paste the following content (adjust to your alias).
+  Save and exit.
+
+  ```sh
+  $ nano /mnt/data/lnd/lnd.conf
+  ```
+
+  ```sh
   # RaspiBolt: lnd configuration
-  # /mnt/ext/lnd/lnd.conf
+  # /mnt/data/lnd/lnd.conf
 
   [Application Options]
   alias=YOUR_FANCY_ALIAS
-  color=#FFFF00
   debuglevel=info
   maxpendingchannels=5
   listen=localhost
-  
-  # Fee settings - default LND base fee = 1000 (mSat), default LND fee rate = 1 (ppm)
+  backupfilepath=/mnt/lnd-backup/channel.backup
+
+  # Password: automatically unlock wallet with the password in this file
+  # -- comment out to manually unlock wallet, and see RaspiBolt guide for more secure options
+  wallet-unlock-password-file=/mnt/data/lnd/password.txt
+  wallet-unlock-allow-create=true
+
+  # Channel settings
   bitcoin.basefee=1000
   bitcoin.feerate=1
-  
-  # Minimum channel size (in satoshis, default is 20,000 sats)
   minchansize=100000
-  
-  # Accept AMP (multi-paths) payments, wumbo channels and do not prevent the creation of anchor channel (default value)
   accept-amp=true
   protocol.wumbo-channels=true
   protocol.no-anchors=false
-  
-  # Save on closing fees
-  ## The target number of blocks in which a cooperative close initiated by a remote peer should be confirmed (default: 10 blocks).
   coop-close-target-confs=24
 
-  #########################
-  # Improve startup speed # (from https://www.lightningnode.info/advanced-tools/lnd.conf by Openoms)
-  #########################
-  # If true, we'll attempt to garbage collect canceled invoices upon start.
-  gc-canceled-invoices-on-startup=true
-  # If true, we'll delete newly canceled invoices on the fly.
-  gc-canceled-invoices-on-the-fly=true
-  # Avoid historical graph data sync
-  ignore-historical-gossip-filters=1
-  # Enable free list syncing for the default bbolt database. This will decrease
-  # start up time, but can result in performance degradation for very large
-  # databases, and also result in higher memory usage. If "free list corruption"
-  # is detected, then this flag may resolve things.
-  sync-freelist=true
-  # Avoid high startup overhead
-  # If true, will apply a randomized staggering between 0s and 30s when
-  # reconnecting to persistent peers on startup. The first 10 reconnections will be
-  # attempted instantly, regardless of the flag's value
-  stagger-initial-reconnect=true
+  # Watchtower
+  wtclient.active=true
 
-  ########################
-  # Compact the database # (slightly modified from https://www.lightningnode.info/advanced-tools/lnd.conf by Openoms)
-  ########################
-  # Can be used on demand by commenting in/out the two options below: it can take several minutes
+  # Performance
+  gc-canceled-invoices-on-startup=true
+  gc-canceled-invoices-on-the-fly=true
+  ignore-historical-gossip-filters=1
+  sync-freelist=true
+  stagger-initial-reconnect=true
+  routing.strictgraphpruning=true
+
+  # Database
   [bolt]
-  # Whether the databases used within lnd should automatically be compacted on
-  # every startup (and if the database has the configured minimum age). This is
-  # disabled by default because it requires additional disk space to be available
-  # during the compaction that is freed afterwards. In general compaction leads to
-  # smaller database files.
   db.bolt.auto-compact=true
-  # How long ago the last compaction of a database file must be for it to be
-  # considered for auto compaction again. Can be set to 0 to compact on every
-  # startup. (default: 168h; the time unit must be present, i.e. s, m or h, except for 0)
   db.bolt.auto-compact-min-age=168h
 
   [Bitcoin]
@@ -158,10 +209,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   tor.streamisolation=true
   ```
 
-🔍 *more: [sample-lnd.conf](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf){:target="_blank"} with all possible options in the LND project repository*
-
-_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
-<script id="asciicast-BIhZQuGGoUKtKDsawTpysYa3o" src="https://asciinema.org/a/BIhZQuGGoUKtKDsawTpysYa3o.js" async></script>
+🔍 *This is a standard configuration. Check the official LND [sample-lnd.conf](https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf){:target="_blank"} with all possible options, and visit the [Lightning Node Management](https://www.lightningnode.info/){:target="_blank"} site by Openoms to learn more.*
 
 ---
 
@@ -173,20 +221,30 @@ Still with user "bitcoin", we first start LND manually to check if everything wo
 $ lnd
 ```
 
+```
+Attempting automatic RPC configuration to bitcoind
+Automatically obtained bitcoind's RPC credentials
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.14.0-beta commit=v0.14.0-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
+...
+2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
+```
+
 The daemon prints the status information directly to the command line.
-This means that we cannot use that session without stopping the server. We need to open a second SSH session.
+This means that we cannot use that session without stopping the server.
+We need to open a second SSH session.
 
 ### Wallet setup
 
 Start your SSH program (eg. PuTTY) a second time, connect to the Pi and log in as "admin".
 Commands for the **second session** start with the prompt `$2` (which must not be entered).
 
-Once LND is started, the process waits for us to create the integrated Bitcoin wallet (it does not use the "bitcoind" wallet).
+Once LND is started, the process waits for us to create the integrated Bitcoin wallet.
 
-* Start a "bitcoin" user session
+* Start a "lnd" user session
 
   ```sh
-  $2 sudo su - bitcoin
+  $2 sudo su - lnd
   ```
 
 * Create the LND wallet
@@ -195,80 +253,71 @@ Once LND is started, the process waits for us to create the integrated Bitcoin w
   $2 lncli create
   ```
 
-* If you want to create a new wallet, enter your `password [C]` as wallet password, select `n` regarding an existing seed and enter the optional `password [D]` as seed passphrase. A new cipher seed consisting of 24 words is created.
+* Enter your `password [C]` as wallet password (it must be exactly the same you stored in `password.txt`).
+  To create a a new wallet, select `n` when asked if you have an existing cipher seed.
+  Just press enter if asked about an additional seed passphrase, unless you know what you're doing.
+  A new cipher seed consisting of 24 words is created.
 
-These 24 words, combined with your passphrase (optional `password [D]`)  is all that you need to restore your Bitcoin wallet and all Lighting channels. The current state of your channels, however, cannot be recreated from this seed, this requires a continuous backup and is still under development for LND.
+  ```
+  Do you have an existing cipher seed mnemonic or extended master root key you want to use?
+  Enter 'y' to use an existing cipher seed mnemonic, 'x' to use an extended master root key
+  or 'n' to create a new seed (Enter y/x/n): n
 
-🚨 This information must be kept secret at all times. **Write these 24 words down manually on a piece of paper and store it in a safe place.** This piece of paper is all an attacker needs to completely empty your wallet! Do not store it on a computer. Do not take a picture with your mobile phone. **This information should never be stored anywhere in digital form.**
+  Your cipher seed can optionally be encrypted.
+  Input your passphrase if you wish to encrypt it (or press enter to proceed without a cipher seed passphrase):
 
-* exit "bitcoin" user session
+  Generating fresh cipher seed...
+
+  !!!YOU MUST WRITE DOWN THIS SEED TO BE ABLE TO RESTORE THE WALLET!!!
+
+  ---------------BEGIN LND CIPHER SEED---------------
+  1. secret     2. secret    3. secret     4. secret
+  ...
+  ```
+
+These 24 words (combined with your optional passphrase `password [D]`)  is all that you need to restore the Bitcoin on-chain wallet.
+The current state of your channels, however, cannot be recreated from this seed.
+For this, the Static Channel Backup stored at `/mnt/lnd-backup/channel.backup` is updated continuously.
+
+🚨 This information must be kept secret at all times.
+**Write these 24 words down manually on a piece of paper and store it in a safe place.**
+This piece of paper is all an attacker needs to completely empty your on-chain wallet!
+Do not store it on a computer.
+Do not take a picture with your mobile phone.
+**This information should never be stored anywhere in digital form.**
+
+* Exit the user "lnd" user session, and then exit the second SSH session altogether
 
   ```sh
   $2 exit
+  $2 exit
   ```
-  
-<script id="asciicast-xv9Gq3G5Pu5A1Jtxu2bACRvjQ" src="https://asciinema.org/a/xv9Gq3G5Pu5A1Jtxu2bACRvjQ.js" async></script>
 
-💡 _In this screencast I use the awesome [`tmux`](https://www.ocf.berkeley.edu/~ckuehl/tmux/){:target="_blank"} to run multiple Terminal sessions in parallel.
-But you can just connect to your RaspiBolt with two separate SSH sessions._
+* Back in your first SSH session with user "bitcoin", LND is still running.
+  Stop LND with `Ctrl-C`.
 
-### Authorization for "admin"
-
-Let's authorize the "admin" user to work with LND using the command line interface `lncli`. For that to work, we need to copy the Transport Layer Security (TLS) certificate and the permission files (macaroons) to the admin home folder.
-
-* Check if the TLS certificates (`tls.cert` and `tls.key`) have been created.
+* Start LND agin and check if the wallet is unlocked automatically.
+  On success, stop LND again.
 
   ```sh
-  $2 sudo ls -la /mnt/ext/lnd/
+  $ lnd
+  >...
+  > Started LND Lightning Network Daemon.
+  > Attempting automatic RPC configuration to bitcoind
+  > Automatically obtained bitcoinds RPC credentials
+  > ...
+  > LTND: Attempting automatic wallet unlock with password
+  > LNWL: Opened wallet
+  > ...
+
+  # stop LND with `Ctrl-C`
   ```
-
-* Check if the permission files `admin.macaroon` has been created.
-
-  ```sh
-  $2 sudo ls -la /home/bitcoin/.lnd/data/chain/bitcoin/mainnet/
-  ```
-
-* Link the LND data directory in the user "admin" home.
-  As a member or the group "bitcoin", admin has read-only access to certain files.
-  We also need to make all directories browsable for the group (with `g+X`) and allow it to read the `admin.macaroon`.
-
-  ```sh
-  $2 ln -s /mnt/ext/lnd /home/admin/.lnd
-  $2 sudo chmod -R g+X /home/admin/.lnd/data/
-  $2 sudo chmod g+r /home/admin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
-  ```
-
-* Make sure that `lncli` works by unlocking your wallet (enter `password [C]` ) and getting some node infos.
-
-  ```sh
-  $2 lncli unlock
-  ```
-
-* Check the current state of LND
-
-  ```sh
-  $2 lncli getinfo
-  ```
-
-You can also see the progress of the initial sync of LND with Bitcoin in the first SSH session.
-
-Let's stop the server for the moment and focus on our primary SSH session again.
-
-```sh
-$2 lncli stop
-$2 exit
-```
-
-This should terminate LND "gracefully" in SSH session 1 that can now be used interactively again.
-
-_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
-<script id="asciicast-o7YMV8E3KAWyVXq3VdzATImYX" src="https://asciinema.org/a/o7YMV8E3KAWyVXq3VdzATImYX.js" async></script>
 
 ### Autostart on boot
 
 Now, let's set up LND to start automatically on system startup.
 
-* Exit the "bitcoin" user session back to "admin"
+* Exit the second "bitcoin" user session back to "admin"
 
   ```sh
   $ exit
@@ -280,7 +329,7 @@ Now, let's set up LND to start automatically on system startup.
   $ sudo nano /etc/systemd/system/lnd.service
   ```
 
-  ```ini
+  ```sh
   # RaspiBolt: systemd unit for lnd
   # /etc/systemd/system/lnd.service
 
@@ -293,35 +342,26 @@ Now, let's set up LND to start automatically on system startup.
 
   # Service execution
   ###################
-
   ExecStart=/usr/local/bin/lnd
-
 
   # Process management
   ####################
-
   Type=simple
   Restart=always
   RestartSec=30
   TimeoutSec=240
   LimitNOFILE=128000
 
-
   # Directory creation and permissions
   ####################################
-
-  # Run as bitcoin:bitcoin
-  User=bitcoin
-  Group=bitcoin
+  User=lnd
 
   # /run/lightningd
   RuntimeDirectory=lightningd
   RuntimeDirectoryMode=0710
 
-
   # Hardening measures
   ####################
-
   # Provide a private /tmp and /var/tmp.
   PrivateTmp=true
 
@@ -339,7 +379,6 @@ Now, let's set up LND to start automatically on system startup.
   # Deny the creation of writable and executable memory mappings.
   MemoryDenyWriteExecute=true
 
-
   [Install]
   WantedBy=multi-user.target
   ```
@@ -350,18 +389,14 @@ Now, let's set up LND to start automatically on system startup.
   $ sudo systemctl enable lnd
   $ sudo systemctl start lnd
   $ systemctl status lnd
-  $ lncli unlock
   ```
 
-* Now, the daemon information is no longer displayed on the command line but written into the system journal. You can monitor the LND startup progress until it caught up with the testnet blockchain (about 1.3m blocks at the moment). This can take up to 2 hours, after that you see a lot of very fast chatter (exit with `Ctrl-C`).
+* Now, the daemon information is no longer displayed on the command line but written into the system journal.
+  You can check on it using the following command (and exit with `Ctrl-C`).
 
   ```sh
   $ sudo journalctl -f -u lnd
   ```
-
-<script id="asciicast-7Kx4HpX5EfwzYmDXBeqVCszk6" src="https://asciinema.org/a/7Kx4HpX5EfwzYmDXBeqVCszk6.js" async></script>
-
----
 
 ## LND in action
 
@@ -370,22 +405,20 @@ This is also the point of no return.
 Up until now, you can just start over.
 Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
 
-* Make sure your RaspiBolt is working as expected.
-* Get a little practice with `bitcoin-cli` and its options (see [Bitcoin Core RPC documentation](https://bitcoin-rpc.github.io/){:target="_blank"})
-* Try a few restarts (first stop lnd and bitcoind with `lncli stop`, `sudo systemctl stop lnd`, `sudo systemctl stop bitcoind` and then reboot with `sudo reboot`), is everything starting fine (don't forget to unlock the wallet after each reboot with `lncli unlock`)?
-
 ### Funding your Lightning node
 
 * Generate a new Bitcoin address (p2wkh = native SegWit/Bech32) to receive funds on-chain and send a small amount of Bitcoin to it from any wallet of your choice.
-  [🕮 `newaddress`](https://api.lightning.community/#newaddress){:target="_blank"}
-  
+
+  [`newaddress`](https://api.lightning.community/#newaddress){:target="_blank"}
+
   ```sh
   $ lncli newaddress p2wkh
   > "address": "bc1..."
   ```
 
 * Check your LND wallet balance
-  [🕮 `walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"}
+
+  [`walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"}
 
   ```sh
   $ lncli walletbalance
@@ -399,16 +432,15 @@ Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
 As soon as your funding transaction is mined (1 confirmation), LND will show its amount as "confirmed_balance".
 
 💡 If you want to open a few channels, you might want to send a few transactions.
-If you have only one [UTXO](https://bitcoin.org/en/glossary/unspent-transaction-output), you need to wait for the change to return to your wallet after every new channel opening.
+If you have only one UTXO, you need to wait for the change to return to your wallet after every new channel opening.
 
-
-_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
-<script id="asciicast-8tL55NcHD5zdaHlBJkFbFXaxV" src="https://asciinema.org/a/8tL55NcHD5zdaHlBJkFbFXaxV.js" async></script>
 
 ### Opening channels
 
 Although LND features an optional "autopilot", we manually open some channels.
-I recommend to go on [Amboss.Space](https://www.amboss.space/){:target="_blank"} or [1ML.com](https://1ml.com){:target="_blank"} and look for a mix of big and small nodes with decent Node Ranks.
+
+We recommend to go on [Amboss.Space](https://www.amboss.space/){:target="_blank"} or [1ML.com](https://1ml.com){:target="_blank"} and look for a mix of big and small nodes with decent Node Ranks.
+Another great way to find peers to collaboratively set up channels is [LightningNetwork+](https://lightningnetwork.plus/){:target="_blank"}.
 
 To connect to a remote node, you need its URI that looks like `<pubkey>@host`:
 
@@ -418,26 +450,28 @@ To connect to a remote node, you need its URI that looks like `<pubkey>@host`:
 Just grab the whole URI above the big QR code and use it as follows (we will use the ACINQ node as an example):
 
 * **Connect** to the remote node, with the full URI.
-  [🕮 `connect`](https://api.lightning.community/#connectpeer){:target="_blank"}
+
+  [`connect`](https://api.lightning.community/#connectpeer){:target="_blank"}
 
   ```sh
   $ lncli connect 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f@34.239.230.56:9735
   ```
 
 * **Open a channel** using the `<pubkey>` and the channel capacity in satoshis.
-  [🕮 `openchannel`](https://api.lightning.community/#openchannel){:target="_blank"}
+
+  [`openchannel`](https://api.lightning.community/#openchannel){:target="_blank"}
 
   One Bitcoin equals 100 million satoshis, so at $10'000/BTC, $10 amount to 0.001 BTC or 100'000 satoshis.
-  To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/to-usd/).
+  To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/to-usd/){:target="_blank"}.
 
-  The command as a built-in fee estimator, but to avoid overpaying fees, you can manually control the fees for the funding transaction by using the `sat_per_byte` argument as follows (to select the appropriate fee, in sats/vB, check [mempool.space](https://mempool.space/){:target="_blank"}) 
+  The command as a built-in fee estimator, but to avoid overpaying fees, you can manually control the fees for the funding transaction by using the `sat_per_byte` argument as follows (to select the appropriate fee, in sats/vB, check [mempool.space](https://mempool.space/){:target="_blank"})
   ```sh
   $ lncli openchannel --sat_per_vbyte 8 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f 100000 0
   ```
 
 * **Check your funds**, both in the on-chain wallet and the channel balances.
-  [🕮 `walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"}
-  [🕮 `channelbalance`](https://api.lightning.community/#channelbalance){:target="_blank"}
+
+  [`walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"} or [`channelbalance`](https://api.lightning.community/#channelbalance){:target="_blank"}
 
   ```sh
   $ lncli walletbalance
@@ -446,7 +480,8 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 
 * **List active channels**. Once the channel funding transaction has been mined and gained enough confirmations, your channel is fully operational.
   That can take an hour or more.
-  [🕮 `listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
+
+  [`listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
 
   ```sh
   $ lncli listchannels
@@ -455,16 +490,53 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 * **Make a Lightning payment**. These work with invoices, so everytime you buy something or want to send money, you need to get an invoice first.
   To try, why not send me a single satoshi to view my Twitter profile?
 
-  * Click on this paywall link: <https://paywall.link/to/468ad>
-  * Click on "Manual Payment Information" and copy the Invoice.
+  * Click on this Tippin.me link: <https://tippin.me/@Stadicus3000>
+  * Click on "Copy request" to copy the invoice data
   * Pay me 1 satoshi (~ $0.0001) 🤑
 
     ```sh
     * lncli payinvoice lnbc10n1pw......................gsj59
     ```
 
-_(Warning: the video below is outdated and does not correspond exactly to the commands above)_
-<script id="asciicast-ATudEzl9xUe7wlodVQuVuuUL6" src="https://asciinema.org/a/ATudEzl9xUe7wlodVQuVuuUL6.js" async></script>
+### Adding watchtowers
+
+Lightning channels need to be monitored to prevent malicious behavior by your channel peers.
+If your RaspiBolt goes down for a longer period of time, for instance due to a hardware problem, a node on the other side of one of your channels might try to close the channel with an earlier channel balance that is better for them.
+
+Watchtowers are other Lightning nodes that can monitor your channels for you.
+If they detect such bad behavior, they can react on your behalf, and send a punishing transaction to close this channel.
+In this case, all channel funds will be sent to your LND on-chain wallet.
+
+A watchtower can only send such a punishing transaction to your wallet, so you don't have to trust them.
+It's good practice to add a few watchtowers, just to be on the safe side.
+
+* With user "LND", add the [Lightning Network+ watchtower](https://lightningnetwork.plus/watchtower){:target="_blank"} as a first example
+
+  ```sh
+  $ sudo su - lnd
+  $ lncli wtclient add 0301135932e89600b3582513c648d46213dc425c7666e3380faa7dbb51f7e6a3d6@tower4excc3jdaoxcqzbw7gzipoknzqn3dbnw2kfdfhpvvbxagrzmfad.onion:9911
+  ```
+
+* Check if the watchtower is active
+
+  ```json
+  $ lncli wtclient towers
+  {
+      "towers": [
+          {
+              "pubkey": "0301135932e89600b3582513c648d46213dc425c7666e3380faa7dbb51f7e6a3d6",
+              "addresses": [
+                  "tower4excc3jdaoxcqzbw7gzipoknzqn3dbnw2kfdfhpvvbxagrzmfad.onion:9911"
+              ],
+              "active_session_candidate": true,
+              "num_sessions": 0,
+              "sessions": [
+              ]
+          }
+      ]
+  }
+  ```
+* Check out this [list of altruistic public watchtowers](https://github.com/openoms/lightning-node-management/issues/4){:target="_blank"} maintained by Openoms, and add a few more.
 
 ### More commands
 
@@ -483,35 +555,35 @@ A quick reference with common commands to play around with:
   ```
 
 * Find out some general stats about your node:
-  [🕮 `getinfo`](https://api.lightning.community/#getinfo){:target="_blank"}
+  [`getinfo`](https://api.lightning.community/#getinfo){:target="_blank"}
 
   ```sh
   $ lncli getinfo
   ```
 
 * Check the peers you are currently connected to:
-  [🕮 `listpeers`](https://api.lightning.community/#listpeers){:target="_blank"}
+  [`listpeers`](https://api.lightning.community/#listpeers){:target="_blank"}
 
   ```sh
   $ lncli listpeers
   ```
 
 * Check the status of your pending channels:
-  [🕮 `pendingchannels`](https://api.lightning.community/#pendingchannels){:target="_blank"}
+  [`pendingchannels`](https://api.lightning.community/#pendingchannels){:target="_blank"}
 
   ```sh
   $ lncli pendingchannels
   ```
 
 * Check the status of your active channels:
-  [🕮 `listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
+  [`listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
 
   ```sh
   $ lncli listchannels
   ```
 
 * Before paying an invoice, you should decode it to check if the amount and other infos are correct:
-  [🕮 `decodepayreq`](https://api.lightning.community/#decodepayreq){:target="_blank"}
+  [`decodepayreq`](https://api.lightning.community/#decodepayreq){:target="_blank"}
 
   ```sh
   $ lncli decodepayreq [INVOICE]
@@ -522,37 +594,38 @@ A quick reference with common commands to play around with:
   ```sh
   $ lncli payinvoice [INVOICE]
   ```
-  
+
 * Send a payment to a node without invoice using AMP (both sender and receiver nodes have to have AMP enabled):
-  [􀀁 `sendpayment`](https://api.lightning.community/#sendpayment){:target="_blank"}
+  [`sendpayment`](https://api.lightning.community/#sendpayment){:target="_blank"}
 
   ```sh
-  $ lncli sendpayment --amp --fee_limit 1 --dest=<node_pubkey> --final_cltv_delta=144 --amt=<amount_in_sats> 
+  $ lncli sendpayment --amp --fee_limit 1 --dest=<node_pubkey> --final_cltv_delta=144 --amt=<amount_in_sats>
   ```
-  
+
 * Check the payments that you sent:
-  [🕮 `listpayments`](https://api.lightning.community/#listpayments){:target="_blank"}
+  [`listpayments`](https://api.lightning.community/#listpayments){:target="_blank"}
 
   ```sh
   $ lncli listpayments
   ```
 
 * Create an invoice:
-  [🕮 `addinvoice`](https://api.lightning.community/#addinvoice){:target="_blank"}
+  [`addinvoice`](https://api.lightning.community/#addinvoice){:target="_blank"}
 
   ```sh
   $ lncli addinvoice [AMOUNT_IN_SATOSHIS]
   ```
 
 * List all invoices:
-  [🕮 `listinvoices`](https://api.lightning.community/#listinvoices){:target="_blank"}
+  [`listinvoices`](https://api.lightning.community/#listinvoices){:target="_blank"}
 
   ```sh
   $ lncli listinvoices
   ```
 
 * to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID`:`OUTPUT_INDEX`
-  [🕮 `closechannel`](https://api.lightning.community/#closechannel){:target="_blank"}
+
+  [`closechannel`](https://api.lightning.community/#closechannel){:target="_blank"}
 
   ```sh
   $ lncli listchannels
@@ -565,311 +638,34 @@ A quick reference with common commands to play around with:
   $ lncli closechannel --force [FUNDING_TXID] [OUTPUT_INDEX]
   ```
 
-🔍 _more: full [LND API reference](https://api.lightning.community/)_
+🔍 _more: full [LND API reference](https://api.lightning.community/){:target="_blank"}_
 
 ---
 
-## LND upgrade
+## For the future: upgrade LND
 
-If you want to upgrade to a new release of LND in the future, check out the FAQ section:
-[How to upgrade LND](raspibolt_faq.md#how-to-upgrade-lnd)
+Upgrading LND can lead to a number of issues.
+**Always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases) completely to understand the changes. These also cover a lot of additional topics and many new features not mentioned here.
+
+* Check your lnd version
+
+  ```sh
+  $ lnd --version
+  ```
+
+* As "admin" user, stop the LND service
+  `$ sudo systemctl stop lnd`
+
+* Download, verify and install the latest LND binaries as described in the [Lightning section](raspibolt_40_lnd.md) of this guide.
+
+* Restart the services with the new configuration
+
+  ```sh
+  $ sudo systemctl restart lnd
+  ```
+
+<br /><br />
 
 ---
 
-## Optional: Using LiT (Lightning Terminal) instead of LND
-
-LiT is a software suite of Lightning Labs which contains LND, Faraday (accounting service), Loop (client software for submarine swaps with LOOP node of Lightning Labs) and Pool (client software to submit orders to buy and sell inbound liquidity through unique price auction at each new block found). LiT provides a user interface to make submarine swap easily, it now also features a UI for Pool Market which is a good tool to estimate the price of liquidity.
-
-Because Pool is alpha software, LiT is alpha software too. The LND part is however in beta and the behavior is exactly the same as LND.
-
-You cannot run LiT and LND at the same time.
-
-The Lightning Terminal UI requires a password. Select a new password:
-
-`[ E ] Master user password`
-
-### Download LiT
-
-Download and install LiT
-
-```sh
-$ cd /tmp
-$ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.5.0-alpha/lightning-terminal-linux-armv7-v0.5.0-alpha.tar.gz
-$ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.5.0-alpha/manifest-v0.5.0-alpha.txt
-$ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.5.0-alpha/manifest-roasbeef-v0.5.0-alpha.sig
-$ wget https://keybase.io/roasbeef/pgp_keys.asc
-
-$ sha256sum --check manifest-v0.5.0-alpha.txt --ignore-missing
-> lightning-terminal-linux-armv7-v0.5.0-alpha.tar.gz: OK
-
-$ gpg ./pgp_keys.asc
-> E4D85299674B2D31FAA1892E372CBD7633C61696
-
-$ gpg --import ./pgp_keys.asc
-$ gpg --verify manifest-roasbeef-v0.5.0-alpha.sig manifest-v0.5.0-alpha.txt
-> gpg: Signature made Tue 22 Jun 2021 00:14:50 CEST
-> gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
-> gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
-> gpg: WARNING: This key is not certified with a trusted signature!
-> gpg:          There is no indication that the signature belongs to the owner.
-> Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
->      Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
-
-$ tar -xzf lightning-terminal-linux-armv7-v0.5.0-alpha.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-armv7-v0.5.0-alpha/*
-$ litd --lnd.version
-> litd version 0.13.0-beta commit=lightning-terminal-v0.5.0-alpha
-```
-
-### Configuration
-
-LiT has its own configuration file. The settings for LND, Pool, Faraday, Loop can all be put in the LiT configuration file 
-
-* Open a "bitcoin" user session
-
-  ```sh
-  $ sudo su - bitcoin
-  ```
-
-* Create the LiT working directory
-
-  ```sh
-  $ mkdir /home/bitcoin/.lit
-  ```
-* Create the LiT configuration file and paste the following content (adjust to your alias and paste password [B] as required in the Faraday section). Save and exit.
-
-  ```sh
-  $ nano lit.conf
-  ```
-  ```ini
-  # RaspiBolt: lit configuration
-  # /home/bitcoin/.lit/lit.conf
-  
-  # Feel free to change this IP depending of you need to access the UI
-  # If you want the UI to be available ONLY from your home network,
-  # replace 0.0.0.0 by the local IP of the RaspiBolt
-  # 0.0.0.0 let you access the UI from anywhere
-  httpslisten=0.0.0.0:8443
-  
-  # Your password for the UI must be at least 8 characters long
-  
-  uipassword=PASSWORD_[E]
-  lnd-mode=integrated
-  
-  # LND settings
-  # [Application Options]
-  lnd.lnddir=/mnt/ext/lnd
-  lnd.alias=YOUR_FANCY_ALIAS
-  lnd.color=#FFFF00
-  lnd.debuglevel=info
-  lnd.maxpendingchannels=5
-  lnd.listen=localhost
-  
-  # Fee settings - default LND base fee = 1000 (mSat), default LND fee rate = 1 (ppm)
-  lnd.bitcoin.basefee=1000
-  lnd.bitcoin.feerate=10
-  
-  # Minimum channel size (in satoshis, default is 20,000 sats)
-  lnd.minchansize=100000
-  
-  # Accept AMP (multi-paths) payments, wumbo channels and do not prevent the creation of anchor channel (default value)
-  lnd.accept-amp=true
-  lnd.protocol.wumbo-channels=true
-  lnd.protocol.no-anchors=false
-  
-  # Save on closing fees
-  ## The target number of blocks in which a cooperative close initiated by a remote peer should be confirmed (default: 10 blocks).
-  lnd.coop-close-target-confs=24
-  
-  #########################
-  # Improve startup speed # (from https://www.lightningnode.info/advanced-tools/lnd.conf by Openoms)
-  #########################
-  # If true, we'll attempt to garbage collect canceled invoices upon start.
-  lnd.gc-canceled-invoices-on-startup=true
-  # If true, we'll delete newly canceled invoices on the fly.
-  lnd.gc-canceled-invoices-on-the-fly=true
-  # Avoid historical graph data sync
-  lnd.ignore-historical-gossip-filters=1
-  # Enable free list syncing for the default bbolt database. This will decrease
-  # start up time, but can result in performance degradation for very large
-  # databases, and also result in higher memory usage. If "free list corruption"
-  # is detected, then this flag may resolve things.
-  lnd.sync-freelist=true
-  # Avoid high startup overhead
-  # If true, will apply a randomized staggering between 0s and 30s when
-  # reconnecting to persistent peers on startup. The first 10 reconnections will be
-  # attempted instantly, regardless of the flag's value
-  lnd.stagger-initial-reconnect=true
-  
-  ########################
-  # Compact the database # (slightly modified from https://www.lightningnode.info/advanced-tools/lnd.conf by Openoms)
-  ########################
-  # Can be used on demand by commenting in/out the two options below: it can take several minutes
-  # [bolt]
-  # Whether the databases used within lnd should automatically be compacted on
-  # every startup (and if the database has the configured minimum age). This is
-  # disabled by default because it requires additional disk space to be available
-  # during the compaction that is freed afterwards. In general compaction leads to
-  # smaller database files.
-  lnd.db.bolt.auto-compact=true
-  # How long ago the last compaction of a database file must be for it to be
-  # considered for auto compaction again. Can be set to 0 to compact on every
-  # startup. (default: 168h; the time unit must be present, i.e. s, m or h, except for 0)
-  lnd.db.bolt.auto-compact-min-age=168h
-  
-  # [Bitcoin]
-  lnd.bitcoin.active=1
-  lnd.bitcoin.mainnet=1
-  lnd.bitcoin.node=bitcoind
-  
-  # [tor]
-  lnd.tor.active=true
-  lnd.tor.v3=true
-  lnd.tor.streamisolation=true
-  
-  #################
-  # Pool settings #
-  #################
-  # This option avoids the creation of channels with nodes with whom you already have a channel (set to 0 if you don't mind)
-  pool.newnodesonly=1
-  
-  ####################
-  # Faraday settings #
-  ####################
-  # If connect_bitcoin is set to 1, Faraday can connect to a bitcoin node (with --txindex set) to provide node accounting services
-  faraday.connect_bitcoin=1
-  # The Bitcoin node IP is the IP address of the Raspibolt, i.e. an address like 192.168.0.20
-  faraday.bitcoin.host=[Bitcoin node IP]:8332
-  # bitcoin.user provides to Faraday the bicoind RPC username, as specified in our bitcoin.conf
-  faraday.bitcoin.user=raspibolt
-  # bitcoin.password provides to Faraday the bitcoind RPC password, as specified in our bitcoin.conf
-  faraday.bitcoin.password=PASSWORD_[B]
-  ```
-
-🔍 *Notice that the options for LND, Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
-  
-### Running LiT
-
-Start your SSH program (eg. PuTTY) a second time, connect to the Pi and log in as “admin”. Commands for the second session start with the prompt $2 (which must not be entered).
-We must never run LND and LiT at the same time to avoid corruption of the channels database. So we must first stop LND and its `systemd` service.
-
-  ```sh
-  $2 lncli stop
-  $2 sudo systemctl stop lnd
-  ```
-
-Once everything is stopped, we can test that LiT is correctly using the LND database.
-
-  ```sh
-  $2 sudo su - bitcoin
-  $2 litd
-  ```
-
-Now go back to the first session and try to unlock your wallet, if you already used your node a lot you must wait for the LND database to be open (you can take a look at the log returned in the second session where LiT is running).
-
-  ```sh
-  $ lncli unlock
-  ```
-  
-  Type your `password [C]` to unlock the wallet. You can check the state with `lncli getinfo`, it should be synced with graph and chain. If it works, you can stop LiT running in the second section using `Ctrl + C` and exit it
-
-  ```sh
-  $2 exit
-  ```
-  
-  
-### Autostart LiT on boot
-
-We stopped lnd service, now that LiT is running we can replace the autostart service for LND by the LiT's one. We modify LND systemd unit:
-
-  ```sh
-  $2 sudo systemctl disable lnd
-  $2 sudo nano /etc/systemd/system/lnd.service
-  ```
-We can just change the line `ExecStart=/usr/local/bin/lnd` for `ExecStart=/usr/local/bin/litd`, rename the file and enable, start, unlock LiT:
-
-  ```sh
-  $2 sudo mv /etc/systemd/system/lnd.service /etc/systemd/system/litd.service
-  $2 sudo systemctl enable litd
-  $2 sudo systemctl start litd
-  $2 systemctl status litd
-  $2 lncli unlock
-  ```
-If you wish to look at the daemon information, they are in the system journal
-
-  ```sh
-  $2 sudo journalctl -f -u litd
-  ```
-### Using other software packaged in LiT
-
-Others softwares have their own macaroon files too, they are created in `.loop`, `.faraday` and `.pool` directories of bitcoin home by default. So we create symbolic link so that admin user can use them.
-
-  ```sh
-  $2 ln -s /home/bitcoin/.loop /home/admin/.loop
-  $2 ln -s /home/bitcoin/.pool /home/admin/.pool
-  $2 ln -s /home/bitcoin/.faraday /home/admin/.faraday
-  ```
-
-For now, softwares packaged in LiT are all listening to the same port 10009 as LND. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port when using them.
-
-For example, the following will not work to look at the last auction snapshot:
-
-  ```sh
-  $2 pool auction snapshot
-  ```
-  
-It will returns the following error:
-  ```sh
-  > [pool] rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial tcp [::1]:12010: connect: connection refused"
-  ```
-It says that the `pool` command try to interact with your pool client on localhost's port 12010. However your instance of Pool is not listening to the default port 12010, but port 10009 ! It also needs to know where the TLS certificate to securely interact with LND is.
-
-That's why this will work:
-
-  ```sh
-  $2 pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert auction snapshot
-  ```
-It can be convenient to create alias to not have to type the rpc server address at every command. Use `alias` command in bash for that
-
-  ```sh
-  $2 alias poolit="pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
-  $2 poolit auction snapshot
-  ```
-You can add your aliases in `.bashrc` file of `admin`
-  ```sh
-  $2 nano ~/.bashrc
-  ```
-  
-Add the following at the end of the file then save and exit:
-  
-  ```
-  $2 alias poolit="pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
-  $2 alias loopit="loop --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
-  $2 alias frclit="frcli --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
-  ```
-  
-Use `help` and documentation on Pool, Loop and Faraday respectively for information on these command.
-  
-### Access LiT UI for easy Loop Out/In and Liquidity trading
-
-LiT provides a UI that allows you to use Loop and Pool conveniently. The UI is running on port 8443. To access it you must be in your home network (or connected through a VPN like WireGuard) and `ufw` should allow access to the port 8443:
-
-  ```sh
-  $2 sudo su
-  # ufw allow 8443 comment 'allow LiT UI'
-  # ufw disable
-  # ufw enable
-  # exit
-  ```
-  
-You can now connect from your home to `https://[your_pi_local_ip]:8443` with your browser and enjoy the nice GUI of LiT ! Use `PASSWORD_[B]` to log in.
-
-### LiT upgrade
-
-Open a session with "admin". You must stop LiT with `lncli stop` then `sudo systemctl stop litd` before upgrading !
-
-Proceed as LND, but use the binaries of the LiT repo and **do not delete the LND macaroons**. Replace `wget https://github.com/lightningnetwork/lnd` by `wget https://github.com/lightninglabs/lightning-terminal` when downloading binaries and check signature as the "download" part of this guide.
-
----
-
-Next: [Electrum >>](raspibolt_50_electrs.md)
+Next: [Ride The Lightning >>](raspibolt_57_rtl.md)
