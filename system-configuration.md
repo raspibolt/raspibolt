@@ -149,15 +149,15 @@ The “Advanced Packaging Tool” (apt) makes this easy.
 
 ## Data directory
 
-We'll store all application data in the dedicated directory `/mnt/data/`.
+We'll store all application data in the dedicated directory `/data/`.
 This allows for better security because it's not inside any user's home directory.
-Additionally, it's easier to move that directory somewhere else, for instance to a separate drive, as you can just mount any storage option to `/mnt/data/`.
+Additionally, it's easier to move that directory somewhere else, for instance to a separate drive, as you can just mount any storage option to `/data/`.
 
 * Create the directory and make user "bitcoin" its owner
 
   ```sh
-  $ sudo mkdir -p /mnt/data
-  $ sudo chown bitcoin:bitcoin /mnt/data
+  $ sudo mkdir /data
+  $ sudo chown bitcoin:bitcoin /data
   ```
 
 ---

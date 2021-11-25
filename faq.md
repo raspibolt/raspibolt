@@ -61,7 +61,7 @@ Copy it to a USB thumbdrive, so that you can restore it later.
 * Copy the whole LND data directory to the thumbdrive
 
   ```sh
-  $ sudo rsync -rhv /ext/mnt/lnd /mnt/thumbdrive/
+  $ sudo rsync -rhvP --append-verify /mnt/ext/lnd /mnt/thumbdrive/
   ```
 
 * Also make sure to create a Static Channel Backup file and copy it to the thumbdrive
@@ -72,7 +72,7 @@ That could result in you losing all your funds.
 * Move your LND directory to prevent the node starting again by accident.
 
   ```sh
-  $ sudo mv /ext/mnt/lnd /ext/mnt/lnd-do-never-start-again
+  $ sudo mv /mnt/ext/lnd /mnt/ext/lnd-do-never-start-again
   ```
 
 Once you set up your new RaspiBolt 3, restore your old LND node setup.
@@ -86,7 +86,7 @@ Once you set up your new RaspiBolt 3, restore your old LND node setup.
   $ sudo mkdir /mnt/thumbdrive
   $ lsblk -pli
   $ sudo mount /dev/sdb1 /mnt/thumbdrive/
-  $ sudo rsync -rhv /mnt/thumbdrive/ /ext/mnt/lnd
+  $ sudo rsync -rhvP --append-verify /mnt/thumbdrive/lnd /data
   ```
 
 ### Backup & Restore Bitcoin data
@@ -101,13 +101,13 @@ When **Reusing the old drive** for your new node, you must first copy the data t
 * Example for network copy
 
     ```sh
-    $ rsync -rhv admin@raspibolt.local:/mnt/ext/bitcoin /your-local-directory
+    $ rsync -rhvP --append-verify admin@raspibolt.local:/mnt/ext/bitcoin /your-local-directory
     ```
 
 * Example for local drive-to-drive copy with both drives mounted
 
     ```sh
-    $ rsync -rhv /mnt/old-raspibolt-drive/bitcoin /mnt/new-drive/mnt/data
+    $ rsync -rhvP --append-verify /mnt/old-raspibolt-drive/bitcoin /mnt/raspibolt-v3-drive/data
     ```
 
 ---
@@ -120,7 +120,7 @@ For a specific command, you can enter `man [command]` to display the manual page
 | command | description | example |
 | -- | -- | -- |
 | `cd` | change to directory | `cd /home/bitcoin` |
-| `ls` | list directory content | `ls -la /mnt/ext` |
+| `ls` | list directory content | `ls -la /data` |
 | `cp` | copy | `cp file.txt newfile.txt` |
 | `mv` | move | `mv file.txt moved_file.txt`
 | `rm` | remove | `rm temporaryfile.txt`

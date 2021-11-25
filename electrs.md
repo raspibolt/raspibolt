@@ -135,20 +135,20 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 * Create the Electrs data directory
 
   ```sh
-  $ sudo mkdir /mnt/data/electrs
-  $ sudo chown -R electrs:electrs /mnt/data/electrs
+  $ sudo mkdir /data/electrs
+  $ sudo chown -R electrs:electrs /data/electrs
   ```
 
 * Switch to the "electrs" user and create the config file with the following content
 
   ```sh
   $ sudo su - electrs
-  $ nano /mnt/data/electrs/electrs.conf
+  $ nano /data/electrs/electrs.conf
   ```
 
   ```sh
   # RaspiBolt: electrs configuration
-  # /mnt/data/electrs/electrs.conf
+  # /data/electrs/electrs.conf
 
   # Bitcoin Core settings
   network = "bitcoin"
@@ -158,7 +158,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   # Electrs settings
   electrum_rpc_addr = "127.0.0.1:50001"
-  db_dir = "/mnt/data/electrs/db"
+  db_dir = "/data/electrs/db"
   index_lookup_limit = 1000
 
   # Logging
@@ -170,14 +170,14 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   It will immediately start with the initial indexing of the Bitcoin blocks.
 
   ```sh
-  $ electrs --conf /mnt/data/electrs/electrs.conf
+  $ electrs --conf /data/electrs/electrs.conf
   ```
 
   ```sh
-  Starting electrs 0.9.3 on aarch64 linux with Config { network: Bitcoin, db_path: "/mnt/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.3 (Electrum Rust Server)!", args: [] }
+  Starting electrs 0.9.3 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.3 (Electrum Rust Server)!", args: [] }
   [2021-11-09T07:09:42.744Z INFO  electrs::metrics::metrics_impl] serving Prometheus metrics on 127.0.0.1:4224
   [2021-11-09T07:09:42.744Z INFO  electrs::server] serving Electrum RPC on 127.0.0.1:50001
-  [2021-11-09T07:09:42.812Z INFO  electrs::db] "/mnt/data/electrs/db/bitcoin": 0 SST files, 0 GB, 0 Grows
+  [2021-11-09T07:09:42.812Z INFO  electrs::db] "/data/electrs/db/bitcoin": 0 SST files, 0 GB, 0 Grows
   [2021-11-09T07:09:43.174Z INFO  electrs::index] indexing 2000 blocks: [1..2000]
   [2021-11-09T07:09:44.665Z INFO  electrs::chain] chain updated: tip=00000000dfd5d65c9d8561b4b8f60a63018fe3933ecb131fb37f905f87da951a, height=2000
   [2021-11-09T07:09:44.986Z INFO  electrs::index] indexing 2000 blocks: [2001..4000]
@@ -216,7 +216,7 @@ Electrs needs to start automatically on system boot.
 
   # Service execution
   ###################
-  ExecStart=/usr/local/bin/electrs --conf /mnt/data/electrs/electrs.conf
+  ExecStart=/usr/local/bin/electrs --conf /data/electrs/electrs.conf
 
   # Process management
   ####################
@@ -439,7 +439,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   $ sudo mv ./target/release/electrs /usr/local/bin/
 
   # Update the Electrs configuration if necessary (see release notes)
-  $ nano /mnt/data/electrs/electrs.conf
+  $ nano /data/electrs/electrs.conf
 
   # Start Electrs
   $ sudo systemctl restart electrs
