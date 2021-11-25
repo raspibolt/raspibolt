@@ -157,8 +157,8 @@ $ sudo su - bitcoin
 $ touch /home/bitcoin/test
 $ ls -la /home/bitcoin/
 .
-lrwxrwxrwx 1 bitcoin bitcoin   16 Nov 13 21:47 .bitcoin -> /mnt/ext/bitcoin
-lrwxrwxrwx 1 bitcoin bitcoin   12 Nov 13 22:28 .lnd -> /mnt/ext/lnd
+lrwxrwxrwx 1 bitcoin bitcoin   16 Nov 13 21:47 .bitcoin -> /data/bitcoin
+lrwxrwxrwx 1 bitcoin bitcoin   12 Nov 13 22:28 .lnd -> /data/lnd
 -rw-r--r-- 1 bitcoin bitcoin    0 Nov 27 18:36 test
 .
 ```

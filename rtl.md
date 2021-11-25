@@ -85,7 +85,7 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
 * Create a new user, copy the LND credentials and open a new session
   ```sh
   $ sudo adduser --disabled-password --gecos "" rtl
-  $ sudo cp /mnt/data/lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/rtl/admin.macaroon
+  $ sudo cp /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/rtl/admin.macaroon
   $ sudo chown rtl:rtl /home/rtl/admin.macaroon
   $ sudo su - rtl
   ```
@@ -165,7 +165,7 @@ Now we take the sample configuration file and add change it to our needs.
 
   ```sh
     "macaroonPath": "/home/rtl"
-    "configPath": "/mnt/data/lnd/lnd.conf"
+    "configPath": "/data/lnd/lnd.conf"
   ```
 * Save and exit
 

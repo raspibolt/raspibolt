@@ -51,7 +51,7 @@ For the BTC RPC Explorer to work, you need your full node to index all transacti
   ```
 
 Please note that reindexing can take more than a day.
-You can follow the progress using `sudo tail -f /mnt/data/bitcoin/debug.log`.
+You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 
 ### Install NodeJS
 
@@ -166,7 +166,7 @@ found 12 vulnerabilities (8 moderate, 4 high)
   ```sh
   BTCEXP_BITCOIND_HOST=127.0.0.1
   BTCEXP_BITCOIND_PORT=8332
-  BTCEXP_BITCOIND_COOKIE=/mnt/data/bitcoin/.cookie
+  BTCEXP_BITCOIND_COOKIE=/data/bitcoin/.cookie
   ```
 
 * Extend the timeout period due to the limited resources of the Raspberry Pi

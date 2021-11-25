@@ -94,7 +94,7 @@ You can read more on [How to securely install Bitcoin](https://medium.com/@luked
 ### Create data folder
 
 Bitcoin Core uses by default the folder `.bitcoin` in the user's home.
-Instead of creating this directory, we create a data directory in the general data location `/mnt/data` and link to it.
+Instead of creating this directory, we create a data directory in the general data location `/data` and link to it.
 
 * Switch to user "bitcoin"
 
@@ -105,13 +105,13 @@ Instead of creating this directory, we create a data directory in the general da
 * Create the Bitcoin data folder
 
   ```sh
-  $ mkdir /mnt/data/bitcoin
+  $ mkdir /data/bitcoin
   ```
 
 * Create the symbolic link `.bitcoin` that points to that directory
 
   ```sh
-  $ ln -s /mnt/data/bitcoin /home/bitcoin/.bitcoin
+  $ ln -s /data/bitcoin /home/bitcoin/.bitcoin
   ```
 
 * Display the link and check that it is not shown in red (this would indicate an error)
@@ -234,7 +234,7 @@ Still logged in as user "bitcoin", let's start "bitcoind" manually.
   This allows "admin" to work with bitcoind directly, for example using the command `bitcoin-cli`
 
   ```sh
-  $ ln -s /mnt/data/bitcoin /home/admin/.bitcoin
+  $ ln -s /data/bitcoin /home/admin/.bitcoin
   ```
 
 ### Autostart on boot

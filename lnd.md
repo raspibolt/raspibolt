@@ -90,16 +90,16 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
 * Create the LND data directory
 
   ```sh
-  $ sudo mkdir /mnt/data/lnd
-  $ sudo chown -R lnd:lnd /mnt/data/lnd
+  $ sudo mkdir /data/lnd
+  $ sudo chown -R lnd:lnd /data/lnd
   ```
 
 * Also create a separate directory for the channel backup.
   Alternatively, you can [mount a USB thumbdrive to this location](https://linuxconfig.org/howto-mount-usb-drive-in-linux){:target="_blank"} for added redundancy.
 
   ```sh
-  $ sudo mkdir /mnt/lnd-backup
-  $ sudo chown -R lnd:lnd /mnt/lnd-backup
+  $ sudo mkdir /data/lnd-backup
+  $ sudo chown -R lnd:lnd /data/lnd-backup
   ```
 
 * Open a "lnd" user session
@@ -111,8 +111,8 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
 * Create symbolic links pointing to the LND and bitcoin data directories
 
   ```sh
-  $ ln -s /mnt/data/lnd /home/lnd/.lnd
-  $ ln -s /mnt/data/bitcoin /home/lnd/.bitcoin
+  $ ln -s /data/lnd /home/lnd/.lnd
+  $ ln -s /data/bitcoin /home/lnd/.bitcoin
   ```
 
 * Display the links and check that they're not shown in red (this would indicate an error)
@@ -134,13 +134,13 @@ To give some perspective: other Lightning implementations like c-lightning or Ec
 * As user "bitcoin", create a text file and enter your LND wallet `password [C]`. Save and exit.
 
   ```sh
-  $ nano /mnt/data/lnd/password.txt
+  $ nano /data/lnd/password.txt
   ```
 
 * Tighten access privileges and make the file readable only for user "lnd":
 
   ```sh
-  $ chmod 600 /mnt/data/lnd/password.txt
+  $ chmod 600 /data/lnd/password.txt
   ```
 
 To improve the security of your wallet, check out these more advanced methods:
@@ -154,23 +154,23 @@ To improve the security of your wallet, check out these more advanced methods:
   Save and exit.
 
   ```sh
-  $ nano /mnt/data/lnd/lnd.conf
+  $ nano /data/lnd/lnd.conf
   ```
 
   ```sh
   # RaspiBolt: lnd configuration
-  # /mnt/data/lnd/lnd.conf
+  # /data/lnd/lnd.conf
 
   [Application Options]
   alias=YOUR_FANCY_ALIAS
   debuglevel=info
   maxpendingchannels=5
   listen=localhost
-  backupfilepath=/mnt/lnd-backup/channel.backup
+  backupfilepath=/data/lnd-backup/channel.backup
 
   # Password: automatically unlock wallet with the password in this file
   # -- comment out to manually unlock wallet, and see RaspiBolt guide for more secure options
-  wallet-unlock-password-file=/mnt/data/lnd/password.txt
+  wallet-unlock-password-file=/data/lnd/password.txt
   wallet-unlock-allow-create=true
 
   # Channel settings
@@ -277,7 +277,7 @@ Once LND is started, the process waits for us to create the integrated Bitcoin w
 
 These 24 words (combined with your optional passphrase `password [D]`)  is all that you need to restore the Bitcoin on-chain wallet.
 The current state of your channels, however, cannot be recreated from this seed.
-For this, the Static Channel Backup stored at `/mnt/lnd-backup/channel.backup` is updated continuously.
+For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
 🚨 This information must be kept secret at all times.
 **Write these 24 words down manually on a piece of paper and store it in a safe place.**
