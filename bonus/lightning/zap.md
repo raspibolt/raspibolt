@@ -1,12 +1,25 @@
 ---
 layout: default
 title: Zap Desktop
-parent: Bonus Section
-nav_order: 50
+parent: Bonus Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
 ## Bonus guide: Zap Desktop Lightning Wallet
-*Difficulty: easy*
+{: .no_toc }
+
+Difficulty: Easy
+{: .label .label-green }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 The desktop app Zap (https://github.com/LN-Zap/zap-desktop) is a cross platform Lightning Network wallet focused on user experience and ease of use.
 
@@ -81,4 +94,4 @@ We will connect Zap to the RaspiBolt using a connection string that includes the
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md) 
+<< Back: [Bonus Lightning](bonus-lightning.md)
