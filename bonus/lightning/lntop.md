@@ -1,16 +1,29 @@
 ---
 layout: default
 title: LNTOP terminal dashboard
-parent: Bonus Section
-nav_order: 85
+parent: Bonus Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
 ## Bonus guide: lntop: LNTOP terminal dashboard
-*Difficulty: easy*
+{: .no_toc }
+
+Difficulty: Easy
+{: .label .label-green }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 [lntop](https://github.com/edouardparis/lntop) is an interactive text-mode channels viewer for Unix systems.
 
-![lntop](images/74_lntop.png)
+![lntop](../../images/74_lntop.png)
 
 ### Install lntop
 
@@ -27,5 +40,4 @@ $ lntop
 ```
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md) 
-
+<< Back: [Bonus Lightning](bonus-lightning.md)
