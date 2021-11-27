@@ -1,13 +1,17 @@
 ---
 layout: default
 title: System overview
-parent: Bonus Section
-nav_order: 10
+parent: Bonus Raspberry Pi
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
-## Bonus guide: System overview
 
-*Difficulty: easy*
+## Bonus guide: System overview
+{: .no_toc }
+
+Difficulty: Easy
+{: .label .label-green }
 
 To get a quick overview over the system status, I created [a shell script](resources/20-raspibolt-welcome) that is run as "message of the day" (motd) to be shown on login or on demand.
 
@@ -49,4 +53,4 @@ Both methods work, but the original method does not rely on third party applicat
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+<< Back: [Bonus Raspberry Pi](bonus-raspberry-pi.md)
