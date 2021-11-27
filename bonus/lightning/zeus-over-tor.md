@@ -1,12 +1,17 @@
 ---
 layout: default
 title: Zeus App Via Tor
-parent: Bonus Section
-nav_order: 30
+parent: Bonus Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Connect Zeus App Over Tor
-*Difficulty: medium*
+{: .no_toc }
+
+Difficulty: Intermediate
+{: .label .label-yellow }
 
 Download the Zeus app, APKs available here: https://github.com/ZeusLN/zeus/releases, 
 on F-Droid and Google Play.
@@ -71,3 +76,7 @@ $ sudo su bitcoin
 $ lndconnect --lnddir=/home/bitcoin/.lnd --host=z1234567890abc.onion --port=8080 -j
 ```
 Scan or copy paste it with Zeus and you are done.
+
+------
+
+<< Back: [Bonus Lightning](bonus-lightning.md)
