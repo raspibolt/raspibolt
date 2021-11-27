@@ -1,12 +1,25 @@
 ---
 layout: default
 title: Static Channel Backups
-parent: Bonus Section
-nav_order: 45
+parent: Bonus Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
 ## Bonus guide: Automatic backup of static.channel to your Dropbox
-*Difficulty: easy*
+{: .no_toc }
+
+Difficulty: Easy
+{: .label .label-green }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 Since lnd V0.6, Static Channel Backups (SCB) is supported. In a nutshell, every time a channel changes, lnd writes a new copy of the channels.backup file. For more details, see v0.6-beta Release Notes
 This guide explains one way to automatically upload the channels.backup file on changes, to your Dropbox
@@ -86,5 +99,4 @@ Logon to your dropbox and see if you have a new file.
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md) 
-
+<< Back: [Bonus Lightning](bonus-lightning.md)
