@@ -69,11 +69,11 @@ Now we can add the Electrs configuration.
   }
   ```
 
-* Test the NGINX configuration and restart the service
+* Test and reload NGINX configuration
 
   ```sh
   $ sudo nginx -t
-  $ sudo systemctl restart nginx
+  $ sudo systemctl reload nginx
   ```
 
 * Configure the firewall to allow incoming requests
@@ -287,10 +287,10 @@ Note that the remote device needs to have Tor installed as well.
   HiddenServicePort 50002 127.0.0.1:50002
   ```
 
-* Restart Tor and get your connection address.
+* Reload Tor configuration and get your connection address.
 
   ```sh
-  $ sudo systemctl restart tor
+  $ sudo systemctl reload tor
   $ sudo cat /var/lib/tor/hidden_service_electrs/hostname
   > abcdefg..............xyz.onion
   ```

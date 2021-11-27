@@ -72,10 +72,10 @@ We need to enable Tor to accept instructions through its control port, with the 
   CookieAuthFileGroupReadable 1
   ```
 
-* Restart Tor to activate the modifications
+* Reload Tor configuration to activate the modifications
 
   ```sh
-  $ sudo systemctl restart tor
+  $ sudo systemctl reload tor
   ```
 
 * Allow the user "bitcoin" to configure Tor directly
@@ -111,10 +111,10 @@ This makes "calling home" very easy, without the need to configure anything on y
   HiddenServicePort 22 127.0.0.1:22
   ```
 
-* Restart Tor and look up your Tor connection address
+* Reload Tor configuration and look up your Tor connection address
 
   ```sh
-  $ sudo systemctl restart tor
+  $ sudo systemctl reload tor
   $ sudo cat /var/lib/tor/hidden_service_sshd/hostname
   > abcdefg..............xyz.onion
   ```
