@@ -1,13 +1,27 @@
 ---
 layout: default
 title: Electrum Personal Server
-parent: Bonus Section
-nav_order: 40
+parent: Bonus Bitcoin
+grand_parent: Bonus Section
+nav_exclude: true
+has_children: false
 has_toc: false
 ---
-## Bonus guide: Electrum Personal Server
 
-*Difficulty: intermediate*
+## Bonus guide: Electrum Personal Server
+{: .no_toc }
+
+Difficulty: Intermediate
+{: .label .label-yellow }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 ### Introduction
 
@@ -190,4 +204,4 @@ Congratulations, you have now one of the best Bitcoin desktop wallet, capable of
 
 ---
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+<< Back: [Bonus Bitcoin](bonus-bitcoin.md)
