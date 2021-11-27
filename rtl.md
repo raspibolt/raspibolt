@@ -62,11 +62,11 @@ Now we can add the RTL configuration.
   }
   ```
 
-* Test NGINX configuration and restart the service
+* Test and reload NGINX configuration
 
   ```sh
   $ sudo nginx -t
-  $ sudo systemctl restart nginx
+  $ sudo systemctl reload nginx
   ```
 
 * Configure firewall to allow incoming HTTPS requests:
@@ -252,10 +252,10 @@ You can easily add a Tor hidden service on the RaspiBolt and access the Ride the
   HiddenServicePort 80 127.0.0.1:3000
   ```
 
-  Restart Tor and get your connection address.
+  Update Tor configuration changes and get your connection address.
 
   ```sh
-  $ sudo systemctl restart tor
+  $ sudo systemctl reload tor
   $ sudo cat /var/lib/tor/hidden_service_rtl/hostname
   > abcefg...................zyz.onion
   ```
