@@ -297,6 +297,16 @@ Note that the remote device needs to have Tor installed as well.
 
 ---
 
+💡 Electrs must first fully index the blockchain and compact its database before you can connect to it with your wallets.
+This can take a few hours.
+Only proceed with the next section once Electrs is ready.
+
+* To check if Electrs is still indexing, you can follow the log output
+
+  ```sh
+  $ sudo journalctl -f -u electrs
+  ```
+
 ## Connect Electrum wallet
 
 [Electrum wallet](https://electrum.org){:target="_blank"} is a well-established, feature-rich Bitcoin wallet for power-users that supports most hardware wallets.
