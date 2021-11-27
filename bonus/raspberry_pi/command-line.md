@@ -1,12 +1,26 @@
 ---
 layout: default
 title: Pimp the CLI
-parent: Bonus Section
-nav_order: 80
+parent: Bonus Raspberry Pi
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Pimp the command line  
-*Difficulty: easy*
+{: .no_toc }
+
+Difficulty: Easy
+{: .label .label-green }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 ### Command prompt
 You can prettify your command prompt for each user by enabling color output and setting a custom prompt. 
@@ -46,4 +60,4 @@ Bash completion will be enabled after your next login.
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md) 
+<< Back: [Bonus Raspberry Pi](bonus-raspberry-pi.md) 
