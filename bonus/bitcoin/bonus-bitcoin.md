@@ -1,0 +1,23 @@
+---
+layout: default
+title: Bonus Bitcoin
+nav_order: 2000
+parent: Bonus Section
+has_children: false
+has_toc: false
+---
+
+## Electrum Servers
+* **[Electrum Personal Server](electrum-personal-server.md)** - an alternative to Electrs
+
+## Pivacy
+* *Coinjoin*
+  * **[JoinMarket on RaspiBolt](https://github.com/kristapsk/raspibolt-extras/blob/master/joinmarket.md)** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
+
+## Security
+* *Multisig*
+  * **[Specter Wallet](specter-desktop.md)** - a convenient and user-friendly GUI around Bitcoin Core with a focus on multisignature setup with hardware wallets and airgapped devices
+
+---
+
+<< Back: [Bonus guides](../../bonus-section.md)
