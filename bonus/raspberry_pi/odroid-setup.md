@@ -1,12 +1,26 @@
 ---
 layout: default
 title: Odroid Setup
-parent: Bonus Section
-nav_order: 76
+parent: Bonus Raspberry Pi
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Odroid XU Setup Guide
-*Difficulty: medium*
+{: .no_toc }
+
+Difficulty: Intermediate
+{: .label .label-yellow }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 This guide describes how to setup RaspiBolt using an Odroid XU4 or compatible hardware (like Odroid HC1, [HC2] (https://www.hardkernel.com/shop/odroid-hc2-home-cloud-two/) and many others).
 
@@ -295,11 +309,10 @@ This can take up to a week or two when using an Odroid XU4, depending mostly on 
 If you want to upgrade to a new release of Bitcoin Core in the future, check out the FAQ section:
 [How to upgrade Bitcoin Core](raspibolt_faq.md#how-to-upgrade-bitcoin-core)
 
-
-
-
-
-
 #### Run Bitcoind and Sync Blockchain
 
 #### Using Bitcoin Node
+ 
+------
+
+<< Back: [Bonus Raspberry Pi](bonus-raspberry-pi.md)
