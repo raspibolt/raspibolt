@@ -1,13 +1,26 @@
 ---
 layout: default
 title: Upgrade External Drive
-parent: Bonus Section
-nav_order: 130
+parent: Bonus Raspberry Pi
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
-## Bonus Guide: Upgrade External Drive
 
-*Difficulty: intermediate*
+## Bonus Guide: Upgrade External Drive
+{: .no_toc }
+
+Difficulty: Intermediate
+{: .label .label-yellow }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 This is a guide for upgrading the external drive. Periodically, as the size of the blockchain grows, you will need to upgrade to a larger drive.
 
@@ -547,4 +560,4 @@ As the blockchain continues to grow you'll be able to repeat these steps in the 
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+<< Back: [Bonus Raspberry Pi](bonus-raspberry-pi.md)
