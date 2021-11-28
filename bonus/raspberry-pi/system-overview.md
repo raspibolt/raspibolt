@@ -1,7 +1,7 @@
 ---
 layout: default
 title: System overview
-parent: Bonus Raspberry Pi
+parent: + Raspberry Pi
 grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false

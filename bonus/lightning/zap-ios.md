@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Zap iOS
-parent: Bonus Lightning
+parent: + Lightning
 grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false

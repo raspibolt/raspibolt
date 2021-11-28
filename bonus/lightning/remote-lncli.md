@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LNTOP terminal dashboard
-parent: Bonus Lightning
+parent: + Lightning
 grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false

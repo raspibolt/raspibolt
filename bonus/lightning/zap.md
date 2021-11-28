@@ -1,11 +1,12 @@
 ---
 layout: default
 title: Zap Desktop
-parent: Bonus Lightning
+parent: + Lightning
 grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Zap Desktop Lightning Wallet
 {: .no_toc }
 

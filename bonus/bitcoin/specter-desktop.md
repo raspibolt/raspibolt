@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Specter Desktop
-parent: Bonus Bitcoin
+parent: + Bitcoin
 grand_parent: Bonus Section
 nav_exclude: true
 has_children: false

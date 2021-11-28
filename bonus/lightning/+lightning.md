@@ -1,18 +1,26 @@
 ---
 layout: default
-title: Bonus Lightning
+title: + Lightning
 nav_order: 3000
 parent: Bonus Section
 has_children: false
 has_toc: false
 ---
 
+# Bonus Section: Lightning guides
+
+---
+
 ## Maintenance
 * **[Auto unlock LND on startup](auto-unlock.md)** - (for RaspiBolt v1 & v2) a script to automatically unlocks the wallet on startup or service-restart
 * **[Use lncli on a different computer](remote-lncli.md)** - control your Lightning node from a different computer within you network, eg. from a Windows machine
 
+---
+
 ## Resilience
 * **[Automatic Static Channel Backup (SCB) to Dropbox](static-backup-dropbox.md)** - (for RaspiBolt v1 & v2) have an updated SCB copy in case you brick your node and want to recover your funds onchain
+
+---
 
 ## Dashboards & Wallets
 
@@ -26,6 +34,8 @@ has_toc: false
 #### *GUI - Mobile*
 * **[Zeus (Android)](zeus-over-tor.md)** - connect to your node over VPN or Tor, make payments with lightning or on-chain, manage your channels, and more
 * **[Zap (iOS)](zap-ios.md)** - a neat interface to manage peers & channels, make payments and create invoices
+
+---
 
 ## Even more Extras [(by Rob Clark)](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md)
 * **[Lights-Out](https://github.com/robclark56/RaspiBolt-Extras/#the-lights-out-raspibolt)** - automatic unlocking of wallet and dynamic ip
