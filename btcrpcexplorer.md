@@ -99,7 +99,7 @@ Now we can add the RTL configuration.
 * Configure the firewall to allow incoming HTTPS requests
 
   ```sh
-  $ sudo ufw allow 4000 comment 'allow BTC RPC Explorer SSL'
+  $ sudo ufw allow 4000/tcp comment 'allow BTC RPC Explorer SSL'
   $ sudo ufw status
   ```
 
