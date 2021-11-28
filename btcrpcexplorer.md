@@ -153,14 +153,6 @@ found 12 vulnerabilities (8 moderate, 4 high)
   $ nano .env
   ```
 
-* By default, the BTC RPC Explorer listens for local requests (localhost / 127.0.0.1).
-  To access it from your local network or somewhere else, change the following parameters
-
-  ```sh
-  BTCEXP_HOST=0.0.0.0
-  BTCEXP_PORT=3002
-  ```
-
 * Instruct BTC RPC Explorer to connect to local Bitcoin Core
 
   ```sh
