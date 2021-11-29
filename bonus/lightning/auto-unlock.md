@@ -2,7 +2,7 @@
 layout: default
 title: Auto-unlock LND
 parent: + Lightning
-grand-parent: Bonus Section
+grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
