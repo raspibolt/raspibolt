@@ -17,7 +17,7 @@ In this section, you can find various optional topics that make your RaspiBolt r
 ## Table of contents
 {: .no_toc .text-delta }
 
-* **[Raspberry Pi](bonus/raspberry_pi/bonus-raspberry-pi.md)**
+* **[Raspberry Pi](bonus/raspberry-pi/bonus-raspberry-pi.md)**
 * **[Bitcoin](bonus/bitcoin/bonus-bitcoin.md)**
 * **[Lightning](bonus/lightning/bonus-lightning.md)**
 
