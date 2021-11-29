@@ -6,6 +6,7 @@ grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Auto-unlock LND on startup
 {: .no_toc }
 
@@ -102,4 +103,4 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
 
 ------
 
-<< Back: [Bonus Lightning](bonus-lightning.md)
+<< Back: [+ Lightning](+lightning.md)

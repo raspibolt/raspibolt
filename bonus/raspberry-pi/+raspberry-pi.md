@@ -28,4 +28,4 @@ has_toc: false
 
 ---
 
-<< Back: [Bonus guides](../../bonus-section.md)
+<< Back: [Bonus Section](../../bonus-section.md)

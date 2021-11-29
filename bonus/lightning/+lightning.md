@@ -37,12 +37,15 @@ has_toc: false
 
 ---
 
-## Even more Extras [(by Rob Clark)](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md)
-* **[Lights-Out](https://github.com/robclark56/RaspiBolt-Extras/#the-lights-out-raspibolt)** - automatic unlocking of wallet and dynamic ip
-* **[RaspiBoltDuo](https://github.com/robclark56/RaspiBolt-Extras/#raspiboltduo)** - testnet & mainnet running simultaneously
-* **[Using REST access](https://github.com/robclark56/RaspiBolt-Extras/#using-rest-access)** - to enable and demonstrate using the REST interface instead of rpc/lncli
-* **[Receiving Lightning payments](https://github.com/robclark56/RaspiBolt-Extras/#receive-ln-payments)** - automatically create invoices / qr codes
+## Even more Extras 
+
+### [RaspiBolt Extras by Rob Clark](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md){:target="_blank"}
+
+* **[Lights-Out](https://github.com/robclark56/RaspiBolt-Extras/#the-lights-out-raspibolt){:target="_blank"}** - automatic unlocking of wallet and dynamic ip
+* **[RaspiBoltDuo](https://github.com/robclark56/RaspiBolt-Extras/#raspiboltduo){:target="_blank"}** - testnet & mainnet running simultaneously
+* **[Using REST access](https://github.com/robclark56/RaspiBolt-Extras/#using-rest-access){:target="_blank"}** - to enable and demonstrate using the REST interface instead of rpc/lncli
+* **[Receiving Lightning payments](https://github.com/robclark56/RaspiBolt-Extras/#receive-ln-payments){:target="_blank"}** - automatically create invoices / qr codes
 
 ---
 
-<< Back: [Bonus guides](../../bonus-section.md)
+<< Back: [Bonus Section](../../bonus-section.md)

@@ -163,4 +163,4 @@ The table below shows which commands are permitted by each macaroon
 
 ------
 
-<< Back: [Bonus Lightning](bonus-lightning.md)
+<< Back: [+ Lightning](+lightning.md)

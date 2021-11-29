@@ -6,6 +6,7 @@ grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Additional scripts
 {: .no_toc }
 
@@ -84,4 +85,4 @@ When switching to mainnet, follow the **Testnet** section but removing all insta
 
 ------
 
-<< Back: [Bonus Lightning](bonus-lightning.md)
+<< Back: [+ Lightning](+lightning.md)

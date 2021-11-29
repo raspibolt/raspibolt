@@ -560,4 +560,4 @@ As the blockchain continues to grow you'll be able to repeat these steps in the 
 
 ------
 
-<< Back: [Bonus Raspberry Pi](bonus-raspberry-pi.md)
+<< Back: [+ Raspberry Pi](+raspberry-pi.md)

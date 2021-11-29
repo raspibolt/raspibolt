@@ -98,4 +98,4 @@ That's it, Now you can only SSH to your raspibolt using your trezor.
 
 ------
 
-<< Back: [Bonus Raspberry Pi](bonus-raspberry-pi.md)
+<< Back: [+ Raspberry Pi](+raspberry-pi.md)

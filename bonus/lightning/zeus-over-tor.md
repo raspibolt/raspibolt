@@ -79,4 +79,4 @@ Scan or copy paste it with Zeus and you are done.
 
 ------
 
-<< Back: [Bonus Lightning](bonus-lightning.md)
+<< Back: [+ Lightning](+lightning.md)

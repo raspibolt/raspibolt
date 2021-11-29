@@ -6,6 +6,7 @@ grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: lntop: LNTOP terminal dashboard
 {: .no_toc }
 
@@ -40,4 +41,4 @@ $ lntop
 ```
 ------
 
-<< Back: [Bonus Lightning](bonus-lightning.md)
+<< Back: [+ Lightning](+lightning.md)

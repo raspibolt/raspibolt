@@ -6,6 +6,7 @@ grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Zap iOS Lightning Wallet
 {: .no_toc }
 
@@ -149,4 +150,4 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 
 ------
 
-<< Back: [Bonus Lightning](bonus-lightning.md)
+<< Back: [+ Lightning](+lightning.md)

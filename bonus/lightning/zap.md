@@ -95,4 +95,4 @@ We will connect Zap to the RaspiBolt using a connection string that includes the
 
 ------
 
-<< Back: [Bonus Lightning](bonus-lightning.md)
+<< Back: [+ Lightning](+lightning.md)
