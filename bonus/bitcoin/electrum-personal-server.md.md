@@ -204,4 +204,4 @@ Congratulations, you have now one of the best Bitcoin desktop wallet, capable of
 
 ---
 
-<< Back: [Bonus Bitcoin](bonus-bitcoin.md)
+<< Back: [Bonus Bitcoin](+bitcoin.md)
