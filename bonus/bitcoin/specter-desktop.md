@@ -474,4 +474,4 @@ Updating to a [new release](https://github.com/cryptoadvance/specter-desktop/rel
   ```
 ------
 
-<< Back: [+ Bitcoin](+bitcoin.md)
+<< Back: [+ Bitcoin](index.md)
