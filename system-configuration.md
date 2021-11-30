@@ -80,8 +80,8 @@ Let's check if your drive works well as-is, or if additional configuration is ne
   $ sudo apt install hdparm
   ```
 
-* Your external drive should be connected as `/dev/sda1`.
-  Check if this is the case and look for the mountpoint `/`
+* Your external disk should be connected as `/dev/sda`.
+  Check if this is the case by listing the names of connected block devices
 
   ```sh
   $ lsblk -pli
@@ -90,7 +90,7 @@ Let's check if your drive works well as-is, or if additional configuration is ne
 * Measure the speed of your external drive
 
   ```sh
-  $ sudo hdparm -t --direct /dev/sda2
+  $ sudo hdparm -t --direct /dev/sda
   > Timing O_DIRECT disk reads: 932 MB in  3.00 seconds = 310.23 MB/sec
   ```
 
