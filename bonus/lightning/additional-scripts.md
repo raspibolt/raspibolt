@@ -85,4 +85,4 @@ When switching to mainnet, follow the **Testnet** section but removing all insta
 
 ------
 
-<< Back: [+ Lightning](+lightning.md)
+<< Back: [+ Lightning](index.md)
