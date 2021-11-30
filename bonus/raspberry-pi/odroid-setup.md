@@ -315,4 +315,4 @@ If you want to upgrade to a new release of Bitcoin Core in the future, check out
  
 ------
 
-<< Back: [+ Raspberry Pi](+raspberry-pi.md)
+<< Back: [+ Raspberry Pi](index.md)
