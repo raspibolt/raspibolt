@@ -1,13 +1,27 @@
 ---
 layout: default
 title: Specter Desktop
-parent: Bonus Section
-nav_order: 130
+parent: + Bitcoin
+grand_parent: Bonus Section
+nav_exclude: true
+has_children: false
 has_toc: false
 ---
-## Bonus guide: Specter Desktop
 
-*Difficulty: medium*
+## Bonus guide: Specter Desktop
+{: .no_toc }
+
+Difficulty: Intermediate
+{: .label .label-yellow }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 The Specter Desktop app is a project that's working on making a convenient and user-friendly GUI around Bitcoin Core with a focus on ***multisignature setup with hardware wallets and airgapped devices***.
 
@@ -460,4 +474,4 @@ Updating to a [new release](https://github.com/cryptoadvance/specter-desktop/rel
   ```
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+<< Back: [+ Bitcoin](index.md)

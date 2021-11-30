@@ -1,13 +1,26 @@
 ---
 layout: default
 title: Trezor Agent
-parent: Bonus Section
-nav_order: 120
+parent: + Raspberry Pi
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
-## Bonus guide: Trezor Agent
 
-*Difficulty: easy*
+## Bonus guide: Trezor Agent
+{: .no_toc }
+
+Difficulty: Easy
+{: .label .label-green }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 It is possible to SSH to your device using your Trezor (It should be possible with Ledger and Keepkey but I haven't tried)
 
@@ -83,10 +96,6 @@ $ trezor-agent -c root@192.168.0.20
 If the SSH succeeded go to your authorized keys file and delete/comment out all other public keys
 That's it, Now you can only SSH to your raspibolt using your trezor.
 
-
-
-
-
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+<< Back: [+ Raspberry Pi](index.md)

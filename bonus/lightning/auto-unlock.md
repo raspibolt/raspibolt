@@ -1,12 +1,17 @@
 ---
 layout: default
 title: Auto-unlock LND
-parent: Bonus Section
-nav_order: 20
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Auto-unlock LND on startup
-*Difficulty: medium*
+{: .no_toc }
+
+Difficulty: Intermediate
+{: .label .label-yellow }
 
 > Please note: this guide has not been updated to LND 0.5 yet and might not work as intended.
 
@@ -98,4 +103,4 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+<< Back: [+ Lightning](index.md)

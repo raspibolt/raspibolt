@@ -1,12 +1,26 @@
 ---
 layout: default
 title: Zap iOS
-parent: Bonus Section
-nav_order: 60
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
+
 ## Bonus guide: Zap iOS Lightning Wallet
-*Difficulty: medium*
+{: .no_toc }
+
+Difficulty: Intermediate
+{: .label .label-yellow }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 This guide describes how to use Zap iOS from within your own network, the same that also connects your RaspiBolt.
 
@@ -136,4 +150,4 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+<< Back: [+ Lightning](index.md)

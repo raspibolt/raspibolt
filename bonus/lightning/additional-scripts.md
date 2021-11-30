@@ -1,13 +1,26 @@
 ---
 layout: default
 title: Additional scripts
-parent: Bonus Section
-nav_order: 120
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
-## Bonus guide: Additional scripts
 
-*Difficulty: easy*
+## Bonus guide: Additional scripts
+{: .no_toc }
+
+Difficulty: Easy
+{: .label .label-green }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 The following scripts were created by [RobClark56](https://github.com/robclark56) and help getting a better system overview.
 
@@ -72,4 +85,4 @@ When switching to mainnet, follow the **Testnet** section but removing all insta
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md)
+<< Back: [+ Lightning](index.md)
