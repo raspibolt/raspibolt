@@ -103,4 +103,4 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
 
 ------
 
-<< Back: [+ Lightning](+lightning.md)
+<< Back: [+ Lightning](index.md)
