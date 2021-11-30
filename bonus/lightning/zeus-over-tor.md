@@ -79,4 +79,4 @@ Scan or copy paste it with Zeus and you are done.
 
 ------
 
-<< Back: [+ Lightning](+lightning.md)
+<< Back: [+ Lightning](index.md)
