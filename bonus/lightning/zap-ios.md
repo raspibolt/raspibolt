@@ -150,4 +150,4 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 
 ------
 
-<< Back: [+ Lightning](+lightning.md)
+<< Back: [+ Lightning](index.md)
