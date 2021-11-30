@@ -41,4 +41,4 @@ $ lntop
 ```
 ------
 
-<< Back: [+ Lightning](+lightning.md)
+<< Back: [+ Lightning](index.md)
