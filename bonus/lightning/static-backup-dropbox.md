@@ -100,4 +100,4 @@ Logon to your dropbox and see if you have a new file.
 
 ------
 
-<< Back: [+ Lightning](+lightning.md)
+<< Back: [+ Lightning](index.md)
