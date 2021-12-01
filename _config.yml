@@ -7,5 +7,24 @@ aux_links:
     "Contribute! Source on GitHub":
       - "https://github.com/raspibolt/raspibolt/"
 
+color_scheme: raspibolt-dark.scss
+
+# defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: https://raspibolt.org/images/raspibolt3-og-image.png
+
+# jekyll-seo-tag
+twitter:
+  card: summary_large_image
+  username: raspibolt
+
+title: RaspiBolt
+tagline: "Bitcoin & Lightning on a Raspberry Pi"
+description: "Build your own 'do-everything-yourself' Bitcoin full node. No need to trust anyone else."
+type: website
+
 # enable theme for local usage
 #theme: "just-the-docs"
