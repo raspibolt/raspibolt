@@ -284,7 +284,7 @@ This piece of paper is all an attacker needs to completely empty your on-chain w
 Do not store it on a computer.
 Do not take a picture with your mobile phone.
 **This information should never be stored anywhere in digital form.**
-  * (optional, but recommended) Record these words in steel to render the backup resistant to fire, water and other hazards that could easily destroy the paper backup. In the spirit of the RaspiBolt DIY approach, a good DIY solution for this is to stamp the words into steel washers and store the washers on bolt secured by a wingnut. This solution uses only off-the-shelf components and therefore does not reveal to any merchants that you might own bitcoins. For a full guide, check out the following article: [https://www.econoalchemist.com/post/backup](https://www.econoalchemist.com/post/backup){:target="_blank"} *(note: the jig is optional, no need to buy it if you don't have a 3D printer)*.
+  * (optional) Record these words in steel to render the backup resistant to fire, water and other hazards that could easily destroy the paper backup. In the spirit of the RaspiBolt DIY approach, a good DIY solution for this is to stamp the words into steel washers and store the washers on bolt secured by a wingnut. This solution uses only off-the-shelf components and therefore does not reveal to any merchants that you might own bitcoins. For a full guide, check out the following article: [https://www.econoalchemist.com/post/backup](https://www.econoalchemist.com/post/backup){:target="_blank"} *(note: the jig is optional, no need to buy it if you don't have a 3D printer)*.
 
 * Exit the user "lnd" user session, and then exit the second SSH session altogether
 
