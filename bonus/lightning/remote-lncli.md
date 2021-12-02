@@ -1,13 +1,26 @@
 ---
 layout: default
 title: Remote LNCLI
-parent: Bonus Section
-nav_order: 90
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
-## Bonus guide: Use `lncli` on a different computer
 
-*Difficulty: easy*
+## Bonus guide: Use `lncli` on a different computer
+{: .no_toc }
+
+Difficulty: Easy
+{: .label .label-green }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 It is possible to run *lnd* on the RaspiBolt, and *lncli* on a different computer. The instructions below explain how to install *lncli* on a Windows PC and communicate with the RaspiBolt. Instructions for different computer systems (MAC, Linux, ...) will be very similar.
 
@@ -150,4 +163,4 @@ The table below shows which commands are permitted by each macaroon
 
 ------
 
-<< Back: [Bonus guides](raspibolt_60_bonus.md) 
+<< Back: [+ Lightning](index.md)
