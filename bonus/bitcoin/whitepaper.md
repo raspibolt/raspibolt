@@ -1,18 +1,31 @@
 ---
 layout: default
-title: Download bitcoin whitepaper
-parent: Bonus Section
-nav_order: 90
+title: Electrum Personal Server
+parent: + Bitcoin
+grand_parent: Bonus Section
+nav_exclude: true
+has_children: false
 has_toc: false
 ---
+
 ## Bonus guide: Download the bitcoin whitepaper directly from the node's blockchain data
+{: .no_toc }
 
-*Difficulty: easy*
+Difficulty: Easy
+{: .label .label-green }
 
-The Bitcoin whitepaper pdf was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`. 
-The transaction contains 947 outputs! 
-Some explanations on how the paper is encoded in the transaction is given in a [Bitcoin stackexchange post](https://bitcoin.stackexchange.com/questions/35959/how-is-the-whitepaper-decoded-from-the-blockchain-tx-with-1000x-m-of-n-multisi/35970#35970) from 2015.
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
+The Bitcoin whitepaper pdf was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`.  
+The transaction contains 947 outputs! Some explanations on how the paper is encoded in the transaction is given in a [Bitcoin stackexchange post](https://bitcoin.stackexchange.com/questions/35959/how-is-the-whitepaper-decoded-from-the-blockchain-tx-with-1000x-m-of-n-multisi/35970#35970){:target="_blank"} from 2015.  
+  
 It is possible to extract the data directly from the blockchain data on your own node and re-create the pdf from it. 
 
 ### Download the pdf
@@ -36,25 +49,25 @@ It is possible to extract the data directly from the blockchain data on your own
   
 ### Send the pdf to your desktop computer (Linux only)
   
-The pdf can now be sent from the remote node to the local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html) utiliy.
+The pdf can now be sent from the remote node to the local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utiliy.
 The following command only works on Linux-based computers.
 
-* On the local computer, open a Terminal window and type the following command (replace <your_node_IP> with the Raspberry Pi IP address and do not forget the dot at the end of the line
+* On your local computer, open a terminal window and type the following command (replace <your_node_IP> with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line
 
   ```sh
   $ scp admin@<your_node_IP>:~/whitepaper/bitcoin.pdf .
   ```
   
-* The file should now be located in the Home folder of the local computer (e.g. /home/<username>).
-
+* The file should now be located in the Home folder of your local computer (e.g. /home/<username>).
+  
 ### Send the pdf to your Telegram account
 
-**⚠ Privacy warning**: Using this method will leak your IP address to the Telegram server.
+🚨 **Privacy warning**: Using this method will leak your IP address to the Telegram server.
 
 * Follow this tutorial to create a new Telegram bot: https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/. 
-Write down the bot ID and the chat ID in a secure location (e.g. a password manager).
+Write down the bot ID and the chat ID in a secure location (e.g. in your password manager).
 
-* Send the whitepaper to your bot (replace <your_chat_ID> and <your_bot_ID> by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
+* Send the white paper to your bot (replace <your_chat_ID> and <your_bot_ID> by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
 
   ```sh
   $ curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/whitepaper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
