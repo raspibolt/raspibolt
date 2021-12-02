@@ -72,7 +72,7 @@ We'll download, verify and install LND.
   $ tar -xzf lnd-linux-arm64-v0.14.1-beta.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.1-beta/*
   $ lnd --version
-  > lnd version 0.14.0-beta commit=v0.14.1-beta
+  > lnd version 0.14.1-beta commit=v0.14.1-beta
 ```
 
 ### Data directory
