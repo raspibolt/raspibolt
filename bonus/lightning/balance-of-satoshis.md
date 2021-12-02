@@ -1,15 +1,27 @@
 ---
 layout: default
 title: Balance of Satoshis
-parent: Bonus Section
-nav_order: 130
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
 # Bonus guide: Balance of Satoshis
+{: .no_toc }
 
-*Difficulty: simple*
+Difficulty: Easy
+{: .label .label-green }
 
-[Balance of Satoshis](https://github.com/alexbosworth/balanceofsatoshis) (BoS), created and maintained by LND developper Alex Bosworth, is a tool to work with LND channel balances.
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+[Balance of Satoshis](https://github.com/alexbosworth/balanceofsatoshis){:target="_blank"} (BoS), created and maintained by LND developper Alex Bosworth, is a tool to work with LND channel balances.
 
 *Requirements:*
 
@@ -22,7 +34,7 @@ has_toc: false
 
 ## Check NodeJS
 
-* NojeJS v12.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user 'admin': 
+* NojeJS v12.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
 
   ```sh
   $ node -v
@@ -30,9 +42,12 @@ has_toc: false
   ```
 
 * If the version is v12.0 or above, you can move to section **Create bos user**.
-* If NodeJS is not installed, follow [these commands](https://stadicus.github.io/RaspiBolt/raspibolt_55_explorer.html#install-nodejs) to install it.
+
+* If NodeJS is not installed, follow [these commands](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
+
 * If NodeJS version is older than v12.0, you can attempt to upgrade it:
-** First, we need to clean the npm cache, install n (Node's version manager) and install the latest stable version.
+  * First, we need to clean the npm cache, install n (Node's version manager) and install the latest stable version.
+  
   ```sh
   $ sudo su
   $ npm cache clean -f
@@ -42,15 +57,22 @@ has_toc: false
   $ node -v
   ```
 
-## Create the bos user and set up npm-global
+## Create the "bos" user and set up npm-global
 
-* Create a new user with your password [ A ]  
+* Create a new user "bos" and make it a member of the "lnd" group
 
   ```sh
-  $ sudo adduser bos
+  $ sudo adduser --disabled-password --gecos "" bos
+  $ sudo /usr/sbin/usermod --append --groups lnd bos
   $ sudo su - bos
   ```
-  
+
+* Create symlink to lnd directory
+
+  ```sh
+  $ ln -s /mnt/ext/lnd/ /home/bos/.lnd
+  ```
+
 * Set up nmp-global
  
   ```sh
@@ -59,44 +81,33 @@ has_toc: false
   $ exit
   $ sudo bash -c "echo 'PATH=$PATH:/home/bos/.npm-global/bin' >> /home/bos/.bashrc"
   ```
-  
-## Download source code and install bos
 
-* Download the source code
+## Install
+
+* Download the source code and install it
   
   ```sh
   $ sudo su - bos
   $ git clone https://github.com/alexbosworth/balanceofsatoshis.git /home/bos/balanceofsatoshis
   $ cd balanceofsatoshis
-  ```  
-  
-* Create symlink to lnd directory
-
-  ```sh
-  $ sudo ln -s /mnt/ext/lnd/ /home/bos/.lnd
-  ```
-
-* Make bos a member of the bitcoin group
-  
-  ```sh
-  $ sudo /usr/sbin/usermod --append --groups bitcoin bos
-  ```
-
-* Install bos
-
-  ```sh
   $ npm install -g balanceofsatoshis
-  ```
-  
-## Using bos (with the bos user)
+  $ cd ~/
+  ```  
 
-* To check the version, you can use one of the following command
+* Check the version
 
   ```sh
   $ bos --version
   $ bos -V
+  > v11.12.1
   ```
   
+## Using Balance of Satoshis
+
+To use Balance of Satoshis, we will use the "bos" user.
+
+### Help
+
 * To see a list of available options and flags run
   
   ```sh
@@ -108,21 +119,44 @@ has_toc: false
   ```sh
   $ bos help balance
   ```
-A description of all the commands is also available here: [https://github.com/niteshbalusu11/BOS-Commands-Document](https://github.com/niteshbalusu11/BOS-Commands-Document) (note that this page might not be kept up-to-date)
+  
+### Circular rebalancing  
 
-* To rebalance on your node [A] a channel with high outbound (to node B) and a channel with high inbound (to node C)
+Circular rebalancing allows to send satoshis out through one channel (which has too little inbound liquidity) and back through another channel (which has too little outbound liquidity). 
+
+E.g. with your node [A], 2 peer nodes [B] and [C] and two channels of 5M sats capacity with 's' being your local liquisity (i.e. your satoshis). The following diagram shows the results of a circular rebalancing of 2M sats that was sent through channel [A]-[B] and received back through channel [C]-[A]. The other channels used to transmit the 2M sats from node [B] to node [C] are not shown here.
+
+```sh
+ Before rebalancing:     After rebalancing: 
+ [A] s s s s . [B]       [A] s s . . . [B] 
+ s                       s
+ .                       s
+ .                       s
+ .                       .
+ .                       .
+[C]                     [C]
+```
+
+* To rebalance a channel (to node [B]) with high outbound and a channel with high inbound (to node [C]). Start with a small max-fee-rate and increase it if necessary.
 
   ```sh
   $ bos rebalance --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
   ```
-  Start with a small max-fee-rate and increase it if necessary.
   
-* More information on bos commands [Github repository](https://github.com/alexbosworth/balanceofsatoshis).
+* E.g. using example above, rebalancing 2M sats with a fee rate of 100 ppm max
+  
+  ```sh
+  $ bos rebalance --amount 2000000 --max-fee-rate 100 --in [NODE_C_PUBKEY] --out [NODE_B_PUBKEY]
+  ```
+
+* There are many additional options that can be used to improve the likelihood of a successful circular rebalancing. There are also many addditonal commands in addition to the rebalancing command. More information on all bos commands can be found in:
+  *  [The BoS Github repository](https://github.com/alexbosworth/balanceofsatoshis){:target="_blank"}
+  *  [This unofficial documentation repo](https://github.com/niteshbalusu11/BOS-Commands-Document){:target="_blank"} *(note that this page might not be kept up-to-date)*
 
 
 ## Upgrade
 
-* Log in with the "bos" and upgrade Balance of Satoshis with `npm`
+* Log in with the "bos" user and upgrade Balance of Satoshis with `npm`
 
   ```sh
   $ sudo su - bos
