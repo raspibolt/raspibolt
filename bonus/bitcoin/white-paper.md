@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Electrum Personal Server
+title: Download the White Paper
 parent: + Bitcoin
 grand_parent: Bonus Section
 nav_exclude: true
