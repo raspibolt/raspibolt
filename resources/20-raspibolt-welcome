@@ -322,6 +322,9 @@ else
   lndversion_color="${color_red}"
 fi
 
+#get channel.db size
+channel_db_size=$(du -h /mnt/ext/lnd/data/graph/mainnet/channel.db | awk '{print $1}')
+
 #electrs
 electrs_running=$(systemctl is-active electrs)
 electrs_color="${color_green}"
@@ -389,8 +392,9 @@ ${color_red}      ~ (  ${color_yellow}／ /_____${color_red}~      ${color_grey}
 ${color_red}     ( : ${color_yellow}／____   ／${color_red} )     ${color_grey}Mempool %-18s ${color_grey}⏳%14s sat
 ${color_red}      ~ .~ (  ${color_yellow}/ ／${color_red}. ~      ${color_grey}Peers   %-22s ${color_grey}∑%15s sat
 ${color_red}       (  : '${color_yellow}/／${color_red}:  )       ${color_grey}                           ${color_grey}%s/%s channels
-${color_red}        '~ .~${color_yellow}°${color_red}~. ~'        ${color_grey}
-${color_red}            '~'            ${color_yellow}%-20s${electrs_color}%-4s${color_grey}   ${color_yellow}%-18s${color_grey} ${btcrpcexplorer_color}%-4s${color_grey}
+${color_red}        '~ .~${color_yellow}°${color_red}~. ~'        ${color_grey}                           ${color_grey}Channel.db size: ${color_green}%s
+${color_red}            '~'
+${color_red}                           ${color_yellow}%-20s${electrs_color}%-4s${color_grey}   ${color_yellow}%-18s${color_grey} ${btcrpcexplorer_color}%-4s${color_grey}
 ${color_red}                           ${electrsversion_color}%-26s ${btcrpcexplorerversion_color}%-24s
 ${color_grey}For others to connect to this lightning node
 ${color_grey}%s
@@ -405,6 +409,7 @@ ${color_grey}%s
 "${mempool} tx" "${ln_pendinglocal}" \
 "${connections} (📥 ${inbound}/📤 ${outbound})" "${sum_balance}" \
 "${ln_channels_online}" "${ln_channels_total}" \
+"${channel_db_size}" \
 "Electrum" "${electrs_running}" "Block Explorer" "${btcrpcexplorer_running}" \
 "${electrsversion}" "${btcrpcexplorerversion}" \
 "${ln_connect_guidance}"
