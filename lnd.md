@@ -86,6 +86,12 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   $ sudo usermod -a -G bitcoin,debian-tor lnd
   ```
 
+* Add the user "admin" to the group "lnd"
+
+  ```sh
+  $ sudo adduser admin lnd
+  ```
+
 * Create the LND data directory
 
   ```sh
@@ -395,6 +401,37 @@ Now, let's set up LND to start automatically on system startup.
 
   ```sh
   $ sudo journalctl -f -u lnd
+  ```
+
+### Allow user "admin" to work with LND
+
+We interact with LND using the application `lncli`.
+At the moment, only the user "lnd" has the necessary access privileges.
+To make the user "admin" the main administrative user, we make sure it can interact with LND as well.
+
+* Newly added groups become active only in a new user session.
+  Log out from SSH.
+
+  ```sh
+  $ exit
+  ```
+
+* Log in as user "admin" again.
+
+* Link the LND data directory in the user "admin" home.
+  As a member or the group "lnd", admin has read-only access to certain files.
+  We also need to make all directories browsable for the group (with `g+X`) and allow it to read the file `admin.macaroon`
+
+  ```sh
+  $ ln -s /data/lnd /home/admin/.lnd
+  $ sudo chmod -R g+X /data/lnd/data/
+  $ sudo chmod g+r /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon
+  ```
+
+* Check if you can use `lncli` by querying LND for information
+
+  ```sh
+  $ lncli getinfo
   ```
 
 ## LND in action
