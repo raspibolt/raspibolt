@@ -32,7 +32,8 @@ Table of contents
 
 ### Steps required
 
-To boot from a microSD card and store the data on an external drive, there are a few additional steps compared to the default RaspiBolt guide:
+To boot from a microSD card and store the data on an external drive, there are a few additional steps compared to the default RaspiBolt guide.
+Below is a summary of the main differences, with detailed guidance in the following sections.
 
 1. [Operating system](../../operating-system.md):
   * write the operating system to the microSD card instead of the external drive
