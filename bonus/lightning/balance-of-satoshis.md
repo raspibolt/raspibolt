@@ -66,6 +66,12 @@ Difficulty: Easy
   ```sh
   $ ln -s /data/lnd /home/bos/.lnd
   ```
+  
+* Display the link and check that it's not shown in red (this would indicate an error)
+
+  ```sh
+  $ ls -la
+  ```
 
 * Set up nmp-global
  
