@@ -280,10 +280,15 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
   ```ini
   AllowOutboundLocalhost 1
   ```
+* Restart Tor
+  
+  ```sh
+  $ sudo systemctl reload tor
+  ```
 
 ### Use bos to connect your node to the bot
 
-* Open a SSH session with the `admin` user and change to the `bos` user
+* Change to the "bos" user
   
   ```sh
   $ sudo su - bos
