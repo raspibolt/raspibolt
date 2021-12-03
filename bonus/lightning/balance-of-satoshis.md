@@ -94,12 +94,11 @@ Difficulty: Easy
   $ cd ~/
   ```  
 
-* Check the version
+* Check the version with the --version (or -V) option
 
   ```sh
-  $ bos --version
   $ bos -V
-  > v11.12.1
+  > v11.13.0
   ```
   
 ## Using Balance of Satoshis
