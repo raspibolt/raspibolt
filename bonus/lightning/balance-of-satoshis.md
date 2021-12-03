@@ -28,7 +28,9 @@ Difficulty: Easy
 * LND (or LND as part of Lightning Terminal/litd)
 * Requires an installation of Node v12.0+
 
-## Check NodeJS
+## Installation
+
+### Check NodeJS
 
 * NojeJS v1.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
 
@@ -51,7 +53,7 @@ Difficulty: Easy
   $ node -v
   ```
 
-## Create the "bos" user and set up npm-global
+### Create the "bos" user and set up npm-global
 
 * Create a new user "bos" and make it a member of the "lnd" group
 
@@ -82,7 +84,7 @@ Difficulty: Easy
   $ sudo bash -c "echo 'PATH=$PATH:/home/bos/.npm-global/bin' >> /home/bos/.bashrc"
   ```
 
-## Install
+### Install
 
 * Download the source code and install it
   
