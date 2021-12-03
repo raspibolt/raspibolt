@@ -34,7 +34,7 @@ Difficulty: Easy
 
   ```sh
   $ node-v
-  >v14.18.2
+  > v14.18.2
   ```
 
 * If the version is v12.0 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
