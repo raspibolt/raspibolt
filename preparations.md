@@ -56,6 +56,8 @@ They should be unique and very secure, at least 12 characters in length. Do **no
 [ A ] Master user password
 [ B ] Bitcoin RPC password
 [ C ] LND wallet password
+[ D ] BTC-RPC-Explorer (optional)
+[ E ] Ride The Lightning
 ```
 
 ![xkcd: Password Strength](images/preparations_xkcd.png)
