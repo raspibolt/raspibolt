@@ -64,7 +64,7 @@ Difficulty: Easy
 * Create symlink to lnd directory
 
   ```sh
-  $ ln -s /mnt/ext/lnd/ /home/bos/.lnd
+  $ ln -s /data/lnd/ /home/bos/.lnd
   ```
 
 * Set up nmp-global
