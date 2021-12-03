@@ -308,7 +308,7 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
 
 ### Permannent connection and autostart on boot 
 
-Now we’ll make sure our Telegram Bot command starts as a service on the Raspberry Pi so it’s always running.
+Now we’ll make sure our Telegram Bot command starts as a systemd service on the Raspberry Pi so it’s always running.
 
 * As user “admin”, create the service file.
 
