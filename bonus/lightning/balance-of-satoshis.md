@@ -111,45 +111,127 @@ To use Balance of Satoshis, we will use the "bos" user.
   
   ```sh
   $ bos help
+  > bos 11.13.0 
+  > 
+  > USAGE
+  > 
+  >   bos <command> [options]
+  >   
+  > COMMANDS
+  > 
+  >   accounting <category>               Get an accounting rundown
+  >   [...]
   ```
   
 * To see detailed information about an individual command, add the name of the command, e.g. with the command `rebalance`
   
   ```sh
   $ bos help rebalance
+  > bos 11.13.0 
+  > 
+  > USAGE
+  > 
+  >   bos rebalance 
+  >   Change the liquidity profile of two peers
+  > [...]
   ```
+  
+* Get a short report of your LN node with pubkey, alias, local capacity, mempool information and recent routing activity
+
+  ```sh
+  $ bos report
+  ```
+
+* Get a list of your channels with peer alias, local and remote balances and your peers fee rates towards your node (the local and remote balances are colour-coded with balances <1M sats in white, >1M sats in green and 4M sats in bolded green, to help identify channels that might require rebalancing)
+
+  ```sh
+  $ bos peers
+  > │ Alias                      │ Inbound    │ In Fee       │ Outbound   │
+  > ├────────────────────────────┼────────────┼──────────────┼────────────┤
+  > │ euclid                     │ 0.00489595 │ 0.00% (7)    │ 0.00508736 ┤
+  > [...]
+  ```
+
   
 ### Circular rebalancing  
 
 Circular rebalancing allows to send satoshis out through one channel (which has too little inbound liquidity) and back through another channel (which has too little outbound liquidity). 
 
-E.g. with your node [A], 2 peer nodes [B] and [C] and two channels of 5M sats capacity with 's' being your local liquisity (i.e. your satoshis). The following diagram shows the results of a circular rebalancing of 2M sats that was sent through channel [A]-[B] and received back through channel [C]-[A]. The other channels used to transmit the 2M sats from node [B] to node [C] are not shown here.
+A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network' by Antonopoulos *et al.* ([source](https://github.com/lnbook/lnbook/blob/ec806916edd6f4d1b2f9da2fef08684f80acb671/05_node_operations.asciidoc#rebalancing-channels){:target="_blank"}) (Alice (A), is your node, Bob (B) and and Chan (C) are two peers with whom you have an opened channel with):
 
-```sh
- Before rebalancing:     After rebalancing: 
- [A] s s s s . [B]       [A] s s . . . [B] 
- s                       s
- .                       s
- .                       s
- .                       .
- .                       .
-[C]                     [C]
-```
+![circular-rebalancing](https://github.com/lnbook/lnbook/raw/ec806916edd6f4d1b2f9da2fef08684f80acb671/images/mtln_0504.png)
 
-* To rebalance a channel (to node [B]) with high outbound and a channel with high inbound (to node [C]). Start with a small max-fee-rate and increase it if necessary.
+* To rebalance a channel (to node B) with high outbound and a channel with high inbound (to node C), use the `rebalance` command.
 
   ```sh
   $ bos rebalance --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
   ```
   
-* E.g. using example above, rebalancing 2M sats with a fee rate of 100 ppm max
+* E.g. using the example above:
+  *  with node B being the [Bitrefill node](https://amboss.space/node/03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac){:target="_blank"}, 
+  *  node C being the [CoinOS node](https://amboss.space/node/02868e12f320073cad0c2959c42559fbcfd1aa326fcb943492ed7f02c9820aa399){:target="_blank"} 
+  *  rebalancing 50,000 sats 
+  *  with a maximum fee rate that you are ready to pay of 100 ppm max
   
   ```sh
-  $ bos rebalance --amount 2000000 --max-fee-rate 100 --in [NODE_C_PUBKEY] --out [NODE_B_PUBKEY]
+  $ bos rebalance --amount 50000 --max-fee-rate 100 --in 02868e12f320073cad0c2959c42559fbcfd1aa326fcb943492ed7f02c9820aa399 --out 03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac
+  > 
   ```
 
-* There are many additional options that can be used to improve the likelihood of a successful circular rebalancing. There are also many addditonal commands in addition to the rebalancing command. More information on all bos commands can be found in:
+* Some rebalancing can take a very long time. A timeout can be specified for the command to terminate gracefully by adding the `--minutes` option.
+
+  ```sh
+  $ bos rebalance --minutes [NUMBER_OF_MINUTES] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
+  ```
+  
+* If you notice that a node in the tried paths is repeatedly the cause of failures, you can ask BoS to ignore this node during path finding by adding the `--avoid` option
+  
+  ```sh
+  $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid [NODE_PUBKEY] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
+  ```
+
+### Tags
+
+BoS allows to create user-defined tags to classify nodes and then be used in the commands.
+
+* For example, you might want to have a tag for nodes that have to be avoided in path finding
+
+* Create the 'avoid-nodes' tag and tag nodes Y and Z
+
+  ```sh
+  $ bos tags avoid-nodestes --add [NODE_Y_PUBKEY] --add [NODE_Z_PUBKEY]
+  > tag: 
+  >   alias: avoid-nodes
+  >   id:    abc123...
+  >   nodes: 
+  >     - [NODE_Y_PUBKEY]
+  >     - [NODE_Z_PUBKEY]
+  ```
+  
+* Check the content of an existing tag
+
+  ```sh
+  $ bos tags
+  > tags: 
+  >   alias: avoid-nodes
+  >   id:    abc123...
+  >   nodes: 
+  >     - [NODE_Y_PUBKEY]
+  >     - [NODE_Z_PUBKEY]
+  ```
+  
+* Use the tag in commands, e.g. with `bos rebalance`
+
+  ```sh
+  $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid avoid-nodes --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
+  ```
+
+### Other commands
+
+There are many additional options that can be used to improve the likelihood of a successful circular rebalancing. There are also many addditonal commands in addition to the rebalancing command. More information on all bos commands can be found in:
+
   *  [The BoS Github repository](https://github.com/alexbosworth/balanceofsatoshis){:target="_blank"}
+
   *  [This unofficial documentation repo](https://github.com/niteshbalusu11/BOS-Commands-Document){:target="_blank"} *(note that this page might not be kept up-to-date)*
 
 
@@ -175,8 +257,9 @@ If you want to uninstall Balance of Satoshis:
   
 ## Optional: connect your node to a Telegram bot
 
-* Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
-* Requirements: a Telegram account
+Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
+
+*Requirements:* a Telegram account
 
 ### Create a new TG bot with the BotFather
 
