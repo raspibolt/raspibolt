@@ -27,7 +27,7 @@ We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL/blob/m
 ### Install NodeJS
 
 Starting with user “admin”, we switch to user “root” and add the Node JS package repository.
-We’ll use version 12 which is the most recent stable one.
+We’ll use version 14 which is well-tested with all web applications used in this guide.
 If you installed BTC RPC Explorer, then you've already accomplisehd this step.
 When finished, exit the “root” user session.
 
