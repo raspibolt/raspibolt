@@ -21,7 +21,7 @@ Difficulty: Easy
 {:toc}
 </details>
 
-[Balance of Satoshis](https://github.com/alexbosworth/balanceofsatoshis){:target="_blank"} (BoS), created and maintained by LND developper Alex Bosworth, is a tool to work with LND channel balances.
+[Balance of Satoshis](https://github.com/alexbosworth/balanceofsatoshis){:target="_blank"} (BoS), created and maintained by LND developper Alex Bosworth, is a tool to work with LND. The most used feature of BoS is the rebalancing command that allows to manage your channels liquidity (which is the main focus of this guide), but BoS contains now many other lightning tools outside liquidity management (such as the creation of a node monitoring Telegram bot which is explained below).
 
 *Requirements:*
 
@@ -101,22 +101,22 @@ Difficulty: Easy
   > v11.13.0
   ```
   
-## Using Balance of Satoshis
+## Balance of Satoshis in action
 
 To use Balance of Satoshis, we will use the "bos" user.
 
-### Help
+### Introduction
 
-* To see a list of available options and flags run
+* To see a list of all available commands run the following command
   
   ```sh
   $ bos help
   ```
   
-* To see details about an individual command, add the name of the command, e.g. with the command `balance`
+* To see detailed information about an individual command, add the name of the command, e.g. with the command `rebalance`
   
   ```sh
-  $ bos help balance
+  $ bos help rebalance
   ```
   
 ### Circular rebalancing  
