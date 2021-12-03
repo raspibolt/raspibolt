@@ -175,7 +175,6 @@ A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network
   
   ```sh
   $ bos rebalance --amount 50000 --max-fee-rate 100 --in 02868e12f320073cad0c2959c42559fbcfd1aa326fcb943492ed7f02c9820aa399 --out 03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac
-  > 
   ```
 
 * Some rebalancing can take a very long time. A timeout can be specified for the command to terminate gracefully by adding the `--minutes` option.
@@ -263,7 +262,7 @@ Balance of Satoshis allows connecting a node to a Telegram bot to receive update
 
 ### Create a new TG bot with the BotFather
 
-* Open Telegram, in the general search box look for the [@BotFather](https://t.me/BotFather) bot and start a conversation with the bot.
+* Open Telegram, in the general search box look for the [@BotFather](https://t.me/BotFather){:target="_blank"} bot and start a conversation with the bot.
 * Type `/start`
 * Type `/newbot` and follow the instructions (choose a bot name, username)
 * Once the bot is created, the BotFather will give you a HTTP API token, copy it and keep it somewhere safe (like in a password manager). Note that if you lose this token, you could always get it agin by typing `/myBot` in the BotFather feed.
