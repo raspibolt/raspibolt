@@ -266,7 +266,7 @@ Balance of Satoshis allows connecting a node to a Telegram bot to receive update
 * Type `/start`
 * Type `/newbot` and follow the instructions (choose a bot name, username)
 * Once the bot is created, the BotFather will give you a HTTP API token, copy it and keep it somewhere safe (like in a password manager). Note that if you lose this token, you could always get it agin by typing `/myBot` in the BotFather feed.
-* You also get a link to your bot (in the form: t.me/[your_bot_username]) click on it and it will redirect you to your new bot feed. Keep Telegram open.
+* You also get a link to your bot (in the form: t.me/[your_bot_username]) click on it and it will redirect you to your new bot feed. Keep Telegram opened.
 
 ### Torify
 
