@@ -349,4 +349,15 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   $ sudo systemctl enable bos-telegram.service
   $ sudo systemctl start bos-telegram.service
   $ sudo systemctl status bos-telegram.service
+  > bos-telegram.service - bos-telegram
+  >   Loaded: loaded (/etc/systemd/system/bos-telegram.service; enabled; vendor preset: enabled)
+  >   Active: active (running) since Fri 2021-12-03 13:52:06 GMT; 8s ago
+  > Main PID: 4682 (node)
+  >    Tasks: 11 (limit: 4164)
+  >      CPU: 7.981s
+  >   CGroup: /system.slice/bos-telegram.service
+  >           `-4682 node /home/bos/.npm-global/bin/bos telegram --connect 1536853548
   ``` 
+
+* Go to your Telegram bot and type /version, it should return your currently installed version of bos.
+* In your Telegram bot type /help to list the list of available commands
