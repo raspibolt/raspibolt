@@ -30,19 +30,17 @@ Difficulty: Easy
 
 ## Check NodeJS
 
-* NojeJS v12.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
+* NojeJS v1.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
 
   ```sh
-  $ node -v
-  >v14.17.4
+  $ node-v
+  >v14.18.2
   ```
 
-* If the version is v12.0 or above, you can move to section **Create bos user**.
+* If the version is v12.0 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
 
-* If NodeJS is not installed, follow [these commands](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
-
-* If NodeJS version is older than v12.0, you can attempt to upgrade it:
-  * First, we need to clean the npm cache, install n (Node's version manager) and install the latest stable version.
+* If NodeJS version is older than v12.0, you can upgrade it:
+  * Clean the npm cache, install n (Node's version manager) and install the latest stable version.
   
   ```sh
   $ sudo su
