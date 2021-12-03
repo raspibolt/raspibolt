@@ -304,7 +304,11 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
 * Go to your new TG bot feed and type `/connect`. Your bot will give you a connection code
 * Copy the connection code and paste it in your SSH session in the second prompt that bos created. You should get a connection message on both your SSH session and your TG bot feed.
 * Your TG bot will now receive notifications from your nodes for various events as described in the introduction.
-* Leave the temporary session by pressing Ctrl+C
+* Leave the temporary session by pressing Ctrl+C and log out of the "bos" user
+  
+  ```sh
+  $ exit
+  ```
 
 ### Permannent connection and autostart on boot 
 
