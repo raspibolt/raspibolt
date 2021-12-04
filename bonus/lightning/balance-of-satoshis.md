@@ -50,18 +50,6 @@ Table of contents
 
 * If the version is v12.0 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
 
-* If NodeJS version is older than v12.0, you can upgrade it:
-  * Clean the npm cache, install n (Node's version manager) and install the latest stable version.
-  
-  ```sh
-  $ sudo su
-  $ npm cache clean -f
-  $ npm install -g n
-  $ sudo n stable
-  $ exit
-  $ node -v
-  ```
-
 #### Create the "bos" user and set up npm-global
 
 * Create a new user "bos" and make it a member of the "lnd" group
