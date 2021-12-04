@@ -85,7 +85,7 @@ Table of contents
 * Still with user "bos", download the source code and install it
   
   ```sh
-  $ git clone https://github.com/alexbosworth/balanceofsatoshis.git /home/bos/balanceofsatoshis
+  $ git clone https://github.com/alexbosworth/balanceofsatoshis.git
   $ cd balanceofsatoshis
   $ npm install -g balanceofsatoshis
   $ cd ~/
