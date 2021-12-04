@@ -77,8 +77,7 @@ Table of contents
   ```sh
   $ mkdir /home/bos/.npm-global
   $ npm config set prefix '/home/bos/.npm-global'
-  $ exit
-  $ sudo bash -c "echo 'PATH=$PATH:/home/bos/.npm-global/bin' >> /home/bos/.bashrc"
+  $ bash -c "echo 'PATH=$PATH:/home/bos/.npm-global/bin' >> /home/bos/.bashrc"
   ```
 
 #### Install
@@ -86,7 +85,6 @@ Table of contents
 * Download the source code and install it
   
   ```sh
-  $ sudo su - bos
   $ git clone https://github.com/alexbosworth/balanceofsatoshis.git /home/bos/balanceofsatoshis
   $ cd balanceofsatoshis
   $ npm install -g balanceofsatoshis
@@ -149,7 +147,7 @@ To use Balance of Satoshis, we will use the "bos" user.
   $ bos peers
   > │ Alias                      │ Inbound    │ In Fee       │ Outbound   │
   > ├────────────────────────────┼────────────┼──────────────┼────────────┤
-  > │ euclid                     │ 0.00489595 │ 0.00% (7)    │ 0.00508736 ┤
+  > │ euclid                     │ 0.00283195 │ 0.00% (7)    │ 0.00956736 ┤
   > [...]
   ```
 
