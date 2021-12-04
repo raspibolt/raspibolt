@@ -56,7 +56,7 @@ Table of contents
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" bos
-  $ sudo /usr/sbin/usermod --append --groups lnd bos
+  $ sudo adduser bos lnd
   $ sudo su - bos
   ```
 
