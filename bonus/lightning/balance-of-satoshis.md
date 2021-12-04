@@ -100,6 +100,8 @@ Table of contents
   > v11.13.0
   ```
   
+---
+  
 ### Balance of Satoshis in action
 
 To use Balance of Satoshis, we will use the "bos" user.
@@ -231,6 +233,7 @@ There are many additional options that can be used to improve the likelihood of 
 
   *  [This unofficial documentation repo](https://github.com/niteshbalusu11/BOS-Commands-Document){:target="_blank"} *(note that this page might not be kept up-to-date)*
 
+---
 
 ### Upgrade
 
@@ -240,7 +243,9 @@ There are many additional options that can be used to improve the likelihood of 
   $ sudo su - bos
   $ npm i -g balanceofsatoshis
   ```
-  
+
+---
+
 ### Uninstall
 
 If you want to uninstall Balance of Satoshis:
@@ -251,7 +256,9 @@ If you want to uninstall Balance of Satoshis:
   $ sudo su -
   $ userdel -r bos
   ``` 
-  
+
+---
+
 ### Optional: connect your node to a Telegram bot
 
 Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
@@ -360,6 +367,6 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
 * Go to your Telegram bot and type /version, it should return your currently installed version of bos.
 * In your Telegram bot type /help to list the list of available commands
 
-------
+---
 
 << Back: [+ Lightning](index.md)
