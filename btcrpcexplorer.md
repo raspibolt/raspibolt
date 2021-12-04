@@ -291,20 +291,22 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 
   ```sh
   ############### This section is just for location-hidden services ###
-  HiddenServiceDir /var/lib/tor/hidden_service_btcrpcexplorer/
+  HiddenServiceDir /var/lib/tor/hidden_service_btcrpcexplorer_ssl/
   HiddenServiceVersion 3
-  HiddenServicePort 80 127.0.0.1:3002
+  HiddenServicePort 443 127.0.0.1:4000
   ```
 
 * Reload Tor configuration and get your connection address.
 
   ```sh
   $ sudo systemctl reload tor
-  $ sudo cat /var/lib/tor/hidden_service_btcrpcexplorer/hostname
+  $ sudo cat /var/lib/tor/hidden_service_btcrpcexplorer_ssl/hostname
   > abcdefg..............xyz.onion
   ```
 
 * With the [Tor browser](https://www.torproject.org){:target="_blank"}, you can access this onion address from any device.
+  You will get a warning in the browser, but that's expected due to our self-signed certificate.
+  Click on "Advanced..." and "Accept the Risk and Continue".
 
 **Congratulations!**
 You now have the BTC RPC Explorer running to check the Bitcoin network information directly from your node.
