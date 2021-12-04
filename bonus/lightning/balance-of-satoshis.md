@@ -82,7 +82,7 @@ Table of contents
 
 #### Install
 
-* Download the source code and install it
+* Still with user "bos", download the source code and install it
   
   ```sh
   $ git clone https://github.com/alexbosworth/balanceofsatoshis.git /home/bos/balanceofsatoshis
