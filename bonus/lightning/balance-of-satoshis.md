@@ -157,7 +157,7 @@ Circular rebalancing allows to send satoshis out through one channel (which has 
 
 A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network' by Antonopoulos *et al.* ([source](https://github.com/lnbook/lnbook/blob/ec806916edd6f4d1b2f9da2fef08684f80acb671/05_node_operations.asciidoc#rebalancing-channels){:target="_blank"}) (Alice (A), is your node, Bob (B) and and Chan (C) are two peers with whom you have an opened channel with):
 
-![circular-rebalancing](https://github.com/VajraOfIndra/RaspiBolt/blob/balance-of-satoshis/images/rebalancing_lnbook.png?raw=true)
+![circular-rebalancing](https://github.com/VajraOfIndra/RaspiBolt/blob/balance-of-satoshis/images/bonus-bos-graph.png?raw=true)
 
 * To rebalance a channel (to node B) with high outbound and a channel with high inbound (to node C), use the `rebalance` command.
 
