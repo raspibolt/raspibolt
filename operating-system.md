@@ -89,6 +89,11 @@ It should display a "Success" message after.
 * If you did not configure the Wifi settings: connect the Pi to your network with an ethernet cable
 * Start the Pi by connecting it to the power adapter using the USB-C cable
 
+## Fallback: if you can't boot from your external drive
+
+We assume that you can boot directly from the external drive.
+This method works for most modern drives, but if it doesn't work in your case, please follow the fallback instructions [Boot from microSD card instead of external drive](bonus/raspberry-pi/boot-from-microsd-card.md).
+
 <br /><br />
 
 ---

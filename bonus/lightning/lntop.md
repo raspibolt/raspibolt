@@ -28,12 +28,16 @@ Difficulty: Easy
 
 ### Install lntop
 
+* As user "admin", download and install application
+
 ```bash
-$ wget https://github.com/edouardparis/lntop/releases/download/v0.1.0/lntop_Linux_armv6.tar.gz
-$ tar -xzf lntop_Linux_armv6.tar.gz lntop
+$ cd /tmp/
+$ wget https://github.com/edouardparis/lntop/releases/download/v0.1.0/lntop_Linux_arm64.tar.gz
+$ tar -xzf lntop_Linux_arm64.tar.gz lntop
 $ sudo install -m 0755 -o root -g root -t /usr/local/bin lntop && rm lntop
-$ rm lntop_Linux_armv6.tar.gz
+$ rm lntop_Linux_arm64.tar.gz
 ```
+
 ### Run lntop
 
 ```bash
