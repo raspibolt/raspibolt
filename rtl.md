@@ -27,7 +27,7 @@ We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL/blob/m
 ### Install NodeJS
 
 Starting with user “admin”, we switch to user “root” and add the Node JS package repository.
-We’ll use version 12 which is the most recent stable one.
+We’ll use version 14 which is well-tested with all web applications used in this guide.
 If you installed BTC RPC Explorer, then you've already accomplisehd this step.
 When finished, exit the “root” user session.
 
@@ -154,11 +154,10 @@ Now we take the sample configuration file and add change it to our needs.
   nano RTL-Config.json
   ```
 
-* Set a password to access the RTL web interface.
-  This should be a dedicated password not used anywhere else.
+* Set password [E] to access the RTL web interface. This should be a dedicated password not used anywhere else.
 
   ```sh
-    "multiPass": "password"
+    "multiPass": "YourPassword[E]"
   ```
 
 * Specify the values where RTL can find the authentication macaroon file and the LND configuration

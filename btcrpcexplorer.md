@@ -192,11 +192,11 @@ found 12 vulnerabilities (8 moderate, 4 high)
     ```
 
 * Optionally, you can add password protection to the web interface.
-  Simply add a password for the following option, for which the browser will then prompt you.
+  Simply add password [D] for the following option, for which the browser will then prompt you.
   You can enter any user name; only the password is checked.
 
   ```sh
-  BTCEXP_BASIC_AUTH_PASSWORD=AnyPassword
+  BTCEXP_BASIC_AUTH_PASSWORD=YourPassword[D]
   ```
 
 * Decide whether you prefer a `light` or `dark` theme
