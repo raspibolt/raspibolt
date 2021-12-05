@@ -82,6 +82,15 @@ Table of contents
 
 #### Install
 
+* Get the PGP key of Alex Bosworth, developer of Balance of Satoshis.
+
+  ```sh
+  $ curl https://keybase.io/alexbosworth/pgp_keys.asc | gpg --import
+  > [...]
+  > gpg: key 1A7872BF473017F3: public key "Alex Bosworth <alexbosworth+keybase@gmail.com>" imported
+  > [...]
+  ```
+
 * Still with user "bos", download the source code and install it
   
   ```sh
@@ -239,6 +248,35 @@ There are many additional options that can be used to improve the likelihood of 
 
   ```sh
   $ sudo su - bos
+  $ cd balanceofsatoshis
+  ```
+  
+  ```sh
+  $ git fetch
+  >
+  >
+  ```
+  
+  ```sh
+  $ git describe --tags --abbrev=0
+  > v99.99.9
+  ```
+  
+  ```sh  
+  $ git checkout v99.99.9
+  > Note: switching to 'v11.13.0'.
+  > [...]
+  ```
+  
+*  Check the GPG signature of tags
+ 
+  ```sh
+  $ git verify-tag v99.99.9
+  > 
+  
+  
+  
+  
   $ npm i -g balanceofsatoshis
   ```
 
