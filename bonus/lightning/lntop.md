@@ -68,7 +68,7 @@ Table of contents
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ $ sha256sum --check checksums-lntop-v0.2.0.txt --ignore-missing
+  $ sha256sum --check checksums-lntop-v0.2.0.txt --ignore-missing
   > lntop-v0.2.0-Linux-arm64.tar.gz: OK
   ```
 
@@ -83,10 +83,12 @@ Table of contents
 
 ### Run lntop
 
-```bash
+Depending on the size of your LND channel database, lntop can take quite a while to start.
+
+```sh
 $ lntop
 ```
 
-------
+---
 
 << Back: [+ Lightning](index.md)
