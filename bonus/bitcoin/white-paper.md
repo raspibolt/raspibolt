@@ -72,8 +72,7 @@ To be read, the PDF can now be sent from the remote node to your local computer 
 
 🚨 **Privacy warning**: Using this method will leak your IP address to the Telegram server.
 
-* Follow this tutorial to create a new Telegram bot: [https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/](https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/) (up to, and including, 'Get the Chat ID').  
-Write down the bot ID and the chat ID in a secure location (e.g. in your password manager).
+* Follow [this tutorial](https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/){:target="_blank"} to create a new Telegram bot (up to, and including, 'Get the Chat ID'). Write down the bot ID and the chat ID in a secure location (e.g. in your password manager).
 
 * Send the white paper to your bot (replace <your_chat_ID> and <your_bot_ID> by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
 
