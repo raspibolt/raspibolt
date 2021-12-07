@@ -116,8 +116,8 @@ A bash script can be used to automatically download and send the pdf to your Tel
 
 ### Trivia: Read the paper in the BTC-RPC-Explorer 
 
-The BTC-RPC-Explorer has also a functionality to extract the data from the node and display the pdf in the web browser.
-
+The BTC-RPC-Explorer has also a functionality to extract the data from the node and display the PDF in the web browser.
+* Open your explorer#
 * Look-up the transaction ID in the explorer: `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713`
 * Click on the link "bitcoin whitepaper" in the top box, this will generate the pdf from the node blockchain and displays it as a pdf file in the browser.
 * Alternatively, use the following URL: http://<node_IP>:3002/bitcoin-whitepaper
