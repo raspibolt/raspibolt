@@ -90,7 +90,7 @@ A bash script can be used to automatically download and send the pdf to your Tel
 
   ```sh
   $ cd ~/bitcoin-white-paper
-  $ nano whitepaper.sh
+  $ nano white-paper.sh
   ```
   
   ```ini
@@ -105,14 +105,13 @@ A bash script can be used to automatically download and send the pdf to your Tel
 * Make the file an executable
 
   ```sh
-  $ chmod +x whitepaper.sh
+  $ chmod +x white-paper.sh
   ```
 
-* To download and send the pdf to the Telegram bot, execute the script
+* To download and send the pdf to the Telegram bot, execute the script with user "admin"
 
   ```sh
-  $ cd ~/
-  $ ~/whitepaper/whitepaper.sh
+  $ ~/bitcoin-white-paper/white-paper.sh
   ```
 
 ### Trivia: Read the paper in the BTC-RPC-Explorer 
