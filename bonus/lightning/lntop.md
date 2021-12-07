@@ -95,9 +95,9 @@ $ lntop
 
 * To use all the functionalities of lntop, use the following keys:
   
-  * F1 or h = Display an "About" page and a list of keyboard keys to use (press F1 again to exit this screen)
+  * **F1 (or h)** = Display an "About" page and a list of keyboard keys to use (press F1 again to exit this screen)
   
-  * F2 (or m) = Display a Menu bar on the left, there are three table options:
+  * **F2 (or m)** = Display a Menu bar on the left, there are three table options:
     * 1) Navigate the Menu with the up and down keys (see below); there are three options:  
       *  CHANNEL = (the home page/default view), a table of all channels
       *  TRANSAC = a table of lightning transactions
@@ -105,23 +105,23 @@ $ lntop
     * 2) Press Enter to see the desired view
     * 3) Press F2 to enter the desired view and exit the left Menu bar
      
-  * ←, →, ↑, ↓ (i.e. left, right, down and up arrows) = 
+  * **←, →, ↑, ↓** (i.e. left, right, down and up arrows) = 
     * (when the left menu bqr is active) = Navigate the Menu options (up and down only)
     * (when the left Menu bar is inactive) = Navigate the colmuns and/or lines of the displayed table (CHANNEL, TRANSAC or ROUTING)
   
-  * h, l, j, k = 1) Navigate the Menu options; 2) Navigate the colmuns/lines of the tables
+  * **h, l, j, k** = 1) Navigate the Menu options; 2) Navigate the colmuns/lines of the tables
 
-  * Enter = 
+  * **Enter** = 
     * (when the left Menu bar is active) = See the content of the desired Menu entry
     * (when the left Meny bar is inactive) = Displays additional information on a channel or transaction, depending on the table being viewed:
       * CHANNEL = Display detailed information about a channel
       * TRANSAC = Display detailed information about a transaction
       * ROUTING = Display detailed information about a forwarded payment
  
-  * a = Sort out column, ascending order
+  * **a** = Sort out column, ascending order
   
-  * d = Sort out colmun, descending order
+  * **d** = Sort out colmun, descending order
 
-  * F10 or q or Ctrl+C = Quit lntop
+  * **F10 (or q or Ctrl+C)** = Quit lntop
 
 << Back: [+ Lightning](index.md)
