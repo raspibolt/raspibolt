@@ -58,8 +58,7 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using data fr
   
 ### Send the PDF to your desktop computer (Linux only)
   
-The pdf can now be sent from the remote node to the local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utiliy.
-The following command only works on Linux-based computers.
+To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utiliy. The following command only works on Linux-based computers.
 
 * On your local computer, open a terminal window and type the following command (replace <your_node_IP> with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
 
@@ -67,7 +66,7 @@ The following command only works on Linux-based computers.
   $ scp admin@<your_node_IP>:~/bitcoin-white-paper/bitcoin.pdf .
   ```
   
-* The file should now be located in the Home folder of your local computer (e.g. /home/<username>).
+* The file should now be located in the Home folder of your local computer (e.g. /home/<username>)>
   
 ### Send the PDF to your Telegram account
 
@@ -82,15 +81,16 @@ Write down the bot ID and the chat ID in a secure location (e.g. in your passwor
   $ curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
   ```
   
-* The pdf should now be available for download in your Telegram bot.
+* The PDF should now be available for download in your Telegram bot.
 
 ### Create a bash script 
 
 A bash script can be used to automatically download and send the pdf to your Telegram bot.
 
-* Create a new file in the '~/whitepaper' directory and paste the following lines (replace <your_chat_ID> and <your_bot_ID> with your own IDs)
+* Still with user "admin", create a new file in the '~/bitcoin-white-paper' directory and paste the following lines (replace <your_chat_ID> and <your_bot_ID> with your own IDs)
 
   ```sh
+  $ cd ~/bitcoin-white-paper
   $ nano whitepaper.sh
   ```
   
@@ -100,7 +100,7 @@ A bash script can be used to automatically download and send the pdf to your Tel
   jq -r '.vout[].scriptPubKey.asm' | cut -c3- |
   xxd -p -r | tail +9c | head -c 184292 > bitcoin.pdf
 
-  curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/whitepaper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
+  curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
   ```
   
 * Make the file an executable
