@@ -434,7 +434,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
   # update the local source code and show the latest release tag (example: v9.9.9)
   $ git fetch
-  $ git describe --tags
+  $ git describe --tags --abbrev=0
   > v9.9.9
 
   # check out the most recent release (replace v9.9.9 with the actual version)

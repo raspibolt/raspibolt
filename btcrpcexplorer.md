@@ -71,9 +71,9 @@ You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 ### Firewall & reverse proxy
 
 In the [Security section](security.md), we set up NGINX as a reverse proxy.
-Now we can add the RTL configuration.
+Now we can add the BTC RPC Explorer configuration.
 
-* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to RTL
+* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to the BTC RPC Explorer
 
   ```sh
   $ sudo nano /etc/nginx/streams-enabled/btcrpcexplorer-reverse-proxy.conf
@@ -192,11 +192,11 @@ found 12 vulnerabilities (8 moderate, 4 high)
     ```
 
 * Optionally, you can add password protection to the web interface.
-  Simply add a password for the following option, for which the browser will then prompt you.
+  Simply add password [D] for the following option, for which the browser will then prompt you.
   You can enter any user name; only the password is checked.
 
   ```sh
-  BTCEXP_BASIC_AUTH_PASSWORD=AnyPassword
+  BTCEXP_BASIC_AUTH_PASSWORD=YourPassword[D]
   ```
 
 * Decide whether you prefer a `light` or `dark` theme
@@ -311,7 +311,7 @@ You now have the BTC RPC Explorer running to check the Bitcoin network informati
 
 ---
 
-## Upgrade
+## For the future: BTC RPC Explorer update
 
 Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/releases){:target="_blank"} is straight-forward, but make sure to check out the [change log](https://github.com/janoside/btc-rpc-explorer/blob/master/CHANGELOG.md){:target="_blank"} first.
 
@@ -327,7 +327,7 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
   ```sh
   $ cd /home/btcrpcexplorer/btc-rpc-explorer
   $ git fetch
-  $ git describe --tags
+  $ git describe --tags --abbrev=0
   $ git checkout v3.2.0
   $ npm install
   $ exit

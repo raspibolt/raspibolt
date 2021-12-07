@@ -27,7 +27,7 @@ We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL/blob/m
 ### Install NodeJS
 
 Starting with user “admin”, we switch to user “root” and add the Node JS package repository.
-We’ll use version 12 which is the most recent stable one.
+We’ll use version 14 which is well-tested with all web applications used in this guide.
 If you installed BTC RPC Explorer, then you've already accomplisehd this step.
 When finished, exit the “root” user session.
 
@@ -103,7 +103,7 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ git clone https://github.com/Ride-The-Lightning/RTL.git
   $ cd RTL
 
-  $ git describe --tags
+  $ git describe --tags --abbrev=0
   > v0.11.2
 
   $ git checkout v0.11.2
@@ -154,11 +154,10 @@ Now we take the sample configuration file and add change it to our needs.
   nano RTL-Config.json
   ```
 
-* Set a password to access the RTL web interface.
-  This should be a dedicated password not used anywhere else.
+* Set password [E] to access the RTL web interface. This should be a dedicated password not used anywhere else.
 
   ```sh
-    "multiPass": "password"
+    "multiPass": "YourPassword[E]"
   ```
 
 * Specify the values where RTL can find the authentication macaroon file and the LND configuration
@@ -274,11 +273,12 @@ If you want to be extra careful, you can enable 2FA for access to your RTL inter
 * Select the "Authentication" tab and click on the "Enable 2FA" button
 * Follow the instructions, using a 2FA app like Google Authenticator or Authy
 
-## Upgrading
+## For the future: RTL upgrade
 
-Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/releases){:target="_blank"} is straight-forward, but make sure to check out the [change log](https://github.com/janoside/btc-rpc-explorer/blob/master/CHANGELOG.md){:target="_blank"} first.
+Updating to a [new release](https://github.com/Ride-The-Lightning/RTL/releases){:target="_blank"} is straight-forward.
+Make sure to read the release notes first.
 
-* From user "admin", stop the service and open a "btcrpcexplorer" user session.
+* From user "admin", stop the service and open a "rtl" user session.
 
   ```sh
   $ sudo systemctl stop rtl
@@ -290,7 +290,7 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
   ```sh
   $ cd /home/rtl/RTL
   $ git fetch
-  $ git describe --tags
+  $ git describe --tags --abbrev=0
   $ git checkout v9.99.9
   $ git verify-tag v9.99.9
   $ npm install --only=prod

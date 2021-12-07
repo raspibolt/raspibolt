@@ -72,7 +72,7 @@ We'll download, verify and install LND.
   $ tar -xzf lnd-linux-arm64-v0.14.1-beta.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.1-beta/*
   $ lnd --version
-  > lnd version 0.14.0-beta commit=v0.14.1-beta
+  > lnd version 0.14.1-beta commit=v0.14.1-beta
 ```
 
 ### Data directory
@@ -84,6 +84,12 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   ```sh
   $ sudo adduser --disabled-password --gecos "" lnd
   $ sudo usermod -a -G bitcoin,debian-tor lnd
+  ```
+
+* Add the user "admin" to the group "lnd"
+
+  ```sh
+  $ sudo adduser admin lnd
   ```
 
 * Create the LND data directory
@@ -279,7 +285,8 @@ The current state of your channels, however, cannot be recreated from this seed.
 For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
 🚨 This information must be kept secret at all times.
-**Write these 24 words down manually on a piece of paper and store it in a safe place.**
+* **Write these 24 words down manually on a piece of paper and store it in a safe place.** 
+You can use a simple piece of paper, write them on a proper [backup card](https://shiftcrypto.ch/backupcard/backupcard_print.pdf){:target="_blank"}), or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
 This piece of paper is all an attacker needs to completely empty your on-chain wallet!
 Do not store it on a computer.
 Do not take a picture with your mobile phone.
@@ -395,6 +402,37 @@ Now, let's set up LND to start automatically on system startup.
 
   ```sh
   $ sudo journalctl -f -u lnd
+  ```
+
+### Allow user "admin" to work with LND
+
+We interact with LND using the application `lncli`.
+At the moment, only the user "lnd" has the necessary access privileges.
+To make the user "admin" the main administrative user, we make sure it can interact with LND as well.
+
+* Newly added groups become active only in a new user session.
+  Log out from SSH.
+
+  ```sh
+  $ exit
+  ```
+
+* Log in as user "admin" again.
+
+* Link the LND data directory in the user "admin" home.
+  As a member or the group "lnd", admin has read-only access to certain files.
+  We also need to make all directories browsable for the group (with `g+X`) and allow it to read the file `admin.macaroon`
+
+  ```sh
+  $ ln -s /data/lnd /home/admin/.lnd
+  $ sudo chmod -R g+X /data/lnd/data/
+  $ sudo chmod g+r /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon
+  ```
+
+* Check if you can use `lncli` by querying LND for information
+
+  ```sh
+  $ lncli getinfo
   ```
 
 ## LND in action
