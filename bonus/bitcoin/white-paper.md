@@ -72,7 +72,7 @@ To be read, the PDF can now be sent from the remote node to your local computer 
 
 🚨 **Privacy warning**: Using this method will leak your IP address to the Telegram server.
 
-* Follow this tutorial to create a new Telegram bot: https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/. 
+* Follow this tutorial to create a new Telegram bot: [https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/](https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/) (up to, and including, 'Get the Chat ID').  
 Write down the bot ID and the chat ID in a secure location (e.g. in your password manager).
 
 * Send the white paper to your bot (replace <your_chat_ID> and <your_bot_ID> by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
@@ -87,7 +87,7 @@ Write down the bot ID and the chat ID in a secure location (e.g. in your passwor
 
 A bash script can be used to automatically download and send the pdf to your Telegram bot.
 
-* Still with user "admin", create a new file in the '~/bitcoin-white-paper' directory and paste the following lines (replace <your_chat_ID> and <your_bot_ID> with your own IDs)
+* Still with user "admin", create a new file in the '~/bitcoin-white-paper' directory and paste the following lines (replace <your_chat_ID> and <your_bot_ID> with your own IDs). Save and exit.
 
   ```sh
   $ cd ~/bitcoin-white-paper
