@@ -91,4 +91,16 @@ $ lntop
 
 ---
 
+### lntop in action
+
+* Use the following keys:
+  
+  * F1 = Display a menu with a list if useful keys
+  * F2 or m = Menu
+  * ←, →, ↑, ↓ (left, right, down and up arrows) = Navigate the lines and columns
+  * h, l, j, k = Navigate the lines and columns
+  * q or F10 or Ctrl+C = Quit lntop
+  * a = Sort out column, ascending order
+  * d = SOrt out colmun, descending order
+
 << Back: [+ Lightning](index.md)
