@@ -8,36 +8,49 @@ has_children: false
 has_toc: false
 ---
 
-## Bonus guide: Download the bitcoin whitepaper directly from the node's blockchain data
+## Bonus guide: Download the bitcoin whitepaper directly from your node's blockchain data
 {: .no_toc }
+
+---
+
+Download the Bitcoin white paper PDF directly from the blockchain data on your own node and witness the power of a decentralized network to fight censorship. 
+
+[lntop](https://github.com/edouardparis/lntop){:target="_blank"} is an interactive text-mode channels viewer for Unix systems.
 
 Difficulty: Easy
 {: .label .label-green }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
+Status: Tested v3
+{: .label .label-green }
+
+![lntop](../../images/74_lntop.png)
+
+---
+
+Table of contents
+{: .text-delta }
+
 1. TOC
 {:toc}
-</details>
 
-The Bitcoin whitepaper pdf was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`.  
+---
+
+The Bitcoin whitepaper PDF was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`.  
+
 The transaction contains 947 outputs! Some explanations on how the paper is encoded in the transaction is given in a [Bitcoin stackexchange post](https://bitcoin.stackexchange.com/questions/35959/how-is-the-whitepaper-decoded-from-the-blockchain-tx-with-1000x-m-of-n-multisi/35970#35970){:target="_blank"} from 2015.  
-  
-It is possible to extract the data directly from the blockchain data on your own node and re-create the pdf from it. 
+
+This guide explains how to reconstruct the Bitcoin white paper PDF using data fro your own verified blockchain. No matter how much censorhip could be thrown at Bitcoin, you will know how to retrieve and share the foundational document of Bitcoin.
 
 ### Download the pdf
 
 * With the "admin" user, create a new directory to store the pdf and move to this directory
 
   ```sh
-  $ mkdir whitepaper
-  $ cd whitepaper
+  $ mkdir bitcoin-white-paper
+  $ cd bitcoin-white-paper
   ```
 
-* Use bitcoin-cli to download and create the pdf
+* Use `bitcoin-cli` to download and create the PDF
 
   ```sh
   $ bitcoin-cli getrawtransaction 54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713 true |
@@ -47,20 +60,20 @@ It is possible to extract the data directly from the blockchain data on your own
   > bitcoin.pdf
   ```
   
-### Send the pdf to your desktop computer (Linux only)
+### Send the PDF to your desktop computer (Linux only)
   
 The pdf can now be sent from the remote node to the local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utiliy.
 The following command only works on Linux-based computers.
 
-* On your local computer, open a terminal window and type the following command (replace <your_node_IP> with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line
+* On your local computer, open a terminal window and type the following command (replace <your_node_IP> with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
 
   ```sh
-  $ scp admin@<your_node_IP>:~/whitepaper/bitcoin.pdf .
+  $ scp admin@<your_node_IP>:~/bitcoin-white-paper/bitcoin.pdf .
   ```
   
 * The file should now be located in the Home folder of your local computer (e.g. /home/<username>).
   
-### Send the pdf to your Telegram account
+### Send the PDF to your Telegram account
 
 🚨 **Privacy warning**: Using this method will leak your IP address to the Telegram server.
 
@@ -70,7 +83,7 @@ Write down the bot ID and the chat ID in a secure location (e.g. in your passwor
 * Send the white paper to your bot (replace <your_chat_ID> and <your_bot_ID> by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
 
   ```sh
-  $ curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/whitepaper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
+  $ curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
   ```
   
 * The pdf should now be available for download in your Telegram bot.
