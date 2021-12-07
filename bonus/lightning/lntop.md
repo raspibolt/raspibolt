@@ -110,8 +110,8 @@ To use all the functionalities of lntop, use the following keys:
   * (when the left Menu bar is inactive) = Navigate the colmuns and/or lines of the displayed table (CHANNEL, TRANSAC or ROUTING)
 
 * **Enter** = 
-  * (when the left Menu bar is active) = See the content of the desired Menu entry
-  * (when the left Meny bar is inactive) = Displays additional information on a channel or transaction, depending on the table being viewed:
+  * *when the left Menu bar is active*: See the content of the desired Menu entry
+  * *when the left Meny bar is inactive*: Displays additional information on a channel or transaction, depending on the table being viewed:
     * CHANNEL = Display detailed information about a channel
     * TRANSAC = Display detailed information about a transaction
     * ROUTING = Display detailed information about a forwarded payment
