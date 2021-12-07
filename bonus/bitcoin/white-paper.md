@@ -15,15 +15,11 @@ has_toc: false
 
 Download the Bitcoin white paper PDF directly from the blockchain data on your own node and witness the power of a decentralized network to fight censorship. 
 
-[lntop](https://github.com/edouardparis/lntop){:target="_blank"} is an interactive text-mode channels viewer for Unix systems.
-
 Difficulty: Easy
 {: .label .label-green }
 
 Status: Tested v3
 {: .label .label-green }
-
-![lntop](../../images/74_lntop.png)
 
 ---
 
