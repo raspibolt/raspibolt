@@ -122,7 +122,7 @@ To use all the functionalities of lntop, use the following keys:
  
 * **a** = Sort out column, ascending order
  
-* **d** = Sort out colmun, descending order
+* **d** = Sort out column, descending order
 
 * **F10 (or q or Ctrl+C)** = Quit lntop
 
