@@ -106,8 +106,8 @@ To use all the functionalities of lntop, use the following keys:
   3) Press F2 to enter the desired view and exit the left Menu bar
      
 * **← (or h), → (or l), ↑ (or j), ↓ (or k)** = 
-  * (when the left Menu bar is active) = Navigate the Menu options (up and down only)
-  * (when the left Menu bar is inactive) = Navigate the colmuns and/or lines of the displayed table (CHANNEL, TRANSAC or ROUTING)
+  * *when the left Menu bar is active* = Navigate the Menu options (up and down only)
+  * *when the left Menu bar is inactive* = Navigate the colmuns and/or lines of the displayed table (CHANNEL, TRANSAC or ROUTING)
 
 * **Enter** = 
   * *when the left Menu bar is active*: See the content of the desired Menu entry
