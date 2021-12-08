@@ -33,13 +33,17 @@ Table of contents
 
 ---
 
-The Bitcoin whitepaper PDF was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`.  
+### Introduction
+
+The Bitcoin white paper PDF was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`.  
 
 The transaction contains 947 outputs! Some explanations on how the paper is encoded in the transaction is given in a [Bitcoin stackexchange post](https://bitcoin.stackexchange.com/questions/35959/how-is-the-whitepaper-decoded-from-the-blockchain-tx-with-1000x-m-of-n-multisi/35970#35970){:target="_blank"} from 2015.  
 
-This guide explains how to reconstruct the Bitcoin white paper PDF using data from your own verified blockchain. No matter how censored the white paper could become, you will know how to recreate and share the foundational document of Bitcoin.
+This guide explains how to reconstruct the Bitcoin white paper PDF using data from your own verified blockchain. No matter how censored the white paper could become (e.g. see [here](https://bitcoinmagazine.com/business/copa-suing-craig-wright-over-bitcoin-white-paper-claims){:target="_blank"}), you will know how to recreate and share the foundational document of Bitcoin.
 
-### Download the pdf
+---
+
+### Download the PDF
 
 * With the "admin" user, create a new directory to store the pdf and move to this directory
 
