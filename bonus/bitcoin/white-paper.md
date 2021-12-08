@@ -21,6 +21,8 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
+![white paper transaction](../../images/white-paper-transac.png)
+
 ---
 
 Table of contents
