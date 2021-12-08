@@ -8,7 +8,7 @@ has_children: false
 has_toc: false
 ---
 
-## Bonus guide: Download the bitcoin whitepaper directly from your node's blockchain data
+## Bonus guide: Download the bitcoin whitepaper directly from your own blockchain
 {: .no_toc }
 
 ---
@@ -55,6 +55,8 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using data fr
   $ ls -la
   > bitcoin.pdf
   ```
+
+---
   
 ### Send the PDF to your desktop computer (Linux only)
   
@@ -81,6 +83,8 @@ To be read, the PDF can now be sent from the remote node to your local computer 
   ```
   
 * The PDF should now be available for download in your Telegram bot.
+  
+---
 
 ### Create a bash script 
 
@@ -114,6 +118,8 @@ A bash script can be used to automatically download and send the pdf to your Tel
   $ ~/bitcoin-white-paper/white-paper.sh
   ```
 
+---
+  
 ### Trivia: Read the paper in the BTC-RPC-Explorer 
 
 The BTC-RPC-Explorer has also a functionality to extract the data from the node and display the PDF in the web browser.
@@ -121,3 +127,7 @@ The BTC-RPC-Explorer has also a functionality to extract the data from the node 
 * Look-up the transaction ID in the explorer: `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713`
 * Click on the link "bitcoin whitepaper" in the top box, this will generate the pdf from the node blockchain and displays it as a pdf file in the browser.
 * Alternatively, use the following URL: http://<node_IP>:3002/bitcoin-whitepaper
+  
+---
+
+<< Back: [+ Bitcoin](index.md)
