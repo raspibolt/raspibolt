@@ -1,42 +1,74 @@
 ---
 layout: default
 title: Circuit Breaker
-parent: Bonus Section
-nav_order: 130
-has_toc: true
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
+has_toc: false
 ---
-# Bonus guide: Circuit Breaker, a lightning 'firewall'
 
-*Difficulty: simple*
+## Bonus guide: Circuit Breaker, a lightning 'firewall'
+{: .no_toc }
 
-[Circuit Breaker](https://github.com/lightningequipment/circuitbreaker) protects the node from being flooded with htlcs in what is known as a [griefing attack](https://bitcoinmagazine.com/technical/good-griefing-a-lingering-vulnerability-on-lightning-network-that-still-needs-fixing).
+---
 
-*Requirements:*
+[Circuit Breaker](https://github.com/lightningequipment/circuitbreaker) protects your node from being flooded with HTLCs in what is known as a [griefing attack](https://bitcoinmagazine.com/technical/good-griefing-a-lingering-vulnerability-on-lightning-network-that-still-needs-fixing).
+
+Difficulty: Easy
+{: .label .label-green }
+
+Status: Tested v3
+{: .label .label-green }
+
+![circuit-breaker-tweet](../../images/circuit-breaker-tweet-transparent.png)
+
+---
+
+Table of contents
+{: .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+### Requirements
 
 * LND (or LND as part of Lightning Terminal/litd)
+* Go v1.13+
 
-## Install Go (for 32-bit OS)
+---
 
-* Check the latest stable version of the armv6 binary at [https://golang.org/dl/](https://golang.org/dl/), download, verify and extract it:
+### Install Go
+
+* Check the latest stable version of the arm64 binary at [https://golang.org/dl/](https://golang.org/dl/) and download it
 
   ```sh
-  $ wget https://golang.org/dl/go1.17.2.linux-armv6l.tar.gz
-  # Check on the download page what is the SHA256 checksum of the file, e.g. for above: 04d16105008230a9763005be05606f7eb1c683a3dbf0fbfed4034b23889cb7f2
-  # Now hash the downloaded file, it should be the same number as the one on the website
-  $ sha256sum go1.17.2.linux-armv6l.tar.gz
-  > 04d16105008230a9763005be05606f7eb1c683a3dbf0fbfed4034b23889cb7f2  go1.17.2.linux-armv6l.tar.gz
-  $ sudo tar -C /usr/local -xzf go1.17.2.linux-armv6l.tar.gz
-  $ rm go1.17.2.linux-armv6l.tar.gz
+  $ cd /tmp
+  $ wget https://go.dev/dl/go1.17.4.linux-arm64.tar.gz
+  ```
+  
+* Check on the download page what is the SHA256 checksum of the file, e.g. for above: 617a46bd083e59877bb5680998571b3ddd4f6dcdaf9f8bf65ad4edc8f3eafb13. Get the SHA256 hash of the downloaded file, it should be the same number as the one on the website
+  
+  ```sh 
+  $ sha256sum go1.17.4.linux-arm64.tar.gz
+  > 617a46bd083e59877bb5680998571b3ddd4f6dcdaf9f8bf65ad4edc8f3eafb13  go1.17.4.linux-arm64.tar.gz
+  ```
+  
+* Install Go in the `/usr/local` directory
+  
+  ```sh 
+  $ sudo tar -xvf go1.17.4.linux-arm64.tar.gz -C /usr/local
+  $ rm go1.17.4.linux-arm64.tar.gz
+  ```
 
-We add the binary to PATH to not have to type the full path each time we are using it
-
-* For a global installation of Go (that users other than admin can use), open `/etc/profile`
+* Add the binary to PATH to not have to type the full path each time you are using it. For a global installation of Go (that users other than "admin" can use), open `/etc/profile`
   
   ```sh
   $ sudo nano /etc/profile
   ```
 
-* Add the following line at the end of the file, save (Ctrl+o) and exit (Ctrl+x)
+* Add the following line at the end of the file, save and exit
   
   ```ini
   export PATH=$PATH:/usr/local/go/bin
@@ -52,33 +84,33 @@ We add the binary to PATH to not have to type the full path each time we are usi
 
   ```sh
   $ go version
-  > go version go1.17.2 linux/arm
+  > go version go1.17.4 linux/arm64
   ```
 
+---
   
-## Install Circuit Breaker
+### Install Circuit Breaker
 
-* Create a new user named `circuitbreaker` and make it part of the `bitcoin` group
+* Create a new user "circuitbreaker" and make it part of the "lnd" group
 
  ```sh
- $ sudo adduser circuitbreaker
- $ sudo /usr/sbin/usermod --append --groups bitcoin circuitbreaker
- $ sudo ln -s /mnt/ext/lnd/ /home/circuitbreaker/.lnd
+ $ sudo adduser --disabled-password --gecos "" circuitbreaker
+ $ sudo adduser circuitbreaker lnd
  ```
  
-* Create a symbolic link to the `lnd` directory, in order for circuitbreaker to be allowed to interact with lnd
-
-```sh
- $ sudo ln -s /mnt/ext/lnd/ /home/circuitbreaker/.lnd
- ```
- 
-* Log in as user `cicuitbreaker` and test the Go is accessible by this new user
+* Log in as user "cicuitbreaker" and test the Go is accessible by this new user
 
   ```sh
   $ sudo su - circuitbreaker
   $ go version 
-  > go version go1.17.2 linux/arm
+  > go version go1.17.4 linux/arm64
   ```
+ 
+* Create a symbolic link to the `lnd` directory, in order for circuitbreaker to be allowed to interact with lnd
+
+```sh
+ $ ln -s /data/lnd /home/circuitbreaker/.lnd
+ ```
 
 * Clone the project and install it 
  
@@ -88,46 +120,53 @@ We add the binary to PATH to not have to type the full path each time we are usi
  $ go install
  ``` 
  
-## Configuration
+* Make Circuit Breaker executable without having to provide the full path to the Go binary directory
+
+  ```sh 
+  $ echo 'export PATH=$PATH:/home/circuitbreaker/go/bin' >> /home/circuitbreaker/.bashrc
+  $ source /home/circuitbreaker/.bashrc
+  ```
+
+---
+
+### Configuration
 
 A sample configuration file is located at `~/circuitbreaker/circuitbreaker-example.yaml`.
-By default, Circuit Breaker reads its configuration file `~/.circuitbreaker/circuitbreaker.yaml`.
+By default, Circuit Breaker reads its configuration file located at `~/.circuitbreaker/circuitbreaker.yaml`.
 
-* Move and rename the sample configuration file to the location expected by Circuit Breaker, then open it
+* Still with  the "circuitbreaker" user, move and rename the sample configuration file to the location expected by Circuit Breaker, then open it
   
- ```sh
- $ cd ~/
- $ mkdir ~/.circuitbreaker
- $ cp ~/circuitbreaker/circuitbreaker-example.yaml ~/.circuitbreaker/circuitbreaker.yaml
- $ nano circuitbreaker.yaml
- ``` 
- 
-Edit the configuration file:
+  ```sh
+  $ cd ~/
+  $ mkdir ~/.circuitbreaker
+  $ cp ~/circuitbreaker/circuitbreaker-example.yaml ~/.circuitbreaker/circuitbreaker.yaml
+  $ nano .circuitbreaker/circuitbreaker.yaml
+  ``` 
  
 * Circuit Breaker suggests 5 maximum pending htlcs, set the number of htlcs that you feel comfortable with in case of griefing attack
  
- ```ini
- maxPendingHtlcs: 3
- ```
- 
-* If you don't want to use exception groups, uncomment the provided example.
- 
- ```ini
- #groups:
-  # For two peers, the pending and rate limits are
-  # lowered.
-  #  - maxPendingHtlcs: 2
-  #    htlcMinInterval: 5s
-  #    htlcBurstSize: 3
-  #    peers:
-  #    - 03901a1fcfbf621245d859fe4b8bfd93c9e8191a93612db3db0efd11af64e226a2
-  #    - 03670eff2ccfd3a469536d8e3d38825313d266fa3c2d22b1f841beca30414586d0
-
-  # A last peer is allowed to have more pending htlcs and no rate limit.
-  #  - maxPendingHtlcs: 25
-  #    peers:
-  #    - 035cb74e3232e98ba6a866c485f1076dca5e42147dc1e3fbf9ea7241d359988e4d
+  ```ini
+  maxPendingHtlcs: 3
   ```
+ 
+* If you don't want to use exception groups, uncomment the entire section
+ 
+  ```ini
+  #groups:
+   # For two peers, the pending and rate limits are
+   # lowered.
+     #- maxPendingHtlcs: 2
+       #htlcMinInterval: 5s
+       #htlcBurstSize: 3
+       #peers:
+       #- 03901a1fcfbf621245d859fe4b8bfd93c9e8191a93612db3db0efd11af64e226a2
+       #- 03670eff2ccfd3a469536d8e3d38825313d266fa3c2d22b1f841beca30414586d0
+ 
+   # A last peer is allowed to have more pending htlcs and no rate limit.
+     #- maxPendingHtlcs: 25
+       #peers:
+       #- 035cb74e3232e98ba6a866c485f1076dca5e42147dc1e3fbf9ea7241d359988e4d
+   ```
   
 * If you don't want to use the hold fees simulation, uncomment the entire section
 
@@ -148,31 +187,54 @@ Edit the configuration file:
     # Report (virtually) collected hold fees once per hour.
   #  reportingInterval: 1h*
   ```
-* Once edited, save (Ctrl+o) and exit (Ctrl+x)
 
-## First run
+* Once edited, save and exit
 
-* Test if the program works by displaying the version and help menu
+---
+
+### First run
+
+* Still with user "circuitbreaker", test if the program works by displaying the version
 
   ```sh
   $ cd ~/
   $ ~/go/bin/circuitbreaker --version
   > circuitbreaker version 0.11.1-beta.rc3 commit=
+  ```
+
+* Display the help menu
+  
+  ```sh
   $ ~/go/bin/circuitbreaker --help
   > NAME:
   > circuitbreaker - A new cli application
   > [...]
   ```
+* Finally, launch circuitbreaker
   
-## Autostart on boot
+  ```sh 
+  $ circuitbreaker
+  $ 2021-12-08T18:33:28.557Z	INFO	Read config file	{"file": "/home/circuitbreaker/.circuitbreaker/circuitbreaker.yaml"}
+  $ 2021-12-08T18:33:28.561Z	INFO	CircuitBreaker started
+  $ 2021-12-08T18:33:28.561Z	INFO	Hold fee	{"base": 0, "rate": 0, "reporting_interval": "0s"}
+  $ 2021-12-08T18:33:28.813Z	INFO	Connected to lnd node	{"pubkey": "YourNodePubkey"}
+  $ 2021-12-08T18:33:28.814Z	INFO	Interceptor/notification handlers registered
+  $ 2021-12-08T18:33:28.814Z	INFO	Hold fee reporting disabled
+  ```
+ 
+ *  Stop circuitbreaker with Ctrl+C
 
-* Exit the `circuitbreaker` user session back to `admin`
+---
+ 
+### Autostart on boot
+
+* Exit the "circuitbreaker" user session back to "admin"
 
   ```sh
   $ exit
   ```
 
-* Create circuitbreaker systemd unit with the following content. Save (Ctrl+o) and exit (Ctrl+x).
+* Create a circuitbreaker systemd unit with the following content, save and exit 
  
   ```sh
   $ sudo nano /etc/systemd/system/circuitbreaker.service
@@ -183,7 +245,7 @@ Edit the configuration file:
   # /etc/systemd/system/circuitbreaker.service
 
   [Unit]
-  Description=Circuit Breaker, a lightning firewall
+  Description=Circuit Breaker
   After=lnd.service
 
   [Service]
@@ -213,6 +275,7 @@ Edit the configuration file:
 
   ```sh
   $ sudo systemctl enable circuitbreaker
+  > Created symlink /etc/systemd/system/multi-user.target.wants/circuitbreaker.service -> /etc/systemd/system/circuitbreaker.service.
   $ sudo systemctl start circuitbreaker
   $ systemctl status circuitbreaker
   > circuitbreaker.service - Circuit Breaker, a lightning firewall
@@ -221,11 +284,19 @@ Edit the configuration file:
   > [...]
   ```
 
-## Upgrade
+* Circuit Breaker is now running in the background. To check the live logging output, use the following command
+
+  ```sh
+  $ sudo journalctl -f -u circuitbreaker
+  ```
+
+---
+
+### Upgrade
 
 Updating to a new release should be straight-forward, but make sure to check out the [release notes](https://github.com/lightningequipment/circuitbreaker/tags) first.
 
-* From user “admin”, stop the service and open a “circuitbreaker” user session
+* From user "admin", stop the service and open a "circuitbreaker" user session
 
   ```sh
   $ sudo systemctl stop circuitbreaker
@@ -248,12 +319,18 @@ Updating to a new release should be straight-forward, but make sure to check out
   $ sudo systemctl start circuitbreaker
   ```
 
+---
 
 ## Uninstall
 
-If you want to uninstall circuitbreaker:
+If you want to uninstall circuitbreaker
 
 * With the root user, delete the circuitbreaker user
-```sh
-$ userdel -r circuitbreaker
-```  
+
+  ```sh
+  $ userdel -r circuitbreaker
+  ```
+
+---
+
+<< Back: [+ Lightning](index.md)
