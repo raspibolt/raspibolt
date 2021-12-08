@@ -1,0 +1,42 @@
+$pink-000: #ff68a7;
+$pink-100: #ff7385;
+$pink-200: #ff008a;
+$pink-300: #ca0049;
+$pink-400: #950036;
+$pink-800: #2c1d23;
+
+$grey-300: #b1afb3;
+
+$root-font-size: 18px; // Base font-size for rems
+
+$font-size-1: 12x;
+$font-size-1-sm: 12px;
+$font-size-2: 14px; //h4 - uppercased!, h6 not uppercased, text-small
+$font-size-3: 15px; //h5
+$font-size-4: 16px;
+$font-size-5: 18x; //h3
+// $font-size-6: 20px; //h2
+// $font-size-7: 26px;
+// $font-size-8: 32px; //h1
+// $font-size-9: 36px;
+// $font-size-10: 42px;
+// $font-size-10-sm: 48px;
+
+$body-background-color: $grey-dk-300;
+$sidebar-color: $grey-dk-250;
+$border-color: $grey-dk-000;
+
+$body-text-color: $grey-lt-200;
+$body-heading-color: $grey-lt-000;
+$nav-child-link-color: $grey-300;
+$search-result-preview-color: $grey-lt-300;
+
+$link-color: $pink-200;
+$btn-primary-color: $blue-200;
+$base-button-color: $grey-dk-200;
+
+// $code-background-color: $grey-dk-200;
+$code-background-color: $pink-800;
+$search-background-color: $pink-800;
+$table-background-color: $pink-800;
+$feedback-color: darken($sidebar-color, 3%);
