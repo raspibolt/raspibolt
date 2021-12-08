@@ -49,9 +49,7 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using data fr
 * Use `bitcoin-cli` to download and create the PDF
 
   ```sh
-  $ bitcoin-cli getrawtransaction 54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713 true |
-  jq -r '.vout[].scriptPubKey.asm' | cut -c3- |
-  xxd -p -r | tail +9c | head -c 184292 > bitcoin.pdf
+  $ bitcoin-cli getrawtransaction 54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713 true | jq -r '.vout[].scriptPubKey.asm' | cut -c3- | xxd -p -r | tail +9c | head -c 184292 > bitcoin.pdf
   $ ls -la
   > bitcoin.pdf
   ```
