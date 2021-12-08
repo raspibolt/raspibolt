@@ -72,7 +72,7 @@ The bonus section contains more specific guides that build on top of the main se
 More fun, lots of knowledge, but with lesser maintenance guarantees.
 Everything is optional.
 
-* [Bonus guides](bonus-section.md)
+* [Bonus guides](./bonus/index.md)
 
 Running into issues?
 
