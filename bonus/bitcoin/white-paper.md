@@ -66,10 +66,10 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using data fr
   
 To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utiliy. The following command only works on Linux-based computers.
 
-* On your local computer, open a terminal window and type the following command. Replace <your_node_IP> with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
+* On your local computer, open a terminal window and type the following command. Replace YourNodeIP with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
 
   ```sh
-  $ scp admin@<your_node_IP>:~/bitcoin-white-paper/bitcoin.pdf .
+  $ scp admin@YourNodeIP:~/bitcoin-white-paper/bitcoin.pdf .
   ```
   
 * The file should now be located in the Home folder of your local computer (e.g. /home/<username>)>
@@ -80,10 +80,10 @@ To be read, the PDF can now be sent from the remote node to your local computer 
 
 * Follow [this tutorial](https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/){:target="_blank"} to create a new Telegram bot (up to, and including, 'Get the Chat ID'). Write down the bot ID and the chat ID in a secure location (e.g. in your password manager).
 
-* Send the white paper to your bot (replace <your_chat_ID> and <your_bot_ID> by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
+* Send the white paper to your bot (replace YourChatID and YourBotID by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
 
   ```sh
-  $ curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
+  $ curl -v -F "chat_id=YourChatID" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/botYourBotID/sendDocument
   ```
   
 * The PDF should now be available for download in your Telegram bot.
@@ -94,7 +94,7 @@ To be read, the PDF can now be sent from the remote node to your local computer 
 
 A bash script can be used to automatically download and send the pdf to your Telegram bot.
 
-* Still with user "admin", create a new file in the '~/bitcoin-white-paper' directory and paste the following lines (replace <your_chat_ID> and <your_bot_ID> with your own IDs). Save and exit.
+* Still with user "admin", create a new file in the '~/bitcoin-white-paper' directory and paste the following lines (replace YourChatID and YourBotID with your own IDs). Save and exit.
 
   ```sh
   $ cd ~/bitcoin-white-paper
@@ -107,7 +107,7 @@ A bash script can be used to automatically download and send the pdf to your Tel
   jq -r '.vout[].scriptPubKey.asm' | cut -c3- |
   xxd -p -r | tail +9c | head -c 184292 > bitcoin.pdf
 
-  curl -v -F "chat_id=<your_chat_ID>" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/bot<your_bot_ID>/sendDocument
+  curl -v -F "chat_id=YourChatID" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/botYourBotID/sendDocument
   ```
   
 * Make the file an executable
