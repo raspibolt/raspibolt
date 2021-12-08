@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![circuit-breaker-tweet](../../images/circuit-breaker-tweet-transparent.png)
+![circuit-breaker-tweet](../../images/circuit-breaker-tweet.png)
 
 ---
 
@@ -93,10 +93,10 @@ Table of contents
 
 * Create a new user "circuitbreaker" and make it part of the "lnd" group
 
- ```sh
- $ sudo adduser --disabled-password --gecos "" circuitbreaker
- $ sudo adduser circuitbreaker lnd
- ```
+  ```sh
+  $ sudo adduser --disabled-password --gecos "" circuitbreaker
+  $ sudo adduser circuitbreaker lnd
+  ```
  
 * Log in as user "cicuitbreaker" and test the Go is accessible by this new user
 
@@ -108,17 +108,17 @@ Table of contents
  
 * Create a symbolic link to the `lnd` directory, in order for circuitbreaker to be allowed to interact with lnd
 
-```sh
- $ ln -s /data/lnd /home/circuitbreaker/.lnd
- ```
+  ```sh
+  $ ln -s /data/lnd /home/circuitbreaker/.lnd
+  ```
 
 * Clone the project and install it 
  
- ```sh
- $ git clone https://github.com/lightningequipment/circuitbreaker.git
- $ cd circuitbreaker
- $ go install
- ``` 
+  ```sh
+  $ git clone https://github.com/lightningequipment/circuitbreaker.git
+  $ cd circuitbreaker
+  $ go install
+  ``` 
  
 * Make Circuit Breaker executable without having to provide the full path to the Go binary directory
 
