@@ -1,112 +1,113 @@
 ---
 layout: default
-title: Intro
+title: Home
 nav_order: 1
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
+{% include_relative include_metatags.md %}
 
-## Beginner’s Guide to ️Lightning️ on a Raspberry Pi
-{: .no_toc }
+![RaspiBolt Logo](images/raspibolt3-logo.png)
 
-I love to tinker and build stuff.
-I am also fascinated with digital currencies, so I recently built my own Bitcoin / Lightning Full Node with a simple low-cost Raspberry Pi.
-I now basically run my own bank using free open-source software and some cheap hardware.
+<br />
+Build your own "do-everything-yourself" Bitcoin full node that will make you a sovereign peer in the Bitcoin and Lightning network.
+{: .fs-6 }
 
-![RaspiBolt Logo](images/00_raspibolt_v2_banner_440.png){:target="_blank"}
-
----
-
-The **RaspiBolt version 2** builds on the Raspberry Pi 4. If you're looking for the old version: [check out the old source files on GitHub](https://github.com/raspibolt/raspibolt/blob/1.0/index.md).
+No need to trust anyone else.
+{: .fs-6 }
 
 ---
 
-## Table of contents
-{: .no_toc .text-delta }
+## What is the RaspiBolt?
 
-1. TOC
-{:toc}
+With this guide, you can set up a Bitcoin and Lightning node from scratch, doing everything yourself.
+You will learn about Linux, Bitcoin, and Lightning.
+As a result, you'll have your very own RaspiBolt node, built by you and no one else.
+
+There are many reasons why you should run your own Bitcoin node.
+
+* **Keep Bitcoin decentralized.** Use your node to help enforce your Bitcoin consensus rules.
+* **Take back your sovereignty.** Let your node validate your own Bitcoin transactions. No need to ask someone else to tell you what's happening in the Bitcoin network.
+* **Improve your privacy.** Connect your wallets to your node so that you no longer need to reveal their whole financial history to external servers.
+* **Be part of Lightning.** Run your own Lightning node for everyday payments and help building a robust, decentralized Bitcoin Lightning network.
+
+Did we mention that it's fun, as well?
 
 ---
 
-This project was as much about the learning process as about the result.
-And I think I succeeded: I learned a lot and my node runs very well.
-This guide is my attempt to share my learnings and encourage you to run a node yourself.
+## RaspiBolt overview
 
-## Why am I excited about Bitcoin and Lightning?
+This guide explains how to set up your own Bitcoin node on a cheap Raspberry Pi.
+But it works on most hardware platforms because it only uses standard Debian Linux commands.
 
-**Bitcoin as new technology** is an incredibly interesting endeavor, especially because of its interdisciplinary nature.
-**Bitcoin as sound money** is going to have a major impact on economic principles and society as a whole.
-In my opinion, a solid, anti-fragile base layer for this future monetary network is the killer app for blockchains and will be more important than the most novel feature of competing altcoin projects.
+### Features
 
-At the moment, Bitcoin is more of a store of value and not really suited for small everyday transactions.
-Due to limitations of the blockchain and the growth of its usage, fees have risen and business models relying on cheap transactions are being priced out.
-This is fine.
-**Truly decentralized blockchains are a scarce resource** and cannot scale to accommodate all global transactions.
-The current scaling pains are a great motivator to build better technology to scale exponentially, as opposed to just making everything bigger for linear scaling.
+Your Bitcoin node will offer the following functionality:
 
-This is where the **Lightning Network** comes in.
-As one of several new blockchain “extensions”, its promise is to accommodate nearly unlimited transactions, with instant payment confirmation, minimal fees and increased privacy.
-It sounds almost too good to be true, but in contrast to ubiquitous ICO with their own token, this technology is well researched, committed to the cypherpunk open-source ethos and leverages the solid underpinnings of Bitcoin.
-
-Bitcoin's security model requires both full nodes and miners to be decentralized.
-While the full-node-using economy must be decentralized to stop fake bitcoins that do not abide to consensus from being accepted as payments, the miners must be  decentralized to stop censorship of transactions and to make transactions irreversible.
-
-To preserve the decentralized nature of this monetary system, I think it is important that everybody can run their own trustless Bitcoin full node, preferably on cheap hardware like a Raspberry Pi.
-If Bitcoin is digital gold, then a full node wallet is your own personal goldsmith who checks for you that received payments are genuine.
-
-This is why I set out to build my **RaspiBolt** and think that I have now - through numerous iterations - quite a good configuration that I would like to share as my modest contribution to the community.
-I am not a systems specialist, so please feel free to point out improvements.
-
-## About this guide
-
-### Structure
-
-1. Introduction (this page)
-1. [Preparations](raspibolt_10_preparations.md): get all required parts
-1. [Raspberry Pi](raspibolt_20_pi.md): set up and configure the Pi as a Linux server
-1. [Security](raspibolt_21_security.md): secure and harden your installation
-1. [Privacy](raspibolt_22_privacy.md): configure Tor networking for improved privacy
-1. [Bitcoin](raspibolt_30_bitcoin.md): run Bitcoin Core as a fully validating node
-1. [Lightning](raspibolt_40_lnd.md): spin up the Lightning Network Daemon (LND)
-1. [Electrum](raspibolt_50_electrs.md): use your node with Hardware Wallets
-1. [Bonus Section](raspibolt_60_bonus.md): go beyond with optional topics
-1. [Troubleshooting](raspibolt_70_troubleshooting.md): debug your system if you have problems
-1. [FAQ](raspibolt_faq.md): frequently asked questions and further reading
-
-### Purpose
-
-My aim is to set up a Bitcoin and Lightning node that
-
-* is as fully validating Bitcoin Full Node and does not require any trust in a 3rd party,
-* is reliably running 24/7,
-* is part of and supports the decentralization of the Lightning network by routing payments and
-* can be used to send and receive personal payments using the command line interface.
-
-This server is set up without graphical user interface and is used remotely using the Secure Shell (SSH) command line.
-
-**The good old days**: this was the original goal of this guide, back in 2017, simply buying a Blockaccino.
-
-[![Buying a Blockaccino](images/00_blockaccino_goal.png)](https://vimeo.com/258395303){:target="_blank"}
+* **Bitcoin**: direct and trustless participation in the Bitcoin peer-to-peer network, full validation of blocks and transactions
+* **Electrum server**: connect your compatible wallets (including hardware wallets) to your own node
+* **Blockchain Explorer**: web-based Explorer to privately look up transactions, blocks, and more
+* **Lightning**: full client with stable long-term channels and a web-based management interface
+* **Always on**: services are constantly synced and available 24/7
+* **Reachable from anywhere**: connect to all your services through the Tor network
 
 ### Target audience
 
-This guide strives to give simple and foolproof instructions.
-But the goal is also to do everything ourselves, no shortcuts that involve trust in a 3rd party allowed.
-This makes this guide quite technical and lengthy, but I try to make it as straightforward as possible and explain everything for you to gain a basic understanding of the how and why.
+We strive to give foolproof instructions.
+But the goal is also to do everything ourselves.
+Shortcuts that involve trusting someone else are not allowed.
+This makes this guide quite technical, but we try to make it as straightforward as possible.
+You'll gain a basic understanding of the how and why.
 
-If you like to learn about Linux, Bitcoin and Lightning, this guide is for you.
+If you like to learn about Linux, Bitcoin, and Lightning, then this guide is for you.
 
-## A word of caution
-All components of the Lightning network are still under development and we are dealing with real money here.
-Unfortunately, nobody uses the Lightning Testnet, so we will go straight for Mainnet.
-But please be aware that you should start with small amounts that you are willing to lose.
+### Structure
 
-## Community Support
-Find help and other Raspibolt users on the following platforms:
-* [Github Issues / Knowledge Base](https://github.com/raspibolt/raspibolt/issues)
-* Reddit sub: [r/raspibolt](https://www.reddit.com/r/raspibolt/)
-* Telegram group: [t.me/raspibolt](https://t.me/raspibolt)
+We aim to keep the core of this guide well maintained and up-to-date:
+
+1. [Raspberry Pi](raspberry-pi.md): prepare the hardware and set up the operating system
+1. [Bitcoin](bitcoin.md): sync your own Bitcoin full node, Electrum server, and Blockchain Explorer
+1. [Lightning](lightning.md): run your own Lightning client with web-based node management
+
+The bonus section contains more specific guides that build on top of the main section.
+More fun, lots of knowledge, but with lesser maintenance guarantees.
+Everything is optional.
+
+* [Bonus guides](./bonus/index.md)
+
+Running into issues?
+
+* [Troubleshooting](troubleshooting.md): first aid to debug your system
+* [FAQ](faq.md): frequently asked questions and further reading
 
 ---
 
-Get started: [Preparations >>](raspibolt_10_preparations.md)
+## Community
+
+This is a community project.
+Find help and other RaspiBolt users on the following platforms:
+
+* [Github Issues / Knowledge Base](https://github.com/raspibolt/raspibolt/issues){:target="_blank"}
+* Reddit sub: [r/raspibolt](https://www.reddit.com/r/raspibolt/){:target="_blank"}
+* Telegram group: [t.me/raspibolt](https://t.me/raspibolt){:target="_blank"}
+
+And feel free to join the many other contributors if you see something that can be improved!
+
+---
+
+## Already running an earlier version of the RaspiBolt?
+
+Unfortunately, a seamless update is not possible because RaspiBolt 3 uses an entirely different 64-bit operating system.
+The general structure of the setup stays the same, however.
+We recommend setting up the RaspiBolt from scratch, but you can then copy over essential data.
+
+[Read how to do that in the FAQ section](faq.md#can-i-update-my-raspibolt-2-to-the-new-version).
+
+## Looking for an older version of this guide?
+
+If you're looking for an older version of this guide, you can still check out the archived source files for [version 1](https://github.com/raspibolt/raspibolt/blob/raspibolt-v1-deprecated/index.md){:target="_blank"} and [version 2](https://v2.raspibolt.org){:target="_blank"}.
+
+<br /><br />
+
+---
+
+Get started: [Backstory >>](backstory.md)
