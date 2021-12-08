@@ -58,7 +58,7 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using data fr
   
 To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utiliy. The following command only works on Linux-based computers.
 
-* On your local computer, open a terminal window and type the following command (replace <your_node_IP> with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
+* On your local computer, open a terminal window and type the following command. Replace <your_node_IP> with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
 
   ```sh
   $ scp admin@<your_node_IP>:~/bitcoin-white-paper/bitcoin.pdf .
