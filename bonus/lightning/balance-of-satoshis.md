@@ -403,6 +403,8 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
 * Go to your Telegram bot and type /version, it should return your currently installed version of bos.
 * In your Telegram bot type /help to list the list of available commands
 
+<br /><br />
+
 ---
 
 << Back: [+ Lightning](index.md)
