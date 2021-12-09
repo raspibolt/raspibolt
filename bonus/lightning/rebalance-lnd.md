@@ -51,6 +51,9 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), we need to ins
   > [...]
   $ pip3 --version
   > pip 20.3.4 from /usr/lib/python3/dist-packages/pip (python 3.9)
+  ```
+
+---
 
 ### Install rebalance-lnd
 
@@ -91,8 +94,10 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), we need to ins
   $ ln -s /data/lnd/ /home/rebalance-lnd/.lnd
   $ cd ~/
   ```
+
+---
   
-## rebalance-lnd in action
+### rebalance-lnd in action
 
 * To rebalance two channels, use the following command (the channel ID is the short 18 digits channel ID here)
 
@@ -103,8 +108,10 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), we need to ins
   ```
   
 * There are many more options available to fine-tuned your rebalancing strategy. Find more information about them in the [README](https://github.com/C-Otto/rebalance-lnd){:target="_blank"} page of C-Otto's repo.
-  
-## Upgrade
+
+---
+
+### Upgrade
 
 * Log in with the "rebalance-lnd" user
 
@@ -128,7 +135,9 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), we need to ins
   > [...]
   ```
 
-## Uninstall
+---
+
+### Uninstall
 
 If you want to uninstall rebalance-lnd:
 
