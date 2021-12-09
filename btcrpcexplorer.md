@@ -71,9 +71,9 @@ You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 ### Firewall & reverse proxy
 
 In the [Security section](security.md), we set up NGINX as a reverse proxy.
-Now we can add the RTL configuration.
+Now we can add the BTC RPC Explorer configuration.
 
-* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to RTL
+* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to the BTC RPC Explorer
 
   ```sh
   $ sudo nano /etc/nginx/streams-enabled/btcrpcexplorer-reverse-proxy.conf
@@ -311,7 +311,7 @@ You now have the BTC RPC Explorer running to check the Bitcoin network informati
 
 ---
 
-## Upgrade
+## For the future: BTC RPC Explorer update
 
 Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/releases){:target="_blank"} is straight-forward, but make sure to check out the [change log](https://github.com/janoside/btc-rpc-explorer/blob/master/CHANGELOG.md){:target="_blank"} first.
 
