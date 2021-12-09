@@ -50,7 +50,7 @@ Table of contents
 
 * If the version is v12.0 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
 
-#### Create the "bos" user and set up npm-global
+#### Create the "bos" user and prepare the directory
 
 * Create a new user "bos" and make it a member of the "lnd" group
 
@@ -72,10 +72,10 @@ Table of contents
   $ ls -la
   ```
 
-* Set up nmp-global
+* Add the bos binary file location to PATH
  
   ```sh
-  $ echo 'export PATH=$PATH:/home/bos/.npm-global/bin' >> /home/bos/.bashrc
+  $ echo 'export PATH=$PATH:/home/bos/balanceofsatoshis' >> /home/bos/.bashrc
   $ source /home/bos/.bashrc
   ```
 
