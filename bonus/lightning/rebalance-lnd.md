@@ -105,7 +105,9 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
   
 ### rebalance-lnd in action
 
-* To rebalance two channels, use the following command (the channel ID is the short 18 digits channel ID here)
+To use rebalance-lnd, use the "rebalance-lnd" user.
+
+* To rebalance two channels, use the following command (the channel ID is the short 18 digits channel ID)
 
  ```sh
   $ rebalance.py --amount AmountInSats --fee-ppm-limit FeeRateInPPM --from NodeAShortChannelID --to NodeBShortChannelID
