@@ -139,7 +139,7 @@ To use rebalance-lnd, use the "rebalance-lnd" user.
   $ git checkout v9.9
   > Note: switching to 'v9.9'.
   > [...]
-  $ npm install
+  $ pip3 install -r requirements.txt
   > [...]
   ```
 
