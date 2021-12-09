@@ -75,8 +75,6 @@ Table of contents
 * Set up nmp-global
  
   ```sh
-  $ mkdir /home/bos/.npm-global
-  $ npm config set prefix '/home/bos/.npm-global'
   $ echo 'export PATH=$PATH:/home/bos/.npm-global/bin' >> /home/bos/.bashrc
   $ source /home/bos/.bashrc
   ```
@@ -97,15 +95,31 @@ Table of contents
   ```sh
   $ git clone https://github.com/alexbosworth/balanceofsatoshis.git
   $ cd balanceofsatoshis
-  $ npm install -g balanceofsatoshis
-  $ cd ~/
+  ```
+  
+* Find the most recent tag and verify the signature. Add the `--tags` option to select even a lightweight/non-annotated tag. Add the `--abbrev=0` option to remove any long-format tag names. 
+    
+  ```sh
+  $ git describe --tags --abbrev=0
+  > v11.14.0
+  $ git verify-tag v11.14.0
+  > gpg: Signature made Tue 07 Dec 2021 03:57:11 GMT
+  > gpg:                using RSA key DE23E73BFA8A0AD5587D2FCDE80D2F3F311FD87E
+  > gpg: Good signature from "Alex Bosworth <alex.bosworth@gmail.com>" [unknown]
+  > [...]
+  ```
+
+* Install Balance of Satoshis locally
+
+  $ npm install
+  > [...]
   ```  
 
 * Check the version with the --version (or -V) option
 
   ```sh
   $ bos -V
-  > v11.13.0
+  > v11.14.0
   ```
   
 ---
@@ -120,7 +134,7 @@ To use Balance of Satoshis, we will use the "bos" user.
   
   ```sh
   $ bos help
-  > bos 11.13.0 
+  > bos 11.14.0 
   > 
   > USAGE
   > 
@@ -136,7 +150,7 @@ To use Balance of Satoshis, we will use the "bos" user.
   
   ```sh
   $ bos help rebalance
-  > bos 11.13.0 
+  > bos 11.14.0 
   > 
   > USAGE
   > 
@@ -206,7 +220,7 @@ BoS allows to create user-defined tags to classify nodes and then be used in the
 * Create the 'avoid-nodes' tag and tag nodes Y and Z
 
   ```sh
-  $ bos tags avoid-nodestes --add [NODE_Y_PUBKEY] --add [NODE_Z_PUBKEY]
+  $ bos tags avoid-nodes --add [NODE_Y_PUBKEY] --add [NODE_Z_PUBKEY]
   > tag: 
   >   alias: avoid-nodes
   >   id:    abc123...
@@ -256,7 +270,7 @@ There are many additional options that can be used to improve the likelihood of 
 
   ```sh
   $ bos -V
-  > 11.13.0
+  > 11.14.0
   ```
 
 * Update the local repository by downloading the new commits from the source repository and check if a new tag/version is available (e.g. here v99.99.9)
@@ -277,7 +291,7 @@ There are many additional options that can be used to improve the likelihood of 
   
   ```sh 
   $ git describe --tags --abbrev=0
-  > v11.13.0
+  > v11.14.0
   ```
 
 * Remove any potential uncommited changes to your local branch to avoid issues when checking out the new tag
@@ -294,7 +308,7 @@ There are many additional options that can be used to improve the likelihood of 
   > Previous HEAD position was 1b2a38d add docs for coop close on open
   > HEAD is now at dd58fc0 [...]
   $ git describe --tags --abbrev=0
-  > v11.14.0
+  > v99.99.9
   ```
   
 *  Check the GPG signature of the new version
@@ -313,7 +327,7 @@ There are many additional options that can be used to improve the likelihood of 
   $ npm install -g
   > [...]
   $ bos -V
-  > v11.14.0
+  > v99.99.9
   ```
 
 ---
