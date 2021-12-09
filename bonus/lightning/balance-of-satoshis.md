@@ -77,7 +77,8 @@ Table of contents
   ```sh
   $ mkdir /home/bos/.npm-global
   $ npm config set prefix '/home/bos/.npm-global'
-  $ bash -c "echo 'PATH=$PATH:/home/bos/.npm-global/bin' >> /home/bos/.bashrc"
+  $ echo 'export PATH=$PATH:/home/bos/.npm-global/bin' >> /home/bos/.bashrc
+  $ source /home/bos/.bashrc
   ```
 
 #### Install
