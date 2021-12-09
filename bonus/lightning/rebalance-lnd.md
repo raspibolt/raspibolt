@@ -21,7 +21,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![lntop](../../images/74_lntop.png)
+![rebalance-lnd illustration](../../images/rebalance-lnd-illustration.png)
 
 ---
 
