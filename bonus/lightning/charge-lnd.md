@@ -1,63 +1,112 @@
 ---
 layout: default
 title: charge-lnd
-parent: Bonus Section
-nav_order: 140
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
-# Bonus guide: Charge-lnd
 
-*Difficulty: simple*
+## Bonus guide: charge-lnd
+{: .no_toc }
 
-[Charge-lnd](https://github.com/accumulator/charge-lnd) is a simple policy based fee manager for LND.
+---
 
-*Requirements:*
+[Charge-lnd](https://github.com/accumulator/charge-lnd){:target="_blank"} is a simple policy based fee manager for LND.
+
+Difficulty: Easy
+{: .label .label-green }
+
+Status: Tested v3
+{: .label .label-green }
+
+---
+
+Table of contents
+{: .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+### Requirements
 
 * LND (or LND as part of Lightning Terminal/litd)
+* Python
 
-*Acknowledgments:*
+---
 
-* This guide was built based on the guides by The Count on [nullcount.com](https://nullcount.com/install-charge-lnd-routing-fees-on-autopilot/) and by the [Plebnet Wiki guide](https://plebnet.wiki/wiki/Fees_And_Profitability#Installing_Charge-Lnd).
+### Install pip3
 
-## Install charge-lnd
+pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is already installed and install it if needed.
 
-* As recommended in the [charge-lnd repository](https://github.com/accumulator/charge-lnd/blob/master/INSTALL.md#installation), we do not need to have full admin rights to use charge-lnd. The following access rights are used:
+* With user "admin", check if pip3 is already installed with the following command. If you don't get an output with a version number it means you need to install pip3 (otherwise, move to the next section 'Install rebalance-lnd).
+  
+  ```sh
+  $ pip3 --version
+  ```
+
+* if you need to install pip3
+
+  ```sh
+  $ sudo apt-get install python3-pip
+  > [...]
+  $ pip3 --version
+  > pip 20.3.4 from /usr/lib/python3/dist-packages/pip (python 3.9)
+  ```
+
+---
+
+### Install charge-lnd
+
+* charge-lnd does not require full admin rights to the LND data. Using the 'least privileges' approach, only the following access rights are necessary:
   * `offchain:read`
   * `offchain:write`
   * `onchain:read`
   * `info:read`
 
-* We can create (or 'bake') a suitably limited macaroon with the "admin" user
+* With the "lnd" user, create (or 'bake') a suitably limited LND macaroon 
  
   ```sh
+  $ sudo su - lnd
   $ lncli bakemacaroon offchain:read offchain:write onchain:read info:read --save_to=~/.lnd/data/chain/bitcoin/mainnet/charge-lnd.macaroon
+  > Macaroon saved to /home/lnd/.lnd/data/chain/bitcoin/mainnet/charge-lnd.macaroon
+  $ exit
   ```
   
-* We create a "charge-lnd" user and we make it part of the "bitcoin" group (to be able to interact with LND)  
+* Create a new user "chargelnd" and make it a member of the "lnd" group
 
   ```sh
-  $ sudo adduser charge-lnd
-  $ sudo /usr/sbin/usermod --append --groups bitcoin charge-lnd
+  $ sudo adduser --disabled-password --gecos "" chargelnd
+  $ sudo adduser chargelnd lnd
   ```
   
 * With the "charge-lnd" user, clone the charge-lnd repository, enter the directory and install the program and required packages using `pip3` (do _not_ forget the dot at the end of the pip command!)
 
   ```sh
-  $ sudo su - charge-lnd
+  $ sudo su - chargelnd
   $ git clone https://github.com/accumulator/charge-lnd.git
   $ cd charge-lnd
   $ pip3 install -r requirements.txt .
   ```
 
+* Add the charge-lnd binary file location to PATH
+
+  ```sh
+  $ echo 'export PATH=$PATH:/home/chargelnd/.local/bin' >> /home/chargelnd/.bashrc
+  $ source /home/chargelnd/.bashrc
+  ```
+
 * Test if the installation was successful by running the program with the --help (or -h) flag
 
   ```sh
-  $ ~/.local/bin/charge-lnd -h
-  >usage: charge-lnd [-h] [--lnddir LNDDIR] [--grpc GRPC]
+  $ charge-lnd -h
+  > usage: charge-lnd [-h] [--lnddir LNDDIR] [--grpc GRPC]
   >                  [--electrum-server ELECTRUM_SERVER] [--dry-run] [--check]
   >                  [-v] -c CONFIG
   >
-  >optional arguments:
+  > optional arguments:
   >  -h, --help            show this help message and exit
   >  --lnddir LNDDIR       (default ~/.lnd) lnd directory
   >  --grpc GRPC           (default localhost:10009) lnd gRPC endpoint
@@ -73,27 +122,41 @@ has_toc: false
   >                        path to config file
   ```
 
-* We are going to create a simlink to the LND directory. We'll place the link in the home directory of the "charge-lnd" user to match the default LND directory used by charge-lnd (~/.lnd) 
+* Create a simlink to the LND directory. Place it in the home directory of the "chargelnd" user to match the default LND directory used by charge-lnd (*i.e.* ~/.lnd) 
 
   ```sh
-  $ ln -s /mnt/ext/lnd/ /home/charge-lnd/.lnd
+  $ ln -s /data/lnd /home/chargelnd/.lnd
   ```
+* Display the link and check that they’re not shown in red (this would indicate an error)
 
-## Configuration file
+  ```sh
+  $ cd ~/
+  $ ls -la
+  ```
+  
+---
 
-* Create a configuration file that we will call charge-lnd.config
+### Configuration file
+
+For this example, we will use a policy that: 
+
+1. Defines some default parameters
+
+1. Then starts by looking for channels with very low outbound to apply a very large base fee (9999 sats) that will prevent any foward going out through the channel (and therefore avoid forward failures and a downgrading by the sender of the likelihood to use your node for future path finding)
+
+1. Then ignores some channels that we want to deal with manually (*e.g.* a liquidity sink)
+
+1. And finally apply a fixed fee rate for two groups of channels
+  
+🚨 Warning: The policy below is just an example, _do_ change the policy according to your own strategy and needs! All the options are listed and described [here](https://github.com/accumulator/charge-lnd){:target="_blank"}
+
+* Still with user "chargelnd", create and open a configuration file
 
   ```sh
   $ nano charge-lnd.config
   ```
 
-* For this example, we will use a policy that: 
-  1. Defines some default parameters
-  2. Then starts by looking at channels with very low outbound to apply a very large base fee that will prevent any attempted forward through the channel (and therefore avoid failures)
-  3. Then ignores some channels that we want to deal with manually (e.g. a large liquidity sink)
-  4. And finally apply a fixed fee rate for two groups of channels
-  
-* Warning: The policy below is just an example, _do_ change the policy according to your own strategy and needs! All the options are listed and described [here](https://github.com/accumulator/charge-lnd)
+*  Copy-paste the following section, changes the values you'd like to use and add the relevant node pubkeys in the desired policy sections
 
   ```ini
   #################################################
@@ -143,20 +206,20 @@ has_toc: false
   fee_ppm = 200
   ```
 
-* We can first test if the syntax is correct or if it contains some errors using the --check option.
-We also have to indicate where the config file is located using the --config (or -c) option
+* Test if the syntax is correct or if it contains some errors using the --check option. 
+Indicate where the configuration file is located using the --config (or -c) option
 
   ```sh
-  $  ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config --check
+  $ charge-lnd -c ~/charge-lnd.config --check
   > Configuration file is valid
   ```
 
-* Then we can do a dry-run test which will print out what changes the program would apply of it was to be run.
+* Do a dry-run test which will print out what changes the program would apply of it was to be run.
 A small report will be displayed for each channel policy that should be updated.
 Adding the --verbose (or -v) option would add aditional information such as if the channel is enabled or disabled.
 
   ```sh
-  $  ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config --dry-run
+  $ charge-lnd -c ~/charge-lnd.config --dry-run
   > 123456x123x1  [<noda_alias>|<node_pukkey>]
   >  policy:          2_9999_basefee_policy
   >  strategy:        static
@@ -167,32 +230,36 @@ Adding the --verbose (or -v) option would add aditional information such as if t
 * Check each channel to see if the proposed updates are the intended one.
 If not, amend the charge-lnd config and re-do dry-run tests until you arrive to the desired results
 
-* Once we are happy with our fee policy and logic, we can manually apply it to our node by running the same command but without the --dry-run test.
+* Once you are happy with your fee policy, you can manually apply it to your node by running the same command but without the --dry-run test.
 Then exit the charge-lnd user.
 
   ```sh
-  $  ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config
+  $ charge-lnd -c ~/charge-lnd.config
   $ exit
   ```
 
-* Double-check the fee policy on all your channels to ensure that you are happy with the changes!
+* Double-check the fee policy on all your channels (e.g. using [RTL](https://raspibolt.org/rtl.html) or [lntop](https://raspibolt.org/bonus/lightning/lntop.html)) to ensure that you are happy with the changes!
 
 🔍: _To see all the possible policy types and options and some examples, check the charge-lnd [Github page](https://github.com/accumulator/charge-lnd#charge-lnd)._
 
-## Automatic fee updates
+---
 
-We can make the script run automatically at regular time intervals by using a cron job. For example, we could run the charge-lnd program every 2 hours.
+### Automatic fee updates
 
-Warning: It is not in your interest, nor in the interest of the wider network, to set up very short intervals between each policay change. Frequent channel policy update spams the LN gossip network and results in less accurate LN graphs overall as it takes a long time for a policy update to reach most of the nodes in the network.
+#### Cron job
 
-* We the admin user, create and edit (option -e) the crontab file of the charge-lnd user (option -u). 
+You can make the script run automatically at regular time intervals by using a cron job. For example, you could run the charge-lnd program every 6 hours.
+
+🚨 Warning: It is not in your interest, nor in the interest of the wider network, to set up very short intervals between each policay change. Frequent channel policy update spams the LN gossip network and results in less accurate LN graphs overall as it takes a long time for a policy update to reach most of the nodes in the network.
+
+* We the "admin" user, create and edit (option -e) the crontab file of the charge-lnd user (option -u). 
 If asked, select the /bin/nano text editor (type 1 and enter)
 
   ```sh
-  $ sudo crontab -u charge-lnd -e
+  $ sudo crontab -u chargelnd -e
   ```
 
-* At the end of the file, paste the following lines. Then save (Ctrl+o) and exit (Ctrl+x)
+* At the end of the file, paste the following lines. Then save and exit.
 
   ```ini
   ##########################################
@@ -200,14 +267,14 @@ If asked, select the /bin/nano text editor (type 1 and enter)
   ##########################################
 
   # Run charge-lnd every 2 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
-  21 */2 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/charge-lnd/charge-lnd/charge-lnd.config > /tmp/my_charge-lnd.log 2>&1; date >> /tmp/my_charge-lnd.log 
+  21 */6 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log 
   ```
 
-  * The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/4_*_*_*). 
-  * `/home/umbrel/.local/bin/charge-lnd -c /home/umbrel/charge-lnd/myconfig` is the command to be run and where to find it (its path) together with the required option(s) (here the location of the configuration file). 
-  * `> /tmp/charge-lnd.log 2>&1; date >> /tmp/charge-lnd.log` records the updates in a charge-lnd.log log file, including the Standard Error and Standard Out and with a timestamp.
+  * The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/6_*_*_*){:target="_blank"}. 
+  * `/home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config` is the command to be run and where to find it (its path) together with the required option(s) (here the location of the configuration file).
+  * `> /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log` records the updates in a `my-charge-lnd.log` log file.
 
-## Checking the logs
+#### Checking the logs
 
 If you need to check the log files:
 
@@ -215,35 +282,48 @@ If you need to check the log files:
 * You can search for a specific string by typing "?" followed by the string to be searched (e.g. a node alias) and then press enter.
 
   ```sh
-  $ less /tmp/my_charge-lnd.log
+  $ less /tmp/my-charge-lnd.log
   ```
 
-* To look for updates of a specific channel
+* To look for updates of a specific channel with an alias 'NodeAliasName'
 
   ```sh
-  $ cat /tmp/my_charge-lnd.log | grep -A 7 <node_alias>
+  $ cat /tmp/my-charge-lnd.log | grep -A 7 NodeAliasName
   ```
 
-# Upgrade
+---
 
-* Let's check what is the latest available version at [https://github.com/accumulator/charge-lnd/releases](https://github.com/accumulator/charge-lnd/releases) and let's find what version of charge-lnd we are running
+### Upgrade
+
+* Let's check what is the latest available version at [https://github.com/accumulator/charge-lnd/releases](https://github.com/accumulator/charge-lnd/releases) and what version of charge-lnd we are running
 
   ```sh
-  $ sudo su - charge-lnd
+  $ sudo su - chargelnd
+  $ cd charge-lnd
   $ pip3 show charge-lnd
   > Name: charge-lnd
-  > Version: 0.2.5
+  > Version: 0.2.8
   ```
 
-* If a newer version exists (e.g. v0.X.X)
+* Fetch the latest version and install it (*e.g.* v9.9.9)
   
   ```sh
   $ git fetch
-  $ git checkout v0.X.X
-  $ python -m pip install --upgrade requirements.txt .
+  $ git describe --tags --abbrev=0
+  > v9.9.9
+  $ git reset --hard HEAD
+  > HEAD is now at [...]
+  $ git checkout v9.9.9
+  > Note: switching to 'v9.9.9'.
+  > [...]
+  $ pip3 install -r requirements.txt .
+  > [...]
   ```
+  
+---
 
-# Uninstall
+
+### Uninstall
 
 If you want to uninstall charge-lnd:
 
@@ -252,4 +332,11 @@ If you want to uninstall charge-lnd:
   ```sh
   $ sudo su -
   $ userdel -r charge-lnd
+  $ exit
   ```
+
+<br /><br />
+
+---
+
+<< Back: [+ Lightning](index.md)
