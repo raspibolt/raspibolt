@@ -349,6 +349,8 @@ If you want to uninstall Balance of Satoshis:
 
 Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
 
+![bos-tg-bot](../../images/bos-bot.png)
+
 *Requirements:* a Telegram account
 
 #### Create a new TG bot with the BotFather
