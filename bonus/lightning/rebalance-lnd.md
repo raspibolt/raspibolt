@@ -42,9 +42,15 @@ Table of contents
 
 ### Install pip3
 
-pip is not installed by default on Raspberry Pi OS Lite (64-bit), we need to install it.
+pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is already installed and install it if needed.
 
-* With user "admin" install pip3 and check the installed version
+* With user "admin", check if pip3 is already installed with the following command. If you don't get an output with a version number it means you need to install pip3 (otherwise, move to the next section 'Install rebalance-lnd).
+  
+  ```sh
+  $ pip3 --version
+  ```
+
+* if you need to install pip3
 
   ```sh
   $ sudo apt-get install python3-pip
