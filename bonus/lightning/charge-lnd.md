@@ -20,6 +20,9 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
+
+![charge-lnd policies](../../images/charge-lnd-illustration.png)
+
 ---
 
 Table of contents
