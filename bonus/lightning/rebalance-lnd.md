@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[rebalance-lnd](https://github.com/C-Otto/rebalance-lnd) (created by C-Otto) is a tool to manage your channel liquidity by doing circular rebalancing; i.e. sending sats out of a channel with too much outbound/local liquidity back to one of your channel with too much inbound/remote liquidity. 
+[rebalance-lnd](https://github.com/C-Otto/rebalance-lnd){:target="_blank"}  (created by C-Otto) is a tool to manage your channel liquidity by doing circular rebalancing; i.e. sending sats out of a channel with too much outbound/local liquidity back to one of your channel with too much inbound/remote liquidity. 
 You just pay the routing fees and can set up some maximum fees that you're ok to pay.
 
 Difficulty: Easy
@@ -102,6 +102,8 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), we need to ins
   >[...]
   ```
   
+* There are many more options available to fine-tuned your rebalancing strategy. Find more information about them in the [README](https://github.com/C-Otto/rebalance-lnd){:target="_blank"} page of C-Otto's repo.
+  
 ## Upgrade
 
 * Log in with the "rebalance-lnd" user
@@ -137,3 +139,9 @@ If you want to uninstall rebalance-lnd:
   $ userdel -r rebalance-lnd
   $ exit
   ```
+
+<br /><br />
+
+---
+
+<< Back: [+ Lightning](index.md)
