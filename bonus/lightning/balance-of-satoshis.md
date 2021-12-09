@@ -83,13 +83,13 @@ Table of contents
 
 #### Install
 
-* Get the PGP key of Alex Bosworth, developer of Balance of Satoshis.
+* Check the main PGP key of Alex Bosworth, developer of Balance of Satoshis: [https://keybase.io/alexbosworth/](https://keybase.io/alexbosworth/){:target="_blank"}, i.e. E80D 2F3F 311F D87E
 
   ```sh
-  $ curl https://keybase.io/alexbosworth/pgp_keys.asc | gpg --import
-  > [...]
-  > gpg: key 1A7872BF473017F3: public key "Alex Bosworth <alexbosworth+keybase@gmail.com>" imported
-  > [...]
+  $ gpg --receive-keys E80D2F3F311FD87E
+  > [gpg: key E80D2F3F311FD87E: public key "Alex Bosworth <alex.bosworth@gmail.com>" imported
+  > gpg: Total number processed: 1
+  > gpg:               imported: 1
   ```
 
 * Still with user "bos", download the source code and install it
@@ -251,34 +251,69 @@ There are many additional options that can be used to improve the likelihood of 
   $ sudo su - bos
   $ cd balanceofsatoshis
   ```
-  
+
+* Check what version you are using currently (e.g. here v11.13.0)
+
+  ```sh
+  $ bos -V
+  > 11.13.0
+  ```
+
+* Update the local repository by downloading the new commits from the source repository and check if a new tag/version is available (e.g. here v99.99.9)
+ 
   ```sh
   $ git fetch
-  >
-  >
+  > remote: Enumerating objects: 29, done.
+  > remote: Counting objects: 100% (29/29), done.
+  > remote: Compressing objects: 100% (9/9), done.
+  > remote: Total 19 (delta 10), reused 19 (delta 10), pack-reused 0
+  > Unpacking objects: 100% (19/19), 22.10 KiB | 275.00 KiB/s, done.
+  > From https://github.com/alexbosworth/balanceofsatoshis
+  > 07f6db4..dd58fc0  master     -> origin/master
+  > * [new tag]         v99.99.9   -> v99.99.9
   ```
+
+* Find the most recent tag. Add the `--tags` option to select even a lightweight/non-annotated tag. Add the `--abbrev=0` option to remove any long-format tag names.
   
-  ```sh
+  ```sh 
   $ git describe --tags --abbrev=0
-  > v99.99.9
+  > v11.13.0
   ```
-  
+
+* Remove any potential uncommited changes to your local branch to avoid issues when checking out the new tag
+
+  ```sh
+  $ git reset --hard HEAD
+  > HEAD is now at 1b2a38d add docs for coop close on open
+  ```
+
+* Switch to new branch identified with `git fetch` (i.e. v99.99.9) and check that it is now  the most recent tag
+
   ```sh  
   $ git checkout v99.99.9
-  > Note: switching to 'v11.13.0'.
-  > [...]
+  > Previous HEAD position was 1b2a38d add docs for coop close on open
+  > HEAD is now at dd58fc0 [...]
+  $ git describe --tags --abbrev=0
+  > v11.14.0
   ```
   
-*  Check the GPG signature of tags
+*  Check the GPG signature of the new version
  
   ```sh
   $ git verify-tag v99.99.9
-  > 
+  > gpg: Signature made Tue 07 Dec 2021 03:57:11 GMT
+  > gpg:                using RSA key DE23E73BFA8A0AD5587D2FCDE80D2F3F311FD87E
+  > gpg: Good signature from "Alex Bosworth <alex.bosworth@gmail.com>" [unknown]
+  > [...]
+  ```  
   
-  
-  
-  
-  $ npm i -g balanceofsatoshis
+*  Install the new version and check this it has been installed properly
+
+  ```sh
+  $ npm install -g
+  > [...]
+  $ bos -V
+  > v11.14.0
   ```
 
 ---
