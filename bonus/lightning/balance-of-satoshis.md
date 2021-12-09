@@ -392,9 +392,17 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
   ```
   
 * When prompted, enter the HTTP API token that the @BotFather gave you earlier
+
 * Go to your new TG bot feed and type `/connect`. Your bot will give you a connection code
-* Copy the connection code and paste it in your SSH session in the second prompt that bos created. You should get a connection message on both your SSH session and your TG bot feed.
+
+* Copy the connection code and paste it in your SSH session in the second prompt that bos created. You should get a connection message on both your SSH session and your TG bot feed. In the SSH session:
+
+  ```sh
+  > is_connected: true
+  ```
+
 * Your TG bot will now receive notifications from your nodes for various events as described in the introduction.
+
 * Leave the temporary session by pressing Ctrl+C and log out of the "bos" user
   
   ```sh
@@ -405,13 +413,13 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
 
 Now we’ll make sure our Telegram Bot command starts as a systemd service on the Raspberry Pi so it’s always running.
 
-* As user “admin”, create the service file.
+* As user "admin", create the service file.
 
   ```sh
   $ sudo nano /etc/systemd/system/bos-telegram.service
   ```
   
-* Paste the following configuration. Replace <CONNECTION_CODE> with your own connection code. Save and exit.
+* Paste the following configuration. Replace YourConnectionCode with your own connection code provided by your bot above. Save and exit.
   
   ```ini
   # /etc/systemd/system/bos-telegram.service
@@ -422,7 +430,7 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   After=lnd.service
 
   [Service] 
-  ExecStart=/usr/bin/torify /home/bos/.npm-global/bin/bos telegram --connect <CONNECTION_CODE>
+  ExecStart=/usr/bin/torify /home/bos/balanceofsatoshis/bos telegram --connect YourConnectionCode
   User=bos
   Restart=always
   TimeoutSec=120
@@ -439,7 +447,7 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   ```sh
   $ sudo systemctl enable bos-telegram.service
   $ sudo systemctl start bos-telegram.service
-  $ sudo systemctl status bos-telegram.service
+  $ systemctl status bos-telegram.service
   > bos-telegram.service - bos-telegram
   >   Loaded: loaded (/etc/systemd/system/bos-telegram.service; enabled; vendor preset: enabled)
   >   Active: active (running) since Fri 2021-12-03 13:52:06 GMT; 8s ago
@@ -450,8 +458,38 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   >           `-4682 node /home/bos/.npm-global/bin/bos telegram --connect 1536853548
   ``` 
 
-* Go to your Telegram bot and type /version, it should return your currently installed version of bos.
-* In your Telegram bot type /help to list the list of available commands
+* To monitor the live logging output use the following command. Exit with Ctrl+C.
+
+  ```sh
+  $ sudo journalctl -f -u bos-telegram
+  ```
+
+#### Bos Telegram bot in action
+
+* The bot will notify you of the followibg events on your LN node:
+  * 💵 A payment being received (if it's a keysend with a message, the message will be decoded and displayed
+  * 💰 Routing/forward events
+  * ☯️ Sucessful rebalancing payment you initiated
+  * 🌹 A new channel being opened to your node
+  * 🥀 A channel closing
+  * You'll receive an actual SCB backup file (that can be downloaded) after each new channel opening or closing
+  * ⛓ A pending onchain payment being received
+  * 🤖 A reply to a command you invoke (see list of commands below)
+
+* Go to your Telegram bot and type /version, it should return your currently installed version of bos and the latest available version.
+
+* In your Telegram bot type /help to list the list of available commands:
+  * /backup - Get node backup file
+  * /blocknotify - Notification on next block
+  * /connect - Connect bot
+  * /costs - View costs over the past week
+  * /earnings - View earnings over the past week
+  * /invoice - Make an invoice
+  * /liquidity with - View node liquidity
+  * /mempool - BTC mempool report
+  * /pay - Pay an invoice
+  * /pending - View pending channels, probes, and forwards
+  * /version - View the current bot version
 
 <br /><br />
 
