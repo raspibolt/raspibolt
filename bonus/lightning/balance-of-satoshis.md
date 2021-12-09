@@ -464,19 +464,19 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   $ sudo journalctl -f -u bos-telegram
   ```
 
+* Check that the program is running in the background: Go to your Telegram bot and type /version, it should return your currently installed version of bos and the latest available version.
+
 #### Bos Telegram bot in action
 
 * The bot will notify you of the followibg events on your LN node:
-  * 💵 A payment being received (if it's a keysend with a message, the message will be decoded and displayed
-  * 💰 Routing/forward events
-  * ☯️ Sucessful rebalancing payment you initiated
-  * 🌹 A new channel being opened to your node
-  * 🥀 A channel closing
-  * You'll receive an actual SCB backup file (that can be downloaded) after each new channel opening or closing
-  * ⛓ A pending onchain payment being received
-  * 🤖 A reply to a command you invoke (see list of commands below)
-
-* Go to your Telegram bot and type /version, it should return your currently installed version of bos and the latest available version.
+  * 💵 - A payment being received (if it's a keysend with a message, the message will be decoded and displayed
+  * 💰 - Routing/forward events
+  * ☯️ - Sucessful rebalancing payment you initiated
+  * 🌹 - A new channel being opened to your node
+  * 🥀 - A channel closing
+  * You'll receive an actual **SCB backup file** (that can be downloaded) after each new channel opening or closing
+  * ⛓ - A pending onchain payment being received
+  * 🤖 - A reply to a command you invoke (see list of commands below)
 
 * In your Telegram bot type /help to list the list of available commands:
   * /backup - Get node backup file
