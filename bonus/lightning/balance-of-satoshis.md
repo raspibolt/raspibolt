@@ -266,7 +266,7 @@ There are many additional options that can be used to improve the likelihood of 
   $ cd balanceofsatoshis
   ```
 
-* Check what version you are using currently (e.g. here v11.13.0)
+* Check what version you are using currently (e.g. here v11.14.0)
 
   ```sh
   $ bos -V
@@ -311,7 +311,7 @@ There are many additional options that can be used to improve the likelihood of 
   > v99.99.9
   ```
   
-*  Check the GPG signature of the new version
+* Check the GPG signature of the new version
  
   ```sh
   $ git verify-tag v99.99.9
@@ -321,10 +321,10 @@ There are many additional options that can be used to improve the likelihood of 
   > [...]
   ```  
   
-*  Install the new version and check this it has been installed properly
+* Install the new version and check this it has been installed properly
 
   ```sh
-  $ npm install -g
+  $ npm install
   > [...]
   $ bos -V
   > v99.99.9
