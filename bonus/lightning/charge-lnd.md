@@ -69,7 +69,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit).
   * `onchain:read`
   * `info:read`
 
-* With the "lnd" user, create (or 'bake') a suitably limited LND macaroon 
+* With the "lnd" user, create (or 'bake') a suitably limited LND macaroon, then exit back to "admin"
  
   ```sh
   $ sudo su - lnd
@@ -78,7 +78,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit).
   $ exit
   ```
   
-* Create a new user "chargelnd" and make it a member of the "lnd" group
+* With user "admin", create a new user "chargelnd" and make it a member of the "lnd" group
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" chargelnd
