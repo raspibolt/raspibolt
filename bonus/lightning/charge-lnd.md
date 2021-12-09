@@ -159,7 +159,7 @@ For this example, we will use a policy that:
   $ nano charge-lnd.config
   ```
 
-*  Copy-paste the following section, changes the values you'd like to use and add the relevant node pubkeys in the desired policy sections
+* Copy-paste the following section, changes the values you'd like to use and add the relevant node pubkeys in the desired policy sections
 
   ```ini
   #################################################
