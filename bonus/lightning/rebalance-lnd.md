@@ -112,7 +112,7 @@ To use rebalance-lnd, use the "rebalance-lnd" user.
  ```sh
   $ rebalance.py --amount AmountInSats --fee-ppm-limit FeeRateInPPM --from NodeAShortChannelID --to NodeBShortChannelID
   > Sending AmountInSats satoshis from channel [...]
-  >[...]
+  > [...]
   ```
   
 * There are many more options available to fine-tuned your rebalancing strategy. Find more information about them in the [README](https://github.com/C-Otto/rebalance-lnd){:target="_blank"} page of C-Otto's repo.
