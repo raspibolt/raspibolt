@@ -100,17 +100,28 @@ The character `|` allows to string them together to create powerful yet efficien
 
 ---
 
-### Send the PDF to your desktop computer (Linux only)
+### Send the PDF to your desktop computer
 
-To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utility. The following command only works on Linux-based computers.
+To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utility.
 
-* On your local computer, open a terminal window and type the following command. Replace YourNodeIP with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
+* **macOS or Linux**
+
+On your local computer, open a terminal window and type the following command. Replace YourNodeIP with the Raspberry Pi IP address (or `raspibolt.local` if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
 
   ```sh
   $ scp admin@YourNodeIP:~/bitcoin-white-paper/bitcoin.pdf .
   ```
 
-* The file should now be located in the Home folder of your local computer (e.g., `/home/<username>`)>
+* **Windows**
+
+This also works with the PSCP tool from PuTTY that you can run from the command line.
+See [How to Use Putty pscp to Copy Files](https://tonyteaches.tech/putty-pscp-tutorial/){:target="_blank"} for more information.
+
+  ```sh
+  pscp admin@YourNodeIP:~/bitcoin-white-paper/bitcoin.pdf .
+  ```
+
+* The file should now be located in the Home folder of your local computer.
 
 ### Send the PDF to your Telegram account
 
