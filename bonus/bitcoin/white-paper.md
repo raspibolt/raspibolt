@@ -39,7 +39,7 @@ The Bitcoin white paper PDF was encoded in the blockhain in April 2013, in trans
 
 The transaction contains 947 outputs and the sender spent almost 60 millions sats as miner fee! Some explanations on how the paper is encoded in the transaction is given in a [Bitcoin stackexchange post](https://bitcoin.stackexchange.com/questions/35959/how-is-the-whitepaper-decoded-from-the-blockchain-tx-with-1000x-m-of-n-multisi/35970#35970){:target="_blank"} from 2015.  
 
-This guide explains how to reconstruct the Bitcoin white paper PDF using data from your own verified blockchain. No matter how censored the white paper could become (e.g. see [here](https://bitcoinmagazine.com/business/copa-suing-craig-wright-over-bitcoin-white-paper-claims){:target="_blank"}), you will know how to recreate and share the foundational document of Bitcoin.
+This guide explains how to reconstruct the Bitcoin white paper PDF using data from your own verified blockchain. No matter how c[nsored the white paper could become (see [this article about whitepaper copyright claims](https://bitcoinmagazine.com/business/copa-suing-craig-wright-over-bitcoin-white-paper-claims){:target="_blank"}), you will know how to recreate and share the foundational document of Bitcoin.
 
 ---
 
