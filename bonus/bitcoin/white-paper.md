@@ -33,7 +33,7 @@ Table of contents
 
 ---
 
-### Introduction
+## Introduction
 
 The Bitcoin white paper PDF was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`.
 
@@ -43,7 +43,7 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using your ow
 
 ---
 
-### Download the PDF
+## Download the PDF
 
 * With the "admin" user, create a new directory to store the PDF and move to this directory
 
@@ -62,7 +62,7 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using your ow
 
 ---
 
-#### How does this work?
+### How does this work?
 
 Here's how the long command from above actually works:
 
@@ -100,7 +100,7 @@ The character `|` allows to string them together to create powerful yet efficien
 
 ---
 
-#### Send the PDF to your desktop computer (Linux only)
+### Send the PDF to your desktop computer (Linux only)
 
 To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utility. The following command only works on Linux-based computers.
 
@@ -162,7 +162,7 @@ A bash script can be used to automatically download and send the pdf to your Tel
 
 ---
   
-### Trivia: Read the paper in the BTC-RPC-Explorer 
+## Trivia: Read the paper in the BTC-RPC-Explorer 
 
 The BTC-RPC-Explorer has also a functionality to extract the data from the node and display the PDF in the web browser.
 * Open your Explorer at [https://raspibolt.local:4000/](https://raspibolt.local:4000/){:target="_blank"} (replace raspibolt.local with your node IP address if needed). 
