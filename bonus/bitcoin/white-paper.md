@@ -21,7 +21,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-
+![Explorer white paper page](../../images/paper-pink.png)
 
 ---
 
