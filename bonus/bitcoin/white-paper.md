@@ -106,7 +106,7 @@ To be read, the PDF can now be sent from the remote node to your local computer 
 
 * **macOS or Linux**
 
-On your local computer, open a terminal window and type the following command. Replace YourNodeIP with the Raspberry Pi IP address (or `raspibolt.local` if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
+  On your local computer, open a terminal window and type the following command. Replace YourNodeIP with the Raspberry Pi IP address (or `raspibolt.local` if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
 
   ```sh
   $ scp admin@YourNodeIP:~/bitcoin-white-paper/bitcoin.pdf .
@@ -114,7 +114,7 @@ On your local computer, open a terminal window and type the following command. R
 
 * **Windows**
 
-This also works with the PSCP tool from PuTTY that you can run from the command line.
+  This also works with the PSCP tool from PuTTY that you can run from the command line.
 See [How to Use Putty pscp to Copy Files](https://tonyteaches.tech/putty-pscp-tutorial/){:target="_blank"} for more information.
 
   ```sh
