@@ -13,7 +13,7 @@ has_toc: false
 
 ---
 
-Download the Bitcoin white paper PDF directly from the blockchain data on your own node and witness the power of a decentralized network to fight censorship. 
+Download the Bitcoin white paper PDF directly from the blockchain data on your own node and witness the power of a decentralized network to fight censorship.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -35,11 +35,11 @@ Table of contents
 
 ### Introduction
 
-The Bitcoin white paper PDF was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`.  
+The Bitcoin white paper PDF was encoded in the blockhain in April 2013, in transaction `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713` of block `230,009`.
 
-The transaction contains 947 outputs and the sender spent almost 60 millions sats as miner fee! Some explanations on how the paper is encoded in the transaction is given in a [Bitcoin stackexchange post](https://bitcoin.stackexchange.com/questions/35959/how-is-the-whitepaper-decoded-from-the-blockchain-tx-with-1000x-m-of-n-multisi/35970#35970){:target="_blank"} from 2015.  
+The transaction contains 947 outputs and the sender spent almost 60 millions sats as miner fee! Some explanations on how the paper is encoded in the transaction is given in a [Bitcoin StackExchange post](https://bitcoin.stackexchange.com/questions/35959/how-is-the-whitepaper-decoded-from-the-blockchain-tx-with-1000x-m-of-n-multisi/35970#35970){:target="_blank"} from 2015.
 
-This guide explains how to reconstruct the Bitcoin white paper PDF using data from your own verified blockchain. No matter how c[nsored the white paper could become (see [this article about whitepaper copyright claims](https://bitcoinmagazine.com/business/copa-suing-craig-wright-over-bitcoin-white-paper-claims){:target="_blank"}), you will know how to recreate and share the foundational document of Bitcoin.
+This guide explains how to reconstruct the Bitcoin white paper PDF using your own verified blockchain data. No matter how c[nsored the white paper could become (see [this article about whitepaper copyright claims](https://bitcoinmagazine.com/business/copa-suing-craig-wright-over-bitcoin-white-paper-claims){:target="_blank"}), you will know how to recreate and share the foundational document of Bitcoin.
 
 ---
 
@@ -61,36 +61,36 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using data fr
   ```
 
 ---
-  
+
 ### Send the PDF to your desktop computer (Linux only)
-  
-To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utiliy. The following command only works on Linux-based computers.
+
+To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utility. The following command only works on Linux-based computers.
 
 * On your local computer, open a terminal window and type the following command. Replace YourNodeIP with the Raspberry Pi IP address (or raspibolt.local if it works) and do not forget the dot at the end of the line (representing the destination of the file, here the 'Home' folder of your local computer).
 
   ```sh
   $ scp admin@YourNodeIP:~/bitcoin-white-paper/bitcoin.pdf .
   ```
-  
-* The file should now be located in the Home folder of your local computer (e.g. /home/<username>)>
-  
+
+* The file should now be located in the Home folder of your local computer (e.g., `/home/<username>`)>
+
 ### Send the PDF to your Telegram account
 
 🚨 **Privacy warning**: Using this method will leak your IP address to the Telegram server.
 
-* Follow [this tutorial](https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/){:target="_blank"} to create a new Telegram bot (up to, and including, 'Get the Chat ID'). Write down the bot ID and the chat ID in a secure location (e.g. in your password manager).
+* Follow [this tutorial](https://www.shellhacks.com/telegram-api-send-message-personal-notification-bot/){:target="_blank"} to create a new Telegram bot (up to, and including, 'Get the Chat ID'). Write down the bot ID and the chat ID in a secure location (e.g., your password manager).
 
-* Send the white paper to your bot (replace YourChatID and YourBotID by respectively your chat and bot ID obtained from the previous step). It might takes a few seconds.
+* Send the white paper to your bot (replace YourChatID and YourBotID by respectively your chat and bot ID obtained from the previous step). It might take a few seconds.
 
   ```sh
   $ curl -v -F "chat_id=YourChatID" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/botYourBotID/sendDocument
   ```
-  
+
 * The PDF should now be available for download in your Telegram bot.
-  
+
 ---
 
-### Create a bash script 
+### Create a bash script
 
 A bash script can be used to automatically download and send the pdf to your Telegram bot.
 
@@ -100,7 +100,7 @@ A bash script can be used to automatically download and send the pdf to your Tel
   $ cd ~/bitcoin-white-paper
   $ nano white-paper.sh
   ```
-  
+
   ```ini
   #!/usr/bin/bash
   bitcoin-cli getrawtransaction 54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713 true |
@@ -131,7 +131,7 @@ The BTC-RPC-Explorer has also a functionality to extract the data from the node 
 * Look-up the transaction ID in the explorer: `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713`
 * Click on the link "bitcoin whitepaper" in the top box, this will generate the PDF from the node blockchain and displays it as a pdf file in the browser.
 * Alternatively, use the following URL: [https://raspibolt.local:4000/bitcoin-whitepaper](https://raspibolt.local:4000/bitcoin-whitepaper){:target="_blank"}
-  
+ 
 ---
 
 << Back: [+ Bitcoin](index.md)
