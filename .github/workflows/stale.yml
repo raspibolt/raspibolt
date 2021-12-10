@@ -29,6 +29,6 @@ jobs:
 
         days-before-pr-stale: 90
         days-before-pr-close: 30
-        stale-pr-message: 'This pull request is marked as `stale` because there was no activity for 90 days. If the pull request stays inactive, it will be closed automatically in 90 days.'
+        stale-pr-message: 'This pull request is marked as `stale` because there was no activity for 90 days. If the pull request stays inactive, it will be closed automatically in 30 days.'
         stale-pr-label: 'stale'
         close-pr-message: 'This pull request has been closed due to inactivity.'
