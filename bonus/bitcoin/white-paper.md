@@ -21,7 +21,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![white paper transaction](../../images/white-paper-transac.png)
+
 
 ---
 
@@ -139,9 +139,13 @@ See [How to Use Putty pscp to Copy Files](https://tonyteaches.tech/putty-pscp-tu
 
 ---
   
-## Trivia: Read the paper in the BTC-RPC-Explorer 
+## Trivia: Read the paper in the BTC-RPC-Explorer
 
 The BTC-RPC-Explorer has also a functionality to extract the data from the node and display the PDF in the web browser.
+
+![white paper transaction](../../images/white-paper-transac.png)
+
+
 * Open your Explorer at [https://raspibolt.local:4000/](https://raspibolt.local:4000/){:target="_blank"} (replace raspibolt.local with your node IP address if needed). 
 * Look-up the transaction ID in the explorer: `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713`
 * Click on the link "bitcoin whitepaper" in the top box, this will generate the PDF from the node blockchain and displays it as a pdf file in the browser.
