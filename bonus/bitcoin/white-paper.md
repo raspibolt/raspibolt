@@ -138,40 +138,6 @@ See [How to Use Putty pscp to Copy Files](https://tonyteaches.tech/putty-pscp-tu
 * The PDF should now be available for download in your Telegram bot.
 
 ---
-
-### Create a bash script
-
-A bash script can be used to automatically download and send the pdf to your Telegram bot.
-
-* Still with user "admin", create a new file in the '~/bitcoin-white-paper' directory and paste the following lines (replace YourChatID and YourBotID with your own IDs). Save and exit.
-
-  ```sh
-  $ cd ~/bitcoin-white-paper
-  $ nano white-paper.sh
-  ```
-
-  ```ini
-  #!/usr/bin/bash
-  bitcoin-cli getrawtransaction 54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713 true |
-  jq -r '.vout[].scriptPubKey.asm' | cut -c3- |
-  xxd -p -r | tail +9c | head -c 184292 > bitcoin.pdf
-
-  curl -v -F "chat_id=YourChatID" -F document=@/home/admin/bitcoin-white-paper/bitcoin.pdf https://api.telegram.org/botYourBotID/sendDocument
-  ```
-  
-* Make the file an executable
-
-  ```sh
-  $ chmod +x white-paper.sh
-  ```
-
-* To download and send the pdf to the Telegram bot, execute the script with user "admin"
-
-  ```sh
-  $ ~/bitcoin-white-paper/white-paper.sh
-  ```
-
----
   
 ## Trivia: Read the paper in the BTC-RPC-Explorer 
 
