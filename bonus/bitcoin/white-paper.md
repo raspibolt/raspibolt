@@ -62,7 +62,45 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using your ow
 
 ---
 
-### Send the PDF to your desktop computer (Linux only)
+#### How does this work?
+
+Here's how the long command from above actually works:
+
+* With `bitcoin-cli getrawtransaction`, you get the raw data of the transaction with this specific transaction id.
+  This command returns the result as a JSON object.
+
+  You can run `bitcoin-cli help getrawtransaction` to learn more.
+
+* The result is handed over ("piped") to the next command: `jq -r '.vout[].scriptPubKey.asm'`.
+  This instruction extracts the assembly data from the "scriptPubKey" for all transaction outputs, where the Bitcoin whitepaper data is stored.
+
+  Run `jq --help` for more information.
+
+* The result is then piped into the `cut -c3-` command, which cuts off the first two characters on every line.
+
+  Check out `cut --help` to learn more.
+
+* The command `xxd -p -r` takes the previous result as input and converts everything from hex into binary encoding.
+
+  Run `xxd --help` for more about this command.
+
+* Then, `tail +9c` output the data starting with the 9th byte
+
+  Use `tail --help` to learn more.
+
+* Finally, the data is piped into `head -c 184292`.
+  This command sends the first 184292 bytes onwards.
+
+  Run `head --help` for more information.
+
+* The argument `> bitcoin.pdf` then takes the whole data input stream and stores it into the file "bitcoin.pdf".
+
+This concatenation of simple commands is a shining example of one of the core principles of Linux.
+The character `|` allows to string them together to create powerful yet efficient data processing.
+
+---
+
+#### Send the PDF to your desktop computer (Linux only)
 
 To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utility. The following command only works on Linux-based computers.
 
