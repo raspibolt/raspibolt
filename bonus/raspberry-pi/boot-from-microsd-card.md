@@ -113,7 +113,7 @@ The external drive is then attached to the file system and becomes available as 
   ```
 
   ```
-  UUID=123456 /mnt/extnew ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2
+  UUID=123456 /data ext4 rw,nosuid,dev,noexec,noatime,nodiratime,auto,nouser,async,nofail 0 2
   ```
 
   🔍 *more: [complete fstab guide](https://linuxconfig.org/how-fstab-works-introduction-to-the-etc-fstab-file-on-linux){:target="_blank"}*
