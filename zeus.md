@@ -22,9 +22,9 @@ We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platforms mobi
 
 ---
 
-## Preparations
+### Preparations
 
-### Access over Tor
+#### Access over Tor
 
 Zeus will access the node via Tor.
 
@@ -42,20 +42,121 @@ Zeus will access the node via Tor.
 
    ```sh
    $ sudo systemctl reload tor
-   $ sudo cat /var/lib/tor/hidden_service_electrs/hostname
+   $ sudo cat /var/lib/tor/hidden_service_lnd_rest/hostname
    > abcdefg..............xyz.onion
    ```
+#### Check if Go is installed
 
+* Check if you have already installed Go
 
-## Install Zeus on the phone
+  ```sh
+  $ go version
+  > go version go1.17.4 linux/arm64
+  ```
 
-### On Android
+* If not, use the next section to install Go on your node
 
-#### Download the APK file
+#### Install Go
+
+* Check the latest stable version of the arm64 binary at [https://golang.org/dl/](https://golang.org/dl/) and download it
+
+  ```sh
+  $ cd /tmp
+  $ wget https://go.dev/dl/go1.17.4.linux-arm64.tar.gz
+  ```
+
+* Check on the download page what is the SHA256 checksum of the file, e.g. for above: 617a46bd083e59877bb5680998571b3ddd4f6dcdaf9f8bf65ad4edc8f3eafb13. Get the SHA256 hash of the downloaded file, it should be the same number as the one on the website
+
+  ```sh 
+  $ sha256sum go1.17.4.linux-arm64.tar.gz
+  > 617a46bd083e59877bb5680998571b3ddd4f6dcdaf9f8bf65ad4edc8f3eafb13  go1.17.4.linux-arm64.tar.gz
+  ```
+
+* Install Go in the `/usr/local` directory
+
+  ```sh 
+  $ sudo tar -xvf go1.17.4.linux-arm64.tar.gz -C /usr/local
+  $ rm go1.17.4.linux-arm64.tar.gz
+  ```
+
+* Add the binary to PATH to not have to type the full path each time you are using it. For a global installation of Go (that users other than "admin" can use), open `/etc/profile`
+
+  ```sh
+  $ sudo nano /etc/profile
+  ```
+
+* Add the following line at the end of the file, save and exit
+
+  ```ini
+  export PATH=$PATH:/usr/local/go/bin
+  ```
+
+* To make the changes effective immediately (and not wait for the next login), execute them from the profile using the following command
+
+  ```sh
+  $ source /etc/profile
+  ```
+
+* Test that Go has been properly installed by checking its version
+
+  ```sh
+  $ go version
+  > go version go1.17.4 linux/arm64
+  ```
+
+#### Install lndconnect
+
+[lndconnect](https://github.com/LN-Zap/lndconnect){:target="_blank"}, created by Zap, is a utility that generates QR Code or URI to connect applications to lnd instances.
+
+* Create a "lndconnect" user and add it to the "lnd" group
+  
+  ```sh
+  $ sudo adduser --disabled-password --gecos "" lndconnect
+  $ sudo adduser lndconnect lnd
+  $ sudo su - lndconnect
+  ```
+
+* Clone the repository and install lndconnect
+  
+  ```sh
+  $ sudo adduser --disabled-password --gecos "" lndconnect
+  $ cd lndconnect
+  $ go build
+  ```
+  
+* Update PATH
+  
+  ```sh
+  $ cd ~/
+  $ echo 'export PATH=$PATH:/home/lndconnect/lndconnect' >> /home/lndconnect/.bashrc
+  $ source /home/lndconnect/.bashrc
+  ```
+  
+#### Create a lndconnect QR code
+
+lnconnect can generate a URI and create a QR code that can then be read by Zeus.
+
+* Still with the "lndconnect" user, use the following command. Make sure to replace the .onion address with the one you generated above.
+
+  ```sh  
+  $ lndconnect --host=abcdefg..............xyz.onion --port=8080
+  ```
+  
+* It will be a big QR code so maximize your terminal window and use CTRL - to shrink the code further to fit the screen
+
+* Keep the SSH session with the QR code opened, it will be needed later
+
+---
+
+### Install Zeus on the phone
+
+#### On Android
+
+##### Download the APK file
 
 * On your phone, go to the Zeus [release page](https://github.com/ZeusLN/zeus/releases){:target="_blank"} and download the latest Android APK file in the 'Assets' section (e.g., `zeus-v0.6.0-alpha4.apk`).
 
-#### Verify the checksum of the file
+##### Verify the checksum of the file
 
 * On your phone, install [Hash Droid](https://f-droid.org/en/packages/com.hobbyone.HashDroid/){:target="_blank"} from F-Droid or Google Play.
 
@@ -65,7 +166,7 @@ Zeus will access the node via Tor.
 
 * Compare the calculated hash value (Hash Droid) with the expected hash value from the text file, they should be the same.
 
-#### Verify the signature of the file
+##### Verify the signature of the file
 
 * On your computer, open a terminal and download the public key used to sign the releases
 
@@ -114,74 +215,87 @@ Zeus will access the node via Tor.
 
 * Now that we've proven the integrity of the downloaded APK, install Zeus by double-clicking on the APK file.
 
-* Once the installation is finished, select 'Open'
+* Once the installation is finished, quit and delete all the APK file, it is not needed anymore.
 
+#### Connect Zeus to your node
 
+* Open Zeus and click on 'Get started'
+* The screen proposes several settings, we'll come back to them later, for now select 'Connect a node' at the top, and then '+ Add a new node'
 
-Download the Zeus app, APKs available here: https://github.com/ZeusLN/zeus/releases, 
-on F-Droid and Google Play.
+* Click on 'Use Tor
 
-Log in to your RaspiBolt through ssh.
+* Click on 'Scan LNDConnect config' and when prompted, allow Zeus to take pictures
 
-Edit `torrc` with `sudo nano /etc/tor/torrc` and add the following lines:
-```
-HiddenServiceDir /var/lib/tor/lnd_api/
-HiddenServiceVersion 3
-HiddenServicePort 8080 127.0.0.1:8080
-HiddenServicePort 10009 127.0.0.1:10009
-```
-Save (Ctrl+O, ENTER) and exit (Ctrl+X)
+* Scan the QR code generated earlier
 
-Restart Tor:
-```
-$ sudo systemctl restart tor
-```
+* Click on 'Save settings', Zeus is now connecting to your node, it might take a while the first time.
 
-View the private credentials of your new hidden service. The first part is the onion address, the second part is the secret.
-```
-$ sudo cat /var/lib/tor/lnd_api/hostname
-z1234567890abc.onion
-```
+<br /><br />
 
-Make sure Go is installed (should be v1.11 or higher):  
-```
-$ go version 
-```
-If need to install Go, run these:
+---
 
-```
-$ wget https://storage.googleapis.com/golang/go1.11.linux-armv6l.tar.gz
-$ sudo tar -C /usr/local -xzf go1.11.linux-armv6l.tar.gz
-$ sudo rm *.gz
-$ sudo mkdir /usr/local/gocode
-$ sudo chmod 777 /usr/local/gocode
-$ export GOROOT=/usr/local/go
-$ export PATH=$PATH:$GOROOT/bin
-$ export GOPATH=/usr/local/gocode
-$ export PATH=$PATH:$GOPATH/bin
-```
+### Security
 
-Install [lndconnect](https://github.com/LN-Zap/lndconnect):
-```
-$ cd ~/download
-$ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.1.0/lndconnect-linux-armv7-v0.1.0.tar.gz
-$ sudo tar -xvf lndconnect-linux-armv7-v0.1.0.tar.gz --strip=1 -C /usr/local/bin
-```
-Switch to user `bitcoin` and generate the LND connect URI QR code (or String):  
-It will be a big QR code so maximize your terminal window and use CTRL - to shrink the code further to fit the screen.
-Replace the `host` variable with the onion address previously generated.
-To generate QR Code:
-```
-$ sudo su bitcoin
-$ lndconnect --lnddir=/home/bitcoin/.lnd --host=z1234567890abc.onion --port=8080
-```
-To generate a String:
-```
-$ sudo su bitcoin
-$ lndconnect --lnddir=/home/bitcoin/.lnd --host=z1234567890abc.onion --port=8080 -j
-```
-Scan or copy paste it with Zeus and you are done.
+#### Add a password to access your node in the app
 
-------
+* In the app, go to the settings and select 'Security' and set a passphrase (save your passphrase somewhere safe, e.g., your password manager).
 
-<< Back: [+ Lightning](index.md)
+#### Uninstall lndconnect
+
+* Unless you plan to reuse lndconnect soon, it is safer to uninstall the program and "lndconect" user
+
+  ```sh
+  $ sudo su -
+  $ userdel -r lndconnect
+  $ exit
+  ```
+
+#### Temporarily disabling the Tor hidden service
+
+* If you don't plan to use the Zeus app for a significant period of time, it is safer to disable the Tor hidden service. With user "admin", open the torrc configuration file, comment out the LND REST API Tor hidden service lines, save and exit and restart Tor.
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```ini
+  #HiddenServiceDir /var/lib/tor/hidden_service_lnd_rest/
+  #HiddenServiceVersion 3
+  #HiddenServicePort 8080 127.0.0.1:8080
+  ```
+  
+  ```sh
+  $ sudo systemctl reload tor
+  ```
+
+* If you want to reuse Zeus later on, uncomment the three lines and restart Tor
+
+---
+
+### Zeus in action
+
+Below is a list of Zeus existing (ticked) and coming soon (unticked) features:
+
+![Zeus](images/zeus-features.png)
+
+---
+
+### Update
+
+To update Zeus, download the desired APK and follow the install process above.
+
+---
+
+### Uninstall
+
+To uninstall, you need to uninstall the app on your phone, uninstall lndconnect and deactivate the LND REST API Tor hidden service
+
+* Uninstall the app on your phone
+
+* To uninstall lndconnect, follow the guidelines provided in [this section](#Uninstall lndconnect)
+
+* To deactovate the LND REST API Tor hidden service, follow the guidelines in [this section](# Temporarily disabling the Tor hidden service)
+
+---
+
+Next: [Bonus Section >>](bonus/index.md)
