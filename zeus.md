@@ -125,7 +125,7 @@ Zeus will access the node via Tor.
 * Clone the repository and install lndconnect
   
   ```sh
-  $ sudo adduser --disabled-password --gecos "" lndconnect
+  $ git clone https://github.com/LN-Zap/lndconnect
   $ cd lndconnect
   $ go build
   ```
