@@ -124,7 +124,7 @@ An attacker would not be able to do much within this user's permission settings.
 * Download the source code directly from GitHub and install all dependencies using the Node Package Manager (NPM).
 
   ```sh
-  $ git clone --branch v3.2.0 https://github.com/janoside/btc-rpc-explorer.git
+  $ git clone --branch v3.3.0 https://github.com/janoside/btc-rpc-explorer.git
   $ cd btc-rpc-explorer
   $ npm install
   ```
@@ -322,13 +322,14 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
   $ sudo su - btcrpcexplorer
   ```
 
-* Fetch the latest GitHub repository information, display the latest release tag (`v3.2.0` in this example), and update:
+* Fetch the latest GitHub repository information, display the release tags (use the latest `v3.3.0` in this example), and update:
 
   ```sh
   $ cd /home/btcrpcexplorer/btc-rpc-explorer
   $ git fetch
-  $ git describe --tags --abbrev=0
-  $ git checkout v3.2.0
+  $ git reset --hard HEAD
+  $ git tag
+  $ git checkout v3.3.0
   $ npm install
   $ exit
   ```
