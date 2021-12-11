@@ -211,13 +211,24 @@ lnconnect can generate a URI and create a QR code that can then be read by Zeus.
    > [...]
    ```
    
-#### Install Zeus
+##### Install Zeus
 
 * Now that we've proven the integrity of the downloaded APK, install Zeus by double-clicking on the APK file.
 
 * Once the installation is finished, quit and delete all the APK file, it is not needed anymore.
 
-#### Connect Zeus to your node
+
+#### On iOS
+
+To install the latest version of Zeus (not available in the Apple Store yet), you will use TestFlight.
+
+* Install TestFlight on your phone by following these instructions: [https://testflight.apple.com/](https://testflight.apple.com/){:target="_blank"}.
+
+* Once installed, open the following link on your phone: [https://testflight.apple.com/join/gpVFzEHN](https://testflight.apple.com/join/gpVFzEHN){:target="_blank"} and follow the instructions.
+
+---
+
+### Connect Zeus to your node
 
 * Open Zeus and click on 'Get started'
 * The screen proposes several settings, we'll come back to them later, for now select 'Connect a node' at the top, and then '+ Add a new node'
@@ -229,8 +240,6 @@ lnconnect can generate a URI and create a QR code that can then be read by Zeus.
 * Scan the QR code generated earlier
 
 * Click on 'Save settings', Zeus is now connecting to your node, it might take a while the first time.
-
-<br /><br />
 
 ---
 
@@ -294,7 +303,7 @@ To uninstall, you need to uninstall the app on your phone, uninstall lndconnect 
 
 * To uninstall lndconnect, follow the guidelines provided in [this section](#Uninstall lndconnect)
 
-* To deactovate the LND REST API Tor hidden service, follow the guidelines in [this section](# Temporarily disabling the Tor hidden service)
+* To deactivate the LND REST API Tor hidden service, follow the guidelines in [this section](# Temporarily disabling the Tor hidden service)
 
 ---
 
