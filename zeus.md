@@ -239,7 +239,7 @@ To install the latest version of Zeus (not available in the Apple Store yet), yo
 * Open Zeus and click on 'Get started'
 * The screen proposes several settings, we'll come back to them later, for now select 'Connect a node' at the top, and then '+ Add a new node'
 
-* Click on 'Use Tor
+* Click on 'Use Tor'
 
 * Click on 'Scan LNDConnect config' and when prompted, allow Zeus to take pictures
 
