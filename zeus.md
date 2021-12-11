@@ -221,7 +221,7 @@ lnconnect can generate a URI and create a QR code that can then be read by Zeus.
 
 * Now that we've proven the integrity of the downloaded APK, install Zeus by double-clicking on the APK file.
 
-* Once the installation is finished, quit and delete all the APK file, it is not needed anymore.
+* Once the installation is finished, quit and delete all the APK file, it is not needed anymore. You could also uninstall Hash Droid.
 
 
 #### On iOS
