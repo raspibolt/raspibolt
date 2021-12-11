@@ -8,7 +8,7 @@ parent: Lightning
 # Zeus
 {: .no_toc }
 
-We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platforms mobile app that connect to your LN node over Tor.  Make payments with lightning or on-chain and manage your channels whle you're on the go.
+We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platforms mobile app that connect to your LN node over Tor.  Make payments with lightning or on-chain and manage your channels wihle you're on the go.
 
 ![Zeus](images/zeus.png)
 
