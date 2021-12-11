@@ -24,6 +24,27 @@ We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platforms mobi
 
 ## Preparations
 
+### Access over Tor
+
+Zeus will access the node via Tor.
+
+* Add the following three lines in the section for “location-hidden services” in the `torrc` file.
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+
+  ############### This section is just for location-hidden services ###
+  HiddenServiceDir /var/lib/tor/hidden_service_lnd_rest/
+  HiddenServiceVersion 3
+  HiddenServicePort 8080 127.0.0.1:8080
+
+* Reload Tor configuration and get your connection address.
+
+   ```sh
+   $ sudo systemctl reload tor
+   $ sudo cat /var/lib/tor/hidden_service_electrs/hostname
+   > abcdefg..............xyz.onion
+   ```
 
 
 ## Install Zeus on the phone
