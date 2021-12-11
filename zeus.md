@@ -28,15 +28,18 @@ We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platform mobil
 
 Zeus will access the node via Tor.
 
-* Add the following three lines in the section for “location-hidden services” in the `torrc` file.
+* Add the following three lines in the section for “location-hidden services” in the `torrc` file. Save and exit.
 
   ```sh
   $ sudo nano /etc/tor/torrc
+  ```
 
+  ```ini
   ############### This section is just for location-hidden services ###
   HiddenServiceDir /var/lib/tor/hidden_service_lnd_rest/
   HiddenServiceVersion 3
   HiddenServicePort 8080 127.0.0.1:8080
+  ```
 
 * Reload Tor configuration and get your connection address.
 
@@ -45,6 +48,9 @@ Zeus will access the node via Tor.
    $ sudo cat /var/lib/tor/hidden_service_lnd_rest/hostname
    > abcdefg..............xyz.onion
    ```
+
+* Save the onion address in a safe place (e.g., password manager)
+   
 #### Check if Go is installed
 
 * Check if you have already installed Go
