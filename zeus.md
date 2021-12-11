@@ -1,17 +1,24 @@
 ---
 layout: default
-title: Zeus App Via Tor
-parent: + Lightning
-grand_parent: Bonus Section
-nav_exclude: true
-has_toc: false
+title: Zeus
+nav_order: 60
+parent: Lightning
 ---
-
-## Bonus guide: Connect Zeus App Over Tor
+<!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
+# Zeus
 {: .no_toc }
 
-Difficulty: Intermediate
-{: .label .label-yellow }
+We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platforms mobile app that connect to your LN node over Tor.  Make payments with lightning or on-chain and manage your channels whle you're on the go.
+
+![Zeus](images/zeus.png)
+
+---
+
+Difficulty: Easy
+{: .label .label-green }
+
+Status: Tested v3
+{: .label .label-green }
 
 Download the Zeus app, APKs available here: https://github.com/ZeusLN/zeus/releases, 
 on F-Droid and Google Play.
