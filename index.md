@@ -66,7 +66,7 @@ We aim to keep the core of this guide well maintained and up-to-date:
 
 1. [Raspberry Pi](raspberry-pi.md): prepare the hardware and set up the operating system
 1. [Bitcoin](bitcoin.md): sync your own Bitcoin full node, Electrum server, and Blockchain Explorer
-1. [Lightning](lightning.md): run your own Lightning client with web-based node management
+1. [Lightning](lightning.md): run your own Lightning client with web-based and mobile-based node management
 
 The bonus section contains more specific guides that build on top of the main section.
 More fun, lots of knowledge, but with lesser maintenance guarantees.
