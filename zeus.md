@@ -54,7 +54,7 @@ We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platforms mobi
   
 * Check the public key’s fingerprint
 
-```sh
+  ```sh
   $ gpg --show-keys PGP.txt
   > pub   rsa4096 2021-10-20 [SC] [expires: 2023-10-20]
   >    96C225207F2137E278C31CF7AAC48DE8AB8DEE84
