@@ -297,7 +297,7 @@ Below is a list of Zeus existing (ticked) and coming soon (unticked) features:
 
 ### Update
 
-To update Zeus, download the desired APK and follow the install process above.
+To update Zeus, download the desired APK and follow the [install process above](#on-android).
 
 ---
 
@@ -307,9 +307,9 @@ To uninstall, you need to uninstall the app on your phone, uninstall lndconnect 
 
 * Uninstall the app on your phone
 
-* To uninstall lndconnect, follow the guidelines provided in [this section](#Uninstall lndconnect)
+* To uninstall lndconnect, follow the guidelines provided in [this section](#uninstall-lndconnect)
 
-* To deactivate the LND REST API Tor hidden service, follow the guidelines in [this section](# Temporarily disabling the Tor hidden service)
+* To deactivate the LND REST API Tor hidden service, follow the guidelines in [this section](#temporarily-disabling-the-tor-hidden-service)
 
 ---
 
