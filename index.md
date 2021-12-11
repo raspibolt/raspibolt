@@ -46,7 +46,7 @@ Your Bitcoin node will offer the following functionality:
 * **Bitcoin**: direct and trustless participation in the Bitcoin peer-to-peer network, full validation of blocks and transactions
 * **Electrum server**: connect your compatible wallets (including hardware wallets) to your own node
 * **Blockchain Explorer**: web-based Explorer to privately look up transactions, blocks, and more
-* **Lightning**: full client with stable long-term channels and a web-based management interface
+* **Lightning**: full client with stable long-term channels and web-based and mobile-based management interfaces
 * **Always on**: services are constantly synced and available 24/7
 * **Reachable from anywhere**: connect to all your services through the Tor network
 
