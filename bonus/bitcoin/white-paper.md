@@ -39,11 +39,11 @@ The Bitcoin white paper PDF was encoded in the blockhain in April 2013, in trans
 
 The transaction contains 947 outputs and the sender spent almost 60 millions sats as miner fee! Some explanations on how the paper is encoded in the transaction is given in a [Bitcoin StackExchange post](https://bitcoin.stackexchange.com/questions/35959/how-is-the-whitepaper-decoded-from-the-blockchain-tx-with-1000x-m-of-n-multisi/35970#35970){:target="_blank"} from 2015.
 
-This guide explains how to reconstruct the Bitcoin white paper PDF using your own verified blockchain data. No matter how c[nsored the white paper could become (see [this article about whitepaper copyright claims](https://bitcoinmagazine.com/business/copa-suing-craig-wright-over-bitcoin-white-paper-claims){:target="_blank"}), you will know how to recreate and share the foundational document of Bitcoin.
+This guide explains how to reconstruct the Bitcoin white paper PDF using your own verified blockchain data. No matter how censored the white paper could become (see [this article about white paper copyright claims](https://bitcoinmagazine.com/business/copa-suing-craig-wright-over-bitcoin-white-paper-claims){:target="_blank"}), you will know how to recreate and share the foundational document of Bitcoin.
 
 ---
 
-## Download the PDF
+## Extract the whitepaper directly from Bitcoin Core
 
 * With the "admin" user, create a new directory to store the PDF and move to this directory
 
@@ -100,7 +100,7 @@ The character `|` allows to string them together to create powerful yet efficien
 
 ---
 
-### Send the PDF to your desktop computer
+### Send the PDF to your computer
 
 To be read, the PDF can now be sent from the remote node to your local computer using the [scp](https://www.man7.org/linux/man-pages/man1/scp.1.html){:target="_blank"} utility.
 
@@ -139,7 +139,7 @@ See [How to Use Putty pscp to Copy Files](https://tonyteaches.tech/putty-pscp-tu
 
 ---
   
-## Trivia: Read the paper in the BTC-RPC-Explorer
+## Get the whitepaper from BTC RPC Explorer
 
 The BTC-RPC-Explorer has also a functionality to extract the data from the node and display the PDF in the web browser.
 
