@@ -71,7 +71,7 @@ Zeus will access the node via Tor.
 
 lnconnect can generate a URI and create a QR code that can then be read by Zeus.
 
-* Still with the "lndconnect" user, use the following command. Make sure to replace the .onion address with the one you generated above.
+* Still with the "admin" user, use the following command. Make sure to replace the .onion address with the one you generated above.
 
   ```sh  
   $ lndconnect --host=abcdefg..............xyz.onion --port=8080
@@ -109,31 +109,11 @@ On iOS, download it from the Apple App Store.
 
 ---
 
-### Security
+### Add a password
 
-#### Add a password to access your node in the app
+For added security, you can add a password.
 
 * In the app, go to the settings and select 'Security' and set a passphrase (save your passphrase somewhere safe, e.g., your password manager).
-
-#### Temporarily disabling the Tor hidden service
-
-* If you don't plan to use the Zeus app for a significant period of time, it is safer to disable the Tor hidden service. With user "admin", open the torrc configuration file, comment out the LND REST API Tor hidden service lines, save and exit and restart Tor.
-
-  ```sh
-  $ sudo nano /etc/tor/torrc
-  ```
-
-  ```ini
-  #HiddenServiceDir /var/lib/tor/hidden_service_lnd_rest/
-  #HiddenServiceVersion 3
-  #HiddenServicePort 8080 127.0.0.1:8080
-  ```
-  
-  ```sh
-  $ sudo systemctl reload tor
-  ```
-
-* If you want to reuse Zeus later on, uncomment the three lines and restart Tor
 
 ---
 
@@ -157,7 +137,21 @@ To uninstall, you need to uninstall the app on your phone and deactivate the LND
 
 * Uninstall the app on your phone
 
-* To deactivate the LND REST API Tor hidden service, follow the guidelines in [this section](#temporarily-disabling-the-tor-hidden-service)
+* To deactivate the LND REST API Tor hidden service, comment out the hidden service lines in  `torrc` and reload Tor
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```ini
+  #HiddenServiceDir /var/lib/tor/hidden_service_lnd_rest/
+  #HiddenServiceVersion 3
+  #HiddenServicePort 8080 127.0.0.1:8080
+  ```
+  
+  ```sh
+  $ sudo systemctl reload tor
+  ```
 
 <br /><br />
 
