@@ -13,6 +13,9 @@ has_toc: false
 Difficulty: Easy
 {: .label .label-green }
 
+Status: Not tested v3
+{: .label .label-yellow }
+
 To get a quick overview over the system status, I created [a shell script](resources/20-raspibolt-welcome) that is run as "message of the day" (motd) to be shown on login or on demand.
 
 ![MotD system overview](images/60_status_overview.png)
