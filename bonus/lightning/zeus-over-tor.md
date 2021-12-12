@@ -13,6 +13,9 @@ has_toc: false
 Difficulty: Intermediate
 {: .label .label-yellow }
 
+Status: Not tested v3
+{: .label .label-yellow }
+
 Download the Zeus app, APKs available here: https://github.com/ZeusLN/zeus/releases, 
 on F-Droid and Google Play.
 
