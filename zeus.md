@@ -22,9 +22,9 @@ We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platform mobil
 
 ---
 
-### Preparations
+## Preparations
 
-#### Access over Tor
+### Access over Tor
 
 Zeus will access the node via Tor.
 
@@ -51,7 +51,7 @@ Zeus will access the node via Tor.
 
 * Save the onion address in a safe place (e.g., password manager)
 
-#### Install lndconnect
+### Install lndconnect
 
 [lndconnect](https://github.com/LN-Zap/lndconnect){:target="_blank"}, created by Zap, is a utility that generates QR Code or URI to connect applications to lnd instances.
 
@@ -67,7 +67,7 @@ Zeus will access the node via Tor.
   $ cd ~/
   ```
 
-#### Create a lndconnect QR code
+### Create a lndconnect QR code
 
 lnconnect can generate a URI and create a QR code that can then be read by Zeus.
 
@@ -83,7 +83,9 @@ lnconnect can generate a URI and create a QR code that can then be read by Zeus.
 
 ---
 
-### Install Zeus on the phone
+## Installation
+
+### Install the Zeus app
 
 On Android, download the Zeus app on F-Droid or Google Play.  
 
@@ -135,7 +137,7 @@ On iOS, download it from the Apple App Store.
 
 ---
 
-### Zeus in action
+## Zeus in action
 
 Below is a list of Zeus existing (ticked) and coming soon (unticked) features:
 
@@ -143,19 +145,21 @@ Below is a list of Zeus existing (ticked) and coming soon (unticked) features:
 
 ---
 
-### Update
+## Update
 
 To update Zeus, update the app using F-Droid, Play Store or the Apple Store.
 
 ---
 
-### Uninstall
+## Uninstall
 
 To uninstall, you need to uninstall the app on your phone and deactivate the LND REST API Tor hidden service
 
 * Uninstall the app on your phone
 
 * To deactivate the LND REST API Tor hidden service, follow the guidelines in [this section](#temporarily-disabling-the-tor-hidden-service)
+
+<br /><br />
 
 ---
 
