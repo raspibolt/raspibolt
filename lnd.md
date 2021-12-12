@@ -32,7 +32,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.1-beta/lnd-linux-arm64-v0.14.1-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.1-beta/lnd-linux-armv7-v0.14.1-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.1-beta/manifest-v0.14.1-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.1-beta/manifest-guggero-v0.14.1-beta.sig
   ```
@@ -63,14 +63,14 @@ We'll download, verify and install LND.
 
   ```sh
   $ sha256sum --check manifest-v0.14.1-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.14.1-beta.tar.gz: OK
+  > lnd-linux-armv7-v0.14.1-beta.tar.gz: OK
   ```
 
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.14.1-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.1-beta/*
+  $ tar -xzf lnd-linux-armv7-v0.14.1-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-armv7-v0.14.1-beta/*
   $ lnd --version
   > lnd version 0.14.1-beta commit=v0.14.1-beta
 ```
