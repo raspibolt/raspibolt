@@ -20,6 +20,8 @@ In the following categories, you can find various additional and optional guides
 * **[Bitcoin](bitcoin/index.md)**
 * **[Lightning](lightning/index.md)**
 
+---
+
 ## Rating
 
 All bonus guides are rated with labels to help you assess the difficulty of each guide, and if it is tested against the most recent version of the main guide.
