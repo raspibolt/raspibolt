@@ -200,13 +200,16 @@ fi
 
 #create variable btcversion
 btcpi=$(bitcoin-cli -version |sed -n 's/^.*version //p')
-if [ "$btcpi" = "$btcgit" ]; then
-  btcversion="$btcpi"
-  btcversion_color="${color_green}"
-else
-  btcversion="$btcpi"" Update!"
-  btcversion_color="${color_red}"
-fi
+case "$btcpi" in
+  *"$btcgit"*)
+    btcversion="$btcpi"
+    btcversion_color="${color_green}"
+    ;;
+  *)
+    btcversion="$btcpi"" Update!"
+    btcversion_color="${color_red}"
+    ;;
+esac
 
 # get LND info
 if [ $chain = "test" ]; then
@@ -329,7 +332,7 @@ if [ -z "${electrs_running##*inactive*}" ]; then
   electrsversion_color="${color_red}"
 else
   electrs_running="up"
-  electrspi=$(echo '{"jsonrpc": "2.0", "method": "server.version", "params": [ "raspibolt", "1.4" ], "id": 0}' | netcat 127.0.0.1 50001 -q 1 | jq -r '.result[0]' | awk '{print "v"$2}')
+  electrspi=$(echo '{"jsonrpc": "2.0", "method": "server.version", "params": [ "raspibolt", "1.4" ], "id": 0}' | netcat 127.0.0.1 50001 -q 1 | jq -r '.result[0]' | awk '{print "v"substr($1,9)}')
   if [ "$electrspi" = "$electrsgit" ]; then
     electrsversion="$electrspi"
     electrsversion_color="${color_green}"
