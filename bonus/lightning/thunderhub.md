@@ -103,7 +103,7 @@ $ npm run build
   # -----------
   # Account Configs
   # -----------
-  ACCOUNT_CONFIG_PATH='/home/thunderhub/thubConfig.yaml'
+  ACCOUNT_CONFIG_PATH='/home/thunderhub/thunderhub/thubConfig.yaml'
   ```
 
 * Edit your `thubConfig.yaml`. Change your `accountpassword`.
