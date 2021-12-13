@@ -53,14 +53,14 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/bitcoin-core-0.21.1/bitcoin-0.21.1-arm-linux-gnueabihf.tar.gz
-  $ wget https://bitcoincore.org/bin/bitcoin-core-0.21.1/SHA256SUMS.asc
+  $ wget https://bitcoincore.org/bin/bitcoin-core-0.20.1/bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz
+  $ wget https://bitcoincore.org/bin/bitcoin-core-0.20.1/SHA256SUMS.asc
   $ wget https://bitcoin.org/laanwj-releases.asc
 
   # check that the reference checksum matches the real checksum
   # (ignore the "lines are improperly formatted" warning)
   $ sha256sum --check SHA256SUMS.asc --ignore-missing
-  > bitcoin-0.21.1-arm-linux-gnueabihf.tar.gz: OK
+  > bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz: OK
 
   # import the public key of Wladimir van der Laan, verify the signed  checksum file
   # and check the fingerprint again in case of malicious keys
@@ -74,10 +74,10 @@ This is a precaution to make sure that this is an official release and not a mal
 * Extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf bitcoin-0.21.1-arm-linux-gnueabihf.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.21.1/bin/*
+  $ tar -xvf bitcoin-0.20.1-arm-linux-gnueabihf.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.20.1/bin/*
   $ bitcoind --version
-  > Bitcoin Core version v0.21.1
+  > Bitcoin Core version v0.20.1
   ```
 
 <script id="asciicast-Ivlf954BGJNmOuJoj7FQ6qNKt" src="https://asciinema.org/a/Ivlf954BGJNmOuJoj7FQ6qNKt.js" async></script>
@@ -339,7 +339,7 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 Once Bitcoin Core is fully synced, we can reduce the size of the database cache.
 A bigger cache speeds up the initial block download, now we want to reduce memory consumption to allow LND and Electrs to run in parallel.
-We also now want to enable the node to listen to and relay transactions.
+We also now want to enable the node to listent to and relay transactions.
 
 * As user "admin", comment the following lines out (add a `#` at the beginning) in the Bitcoin settings file.
   Bitcoin Core will then just use the default of 300 MB instead of 2 GB.

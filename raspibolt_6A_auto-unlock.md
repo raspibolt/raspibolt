@@ -18,10 +18,8 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
 `$ systemd --version`
 
 
-* As user "admin", create a new directory, prepare it and save your LND wallet password [C] into a text file
-  `$ sudo mkdir -m 700 /etc/lnd`
-  `$ sudo chown root:root /etc/lnd`
-  `$ sudo install -o root -g root -m 600 -T /dev/null /etc/lnd/pwd`
+* As user "admin", create a new directory and save your LND wallet password [C] into a text file
+  `$ sudo mkdir /etc/lnd`
   `$ sudo nano /etc/lnd/pwd`
 
 * The following script unlocks the LND wallet through its web service (REST interface). Some additional information:
@@ -31,7 +29,6 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
   * All automatic unlocks are recorded in `audit.log`.
 
 * Copy the following script it into a new file.
- `$ sudo install -o root -g root -m 700 -T /dev/null /etc/lnd/unlock`
  `$ sudo nano /etc/lnd/unlock`
 
   ```bash
@@ -62,6 +59,14 @@ This is why a script that automatically unlocks the wallet is  helpful. The pass
 
   echo "$? $(date)" >> /etc/lnd/audit.log
   exit 0
+  ```
+
+* Make the directory and all content accessible only for "root"
+
+  ```bash
+  $ sudo chmod 400 /etc/lnd/pwd
+  $ sudo chmod 100 /etc/lnd/unlock
+  $ sudo chown root:root /etc/lnd/*
   ```
 
 * Edit the LND systemd unit. This starts the script directly after LND is running.
