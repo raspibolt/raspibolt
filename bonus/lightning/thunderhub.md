@@ -109,7 +109,6 @@ $ npm run build
 * Edit your `thubConfig.yaml`. Change your `accountpassword`.
 
   ```
-  cd
   nano thubConfig.yaml 
   ```
   ```
