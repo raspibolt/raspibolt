@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-The following script was created by [RobClark56](https://github.com/robclark56) and help getting a better system overview.
+Aliases are shortcuts for commands that can save time and make it easier to execute common and frequent commands. The following aliases do not display information in a fancy way, but they make it easier to execute commands.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![](images/60_balance.png)
+![alias](../../images/alias-example.png)
 
 ---
 
@@ -32,55 +32,145 @@ Table of contents
 
 ---
 
-The following scripts were created by [RobClark56](https://github.com/robclark56) and help getting a better system overview.
+## Acknowledgments
 
-### Install the script
+The following list of aliases was derived from contributions by [RobClark56](https://github.com/robclark56) and @marcosdub.
 
-* As user “admin”, download the script
+---
 
-  ```sh
-  $ cd /tmp
-  $ wget https://raw.githubusercontent.com/raspibolt/raspibolt/master/resources/lnbalance
-  ```
-  
-* You can investigate the content of the script to ensure that there is no malicious code in it. Once done press q to quit.
-  
-  ```sh
-  $ less balance
-  > /bin/bash
-  > spiBolt channel balance display, by robclark56
-  > [...]
-  ```
-  
-* Make the script executable (check by displaying the file name, it should have become green)
-  
-  ```sh
-  $ chmod +x lnbalance
-  $ ls -la
-  ```
+## Set up aliases
 
-* Move the file to the  global bin(aries) folder
+* With user "admin, create a `.bash_aliases` file in `nano`
 
   ```sh
-  $ sudo cp lnbalance /usr/local/bin
-  $ rm lnbalance
-  $ cd
+  $ sudo nano ~/.bash_aliases
   ```
+
+* Paste the following lines in `nano`
+
+  ```ini
+    
+  ##################
+  # GENERAL STATUS #
+  ################## 
+  
+  alias livehealth='sudo watch -n 1 "vcgencmd measure_clock arm; vcgencmd measure_temp"'
  
-### lnbalance in action
+  alias showversion='echo The installed versions of the services are as follows: ; bitcoind --version ; lnd --version ; echo BTC RPC Explorer: head -n 3 /home/btcrpcexplorer/btc-rpc-explorer/package.json ; echo Electrs: version head -n 1 /home/admin/rust/electrs/RELEASE-NOTES.md ; tor --version ; echo RTL: head -n 3 /home/rtl/RTL/package.json ; echo NPM: v`npm --version` ; echo NodeJS: node -v ; lntop --version ; htop --version ; nginx -v'
+ 
+  alias statuservices='echo The status of the services is as follows, press the space key to advance: ; sudo systemctl status bitcoind lnd rtl electrs btcrpcexplorer tor ssh fail2ban ufw vncserver-x11-serviced'
+  
+  ##################
+  # START SERVICES #
+  ##################
+  
+  alias startbitcoind='sudo systemctl start bitcoind'
+  alias startelectrs='sudo systemctl start electrs'
+  alias startexplorer='sudo systemctl start btcrpcexplorer'
+  alias startlnd='sudo systemctl start lnd'
+  alias startrtl='sudo systemctl start rtl'
+  
+  ##################
+  # SERVICE STATUS #
+  ##################
+  
+  alias statusbitcoind='sudo systemctl status bitcoind'
+  alias statuselectrs='sudo systemctl status electrs'
+  alias statusexplorer='sudo systemctl status btcrpcexplorer'
+  alias statuslnd='sudo systemctl status lnd'
+  alias statusrtl='sudo systemctl status rtl'
+  
+  ##################
+  # STOP SERVICES  #
+  ##################
+  
+  alias stopbitcoind='sudo systemctl stop bitcoind'
+  alias stopelectrs='sudo systemctl stop electrs'
+  alias stopcexplorer='sudo systemctl stop btcrpcexplorer'
+  alias stoplnd='sudo systemctl stop lnd'
+  alias stoprtl='sudo systemctl stop rtl'
+  
+  ##################
+  #  SERVICE LOGS  #
+  ##################
+  
+  alias bitcoindlogs='sudo tail -f /mnt/ext/bitcoin/debug.log'
+  alias electrslogs='sudo journalctl -f -u electrs'
+  alias btcrpcexplorerlogs='sudo journalctl -f -u btcrpcexplorer'
+  alias lndlogs='sudo journalctl -f -u lnd'
+  alias rtllogs='sudo journalctl -f -u rtl'
+  
+  ##################
+  #       LND      #
+  ##################
+  
+  alias unlock='lncli unlock'
+  alias newaddress='lncli newaddress p2wkh'
+  alias txns='lncli listchaintxns'
+  alias getinfo='lncli getinfo'
+  alias walletbalance='lncli walletbalance'
+  alias peers='lncli listpeers'
+  alias channels='lncli listchannels'
+  alias channelbalance='lncli channelbalance'
+  alias pendingchannels='lncli pendingchannels'
+  alias openchannel='lncli openchannel'
+  alias connect='lncli connect'
+  alias payinvoice='lncli payinvoice'
+  alias addinvoice='lncli addinvoice'
+  
+  ##################
+  # LND Watchtower #
+  ##################
+  
+  alias wtclientinfo='lncli wtclient towers'
+  alias wtserverinfo='lncli tower info'
+  
+  ```
+  
+* Execute a source command to register changes to the .bashrc file
 
-* With the "admin" user, run `lnbalance`
-
-  ```sh
-  $ lnbalance
-  > mainnet (sat)        |       Local|      Remote|Commitment Fees|
-  > Wallet               |      122236|            |               |
-  > Active Channels    12|      919850|      822047|           5655|
-  > Inactive Channels   0|           0|           0|              0|
-  > Total              12|     1042086|      822047|           5655|
+  ```sh 
+  $ source /home/admin/.bashrc 
   ```
 
-<br /><br />
+## Aliases in action
+
+* Test some of the aliases to see if it has been installed properly
+
+  ```sh
+  $ livehealth
+  > Every 1.0s: vcgencmd measure_clock arm; vcgencmd measure_temp raspibolt: Tue Dec 14 15:00:21 2021
+  > frequency(48)= 124121523
+  > temp=37.0'C
+  ```
+  
+  ```sh
+  $ showversion
+  > The installed versions of the services are as follows:
+  > Bitcoin Core version v22.0.0
+  > lnd version 0.14.1-beta commit=v0.14.1-beta
+  > BTC RPC Explorer: head -n 3 /home/btcrpcexplorer/btc-rpc-explorer/package.json
+  > Electrs: version head -n 1 /home/admin/rust/electrs/RELEASE-NOTES.md
+  > Tor version 0.4.5.10.
+  > RTL: head -n 3 /home/rtl/RTL/package.json
+  > NPM: v8.1.2
+  > NodeJS: node -v
+  > lntop version v0.2.0
+  > htop 3.0.5 
+  > nginx version: nginx/1.18.0
+  ```
+
+---
+
+## Uninstall
+
+* To remove these special aliases, with user "admin", simply delete the `.bash_aliases` file and reset `.bashrc`
+
+  ```sh
+  $ cd ~/
+  $ rm .bash_aliases
+  $ source /home/admin/.bashrc 
+  ```
 
 ---
 
