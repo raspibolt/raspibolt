@@ -82,6 +82,16 @@ Table of contents
                                                                       Month:   20385
   ```
 
+### Uninstall
+
+* To uninstall `lnchannels`
+
+  ```sh
+  $ cd /usr/local/bin
+  $ sudo rm lnchannels
+  $ cd
+  ```
+
 <br /><br />
 
 ---
