@@ -15,8 +15,8 @@ has_toc: false
 
 [Mempool](https://github.com/mempool/mempool){:target="_blank"} is a self-hosted Bitcoin blockchain and mempool visualizer/explorer. Look up your onchain transactions and estimate transaction fees without any privacy leaks.
 
-Difficulty: Easy
-{: .label .label-green }
+Difficulty: Medium
+{: .label .label-yellow }
 
 Status: Tested v3
 {: .label .label-green }
