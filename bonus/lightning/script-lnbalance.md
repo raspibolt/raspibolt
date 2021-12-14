@@ -32,8 +32,6 @@ Table of contents
 
 ---
 
-The following scripts were created by [RobClark56](https://github.com/robclark56) and help getting a better system overview.
-
 ### Install the script
 
 * As user “admin”, download the script
@@ -78,6 +76,16 @@ The following scripts were created by [RobClark56](https://github.com/robclark56
   > Active Channels    12|      919850|      822047|           5655|
   > Inactive Channels   0|           0|           0|              0|
   > Total              12|     1042086|      822047|           5655|
+  ```
+
+### Uninstall
+
+* To uninstall `lnbalance`
+
+  ```sh
+  $ cd /usr/local/bin
+  $ sudo rm lnbalance
+  $ cd
   ```
 
 <br /><br />
