@@ -55,7 +55,7 @@ Table of contents
   ```
 * If the version is v14 or older, update it following this tutorial: TBD
 
-## Mempool
+## Installation
 
 ### Clone the repository
 
@@ -235,6 +235,24 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 * Install the mempool configuration for nginx
 
 [TBD](https://github.com/mempool/mempool#manual-installation){:target="_blank"}
+
+---
+
+## Mempool in action
+
+TBD
+
+---
+
+## Upgrade
+
+TBD
+
+---
+
+## Uninstall
+
+TBD
 
 <br /><br />
 
