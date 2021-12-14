@@ -25,13 +25,17 @@ has_toc: false
 ## Dashboards & Wallets
 
 #### *CLI-only*
+
 * **[lntop](lntop.md)** - lntop is an interactive text-mode channels viewer for Unix systems
-* **[Additional scripts: show balance & channels](additional-scripts.md)** - additional bash scripts to display a balance overview as well as a nicely formatted channels overview
+* **[lnbalance](script-lnbalance.md)** -  a simple node balances viewer
+* **[lnchannels](script-lnchannels.md)** - a simple channels viewer
 
 #### *GUI - Desktop*
+
 * **[Zap](zap.md)** - a cross platform Lightning Network wallet focused on user experience and ease of use
 
 #### *GUI - Mobile*
+
 * **[Zeus (Android)](zeus-over-tor.md)** - connect to your node over VPN or Tor, make payments with lightning or on-chain, manage your channels, and more
 * **[Zap (iOS)](zap-ios.md)** - a neat interface to manage peers & channels, make payments and create invoices
 
