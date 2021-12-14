@@ -69,7 +69,7 @@ The following scripts were created by [RobClark56](https://github.com/robclark56
  
 ### lnbalance in action
 
-* With the "admin" user, run lnbalance
+* With the "admin" user, run `lnbalance`
 
   ```sh
   $ lnbalance
