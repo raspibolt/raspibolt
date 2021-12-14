@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Additional scripts
+title: lnbalance script
 parent: + Lightning
 grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: Additional scripts
+## Bonus guide: lnbalance script
 {: .no_toc }
 
 ---
