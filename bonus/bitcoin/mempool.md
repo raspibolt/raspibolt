@@ -153,7 +153,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
     "CORE_RPC": {
       "HOST": "127.0.0.1",
       "PORT": 8332,
-      "USERNAME": "mempool",
+      "USERNAME": "raspibolt",
       "PASSWORD": "Password[B]"
     },
     "ELECTRUM": {
