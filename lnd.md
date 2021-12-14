@@ -125,7 +125,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   ```sh
   $ ls -la
   ```
-  ![symlinks](images/lnd-symlinks.png)
+  ![symlinks](images/lnd-symlink-colour.png)
 
 ### Wallet password
 
