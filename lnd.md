@@ -722,7 +722,7 @@ The `channel.backup` file is very small in size (<<1MB) so even the smallest thu
 
 * Once formatted, plug it into one of the USB 2.0 (black) port. 
 
-####  Set Up a "mounting Point" for the USB Drive
+####  Set up a mounting point for the USB thumbdrive
 
 * Create the mounting directory
 
