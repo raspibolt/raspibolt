@@ -706,17 +706,21 @@ You can read more about SCBs in [this section of 'Mastering the Lighning Network
 
 A simple method is to save the SCB file on a small thumbdrive permanently plugged in the RaspBerry Pi.
 
-#### Thumdrive size
+#### Thumbdrive size
 
 The `channel.backup` file is very small in size (<<1MB) so even the smallest thumbdrive will do the job.
 
 #### Formatting
 
-To ensure that the thumbdrive does not contain malicious code, we will format it on our local computer.
+* To ensure that the thumbdrive does not contain malicious code, we will format it on our local computer.
 
-* On Linux, follow [this tutorial](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}
-* On Windows, follow [this tutorial](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-in-windows-12893){:target="_blank"}
-* On Mac, follow [this tutorial](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}
+  * On Linux, follow [this tutorial](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}
+  
+  * On Windows, follow [this tutorial](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-in-windows-12893){:target="_blank"}
+  
+  * On Mac, follow [this tutorial](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}
+
+* Once formatted, plug it into one of the USB 2.0 (black) port. 
 
 ####  Set Up a "mounting Point" for the USB Drive
 
@@ -895,6 +899,12 @@ We now cause the `channel.backup` to change and see if a copy gets uploaded to t
   ```
   
 You're set! Each time you'll open a new channel or close a channel, the backup file in the thumbdrive will be updated.
+
+### (Optional) Automatic SCB to remote location
+
+The thumbdrive-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and USB thumbdrive are destroyed at the same time (*e.g.* fire, food, etc.).  
+
+To protect against this situation, it is necessary to send the backup to a remote location. For example, [this bonus guide](https://raspibolt.org/bonus/lightning/static-backup-dropbox.html) explains how to automatically send the backup to your Dropbox.
 
 ---
 
