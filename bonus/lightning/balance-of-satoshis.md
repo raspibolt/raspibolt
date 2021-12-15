@@ -115,7 +115,7 @@ Table of contents
   > [...]
   ```  
 
-* Check the version with the --version (or -V) option
+* Check the version with the `-V` option
 
   ```sh
   $ bos -V
