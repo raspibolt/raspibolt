@@ -258,6 +258,8 @@ There are many additional options that can be used to improve the likelihood of 
 
   *  [This unofficial documentation repo](https://github.com/niteshbalusu11/BOS-Commands-Document){:target="_blank"} *(note that this page might not be kept up-to-date)*
 
+You can also join the Balance of Satoshis Telegram group to get support: [https://t.me/balanceofsatoshis](https://t.me/balanceofsatoshis){:target="_blank"}
+
 ---
 
 ## Upgrade
