@@ -20,6 +20,8 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
+![bos-rebalance](../../images/bos-illustration.png)
+
 ---
 
 Table of contents
