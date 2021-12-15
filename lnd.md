@@ -744,7 +744,7 @@ To ensure that the thumbdrive does not contain malicious code, we will format it
   ```
   
   ```ini
-  UUID=123456 /mnt/thumbdrive vfat auto,noexec,nouser,rw,sync,nosuid 0 0
+  UUID=123456 /mnt/thumbdrive vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail 0 0
   ```
   
   🔍 *more: [fstab guide](https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/){:target="_blank"}*
@@ -752,10 +752,10 @@ To ensure that the thumbdrive does not contain malicious code, we will format it
 * Mount the drive and check the file system. Is “/mnt/thumdrive” listed?
 
   ```sh
-  $ sudo mount /dev/sdb1
-  $ df -h /dev/sdb1
+  $ sudo mount /dev/sdb
+  $ df -h /dev/sdb
   > Filesystem      Size  Used Avail Use% Mounted on
-  > /dev/sdb1       126M   30M  223M  12% /mnt/thumbdrive
+  > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/thumbdrive
   ```
 
 #### Create a backup SCB file
@@ -796,16 +796,23 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   # The script waits for a change in channel.backup. When a change happens (channel opening or closing), a copy of the file is sent to the thumdrive
   
   # Location of the channel.backup file used by LND
-  $SOURCEFILE=/data/lnd/data/chain/bitcoin/mainnet/channel.backup
+  SOURCEFILE=/data/lnd/data/chain/bitcoin/mainnet/channel.backup
   
   # Location of the backup file in the mounted thumbdrive
-  $BACKUPFILE=/thumb/channel.backup
+  BACKUPFILE=/thumb/channel.backup
+  
+  # Backup function
+  run_backup_on_change () {
+    echo "Copying backup file..."
+    sudo cp $SOURCEFILE $BACKUPFILE
+  }
 
+  # Monitoring function
   run () {
     while true; do
-	    inotifywait $SOURCEFILE
-      cp $SOURCEFILE $BACKUPFILE
-  	done
+        inotifywait $SOURCEFILE
+        run_backup_on_change
+    done
   }
 
   run
@@ -849,28 +856,45 @@ We'll setup the backup script as a systemd service to run in the background and 
 * Enable and start the service, check its status (it should be 'active')
   
   ```sh
-  $ sudo systemctl enable thumbdrive-scb-backup.sh
-  $ sudo systemctl start thumbdrive-scb-backup.sh
-  $ sudo systemctl status thumbdrive-scb-backup.sh
+  $ sudo systemctl enable thumbdrive-scb-backup.service
+  $ sudo systemctl start thumbdrive-scb-backup.service
+  $ sudo systemctl status thumbdrive-scb-backup.service
   ```
   
 #### Test
 
 We now cause the `channel.backup` to change and see if a copy gets uploaded to the thumbdrive.
 
-* Simulate a file change
+* Open the live logging output of the service
   
   ```sh
-  $ sudo touch /data/lnd/data/chain/bitcoin/mainnet/channel.backup
+  $ sudo journalctl -f -u thumbdrive-scb-backup.service
+  ```
+
+* Open a second SSH session (we'll usse $2 to indicate inputs in this second session). Exit the session.
+  
+  ```sh
+  $2 sudo touch /data/lnd/data/chain/bitcoin/mainnet/channel.backup
+  $2 exit
   ```
   
-* Check the last time the backup file was updated (it should be now)
+* Go back to the first SSH session, in the logs, you should see the following new entries
+  ```
+  > [...]
+  > Dec 15 11:28:55 raspibolt backup-channels[158516]: Copying backup file...
+  > Dec 15 11:28:55 raspibolt sudo[158557]:     root : PWD=/ ; USER=root ; COMMAND=/usr/bin/cp /home/admin/.lnd/data/chain/bitcoin/mainnet/channel.backup /mnt/thumbdrive/channel.backup
+  > [...]
+  ```
+
+* Check the last time the backup file was updated (it should be the same time you did the `touch` command above)
   
   ```sh
-  $ cd /thumb
+  $ cd /mnt/thumbdrive
   $ ls -la
-  > -rw-r--r--  1 admin admin  3539 Dec  2 11:46 .bashrc
+  > -rwxr-xr-x 1 root root 16445 Dec 15 11:28 channel.backup
   ```
+  
+You're set! Each time you'll open a new channel or close a channel, the backup file in the thumbdrive will be updated.
 
 ---
 
