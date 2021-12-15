@@ -685,7 +685,7 @@ A quick reference with common commands to play around with:
 
 Static Channels Backup is a feature of LND that allows for the onchain recovery of lightning channel balances in the case of a bricked node. Despite its name, it does not allow the recovery of your LN channels but simply increases the chance that you'll recover all (or most) of your offchain (local) balances.  
 
-The SCB contains all the necessary channel information used for the recovery process which is called the Data Loss Protection (DLP). It is a foolproof safe backup mechanism (i.e. there is no risk of penalty transactions being triggered which would result in the entire local). During recovery, the SCB is used by LND to know who were you peers with whom you had channels. LND send all your online peers a request to force close the channel on their end. Without this method, you would need to either contact the peer yourself to ask them to force close the channel or else wait for them to force close on their own, resulting in probably several channels being kept opened for possible weeks or months. If one of these peers themselves have a technical issue and brick their node, then the channel becomes a zombie channel with possibly no chance of ever recovering the funds in it.  
+The SCB contains all the necessary channel information used for the recovery process which is called the Data Loss Protection (DLP). It is a foolproof safe backup mechanism (*i.e.*, there is no risk of penalty transactions being triggered which would result in the entire local). During recovery, the SCB is used by LND to know who were you peers with whom you had channels. LND send all your online peers a request to force close the channel on their end. Without this method, you would need to either contact the peer yourself to ask them to force close the channel or else wait for them to force close on their own, resulting in probably several channels being kept opened for possible weeks or months. If one of these peers themselves have a technical issue and brick their node, then the channel becomes a zombie channel with possibly no chance of ever recovering the funds in it.  
 
 This SCB-based recovery method has several consequences worth bearing in mind:
 
@@ -712,7 +712,7 @@ The `channel.backup` file is very small in size (<<1MB) so even the smallest thu
 
 #### Formatting
 
-* To ensure that the thumbdrive does not contain malicious code, we will format it on our local computer.
+* To ensure that the thumbdrive does not contain malicious code, we will format it on our local computer (select a name easy to recognize, *e.g.*, "SCB backup").
 
   * On Linux, follow [this tutorial](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}
   
