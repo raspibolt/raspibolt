@@ -727,7 +727,7 @@ The `channel.backup` file is very small in size (<<1MB) so even the smallest thu
 * Create the mounting directory
 
   ```sh
-  $ sudo mkdir /mnt/thumdrive 
+  $ sudo mkdir /mnt/thumbdrive
   ```
 
 * List the devices and copy the `UUID` of the thumdrive into a text editor on your local computer (e.g. here `123456`).
