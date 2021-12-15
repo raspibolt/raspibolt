@@ -726,11 +726,15 @@ To ensure that the thumbdrive does not contain malicious code, we will format it
   $ sudo mkdir /mnt/thumdrive 
   ```
 
-* List the devices and copy the `UUID` of the thumdrive into a text editor on your local computer.
+* List the devices and copy the `UUID` of the thumdrive into a text editor on your local computer (e.g. here `123456`).
   
   ```sh
   $ lsblk -o NAME,MOUNTPOINT,UUID,FSTYPE,SIZE,LABEL,MODEL
-  > 
+  > NAME   MOUNTPOINT UUID                                 FSTYPE   SIZE LABEL      MODEL
+  > sda                                                           931.5G            SSD_PLUS_1000GB
+  > |-sda1 /boot      DBF3-0E3A                            vfat     256M boot       
+  > `-sda2 /          b73b1dc9-6e12-4e68-9d06-1a1892663226 ext4   931.3G rootfs     
+  > sdb               123456                               vfat     1.9G SCB backup UDisk
   ```
 
 * Edit the `fstab` file and add the following as a new line at the end, replacing `123456` with your own `UUID`.
@@ -743,7 +747,7 @@ To ensure that the thumbdrive does not contain malicious code, we will format it
   UUID=123456 /mnt/thumbdrive vfat auto,noexec,nouser,rw,sync,nosuid 0 0
   ```
   
-  🔍 *more: [complete fstab guide](http://www.linuxstall.com/fstab){:target="_blank"}*
+  🔍 *more: [fstab guide](https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/){:target="_blank"}*
 
 * Mount the drive and check the file system. Is “/mnt/thumdrive” listed?
 
@@ -759,8 +763,7 @@ To ensure that the thumbdrive does not contain malicious code, we will format it
 * Create an empty SCB file in the thumdrive
 
   ```sh
-  $ cd /thumb
-  $ sudo touch channel.backup
+  $ sudo touch /mnt/thumbdrive/channel.backup
   ```
 
 #### Install inotify-tools
@@ -811,7 +814,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
 * Make the script executable and move it to the standard bin(ary) directory
 
   ```sh
-  $ sudo chmod +x .sh
+  $ sudo chmod +x thumbdrive-scb-backup.sh
   $ sudo cp thumbdrive-scb-backup.sh /usr/local/bin
   $ rm thumbdrive-scb-backup.sh
   ```
@@ -823,7 +826,7 @@ We'll setup the backup script as a systemd service to run in the background and 
 * Create a new service file
   
   ```sh
-  sudo nano /etc/systemd/system/backup-channels.service
+  sudo nano /etc/systemd/system/thumbdrive-scb-backup.service
   ```
 
 * Paste the following lines. Save and exit.
