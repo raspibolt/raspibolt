@@ -278,13 +278,7 @@ There are many additional options that can be used to improve the likelihood of 
  
   ```sh
   $ git fetch
-  > remote: Enumerating objects: 29, done.
-  > remote: Counting objects: 100% (29/29), done.
-  > remote: Compressing objects: 100% (9/9), done.
-  > remote: Total 19 (delta 10), reused 19 (delta 10), pack-reused 0
-  > Unpacking objects: 100% (19/19), 22.10 KiB | 275.00 KiB/s, done.
-  > From https://github.com/alexbosworth/balanceofsatoshis
-  > 07f6db4..dd58fc0  master     -> origin/master
+  > [...]
   > * [new tag]         v99.99.9   -> v99.99.9
   ```
 
