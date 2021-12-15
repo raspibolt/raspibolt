@@ -13,6 +13,9 @@ has_toc: false
 Difficulty: Intermediate
 {: .label .label-yellow }
 
+Status: Not tested v3
+{: .label .label-yellow }
+
 > Please note: this guide has not been updated to LND 0.5 yet and might not work as intended.
 
 It takes a litte getting used to the fact that the LND wallet needs  to be manually unlocked everytime the LND daemon is restarted. This  makes sense from a security perspective, as the wallet is encrypted and  the key is not stored on the same machine. For reliable operations,  however, this is not optimal, as you can easily recover LND after it  restarts for some reason (crash or power outage), but then it's stuck  with a locked wallet and cannot operate at all.
