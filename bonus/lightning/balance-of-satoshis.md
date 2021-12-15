@@ -110,7 +110,8 @@ Table of contents
   ```
 
 * Install Balance of Satoshis locally
-
+  
+  ```sh
   $ npm install
   > [...]
   ```  
