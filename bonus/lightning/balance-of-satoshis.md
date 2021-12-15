@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: Balance of Satoshis
+# Bonus guide: Balance of Satoshis
 {: .no_toc }
 
 ---
@@ -30,16 +30,16 @@ Table of contents
 
 ---
 
-### Requirements
+## Requirements
 
 * LND (or LND as part of Lightning Terminal/litd)
 * Node v12.0+
 
 ---
 
-### Installation
+## Installation
 
-#### Check NodeJS
+### Check NodeJS
 
 * NojeJS v14.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
 
@@ -50,7 +50,7 @@ Table of contents
 
 * If the version is v12.0 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
 
-#### Create the "bos" user and prepare the directory
+### Create the "bos" user and prepare the directory
 
 * Create a new user "bos" and make it a member of the "lnd" group
 
@@ -79,7 +79,7 @@ Table of contents
   $ source /home/bos/.bashrc
   ```
 
-#### Install
+### Install
 
 * Check the main PGP key of Alex Bosworth, developer of Balance of Satoshis: [https://keybase.io/alexbosworth/](https://keybase.io/alexbosworth/){:target="_blank"}, i.e. E80D 2F3F 311F D87E
 
@@ -124,11 +124,11 @@ Table of contents
   
 ---
   
-### Balance of Satoshis in action
+## Balance of Satoshis in action
 
 To use Balance of Satoshis, we will use the "bos" user.
 
-#### Introduction
+### Introduction
 
 * To see a list of all available commands run the following command
   
@@ -175,7 +175,7 @@ To use Balance of Satoshis, we will use the "bos" user.
   > [...]
   ```
 
-#### Circular rebalancing  
+### Circular rebalancing  
 
 Circular rebalancing allows to send satoshis out through one channel (which has too little inbound liquidity) and back through another channel (which has too little outbound liquidity). 
 
@@ -211,7 +211,7 @@ A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network
   $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid [NODE_PUBKEY] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
   ```
 
-#### Tags
+### Tags
 
 BoS allows to create user-defined tags to classify nodes and then be used in the commands.
 
@@ -247,7 +247,7 @@ BoS allows to create user-defined tags to classify nodes and then be used in the
   $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid avoid-nodes --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
   ```
 
-#### Other commands
+### Other commands
 
 There are many additional options that can be used to improve the likelihood of a successful circular rebalancing. There are also many addditonal commands in addition to the rebalancing command. More information on all bos commands can be found in:
 
@@ -257,7 +257,7 @@ There are many additional options that can be used to improve the likelihood of 
 
 ---
 
-### Upgrade
+## Upgrade
 
 * Log in with the "bos" user and upgrade Balance of Satoshis with `npm`
 
@@ -332,7 +332,7 @@ There are many additional options that can be used to improve the likelihood of 
 
 ---
 
-### Uninstall
+## Uninstall
 
 If you want to uninstall Balance of Satoshis:
 
@@ -345,7 +345,7 @@ If you want to uninstall Balance of Satoshis:
 
 ---
 
-### Optional: connect your node to a Telegram bot
+## Optional: connect your node to a Telegram bot
 
 Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
 
@@ -353,7 +353,7 @@ Balance of Satoshis allows connecting a node to a Telegram bot to receive update
 
 *Requirements:* a Telegram account
 
-#### Create a new TG bot with the BotFather
+### Create a new TG bot with the BotFather
 
 * Open Telegram, in the general search box look for the [@BotFather](https://t.me/BotFather){:target="_blank"} bot and start a conversation with the bot.
 * Type `/start`
@@ -361,7 +361,7 @@ Balance of Satoshis allows connecting a node to a Telegram bot to receive update
 * Once the bot is created, the BotFather will give you a HTTP API token, copy it and keep it somewhere safe (like in a password manager). Note that if you lose this token, you could always get it agin by typing `/myBot` in the BotFather feed.
 * You also get a link to your bot (in the form: t.me/[your_bot_username]) click on it and it will redirect you to your new bot feed. Keep Telegram opened.
 
-#### Torify
+### Torify
 
 To avoid leaking our node IP address to Telegram, we can force bos to use Tor using the [`torify`](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorifyHOWTO) utility. To do this, we first need to edit the `torsocks.conf` file.
 
@@ -379,7 +379,7 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
   $ sudo systemctl reload tor
   ```
 
-#### Use bos to connect your node to the bot
+### Use bos to connect your node to the bot
 
 * Change to the "bos" user
   
@@ -411,7 +411,7 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
   $ exit
   ```
 
-#### Permannent connection and autostart on boot 
+### Permannent connection and autostart on boot 
 
 Now we’ll make sure our Telegram Bot command starts as a systemd service on the Raspberry Pi so it’s always running.
 
@@ -468,7 +468,7 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
 
 * Check that the program is running in the background: Go to your Telegram bot and type /version, it should return your currently installed version of bos and the latest available version.
 
-#### Bos Telegram bot in action
+### Bos Telegram bot in action
 
 * The bot will notify you of the followibg events on your LN node:
   * 💵 - A payment being received (if it's a keysend with a message, the message will be decoded and displayed
