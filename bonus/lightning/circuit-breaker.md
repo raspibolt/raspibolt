@@ -7,12 +7,12 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: Circuit Breaker, a lightning 'firewall'
+# Bonus guide: Circuit Breaker, a lightning 'firewall'
 {: .no_toc }
 
 ---
 
-[Circuit Breaker](https://github.com/lightningequipment/circuitbreaker) protects your node from being flooded with HTLCs in what is known as a [griefing attack](https://bitcoinmagazine.com/technical/good-griefing-a-lingering-vulnerability-on-lightning-network-that-still-needs-fixing).
+[Circuit Breaker](https://github.com/lightningequipment/circuitbreaker){:target="_blank"} protects your node from being flooded with HTLCs in what is known as a [griefing attack](https://bitcoinmagazine.com/technical/good-griefing-a-lingering-vulnerability-on-lightning-network-that-still-needs-fixing){:target="_blank"}.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -32,23 +32,24 @@ Table of contents
 
 ---
 
-### Requirements
+## Requirements
 
 * LND (or LND as part of Lightning Terminal/litd)
 * Go v1.13+
 
 ---
 
-### Install Go
+## Install Go
 
-* Check the latest stable version of the arm64 binary at [https://golang.org/dl/](https://golang.org/dl/) and download it
+* Check the latest stable version of the arm64 binary at [https://golang.org/dl/](https://golang.org/dl/){:target="_blank"} and download it
 
   ```sh
   $ cd /tmp
   $ wget https://go.dev/dl/go1.17.4.linux-arm64.tar.gz
   ```
   
-* Check on the download page what is the SHA256 checksum of the file, e.g. for above: 617a46bd083e59877bb5680998571b3ddd4f6dcdaf9f8bf65ad4edc8f3eafb13. Get the SHA256 hash of the downloaded file, it should be the same number as the one on the website
+* Check on the download page what is the SHA256 checksum of the file, e.g. for above: 617a46bd083e59877bb5680998571b3ddd4f6dcdaf9f8bf65ad4edc8f3eafb13. 
+Calculate the SHA256 hash of the downloaded file, it should be the same number as the one on the website
   
   ```sh 
   $ sha256sum go1.17.4.linux-arm64.tar.gz
@@ -62,7 +63,7 @@ Table of contents
   $ rm go1.17.4.linux-arm64.tar.gz
   ```
 
-* Add the binary to PATH to not have to type the full path each time you are using it. For a global installation of Go (that users other than "admin" can use), open `/etc/profile`
+* Add the binary to `PATH` to not have to type the full path each time you are using it. For a global installation of Go (that users other than "admin" can use), open `/etc/profile`
   
   ```sh
   $ sudo nano /etc/profile
@@ -89,7 +90,7 @@ Table of contents
 
 ---
   
-### Install Circuit Breaker
+## Install Circuit Breaker
 
 * Create a new user "circuitbreaker" and make it part of the "lnd" group
 
@@ -106,7 +107,7 @@ Table of contents
   > go version go1.17.4 linux/arm64
   ```
  
-* Create a symbolic link to the `lnd` directory, in order for circuitbreaker to be allowed to interact with lnd
+* Create a symbolic link to the `lnd` directory, in order for `circuitbreaker` to be allowed to interact with `lnd`
 
   ```sh
   $ ln -s /data/lnd /home/circuitbreaker/.lnd
@@ -129,7 +130,7 @@ Table of contents
 
 ---
 
-### Configuration
+## Configuration
 
 A sample configuration file is located at `~/circuitbreaker/circuitbreaker-example.yaml`.
 By default, Circuit Breaker reads its configuration file located at `~/.circuitbreaker/circuitbreaker.yaml`.
@@ -143,7 +144,7 @@ By default, Circuit Breaker reads its configuration file located at `~/.circuitb
   $ nano .circuitbreaker/circuitbreaker.yaml
   ``` 
  
-* Circuit Breaker suggests 5 maximum pending htlcs, set the number of htlcs that you feel comfortable with in case of griefing attack
+* Circuit Breaker suggests 5 maximum pending htlcs, set the number of htlcs that you feel comfortable with in case of a griefing attack
  
   ```ini
   maxPendingHtlcs: 3
@@ -188,29 +189,29 @@ By default, Circuit Breaker reads its configuration file located at `~/.circuitb
   #  reportingInterval: 1h*
   ```
 
-* Once edited, save and exit
+* Once edited, save and exit.
 
 ---
 
-### First run
+## First run
 
 * Still with user "circuitbreaker", test if the program works by displaying the version
 
   ```sh
   $ cd ~/
-  $ ~/go/bin/circuitbreaker --version
+  $ circuitbreaker --version
   > circuitbreaker version 0.11.1-beta.rc3 commit=
   ```
 
 * Display the help menu
   
   ```sh
-  $ ~/go/bin/circuitbreaker --help
+  $ circuitbreaker --help
   > NAME:
   > circuitbreaker - A new cli application
   > [...]
   ```
-* Finally, launch circuitbreaker
+* Finally, launch `circuitbreaker`
   
   ```sh 
   $ circuitbreaker
@@ -222,11 +223,11 @@ By default, Circuit Breaker reads its configuration file located at `~/.circuitb
   $ 2021-12-08T18:33:28.814Z	INFO	Hold fee reporting disabled
   ```
  
- *  Stop circuitbreaker with Ctrl+C
+ *  Stop `circuitbreaker` with Ctrl+C
 
 ---
  
-### Autostart on boot
+## Autostart on boot
 
 * Exit the "circuitbreaker" user session back to "admin"
 
@@ -234,7 +235,7 @@ By default, Circuit Breaker reads its configuration file located at `~/.circuitb
   $ exit
   ```
 
-* Create a circuitbreaker systemd unit with the following content, save and exit 
+* Create a circuitbreaker systemd service unit with the following content, save and exit 
  
   ```sh
   $ sudo nano /etc/systemd/system/circuitbreaker.service
@@ -292,9 +293,9 @@ By default, Circuit Breaker reads its configuration file located at `~/.circuitb
 
 ---
 
-### Upgrade
+## Upgrade
 
-Updating to a new release should be straight-forward, but make sure to check out the [release notes](https://github.com/lightningequipment/circuitbreaker/tags) first.
+Updating to a new release should be straight-forward, but make sure to check out the [release notes](https://github.com/lightningequipment/circuitbreaker/tags){:target="_blank"} first.
 
 * From user "admin", stop the service and open a "circuitbreaker" user session
 
@@ -325,11 +326,13 @@ Updating to a new release should be straight-forward, but make sure to check out
 
 If you want to uninstall circuitbreaker
 
-* With the root user, delete the circuitbreaker user
+* With the "root" user, delete the "circuitbreaker" user
 
   ```sh
   $ userdel -r circuitbreaker
   ```
+
+<br /><br />
 
 ---
 
