@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![lnchannels](../../images/lnchannels.png)
+![lnchannels](../../images/script-lnchannels.png)
 
 ---
 
