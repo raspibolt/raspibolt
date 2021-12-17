@@ -109,7 +109,7 @@ $ npm run build
   ```sh
   $ nano thubConfig.yaml 
   ```
-  ```
+  ```ini
   masterPassword: 'PASSWORD' # Default password unless defined in account
   accounts:
     - name: 'RaspiBolt'
