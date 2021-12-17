@@ -6,52 +6,49 @@ grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
-## Bonus Guide: Install Thunderhub
-
-*Difficulty: medium*
-
-This is a guide for the installation of [thunderhub](https://www.thunderhub.io/), manage your Lightning Node through a WebUI.
-Be careful with this guide and have look at [ThunderHub by "apotdevin"](https://github.com/apotdevin/thunderhub#thunderhub---lightning-node-manager) for more information and a more detailed instruction.
-
-
-![](images/75_thunderhub.png)
+# Bonus Guide: Install Thunderhub
+{: .no_toc }
 
 ---
+
+[Thunderhub](https://github.com/apotdevin/thunderhub) is an open source LND node manager where you can manage and monitor your node on any device or browser. It allows you to take control of the lightning network with a simple and intuitive UX and the most up-to-date tech stack.
+
+Difficulty: Medium
+{: .label .label-yellow }
+
+Status: Tested v3
+{: .label .label-red }
+
+![thunderhub](../../images/75_thunderhub.png)
+
+---
+
+Table of contents
+
+---
+
 ## Preparations
 
-### Check NodeJS Version
+### Check NodeJS
 
-* Starting with user "admin", we switch to user "root" and check if [Node JS](https://nodejs.org) is installed already. 
+* NojeJS v14.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
   
+  ```sh
+  $ node -v
+  > v14.18.2
   ```
-  $ sudo su
-  $ nodejs --version
-  > v12.22.1
-  $ exit
-  ```
-### Install NodeJS
-
-* If that is not the case, we will install it. 
-  We'll use version 12 which is the most recent stable one. Then, exit the "root" user session.
-
-  ```
-  $ curl -sL https://deb.nodesource.com/setup_12.x | bash -
-  $ exit
-  ```
-* Install NodeJS using the apt package manager.
-
-  ```
-  $ sudo apt-get install nodejs
-  ```
+* If the version is v12.0 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
 
 ### Firewall 
 
 * Configure firewall to allow incoming HTTP requests from your local network to the web server.
 
-  ```
+  ```sh
   $ sudo ufw allow from 192.168.0.0/16 to any port 3010 comment 'allow ThunderHub from local network'
   $ sudo ufw status
   ```
+  
+---
 
 ## ThunderHub
 
@@ -64,7 +61,7 @@ We are going to install thunderhub in the home directory since it doesn't take m
 * Create a new user with  your `password[A]`. The new user needs read-only access to the `tls.cert` and our `admin.macaroon`, 
   so we add him to the "bitcoin" group. Open a new session.
 
-  ```
+  ```sh
   $ sudo adduser thunderhub
   $ sudo adduser thunderhub bitcoin
   $ sudo su - thunderhub
@@ -72,7 +69,7 @@ We are going to install thunderhub in the home directory since it doesn't take m
 
 * Download the source code directly from GitHub and install all dependencies using NPM.
 
-```
+```sh
 $ git clone https://github.com/apotdevin/thunderhub.git
 $ cd thunderhub
 $ npm install
@@ -83,14 +80,14 @@ $ npm run build
 
 * Edit the configuration file. Switch to `thunderhub` user for this.
 
-  ```
+  ```sh
   $ sudo su - thunderhub
   $ nano ~/thunderhub/.env
   ```
 
 * Uncomment the following lines, save and exit:
 
-  ```
+  ```ini
   # -----------
   # Server Configs
   # -----------
@@ -109,8 +106,8 @@ $ npm run build
 
 * Edit your `thubConfig.yaml`. Change your `accountpassword`.
 
-  ```
-  nano thubConfig.yaml 
+  ```sh
+  $ nano thubConfig.yaml 
   ```
   ```
   masterPassword: 'PASSWORD' # Default password unless defined in account
@@ -121,6 +118,8 @@ $ npm run build
       certificatePath: '/home/bitcoin/.lnd/tls.cert'
       password: 'accountpassword'
   ```
+
+---
 
 ## First Start
 
@@ -146,20 +145,22 @@ Test starting thunderhub manually first to make sure it works.
   $ exit
   ```
 
-### Autostart on boot
+---
+
+## Autostart on boot
 
 Now we'll make sure ThunderHub starts as a service on the Raspberry Pi so it's always running.
 In order to do that we create a systemd unit that starts the service on boot directly after LND.
 
 * As user "admin", create the service file.
 
-  ```
+  ```sh
   $ sudo nano /etc/systemd/system/thunderhub.service
   ```
 
 * Paste the following configuration. Save and exit.
 
-  ```
+  ```ini
   # RaspiBolt: systemd unit for Thunderhub
   # /etc/systemd/system/thunderhub.service
 
@@ -184,7 +185,7 @@ In order to do that we create a systemd unit that starts the service on boot dir
 
 * Enable the service, start it and check log logging output.
 
-  ```
+  ```sh
   $ sudo systemctl enable thunderhub.service
   $ sudo systemctl start thunderhub.service
   $ sudo journalctl -f -u thunderhub
@@ -192,7 +193,9 @@ In order to do that we create a systemd unit that starts the service on boot dir
 
 * You can now access ThunderHub from within your local network by browsing to <http://raspibolt.local:3010> (or your equivalent ip address).
 
-### Remote access over Tor (optional)
+---
+
+## Remote access over Tor (optional)
 
 Do you want to access ThunderHub remotely?
 You can easily do so by adding a Tor hidden service on the RaspiBolt and accessing ThunderHub with the Tor browser from any device.
@@ -200,11 +203,11 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 * Add the following three lines in the section for "location-hidden services" in the `torrc` file.
   Save and exit.
 
- ```
+ ```sh
   $ sudo nano /etc/tor/torrc
   ```
 
-  ```
+  ```ini
   HiddenServiceDir /var/lib/tor/thunderhub
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:3010
@@ -212,7 +215,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 
 * Restart Tor and get your connection address.
 
-  ```
+  ```sh
   $ sudo systemctl restart tor
   $ sudo cat /var/lib/tor/thunderhub/hostname
   > abcdefg..............xyz.onion
@@ -224,20 +227,22 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 **Congratulations!**
 You now have the BTC RPC Explorer running to check the Bitcoin network information directly from your node.
 
+---
+
 ## Upgrade
 
 Updating to a [new release](https://github.com/apotdevin/thunderhub/releases) should be straight-forward.
 
 * From user "admin", stop the service and open a "thunderhub" user session.
 
-  ```
+  ```sh
   $ sudo systemctl stop thunderhub
   $ sudo su - thunderhub
   ```
 
 * Fetch the latest GitHub repository information and check out the new release:
 
-  ```
+  ```sh
   $ cd thunderhub
   $ git pull
   $ npm install
@@ -247,9 +252,12 @@ Updating to a [new release](https://github.com/apotdevin/thunderhub/releases) sh
 
 * Start the service again.
 
-  ```
+  ```sh
   $ sudo systemctl start thunderhub
   ```
+  
+  <br /><br />
+  
 ---
 
-Next: [Bonus guides >>](raspibolt_60_bonus.md)
+<<Back: [+ Lightning](index.md)
