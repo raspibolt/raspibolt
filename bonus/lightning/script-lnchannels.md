@@ -7,12 +7,12 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: lnchannels script
+# Bonus guide: lnchannels script
 {: .no_toc }
 
 ---
 
-The following script was created by [RobClark56](https://github.com/robclark56) and help getting a better system overview.
+The following script was created by [RobClark56](https://github.com/robclark56){:target="_blank"} to display a summary of all your channels.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![](images/60_balance.png)
+![lnchannels](../../images/lnchannels.png)
 
 ---
 
@@ -32,7 +32,7 @@ Table of contents
 
 ---
 
-### Install the script
+## Install the script
 
 * As user “admin”, download the script
 
@@ -64,8 +64,10 @@ Table of contents
   $ rm lnchannels
   $ cd
   ```
- 
-### lnbalance in action
+
+---
+
+## lnbalance in action
 
 * With the "admin" user, run `lnchannels`
 
@@ -82,7 +84,9 @@ Table of contents
                                                                       Month:   20385
   ```
 
-### Uninstall
+---
+
+## Uninstall
 
 * To uninstall `lnchannels`
 
