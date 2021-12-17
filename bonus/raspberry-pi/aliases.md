@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: Aliases
+# Bonus guide: Aliases
 {: .no_toc }
 
 ---
@@ -34,13 +34,13 @@ Table of contents
 
 ## Acknowledgments
 
-The following list of aliases was derived from contributions by [RobClark56](https://github.com/robclark56) and @marcosdub.
+The following list of aliases was derived from contributions by [RobClark56](https://github.com/robclark56){:target="_blank"} and [marcosdub](https://github.com/marcosdub){:target="_blank"}.
 
 ---
 
 ## Set up aliases
 
-* With user "admin, create a `.bash_aliases` file in `nano`
+* With user "admin", create a `.bash_aliases` file in `nano`
 
   ```sh
   $ sudo nano ~/.bash_aliases
@@ -127,11 +127,13 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   
   ```
   
-* Execute a source command to register changes to the .bashrc file
+* Execute a `source` command to register changes to the `.bashrc` file
 
   ```sh 
   $ source /home/admin/.bashrc 
   ```
+
+---
 
 ## Aliases in action
 
@@ -171,6 +173,8 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   $ rm .bash_aliases
   $ source /home/admin/.bashrc 
   ```
+
+<br /><br />
 
 ---
 
