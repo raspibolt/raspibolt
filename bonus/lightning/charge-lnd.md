@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: charge-lnd
+# Bonus guide: charge-lnd
 {: .no_toc }
 
 ---
@@ -19,7 +19,6 @@ Difficulty: Easy
 
 Status: Tested v3
 {: .label .label-green }
-
 
 ![charge-lnd policies](../../images/charge-lnd-illustration.png)
 
@@ -33,16 +32,16 @@ Table of contents
 
 ---
 
-### Requirements
+## Requirements
 
 * LND (or LND as part of Lightning Terminal/litd)
 * Python
 
 ---
 
-### Install pip3
+## Install pip3
 
-pip is not installed by default on Raspberry Pi OS Lite (64-bit).
+`pip` is not installed by default on Raspberry Pi OS Lite (64-bit).
 
 * With user "admin", check if pip3 is already installed with the following command. If you don't get an output with a version number it means you need to install pip3 (otherwise, move to the next section "Install charge-lnd").
   
@@ -61,9 +60,9 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit).
 
 ---
 
-### Install charge-lnd
+## Install charge-lnd
 
-* charge-lnd does not require full admin rights to the LND data. Using the 'least privileges' approach, only the following access rights are necessary:
+* `charge-lnd` does not require full admin rights to the LND data. Using the 'least privileges' approach, only the following access rights are necessary:
   * `offchain:read`
   * `offchain:write`
   * `onchain:read`
@@ -94,14 +93,14 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit).
   $ pip3 install -r requirements.txt .
   ```
 
-* Add the charge-lnd binary file location to PATH
+* Add the `charge-lnd` binary file location to `PATH`
 
   ```sh
   $ echo 'export PATH=$PATH:/home/chargelnd/.local/bin' >> /home/chargelnd/.bashrc
   $ source /home/chargelnd/.bashrc
   ```
 
-* Test if the installation was successful by running the program with the --help (or -h) flag
+* Test if the installation was successful by running the program with the -h (help) flag
 
   ```sh
   $ charge-lnd -h
@@ -125,11 +124,12 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit).
   >                        path to config file
   ```
 
-* Create a simlink to the LND directory. Place it in the home directory of the "chargelnd" user to match the default LND directory used by charge-lnd (*i.e.* ~/.lnd) 
+* Create a symlink to the LND directory. Place it in the home directory of the "chargelnd" user to match the default LND directory used by charge-lnd (*i.e.* `~/.lnd`) 
 
   ```sh
   $ ln -s /data/lnd /home/chargelnd/.lnd
   ```
+
 * Display the link and check that they’re not shown in red (this would indicate an error)
 
   ```sh
@@ -139,7 +139,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit).
   
 ---
 
-### Configuration file
+## Configuration file
 
 For this example, we will use a policy that: 
 
@@ -210,7 +210,7 @@ For this example, we will use a policy that:
   ```
 
 * Test if the syntax is correct or if it contains some errors using the --check option. 
-Indicate where the configuration file is located using the --config (or -c) option
+Indicate where the configuration file is located using the -c option
 
   ```sh
   $ charge-lnd -c ~/charge-lnd.config --check
@@ -219,7 +219,7 @@ Indicate where the configuration file is located using the --config (or -c) opti
 
 * Do a dry-run test which will print out what changes the program would apply of it was to be run.
 A small report will be displayed for each channel policy that should be updated.
-Adding the --verbose (or -v) option would add aditional information such as if the channel is enabled or disabled.
+Adding the -v (verbose) option would add aditional information such as if the channel is enabled or disabled.
 
   ```sh
   $ charge-lnd -c ~/charge-lnd.config --dry-run
@@ -243,20 +243,20 @@ Then exit the charge-lnd user.
 
 * Double-check the fee policy on all your channels (e.g. using [RTL](https://raspibolt.org/rtl.html) or [lntop](https://raspibolt.org/bonus/lightning/lntop.html)) to ensure that you are happy with the changes!
 
-🔍: _To see all the possible policy types and options and some examples, check the charge-lnd [Github page](https://github.com/accumulator/charge-lnd#charge-lnd)._
+🔍: _To see all the possible policy types and options and some examples, check the charge-lnd [Github page](https://github.com/accumulator/charge-lnd#charge-lnd){:target="_blank"}._
 
 ---
 
-### Automatic fee updates
+## Automatic fee updates
 
-#### Cron job
+### Cron job
 
 You can make the script run automatically at regular time intervals by using a cron job. For example, you could run the charge-lnd program every 6 hours.
 
 🚨 Warning: It is not in your interest, nor in the interest of the wider network, to set up very short intervals between each policay change. Frequent channel policy update spams the LN gossip network and results in less accurate LN graphs overall as it takes a long time for a policy update to reach most of the nodes in the network.
 
-* We the "admin" user, create and edit (option -e) the crontab file of the charge-lnd user (option -u). 
-If asked, select the /bin/nano text editor (type 1 and enter)
+* We the "admin" user, create and edit (option -e) the `crontab` file of the "charge-lnd" user (option -u). 
+If asked, select the `/bin/nano` text editor (type 1 and enter)
 
   ```sh
   $ sudo crontab -u chargelnd -e
@@ -277,11 +277,12 @@ If asked, select the /bin/nano text editor (type 1 and enter)
   * `/home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config` is the command to be run and where to find it (its path) together with the required option(s) (here the location of the configuration file).
   * `> /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log` records the updates in a `my-charge-lnd.log` log file.
 
-#### Checking the logs
+### Checking the logs
 
 If you need to check the log files:
 
 * Use `less` to read the entire log file. Type "g" to go the start of the log, "G" to the end, use the arrows to move up and down and exit by pressing "q".
+
 * You can search for a specific string by typing "?" followed by the string to be searched (e.g. a node alias) and then press enter.
 
   ```sh
@@ -296,9 +297,9 @@ If you need to check the log files:
 
 ---
 
-### Upgrade
+## Upgrade
 
-* Let's check what is the latest available version at [https://github.com/accumulator/charge-lnd/releases](https://github.com/accumulator/charge-lnd/releases) and what version of charge-lnd we are running
+* Let's check what is the latest available version at [https://github.com/accumulator/charge-lnd/releases](https://github.com/accumulator/charge-lnd/releases){:target="_blank"} and what version of `charge-lnd` we are running
 
   ```sh
   $ sudo su - chargelnd
@@ -325,10 +326,9 @@ If you need to check the log files:
   
 ---
 
+## Uninstall
 
-### Uninstall
-
-If you want to uninstall charge-lnd:
+If you want to uninstall `charge-lnd`:
 
 * Log in with the "root" user and delete the "charge-lnd" user
 
