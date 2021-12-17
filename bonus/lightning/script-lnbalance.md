@@ -7,12 +7,12 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: lnbalance script
+# Bonus guide: lnbalance script
 {: .no_toc }
 
 ---
 
-The following script was created by [RobClark56](https://github.com/robclark56) and help getting a better system overview.
+The following script was created by [RobClark56](https://github.com/robclark56){:target="_blank"} and help getting a better system overview.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -32,7 +32,7 @@ Table of contents
 
 ---
 
-### Install the script
+## Install the script
 
 * As user “admin”, download the script
 
