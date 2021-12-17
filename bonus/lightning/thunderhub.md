@@ -1,8 +1,9 @@
 ---
 layout: default
-title: Upgrade External Drive
-parent: Bonus Section
-nav_order: 140
+title: Installation Thunderhub
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
 has_toc: false
 ---
 ## Bonus Guide: Install Thunderhub
