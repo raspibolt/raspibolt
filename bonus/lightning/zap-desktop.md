@@ -72,7 +72,7 @@ Table of contents
   $ sudo nano /home/lnd/.lnd/lnd.conf
   ```
 
-*  Add the following lines to the section `[Application Options]`:  
+* Add the following lines to the section `[Application Options]`:  
   
   ```ini
   # Add local network IP address to LND's TLS certificate
@@ -80,19 +80,20 @@ Table of contents
   rpclisten=0.0.0.0:10009
   ```
   
-#* Backup and delete the existing `tls.cert` and `tls.key` filess and restart LND to recreate them. 
-#  
-#  ```
-#  $ sudo mv /home/lnd/.lnd/tls.*
+* Backup and delete the existing `tls.cert` and `tls.key` files and restart LND to recreate them. 
 
+  ```sh
+  $ sudo mv /home/lnd/.lnd/tls.cert /home/lnd/.lnd/tls.cert.bak
+  $ sudo mv /home/lnd/.lnd/tls.key /home/lnd/.lnd/tls.key.bak
   ```
   
-#* Copy the new `tls.cert` to the user "admin".  
- # ```
-  #$ sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd
-  #```
+* Copy the new `tls.cert` to the user "admin".  
+ 
+  ```sh
+  $ sudo cp /home/lnd/.lnd/tls.cert /home/admin/.lnd
+  ```
 
-* Restart LND (if you did not set up the autounlock, unlock the LND wallet with `lncli unlock`)  
+* Restart LND (if you did not set up the LND wallet auto-unlock, unlock the wallet with `lncli unlock`)  
   
   ```sh
   $ sudo systemctl restart lnd
@@ -103,40 +104,59 @@ Table of contents
 * Configure firewall to allow incoming requests from local network only  
   
   ```sh
-  $ sudo ufw allow from 192.168.0.0/16 to 10009/tcp comment 'allow LND grpc from local LAN'
+  $ sudo ufw allow from 192.168.0.0/16 to any port 10009 comment 'allow LND grpc from local LAN'
   $ sudo ufw status
   ```
 
-### Connect Zap Desktop with a Connection String 
+---
 
-We will connect Zap to the RaspiBolt using a connection string that includes the connection and authentication information. This   option is available starting with Zap 0.4.0 beta.
+## Connect Zap Desktop to your node 
 
-#### On the Pi:
+We will connect Zap to the RaspiBolt using a connection string that includes the connection and authentication information.
 
-* Install LndConnect:  
-  ```
+### Install lndconnect on the node
+
+[lndconnect](https://github.com/LN-Zap/lndconnect){:target="_blank"}, created by Zap, is a utility that generates a QR Code or URI to connect applications to LND instances.
+
+* With the "admin" user, download the binary and install it
+
+  ```sh
   $ cd /tmp
-  $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.1.0/lndconnect-linux-armv7-v0.1.0.tar.gz
-  $ sudo tar -xvf lndconnect-linux-armv7-v0.1.0.tar.gz --strip=1 -C /usr/local/bin
+  $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.2.0/lndconnect-linux-arm64-v0.2.0.tar.gz
+  $ tar -xvf lndconnect-linux-arm64-v0.2.0.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lndconnect-linux-arm64-v0.2.0/lndconnect
+  $ rm lndconnect-linux-arm64-v0.2.0.tar.gz
+  $ rm -R lndconnect-linux-arm64-v0.2.0
+  $ cd ~/
   ```
 
-* Generate the Connection String  
+* Generate the connection string (the -i option include the local IP; the -j option generates a string rather than a QR code)
+  
+  ```sh
+  $ lndconnect -i -j
+  > lndconnect://...
   ```
-  $ sudo lndconnect --lnddir=/home/admin/.lnd -i -j
-  ```
-  Copy the resulting text starting with `lndconnect://...`
 
-#### Configure Zap: 
+### Configure Zap: 
 
-  * Start Zap on your desktop
-  * Create a new wallet
-  * Choose the `Connect to your node` option  
-    ![Zap welcome screen](images/71_zap_desktop1.png)
-  * Paste the Connection String generated with LndConnect
-  * Confirm and Connect
-  * Confirm the settings on the following screen and you are done!
-    ![Zap Desktop wallet](images/71_zap_desktop4.png)
+* If Zap is not already launched, start Zap on your desktop
 
-------
+* Choose the `Connect to your node` option
+
+![Zap welcome screen](images/71_zap_desktop1.png)
+
+* Paste the connection string generated above (starting with with `lndconnect://...`)
+
+* Confirm and connect
+
+* Confirm the settings on the following screen and you are done!
+
+![Zap Desktop wallet](images/71_zap_desktop4.png)
+
+* Go to "File", "Preferences", "Security" and enable app password
+
+<br /><br />
+
+---
 
 << Back: [+ Lightning](index.md)
