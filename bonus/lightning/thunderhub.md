@@ -24,6 +24,10 @@ Status: Tested v3
 ---
 
 Table of contents
+{: .text-delta }
+
+1. TOC
+{:toc}
 
 ---
 
