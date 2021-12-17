@@ -107,7 +107,7 @@ $ npm run build
 * Edit your `thubConfig.yaml`. Change your `accountpassword`.
 
   ```sh
-  $ nano thubConfig.yaml 
+  $ nano thunderhub/thubConfig.yaml 
   ```
   ```ini
   masterPassword: 'PASSWORD' # Default password unless defined in account
