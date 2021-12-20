@@ -7,14 +7,13 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: Lightning Terminal
+# Bonus guide: Lightning Terminal
 {: .no_toc }
 
 ---
 
 [Lightning Terminal](https://github.com/lightninglabs/lightning-terminal){:target="_blank"} is a software suite of Lightning Labs which contains:
 
-* LND
 * Faraday: accounting service
 * Loop: client software for submarine swaps with LOOP node of Lightning Labs
 * Pool: client software to submit orders to buy and sell inbound liquidity through unique price auction at each new block found
@@ -31,7 +30,7 @@ Table of contents
 
 ---
 
-### Introduction
+## Introduction
 
 Lightning Terminal provides a user interface to make submarine swap easily, it now also features a UI for Pool Market which is a good tool to estimate the price of liquidity.
 Because Pool is alpha software, Lightning Terminal is alpha software too. The LND part is however in beta and the behavior is exactly the same as LND.  
@@ -44,7 +43,7 @@ The Lightning Terminal UI requires a password. Select a new password:
 
 ---
 
-### Installation
+## Installation
 
 ### Download LiT
 
@@ -80,13 +79,25 @@ The Lightning Terminal UI requires a password. Select a new password:
   > litd version 0.14.1-beta commit=lightning-terminal-v0.6.1-alpha
   ```
 
-#### Data directory
+### Data directory
 
 * Create the “lnd” service user, and add it to the groups “bitcoin” and “debian-tor”
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" lit
   $ sudo adduser lit lnd
+  ```
+  
+* Create the Loop, Pool and Faraday data directories
+
+  ```sh
+  $ sudo mkdir /data/loop /data/pool /data/faraday
+  $ sudo chown -R lit:lit /data/loop /data/pool /data/faraday
+  ```
+
+* Open a “lit” user session  
+  
+  ```sh 
   $ sudo su - lit
   ```
 
@@ -94,92 +105,101 @@ The Lightning Terminal UI requires a password. Select a new password:
 
   ```sh
   $ ln -s /data/lnd /home/lit/.lnd
+  $ ln -s /data/loop /home/lit/.loop
+  $ ln -s /data/pool /home/lit/.pool
+  $ ln -s /data/faraday /home/lit/.faraday
+  ```
+
+* Display the links and check that they’re not shown in red (this would indicate an error)
+
+  ```sh
+  $ ls -la
   ```
 
 #### Configuration
 
-`litd`, the Lightning Terminal daemon has its own configuration file. The settings for LND, Pool, Faraday, Loop can all be put in the LiT configuration file 
+`litd`, the Lightning Terminal daemon, has its own configuration file. 
+The settings for Pool, Faraday, Loop can all be put in the configuration file 
 
-* Open a "lit" user session
-
-  ```sh
-  $ sudo su - lit
-  ```
-
-* Create the LiT working directory
+* Still with the "lit" user, create the LiT working directory
 
   ```sh
   $ mkdir /home/lit/.lit
   $ cd .lit
   ```
-* Create the LiT configuration file and paste the following content (adjust to your alias and paste password [B] as required in the Faraday section). Save and exit.
+
+* Create the LiT configuration file and paste the following content (set the uipassword with your password [G] and adjust to your alias and paste password [B] as required in the Faraday section). Save and exit.
 
   ```sh
   $ nano lit.conf
   ```
   
   ```ini  
-  # RaspiBolt: lit configuration (LND remote mode)
-  # /home/lit/.lit/lit.conf
+  # RaspiBolt: lit configuration
+  # /home/admin/.lit/lit.conf
   
-  # Application Options
+  #######################
+  # Application Options #
+  #######################
   
-  # Feel free to change this IP depending of you need to access the UI
-  # If you want the UI to be available ONLY from your home network,
-  # replace 0.0.0.0 by the local IP of the RaspiBolt
-  # 0.0.0.0 let you access the UI from anywhere
-  httpslisten=raspibolt.local:8443
+  # The host:port to listen for incoming HTTP/2 connections on for the web UI only. (default:127.0.0.1:8443)
+  httpslisten=0.0.0.0:8443
   
   # Your password for the UI must be at least 8 characters long
-  uipassword=PASSWORD_[E]
-  network=mainnet
-  
+  uipassword=Password[G]
+
   # Remote options
   remote.lit-debuglevel=debug
-  
+
   # Remote lnd options
-  remote.lnd.rpcserver=192.168.0.171:10009
-  remote.lnd.macaroonpath=~/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
-  remote.lnd.tlscertpath=~/.lnd/tls.cert
+  remote.lnd.rpcserver=127.0.0.1:10009
+  remote.lnd.macaroonpath=/home/lit/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
+  remote.lnd.tlscertpath=/home/lit/.lnd/tls.cert
+  
+  
+  #################
+  #     Loop      #
+  #################
+  
+  # ???
+  loop.loopoutmaxparts=5
+  
+  
+  #################
+  # Pool settings #
+  #################
+  
+  # This option avoids the creation of channels with nodes with whom you already have a channel (set to 0 if you don't mind)
+  #pool.newnodesonly=1
+  
   
   ####################
-  #  Loop settings   #
+  #      Faraday     #
   ####################
-  loop.loopoutmaxparts=5
-
-  ####################
-  #  Pool settings   #
-  ####################
-  pool.newnodesonly=true
-
-  ####################
-  # Faraday settings #
-  ####################
-  # If connect_bitcoin is set to 1, Faraday can connect to a bitcoin node (with --txindex set) to provide node accounting services
+  
+  # ???
   faraday.min_monitored=48h
+  
+  
+  ####################
+  # Faraday-Bitcoin  #
+  ####################
+  
   # If connect_bitcoin is set to 1, Faraday can connect to a bitcoin node (with --txindex set) to provide node accounting services
   faraday.connect_bitcoin=1
   # The Bitcoin node IP is the IP address of the Raspibolt, i.e. an address like 192.168.0.20
-  faraday.bitcoin.host=[Bitcoin node IP]:8332
+  faraday.bitcoin.host=192.168.0.171
   # bitcoin.user provides to Faraday the bicoind RPC username, as specified in our bitcoin.conf
   faraday.bitcoin.user=raspibolt
   # bitcoin.password provides to Faraday the bitcoind RPC password, as specified in our bitcoin.conf
-  faraday.bitcoin.password=PASSWORD_[B]
+  faraday.bitcoin.password=Password[B]
   ```
 
-🔍 *Notice that the options for LND, Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
+🔍 *Notice that the options for Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
   
 ### Running LiT
 
-Start your SSH program (eg. PuTTY) a second time, connect to the Pi and log in as “admin”. Commands for the second session start with the prompt $2 (which must not be entered).
-We must never run LND and LiT at the same time to avoid corruption of the channels database. So we must first stop LND and its `systemd` service.
-
-  ```sh
-  $2 lncli stop
-  $2 sudo systemctl stop lnd
-  ```
-
-Once everything is stopped, we can test that LiT is correctly using the LND database.
+* Test that Lightning Terminal is correctly using the LND database.
 
   ```sh
   $2 sudo su - bitcoin
