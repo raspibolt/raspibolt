@@ -37,6 +37,11 @@ has_toc: false
 
 ---
 
+## Liquidity management (rebalancing)
+* **[Balance of Satoshis](balance-of-satoshis.md)** - a tool to rebalance your channels and set up a LN node monitoring Telegram bot
+
+---
+
 ## Even more Extras 
 
 ### [RaspiBolt Extras by Rob Clark](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md){:target="_blank"}
