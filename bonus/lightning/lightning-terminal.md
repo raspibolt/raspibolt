@@ -202,42 +202,75 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 * Test that Lightning Terminal is correctly using the LND database.
 
   ```sh
-  $2 sudo su - bitcoin
-  $2 litd
+  $ litd
   ```
 
-Now go back to the first session and try to unlock your wallet, if you already used your node a lot you must wait for the LND database to be open (you can take a look at the log returned in the second session where LiT is running).
+* Test that Lightning Terminal is working by visiting the web UI at [https://raspibolt.local:4002/](https://raspibolt.local:4002/){:target="_blank"} (enter passworrd [G] when prompted.
+
+---
+
+## Autostart Lightning Terminal on boot
+
+Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd unit that starts the service on boot directly after LND.
+
+* As user "admin", create the service file.
+  
+  ```sh
+  $ sudo nano /etc/systemd/system/litd.service
+  ```
+* We can just change the line `ExecStart=/usr/local/bin/lnd` for `ExecStart=/usr/local/bin/litd`, rename the file and enable, start, unlock LiT:
 
   ```sh
-  $ lncli unlock
+  # RaspiBolt: systemd unit for litd
+  # /etc/systemd/system/litd.service
+  
+  [Unit]
+  Description=Lightning Terminal Daemon
+  After=lnd.service
+  
+  [Service]
+  
+  # Service execution
+  ###################
+  ExecStart=/usr/local/bin/litd
+  
+  # Process management
+  ####################
+  Type=simple
+  Restart=always
+  RestartSec=30
+  TimeoutSec=240
+  LimitNOFILE=128000
+  
+  # Directory creation and permissions
+  ####################################
+  User=lit
+  Group=lit
+  
+  # Hardening measures
+  ####################
+  # Provide a private /tmp and /var/tmp.
+  PrivateTmp=true
+  
+  # Mount /usr, /boot/ and /etc read-only for the process.
+  ProtectSystem=full
+  
+  # Disallow the process and all of its children to gain
+  # new privileges through execve().
+  NoNewPrivileges=true
+  
+  # Use a new /dev namespace only populated with API pseudo devices
+  # such as /dev/null, /dev/zero and /dev/random.
+  PrivateDevices=true
+  
+  # Deny the creation of writable and executable memory mappings.
+  MemoryDenyWriteExecute=true
+  
+  [Install]
+  WantedBy=multi-user.target
   ```
   
-  Type your `password [C]` to unlock the wallet. You can check the state with `lncli getinfo`, it should be synced with graph and chain. If it works, you can stop LiT running in the second section using `Ctrl + C` and exit it
-
-  ```sh
-  $2 exit
-  ```
-  
-  
-### Autostart LiT on boot
-
-We stopped lnd service, now that LiT is running we can replace the autostart service for LND by the LiT's one. We modify LND systemd unit:
-
-  ```sh
-  $2 sudo systemctl disable lnd
-  $2 sudo nano /etc/systemd/system/lnd.service
-  ```
-We can just change the line `ExecStart=/usr/local/bin/lnd` for `ExecStart=/usr/local/bin/litd`, rename the file and enable, start, unlock LiT:
-
-  ```sh
-  $2 sudo mv /etc/systemd/system/lnd.service /etc/systemd/system/litd.service
-  $2 sudo systemctl enable litd
-  $2 sudo systemctl start litd
-  $2 systemctl status litd
-  $2 lncli unlock
-  ```
-If you wish to look at the daemon information, they are in the system journal
-
+* Enable the service, start it and check log logging output.
   ```sh
   $2 sudo journalctl -f -u litd
   ```
@@ -246,10 +279,18 @@ If you wish to look at the daemon information, they are in the system journal
 Others softwares have their own macaroon files too, they are created in `.loop`, `.faraday` and `.pool` directories of bitcoin home by default. So we create symbolic link so that admin user can use them.
 
   ```sh
-  $2 ln -s /home/bitcoin/.loop /home/admin/.loop
-  $2 ln -s /home/bitcoin/.pool /home/admin/.pool
-  $2 ln -s /home/bitcoin/.faraday /home/admin/.faraday
+  $ sudo systemctl enable litd
+  $ sudo systemctl start litd
+  $ sudo systemctl status litd
+  $ sudo journalctl -f -u litd
   ```
+  
+  
+--- 
+---
+  
+  
+  
 
 For now, softwares packaged in LiT are all listening to the same port 10009 as LND. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port when using them.
 
