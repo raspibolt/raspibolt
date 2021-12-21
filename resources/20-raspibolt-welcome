@@ -5,6 +5,40 @@ set -u
 # make executable and copy script to /etc/update-motd.d/
 # user must be able to execute bitcoin-cli and lncli
 
+# Script configuration
+# ------------------------------------------------------------------------------
+
+# set colors
+color_red='\033[0;31m'
+color_green='\033[0;32m'
+color_yellow='\033[0;33m'
+color_grey='\033[0;37m'
+
+# set datadir
+bitcoin_dir="/data/bitcoin"
+lnd_dir="/data/lnd"
+
+# set to mount point of secondary storage. This is used to calculate secondary USB usage %
+ext_storage2nd="/mnt/ext"
+
+# set to network device name (usually eth0 for ethernet or wlan0 for wireless on raspberry pi
+# unless you have 'Predictable Network Names' turned on in raspi-config).
+network_name="wlan0"
+
+
+# Helper functionality
+# ------------------------------------------------------------------------------
+
+# controlled abort on Ctrl-C
+trap_ctrlC() {
+  echo -e "\r"
+  printf "%0.s " {1..80}
+  printf "\n"
+  exit
+}
+
+trap trap_ctrlC SIGINT SIGTERM
+
 # print usage information for script
 usage() {
   echo "RaspiBolt Welcome: system status overview
@@ -25,27 +59,6 @@ if [[ ${#} -gt 0 ]]; then
     exit 0
   fi
 fi
-
-
-# Script configuration
-# ------------------------------------------------------------------------------
-
-# set colors
-color_red='\033[0;31m'
-color_green='\033[0;32m'
-color_yellow='\033[0;33m'
-color_grey='\033[0;37m'
-
-# set datadir
-bitcoin_dir="/data/bitcoin"
-lnd_dir="/data/lnd"
-
-# set to mount point of secondary storage. This is used to calculate secondary USB usage %
-ext_storage2nd="/mnt/ext"
-
-# set to network device name (usually eth0 for ethernet or wlan0 for wireless on raspberry pi
-# unless you have 'Predictable Network Names' turned on in raspi-config).
-network_name="wlan0"
 
 
 # Print first welcome message
