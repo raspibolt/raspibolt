@@ -8,12 +8,6 @@ set -u
 # Script configuration
 # ------------------------------------------------------------------------------
 
-# set colors
-color_red='\033[0;31m'
-color_green='\033[0;32m'
-color_yellow='\033[0;33m'
-color_grey='\033[0;37m'
-
 # set datadir
 bitcoin_dir="/data/bitcoin"
 lnd_dir="/data/lnd"
@@ -21,13 +15,18 @@ lnd_dir="/data/lnd"
 # set to mount point of secondary storage. This is used to calculate secondary USB usage %
 ext_storage2nd="/mnt/ext"
 
-# set to network device name (usually eth0 for ethernet or wlan0 for wireless on raspberry pi
-# unless you have 'Predictable Network Names' turned on in raspi-config).
+# set to network device name (usually "eth0" for ethernet, and "wlan0" for wifi)
 network_name="wlan0"
 
 
 # Helper functionality
 # ------------------------------------------------------------------------------
+
+# set colors
+color_red='\033[0;31m'
+color_green='\033[0;32m'
+color_yellow='\033[0;33m'
+color_grey='\033[0;37m'
 
 # controlled abort on Ctrl-C
 trap_ctrlC() {
