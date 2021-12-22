@@ -99,8 +99,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   $ sudo chown -R lnd:lnd /data/lnd
   ```
 
-* Also create a separate directory for the channel backup.
-  Alternatively, you can [mount a USB thumbdrive to this location](https://linuxconfig.org/howto-mount-usb-drive-in-linux){:target="_blank"} for added redundancy.
+* Also create a separate directory for the channel backup
 
   ```sh
   $ sudo mkdir /data/lnd-backup
