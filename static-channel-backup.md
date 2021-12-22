@@ -156,7 +156,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   SOURCEFILE=/data/lnd-backup/channel.backup
   
   # Location of the backup file in the mounted thumbdrive
-  BACKUPFILE=/mnt/thumbdrive-scb/channel.backup
+  BACKUPFILE="/mnt/thumbdrive-scb/channel-$(date +"%Y%m%d-%H%M%S").backup"
   
   # Backup function
   run_backup_on_change () {
