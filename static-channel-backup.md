@@ -48,7 +48,7 @@ The guide will show how to set up an automatic Static Channel Backup:
 1. Locally, on a USB thumbdrive plugged into the Pi: in case of SSD drive failure only
 1. Remotely, in Dropbox: in case of widespread node damage, including the thumdrive (e.g. flood, fire, etc)
 
-## Automatic SCB on thumbdrive
+## Local automatic SCB backup: USB thumbdrive
 
 We will create a bash script that automatically backup the LND SCB file on change to a small thumbdrive permanently plugged in the RaspBerry Pi.
 
@@ -116,7 +116,7 @@ and copy them into a text editor on your local computer (e.g. here `1005` and `1
   > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/thumbdrive-scb
   ```
 
-#### Create a backup SCB file
+### Create a backup SCB file
 
 * Create an empty SCB file in the thumdrive
 
@@ -124,7 +124,7 @@ and copy them into a text editor on your local computer (e.g. here `1005` and `1
   $ sudo touch /mnt/thumbdrive-scb/channel.backup
   ```
 
-#### Install inotify-tools
+### Install inotify-tools
 
 `inotify-tools` allows to use `inotify` (a tool that monitors files and directories) within shell scripts. We'll use it to monitor changes in our node's `channel.backup` (i.e. new updates by LND when a channel is opened or closed).
 
@@ -135,7 +135,7 @@ and copy them into a text editor on your local computer (e.g. here `1005` and `1
   $ sudo apt install inotify-tools
   ```
 
-#### Create script
+### Create script
 
 We create a shell script that uses `inotify` to monitor changes in `channel.backup` and make a copy of it on change.
 
@@ -181,7 +181,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   $ sudo chmod +x /usr/local/bin/thumbdrive-scb-backup.sh
   ```
   
-#### Run backup script in background
+### Run backup script in background
 
 We'll setup the backup script as a systemd service to run in the background and start automatically on system startup.
 
@@ -221,7 +221,7 @@ We'll setup the backup script as a systemd service to run in the background and 
   $ sudo systemctl status thumbdrive-scb-backup.service
   ```
   
-#### Test
+### Test
 
 We now cause the `channel.backup` to change and see if a copy gets uploaded to the thumbdrive.
 
@@ -256,10 +256,17 @@ We now cause the `channel.backup` to change and see if a copy gets uploaded to t
   
 You're set! Each time you'll open a new channel or close a channel, the backup file in the thumbdrive will be updated.
 
-### (Optional) Automatic SCB to remote location
+---
+
+## (Optional) Remote automatic SCB backup: Dropbox
 
 The thumbdrive-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and USB thumbdrive are destroyed at the same time (*e.g.* fire, food, etc.).  
 
 To protect against this situation, it is necessary to send the backup to a remote location. For example, [this bonus guide](https://raspibolt.org/bonus/lightning/static-backup-dropbox.html) explains how to automatically send the backup to your Dropbox.
 
+<br /><br />
+
 ---
+
+Next: [Ride The Lightning >>](rtl.md)
+
