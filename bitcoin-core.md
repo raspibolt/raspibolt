@@ -173,10 +173,6 @@ We'll also set the proper access permissions.
   server=1
   txindex=1
 
-  # File permissions, necessary for cookie authentication
-  sysperms=1
-  disablewallet=1
-
   # Network
   listen=1
   listenonion=1
@@ -265,7 +261,8 @@ We use “systemd“, a daemon that controls the startup process using configura
   ExecStart=/usr/local/bin/bitcoind -daemon \
                                     -pid=/run/bitcoind/bitcoind.pid \
                                     -conf=/home/bitcoin/.bitcoin/bitcoin.conf \
-                                    -datadir=/home/bitcoin/.bitcoin
+                                    -datadir=/home/bitcoin/.bitcoin \
+                                    -startupnotify="chmod g+r /home/bitcoin/.bitcoin/.cookie"
 
   # Process management
   ####################
@@ -343,6 +340,14 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   > Nov 25 22:50:59 raspibolt3 systemd[1]: Starting Bitcoin daemon...
   > Nov 25 22:50:59 raspibolt3 bitcoind[2316]: Bitcoin Core starting
   > Nov 25 22:50:59 raspibolt3 systemd[1]: Started Bitcoin daemon.
+  ```
+
+* Check if the permission cookie can be accessed by the group "bitcoin".
+  The output must contain the `-rw-r-----` part, otherwise no application run by a different user can access Bitcoin Core.
+
+  ```sh
+  $ ls -la /home/bitcoin/.bitcoin/.cookie
+  > -rw-r----- 1 bitcoin bitcoin 75 Dec 17 13:48 /home/bitcoin/.bitcoin/.cookie
   ```
 
 * See "bitcoind" in action by monitoring its log file.
