@@ -1,27 +1,76 @@
-#!/bin/sh
-# RaspiBolt LND Mainnet: systemd unit for getpublicip.sh script
+#!/bin/bash
 # /etc/systemd/system/20-raspibolt-welcome.sh
+set -u
 
 # make executable and copy script to /etc/update-motd.d/
-# root must be able to execute bitcoin-cli and lncli
+# user must be able to execute bitcoin-cli and lncli
+
+# Script configuration
+# ------------------------------------------------------------------------------
+
+# set datadir
+bitcoin_dir="/data/bitcoin"
+lnd_dir="/data/lnd"
+
+# set to mount point of secondary storage. This is used to calculate secondary USB usage %
+ext_storage2nd="/mnt/ext"
+
+# set to network device name (usually "eth0" for ethernet, and "wlan0" for wifi)
+network_name="wlan0"
+
+
+# Helper functionality
+# ------------------------------------------------------------------------------
 
 # set colors
 color_red='\033[0;31m'
 color_green='\033[0;32m'
 color_yellow='\033[0;33m'
 color_grey='\033[0;37m'
-color_blue='\033[1;34m'
-color_darkgrey='\033[0;90m'
 
-# set datadir
-bitcoin_dir="/home/bitcoin/.bitcoin"
-lnd_dir="/home/bitcoin/.lnd"
+# controlled abort on Ctrl-C
+trap_ctrlC() {
+  echo -e "\r"
+  printf "%0.s " {1..80}
+  printf "\n"
+  exit
+}
 
-#Set to mount point of blockchain volume. This is used to calculate USB HDD usage %
-ext_hdd="/mnt/ext"
+trap trap_ctrlC SIGINT SIGTERM
 
-#Set to network device name (usually eth0 for ethernet or wlan0 for wireless on raspberry pi unless you have 'Predictable Network Names' turned on in raspi-config. To get network device name run ifconfig.)
-network_name="wlan0"
+# print usage information for script
+usage() {
+  echo "RaspiBolt Welcome: system status overview
+usage: bbb-cmd.sh [--help] [--mock]
+
+This script can be run on startup: make it executable and
+copy the script to /etc/update-motd.d/
+"
+}
+
+# check script arguments
+mockmode=0
+if [[ ${#} -gt 0 ]]; then
+  if [[ "${1}" == "-m" ]] || [[ "${1}" == "--mock" ]]; then
+    mockmode=1
+  else
+    usage
+    exit 0
+  fi
+fi
+
+
+# Print first welcome message
+# ------------------------------------------------------------------------------
+printf "
+${color_yellow}RaspiBolt %s:${color_grey} Sovereign Bitcoin full node
+${color_yellow}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+" "3"
+
+# Gather system data
+# ------------------------------------------------------------------------------
+printf "%0.s#" {1..40}
+echo -ne '\r### Loading System data \r'
 
 # get uptime & load
 load=$(w|head -1|sed -E 's/.*load average: (.*)/\1/')
@@ -40,129 +89,52 @@ fi
 
 # get memory
 ram_avail=$(free --mebi | grep Mem | awk '{ print $7 }')
-ram=$(printf "%sM / %sM" "${ram_avail}" "$(free --mebi | grep Mem | awk '{ print $2 }')")
 
-if [ ${ram_avail} -lt 100 ]; then
+if [ "${ram_avail}" -lt 100 ]; then
   color_ram="${color_red}\e[7m"
 else
   color_ram=${color_green}
 fi
 
 # get storage
-sd_free_ratio=$(printf "%d" "$(df | grep "/$" | awk '{ print $4/$2*100 }')") 2>/dev/null
-#sd=$(printf "%s (%s%%)" "$(df -h | grep '/$' | awk '{ print $4 }')" "${sd_free_ratio}")
-sd=$(printf "%s" "$(df -h|grep '/$'|awk '{print $4}')") 2>/dev/null
-if [ ${sd_free_ratio} -lt 10 ]; then
-  color_sd="${color_red}\e[7m"
+storage_free_ratio=$(printf "%.0f" "$(df | grep "/$" | awk '{ print $4/$2*100 }')") 2>/dev/null
+storage=$(printf "%s" "$(df -h|grep '/$'|awk '{print $4}')") 2>/dev/null
+
+if [ "${storage_free_ratio}" -lt 10 ]; then
+  color_storage="${color_red}\e[7m"
 else
-  color_sd=${color_green}
+  color_storage=${color_green}
 fi
 
-hdd_free_ratio=$(printf "%d" "$(df  | grep ${ext_hdd} | awk '{ print $4/$2*100 }')") 2>/dev/null
-#hdd=$(printf "%s (%s%%)" "$(df -h | grep ${ext_hdd} | awk '{ print $4 }')" "${hdd_free_ratio}")
-hdd=$(printf "%s" "$(df -h|grep ${ext_hdd}|awk '{print $4}')") 2>/dev/null
-if [ ${hdd_free_ratio} -lt 10 ]; then
-  color_hdd="${color_red}\e[7m"
+storage2nd_free_ratio=$(printf "%.0f" "$(df  | grep ${ext_storage2nd} | awk '{ print $4/$2*100 }')") 2>/dev/null
+storage2nd=$(printf "%s" "$(df -h|grep ${ext_storage2nd}|awk '{print $4}')") 2>/dev/null
+
+if [ -z "${storage2nd}" ]; then
+  storage2nd="none"
+  color_storage2nd=${color_grey}
 else
-  color_hdd=${color_green}
+  storage2nd="${storage2nd} free"
+  if [ "${storage2nd_free_ratio}" -lt 10 ]; then
+    color_storage2nd="${color_red}\e[7m"
+  else
+    color_storage2nd=${color_green}
+  fi
 fi
 
 # get network traffic
 network_rx=$(ifconfig ${network_name} | grep 'RX packets' | awk '{ print $6$7 }' | sed 's/[()]//g')
 network_tx=$(ifconfig ${network_name} | grep 'TX packets' | awk '{ print $6$7 }' | sed 's/[()]//g')
 
-# Bitcoin blockchain
-bitcoind_running=$(systemctl is-active bitcoind)
-bitcoind_color="${color_green}"
-if [ -z "${bitcoind_running##*inactive*}" ]; then
-  bitcoind_running="down"
-  bitcoind_color="${color_red}\e[7m"
-else
-  bitcoind_running="up"
-fi
-btc_path=$(command -v bitcoin-cli)
-if [ -n ${btc_path} ]; then
-  btc_title="฿itcoin"
-  chain="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.chain')"
-  if [ -n $chain ]; then
-    btc_title="${btc_title} (${chain}net)"
+# Gather application versions
+# ------------------------------------------------------------------------------
 
-    # get sync status
-    block_chain="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.headers')"
-    block_verified="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.blocks')"
-    block_diff=$(expr ${block_chain} - ${block_verified})
-
-    progress="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.verificationprogress')"
-    sync_percentage=$(printf "%.2f%%" "$(echo $progress | awk '{print 100 * $1}')")
-
-    if [ ${block_diff} -eq 0 ]; then    # fully synced
-      sync="OK"
-      sync_color="${color_green}"
-      sync_behind="[${block_chain}]"
-    elif [ ${block_diff} -eq 1 ]; then          # fully synced
-      sync="OK"
-      sync_color="${color_green}"
-      sync_behind="-1 block"
-    elif [ ${block_diff} -le 10 ]; then    # <= 10 blocks behind
-      sync="Behind"
-      sync_color="${color_red}"
-      sync_behind="-${block_diff} blocks"
-    else
-      sync="In progress"
-      sync_color="${color_red}"
-      sync_behind="${sync_percentage}"
-    fi
-
-    # get last known block
-    last_block="$(bitcoin-cli -datadir=${bitcoin_dir} getblockcount)"
-    if [ ! -z "${last_block}" ]; then
-      btc_line2="${btc_line2} ${color_gray}(block ${last_block})"
-    fi
-
-    # get mem pool transactions
-    mempool="$(bitcoin-cli -datadir=${bitcoin_dir} getmempoolinfo | jq -r '.size')"
-
-    # get connection info
-    connections="$(bitcoin-cli -datadir=${bitcoin_dir} getnetworkinfo | jq .connections)"
-    inbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == true)' | jq -s 'length')"
-    outbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == false)' | jq -s 'length')"
-
-  else
-    btc_line2="${color_red}NOT RUNNING\t\t"
-  fi
-fi
-
-# get public IP address & port
-public_ip=$(curl -s ipinfo.io/ip)
-public_port=$(cat ${bitcoin_dir}/bitcoin.conf 2>/dev/null | grep ^port= | awk -F"=" '{print $2}')
-if [ "${public_port}" = "" ]; then
-  if [ $chain  = "test" ]; then
-    public_port=18333
-  else
-    public_port=8333
-  fi
-fi
-
-#Choose the top two lines if you experience 'not reachable' while blockchain syncs. Could be due to nat-loopback being not available. 
-#public_check=$(curl -s https://bitnodes.io/api/v1/nodes/me-${public_port}/ | jq .success)
-#if [ $public_check = "true" ]; then
-public_check=$(timeout 2s nc -z ${public_ip} ${public_port}; echo $?)
-if [ $public_check = "0" ]; then
-  public="Yes"
-  public_color="${color_green}"
-else
-  public="Not reachable"
-  public_color="${color_red}"
-fi
-public_addr="${public_ip}:${public_port}"
-
-# Github calls for version info, limited to once a day
-gitstatusfile="${HOME}/.raspibolt.inf"
+# GitHub calls for version info, limited to once a day
+gitstatusfile="${HOME}/.raspibolt.versions"
 gitupdate="0"
 if [ ! -f "$gitstatusfile" ]; then
   gitupdate="1"
 else
-  gitupdate=`find ${gitstatusfile} -mtime +1|wc -l`
+  gitupdate=$(find "${gitstatusfile}" -mtime +1 | wc -l)
 fi
 if [ "${gitupdate}" -eq "1" ]; then
   # Calls to github
@@ -170,38 +142,36 @@ if [ "${gitupdate}" -eq "1" ]; then
   lndgit=$(curl -s https://api.github.com/repos/lightningnetwork/lnd/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
   # Electrs and RPC Explorer dont have a latest release, just tags
   electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
-  btcrcpexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
+  btcrpcexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
   # write to file TODO: convert to JSON for sanity
   printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
 else
   # read from file
-  btcgit=`cat ${gitstatusfile} | sed -n '1p'`
-  lndgit=`cat ${gitstatusfile} | sed -n '2p'`
-  electrsgit=`cat ${gitstatusfile} | sed -n '3p'`
-  btcrpcexplorergit=`cat ${gitstatusfile} | sed -n '4p'`
-  # fill if not yet set -- TBD: convert to common routine
+  btcgit=$(sed -n '1p' < "${gitstatusfile}")
+  lndgit=$(sed -n '2p' < "${gitstatusfile}")
+  electrsgit=$(sed -n '3p' < "${gitstatusfile}")
+  btcrpcexplorergit=$(sed -n '4p' < "${gitstatusfile}")
+
+  # fill if not yet set
   if [ -z "$btcgit" ]; then
     btcgit=$(curl -s https://api.github.com/repos/bitcoin/bitcoin/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-    printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
   fi
   if [ -z "$lndgit" ]; then
     lndgit=$(curl -s https://api.github.com/repos/lightningnetwork/lnd/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-    printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
   fi
   if [ -z "$electrsgit" ]; then
     electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
-    printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
   fi
   if [ -z "$btcrpcexplorergit" ]; then
     btcrpcexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
-    printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
   fi
+  printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
 fi
 
-#create variable btcversion
+# create variable btcversion
 btcpi=$(bitcoin-cli -version |sed -n 's/^.*version //p')
-case "$btcpi" in
-  *"$btcgit"*)
+case "${btcpi}" in
+  *"${btcgit}"*)
     btcversion="$btcpi"
     btcversion_color="${color_green}"
     ;;
@@ -211,8 +181,82 @@ case "$btcpi" in
     ;;
 esac
 
-# get LND info
-if [ $chain = "test" ]; then
+
+# Gather Bitcoin Core data
+# ------------------------------------------------------------------------------
+printf "%0.s#" {1..50}
+echo -ne '\r### Loading Bitcoin Core data \r'
+
+bitcoind_running=$(systemctl is-active bitcoind)
+bitcoind_color="${color_green}"
+if [ -z "${bitcoind_running##*inactive*}" ]; then
+  bitcoind_running="down"
+  bitcoind_color="${color_red}\e[7m"
+else
+  bitcoind_running="up"
+fi
+btc_path=$(command -v bitcoin-cli)
+if [ -n "${btc_path}" ]; then
+  btc_title="฿itcoin"
+  chain="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.chain')"
+
+  btc_title="${btc_title} (${chain}net)"
+
+  # get sync status
+  block_chain="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.headers')"
+  block_verified="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.blocks')"
+  block_diff=$(("${block_chain}" - "${block_verified}"))
+
+  progress="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.verificationprogress')"
+  sync_percentage=$(printf "%.2f%%" "$(echo "${progress}" | awk '{print 100 * $1}')")
+
+  if [ "${block_diff}" -eq 0 ]; then      # fully synced
+    sync="OK"
+    sync_color="${color_green}"
+    sync_behind="[#${block_chain}]"
+  elif [ "${block_diff}" -eq 1 ]; then    # fully synced
+    sync="OK"
+    sync_color="${color_green}"
+    sync_behind="-1 block"
+  elif [ "${block_diff}" -le 10 ]; then   # <= 10 blocks behind
+    sync="Behind"
+    sync_color="${color_red}"
+    sync_behind="-${block_diff} blocks"
+  else
+    sync="In progress"
+    sync_color="${color_red}"
+    sync_behind="${sync_percentage}"
+  fi
+
+  # get mem pool transactions
+  mempool="$(bitcoin-cli -datadir=${bitcoin_dir} getmempoolinfo | jq -r '.size')"
+
+  # get connection info
+  connections="$(bitcoin-cli -datadir=${bitcoin_dir} getnetworkinfo | jq .connections)"
+  inbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == true)' | jq -s 'length')"
+  outbound="$(bitcoin-cli -datadir=${bitcoin_dir} getpeerinfo | jq '.[] | select(.inbound == false)' | jq -s 'length')"
+fi
+
+# create variable btcversion
+btcpi=$(bitcoin-cli -version |sed -n 's/^.*version //p')
+case "${btcpi}" in
+  *"${btcgit}"*)
+    btcversion="$btcpi"
+    btcversion_color="${color_green}"
+    ;;
+  *)
+    btcversion="$btcpi"" Update!"
+    btcversion_color="${color_red}"
+    ;;
+esac
+
+
+# Gather LND data
+# ------------------------------------------------------------------------------
+printf "%0.s#" {1..60}
+echo -ne '\r### Loading LND data \r'
+
+if [ "${chain}" = "test" ]; then
   macaroon_path="${lnd_dir}/data/chain/bitcoin/testnet/readonly.macaroon"
 else
   macaroon_path="${lnd_dir}/data/chain/bitcoin/mainnet/readonly.macaroon"
@@ -237,92 +281,100 @@ if [ -z "${lnd_running##*up*}" ] ; then
 else
   wallet_unlocked=0
 fi
+printf "%0.s#" {1..63}
+echo -ne '\r### Loading LND data \r'
+
 if [ "$wallet_unlocked" -eq "0" ] ; then
- alias_color="${color_red}"
- ln_alias="Wallet Locked"
- ln_walletbalance="?"
- ln_channelbalance="?"
- ln_channels_online="?"
- ln_channels_total="?"
- ln_connect_addr=""
- ln_external=""
- ln_external_ip=""
- ln_channel_pubkey=""
- external_color="${color_grey}"
- ln_pendingopen="?"
- ln_pendingforce="?"
- ln_waitingclose="?"
- ln_pendinglocal="?"
- sum_balance="?"
- if [ $lnd_running = "up" ]; then
-   ln_connect_guidance="You must first unlock your wallet:   lncli unlock"
- else
-   ln_connect_guidance="The LND service is down. Start the service:   sudo systemctl start lnd"
- fi
+  alias_color="${color_red}"
+  ln_alias="Wallet Locked"
+  ln_walletbalance="?"
+  ln_channelbalance="?"
+  ln_channels_online="?"
+  ln_channels_total="?"
+  ln_connect_addr=""
+  ln_external=""
+  ln_pendingopen="?"
+  ln_pendingforce="?"
+  ln_waitingclose="?"
+  ln_pendinglocal="?"
+  sum_balance="?"
+  if [ $lnd_running = "up" ]; then
+    ln_connect_guidance="You must first unlock your wallet:   lncli unlock"
+  else
+    ln_connect_guidance="The LND service is down. Start the service:   sudo systemctl start lnd"
+  fi
 else
- alias_color="${color_grey}"
- ln_alias="$($lncli getinfo | jq -r '.alias')" 2>/dev/null
- ln_walletbalance="$($lncli walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
- ln_channelbalance="$($lncli channelbalance | jq -r '.balance')" 2>/dev/null
+  alias_color="${color_grey}"
+  ln_alias="$(${lncli} getinfo | jq -r '.alias')" 2>/dev/null
+  ln_walletbalance="$(${lncli} walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
+  ln_channelbalance="$(${lncli} channelbalance | jq -r '.balance')" 2>/dev/null
 
- ln_channels_online="$($lncli getinfo | jq -r '.num_active_channels')" 2>/dev/null
- ln_channels_total="$($lncli listchannels | jq '.[] | length')" 2>/dev/null
- ln_connect_addr="$($lncli getinfo | jq -r '.uris[0]')" 2>/dev/null
- ln_connect_guidance="lncli connect ${ln_connect_addr}"
- ln_external="$(echo $ln_connect_addr | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
- ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
- ln_channel_pubkey="$(echo $ln_connect_addr | tr "@" " " | awk '{ print $1 }')" 2>/dev/null
- if [ "$ln_external_ip" = "$public_ip" ]; then
-  external_color="${color_grey}"
- else
-  external_color="${color_red}"
- fi
- if [ -z "${ln_external##*onion*}" ]; then
-  external_color="${color_blue}"
-  ln_external="Using TOR Address"
- fi
+  printf "%0.s#" {1..66}
 
- ln_pendingopen=$($lncli pendingchannels  | jq '.pending_open_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
- if [ -z $ln_pendingopen ]; then
-  ln_pendingopen=0
- fi
+  echo -ne '\r### Loading LND data \r'
 
- ln_pendingforce=$($lncli pendingchannels  | jq '.pending_force_closing_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
- if [ -z $ln_pendingforce ]; then
-  ln_pendingforce=0
- fi
+  ln_channels_online="$(${lncli} getinfo | jq -r '.num_active_channels')" 2>/dev/null
+  ln_channels_total="$(${lncli} listchannels | jq '.[] | length')" 2>/dev/null
+  ln_connect_addr="$(${lncli} getinfo | jq -r '.uris[0]')" 2>/dev/null
+  ln_connect_guidance="lncli connect ${ln_connect_addr}"
+  ln_external="$(echo "${ln_connect_addr}" | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
+  if [ -z "${ln_external##*onion*}" ]; then
+    ln_external="Using TOR Address"
+  fi
 
- ln_waitingclose=$($lncli pendingchannels  | jq '.waiting_close_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
- if [ -z $ln_waitingclose ]; then
-  ln_waitingclose=0
- fi
+  printf "%0.s#" {1..70}
+  echo -ne '\r### Loading LND data \r'
 
- ln_pendinglocal=$(expr $ln_pendingopen + $ln_pendingforce + $ln_pendingclose + $ln_waitingclose)
+  ln_pendingopen=$($lncli pendingchannels  | jq '.pending_open_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+  if [ -z "${ln_pendingopen}" ]; then
+    ln_pendingopen=0
+  fi
 
- sum_balance=0
- if [ ! -z "$ln_channelbalance" ]; then
-  sum_balance=$(expr $ln_channelbalance + $sum_balance )
- fi
- if [ ! -z "$ln_walletbalance" ]; then
-  sum_balance=$(expr $ln_walletbalance + $sum_balance )
- fi
- if [ ! -z "$ln_pendinglocal" ]; then
-   sum_balance=$(expr $sum_balance + $ln_pendinglocal )
- fi
+  ln_pendingforce=$($lncli pendingchannels  | jq '.pending_force_closing_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+  if [ -z "${ln_pendingforce}" ]; then
+    ln_pendingforce=0
+  fi
+
+  ln_waitingclose=$($lncli pendingchannels  | jq '.waiting_close_channels[].channel.local_balance|tonumber ' | awk '{sum+=$0} END{print sum}')
+  if [ -z "${ln_waitingclose}" ]; then
+    ln_waitingclose=0
+  fi
+
+  echo -ne '\r### Loading LND data \r'
+
+  ln_pendinglocal=$((ln_pendingopen + ln_pendingforce + ln_waitingclose))
+
+  sum_balance=0
+  if [ -n "${ln_channelbalance}" ]; then
+    sum_balance=$((ln_channelbalance + sum_balance ))
+  fi
+  if [ -n "${ln_walletbalance}" ]; then
+    sum_balance=$((ln_walletbalance + sum_balance ))
+  fi
+  if [ -n "$ln_pendinglocal" ]; then
+    sum_balance=$((sum_balance + ln_pendinglocal ))
+  fi
 fi
-
 
 #create variable lndversion
 lndpi=$(lncli -version | sed -n 's/^.*commit=//p')
-if [ "$lndpi" = "$lndgit" ]; then
-  lndversion="$lndpi"
+if [ "${lndpi}" = "${lndgit}" ]; then
+  lndversion="${lndpi}"
   lndversion_color="${color_green}"
 else
-  lndversion="$lndpi"" Update!"
+  lndversion="${lndpi}"" Update!"
   lndversion_color="${color_red}"
 fi
 
-#electrs
+#get channel.db size
+channel_db_size=$(du -h ${lnd_dir}/data/graph/mainnet/channel.db | awk '{print $1}')
+
+
+# Gather Electrs data
+# ------------------------------------------------------------------------------
+printf "%0.s#" {1..75}
+echo -ne '\r### Loading Electrum data \r'
+
 electrs_running=$(systemctl is-active electrs)
 electrs_color="${color_green}"
 if [ -z "${electrs_running##*inactive*}" ]; then
@@ -341,6 +393,13 @@ else
     electrsversion_color="${color_red}"
   fi
 fi
+
+
+# Gather Bitcoin Explorer data
+# ------------------------------------------------------------------------------
+printf "%0.s#" {1..78}
+echo -ne '\r### Loading Block Explorer data \r'
+
 #btcrpcexplorer
 btcrpcexplorer_running=$(systemctl is-active btcrpcexplorer)
 btcrpcexplorer_color="${color_green}"
@@ -351,7 +410,7 @@ if [ -z "${btcrpcexplorer_running##*inactive*}" ]; then
   btcrpcexplorerversion_color="${color_red}"
 else
   btcrpcexplorer_running="up"
-  btcrpcexplorerpi=$(curl -s http://127.0.0.1:3002/tools | grep -oP '(?<=version: )[^</]*' | awk '{print "v"$1}' )
+  btcrpcexplorerpi=$(git --git-dir /home/btcrpcexplorer/btc-rpc-explorer/.git describe --tags)
   if [ "$btcrpcexplorerpi" = "$btcrpcexplorergit" ]; then
     btcrpcexplorerversion="$btcrpcexplorerpi"
     btcrpcexplorerversion_color="${color_green}"
@@ -361,10 +420,11 @@ else
   fi
 fi
 
-#fakeoverrides for documentation images
-if [ 1 -eq 0 ]; then
-  public_addr="255.255.255.255:8333"
-  ln_alias="Node_Alias_Here"
+# Mockmode overrides data for documentation images
+# ------------------------------------------------------------------------------
+
+if [ "${mockmode}" -eq 1 ]; then
+  ln_alias="MyRaspiBolt-version3"
   ln_walletbalance="100000"
   ln_channelbalance="200000"
   ln_pendinglocal="50000"
@@ -374,38 +434,41 @@ if [ 1 -eq 0 ]; then
   ln_connect_guidance="lncli connect c55c05e9148e4e0f120835a6384348dd4d91f77bb1adf256694391bf81a07f03ef@klra7gtbc1j322399pq87bk47ny38brjomvfdg3vb6k3ggahan2dzlyd.onion:9735"
 fi
 
-#render
-printf "
-${color_yellow}RaspiBolt 2.2-beta:${color_grey} Bitcoin Core, LND, Electrs and Block Explorer
+# Render output
+# ------------------------------------------------------------------------------
+
+echo -ne "\033[2K"
+printf "${color_grey}cpu temp: ${color_temp}%-2s°C${color_grey}  tx: %-10s storage:   ${color_storage}%-11s ${color_grey}  load: %s
+${color_grey}up: %-10s  rx: %-10s 2nd drive: ${color_storage2nd}%-11s${color_grey}   available mem: ${color_ram}%sM
 ${color_yellow}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${color_grey}cpu temp: ${color_temp}%-2s°C${color_grey}   tx: %-10s sd card: ${color_sd}%-11s ${color_grey}   load: %s
-${color_grey}up: %-10s   rx: %-10s external: ${color_hdd}%-11s${color_grey}   available mem: ${color_ram}%sM
-${color_yellow}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${color_green}        .~~.   .~~.        ${color_yellow}%-22s${bitcoind_color}%-4s${color_grey}   ${color_yellow}%-20s${lnd_color}%-4s
-${color_green}       '. \ ' ' / .'       ${btcversion_color}%-26s ${lndversion_color}%-24s
-${color_red}        .~ .~~~${color_yellow}.${color_red}.~.        ${color_grey}%-26s ${alias_color}%-24s
-${color_red}       : .~.'${color_yellow}／/${color_red}~. :       ${color_grey}Sync    ${sync_color}%-18s ${color_grey}฿${color_grey}%15s sat
-${color_red}      ~ (  ${color_yellow}／ /_____${color_red}~      ${color_grey}Public  ${public_color}%-18s ${color_grey}⚡%14s sat
-${color_red}     ( : ${color_yellow}／____   ／${color_red} )     ${color_grey}Mempool %-18s ${color_grey}⏳%14s sat
-${color_red}      ~ .~ (  ${color_yellow}/ ／${color_red}. ~      ${color_grey}Peers   %-22s ${color_grey}∑%15s sat
-${color_red}       (  : '${color_yellow}/／${color_red}:  )       ${color_grey}                           ${color_grey}%s/%s channels
-${color_red}        '~ .~${color_yellow}°${color_red}~. ~'        ${color_grey}
-${color_red}            '~'            ${color_yellow}%-20s${electrs_color}%-4s${color_grey}   ${color_yellow}%-18s${color_grey} ${btcrpcexplorer_color}%-4s${color_grey}
-${color_red}                           ${electrsversion_color}%-26s ${btcrpcexplorerversion_color}%-24s
+${color_green}     .~~.   .~~.      ${color_yellow}%-22s${bitcoind_color}%-4s${color_grey}   ${color_yellow}%-20s${lnd_color}%-4s
+${color_green}    '. \ ' ' / .'     ${btcversion_color}%-26s ${lndversion_color}%-24s
+${color_red}     .~ .~~~${color_yellow}.${color_red}.~.      ${color_grey}Sync    ${sync_color}%-18s ${alias_color}%-24s
+${color_red}    : .~.'${color_yellow}／/${color_red}~. :     ${color_grey}Mempool %-18s ${color_grey}฿%17s sat
+${color_red}   ~ (  ${color_yellow}／ /_____${color_red}~    ${color_grey}Peers   %-22s ${color_grey}⚡%16s sat
+${color_red}  ( : ${color_yellow}／____   ／${color_red} )                              ${color_grey}⏳%16s sat
+${color_red}   ~ .~ (  ${color_yellow}/ ／${color_red}. ~    ${color_yellow}%-20s${electrs_color}%-4s   ${color_grey}∑%17s sat
+${color_red}    (  : '${color_yellow}/／${color_red}:  )     ${electrsversion_color}%-26s ${color_grey}%s/%s channels
+${color_red}     '~ .~${color_yellow}°${color_red}~. ~'                                 ${color_grey}Channel.db size: ${color_green}%s
+${color_red}         '~'          ${color_yellow}%-20s${color_grey}${btcrpcexplorer_color}%-4s
+${color_red}                      ${btcrpcexplorerversion_color}%-24s
+
 ${color_grey}For others to connect to this lightning node
 ${color_grey}%s
+
 " \
-"${temp}" "${network_tx}" "${sd} free" "${load}" \
-"${uptime}" "${network_rx}" "${hdd} free" "${ram_avail}" \
+"${temp}" "${network_tx}" "${storage} free" "${load}" \
+"${uptime}" "${network_rx}" "${storage2nd}" "${ram_avail}" \
 "${btc_title}" "${bitcoind_running}" "Lightning (LND)" "${lnd_running}" \
 "${btcversion}" "${lndversion}" \
-"${public_addr}" "${ln_alias}" \
-"${sync} ${sync_behind}" "${ln_walletbalance}" \
-"${public}" "${ln_channelbalance}" \
-"${mempool} tx" "${ln_pendinglocal}" \
-"${connections} (📥 ${inbound}/📤 ${outbound})" "${sum_balance}" \
-"${ln_channels_online}" "${ln_channels_total}" \
-"Electrum" "${electrs_running}" "Block Explorer" "${btcrpcexplorer_running}" \
-"${electrsversion}" "${btcrpcexplorerversion}" \
+"${sync} ${sync_behind}" "${ln_alias}" \
+"${mempool} tx" "${ln_walletbalance}" \
+"${connections} (📥${inbound} /📤${outbound})" "${ln_channelbalance}" \
+"${ln_pendinglocal}" \
+"Electrum" "${electrs_running}" "${sum_balance}" \
+"${electrsversion}" "${ln_channels_online}" "${ln_channels_total}" \
+"${channel_db_size}" \
+"Block Explorer" "${btcrpcexplorer_running}" \
+"${btcrpcexplorerversion}" \
 "${ln_connect_guidance}"
-echo "$(tput -T xterm sgr0)"
+
