@@ -154,10 +154,10 @@ Now we take the sample configuration file and add change it to our needs.
   nano RTL-Config.json
   ```
 
-* Set password [E] to access the RTL web interface. This should be a dedicated password not used anywhere else.
+* Set password [F] to access the RTL web interface. This should be a dedicated password not used anywhere else.
 
   ```sh
-    "multiPass": "YourPassword[E]"
+    "multiPass": "YourPassword[F]"
   ```
 
 * Specify the values where RTL can find the authentication macaroon file and the LND configuration
