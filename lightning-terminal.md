@@ -1,10 +1,8 @@
 ---
 layout: default
 title: Lightning Terminal
-parent: + Lightning
-grand_parent: Bonus Section
-nav_exclude: true
-has_toc: false
+nav_order: 14
+parent: Lightning
 ---
 
 # Bonus guide: Lightning Terminal
@@ -12,11 +10,7 @@ has_toc: false
 
 ---
 
-[Lightning Terminal](https://github.com/lightninglabs/lightning-terminal){:target="_blank"} is a software suite of Lightning Labs which contains:
-
-* Faraday: accounting service
-* Loop: client software for submarine swaps with LOOP node of Lightning Labs
-* Pool: client software to submit orders to buy and sell inbound liquidity through unique price auction at each new block found
+We install [Lightning Terminal](https://github.com/lightninglabs/lightning-terminal){:target="_blank"}, a browser-based interface for managing channel liquidity.
 
 ![lightning-terminal](../../images/lightning-terminal.png)
 
@@ -32,14 +26,22 @@ Table of contents
 
 ## Introduction
 
-Lightning Terminal provides a user interface to make submarine swap easily, it now also features a UI for Pool Market which is a good tool to estimate the price of liquidity.
+Lightning Terminal is developped by the Lighining Labs, the developper of the LND lightning network implementation that we have just installed. Lightning Terminal aims at providing additional tools for operators to manage their nodes and their channel balances. Below is a summary of Lighting Labs features:
+
+* Visualize your channel balances
+* Loop: Run the Loop daemon on your node and perform submarine swaps with the LOOP node using the web GUI
+* Pool: Run the Pool daemon on your node and use the web GUI to buy and sell inbound liquidity
+* Faraday: Run the Faraday daemon on your node that provides a CLI-based LN node accounting service
+
 Because Pool is alpha software, Lightning Terminal is alpha software too. The LND part is however in beta and the behavior is exactly the same as LND.  
 
-You cannot run LiT and LND at the same time.  
+---
 
-The Lightning Terminal UI requires a password. Select a new password:
+## Preparations
 
-  `[ E ] Lightning Terminal master user password`
+The Lightning Terminal UI requires a password. Select a new password now and save it somewhere safe (e.g., password manager):
+
+  `[ E ] Lightning Terminal password`
 
 ---
 
