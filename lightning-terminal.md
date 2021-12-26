@@ -26,7 +26,7 @@ Table of contents
 
 ## Introduction
 
-Lightning Terminal is developped by the Lighining Labs, the developper of the LND lightning network implementation that we have just installed. Lightning Terminal aims at providing additional tools for operators to manage their nodes and their channel balances. Below is a summary of Lighting Labs features:
+Lightning Terminal is developped by the Lighining Labs, the developper of the LND lightning network implementation that we have just installed. It aims at providing additional tools for operators to manage their nodes and their channel balances. Below is a summary of Lighting Labs features:
 
 * Visualize your channel balances
 * Run a single daemon (`litd`) that integrates the Loop daemon (`loopd`), the Pool daemon (`poold`) and the Faraday deamon (`faraday`)
