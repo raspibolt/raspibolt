@@ -29,19 +29,12 @@ Table of contents
 Lightning Terminal is developped by the Lighining Labs, the developper of the LND lightning network implementation that we have just installed. Lightning Terminal aims at providing additional tools for operators to manage their nodes and their channel balances. Below is a summary of Lighting Labs features:
 
 * Visualize your channel balances
-* Loop: Run the Loop daemon on your node and perform submarine swaps with the LOOP node using the web GUI
-* Pool: Run the Pool daemon on your node and use the web GUI to buy and sell inbound liquidity
-* Faraday: Run the Faraday daemon on your node that provides a CLI-based LN node accounting service
+* Run a single daemon (`litd`) that integrates the Loop daemon (`loopd`), the Pool daemon (`poold`) and the Faraday deamon (`faraday`)
+* Loop client (`loop`): Perform submarine swaps with the LOOP node using the CLI or web GUI
+* Pool client (`pool`): Buy and sell inbound liquidity using the peer-to-peer auction-based Pool exchange using the CLI or web GUI 
+* Faraday client (`frcli`): Run the Faraday daemon on your node that provides a CLI-based LN node accounting service
 
 Because Pool is alpha software, Lightning Terminal is alpha software too. The LND part is however in beta and the behavior is exactly the same as LND.  
-
----
-
-## Preparations
-
-The Lightning Terminal UI requires a password. Select a new password now and save it somewhere safe (e.g., password manager):
-
-  `[ E ] Lightning Terminal password`
 
 ---
 
