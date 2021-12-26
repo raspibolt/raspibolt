@@ -706,4 +706,4 @@ Upgrading LND can lead to a number of issues.
 
 ---
 
-Next: [Ride The Lightning >>](rtl.md)
+Next: [Lightning Terminal >>](lightning-terminal.md)
