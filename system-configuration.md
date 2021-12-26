@@ -51,7 +51,7 @@ We will use the primary user "admin" instead of "pi" to make this guide more uni
 The Bitcoin Core application will run in the background (as a "daemon") and use the separate user “bitcoin” for security reasons.
 This user does not have admin rights and cannot change the system configuration.
 
-* Create the user "bitcoin" and set your `password [A]`
+* Create the user "bitcoin"
 
   ```sh
   $ sudo adduser --gecos "" --disabled-password bitcoin
