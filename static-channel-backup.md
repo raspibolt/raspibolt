@@ -255,12 +255,117 @@ You're set! Each time you'll open a new channel or close a channel, the backup f
 
 ---
 
-## (Optional) Remote backup: Dropbox
+## (Optional) Remote backup: GitHub
 
 The thumbdrive-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and USB thumbdrive are destroyed at the same time (*e.g.* fire, food, etc.).  
 
-To protect against this situation, it is necessary to send the backup to a remote location. For example, [this bonus guide](https://raspibolt.org/bonus/lightning/static-backup-dropbox.html) explains how to automatically send the backup to your Dropbox.
+To protect against this situation, it is necessary to send the backup to a remote location. We will 
 
+### Create a GitHub repository
+
+* Go to [GitHub](https://github.com/){:target="_blank"} and sign up for a new user account (or use an existing one)
+
+* Create a new repository: [https://github.com/new](https://github.com/new){:target="_blank"}
+  * Type the following repository name: `lnd-backup`
+  * Select "Private" (rather than the default "Public")
+  * Click on "Create repository"
+
+### Clone the repository to the node
+
+* With the "admin" user, backup  the existing `lnd-backup` folder
+
+  ```sh
+  $ sudo mv /data/lnd-backup /data/lnd-backup.bak
+  ```
+
+* Using the "bitcoin" user, create a pair of SSH keys. When prompt, just press "Enter" to confirm the default SSH directory and to not setting up a password.
+
+  ```sh
+  $ sudo su - bitcoin
+  $ ssh-keygen -t rsa -b 4096
+  > Generating public/private rsa key pair.
+  > Enter file in which to save the key (/home/bitcoin/.ssh/id_rsa): 
+  > Created directory '/home/bitcoin/.ssh'.
+  > Enter passphrase (empty for no passphrase): 
+  > Enter same passphrase again: 
+  > Your identification has been saved in /home/bitcoin/.ssh/id_rsa
+  > Your public key has been saved in /home/bitcoin/.ssh/id_rsa.pub
+  > The key fingerprint is:
+  > SHA256:1234abcd... bitcoin@raspibolt
+  > [...]
+  ```
+
+* Display the public key
+
+  ```sh
+  $ cat /home/bitcoin/.ssh/id_rsa.pub
+  > ssh-rsa 5678efgh... bitcoin@raspibolt
+
+* Go back to the GitHub repository webpage
+  * Click on "Settings", then "Deploy keys", then "Add deploy keys"
+  * Type a title (e.g., SCB)
+  * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... bitcoin@raspibolt`)
+  * Click "Add key"
+
+* Still with user "bitcoin", set up global Git confirguration values. It is required but can be dummy values
+
+  ```sh
+  $ cd /data
+  $ git config --global user.name "RaspiBolt"
+  $ git config --global user.email "raspibolt@dummyemail.com"
+  ```
+
+* Clone your newly created empty repository (whem prompted "Are you sure you want to continue connecting", type `yes`)
+
+  ```sh
+  $ git clone git@github.com:VajraOfIndra/lnd-backup.git
+  > Cloning into 'lnd-backup'...
+  > The authenticity of host 'github.com (140.82.121.3)' can't be established.
+  > ECDSA key fingerprint is SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM.
+  > Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+  > Warning: Permanently added 'github.com,140.82.121.3' (ECDSA) to the list of known hosts.
+  > warning: You appear to have cloned an empty repository.
+  $ cd lnd-backup
+  $ ls -la
+  > drwxr-xr-x  3 bitcoin bitcoin 4096 Dec 27 18:55 .
+  > drwxr-xr-x 12 bitcoin bitcoin 4096 Dec 27 18:55 ..
+  > drwxr-xr-x  7 bitcoin bitcoin 4096 Dec 27 18:56 .git
+  ```
+
+### Push to remote directory
+
+* Using a second SSH session, trigger a backup of the `channel.backup` file. Exit the second session.
+
+  ```sh
+  $2 sudo touch /home/admin/.lnd/data/chain/bitcoin/mainnet/channel.backup
+  $2 exit
+  ```
+
+* Go back to your first session, check that a new backup file has been created
+
+  ```sh
+  $ ls -la
+  > drwxr-xr-x  3 bitcoin bitcoin  4096 Dec 27 19:18 .
+  > drwxr-xr-x 12 bitcoin bitcoin  4096 Dec 27 19:07 ..
+  > drwxr-xr-x  8 bitcoin bitcoin  4096 Dec 27 19:25 .git
+  > -rw-r--r--  1 bitcoin bitcoin 11957 Dec 27 19:18 channel.backup
+  ```
+
+* Enter the Git repository, commit the content of the folder and push it to your remote GitHub repository 
+
+  ```sh
+  $ cd lnd-backup
+  $ git add .
+  $ git commit -m "SCB"
+  $ git push --set-upstream origin master
+  ```
+
+* Check that the backup file is now in your remote GitHub repository (https://github.com/<YourGitHubUsername>/lnd-backup)
+
+### Push to remote directory
+
+* Usin
+ 
 <br /><br />
 
 ---
