@@ -307,7 +307,7 @@ To protect against this situation, it is necessary to send the backup to a remot
   * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... bitcoin@raspibolt`)
   * Click "Add key"
 
-* Still with user "bitcoin", set up global Git confirguration values. It is required but can be dummy values
+* Still with user "bitcoin", set up global Git configuration values. The name and email are required but can be dummy values.
 
   ```sh
   $ cd /data
