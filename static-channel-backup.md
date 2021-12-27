@@ -364,7 +364,52 @@ To protect against this situation, it is necessary to send the backup to a remot
 
 ### Push to remote directory
 
-* Usin
+* Create a new shell script file
+
+  ```sh
+  $ sudo nano /usr/local/bin/github-scb-backup.sh
+  ```
+
+* Check the following line code and paste them in nano. Save and exit.
+
+  ```sh
+  #!/bin/bash
+  
+  # The script waits for a change in channel.backup. 
+  # When a change happens, it pushes the content of the backup folder to the remote GitHub repo
+  
+  
+  USER='bitcoin'
+  REPO='/data/lnd-backup/'
+ 
+  # Location of the source file
+  SOURCEFILE=/data/lnd-backup/channel.backup
+  
+  # Backup function
+  run_backup_on_change () {
+    echo "Copying backup file to remote location..."
+    git add /data/lnd-backup/.
+    git commit -m "SCB"
+    git push --set-upstream origin master
+  }
+
+  # Monitoring function
+  run () {
+    while true; do
+        inotifywait $SOURCEFILE
+        run_backup_on_change
+    done
+  }
+
+  run
+  ```
+
+* Make the script executable and move it to the standard bin(ary) directory
+
+  ```sh
+  $ sudo chmod +x /usr/local/bin/thumbdrive-scb-backup.sh
+  ```
+  
  
 <br /><br />
 
