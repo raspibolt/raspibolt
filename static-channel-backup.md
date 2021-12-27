@@ -48,13 +48,13 @@ The guide will show how to set up an automatic Static Channel Backup:
 1. Locally, on a USB thumbdrive plugged into the Pi: in case of SSD drive failure only
 1. Remotely, in Dropbox: in case of widespread node damage, including the thumdrive (e.g. flood, fire, etc)
 
-## Local automatic SCB backup: USB thumbdrive
+## Local backup: USB thumbdrive
 
 We will create a bash script that automatically backup the LND SCB file on change to a small thumbdrive permanently plugged in the RaspBerry Pi.
 
 ### Thumbdrive size
 
-The `channel.backup` file is very small in size (<<1MB) so even the smallest thumbdrive will do the job.
+The `channel.backup` file is very small in size (<<1 MB) so even the smallest thumbdrive will do the job.
 
 ### Formatting
 
@@ -70,9 +70,10 @@ The `channel.backup` file is very small in size (<<1MB) so even the smallest thu
 
 ###  Set up a mounting point for the USB thumbdrive
 
-* Create the mounting directory
+* Create the mounting directory and make it immutable
 
   ```sh
+  $ sudo mkdir /mnt/thumbdrive-scb
   $ sudo chattr +i /mnt/thumbdrive-scb
   ```
 
@@ -102,7 +103,7 @@ and copy them into a text editor on your local computer (e.g. here `1005` and `1
   ```
   
   ```ini
-  UUID=123456 /mnt/thumbdrive vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=1005,uid=1005 0 0
+  UUID=123456 /mnt/thumbdrive-scb vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=1005,uid=1005 0 0
   ```
   
   🔍 *more: [fstab guide](https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/){:target="_blank"}*
@@ -114,14 +115,6 @@ and copy them into a text editor on your local computer (e.g. here `1005` and `1
   $ df -h thumbdrive-scb
   > Filesystem      Size  Used Avail Use% Mounted on
   > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/thumbdrive-scb
-  ```
-
-### Create a backup SCB file
-
-* Create an empty SCB file in the thumdrive
-
-  ```sh
-  $ sudo touch /mnt/thumbdrive-scb/channel.backup
   ```
 
 ### Install inotify-tools
@@ -142,7 +135,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
 * Create a new shell script file
 
   ```sh
-  $ nano /usr/local/bin/thumbdrive-scb-backup.sh
+  $ sudo nano /usr/local/bin/thumbdrive-scb-backup.sh
   ```
 
 * Check the following line code and paste them in nano. Save and exit.
@@ -150,7 +143,8 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   ```sh
   #!/bin/bash
   
-  # The script waits for a change in channel.backup. When a change happens (channel opening or closing), a copy of the file is sent to the thumdrive
+  # The script waits for a change in channel.backup. 
+  # When a change happens (channel opening or closing), a copy of the file is sent to the thumdrive
   
   # Location of the channel.backup file used by LND
   SOURCEFILE=/data/lnd-backup/channel.backup
@@ -231,7 +225,8 @@ We now cause the `channel.backup` to change and see if a copy gets uploaded to t
   $ sudo journalctl -f -u thumbdrive-scb-backup.service
   ```
 
-* Open a second SSH session (we'll usse $2 to indicate inputs in this second session). Exit the session.
+* Start your SSH program (eg. PuTTY) a second time and log in as “admin”. Commands for the second session start with the prompt $2.
+* Simulate a `channel.backup` file change and then exit the session.
   
   ```sh
   $2 sudo touch /data/lnd-backup/channel.backup
@@ -239,26 +234,28 @@ We now cause the `channel.backup` to change and see if a copy gets uploaded to t
   ```
   
 * Go back to the first SSH session, in the logs, you should see the following new entries
-  ```
+  
+  ```sh
   > [...]
-  > Dec 15 11:28:55 raspibolt backup-channels[158516]: Copying backup file...
-  > Dec 15 11:28:55 raspibolt sudo[158557]:     root : PWD=/ ; USER=root ; COMMAND=/usr/bin/cp /home/admin/.lnd/data/chain/bitcoin/mainnet/channel.backup /mnt/thumbdrive/channel.backup
+  > Dec 27 17:39:52 raspibolt thumbdrive-scb-backup.sh[127014]: /data/lnd-backup/channel.backup OPEN
+  > Dec 27 17:39:52 raspibolt thumbdrive-scb-backup.sh[127012]: Copying backup file...
+  > Dec 27 17:39:52 raspibolt thumbdrive-scb-backup.sh[127320]: Setting up watches.
+  > Dec 27 17:39:52 raspibolt thumbdrive-scb-backup.sh[127320]: Watches established.
   > [...]
   ```
 
-* Check the last time the backup file was updated (it should be the same time you did the `touch` command above)
+* Check the content of your USB thumbdrive. It should now contain a backup file with the date/time corresponding to the test made just above
   
   ```sh
-  $ cd /mnt/thumbdrive-scb
-  $ ls -la
-  > -rwxr-xr-x 1 root root 16445 Dec 15 11:28 channel.backup
+  $ ls -la /mnt/thumbdrive-scb
+  > -rwxr-xr-x 1 lnd  lnd     45 Dec 27 17:39 channel-20211227-173403.backup
   ```
   
 You're set! Each time you'll open a new channel or close a channel, the backup file in the thumbdrive will be updated.
 
 ---
 
-## (Optional) Remote automatic SCB backup: Dropbox
+## (Optional) Remote backup: Dropbox
 
 The thumbdrive-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and USB thumbdrive are destroyed at the same time (*e.g.* fire, food, etc.).  
 
