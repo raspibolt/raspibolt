@@ -12,7 +12,7 @@ parent: Lightning
 
 We install [Lightning Terminal](https://github.com/lightninglabs/lightning-terminal){:target="_blank"}, a browser-based interface for managing channel liquidity.
 
-![lightning-terminal](../../images/lightning-terminal.png)
+![lightning-terminal](images/lightning-terminal.png)
 
 ---
 
@@ -53,27 +53,26 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 
 * Import the project's lead maintainer (Oliver Gugger) PGP key from Keybase 
 
+  ```sh
   $ curl https://keybase.io/guggero/pgp_keys.asc | gpg --import
-  >  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-  >                               Dload  Upload   Total   Spent    Left  Speed
-  > 100 19417  100 19417    0     0  32578      0 --:--:-- --:--:-- --:--:-- 32524
-  > gpg: key 8E4256593F177720: 1 signature not checked due to a missing key
+  > [...]
   > gpg: key 8E4256593F177720: "Oliver Gugger <gugger@gmail.com>" 1 new signature
-  > gpg: Total number processed: 1
-  > gpg:         new signatures: 1
-  > gpg: no ultimately trusted keys found
+  > [...]
+  ```
   
 * Using the key, verify the authenticity of the checksums file
-
+  
+  ```sh
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.1-alpha/manifest-v0.6.1-alpha.sig
   $ gpg --verify manifest-v0.6.1-alpha.sig manifest-v0.6.1-alpha.txt
-  > gpg: Signature made Fri Dec  3 22:58:37 2021 GMT
-  > gpg:                using RSA key F4FC70F07310028424EFC20A8E4256593F177720
+  > [...]
   > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
   > [...]
+  ```
 
 * Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
 
+  ```sh
   $ tar -xzf lightning-terminal-linux-arm64-v0.6.1-alpha.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.6.1-alpha/*
   $ litd --lnd.version
@@ -123,7 +122,7 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 The Lightning Terminal daemon (`litd`) has its own configuration file. 
 The settings for Pool, Faraday, Loop can all be put in the configuration file 
 
-* Create the configuration file and paste the following content (set the `uipassword` with your password [G] and adjust to your alias; and paste password [B] as required in the Faraday section). Save and exit.
+* Still with the "lit" user, create the configuration file and paste the following content (set the `uipassword` with your password [E] and adjust to your alias; and paste password [B] as required in the Faraday section). Save and exit.
 
   ```sh
   $ cd ~/.lit
@@ -142,7 +141,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   httpslisten=0.0.0.0:8443
   
   # Your password for the UI must be at least 8 characters long
-  uipassword=Password[G]
+  uipassword=Password[E]
 
   # Remote options
   remote.lit-debuglevel=debug
@@ -199,9 +198,13 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   $ litd
   ```
 
-* Test that Lightning Terminal is working by visiting the web UI at [https://raspibolt.local::8443/](https://raspibolt.local::8443/){:target="_blank"} (enter passworrd [G] when prompted.
+* Test that Lightning Terminal is working by visiting the web UI
+  * Past the following URL in your browser: [https://raspibolt.local::8443/](https://raspibolt.local::8443/){:target="_blank"} (replace raspibolt.local by your node IP address if required)
+  * Note that the first time you connect, your browser will display a warning due to the fact the SSL certificate is self-generated. On Firefox, simply click "Advanced" and then "Accept the risks and continue" (or similar wording in other browsers)
+  * Enter password [E] when prompted.
+  * (Optional) Follow the walkthrough to have a first introduction to Lightning Terminal GUI. Otherwise, click "No thanks" to skip it.
 
-* To stop Lightning Terminal, press Ctrl+C. Then exit the "lit" user.
+* Close the browser window, go back to the terminal and stop Lightning Terminal by pressing Ctrl+C. Then exit the "lit" user.
 
   ```sh
   $ exit
@@ -276,12 +279,13 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
   >   Loaded: loaded (/etc/systemd/system/litd.service; enabled; vendor preset: enabled)
   >   Active: active (running) since Mon 2021-12-27 19:16:10 GMT; 22h ago
   > [...]
-  $ sudo journalctl -f -u litd
   ```
   
----
-
-## Using other software packaged in LiT
+* Check the live logging activity. Press Ctrl+C to exit.
+  
+  ```sh
+  $ sudo journalctl -f -u litd
+  ```
 
 ### Admin user
 
@@ -300,7 +304,22 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
   $ ln -s /data/faraday /home/admin/.faraday
   ```
 
-### Admin user
+---
+
+## Lightning Terminal in action
+
+### Faraday
+
+* Check the Faraday options using `frcli`, the Faraday Client
+
+  ```sh
+  $ frcli --help
+  > NAME:
+  >   frcli - command line tool for faraday
+  > [...]
+  ```
+
+
 
 For now, softwares packaged in Lightning Terminal are all listening to the same port 10009. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port when using them.
 
