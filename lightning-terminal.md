@@ -193,7 +193,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 ### Manual start
 
-Still with user “lit”, we first start Lightning Terminal manually to check if everything works fine.
+* Still with user “lit”, we first start Lightning Terminal manually to check if everything works fine.
 
   ```sh
   $ litd
