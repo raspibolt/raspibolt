@@ -337,9 +337,6 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   >      CGroup: /system.slice/bitcoind.service
   >              `-2317 /usr/local/bin/bitcoind -daemon -pid=/run/bitcoind/bitcoind.pid -conf=/home/bitcoin/.bitcoin/bitcoin.conf > -datadir=/home/bitcoin/.bitcoin
   >
-  > Nov 25 22:50:59 raspibolt3 systemd[1]: Starting Bitcoin daemon...
-  > Nov 25 22:50:59 raspibolt3 bitcoind[2316]: Bitcoin Core starting
-  > Nov 25 22:50:59 raspibolt3 systemd[1]: Started Bitcoin daemon.
   ```
 
 * Check if the permission cookie can be accessed by the group "bitcoin".
