@@ -8,7 +8,7 @@ parent: Lightning
 # Lightning: Static Channel Backup
 {: .no_toc }
 
-We set up an automatic Static Channel Backup on an USB thumbdrive to recover lightning funds in case of SSD drive failure.
+We set up an automatic Static Channel Backup on an USB thumbdrive (and optionally to a remote GitHub repository) to recover lightning funds in case of SSD drive failure.
 
 ---
 
@@ -45,8 +45,8 @@ You can read more about SCBs in [this section of 'Mastering the Lighning Network
 
 The guide will show how to set up an automatic Static Channel Backup:
 
-1. Locally, on a USB thumbdrive plugged into the Pi: in case of SSD drive failure only
-1. Remotely, in Dropbox: in case of widespread node damage, including the thumdrive (e.g. flood, fire, etc)
+1. Locally, to a USB thumbdrive plugged into the Pi: in case of SSD drive failure only
+1. Remotely, to a GitHub repository: in case of widespread node damage (e.g. flood, fire, etc)
 
 ## Local backup: USB thumbdrive
 
@@ -290,8 +290,6 @@ To protect against this situation, it is necessary to send the backup to a remot
   > Enter same passphrase again: 
   > Your identification has been saved in /home/bitcoin/.ssh/id_rsa
   > Your public key has been saved in /home/bitcoin/.ssh/id_rsa.pub
-  > The key fingerprint is:
-  > SHA256:1234abcd... bitcoin@raspibolt
   > [...]
   ```
 
@@ -299,11 +297,11 @@ To protect against this situation, it is necessary to send the backup to a remot
 
   ```sh
   $ cat /home/bitcoin/.ssh/id_rsa.pub
-  > ssh-rsa 5678efgh... bitcoin@raspibolt
+  > ssh-rsa 1234abcd... bitcoin@raspibolt
 
 * Go back to the GitHub repository webpage
   * Click on "Settings", then "Deploy keys", then "Add deploy keys"
-  * Type a title (e.g., SCB)
+  * Type a title (e.g., SCB bitcoin user)
   * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... bitcoin@raspibolt`)
   * Click "Add key"
 
@@ -332,85 +330,187 @@ To protect against this situation, it is necessary to send the backup to a remot
   > drwxr-xr-x  7 bitcoin bitcoin 4096 Dec 27 18:56 .git
   ```
 
-### Push to remote directory
-
-* Using a second SSH session, trigger a backup of the `channel.backup` file. Exit the second session.
+* For the backup file to be updated by LND, the folder has to belong to the "lnd" user. With user "admin", change the owner to "lnd"
 
   ```sh
-  $2 sudo touch /home/admin/.lnd/data/chain/bitcoin/mainnet/channel.backup
-  $2 exit
+  $ exit
+  $ sudo chown -R lnd:lnd /data/lnd-backup
   ```
 
-* Go back to your first session, check that a new backup file has been created
+### Manual backup to remote GitHub directory
+
+#### Move backup file
+
+* Move your latest `channel.backup` file to the newly created folder
 
   ```sh
-  $ ls -la
+  $ sudo mv /data/lnd-backup.bak/channel.backup /data/lnd-backup
+  $ sudo ls -la /data/lnd-backup
   > drwxr-xr-x  3 bitcoin bitcoin  4096 Dec 27 19:18 .
   > drwxr-xr-x 12 bitcoin bitcoin  4096 Dec 27 19:07 ..
   > drwxr-xr-x  8 bitcoin bitcoin  4096 Dec 27 19:25 .git
   > -rw-r--r--  1 bitcoin bitcoin 11957 Dec 27 19:18 channel.backup
   ```
 
-* Enter the Git repository, commit the content of the folder and push it to your remote GitHub repository 
+#### Allow user "lnd" to access the remote GitHub repo
+
+* Using the "lnd" user, create a pair of SSH keys and display the public key string
 
   ```sh
-  $ cd lnd-backup
+  $ sudo su - lnd
+  $ ssh-keygen -t rsa -b 4096
+  $ cat /home/bitcoin/.ssh/id_rsa.pub
+  > ssh-rsa 5678efgh... lnd@raspibolt
+  ```
+
+* Delete the "SCB bitcoin user" key, we don't need it anymore
+  * Go back to the GitHub repository webpage
+  * Click on "Settings", then "Deploy keys"
+  * Click on "Delete" within the "SCB bitcoin user" box
+
+* Add the new key fro user "lnd"
+  * Click on "Add deploy keys"
+  * Type a title (e.g., SCB lnd user)
+  * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... lnd@raspibolt`)
+  * Tick the box "Allow write access" (it is needed to pushes changes to the GitHub repo)
+  * Click "Add key"
+
+#### Push changes to remote repo
+
+* Go back to your SSH session. Still with user "lnd", enter the Git repository, commit the content of the folder and push it to your remote GitHub repository 
+
+  ```sh
+  $ cd /data/lnd-backup
   $ git add .
   $ git commit -m "SCB"
   $ git push --set-upstream origin master
   ```
 
-* Check that the backup file is now in your remote GitHub repository (https://github.com/<YourGitHubUsername>/lnd-backup)
+* Check that the backup file is now in your remote GitHub repository (in the "<> code" tab)
 
-### Push to remote directory
+* Exit the "lnd" user
 
-* Create a new shell script file
+  ```sh
+  $ exit
+  ```
+
+### Automatic backup to remote GitHub directory
+
+#### Create script
+
+* With user admin, create a new shell script file
 
   ```sh
   $ sudo nano /usr/local/bin/github-scb-backup.sh
   ```
 
-* Check the following line code and paste them in nano. Save and exit.
+* Check the following lines of code and paste them in `nano`. Save and exit.
 
   ```sh
   #!/bin/bash
   
-  # The script waits for a change in channel.backup. 
+  # The script waits for a change in /data/lnd-backup/channel.backup. 
   # When a change happens, it pushes the content of the backup folder to the remote GitHub repo
-  
-  
-  USER='bitcoin'
-  REPO='/data/lnd-backup/'
- 
-  # Location of the source file
-  SOURCEFILE=/data/lnd-backup/channel.backup
-  
+
+  # Location of Git repo, source file and formatted backup file to send to remote repo
+  GITREPO="/data/lnd-backup"
+  SOURCEFILE="/data/lnd-backup/channel.backup"
+  BACKUPFILE="/data/lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
+
   # Backup function
   run_backup_on_change () {
-    echo "Copying backup file to remote location..."
-    git add /data/lnd-backup/.
+    echo "Entering Git repository..."
+    cd $GITREPO
+    echo "Making a timestamped copy of channel.backup..."
+    cp $SOURCEFILE $BACKUPFILE
+    echo "Committing changes and adding a timestamped commit message"
+    git add .
     git commit -m "SCB"
+    echo "Pushing changes to remote repository..."
     git push --set-upstream origin master
+    echo "Success! The file is now remotely backed up!"
   }
 
   # Monitoring function
   run () {
     while true; do
         inotifywait $SOURCEFILE
+        echo "channel.backup has been changed!"
         run_backup_on_change
     done
   }
-
+  
   run
   ```
 
 * Make the script executable and move it to the standard bin(ary) directory
 
   ```sh
-  $ sudo chmod +x /usr/local/bin/thumbdrive-scb-backup.sh
+  $ sudo chmod +x /usr/local/bin/github-scb-backup.sh
   ```
   
- 
+#### Run backup script in background
+
+We'll setup the backup script as a systemd service to run in the background and start automatically on system startup.
+
+* Create a new service file
+  
+  ```sh
+  sudo nano /etc/systemd/system/github-scb-backup.service
+  ```
+
+* Paste the following lines. Save and exit.
+  
+  ```ini
+  # RaspiBolt: systemd unit for automatic SCB copy to GitHub
+  # /etc/systemd/system/github-scb-backup.service
+
+  [Unit]
+  Description=Github SCB Backup daemon
+  After=lnd.service
+
+  [Service]
+  ExecStart=/usr/local/bin/github-scb-backup.sh
+  Restart=always
+  RestartSec=1
+  StandardOutput=syslog
+  StandardError=syslog
+  User=lnd
+
+  [Install]
+  WantedBy=multi-user.target
+  ```
+  
+* Enable and start the service, check its status (it should be 'active')
+  
+  ```sh
+  $ sudo systemctl enable github-scb-backup.service
+  $ sudo systemctl start github-scb-backup.service
+  $ sudo systemctl status github-scb-backup.service
+  ```
+
+* To monitor the logs
+
+  ```sh
+  $ sudo journalctl -f -u github-scb-backup.service
+  > Dec 28 14:05:09 raspibolt github-scb-backup.sh[139204]: Setting up watches.
+  > Dec 28 14:05:09 raspibolt github-scb-backup.sh[139204]: Watches established.
+  ```
+
+### Test
+
+We now cause the `channel.backup` to change and see if a copy gets uploaded to the thumbdrive.
+
+* Still with user "admin", simulate a `channel.backup` file change
+  
+  ```sh
+  $ sudo touch /data/lnd-backup/channel.backup
+  ```
+
+* Check your GitHub repository (in the "<> code" tab). It should now contain the latest timestamped backup file
+
+You're set! Each time you'll open a new channel or close a channel, the new `channel.backup` file will be pushed to your remote GitHub repository.
+
 <br /><br />
 
 ---
