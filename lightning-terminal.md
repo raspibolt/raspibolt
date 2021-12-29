@@ -361,9 +361,9 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
 
 #### Introduction
 
-Lightning Node Connect allows to connect to Lightning Terminal and the node from the web via Lightning Lab's [web Terminal](https://terminal.lightning.engineering/){:target="_blank"}. Like, the Lightning Terminal web UI, the Terminal dashboard offers an overview of the channels and the Loop and Pool services but it also offers an health check and ranking information, gives a summary of recent routing and payment events and payments can be made and received.
+Lightning Node Connect allows to connect to Lightning Terminal and the node from the web via Lightning Lab's [web Terminal](https://terminal.lightning.engineering/){:target="_blank"}. Like, the Lightning Terminal web UI, the Terminal dashboard offers an overview of the channels and the Loop and Pool services but it also offers an health check and ranking information, gives a summary of recent routing and payment events and payments can be made and received. For more information, check out the Lighning Labs [blog post announcement](https://lightning.engineering/posts/2021-11-30-lightning-terminal/){:target="_blank"}.
 
-Note: Contrary to the Lightning Terminal web UI that can only be accessed in your LAN, the web Terminal can be used (securely) from anywhere.
+*Note:* Contrary to the Lightning Terminal web UI that can only be accessed in your LAN, the web Terminal can be used (securely) from anywhere.
 
 #### How to connect
 
