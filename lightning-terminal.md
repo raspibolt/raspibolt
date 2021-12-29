@@ -367,9 +367,49 @@ Rather than always typing these flags, we can create aliases for the "admin" use
 
 ### Loop
 
+[Loop](https://github.com/lightninglabs/loop){:target="_blank"} is a non-custodial service offered by Lightning Labs that makes it easy to move bitcoin into and out of the Lightning Network:
+* Deposit to a Bitcoin address without closing channels with Loop In
+* Convert outbound liquidity into inbound liquidity with Loop Out
+* Refill depleted Lightning channels with Loop In
+
+![loop](images/loop.png)
+
+As an example, we will show how to use loop out to move some sats out of a channel and receive it onchain. This could help a merchant when a channel has been used for payments and is now all outbound. By using loop out, some liquidity is moved to the other side which allows the channel to be used again by clients, while the funds oved onchain can now be stored in cold storage.
+
+#### Loop out
+
+* Log in to Lightning Terminal
+* Click on the "Loop" button
+* Select a channel which is mostly outbound (they will be colour-coded in red in the Terminal)
+  * e.g. a channel with 1,000,000 sats on your side and 0 sats on the remote side
+* Click on the "Loop Out" button
+* The slider represents your local (outbound) balance. Select how much of it you want to send on your onchain address, which is also the amount you want to move to the remote (inbound) side of the channel.
+  * e.g. to move 500,000 sats (out of 1,000,000 sats) onchain, place the slider at the 500,000 sats mark
+* Click on "Additional Options"
+* Specify a confirmation target. Tp reduce fees, and if the mempool is not busy (check [mempool.space](https://mempool.space/){:target="_blank"}), use a very large value (e.g. 400, the maximum allowed) to get a fee close to 1 sa/vB.
+* If you're ok with the sats going to your LND wallet, leave the "Destination" blank. If you want to send it to an external wallet, paste a segwit address from that external wallet.
+* Click "Next"
+* Review the proposed transaction and fees (in sats and % of the amount sent). The fee is an estimation of the total fee that includes: 1) the on-chain fee + 2) the service fee for Loop Out; + 3) the estimated off-chain routing fee. The real fee might differ from this estimation.
+* If you're happy with the fees, click "Confirm"
+
+Congrats! You've done your first lightning submarine swap!
+
+#### More information
+
+* The Lightning Terminal web UI can also be used to Loop In
+* You can loop out/in using the RTL web UI
+* You can loop out/in using the CLI (which displays more fee details)
+* To get more information, check out the following resources:
+  * [https://lightning.engineering/loop/](https://lightning.engineering/loop/){:target="_blank"}
+  * [https://docs.lightning.engineering/lightning-network-tools/loop](https://docs.lightning.engineering/lightning-network-tools/loop){:target="_blank"}
+  * [https://github.com/lightninglabs/loop](https://github.com/lightninglabs/loop){:target="_blank"}
+
+
 ### Pool
 
 [Pool](https://github.com/lightninglabs/pool){:target="_blank"} is a marketplace for Lightning channels. You can rent a channel when you need inbound liquidity or earn an income by leasing a channel.
+
+![pool](images/pool.png)
 
 #### Preparations
 
@@ -385,17 +425,35 @@ Pool requires to fund an account from your LND onchain wallet. This account will
 * Select a confirmation target you are comfortable with (e.g. 1 sat/vB)
 * Click "Fund"
 
-#### Submit an ask: Lease a channel
+#### Submit a bid
 
 You can use the sats in your account to open channels to bidders and earn a one-off premium based on channel size and rate.
 
-* In the left menu, click on "Ask"
-* In "Offered Outbound Liquidity", select the maximum size of channel you are ok to open: e.g. `5000000` (i,e. 5M sats)
-* In "Ask Premium", select your desired premium, expressed in sats. Check the recent awarded auctions for reasonable expectations.
-  * If the last few auctions offered 25 bps and you'd like to ask the same rate, multiply your maximum channel size by the rate and divide by 100,000:
-    * 25 * 5,000,000 / 100,000 = 12,500 sats -> Use 12,500 as the "Ask premium"
+* In the left menu, click on "Bid"
+* In "Desired Inbound Liquidity", select the size of the channel you are looking for, e.g. `2000000`
+* In "Bid Premium", select a premium you are ready to pay, expressed in sats. Check the recent awarded auctions for reasonable expectations.
+  * If the last few auctions offered 25 bps and you'd like to pay the same rate, multiply your desired channel size by the rate and divide by 100,000:
+    * 25 * 2,000,000 / 100,000 = 5,000 sats -> Use `5000` as the "Ask premium"
     * Check at the bottom of the menu that the rate is indeed 25 bps
-* 
+* Click on "View additional options"
+* Select a channel duration. The peer that will open a 2M sats channel to your node will be committed to keep the channel opened for this duration at the minimum. If they close before, they will not be paid the premium and will be banned from the Pool server.
+* Select a minimum channel size (e.g. `1000000` sats) that you are ok with. It could be the same value as the desired channel size above.
+* Choose a max batch fee rate. check the on-going rate at the top of the Terminal and select a value slightly higher.
+* Choose if you want a channel only from Tier 1 (T1) nodes or from any nodes. The Tier ranking is done by Lightning Labs based on a number of parameters (e.g. node capacity, number of channels, uptime etc). T1 nodes are nodes that are considered as potentially good routers, i.e. they have more capacity, channels, uptime etc than T0 nodes. Expect to pay a higher rate for T1 nodes than for T0 nodes.
+* Review your bid details at the bottom. In particular, check that your offered premium rate is what you expect.
+* If you want to submit the bid, click on "Place bid oreder".
+* The bid will appear in the open orders section of the central panel. 
+* You can now close Lightning Terminal. Your bid will be taken into consideration by the Pool server and if an ask matches your bid, a channel will be opened to your node and sats will be taken from your Pool account to pay for the fees (a share of the onchain fees + Pool service fees + premium to peer that opens the channel)
+
+Congrats! You've done your first Pool bid!
+
+#### More information
+
+* If you want to earn sats to open channels to bidders, choose "Ask" instead of "Bid"
+* To get more information, check out the following resources:
+  * [https://lightning.engineering/pool/](https://lightning.engineering/pool/){:target="_blank"}
+  * [https://docs.lightning.engineering/lightning-network-tools/pool](https://docs.lightning.engineering/lightning-network-tools/pool){:target="_blank"}
+  * [https://github.com/lightninglabs/pool](https://github.com/lightninglabs/pool){:target="_blank"}
 
 ### Faraday
 
