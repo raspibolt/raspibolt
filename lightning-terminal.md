@@ -50,6 +50,7 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.1-alpha/manifest-v0.6.1-alpha.txt
   $ sha256sum --check manifest-v0.6.1-alpha.txt --ignore-missing
   > lightning-terminal-linux-arm64-v0.6.1-alpha.tar.gz: OK
+  ```
 
 * Import the project's lead maintainer (Oliver Gugger) PGP key from Keybase 
 
