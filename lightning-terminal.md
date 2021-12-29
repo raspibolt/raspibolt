@@ -338,6 +338,47 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
   $ sudo journalctl -f -u litd
   ```
 
+### Settings
+
+* Log in to your Lightning Terminal by pasting [https://raspibolt.local:8443/](https://raspibolt.local:8443/){:target="_blank"} in your web browser (replace rapsibolt.local by your node IP address if needed).
+
+* In the left menu, click on "Settings"
+
+* Click on "Channel balance mode" and select the case that best corresponds to your usage of your LN node
+  * Choose "Receiving" if you plan to mostly receive LN payments (e.g. if you're a merchant)
+  * Choose "Sending" if you plan to mostly send LN payments (e.g. if you're a casual end-user)
+  * Choose "Routing" if your main goal is to route payments (e.g. if you're a LN router)
+
+* Go back to "Settings"
+
+* Click on "Bitcoin Transaction URL" and replace the default URL (`https://mempool.space/tx/{txid}`) by your own explorer (`https://raspibolt.local:4000/tx/{txid}`, replace raspibolt.local by your node IP if necessary). This will preserve your privacy when looking up transactions from the Terminal.
+
+* Optional: Replace the default Lightning Node URL (`https://1ml.com/node/{pubkey}`) by the Amboss explorer (`https://amboss.space/node/{pubkey}`
+
+* Click "Save changes"
+
+### Lightning Node Connect
+
+#### Introduction
+
+Lightning Node Connect allows to connect to Lightning Terminal and the node from the web via Lightning Lab's [web Terminal](https://terminal.lightning.engineering/){:target="_blank"}. Like, the Lightning Terminal web UI, the Terminal dashboard offers an overview of the channels and the Loop and Pool services but it also offers an health check and ranking information, gives a summary of recent routing and payment events and payments can be made and received.
+
+Note: Contrary to the Lightning Terminal web UI that can only be accessed in your LAN, the web Terminal can be used (securely) from anywhere.
+
+#### How to connect
+
+* Log in to your Lightning Terminal by pasting [https://raspibolt.local:8443/](https://raspibolt.local:8443/){:target="_blank"} in your web browser (replace rapsibolt.local by your node IP address if needed).
+* In the left menu, click on "Lightning Node Connect"
+* Click on the "Create a new session" button and choose a name (e.g. test #1)
+* Click the "Submit" button, a pairing phrase will be copied to your clipboard
+* Open Lightning Labs web Terminal in a new tab in your browser: [https://terminal.lightning.engineering/#/](https://terminal.lightning.engineering/#/){:target="_blank"}
+* Click on the "Connect to my node" button in the top right corner
+* Paste the pairing phrase in the box
+* Click "Connect" (if it fails, reload the page, create a new session/pairing phrase and try again)
+* Paste password[F] (twice)
+
+Congrats! You've connected your node to the web Terminal and can now manage it from anywhere.
+
 ---
 
 ## Lightning Terminal in action
@@ -370,14 +411,12 @@ Congrats! You've done your first lightning submarine swap!
 
 #### More information
 
-* The Lightning Terminal web UI can also be used to Loop In
-* You can loop out/in using the RTL web UI (see [next section of the guide](rtl.md))
-* You can loop out/in using the CLI (which displays more fee details)
+* You can loop in/out using the CLI (check `litloop --help`), the Lightning Terminal, the web Terminal or the Ride The Lightning web UI (see [next section of the guide](rtl.md))
 * To get more information, check out the following resources:
-  * Loop webpage: [https://lightning.engineering/loop/](https://lightning.engineering/loop/){:target="_blank"}
-  * Loop documentation: [https://docs.lightning.engineering/lightning-network-tools/loop](https://docs.lightning.engineering/lightning-network-tools/loop){:target="_blank"}
-  * GitHub repository: [https://github.com/lightninglabs/loop](https://github.com/lightninglabs/loop){:target="_blank"}
-  * Lightning Labs blog post announcement: [https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}
+  * [Loop webpage](https://lightning.engineering/loop/){:target="_blank"}
+  * [Loop documentation](https://docs.lightning.engineering/lightning-network-tools/loop){:target="_blank"}
+  * [Loop GitHub repository](https://github.com/lightninglabs/loop){:target="_blank"}
+  * [Lightning Labs blog post announcement](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}
 
 
 ### Pool
@@ -425,11 +464,12 @@ Congrats! You've done your first Pool bid!
 #### More information
 
 * If you want to earn sats to open channels to bidders, choose "Ask" instead of "Bid"
+* You can use Pool using the CLI (check `litpool --help`), the Lightning Terminal or the web Terminal.
 * To get more information, check out the following resources:
-  * Pool webpage: [https://lightning.engineering/pool/](https://lightning.engineering/pool/){:target="_blank"}
-  * Pool documentation: [https://docs.lightning.engineering/lightning-network-tools/pool](https://docs.lightning.engineering/lightning-network-tools/pool){:target="_blank"}
-  * GitHub repository: [https://github.com/lightninglabs/pool](https://github.com/lightninglabs/pool){:target="_blank"}
-  * Lightning Labs blog post announcement: [https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}
+  * [Pool webpage](https://lightning.engineering/pool/){:target="_blank"}
+  * [Pool documentation](https://docs.lightning.engineering/lightning-network-tools/pool){:target="_blank"}
+  * [Pool GitHub repository](https://github.com/lightninglabs/pool){:target="_blank"}
+  * [Lightning Labs blog post announcement](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}
 
 ### Faraday
 
@@ -458,11 +498,10 @@ The following commands are avaialble:
 
 * To obtain more details about each of these commands, type `litfaraday <command_name> --help`
 * To get more information, check out the following resources:
-  * Faraday documentation: [https://docs.lightning.engineering/lightning-network-tools/faraday](https://docs.lightning.engineering/lightning-network-tools/faraday){:target="_blank"}
-  * GitHub repository: [https://github.com/lightninglabs/faraday](https://github.com/lightninglabs/faraday){:target="_blank"}
-  * Lightning Labs blog posts:
-    * Announcement: [https://lightning.engineering/posts/2020-04-02-faraday/](https://lightning.engineering/posts/2020-04-02-faraday/){:target="_blank"}
-    * Latest feature: [https://lightning.engineering/posts/2020-09-15-faraday-accounting/](https://lightning.engineering/posts/2020-09-15-faraday-accounting/){:target="_blank"}
+  * [Faraday documentation](https://docs.lightning.engineering/lightning-network-tools/faraday){:target="_blank"}
+  * [Faraday GitHub repository](https://github.com/lightninglabs/faraday){:target="_blank"}
+  * [Lightning Labs blog post announcement](https://lightning.engineering/posts/2020-04-02-faraday/){:target="_blank"}
+  * [Latest feature blog post](https://lightning.engineering/posts/2020-09-15-faraday-accounting/){:target="_blank"}
 
 ---
 
