@@ -5,7 +5,7 @@ nav_order: 14
 parent: Lightning
 ---
 
-# Bonus guide: Lightning Terminal
+# Lightning Terminal
 {: .no_toc }
 
 ---
