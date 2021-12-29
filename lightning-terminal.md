@@ -378,7 +378,7 @@ Lightning Node Connect allows to connect to Lightning Terminal and the node from
 * Click on the "Connect to my node" button in the top right corner
 * Paste the pairing phrase in the box
 * Click "Connect" (if it fails, reload the page, create a new session/pairing phrase and try again)
-* Paste password[F] (twice)
+* Paste your Password [F] (twice)
 
 Congrats! You've connected your node to the web Terminal and can now manage it from anywhere.
 
