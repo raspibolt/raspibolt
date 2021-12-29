@@ -95,6 +95,21 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
   $ sudo chown -R lit:lit /data/lit /data/loop /data/pool /data/faraday
   ```
 
+* Add the "admin" user to the "lit" group
+
+  ```sh
+  $ sudo adduser admin lit
+  ```
+
+* With the "admin" user, create symlinks to the Lightning Terminal, Loop, Pool and Faraday directories
+
+  ```sh
+  $ ln -s /data/lit /home/admin/.lit
+  $ ln -s /data/loop /home/admin/.loop
+  $ ln -s /data/pool /home/admin/.pool
+  $ ln -s /data/faraday /home/admin/.faraday
+  ```
+
 * Open a “lit” user session
   
   ```sh 
@@ -162,20 +177,25 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   #################
   
   # This option avoids the creation of channels with nodes with whom you already have a channel (set to 0 if you don't mind)
-  #pool.newnodesonly=1
+  pool.newnodesonly=1
+  # Path to Pool's own macaroon
+  pool.macaroonpath=/home/lit/.pool/mainnet/pool.macaroon
     
   ##################
   #     Faraday    #
   ##################
   
-  faraday.min_monitored=48h
+  # If connect_bitcoin is set to 1, Faraday can connect to a bitcoin node (with --txindex set) to provide node accounting services
+  faraday.connect_bitcoin=1
+  # The minimum amount of time that a channel must be monitored for before recommending termination
+  faraday.min_monitored=72h
+  # Path to Faraday's own macaroon
+  faraday.macaroonpath=/home/lit/.faraday/mainnet/faraday.macaroon
     
   ###################
   # Faraday-Bitcoin #
   ###################
   
-  # If connect_bitcoin is set to 1, Faraday can connect to a bitcoin node (with --txindex set) to provide node accounting services
-  faraday.connect_bitcoin=1
   # The Bitcoin node IP is the IP address of the Raspibolt, i.e. an address like 192.168.0.20
   faraday.bitcoin.host=192.168.0.171
   # bitcoin.user provides to Faraday the bicoind RPC username, as specified in our bitcoin.conf
@@ -287,93 +307,130 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
   $ sudo journalctl -f -u litd
   ```
 
-### Admin user
-
-* Add the "admin" user to the "lit" group
-
-  ```sh
-  $ sudo adduser admin lit
-  ```
-
-* With the "admin" user, create symlinks to the Lightning Terminal, Loop, Pool and Faraday directories
-
-  ```sh
-  $ ln -s /data/lit /home/admin/.lit
-  $ ln -s /data/loop /home/admin/.loop
-  $ ln -s /data/pool /home/admin/.pool
-  $ ln -s /data/faraday /home/admin/.faraday
-  ```
-
 ---
 
 ## Lightning Terminal in action
 
-### Faraday
+### Aliases
 
-* Check the Faraday options using `frcli`, the Faraday Client
+For now, softwares packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them.
+
+* For example, trying to list the Pool accounts using the Pool client results in an error message
 
   ```sh
-  $ frcli --help
+  $ pool accounts list
+  > pool] open /home/admin/.pool/mainnet/tls.cert: no such file or directory
+  ```
+ 
+ * But adding the RPC port and TLS certificate path flags solves the issue
+
+  ```sh
+  $ pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list
+  > {
+	>  "accounts": []
+  > }
+  ```
+
+Rather than always typing these flags, we can create aliases for the "admin" user.
+
+* Still with user "admin", create an alias file and paste the following line. Save and exit.
+
+  ```sh
+  $ cd ~/
+  $ nano .bash_aliases
+  ```
+
+  ```ini
+  ######################
+  # Lightning Terminal #
+  ######################
+  
+  alias litfaraday="frcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  alias litloop="loop --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert" 
+  ```
+
+* Activate the aliases
+
+  ```sh
+  $ source .bashrc
+  ```
+
+* Test your newly created aliases. Still with user "admin", type the alias instead of the normal command and flags, e.g.
+
+  ```sh
+  $ litpool accounts list
+  > {
+	>  "accounts": []
+  > }
+  ```
+
+### Loop
+
+### Pool
+
+[Pool](https://github.com/lightninglabs/pool){:target="_blank"} is a marketplace for Lightning channels. You can rent a channel when you need inbound liquidity or earn an income by leasing a channel.
+
+#### Preparations
+
+Pool requires to fund an account from your LND onchain wallet. This account will be used to draw the sats required to open channels and pay Pool fees. Make sure you fund your LND wallet with at least the amount of sats you'd like to have in your Pool account.
+
+#### Create a Pool account
+
+* Log in to the Lightning Terminal UI
+* In the left menu, click on "Lightning Pool"
+* Click "Open an account"
+* Type the desired amount whit which you want to fund your account
+* Change the "Expires in" parameters if you'd like a longer expiration deadline (closing or reopening an account at the end of the account lifetime requires one or two onchain transactions and therefore onchain fees; if you plan to use Pool long-term, increase the duration to save on fees)
+* Select a confirmation target you are comfortable with (e.g. 1 sat/vB)
+* Click "Fund"
+
+#### Submit an ask: Lease a channel
+
+You can use the sats in your account to open channels to bidders and earn a one-off premium based on channel size and rate.
+
+* In the left menu, click on "Ask"
+* In "Offered Outbound Liquidity", select the maximum size of channel you are ok to open: e.g. `5000000` (i,e. 5M sats)
+* In "Ask Premium", select your desired premium, expressed in sats. Check the recent awarded auctions for reasonable expectations.
+  * If the last few auctions offered 25 bps and you'd like to ask the same rate, multiply your maximum channel size by the rate and divide by 100,000:
+    * 25 * 5,000,000 / 100,000 = 12,500 sats -> Use 12,500 as the "Ask premium"
+    * Check at the bottom of the menu that the rate is indeed 25 bps
+* 
+
+### Faraday
+
+[Faraday](https://github.com/lightninglabs/faraday){:target="_blank"} is a suite of accounting CLI-based tools for LND node operators.
+
+* Check the Faraday commands
+
+  ```sh
+  $ litfaraday --help
   > NAME:
   >   frcli - command line tool for faraday
   > [...]
   ```
-
-
-
-For now, softwares packaged in Lightning Terminal are all listening to the same port 10009. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port when using them.
-
-For example, the following will not work to look at the last auction snapshot:
-
-  ```sh
-  $2 pool auction snapshot
-  ```
   
-It will returns the following error:
-  ```sh
-  > [pool] rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial tcp [::1]:12010: connect: connection refused"
-  ```
-It says that the `pool` command try to interact with your pool client on localhost's port 12010. However your instance of Pool is not listening to the default port 12010, but port 10009 ! It also needs to know where the TLS certificate to securely interact with LND is.
+The following commands are avaialble:
 
-That's why this will work:
+* `insights`: expose metrics gathered for one or many channels.
+* `revenue`: generate a revenue report over a time period for one or many channels.
+* `outliers`: close recommendations based whether channels are outliers based on a variety of metrics.
+* `threshold`: close recommendations based on thresholds a variety of metrics.
+* `audit`: produce an accounting report for your node over a period of time. 
+* `fiat`: get the USD price for an amount of Bitcoin at a given time, currently obtained from CoinCap's historical price API.
+* `closereport`: provides a channel specific fee report, including fees paid on chain.
 
+To obtain more details about each of these commands, type --help after them, e.g.
+  
   ```sh
-  $2 pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert auction snapshot
+  $ litfaraday insights --help
+  > NAME:
+  >   frcli audit - Get a report of node activity.
+  >
+  > USAGE:
+  >   frcli audit [command options] [arguments...]
+  > [...]
   ```
-It can be convenient to create alias to not have to type the rpc server address at every command. Use `alias` command in bash for that
-
-  ```sh
-  $2 alias poolit="pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
-  $2 poolit auction snapshot
-  ```
-You can add your aliases in `.bashrc` file of `admin`
-  ```sh
-  $2 nano ~/.bashrc
-  ```
-  
-Add the following at the end of the file then save and exit:
-  
-  ```
-  $2 alias poolit="pool --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
-  $2 alias loopit="loop --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
-  $2 alias frclit="frcli --rpcserver=localhost:10009 --tlscertpath=~/.lnd/tls.cert"
-  ```
-  
-Use `help` and documentation on Pool, Loop and Faraday respectively for information on these command.
-  
-### Access LiT UI for easy Loop Out/In and Liquidity trading
-
-LiT provides a UI that allows you to use Loop and Pool conveniently. The UI is running on port 8443. To access it you must be in your home network (or connected through a VPN like WireGuard) and `ufw` should allow access to the port 8443:
-
-  ```sh
-  $2 sudo su
-  # ufw allow 8443 comment 'allow LiT UI'
-  # ufw disable
-  # ufw enable
-  # exit
-  ```
-  
-You can now connect from your home to `https://[your_pi_local_ip]:8443` with your browser and enjoy the nice GUI of LiT ! Use `PASSWORD_[B]` to log in.
 
 ---
 
