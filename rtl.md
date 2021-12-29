@@ -231,6 +231,9 @@ In order to do that, we create a systemd unit that starts the service on boot di
   $ sudo systemctl start rtl
   $ sudo journalctl -f -u rtl
   ```
+  
+**Congratulations!**
+You now have Ride the Lightning running to manage your Lightning service on our own node.
 
 ## Optional
 
@@ -261,9 +264,6 @@ You can easily add a Tor hidden service on the RaspiBolt and access the Ride the
 
 With the Tor browser (link this), you can access this onion address from any device.
 
-**Congratulations!**
-You now have Ride the Lightning running to manage your Lightning service on our own node.
-
 ### Enable 2-Factor-Authentication
 
 If you want to be extra careful, you can enable 2FA for access to your RTL interface.
@@ -272,6 +272,20 @@ If you want to be extra careful, you can enable 2FA for access to your RTL inter
 * Click on the RTL logo top right, and choose "Settings"
 * Select the "Authentication" tab and click on the "Enable 2FA" button
 * Follow the instructions, using a 2FA app like Google Authenticator or Authy
+
+### Set up the Loop service
+
+RTL provides a GUI for the [Loop submarine swap service](https://lightning.engineering/loop/){:target="_blank"}.
+
+* Go the the navigation menu in the top left (if it's hidden, click on the hamburger symbol)
+* Click on "Node Config"
+* Click on the "Services" tab
+* If it's disabled, click on "Enable Loop service"
+* In "Loop Server URL", replace `https://localhost:8081` by `https://localhost:8443`
+* In "Loop Macaroon Path", the path should be `/home/lit/.loop/mainnet`
+* Then click the "Update" button
+* Go back to the navigation menu and click on "Services", then "Loop"
+* You can now perform loop ins and loop outs directly from RTL
 
 ## For the future: RTL upgrade
 
