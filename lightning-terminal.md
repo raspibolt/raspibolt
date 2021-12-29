@@ -586,7 +586,7 @@ The following commands are avaialble:
   ```sh
   $ sudo su -
   $ userdel -r lit
-
+  ```
 
 <br /><br />
 
