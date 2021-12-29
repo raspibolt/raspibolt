@@ -468,8 +468,6 @@ The following commands are avaialble:
 
 ## Upgrade
 
-* Read the [release notes](https://github.com/lightninglabs/lightning-terminal/releases){:target="_blank"} in case there is any breaking change to be aware of.
-
 * Check your Lightning Terminal version
 
   ```sh
@@ -477,13 +475,21 @@ The following commands are avaialble:
   > litd version 0.14.1-beta commit=lightning-terminal-v0.6.1-alpha
   ```
 
-* Stop the service
+* Read the [release notes](https://github.com/lightninglabs/lightning-terminal/releases){:target="_blank"} in case there is any breaking change to be aware of.
+
+* Stop the Lightning Terminal systemd service
 
   ```sh
   $ sudo systemctl stop litd
   ```
 
-* Install the new version following the same installation process explained in this guide [here](#Download_Lightning_Terminal)
+* Install the new version following the same installation process explained in this guide [here](lightning-terminal.md#download-verify-and-install)
+
+* Restart the service
+
+  ```sh
+  $ sudo systemctl start litd
+  ```
 
 ---
 
@@ -525,7 +531,12 @@ The following commands are avaialble:
 
   ```sh
   $ nano .bash_aliases
-  $ sudo rm -R faraday lit loop pool
+  ```
+  
+  ```ini  
+  #alias litfaraday="frcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  #alias litloop="loop --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  #alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert" 
   ```
 
 * Finally, with the "root" user, delete the "lit" user
