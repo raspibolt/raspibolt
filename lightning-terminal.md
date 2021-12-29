@@ -40,7 +40,7 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 
 ## Installation
 
-### Download Lightning Terminal
+### Download, verify and install
 
 * With the "admin" user, download the latest arm64 binary and its checksum and verify the integrity of the binary
 
@@ -206,6 +206,37 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 🔍 *Notice that the options for Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
 
+### Aliases
+
+For now, softwares packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them, using flags (e.g., `pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list`, do not try it now as Lightning Terminal is not running yet!).  
+
+Rather than always typing the flags, we can create aliases for the "admin" user.
+
+* Still with user "admin", create an alias file and paste the following line. Save and exit.
+
+  ```sh
+  $ cd ~/
+  $ nano .bash_aliases
+  ```
+
+  ```ini
+  ######################
+  # Lightning Terminal #
+  ######################
+  
+  alias litfaraday="frcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  alias litloop="loop --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert" 
+  ```
+
+* Activate the aliases
+
+  ```sh
+  $ source .bashrc
+  ```
+
+* To use Loop, Pool or Faraday from the CLI, use the alias followed by the desired command (e.g., `litpool accounts list`, much simpler!)
+
 ---
 
 ## Run Lightning Terminal
@@ -311,66 +342,9 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
 
 ## Lightning Terminal in action
 
-### Aliases
-
-For now, softwares packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them.
-
-* For example, trying to list the Pool accounts using the Pool client results in an error message
-
-  ```sh
-  $ pool accounts list
-  > pool] open /home/admin/.pool/mainnet/tls.cert: no such file or directory
-  ```
- 
- * But adding the RPC port and TLS certificate path flags solves the issue
-
-  ```sh
-  $ pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list
-  > {
-	>  "accounts": []
-  > }
-  ```
-
-Rather than always typing these flags, we can create aliases for the "admin" user.
-
-* Still with user "admin", create an alias file and paste the following line. Save and exit.
-
-  ```sh
-  $ cd ~/
-  $ nano .bash_aliases
-  ```
-
-  ```ini
-  ######################
-  # Lightning Terminal #
-  ######################
-  
-  alias litfaraday="frcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
-  alias litloop="loop --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
-  alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert" 
-  ```
-
-* Activate the aliases
-
-  ```sh
-  $ source .bashrc
-  ```
-
-* Test your newly created aliases. Still with user "admin", type the alias instead of the normal command and flags, e.g.
-
-  ```sh
-  $ litpool accounts list
-  > {
-	>  "accounts": []
-  > }
-  ```
-
 ### Loop
 
-[Loop](https://github.com/lightninglabs/loop){:target="_blank"} is a non-custodial service offered by Lightning Labs that makes it easy to move bitcoin into and out of the Lightning Network:
-* Deposit to a Bitcoin address without closing channels with Loop In
-* Convert outbound liquidity into inbound liquidity with Loop Out
-* Refill depleted Lightning channels with Loop In
+[Loop](https://github.com/lightninglabs/loop){:target="_blank"} is a non-custodial service offered by Lightning Labs that makes it easy to move bitcoin into and out of the Lightning Network: deposit to a Bitcoin address without closing channels with Loop In, convert outbound liquidity into inbound liquidity with Loop Out, refill depleted Lightning channels with Loop In.
 
 ![loop](images/loop.png)
 
@@ -397,12 +371,13 @@ Congrats! You've done your first lightning submarine swap!
 #### More information
 
 * The Lightning Terminal web UI can also be used to Loop In
-* You can loop out/in using the RTL web UI
+* You can loop out/in using the RTL web UI (see [next section of the guide](rtl.md))
 * You can loop out/in using the CLI (which displays more fee details)
 * To get more information, check out the following resources:
-  * [https://lightning.engineering/loop/](https://lightning.engineering/loop/){:target="_blank"}
-  * [https://docs.lightning.engineering/lightning-network-tools/loop](https://docs.lightning.engineering/lightning-network-tools/loop){:target="_blank"}
-  * [https://github.com/lightninglabs/loop](https://github.com/lightninglabs/loop){:target="_blank"}
+  * Loop webpage: [https://lightning.engineering/loop/](https://lightning.engineering/loop/){:target="_blank"}
+  * Loop documentation: [https://docs.lightning.engineering/lightning-network-tools/loop](https://docs.lightning.engineering/lightning-network-tools/loop){:target="_blank"}
+  * GitHub repository: [https://github.com/lightninglabs/loop](https://github.com/lightninglabs/loop){:target="_blank"}
+  * Lightning Labs blog post announcement: [https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}
 
 
 ### Pool
@@ -451,9 +426,10 @@ Congrats! You've done your first Pool bid!
 
 * If you want to earn sats to open channels to bidders, choose "Ask" instead of "Bid"
 * To get more information, check out the following resources:
-  * [https://lightning.engineering/pool/](https://lightning.engineering/pool/){:target="_blank"}
-  * [https://docs.lightning.engineering/lightning-network-tools/pool](https://docs.lightning.engineering/lightning-network-tools/pool){:target="_blank"}
-  * [https://github.com/lightninglabs/pool](https://github.com/lightninglabs/pool){:target="_blank"}
+  * Pool webpage: [https://lightning.engineering/pool/](https://lightning.engineering/pool/){:target="_blank"}
+  * Pool documentation: [https://docs.lightning.engineering/lightning-network-tools/pool](https://docs.lightning.engineering/lightning-network-tools/pool){:target="_blank"}
+  * GitHub repository: [https://github.com/lightninglabs/pool](https://github.com/lightninglabs/pool){:target="_blank"}
+  * Lightning Labs blog post announcement: [https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}
 
 ### Faraday
 
@@ -478,23 +454,36 @@ The following commands are avaialble:
 * `fiat`: get the USD price for an amount of Bitcoin at a given time, currently obtained from CoinCap's historical price API.
 * `closereport`: provides a channel specific fee report, including fees paid on chain.
 
-To obtain more details about each of these commands, type --help after them, e.g.
-  
-  ```sh
-  $ litfaraday insights --help
-  > NAME:
-  >   frcli audit - Get a report of node activity.
-  >
-  > USAGE:
-  >   frcli audit [command options] [arguments...]
-  > [...]
-  ```
+#### More information
+
+* To obtain more details about each of these commands, type `litfaraday <command_name> --help`
+* To get more information, check out the following resources:
+  * Faraday documentation: [https://docs.lightning.engineering/lightning-network-tools/faraday](https://docs.lightning.engineering/lightning-network-tools/faraday){:target="_blank"}
+  * GitHub repository: [https://github.com/lightninglabs/faraday](https://github.com/lightninglabs/faraday){:target="_blank"}
+  * Lightning Labs blog posts:
+    * Announcement: [https://lightning.engineering/posts/2020-04-02-faraday/](https://lightning.engineering/posts/2020-04-02-faraday/){:target="_blank"}
+    * Latest feature: [https://lightning.engineering/posts/2020-09-15-faraday-accounting/](https://lightning.engineering/posts/2020-09-15-faraday-accounting/){:target="_blank"}
 
 ---
 
 ## Upgrade
 
-TBD
+* Read the [release notes](https://github.com/lightninglabs/lightning-terminal/releases){:target="_blank"} in case there is any breaking change to be aware of.
+
+* Check your Lightning Terminal version
+
+  ```sh
+  $ litd --lnd.version
+  > litd version 0.14.1-beta commit=lightning-terminal-v0.6.1-alpha
+  ```
+
+* Stop the service
+
+  ```sh
+  $ sudo systemctl stop litd
+  ```
+
+* Install the new version following the same installation process explained in this guide [here](#Download_Lightning_Terminal)
 
 ---
 
@@ -529,6 +518,13 @@ TBD
 
   ```sh
   $ cd /data
+  $ sudo rm -R faraday lit loop pool
+  ```
+
+* Remove (or comment out) the aliases from the `.bash_aliases` file
+
+  ```sh
+  $ nano .bash_aliases
   $ sudo rm -R faraday lit loop pool
   ```
 
