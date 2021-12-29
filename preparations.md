@@ -58,7 +58,8 @@ They should be unique and very secure, at least 12 characters in length. Do **no
 [ C ] BTC-RPC-Explorer password (optional)
 [ D ] LND wallet password
 [ E ] Lightning Terminal password
-[ F ] Ride The Lightning password
+[ F ] Terminal web dashboard password
+[ G ] Ride The Lightning password
 ```
 
 ![xkcd: Password Strength](images/preparations_xkcd.png)
