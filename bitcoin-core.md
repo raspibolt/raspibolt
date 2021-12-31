@@ -337,6 +337,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   >      CGroup: /system.slice/bitcoind.service
   >              `-2317 /usr/local/bin/bitcoind -daemon -pid=/run/bitcoind/bitcoind.pid -conf=/home/bitcoin/.bitcoin/bitcoin.conf > -datadir=/home/bitcoin/.bitcoin
   >
+  > Warning: some journal files were not opened due to insufficient permissions.
   ```
 
 * Check if the permission cookie can be accessed by the group "bitcoin".
@@ -351,7 +352,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   Exit with `Ctrl-C`
 
   ```sh
-  $ tail -f /home/bitcoin/.bitcoin/debug.log
+  $ sudo tail -f /home/bitcoin/.bitcoin/debug.log
   ```
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain
