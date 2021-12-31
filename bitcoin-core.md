@@ -365,6 +365,15 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
     That’s normal, just give it a few minutes.
   * Among other infos, the “verificationprogress” is shown.
     Once this value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
+  * If you see the following warning when inspecting the bitcoin service with `systemctl status bitcoind.service`:
+    ```
+    Warning: some journal files were not opened due to insufficient permissions.
+    ```
+    Then run the following command to give read access to all users in the bitcoin group:
+    ```
+    $ sudo chmod -R g+r /data/bitcoin
+    ```
+    
 
 ---
 
