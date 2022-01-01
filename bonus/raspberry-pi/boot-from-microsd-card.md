@@ -123,7 +123,7 @@ The external drive is then attached to the file system and becomes available as 
 
   ```sh
   $ sudo mkdir /data
-  $ sudo chattr +1 /data
+  $ sudo chattr +i /data
   ```
 
 * Mount all drives and check the file system.
