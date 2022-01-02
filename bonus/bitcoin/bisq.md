@@ -46,9 +46,11 @@ The guide will show you how to:
 
 ## Install Bisq
 
-Install Bisq on your local computer using the appropriate binary for your OS: [https://bisq.network/downloads/](https://bisq.network/downloads/){:target="_blank"}
+* Download Bisq on your local computer using the appropriate binary for your OS: [https://bisq.network/downloads/](https://bisq.network/downloads/){:target="_blank"}
 
-Do NOT launch Bisq yet!
+* Verify the downloaded binary following [Bisq guidelines](https://bisq.wiki/Downloading_and_installing){:target="_blank"}
+
+* Once you've verified the integrity of the downloaded Bisq binary, install it on your local computer but do NOT launch Bisq yet!
 
 ---
 
