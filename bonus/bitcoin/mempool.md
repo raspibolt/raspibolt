@@ -224,32 +224,27 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ sudo rsync -av --delete /home/mempool/frontend/dist/mempool/ /var/www/
   ```
   
-### NGINX + certbot
+### NGINX
 
-* NGINX is already installed on the node but we need to install `certbox`
-  
-  ```sh
-  $ sudo apt-get install python3-certbot-nginx
-  ```
-
-* Install the mempool configuration for nginx
-
+---
+WIP
+Install the mempool configuration for nginx
 [TBD](https://github.com/mempool/mempool#manual-installation){:target="_blank"}
+$ sudo cp /home/mempool/mempool/backend/nginx.conf /etc/nginx/snippets/nginx-mempool.conf
+$ sudo ln -sf /etc/nginx/sites-available/mempool.conf /etc/nginx/sites-enabled/
+---
 
-  $ sudo cp /home/mempool/mempool/backend/nginx.conf /etc/nginx/snippets/nginx-mempool.conf
+### Autostart on boot
 
+Now we’ll make sure Mempool starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd unit that starts the service on boot directly after Bitcoin Core.
 
-
-
-
-
-
-
-
+* As user “admin”, create the service file
 
   ```sh
   $ sudo nano /etc/systemd/system/mempool.service
   ```
+  
+* Paste the following configuration. Save and exit.  
   
   ```ini 
   # RaspiBolt: systemd unit for Mempool           
@@ -278,12 +273,13 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   WantedBy=multi-user.target
   ```
 
+* Enable the service, start it and check log logging output.
+
   ```sh  
   $ sudo systemctl enable mempool
   $ sudo systemctl start mempool
   $ sudo journalctl -f -u mempool
   ```
-
 
 ---
 
