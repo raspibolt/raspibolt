@@ -22,7 +22,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![Bisq](../../bisq.png)
+![Bisq](../../images/bisq.png)
 
 ---
 
