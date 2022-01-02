@@ -17,7 +17,9 @@ has_toc: false
 
 ---
 
-## Pivacy (coinjoin)
+## Pivacy
+
+* **[Bisq](bisq.md)** - buy and sell Bitcoin for national currencies on a decentralized exchange connected to your own node
 
 * **[JoinMarket on RaspiBolt](https://github.com/kristapsk/raspibolt-extras/blob/master/joinmarket.md){:target="_blank"}** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
 
