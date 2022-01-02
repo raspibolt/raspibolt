@@ -169,7 +169,9 @@ For the trading options, please refer to Bisq [website](https://bisq.network/get
 * In the pop-up window that just appeared, read the information and then click on "Set password, I already made a backup". Once done, close the confirmation window.
 
 Congrats! You're now ready to start buying and selling Bitcoin on Bisq.
- 
+
+<br /><br />
+
 ---
 
 << Back: [+ Bitcoin](index.md)
