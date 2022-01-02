@@ -54,7 +54,9 @@ The guide will show you how to:
 
 ---
 
-## Configure Bitcoin Core
+## Connect Bisq to your node
+
+### Configure Bictoin Core
 
 For Bisq to connect to your Bitcoin Core node, the bloom filters have to be activated.
 
@@ -81,11 +83,9 @@ For Bisq to connect to your Bitcoin Core node, the bloom filters have to be acti
   > 022-01-01T22:18:17Z tor: Got service ID 123...abc, advertising service 123...abc.onion:8333
   ```
 
----
+### First run & configuration
 
-## First run & configuration
-
-### Start Bisq from the command line
+#### Start Bisq from the command line
 
 The first time Bisq is opened using the GUI, it will connect to several remote Bitcoin nodes via Tor. 
 To avoid this, we will start Bisq the first time using the command line to force it to connect to your Bitcoin node only.
@@ -99,7 +99,7 @@ Replace `123...abc.onion:8333` by your own Bitcoin Core .onion address that you 
   $ /opt/bisq/bin/Bisq -btcNodes=123...abc.onion:8333 -useTorForBtc=true
   ```
 
-### Network configuration
+#### Network configuration
 
 * Click on the "Settings" tab
 
@@ -121,12 +121,14 @@ Replace `123...abc.onion:8333` by your own Bitcoin Core .onion address that you 
 
 Congrats! Bisq is now connected to your node.
 
-### Configuration
+--- 
+
+## Configuration
 
 This section will highlight key configuration options focusing on privacy and security only. 
 For the trading options, please refer to Bisq [website](https://bisq.network/getting-started/){:target="_blank"} and [wiki](https://bisq.wiki/Main_Page){:target="_blank"}. 
 
-#### Bitcoin Explorer
+### Bitcoin Explorer
 
 * Click to "Settings" > "Preferences"
 
@@ -139,7 +141,7 @@ For the trading options, please refer to Bisq [website](https://bisq.network/get
 
 * Click save
 
-#### Wallet seed
+### Wallet seed
 
 * Click on the "Account" tab
 
@@ -153,7 +155,7 @@ For the trading options, please refer to Bisq [website](https://bisq.network/get
 
 * Read the "Information" section to understand the importance of the seed words and wallet date
 
-#### Backup
+### Backup
 
 * Still in the "Account" tab, now click on "Backup"
 
@@ -162,7 +164,7 @@ For the trading options, please refer to Bisq [website](https://bisq.network/get
 * Click on "Backup now (backup is not encrypted)"
 
 
-#### Wallet password
+### Wallet password
 
 * Still in the "Account" tab, click on "Wallet password"
 
