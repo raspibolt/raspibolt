@@ -107,7 +107,7 @@ Replace `123...abc.onion:8333` by your own Bitcoin Core .onion address that you 
 
 * In the "Bitcoin Network" section, click on "Use custom Bitcoin Core nodes"
 
-* In the box just below, paste your Bitcoin Core node .onion address (`123...abc.onion:8333`
+* In the box just below, paste your Bitcoin Core node .onion address (`123...abc.onion:8333`)
 
 * Click on any other tab at the top. Bisq will ask you to shut down the program to make your change effectice.
 
