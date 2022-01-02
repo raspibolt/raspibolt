@@ -236,6 +236,55 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 
 [TBD](https://github.com/mempool/mempool#manual-installation){:target="_blank"}
 
+  $ sudo cp /home/mempool/mempool/backend/nginx.conf /etc/nginx/snippets/nginx-mempool.conf
+
+
+
+
+
+
+
+
+
+
+  ```sh
+  $ sudo nano /etc/systemd/system/mempool.service
+  ```
+  
+  ```ini 
+  # RaspiBolt: systemd unit for Mempool           
+  # /etc/systemd/system/mempool.service
+
+  [Unit]
+  Description=mempool
+  After=bitcoind.service
+
+  [Service]
+  WorkingDirectory=/home/mempool/mempool/backend
+  ExecStart=/usr/bin/node --max-old-space-size=2048 dist/index.js
+  User=mempool
+
+  # Restart on failure but no more than default times (DefaultStartLimitBurst=5) every 10 minutes (600 seconds). Otherwise stop
+  Restart=on-failure
+  RestartSec=600
+
+  # Hardening measures
+  PrivateTmp=true
+  ProtectSystem=full
+  NoNewPrivileges=true
+  PrivateDevices=true
+
+  [Install]
+  WantedBy=multi-user.target
+  ```
+
+  ```sh  
+  $ sudo systemctl enable mempool
+  $ sudo systemctl start mempool
+  $ sudo journalctl -f -u mempool
+  ```
+
+
 ---
 
 ## Mempool in action
