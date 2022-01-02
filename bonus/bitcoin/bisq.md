@@ -139,7 +139,7 @@ For the trading options, please refer to Bisq [website](https://bisq.network/get
   * Transaction URL: `https://raspibolt.local:4000/tx/` (replace rapsibolt.local by your node IP address if required)
   * Address URL: `https://raspibolt.local:4000/address/` (replace rapsibolt.local by your node IP address if required)
 
-* Click save
+* Click "Save"
 
 ### Wallet seed
 
