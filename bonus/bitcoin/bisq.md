@@ -125,8 +125,9 @@ Congrats! Bisq is now connected to your node.
 
 ## Configuration
 
-This section will highlight key configuration options focusing on privacy and security only. 
-For the trading options, please refer to Bisq [website](https://bisq.network/getting-started/){:target="_blank"} and [wiki](https://bisq.wiki/Main_Page){:target="_blank"}. 
+This section will highlight key configuration options focusing on privacy and security only.  
+
+For the national currency account and trading configuration options, please refer to the Bisq [website](https://bisq.network/getting-started/){:target="_blank"} and [wiki](https://bisq.wiki/Main_Page){:target="_blank"}. 
 
 ### Bitcoin Explorer
 
@@ -172,7 +173,7 @@ For the trading options, please refer to Bisq [website](https://bisq.network/get
 
 * In the pop-up window that just appeared, read the information and then click on "Set password, I already made a backup". Once done, close the confirmation window.
 
-Congrats! You're now ready to start buying and selling Bitcoin on Bisq.
+Congrats! You're now ready to start buying and selling Bitcoin on Bisq in a secure and private way.
 
 <br /><br />
 
