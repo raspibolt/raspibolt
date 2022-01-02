@@ -34,7 +34,7 @@ When finished, exit the “root” user session.
 * Add the NodeJS software repository
 
   ```sh
-  $ curl -sL https://deb.nodesource.com/setup_14.x | bash -E -
+  $ curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -E -
   ```
 
 * Install NodeJS using the apt package manager
