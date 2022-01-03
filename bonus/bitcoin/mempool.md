@@ -230,17 +230,226 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 * Install the output into nginx webroot folder
 
   ```sh
-  $ sudo rsync -av --delete /home/mempool/frontend/dist/mempool/ /var/www/
+  $ sudo rsync -av --delete /home/mempool/mempool/frontend/dist/mempool/ /var/www/mempool/
+  $ sudo chown -R www-data:www-data /var/www/mempool
   ```
   
 ### NGINX
 
----
-WIP
-Install the mempool configuration for nginx
-[TBD](https://github.com/mempool/mempool#manual-installation){:target="_blank"}
-$ sudo cp /home/mempool/mempool/backend/nginx.conf /etc/nginx/snippets/nginx-mempool.conf
-$ sudo ln -sf /etc/nginx/sites-available/mempool.conf /etc/nginx/sites-enabled/
+We now need to modify the Nginx configuration to create a web server for the website on port 4081.
+
+* Create a proxy server for the Mempool website on port 4081
+
+  ```sh
+  $ sudo nano /etc/nginx/sites-available/mempool-ssl.conf
+  ```
+
+* Paste the following configuration line. Save and exit
+
+  ```ini
+  ## mempool-ssl.conf
+  
+          proxy_read_timeout 300;
+          proxy_connect_timeout 300;
+          proxy_send_timeout 300;
+  
+          map $http_accept_language $header_lang {
+                  default en-US;
+                  ~*^en-US en-US;
+                  ~*^en en-US;
+                  ~*^ar ar;
+                  ~*^ca ca;
+                  ~*^cs cs;
+                  ~*^de de;
+                  ~*^es es;
+                  ~*^fa fa;
+                  ~*^fr fr;
+                  ~*^ko ko;
+                  ~*^it it;
+                  ~*^he he;
+                  ~*^ka ka;
+                  ~*^hu hu;
+                  ~*^mk mk;
+                  ~*^nl nl;
+                  ~*^ja ja;
+                  ~*^nb nb;
+                  ~*^pl pl;
+                  ~*^pt pt;
+                  ~*^ro ro;
+                  ~*^ru ru;
+                  ~*^sl sl;
+                  ~*^fi fi;
+                  ~*^sv sv;
+                  ~*^th th;
+                  ~*^tr tr;
+                  ~*^uk uk;
+                  ~*^vi vi;
+                  ~*^zh zh;
+                  ~*^hi hi;
+          }
+  
+          map $cookie_lang $lang {
+                  default $header_lang;
+                  ~*^en-US en-US;
+                  ~*^en en-US;
+                  ~*^ar ar;
+                  ~*^ca ca;
+                  ~*^cs cs;
+                  ~*^de de;
+                  ~*^es es;
+                  ~*^fa fa;
+                  ~*^fr fr;
+                  ~*^ko ko;
+                  ~*^it it;
+                  ~*^he he;
+                  ~*^ka ka;
+                  ~*^hu hu;
+                  ~*^mk mk;
+                  ~*^nl nl;
+                  ~*^ja ja;
+                  ~*^nb nb;
+                  ~*^pl pl;
+                  ~*^pt pt;
+                  ~*^ro ro;
+                  ~*^ru ru;
+                  ~*^sl sl;
+                  ~*^fi fi;
+                  ~*^sv sv;
+                  ~*^th th;
+                  ~*^tr tr;
+                  ~*^uk uk;
+                  ~*^vi vi;
+                  ~*^zh zh;
+                  ~*^hi hi;
+          }
+  
+  server {
+      listen 4081 ssl;
+      listen [::]:4081 ssl;
+      server_name _;
+  
+      # TLS
+      ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+      ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+      #ssl_session_cache shared:SSL:1m;
+      ssl_session_timeout 4h;
+      ssl_protocols TLSv1.2 TLSv1.3;
+      ssl_prefer_server_ciphers on;
+  
+      include /etc/nginx/snippets/nginx-mempool.conf;
+  
+  }
+  ```
+
+* Create a symlink in the sites-enabled directpry
+
+  ```sh
+  $ sudo ln -sf /etc/nginx/sites-available/mempool-ssl.conf /etc/nginx/sites-enabled/
+  ```
+
+* Copy the conf file dedicated to the Mempool website in the Nginx `snippets` directory
+
+  ```sh
+  $ sudo rsync -av /home/mempool/mempool/nginx-mempool.conf /etc/nginx/snippets
+  ```
+
+* Replace the main NGINX configuration file
+
+  ```sh
+  $ sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak2
+  $ sudo nano /etc/nginx/nginx.conf
+  ```
+
+* Paste the following configuration lines. Save and exit.
+
+  ```ini
+  user www-data;
+  worker_processes auto;
+  pid /run/nginx.pid;
+  include /etc/nginx/modules-enabled/*.conf;
+
+  # worker_rlimit_nofile 100000;
+
+  events {
+          worker_connections 768;
+          # multi_accept on;
+  }
+
+  http {
+          ##
+          # Basic Settings
+          ##
+          
+          sendfile on;
+          tcp_nopush on;
+          tcp_nodelay on;
+          keepalive_timeout 65;
+          types_hash_max_size 2048;
+          server_tokens off;
+          
+          # server_names_hash_bucket_size 64;
+          # server_name_in_redirect off;
+          
+          include /etc/nginx/mime.types;
+          default_type application/octet-stream;
+          
+          ##
+          # SSL Settings
+          ##
+          
+          ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POO>
+          ssl_prefer_server_ciphers on;
+          
+          ##
+          # Logging Settings
+          ##
+          
+          access_log /var/log/nginx/access.log;
+          error_log /var/log/nginx/error.log;
+          
+          ##
+          # Gzip Settings
+          ##
+          
+          gzip on;
+          
+          # gzip_vary on;
+          # gzip_proxied any;
+          # gzip_comp_level 6;
+          # gzip_buffers 16 8k;
+          # gzip_http_version 1.1;
+          # gzip_types text/plain text/css application/json application/javascrip>
+          
+          ##
+          # Virtual Host Configs
+          ##
+          
+          include /etc/nginx/conf.d/*.conf;
+          include /etc/nginx/sites-enabled/*;
+  }
+  
+  stream {
+          ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+          ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+          ssl_session_cache shared:SSL:1m;
+          ssl_session_timeout 4h;
+          ssl_protocols TLSv1.2 TLSv1.3;
+          ssl_prefer_server_ciphers on;
+          
+          include /etc/nginx/streams-enabled/*.conf;
+  
+  }
+  ```
+
+* Test and reload NGINX configuration
+  
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  $ sudo systemctl reload nginx
+  ```
+
 ---
 
 ### Autostart on boot
@@ -294,19 +503,76 @@ Now we’ll make sure Mempool starts as a service on the Raspberry Pi so it’s 
 
 ## Mempool in action
 
-TBD
+Point your browser to the secure access point provided by the NGINX web proxy, for example [https://raspibolt.local:4081](https://raspibolt.local:4081){:target="_blank"} (or your nodes ip address, e.g. https://192.168.0.20:4081).
 
 ---
 
 ## Upgrade
 
-TBD
+Updating to a new release is straight-forward. Make sure to read the release notes first.
+
+* From user “admin”, stop the service and open a “mempool” user session.
+
+  ```sh
+  $ sudo systemctl stop mempool
+  $ sudo su - mempool
+  ```
+
+* Fetch the latest GitHub repository information, display the latest release tag (v9.99.9 in this example), and update:
+
+  ```sh 
+  $ cd /home/mempool/mempool
+  $ git fetch
+  $ git describe --tags --abbrev=0
+  $ git checkout v9.99.9
+  $ git verify-tag v9.99.9
+  $ npm install --only=prod
+  $ exit
+  
+* Start the service again
+ 
+  ```sh 
+  $ sudo systemctl start mempool
+  $ sudo journalctl -f -u mempool
+
+* Point your browser to [https://raspibolt:4081/about](https://raspibolt:4081/about){:target="_blank"} and check that the displayed version is the newest version that you just installed.
 
 ---
 
 ## Uninstall
 
-TBD
+* Stop, disable and delete the Mempool systemd service
+ 
+  ```sh 
+  $ sudo systemctl stop mempool
+  $ sudo systemctl disable mempool
+  $ sudo rm /etc/systemd/system/mempool.service
+  ```sh
+
+* Remove the Nginx configurations for Mempool
+
+  ```sh 
+  $ sudo rm -R /var/www/mempool
+  $ sudo rm /etc/nginx/snippets/nginx-mempool.conf
+  $ sudo rm /etc/nginx/sites-enabled/mempool-ssl.conf
+  $ sudo rm /etc/nginx/sites-available/mempool-ssl.conf
+  $ sudo rm /etc/nginx/nginx.conf
+  $ sudo mv /etc/nginx/nginx.conf.bak2 /etc/nginx/nginx.conf
+  
+* Test and reload NGINX configuration
+  
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  $ sudo systemctl reload nginx
+  ```
+* Delete the "mempool" user
+
+  ```sh
+  $ sudo su -
+  $ userdel -r mempool
+  ```
 
 <br /><br />
 
