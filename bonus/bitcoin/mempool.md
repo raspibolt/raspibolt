@@ -55,6 +55,15 @@ Table of contents
   ```
 * If the version is v14 or older, update it following this tutorial: TBD
 
+### Firewall
+
+* Configure the firewall to allow incoming HTTPS requests
+
+  ```sh
+  $ sudo ufw allow 4081/tcp comment 'allow Mempool SSL'
+  $ sudo ufw status
+  ```
+
 ## Installation
 
 ### Clone the repository
