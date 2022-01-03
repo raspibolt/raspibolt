@@ -573,7 +573,7 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ sudo systemctl stop mempool
   $ sudo systemctl disable mempool
   $ sudo rm /etc/systemd/system/mempool.service
-  ```sh
+  ```
 
 * Remove the Nginx configurations for Mempool
 
