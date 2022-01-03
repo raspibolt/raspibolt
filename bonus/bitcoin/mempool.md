@@ -87,8 +87,6 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 
   ```sh
   $ git clone https://github.com/mempool/mempool
-  > Cloning into 'mempool'...
-  > [...]
   $ exit
   ```
 
@@ -615,6 +613,15 @@ Updating to a new release is straight-forward. Make sure to read the release not
   > nginx: configuration file /etc/nginx/nginx.conf test is successful
   $ sudo systemctl reload nginx
   ```
+  
+* Remove MariaDB. When prompted, check the packages that will be removed and type "Y" and "Enter"
+
+  ```sh
+  $ sudo service mysql stop
+  $ sudo apt-get --purge remove "mysql*"
+  
+* A blue window will pop up asking if we want to remove all MariaDB databases, select `<Yes>`.
+
 * Delete the "mempool" user. It might take a long time as the Mempool user directory is big. Do not worry about the `userdel: mempool mail spool (/var/mail/mempool) not found`.
 
   ```sh
