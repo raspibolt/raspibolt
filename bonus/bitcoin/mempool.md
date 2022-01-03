@@ -575,6 +575,23 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ sudo rm /etc/systemd/system/mempool.service
   ```
 
+* Display the UFW firewall rules and notes the numbers of the rules for Mempool (e.g., X and Y below)
+
+  ```sh
+  $ sudo ufw status numbered
+  > [...]
+  > [X] 4081/tcp                   ALLOW IN    Anywhere                   # allow Mempool SSL
+  > [...]
+  > [Y] 4081/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow Mempool SSL
+  ```
+
+* Delete the two Mempool rules (check that the rule to be deleted is the correct one and type "y" and "Enter" when prompted)
+
+  ```sh
+  $ sudo ufw delete Y
+  $ sudo ufw delete X  
+  ```
+
 * Remove the Nginx configurations for Mempool
 
   ```sh 
@@ -593,11 +610,12 @@ Updating to a new release is straight-forward. Make sure to read the release not
   > nginx: configuration file /etc/nginx/nginx.conf test is successful
   $ sudo systemctl reload nginx
   ```
-* Delete the "mempool" user
+* Delete the "mempool" user. It might take a long time as the Mempool user directory is big. Do not worry about the `userdel: mempool mail spool (/var/mail/mempool) not found`.
 
   ```sh
   $ sudo su -
   $ userdel -r mempool
+  > userdel: mempool mail spool (/var/mail/mempool) not found
   ```
 
 <br /><br />
