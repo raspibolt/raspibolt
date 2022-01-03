@@ -39,7 +39,7 @@ Table of contents
 * Electrs
 * NodeJS v16+
 * MariaDB
-* NGINX
+* nginx
 
 ---
 
@@ -234,9 +234,9 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ sudo chown -R www-data:www-data /var/www/mempool
   ```
   
-### NGINX
+### nginx
 
-We now need to modify the Nginx configuration to create a web server for the website on port 4081.
+We now need to modify the nginx configuration to create a web server for the website on port 4081.
 
 * Create a proxy server for the Mempool website on port 4081
 
@@ -347,7 +347,7 @@ We now need to modify the Nginx configuration to create a web server for the web
   $ sudo ln -sf /etc/nginx/sites-available/mempool-ssl.conf /etc/nginx/sites-enabled/
   ```
 
-* Copy the conf file dedicated to the Mempool website in the Nginx `snippets` directory
+* Copy the conf file dedicated to the Mempool website in the nginx `snippets` directory
 
   ```sh
   $ sudo rsync -av /home/mempool/mempool/nginx-mempool.conf /etc/nginx/snippets
@@ -379,7 +379,7 @@ We modify this file to add a restriction that only allow access from the LAN and
   }
   ```
 
-* Replace the main NGINX configuration file
+* Replace the main nginx configuration file
 
   ```sh
   $ sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak2
@@ -467,7 +467,7 @@ We modify this file to add a restriction that only allow access from the LAN and
   }
   ```
 
-* Test and reload NGINX configuration
+* Test and reload nginx configuration
   
   ```sh
   $ sudo nginx -t
@@ -529,7 +529,7 @@ Now we’ll make sure Mempool starts as a service on the Raspberry Pi so it’s 
 
 ## Mempool in action
 
-Point your browser to the secure access point provided by the NGINX web proxy, for example [https://raspibolt.local:4081](https://raspibolt.local:4081){:target="_blank"} (or your nodes ip address, e.g. https://192.168.0.20:4081).
+Point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4081](https://raspibolt.local:4081){:target="_blank"} (or your nodes ip address, e.g. https://192.168.0.20:4081).
 
 ---
 
@@ -592,7 +592,7 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ sudo ufw delete X  
   ```
 
-* Remove the Nginx configurations for Mempool
+* Remove the nginx configurations for Mempool
 
   ```sh 
   $ sudo rm -R /var/www/mempool
