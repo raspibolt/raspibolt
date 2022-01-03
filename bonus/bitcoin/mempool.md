@@ -47,12 +47,13 @@ Table of contents
 
 ### NodeJS v16+
 
-* Let's check our version of NodeJS running on the node
+* With user "admin, let's check our version of NodeJS running on the node
 
   ```sh
   $ node -v
   > v16.13.1
   ```
+
 * If the version is v14 or older, update it following this tutorial: TBD
 
 ### Firewall
