@@ -353,6 +353,32 @@ We now need to modify the Nginx configuration to create a web server for the web
   $ sudo rsync -av /home/mempool/mempool/nginx-mempool.conf /etc/nginx/snippets
   ```
 
+We modify this file to add a restriction that only allow access from the LAN and deny connections from the rest of the world
+
+* Open the file and go to the first "location" context
+
+  ```sh
+  $ sudo nano /etc/nginx/snippets/nginx-mempool.conf 
+  ```
+
+  ```ini
+  location / {
+              try_files /$lang/$uri /$lang/$uri/ $uri $uri/ /en-US/$uri @index-redirect;
+              expires 10m;
+  }
+  ```
+
+* Add the following two lines (`allow 192.168.0.0/16;` and `deny all;`) for the context to now look like that. Save and exit.
+
+  ```ini
+  location / {
+              allow 192.168.0.0/16;
+              deny all;
+              try_files /$lang/$uri /$lang/$uri/ $uri $uri/ /en-US/$uri @index-redirect;
+              expires 10m;
+  }
+  ```
+
 * Replace the main NGINX configuration file
 
   ```sh
