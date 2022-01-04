@@ -99,14 +99,9 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   ```sh
   $ sudo apt update
   $ sudo apt install mariadb-server mariadb-client
-  $ sudo systemctl status mariadb
-  > * mariadb.service - MariaDB 10.5.12 database server
-  >  Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; vendor preset: enabled)
-  >  Active: active (running) since Mon 2021-12-13 11:29:11 GMT; 23h ago
-  >  [...]
   ```
   
-* Now, open the MariaDB shell. The instructions to enter in the MariaDB shell with start with $2
+* Now, open the MariaDB shell. 
 
   ```sh
   $ sudo mysql
@@ -115,25 +110,25 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   > MariaDB [(none)]>
   ```
 
-* Enter the following commands in the shell and exit
+* Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell with start with "MDB$"
 
   ```sh
-  $$ drop database mempool;
+  MDB$ drop database mempool;
   > ERROR 1008 (HY000): Can't drop database 'mempool'; database doesn't exist
-  $$ create database mempool;
+  MDB$ create database mempool;
   > Query OK, 1 row affected (0.001 sec)
-  $$ grant all privileges on mempool.* to 'mempool'@'%' identified by 'mempool';
+  MDB$ grant all privileges on mempool.* to 'mempool'@'%' identified by 'mempool';
   > Query OK, 0 rows affected (0.012 sec)
-  $$ exit
+  MDB$ exit
   ```
   
-* Still with user "admin", from the mempool repo's top-level folder, import the database structure:
+#* Still with user "admin", from the mempool repo's top-level folder, import the database structure:
 
-  ```sh
-  $ cd /home/mempool/mempool
-  $ mariadb -umempool -pmempool mempool < mariadb-structure.sql
-  $ cd ~/
-  ```
+#  ```sh
+#  $ cd /home/mempool/mempool
+#  $ mariadb -umempool -pmempool mempool < mariadb-structure.sql
+#  $ cd ~/
+#  ```
 
 ### Installation of Mempool's backend
 
@@ -142,7 +137,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   ```sh
   $ sudo su - mempool
   $ cd mempool/backend
-  $ npm install
+  $ npm install --prod
   $ npm run build
   ```
   
@@ -160,7 +155,22 @@ For improved security, we create the new user "mempool" that will run the Mempoo
     "MEMPOOL": {
       "NETWORK": "mainnet",
       "BACKEND": "electrum",
-      "HTTP_PORT": 8999
+      "HTTP_PORT": 8999,
+      "NETWORK": "mainnet",
+      "BACKEND": "electrum",
+      "HTTP_PORT": 8999,
+      "SPAWN_CLUSTER_PROCS": 0,
+      "API_URL_PREFIX": "/api/v1/",
+      "POLL_RATE_MS": 2000,
+      "CACHE_DIR": "./cache",
+      "CLEAR_PROTECTION_MINUTES": 20,
+      "RECOMMENDED_FEE_PERCENTILE": 50,
+      "BLOCK_WEIGHT_UNITS": 4000000,
+      "INITIAL_BLOCKS_AMOUNT": 8,
+      "MEMPOOL_BLOCKS_AMOUNT": 8,
+      "PRICE_FEED_UPDATE_INTERVAL": 3600,
+      "USE_SECOND_NODE_FOR_MINFEE": false,
+      "EXTERNAL_ASSETS": []
     },
     "CORE_RPC": {
       "HOST": "127.0.0.1",
@@ -614,13 +624,13 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ sudo systemctl reload nginx
   ```
   
-* Remove MariaDB. When prompted, check the packages that will be removed and type "Y" and "Enter"
+* Remove MariaDB. When prompted, check the packages that will be removed and type "Y" and "Enter". A blue window will pop up asking if we want to remove all MariaDB databases, select `<Yes>`.
 
   ```sh
   $ sudo service mysql stop
   $ sudo apt-get --purge remove "mysql*"
   
-* A blue window will pop up asking if we want to remove all MariaDB databases, select `<Yes>`.
+* 
 
 * Delete the "mempool" user. It might take a long time as the Mempool user directory is big. Do not worry about the `userdel: mempool mail spool (/var/mail/mempool) not found`.
 
