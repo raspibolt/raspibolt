@@ -112,7 +112,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 
 * Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell with start with "MDB$"
 
-  ```sh
+  ```sql
   MDB$ drop database mempool;
   > ERROR 1008 (HY000): Can't drop database 'mempool'; database doesn't exist
   MDB$ create database mempool;
@@ -121,14 +121,6 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   > Query OK, 0 rows affected (0.012 sec)
   MDB$ exit
   ```
-  
-#* Still with user "admin", from the mempool repo's top-level folder, import the database structure:
-
-#  ```sh
-#  $ cd /home/mempool/mempool
-#  $ mariadb -umempool -pmempool mempool < mariadb-structure.sql
-#  $ cd ~/
-#  ```
 
 ### Installation of Mempool's backend
 
@@ -141,15 +133,15 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ npm run build
   ```
   
-* Copy and rename the sample configuration file
+* Create a sample configuration file
   
   ```sh
-  $ cp mempool-config.sample.json mempool-config.json
   $ nano mempool-config.json
   ```
-  
-* Open the config file and paste the following text. In the CORE_RPC section, replace USERNAME by 'raspibolt' and PASSWORD by your password [B]
-  
+
+* Paste the following lines. In the CORE_RPC section, replace the username with "raspibolt" and password with your password [B].
+
+
   ```sh
   {
     "MEMPOOL": {
@@ -203,24 +195,9 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 * After a few minutes, we should see outputs like this. 
 
   ```sh
-  > Mempool updated in 0.189 seconds
   > Updating mempool
+  > [...]
   > Mempool updated in 0.096 seconds
-  > Updating mempool
-  > Mempool updated in 0.099 seconds
-  > Updating mempool
-  > Calculated fee for transaction 1 / 10
-  > Calculated fee for transaction 2 / 10
-  > Calculated fee for transaction 3 / 10
-  > Calculated fee for transaction 4 / 10
-  > Calculated fee for transaction 5 / 10
-  > Calculated fee for transaction 6 / 10
-  > Calculated fee for transaction 7 / 10
-  > Calculated fee for transaction 8 / 10
-  > Calculated fee for transaction 9 / 10
-  > Calculated fee for transaction 10 / 10
-  > Mempool updated in 0.243 seconds
-  > Updating mempool
   ```
 
 * Press Ctrl+C to exit and come back to the repository root directory
@@ -231,16 +208,16 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 
 ### Installation of Mempool's frontend
 
-* Still with user "mempool", install the frontend and exit back to the "admin" user
-
+* Still with user "mempool", install the frontend (it will take several minutes) and exit back to the "admin" user
+  
   ```sh
   $ cd frontend
-  $ npm install
-  $ npm run
+  $ npm install --prod
+  $ npm run build
   $ exit
   ```
 
-* Install the output into nginx webroot folder
+* Install the output into nginx webroot folder and change its ownersjip to the "www-data" user
 
   ```sh
   $ sudo rsync -av --delete /home/mempool/mempool/frontend/dist/mempool/ /var/www/mempool/
