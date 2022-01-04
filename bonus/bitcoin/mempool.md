@@ -122,7 +122,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   MDB$ exit
   ```
 
-### Installation of Mempool's backend
+### Backend
 
 * With user "mempool", install the backend  
   
@@ -206,7 +206,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ cd ~/mempool
   ```
 
-### Installation of Mempool's frontend
+### Frontend
 
 * Still with user "mempool", install the frontend (it will take several minutes) and exit back to the "admin" user
   
@@ -217,7 +217,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ exit
   ```
 
-* Install the output into nginx webroot folder and change its ownersjip to the "www-data" user
+* Install the output into nginx webroot folder and change its ownership to the "www-data" user
 
   ```sh
   $ sudo rsync -av --delete /home/mempool/mempool/frontend/dist/mempool/ /var/www/mempool/
@@ -228,7 +228,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 
 We now need to modify the nginx configuration to create a web server for the website on port 4081.
 
-* Create a proxy server for the Mempool website on port 4081
+* Create a nginx configuration file for the Mempool website with a server listening on port 4081
 
   ```sh
   $ sudo nano /etc/nginx/sites-available/mempool-ssl.conf
@@ -351,14 +351,14 @@ We modify this file to add a restriction that only allow access from the LAN and
   $ sudo nano /etc/nginx/snippets/nginx-mempool.conf 
   ```
 
+* Display the line numbers by pressing "Alt+#". Paste the following two lines between lines 16 and 17.
+
   ```ini
-  location / {
-              try_files /$lang/$uri /$lang/$uri/ $uri $uri/ /en-US/$uri @index-redirect;
-              expires 10m;
-  }
+                  allow 192.168.0.0/16;
+                  deny all;
   ```
 
-* Add the following two lines (`allow 192.168.0.0/16;` and `deny all;`) for the context to now look like that. Save and exit.
+* The context should now look like this. Save and exit.
 
   ```ini
   location / {
@@ -519,7 +519,7 @@ Now we’ll make sure Mempool starts as a service on the Raspberry Pi so it’s 
 
 ## Mempool in action
 
-Point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4081](https://raspibolt.local:4081){:target="_blank"} (or your nodes ip address, e.g. https://192.168.0.20:4081).
+Point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4081](https://raspibolt.local:4081){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4081).
 
 ---
 
@@ -537,14 +537,14 @@ Updating to a new release is straight-forward. Make sure to read the release not
 * Fetch the latest GitHub repository information, display the latest release tag (v9.99.9 in this example), and update:
 
   ```sh 
-  $ cd /home/mempool/mempool
+  $ cd mempool
   $ git fetch
   $ git describe --tags --abbrev=0
   $ git checkout v9.99.9
-  $ git verify-tag v9.99.9
-  $ npm install --only=prod
-  $ exit
+  ```
   
+* Then follow the installation process described in the guide in the [Backend section](#backend) up to, and including the nginx section .
+
 * Start the service again
  
   ```sh 
@@ -606,8 +606,7 @@ Updating to a new release is straight-forward. Make sure to read the release not
   ```sh
   $ sudo service mysql stop
   $ sudo apt-get --purge remove "mysql*"
-  
-* 
+  ```
 
 * Delete the "mempool" user. It might take a long time as the Mempool user directory is big. Do not worry about the `userdel: mempool mail spool (/var/mail/mempool) not found`.
 
