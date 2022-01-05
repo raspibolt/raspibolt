@@ -66,7 +66,7 @@ We are going to install thunderhub in the home directory since it doesn't take m
   so we add him to the "bitcoin" group. Open a new session.
 
   ```sh
-  $ sudo adduser thunderhub
+  $ sudo adduser --disabled-password --gecos "" thunderhub
   $ sudo adduser thunderhub bitcoin
   $ sudo su - thunderhub
   ```
