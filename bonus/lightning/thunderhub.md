@@ -35,7 +35,7 @@ Table of contents
 
 ### Check NodeJS
 
-* NojeJS v14.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
+* NojeJS v14.15 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
   
   ```sh
   $ node -v
