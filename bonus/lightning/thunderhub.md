@@ -73,12 +73,12 @@ We are going to install thunderhub in the home directory since it doesn't take m
 
 * Download the source code directly from GitHub and install all dependencies using NPM.
 
-```sh
-$ git clone https://github.com/apotdevin/thunderhub.git
-$ cd thunderhub
-$ npm install
-$ npm run build
-```
+  ```sh
+  $ git clone https://github.com/apotdevin/thunderhub.git
+  $ cd thunderhub
+  $ npm install
+  $ npm run build
+  ```
 
 ### Configuration
 
