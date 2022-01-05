@@ -63,7 +63,7 @@ For that we will create a separate user and we will be running the code as the n
 We are going to install thunderhub in the home directory since it doesn't take much space.
 
 * Create a new user with  your `password[A]`. The new user needs read-only access to the `tls.cert` and our `admin.macaroon`, 
-  so we add him to the "bitcoin" group. Open a new session.
+  so we add him to the "lnd" group. Open a new session.
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" thunderhub
