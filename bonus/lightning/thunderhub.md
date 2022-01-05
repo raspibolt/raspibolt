@@ -67,7 +67,7 @@ We are going to install thunderhub in the home directory since it doesn't take m
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" thunderhub
-  $ sudo adduser thunderhub bitcoin
+  $ sudo adduser thunderhub lnd
   $ sudo su - thunderhub
   ```
 
