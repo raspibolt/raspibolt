@@ -41,7 +41,7 @@ Table of contents
   $ node -v
   > v14.18.2
   ```
-* If the version is v12.0 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
+* If the version is v14.15 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs){:target="_blank"} to install it.
 
 ### Firewall 
 
