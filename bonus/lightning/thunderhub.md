@@ -82,7 +82,7 @@ We are going to install thunderhub in the home directory since it doesn't take m
 
 ### Configuration
 
-* Edit the configuration file. Switch to `thunderhub` user for this.
+* Still with user "thunderhub", edit the configuration file.
 
   ```sh
   $ sudo su - thunderhub
