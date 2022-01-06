@@ -134,7 +134,7 @@ Test starting thunderhub manually first to make sure it works.
 
  ```
   $ cd ~/thunderhub
-  $ npm run start -- -p 3010
+  $ npm run start -p 3010
   ```
 
 * Now point your browser to `http://raspibolt.local:3010` (or whatever you chose as hostname) or the ip address (e.g. `http://192.168.0.20:3010`).
@@ -175,7 +175,7 @@ In order to do that we create a systemd unit that starts the service on boot dir
 
   [Service]
   WorkingDirectory=/home/thunderhub/thunderhub
-  ExecStart=/usr/bin/npm run start -- -p 3010
+  ExecStart=/usr/bin/npm run start -p 3010
   User=thunderhub
   Restart=always
   TimeoutSec=120
