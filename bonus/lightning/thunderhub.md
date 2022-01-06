@@ -17,7 +17,7 @@ Difficulty: Medium
 {: .label .label-yellow }
 
 Status: Tested v3
-{: .label .label-red }
+{: .label .label-green }
 
 ![thunderhub](../../images/75_thunderhub.png)
 
