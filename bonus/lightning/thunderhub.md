@@ -107,10 +107,11 @@ We are going to install thunderhub in the home directory since it doesn't take m
   ACCOUNT_CONFIG_PATH='/home/thunderhub/thunderhub/thubConfig.yaml'
   ```
 
-* Edit your `thubConfig.yaml`. Change your `accountpassword`.
+* If not already done, change your directory and edit your `thubConfig.yaml`. Change your `accountpassword`.
 
   ```sh
-  $ nano thunderhub/thubConfig.yaml 
+  $ cd thunderhub
+  $ nano thubConfig.yaml 
   ```
   ```ini
   masterPassword: 'PASSWORD' # Default password unless defined in account
