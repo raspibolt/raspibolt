@@ -56,7 +56,7 @@ The guide will show you how to:
 
 ## Connect Bisq to your node
 
-### Configure Bictoin Core
+### Configure Bitcoin Core
 
 For Bisq to connect to your Bitcoin Core node, the bloom filters have to be activated.
 
