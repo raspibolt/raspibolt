@@ -104,12 +104,12 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ cd RTL
 
   $ git describe --tags --abbrev=0
-  > v0.11.2
+  > v0.12.0
 
-  $ git checkout v0.11.2
+  $ git checkout v0.12.0
 
-  $ git verify-tag v0.11.2
-  > gpg: Signature made Fri 03 Sep 2021 02:59:24 BST
+  $ git verify-tag v0.12.0
+  > gpg: Signature made Wed 29 Dec 2021 23:22:40 GMT
   > gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
   > gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
   > gpg:                 aka "Suheb <39208279+saubyk@users.noreply.github.com>" [unknown]
@@ -150,7 +150,7 @@ Now we take the sample configuration file and add change it to our needs.
 * Copy the sample config file, and open it in the text editor.
 
   ```sh
-  cp docs/Sample-RTL-Config.json ./RTL-Config.json
+  cp .github/docs/Sample-RTL-Config.json ./RTL-Config.json
   nano RTL-Config.json
   ```
 
