@@ -381,7 +381,7 @@ We modify this file to add a restriction that only allow access from the LAN and
 * Replace the main nginx configuration file
 
   ```sh
-  $ sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak2
+  $ sudo mv /etc/nginx/nginx.conf /etc/nginx/raspibolt-nginx.conf.bak
   $ sudo nano /etc/nginx/nginx.conf
   ```
 
