@@ -221,6 +221,16 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ sudo chown -R www-data:www-data /var/www/mempool
   ```
   
+### Restrict access to configuration file
+
+The Mempool configuration file contains the Bitcoin Core RPC username and password which are sensitive information. We'll restrict reading access to this file by user "mempool" only.
+
+* Still with user "admin", change the ownership of the configuration file
+ 
+  ```sh
+  $ sudo chown 600 /home/mempool/mempool/backend/mempool-config.json
+  ```
+
 ### nginx
 
 We now need to modify the nginx configuration to create a web server for the website on port 4081.
