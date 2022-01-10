@@ -559,6 +559,7 @@ Updating to a new release is straight-forward. Make sure to read the release not
   ```sh 
   $ sudo systemctl start mempool
   $ sudo journalctl -f -u mempool
+  ```
 
 * Point your browser to [https://raspibolt:4081/about](https://raspibolt:4081/about){:target="_blank"} and check that the displayed version is the newest version that you just installed.
 
@@ -600,6 +601,7 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ sudo rm /etc/nginx/sites-available/mempool-ssl.conf
   $ sudo rm /etc/nginx/nginx.conf
   $ sudo mv /etc/nginx/nginx.conf.bak2 /etc/nginx/nginx.conf
+  ```
   
 * Test and reload NGINX configuration
   
