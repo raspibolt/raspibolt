@@ -37,7 +37,7 @@ Table of contents
 
 * Bitcoin
 * Electrs
-* NodeJS v16+
+* Node.js v16+
 * MariaDB
 * nginx
 
@@ -45,18 +45,18 @@ Table of contents
 
 ## Preparations
 
-### NodeJS
+### Node.js
 
-To run Mempool, we need to run NodeJS v16 or above.
+To run Mempool, we need to run Node.js v16 or above.
 
-* With user "admin", let's check our version of NodeJS running on the node
+* With user "admin", let's check our version of Node.js running on the node
 
   ```sh
   $ node -v
   > v16.13.1
   ```
 
-* If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
+* If Node.js is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
 ### Firewall
 
