@@ -115,8 +115,6 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 * Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell with start with "MDB$"
 
   ```sql
-  MDB$ drop database mempool;
-  > ERROR 1008 (HY000): Can't drop database 'mempool'; database doesn't exist
   MDB$ create database mempool;
   > Query OK, 1 row affected (0.001 sec)
   MDB$ grant all privileges on mempool.* to 'mempool'@'%' identified by 'mempool';
