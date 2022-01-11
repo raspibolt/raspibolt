@@ -220,6 +220,12 @@ Still logged in as user "bitcoin", let's start "bitcoind" manually.
 
 * Once everything looks ok, stop "bitcoind" with `Ctrl-C`
 
+* Grant the "bitcoin" group read-permission for the debug log file:
+  
+  ```sh
+  $ sudo chmod g+r /data/bitcoin/debug.log
+  ```
+
 * Exit the “bitcoin” user session back to user “admin”
 
   ```sh
@@ -337,7 +343,6 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   >      CGroup: /system.slice/bitcoind.service
   >              `-2317 /usr/local/bin/bitcoind -daemon -pid=/run/bitcoind/bitcoind.pid -conf=/home/bitcoin/.bitcoin/bitcoin.conf > -datadir=/home/bitcoin/.bitcoin
   >
-  > Warning: some journal files were not opened due to insufficient permissions.
   ```
 
 * Check if the permission cookie can be accessed by the group "bitcoin".
