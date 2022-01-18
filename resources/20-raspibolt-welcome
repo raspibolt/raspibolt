@@ -170,7 +170,7 @@ else
     if [ -z "$rtlgit" ]; then
     rtlgit=$(curl -s https://api.github.com/repos/Ride-The-Lightning/RTL/tags | jq -r '.[0].name')
   fi
-  printf "%s\n%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}"  "${rtlgit}" > "${gitstatusfile}"
+  printf "%s\n%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" "${rtlgit}" > "${gitstatusfile}"
 fi
 
 # create variable btcversion
