@@ -60,8 +60,7 @@ Table of contents
 * Move the file to the  global bin(aries) folder and clean the `/tmp` directory
 
   ```sh
-  $ sudo cp lnchannels /usr/local/bin
-  $ rm lnchannels
+  $ sudo mv lnchannels /usr/local/bin
   $ cd
   ```
 
@@ -91,8 +90,7 @@ Table of contents
 * To uninstall `lnchannels`
 
   ```sh
-  $ cd /usr/local/bin
-  $ sudo rm lnchannels
+  $ sudo rm /usr/local/bin/lnchannels
   $ cd
   ```
 
