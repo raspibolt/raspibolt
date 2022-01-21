@@ -100,7 +100,7 @@ To enable booting from USB, follow these steps:
 
 1. Get your hands on a microSD card (all data will be deleted, but you only need it once)
 1. Using the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"}, write config bootloader to enable "USB Boot" to the microSD card
-  (select Misc utility images / Bootleader / USB Boot)
+  (select Misc utility images / Bootloader / USB Boot)
 1. Boot your Pi with this microSD card
 1. Once the green LED blinks constantly, you can disconnect the power
 1. Remove the microSD card and start your Pi again with the SSD connected
