@@ -43,22 +43,32 @@ The following list of aliases was derived from contributions by [RobClark56](htt
 * With user "admin", create a `.bash_aliases` file in `nano`
 
   ```sh
-  $ sudo nano ~/.bash_aliases
+  $ nano ~/.bash_aliases
   ```
 
 * Paste the following lines in `nano`
 
   ```ini
-    
   ##################
   # GENERAL STATUS #
   ################## 
   
   alias livehealth='sudo watch -n 1 "vcgencmd measure_clock arm; vcgencmd measure_temp"'
  
-  alias showversion='echo The installed versions of the services are as follows: ; bitcoind --version ; lnd --version ; echo BTC RPC Explorer: head -n 3 /home/btcrpcexplorer/btc-rpc-explorer/package.json ; echo Electrs: version head -n 1 /home/admin/rust/electrs/RELEASE-NOTES.md ; tor --version ; echo RTL: head -n 3 /home/rtl/RTL/package.json ; echo NPM: v`npm --version` ; echo NodeJS: node -v ; lntop --version ; htop --version ; nginx -v'
- 
-  alias statuservices='echo The status of the services is as follows, press the space key to advance: ; sudo systemctl status bitcoind lnd rtl electrs btcrpcexplorer tor ssh fail2ban ufw vncserver-x11-serviced'
+  alias showversion='echo The installed versions of the services are as follows: ; \
+    bitcoind --version ; \
+    lnd --version ; \
+    echo "BTC RPC Explorer: $(head -n 3 /home/btcrpcexplorer/btc-rpc-explorer/package.json)" ; \
+    echo "Electrs: version $(head -n 1 /home/admin/rust/electrs/RELEASE-NOTES.md)" ;
+    tor --version ; \
+    echo "RTL: $(head -n 3 /home/rtl/RTL/package.json)" ; \
+    echo NPM: v`npm --version` ; \
+    echo NodeJS: node -v ; \
+    lntop --version ; \
+    htop --version ; nginx -v'
+    
+  alias statuservices='echo The status of the services is as follows, press the space key to advance: ; \
+    sudo systemctl status bitcoind lnd rtl electrs btcrpcexplorer tor ssh fail2ban ufw vncserver-x11-serviced'
   
   ##################
   # START SERVICES #
@@ -130,7 +140,7 @@ The following list of aliases was derived from contributions by [RobClark56](htt
 * Execute a `source` command to register changes to the `.bashrc` file
 
   ```sh 
-  $ source /home/admin/.bashrc 
+  $ source ~/.bash_aliases 
   ```
 
 ---
@@ -166,12 +176,10 @@ The following list of aliases was derived from contributions by [RobClark56](htt
 
 ## Uninstall
 
-* To remove these special aliases, with user "admin", simply delete the `.bash_aliases` file and reset `.bashrc`
+* To remove these special aliases, with user "admin", simply delete the `.bash_aliases`. The aliases will be gone with the next login.
 
   ```sh
-  $ cd ~/
-  $ rm .bash_aliases
-  $ source /home/admin/.bashrc 
+  $ rm ~/.bash_aliases
   ```
 
 <br /><br />
