@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-The following script was created by [RobClark56](https://github.com/robclark56){:target="_blank"} and help getting a better system overview.
+The following script was created by [RobClark56](https://github.com/robclark56){:target="_blank"} and helps to get a better system overview.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -44,9 +44,9 @@ Table of contents
 * You can investigate the content of the script to ensure that there is no malicious code in it. Once done press q to quit.
   
   ```sh
-  $ less balance
-  > /bin/bash
-  > spiBolt channel balance display, by robclark56
+  $ less lnbalance
+  > #!/bin/bash
+  > # RaspiBolt channel balance display, by robclark56
   > [...]
   ```
   
@@ -60,8 +60,7 @@ Table of contents
 * Move the file to the  global bin(aries) folder
 
   ```sh
-  $ sudo cp lnbalance /usr/local/bin
-  $ rm lnbalance
+  $ sudo mv lnbalance /usr/local/bin
   $ cd
   ```
  
@@ -83,8 +82,7 @@ Table of contents
 * To uninstall `lnbalance`
 
   ```sh
-  $ cd /usr/local/bin
-  $ sudo rm lnbalance
+  $ sudo rm /usr/local/bin/lnbalance
   $ cd
   ```
 
