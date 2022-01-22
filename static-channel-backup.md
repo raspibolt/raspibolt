@@ -255,7 +255,7 @@ You're set! Each time you'll open a new channel or close a channel, a timestampe
 
 ## (Optional) Remote backup: GitHub
 
-The thumbdrive-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and USB thumbdrive are destroyed at the same time (*e.g.* fire, food, etc.).  
+The thumbdrive-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and USB thumbdrive are destroyed at the same time (*e.g.* fire, flood, etc.).  
 
 To protect against this situation, it is necessary to send the backup to a remote location. We will 
 
