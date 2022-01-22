@@ -257,7 +257,7 @@ You're set! Each time you'll open a new channel or close a channel, a timestampe
 
 The thumbdrive-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and USB thumbdrive are destroyed at the same time (*e.g.* fire, flood, etc.).  
 
-To protect against this situation, it is necessary to send the backup to a remote location. We will 
+To protect against this situation, it is necessary to send the backup to a remote location. We will use a private repository on GitHub which is FOSS and free. The SCB file is already encrypted and can therefore be sent to the repository as is and without the need for additional encryption.
 
 ### Create a GitHub repository
 
