@@ -89,21 +89,21 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest th
   ```
 
 * Now, get the "lnd" user identifier (UID) and the "lnd" group identifier (GUI) from the `/etc/passwd` database of all user accounts. 
-and copy them into a text editor on your local computer (e.g. here `1005` and `1005`)
+and copy them into a text editor on your local computer (e.g. here `XXXX` and `XXXX`)
   
   ```sh
   $ awk -F ':' '$1=="lnd" {print "GID: "$3" / UID: "$4}'  /etc/passwd
-  > GID: 1005 / UID: 1005
+  > GID: XXXX / UID: XXXX
   ```
 
-* Edit the `fstab` file and add the following as a new line at the end, replacing `123456` with your own `UUID`, and `1005` with your own `GID` and `UID`.
+* Edit the `fstab` file and add the following as a new line at the end, replacing `123456` with your own `UUID`, and `XXXX` with your own `GID` and `UID`.
 
   ```sh
   $ sudo nano /etc/fstab
   ```
   
   ```ini
-  UUID=123456 /mnt/thumbdrive-scb vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=1005,uid=1005 0 0
+  UUID=123456 /mnt/thumbdrive-scb vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=XXXX,uid=XXXX 0 0
   ```
   
   🔍 *more: [fstab guide](https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/){:target="_blank"}*
