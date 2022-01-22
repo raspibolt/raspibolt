@@ -224,7 +224,7 @@ We now cause the `channel.backup` to change and see if a copy gets uploaded to t
   ```
 
 * Start your SSH program (eg. PuTTY) a second time and log in as “admin”. Commands for the second session start with the prompt $2.
-* Simulate a `channel.backup` file change and then exit the session.
+* Simulate a `channel.backup` file change with the `touch` command (that simply updates the timestamp of the file but not its content) and then exit the session.
   
   ```sh
   $2 sudo touch /data/lnd-backup/channel.backup
