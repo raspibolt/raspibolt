@@ -249,7 +249,7 @@ We now cause the `channel.backup` to change and see if a copy gets uploaded to t
   > -rwxr-xr-x 1 lnd  lnd     45 Dec 27 17:39 channel-20211227-173403.backup
   ```
   
-You're set! Each time you'll open a new channel or close a channel, the backup file in the thumbdrive will be updated.
+You're set! Each time you'll open a new channel or close a channel, a timestamped copy of the backup file is saved to the USB thumbdrive.
 
 ---
 
