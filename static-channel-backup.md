@@ -46,6 +46,8 @@ The guide will show how to set up an automatic Static Channel Backup:
 1. Locally, to a USB thumbdrive plugged into the Pi: in case of SSD drive failure only
 1. Remotely, to a GitHub repository: in case of widespread node damage (e.g. flood, fire, etc)
 
+---
+
 ## Local backup: USB thumbdrive
 
 We will create a bash script that automatically backup the LND SCB file on change to a small thumbdrive permanently plugged in the RaspBerry Pi.
