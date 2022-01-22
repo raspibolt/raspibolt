@@ -199,8 +199,6 @@ We'll setup the backup script as a systemd service to run in the background and 
   ExecStart=/usr/local/bin/thumbdrive-scb-backup.sh
   Restart=always
   RestartSec=1
-  StandardOutput=syslog
-  StandardError=syslog
   User=lnd
 
   [Install]
