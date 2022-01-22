@@ -20,7 +20,7 @@ We set up an automatic Static Channel Backup on an USB thumbdrive (and optionall
 
 ---
 
-## Introduction: why are channel backups important?
+## Why are channel backups important?
 
 Static Channels Backup is a feature of LND that allows for the onchain recovery of lightning channel balances in the case of a bricked node. Despite its name, it does not allow the recovery of your LN channels but simply increases the chance that you'll recover all (or most) of your offchain (local) balances.  
 
@@ -40,8 +40,6 @@ This is why it is recommended to set up an automatic SCB update mechanism that:
 1. Save the SCB file in another location than the SSD drive (to ensure that the SCB survive in case of drive failure)
 
 You can read more about SCBs in [this section of 'Mastering the Lighning Network'](https://github.com/lnbook/lnbook/blob/ec806916edd6f4d1b2f9da2fef08684f80acb671/05_node_operations.asciidoc#node-and-channel-backups){:target="_blank"}.
-
-## TL;DR
 
 The guide will show how to set up an automatic Static Channel Backup:
 
