@@ -8,7 +8,7 @@ parent: Lightning
 # Ride The Lightning
 {: .no_toc }
 
-We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL/blob/master/docs/README.md){:target="_blank"}, a powerful web interface to manage your Lightning node.
+We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL#readme){:target="_blank"}, a powerful web interface to manage your Lightning node.
 
 ![Ride The Lightning dashboard](images/rtl-homepage.png)
 
