@@ -26,7 +26,7 @@ We set up [Electrs](https://github.com/romanz/electrs/){:target="_blank"} to ser
 The best way to safekeep your bitcoin (meaning the best combination of security and usability) is to use a hardware wallet (like [BitBox](https://shiftcrypto.ch/bitbox02){:target="_blank"}, [Ledger](https://www.ledger.com){:target="_blank"} or [Trezor](https://trezor.io){:target="_blank"}) in combination with your own Bitcoin node.
 This gives you security, privacy and eliminates the need to trust a third party to verify transactions.
 
-Bitcoin Core on the RaspiBolt itself is not meant to hold funds, its wallet is deactivated.
+Bitcoin Core on the RaspiBolt itself is not meant to hold funds.
 
 One possibility to use Bitcoin Core with your Bitcoin wallets is to use an Electrum Server as middleware.
 It imports data from Bitcoin Core and provides it to software wallets supporting the Electrum protocol.
@@ -100,7 +100,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   ```sh
   $ mkdir /home/admin/rust
   $ cd /home/admin/rust
-  $ git clone --branch v0.9.3 https://github.com/romanz/electrs.git
+  $ git clone --branch v0.9.4 https://github.com/romanz/electrs.git
   $ cd electrs
   ```
 
@@ -108,7 +108,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   ```sh
   $ curl https://romanzey.de/pgp.txt | gpg --import
-  $ git verify-tag v0.9.3
+  $ git verify-tag v0.9.4
   > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
@@ -174,7 +174,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   ```
 
   ```sh
-  Starting electrs 0.9.3 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.3 (Electrum Rust Server)!", args: [] }
+  Starting electrs 0.9.4 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.4 (Electrum Rust Server)!", args: [] }
   [2021-11-09T07:09:42.744Z INFO  electrs::metrics::metrics_impl] serving Prometheus metrics on 127.0.0.1:4224
   [2021-11-09T07:09:42.744Z INFO  electrs::server] serving Electrum RPC on 127.0.0.1:50001
   [2021-11-09T07:09:42.812Z INFO  electrs::db] "/data/electrs/db/bitcoin": 0 SST files, 0 GB, 0 Grows
