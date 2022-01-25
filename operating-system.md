@@ -89,6 +89,26 @@ It should display a "Success" message after.
 * If you did not configure the Wifi settings: connect the Pi to your network with an ethernet cable
 * Start the Pi by connecting it to the power adapter using the USB-C cable
 
+## Does it boot?
+
+The 🔴 red LED on the Pi will indicate that the device is powered on.
+
+The 🟢 green LED should be flickering constantly after a few seconds, indicating activity.
+If the green LED is lit constantly, without flickering, your Pi is probably not yet configured to boot from USB.
+
+To enable booting from USB, follow these steps:
+
+1. Get your hands on a microSD card (all data will be deleted, but you only need it once)
+1. Using the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"}, write config bootloader to enable "USB Boot" to the microSD card
+  (select Misc utility images / Bootloader / USB Boot)
+1. Boot your Pi with this microSD card
+1. Once the green LED blinks constantly, you can disconnect the power
+1. Remove the microSD card and start your Pi again with the SSD connected
+
+This procedure is also explained in more detail in the helpful guide [How to Boot Raspberry Pi 4 From a USB SSD](https://www.tomshardware.com/how-to/boot-raspberry-pi-4-usb){:target="_blank"}.
+
+Your Raspberry Pi should now boot from the SSD attached via USB.
+
 ## Fallback: if you can't boot from your external drive
 
 We assume that you can boot directly from the external drive.
