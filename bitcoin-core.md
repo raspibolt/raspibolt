@@ -140,7 +140,7 @@ Bitcoin Core provides a simple Python program to generate the configuration line
 
 * Run the script with the Python3 interpreter, providing username (`raspibolt`) and your `password [B]` as arguments.
 
-  🚨 All commdands entered are stored in the bash history.
+  🚨 All commands entered are stored in the bash history.
   But we don't want the password to be stored where anyone can find it.
   For this, put a space (` `) in front of the command shown below.
 
