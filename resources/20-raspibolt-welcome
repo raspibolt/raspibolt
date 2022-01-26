@@ -140,7 +140,7 @@ if [ "${gitupdate}" -eq "1" ]; then
   # Calls to github
   btcgit=$(curl -s https://api.github.com/repos/bitcoin/bitcoin/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
   lndgit=$(curl -s https://api.github.com/repos/lightningnetwork/lnd/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-  # Electrs and RPC Explorer dont have a latest release, just tags
+  # Electrs, RPC Explorer and RTL dont have a latest release, just tags
   electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
   btcrpcexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
   rtlgit=$(curl -s https://api.github.com/repos/Ride-The-Lightning/RTL/tags | jq -r '.[0].name')
@@ -481,7 +481,8 @@ ${color_red}   ~ .~ (  ${color_yellow}/ ／${color_red}. ~    ${color_yellow}%-2
 ${color_red}    (  : '${color_yellow}/／${color_red}:  )     ${electrsversion_color}%-26s ${color_grey}%s/%s channels
 ${color_red}     '~ .~${color_yellow}°${color_red}~. ~'                                 ${color_grey}Channel.db size: ${color_green}%s
 ${color_red}         '~'          ${color_yellow}%-20s${color_grey}${btcrpcexplorer_color}%-4s
-${color_red}                      ${btcrpcexplorerversion_color}%-24s
+${color_red}                      ${btcrpcexplorerversion_color}%-24s   ${color_yellow}%-20s${rtl_color}%-4s
+                                                 ${rtlversion_color}%-24s
 
 ${color_grey}For others to connect to this lightning node
 ${color_grey}%s
@@ -499,8 +500,8 @@ ${color_grey}%s
 "${electrsversion}" "${ln_channels_online}" "${ln_channels_total}" \
 "${channel_db_size}" \
 "Block Explorer" "${btcrpcexplorer_running}" \
-"${btcrpcexplorerversion}" \
+"${btcrpcexplorerversion}" "RTL" "${rtl_running}" \
+"${rtlversion}" \
 "${ln_connect_guidance}"
 
-echo "RTL" "${rtl_running}" \
-"${rtlversion}" \
+
