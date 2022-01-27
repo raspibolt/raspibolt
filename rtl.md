@@ -33,7 +33,7 @@ If you installed BTC RPC Explorer, then you've already accomplisehd this step.
 * Add the NodeJS software repository
 
   ```sh
-  $ curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -E -
+  $ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
   ```
 
 * Install NodeJS using the apt package manager
