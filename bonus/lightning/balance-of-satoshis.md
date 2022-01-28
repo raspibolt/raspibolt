@@ -43,7 +43,7 @@ Table of contents
 
 ### Check Node.js
 
-* Noje.js v16 or above should have been installed for the BTC RPC Explorer and RTL. We can check our version of Node.js with user "admin":
+* Noje.js v16 should have been installed for the BTC RPC Explorer and RTL. We can check our version of Node.js with user "admin":
 
   ```sh
   $ node -v
