@@ -26,15 +26,14 @@ We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL#readme
 
 ### Install NodeJS
 
-Starting with user “admin”, we switch to user “root” and add the Node JS package repository.
+Starting with user “admin”, we add the Node JS package repository.
 We’ll use version 14 which is well-tested with all web applications used in this guide.
 If you installed BTC RPC Explorer, then you've already accomplisehd this step.
-When finished, exit the “root” user session.
 
 * Add the NodeJS software repository
 
   ```sh
-  $ curl -sL https://deb.nodesource.com/setup_14.x | bash -E -
+  $ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
   ```
 
 * Install NodeJS using the apt package manager
