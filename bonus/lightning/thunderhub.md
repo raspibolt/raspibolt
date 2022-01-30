@@ -19,7 +19,7 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
-![thunderhub](../../images/75_thunderhub.png)
+![thunderhub](../../images/75_thunderhub_channel_view.png)
 
 ---
 
