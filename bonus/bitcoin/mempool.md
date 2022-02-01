@@ -88,7 +88,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   ```sh
   $ git clone https://github.com/mempool/mempool
   $ cd mempool
-  $ git checkout v2.2
+  $ git checkout v2.3.1
   $ exit
   ```
 
