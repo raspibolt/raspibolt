@@ -55,11 +55,9 @@ They should be unique and very secure, at least 12 characters in length. Do **no
 ```console
 [ A ] Master user password
 [ B ] Bitcoin RPC password
-[ C ] BTC-RPC-Explorer password (optional)
-[ D ] LND wallet password
-[ E ] Lightning Terminal password
-[ F ] Terminal web dashboard password
-[ G ] Ride The Lightning password
+[ C ] LND wallet password
+[ D ] BTC-RPC-Explorer password (optional)
+[ E ] Ride The Lightning password
 ```
 
 ![xkcd: Password Strength](images/preparations_xkcd.png)
