@@ -99,6 +99,39 @@ $ trezor-agent -c root@192.168.0.20
 If the SSH succeeded go to your authorized keys file and delete/comment out all other public keys
 That's it, Now you can only SSH to your raspibolt using your trezor.
 
+## SSH remote access through Tor (optional) 
+
+if you would like to take avantage of the raspibolt v3 guide option of using SSH over Tor but would still like some extra security
+you can use the the trezor-agent as your hardware base authentication.
+
+The main advantage of SSH through Tor is you can do it from everywhere you have Tor available not only your local network
+The Big tradeoff is there is a noticable slowness in response time.
+
+the process is very similar -
+
+To generate public keys for 'admin' and 'root' users, when asked enter the pin of your trezor and a passphrase
+* You can use PASSWORD[A], or come up with a diffrent passphrase
+
+```sh
+$ trezor-agent admin@abcdefg..............xyz.onion
+> ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBByrPrzZXq3ysny74YhYC3AQLBEx7ocjG7oy3C0r+dYui772sOxjDjTj+Ra+Pi7tDjO+m0kcfiMcRjxbB9eF/dg= <ssh://admin@abcdefg..............xyz.onion|nist256p1>
+$ trezor-agent root@abcdefg..............xyz.onion
+> ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCD4lnzAIDCcMbA3MRjBALsAl4oQf2A1ILYyC/HtB6MeyPo5znrfuxcRdSSPHQ3AuN3/i7taZB2uZukPxZ+zbLA= <ssh://root@abcdefg..............xyz.onion|nist256p1>
+```
+* replace abcdefg..............xyz.onion with the onion addrees you produced in the Raspberry-Pi part of the main guide: https://raspibolt.org/privacy.html#ssh-remote-access-through-tor-optional
+
+Login to your pi and paste the generated public keys into your authorized key file (same as the non tor part of this bonus guide).
+
+SSH from your main machine as admin, enter pin and the password that you chosen
+
+SSH from your trezor as admin, enter pin and the password that you chosen
+```sh
+$ torify trezor-agent -c admin@abcdefg..............xyz.onion
+```
+or as root
+```sh
+$ torify trezor-agent -c root@abcdefg..............xyz.onion
+```
 ------
 
 << Back: [+ Raspberry Pi](index.md)
