@@ -6,7 +6,7 @@ grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
-# Bonus Guide: Install Thunderhub
+# Bonus Guide: Install ThunderHub
 {: .no_toc }
 
 ---
