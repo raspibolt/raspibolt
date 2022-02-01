@@ -137,7 +137,7 @@ For this initial setup, we choose the easy route: we store the password in a fil
 This is not the most secure setup, but you can improve it later if you want, with the bonus guides linked below.
 To give some perspective: other Lightning implementations like c-lightning or Eclair don't even have a password.
 
-* As user "lnd", create a text file and enter your LND wallet `password [D]`. Save and exit.
+* As user "lnd", create a text file and enter your LND wallet `password [C]`. Save and exit.
 
   ```sh
   $ nano /data/lnd/password.txt
@@ -281,7 +281,7 @@ Once LND is started, the process waits for us to create the integrated Bitcoin w
   ...
   ```
 
-These 24 words (combined with your optional passphrase)  is all that you need to restore the Bitcoin on-chain wallet.
+These 24 words (combined with your optional passphrase `password [D]`)  is all that you need to restore the Bitcoin on-chain wallet.
 The current state of your channels, however, cannot be recreated from this seed.
 For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
@@ -706,4 +706,4 @@ Upgrading LND can lead to a number of issues.
 
 ---
 
-Next: [Lightning Terminal >>](lightning-terminal.md)
+Next: [Ride The Lightning >>](rtl.md)
