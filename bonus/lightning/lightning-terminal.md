@@ -512,6 +512,23 @@ The following commands are avaialble:
   * [Lightning Labs blog post announcement](https://lightning.engineering/posts/2020-04-02-faraday/){:target="_blank"}
   * [Latest feature blog post](https://lightning.engineering/posts/2020-09-15-faraday-accounting/){:target="_blank"}
 
+
+---
+
+## Optional: Set up the Loop service in Ride The Lightning
+
+If you have installed [Ride The Lightning](https://raspibolt.org/rtl.html), you can use the Loop submarine swap service directly from the RTL GUI:
+
+* Go the the navigation menu in the top left (if it's hidden, click on the hamburger symbol)
+* Click on "Node Config"
+* Click on the "Services" tab
+* If it's disabled, click on "Enable Loop service"
+* In "Loop Server URL", replace `https://localhost:8081` by `https://localhost:8443`
+* In "Loop Macaroon Path", the path should be `/home/lit/.loop/mainnet`
+* Then click the "Update" button
+* Go back to the navigation menu and click on "Services", then "Loop"
+* You can now perform loop ins and loop outs directly from RTL
+
 ---
 
 ## Upgrade
