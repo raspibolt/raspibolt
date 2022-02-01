@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Installation Thunderhub
+title: ThunderHub
 parent: + Lightning
 grand_parent: Bonus Section
 nav_exclude: true
