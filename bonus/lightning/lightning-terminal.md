@@ -1,16 +1,20 @@
 ---
 layout: default
 title: Lightning Terminal
-nav_order: 14
-parent: Lightning
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
+has_toc: false
 ---
 
-# Lightning Terminal
+# Bonus guide: Lightning Terminal
 {: .no_toc }
 
----
+Difficulty: Medium
+{: .label .label-yellow }
 
-We install [Lightning Terminal](https://github.com/lightninglabs/lightning-terminal){:target="_blank"}, a browser-based interface for managing channel liquidity.
+Status: Tested v3
+{: .label .label-green }
 
 ![lightning-terminal](images/lightning-terminal.png)
 
@@ -25,6 +29,8 @@ Table of contents
 ---
 
 ## Introduction
+
+We install [Lightning Terminal](https://github.com/lightninglabs/lightning-terminal){:target="_blank"}, a browser-based interface for managing channel liquidity.  
 
 Lightning Terminal, developped by Lighining Labs, aims at providing additional tools for operators to manage their node and channel balances. Below is a summary of Lighting Terminal's features:
 
@@ -592,4 +598,4 @@ The following commands are avaialble:
 
 ---
 
-Next: [Ride The Lightning >>](rtl.md)
+<< Back: [+ Lightning](index.md)
