@@ -53,16 +53,16 @@ For the BTC RPC Explorer to work, you need your full node to index all transacti
 Please note that reindexing can take more than a day.
 You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 
-### Install NodeJS
+### Install Node.js
 
-* Add the [Node JS](https://nodejs.org){:target="_blank"} package repository from user "admin".
-  We'll use version 14, which is well tested with this application.
+* Add the [Node.js](https://nodejs.org){:target="_blank"} package repository from user "admin".
+  We'll use version 16, which is the latest stable version.
 
   ```sh
-  $ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+  $ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
   ```
 
-* Install NodeJS using the apt package manager.
+* Install Node.js using the apt package manager.
 
   ```sh
   $ sudo apt install nodejs
