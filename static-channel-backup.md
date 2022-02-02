@@ -112,7 +112,7 @@ and copy them into a text editor on your local computer (e.g. here `XXXX` and `X
 
   ```sh
   $ sudo mount -a
-  $ df -h thumbdrive-scb
+  $ df -h /mnt/thumbdrive-scb
   > Filesystem      Size  Used Avail Use% Mounted on
   > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/thumbdrive-scb
   ```
