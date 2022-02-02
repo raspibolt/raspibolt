@@ -312,10 +312,10 @@ To protect against this situation, it is necessary to send the backup to a remot
   $ git config --global user.email "raspibolt@dummyemail.com"
   ```
 
-* Clone your newly created empty repository (whem prompted "Are you sure you want to continue connecting", type `yes`)
+* Clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes`.
 
   ```sh
-  $ git clone git@github.com:VajraOfIndra/lnd-backup.git
+  $ git clone git@github.com:YourUserName/lnd-backup.git
   > Cloning into 'lnd-backup'...
   > The authenticity of host 'github.com (140.82.121.3)' can't be established.
   > ECDSA key fingerprint is SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM.
