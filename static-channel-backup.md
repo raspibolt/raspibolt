@@ -296,6 +296,7 @@ To protect against this situation, it is necessary to send the backup to a remot
   ```sh
   $ cat /home/bitcoin/.ssh/id_rsa.pub
   > ssh-rsa 1234abcd... bitcoin@raspibolt
+  ```
 
 * Go back to the GitHub repository webpage
   * Click on "Settings", then "Deploy keys", then "Add deploy keys"
