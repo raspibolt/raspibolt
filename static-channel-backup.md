@@ -88,22 +88,22 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest th
   > sdb               123456                               vfat     1.9G SCB backup UDisk
   ```
 
-* Now, get the "lnd" user identifier (UID) and the "lnd" group identifier (GUI) from the `/etc/passwd` database of all user accounts. 
-and copy them into a text editor on your local computer (e.g. here `XXXX` and `XXXX`)
+* Now, get the "lnd" user identifier (UID) and the "lnd" group identifier (GID) from the `/etc/passwd` database of all user accounts. 
+and copy them into a text editor on your local computer (e.g. here GID is `XXXX` and UID is `YYYY`)
   
   ```sh
   $ awk -F ':' '$1=="lnd" {print "GID: "$3" / UID: "$4}'  /etc/passwd
-  > GID: XXXX / UID: XXXX
+  > GID: XXXX / UID: YYYY
   ```
 
-* Edit the `fstab` file and add the following as a new line at the end, replacing `123456` with your own `UUID`, and `XXXX` with your own `GID` and `UID`.
+* Edit the `fstab` file and add the following as a new line at the end, replacing `123456`, `XXXX` and `YYYY` with your own `UUID`, `GID` and `UID`
 
   ```sh
   $ sudo nano /etc/fstab
   ```
   
   ```ini
-  UUID=123456 /mnt/thumbdrive-scb vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=XXXX,uid=XXXX 0 0
+  UUID=123456 /mnt/thumbdrive-scb vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=XXXX,uid=YYYY 0 0
   ```
   
   🔍 *more: [fstab guide](https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/){:target="_blank"}*
