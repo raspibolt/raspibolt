@@ -223,7 +223,7 @@ Still logged in as user "bitcoin", let's start "bitcoind" manually.
 * Grant the "bitcoin" group read-permission for the debug log file:
   
   ```sh
-  $ sudo chmod g+r /data/bitcoin/debug.log
+  $ chmod g+r /data/bitcoin/debug.log
   ```
 
 * Exit the “bitcoin” user session back to user “admin”
@@ -357,7 +357,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   Exit with `Ctrl-C`
 
   ```sh
-  $ sudo tail -f /home/bitcoin/.bitcoin/debug.log
+  $ tail -f /home/bitcoin/.bitcoin/debug.log
   ```
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain
