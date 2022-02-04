@@ -36,8 +36,8 @@ As a result, it should work smoothly with Raspberry Pis while still being compat
 We will use the "Rasberry Pi Imager" application to write the operating system to the external drive.
 Unfortunately, the 64-bit version of the Raspberry Pi OS is not integrated yet, so we need to download it manually.
 
-* Download the latest [RasPi OS Lite (64-bit)](https://downloads.raspberrypi.org/raspios_lite_arm64/images/){:target="_blank"} disk image.
-  Simply get the ZIP file named similarly to `2021-10-30-raspios-bullseye-arm64-lite.zip`.
+* Download the latest [RasPi OS Lite (64-bit)](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-64-bit){:target="_blank"} disk image.
+  Simply get the ZIP file named similarly to `2022-01-28-raspios-bullseye-arm64.zip`.
   Its size should be around 400 MB.
 
 * Download and install the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"} for your regular operating system.
