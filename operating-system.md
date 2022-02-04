@@ -68,8 +68,7 @@ Configure the advanced options as follows:
 ## Write the operating system to the external drive
 
 * Connect the external drive to your regular computer
-* Click on "CHOOSE OS" and select "Use custom"
-* Select the downloaded RasPi OS disk image file
+* Make sure that "Raspberry Pi OS Lite (64bit)" is selected
 * Click on "CHOOSE STORAGE"
 * Select your external drive
 * Click on "WRITE"
