@@ -39,7 +39,7 @@ In order to write the operating system to the external drive, we will use the [R
 
 Start the Raspberry Pi Imager and open the "Advanced options" by pressing the cogwheel in the bottom right corner of the application window:
 
-![image](https://user-images.githubusercontent.com/19550140/152545918-1cfb4869-87f5-4b4f-bcdb-5da6fb7d148b.png)
+![image](images/operating-system_imager-start.png)
 
 You can now pre-configure the operating system even before it's started for the first time.
 
