@@ -27,9 +27,10 @@ Status: Not tested v3
 
 The following scripts were created by [RobClark56](https://github.com/robclark56) and help getting a better system overview.
 
-Install necessary software packages:
+Install `jq`, a JSON processor that will be used by the scripts:
 
   ```sh
+  $ sudo apt update
   $ sudo apt install jq --install-recommends
   ```
 
