@@ -8,7 +8,9 @@ parent: Lightning
 # Lightning: Static Channel Backup
 {: .no_toc }
 
-We set up an automatic Static Channel Backup on an USB thumbdrive (and optionally to a remote GitHub repository) to recover lightning funds in case of SSD drive failure.
+We set up an automatic Static Channel Backup on a local storage device and/or a remote GitHub repository to recover lightning funds in case of SSD drive failure.
+
+![GitHub remote backup](images/remote-scb-backup.png)
 
 ---
 
@@ -46,14 +48,7 @@ The guide will show how to set up an automatic Static Channel Backup:
 1. Locally, to a USB thumbdrive or microSD plugged into the Pi: in case of SSD drive failure only
 1. Remotely, to a GitHub repository: in case of widespread node damage (e.g. flood, fire, etc)
 
-
-### Choose your backup method(s)
-
-The storage device-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and the storage device are destroyed at the same time (*e.g.* fire, flood, etc.).  
-
-To protect against this situation, it is necessary to send the backup to a remote location. We could use a private repository on GitHub which is FOSS and free. The SCB file is already encrypted and can therefore be sent to the repository as is, and without the need for additional encryption.
-
-You can choose one of the method, or use both, depending on your requirements and preferences.
+We recommend to use both methods, but you can choose either one of them, depending on your own requirements and preferences.
 
 ---
 
@@ -232,7 +227,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   $ sudo nano /usr/local/bin/scb-backup.sh
   ```
 
-* Check the following line code and paste them in nano. Save and exit.
+* Check the following lines of code and paste them in nano. By default, both local and remote backup methods are enabled in the script. If you do not plan to use one of the method, change the corresponding variable (`LOCAL_BACKUP_ENABLED` or `REMOTE_BACKUP_ENABLED`) to "false". Save and exit.
 
   ```sh
   #!/bin/bash
