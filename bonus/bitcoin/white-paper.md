@@ -52,7 +52,7 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using your ow
   $ cd bitcoin-white-paper
   ```
   
-* Install jq, a JSON processor that will be used to parse the transaction data
+* Install `jq`, a JSON processor that will be used to parse the transaction data
 
   ```sh
   $ sudo apt update
