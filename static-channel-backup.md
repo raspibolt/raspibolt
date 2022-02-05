@@ -43,22 +43,31 @@ You can read more about SCBs in [this section of 'Mastering the Lighning Network
 
 The guide will show how to set up an automatic Static Channel Backup:
 
-1. Locally, to a USB thumbdrive plugged into the Pi: in case of SSD drive failure only
+1. Locally, to a USB thumbdrive or microSD plugged into the Pi: in case of SSD drive failure only
 1. Remotely, to a GitHub repository: in case of widespread node damage (e.g. flood, fire, etc)
+
+
+### Choose your backup method(s)
+
+The storage device-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and the storage device are destroyed at the same time (*e.g.* fire, flood, etc.).  
+
+To protect against this situation, it is necessary to send the backup to a remote location. We could use a private repository on GitHub which is FOSS and free. The SCB file is already encrypted and can therefore be sent to the repository as is, and without the need for additional encryption.
+
+You can choose one of the method, or use both, depending on your requirements and preferences.
 
 ---
 
-## Local backup: USB thumbdrive
+## Local backup preparations
 
-We will create a bash script that automatically backup the LND SCB file on change to a small thumbdrive permanently plugged in the RaspBerry Pi.
+Follow this section if you plan to backup your SCB locally. Otherwise, if you plan to have a remote backup only, move to the [next section](https://github.com/VajraOfIndra/RaspiBolt/edit/thumbrdive-scb-backup/static-channel-backup.md#remote-backup-preparations).
 
-### Thumbdrive size
+### Storage device size
 
-The `channel.backup` file is very small in size (<<1 MB) so even the smallest thumbdrive will do the job.
+The `channel.backup` file is very small in size (<<1 MB) so even the smallest USB thumbdrive or microSD card will do the job.
 
 ### Formatting
 
-* To ensure that the thumbdrive does not contain malicious code, we will format it on our local computer (select a name easy to recognize, *e.g.*, "SCB backup").
+* To ensure that the storage device does not contain malicious code, we will format it on our local computer (select a name easy to recognize, *e.g.*, "SCB backup"). The following guides can be applied to both the thumbdrive and the microSD card.
 
   * On Linux, follow [this tutorial](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}
   
@@ -66,18 +75,18 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest th
   
   * On Mac, follow [this tutorial](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}
 
-* Once formatted, plug it into one of the USB 2.0 (black) port. 
+* Once formatted, plug the storage device into your Pi (if using a thumbdrive, use one of the USB 2.0 (black) port). 
 
-###  Set up a mounting point for the USB thumbdrive
+###  Set up a mounting point for the storage device
 
 * Create the mounting directory and make it immutable
 
   ```sh
-  $ sudo mkdir /mnt/thumbdrive-scb
-  $ sudo chattr +i /mnt/thumbdrive-scb
+  $ sudo mkdir /mnt/storage-device-scb
+  $ sudo chattr +i /mnt/storage-device-scb
   ```
 
-* List the devices and copy the `UUID` of the thumdrive into a text editor on your local computer (e.g. here `123456`).
+* List the devices and copy the `UUID` of the storage device into a text editor on your local computer (e.g. here `123456`).
   
   ```sh
   $ lsblk -o NAME,MOUNTPOINT,UUID,FSTYPE,SIZE,LABEL,MODEL
@@ -103,23 +112,108 @@ and copy them into a text editor on your local computer (e.g. here GID is `XXXX`
   ```
   
   ```ini
-  UUID=123456 /mnt/thumbdrive-scb vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=XXXX,uid=YYYY 0 0
+  UUID=123456 /mnt/storage-device-scb vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=XXXX,uid=YYYY 0 0
   ```
   
   🔍 *more: [fstab guide](https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/){:target="_blank"}*
 
-* Mount the drive and check the file system. Is “/mnt/thumdrive” listed?
+* Mount the drive and check the file system. Is “/mnt/storage-device-scb” listed?
 
   ```sh
   $ sudo mount -a
-  $ df -h /mnt/thumbdrive-scb
+  $ df -h /mnt/storage-device-scb
   > Filesystem      Size  Used Avail Use% Mounted on
-  > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/thumbdrive-scb
+  > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/storage-device-scb
   ```
+
+---
+
+## Remote backup preparations
+
+Follow this section if you plan to backup your SCB remotely. Otherwise, if you plan to have a local backup only, move to the [next section](https://github.com/VajraOfIndra/RaspiBolt/edit/thumbrdive-scb-backup/static-channel-backup.md#automatic-backup).
+
+### Create a GitHub repository
+
+* Go to [GitHub](https://github.com/){:target="_blank"} and sign up for a new user account (or use an existing one)
+
+* Create a new repository: [https://github.com/new](https://github.com/new){:target="_blank"}
+  * Type the following repository name: `remote-lnd-backup`
+  * Select "Private" (rather than the default "Public")
+  * Click on "Create repository"
+
+### Clone the repository to the node
+
+* Using the "lnd" user, create a pair of SSH keys. When prompted, just press "Enter" to confirm the default SSH directory and to not set up a password.
+
+  ```sh
+  $ sudo su - lnd
+  $ ssh-keygen -t rsa -b 4096
+  > Generating public/private rsa key pair.
+  > [...]
+  ```
+
+* Display the public key
+
+  ```sh
+  $ cat /home/lnd/.ssh/id_rsa.pub
+  > ssh-rsa 1234abcd... lnd@raspibolt
+  ```
+
+* Go back to the GitHub repository webpage
+  * Click on "Settings", then "Deploy keys", then "Add deploy keys"
+  * Type a title (e.g., "SCB")
+  * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... lnd@raspibolt`)
+  * Tick the box "Allow write access" (it is needed to pushes changes to the GitHub repo)
+  * Click "Add key"
+
+* Still with user "lnd", set up global Git configuration values. The name and email are required but can be dummy values.
+
+  ```sh
+  $ cd /data/lnd
+  $ git config --global user.name "RaspiBolt"
+  $ git config --global user.email "raspibolt@dummyemail.com"
+  ```
+
+* Clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes` and press "Enter".
+
+  ```sh
+  $ git clone git@github.com:YourUserName/remote-lnd-backup.git
+  > Cloning into 'lnd-backup'...
+  ```
+  
+### Test
+
+* Still with user "lnd", enter the Git repository, create a dummy file and push it to your remote GitHub repository 
+
+  ```sh
+  $ cd /data/lnd-backup
+  $ touch test
+  $ git add .
+  $ git commit -m "testing"
+  $ git push --set-upstream origin master
+  $ rm test
+  ```
+
+* Check that a copy of the test file is now in your remote GitHub repository (in the "<> code" tab).
+
+* Go back to the SSH session, delete the test file, and exit the "lnd" user
+
+  ```sh
+  $ rm test
+  $ exit
+  ```
+
+---
+
+## Automatic backup
+
+We will now create a bash script that automatically backup the LND SCB file on change to the local and/or remote backup locations.
 
 ### Install inotify-tools
 
-`inotify-tools` allows to use `inotify` (a tool that monitors files and directories) within shell scripts. We'll use it to monitor changes in our node's `channel.backup` (i.e. new updates by LND when a channel is opened or closed).
+`inotify-tools` allows to use `inotify` (a tool that monitors files and directories) within shell scripts.  
+
+We will use it to monitor changes in the `channel.backup` file updated by LND each time a channel is opened or closed.
 
 * Install `inotify-tools`
 
@@ -135,7 +229,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
 * Create a new shell script file
 
   ```sh
-  $ sudo nano /usr/local/bin/thumbdrive-scb-backup.sh
+  $ sudo nano /usr/local/bin/scb-backup.sh
   ```
 
 * Check the following line code and paste them in nano. Save and exit.
@@ -143,38 +237,73 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   ```sh
   #!/bin/bash
   
-  # The script waits for a change in channel.backup. 
-  # When a change happens (channel opening or closing), a copy of the file is sent to the thumdrive
-  
-  # Location of the channel.backup file used by LND
-  SOURCEFILE=/data/lnd-backup/channel.backup
-  
-  # Location of the backup file in the mounted thumbdrive
-  BACKUPFILE="/mnt/thumbdrive-scb/channel-$(date +"%Y%m%d-%H%M%S").backup"
-  
-  # Backup function
-  run_backup_on_change () {
-    echo "Copying backup file..."
-    cp $SOURCEFILE $BACKUPFILE
+  # The script waits for a change in ~/.lnd/data/chain/bitcoin/mainnet/channel.backup.
+  # When a change happens, it creates a backup of the file locally on a storage device and/or remotely in a GitHub repo
+
+  # By default, both methods are used. If you do NOT want to use one of the method, replace "true" by "false" in the two variables below:
+  LOCAL_BACKUP_ENABLED="true"
+  REMOTE_BACKUP_ENABLED="true"
+    
+  # Locations of source SCB file, formatted backup files and Git repo
+  SOURCEFILE="/home/lnd/.lnd/data/chain/bitcoin/mainnet/channel.backup"
+  LOCAL_BACKUP_FILE="/mnt/storage-device-scb/channel-$(date +"%Y%m%d-%H%M%S").backup"
+  GITREPO="/data/lnd/remote-lnd-backup"
+  REMOTE_BACKUP_FILE="/data/lnd/remote-lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
+
+
+  # Local backup function
+  run_local_backup_on_change () {
+    echo "Copying backup file to local storage device..."
+    cp $SOURCEFILE $LOCAL_BACKUP_FILE
+    echo "Success! The file is now locally backed up!"
   }
+
+  # Remote backup function
+  run_remote_backup_on_change () {
+    echo "Entering Git repository..."
+    cd $GITREPO
+    echo "Making a timestamped copy of channel.backup..."
+    cp $SOURCEFILE $REMOTE_BACKUP_FILE
+    echo "Committing changes and adding a message"
+    git add .
+    git commit -m "SCB"
+    echo "Pushing changes to remote repository..."
+    git push --set-upstream origin master
+    echo "Success! The file is now remotely backed up!"
+  }
+  
 
   # Monitoring function
   run () {
     while true; do
+
         inotifywait $SOURCEFILE
-        run_backup_on_change
+        echo "channel.backup has been changed!"
+
+        if [ "$LOCAL_BACKUP_ENABLED" == "true" ]
+        then
+          echo "Local backup is enabled"
+          run_local_backup_on_change
+        fi
+
+        if [ "$REMOTE_BACKUP_ENABLED" == "true" ]
+        then
+          echo "Remote backup is enabled"
+          run_remote_backup_on_change
+        fi
+
     done
   }
-
+  
   run
   ```
-
+ 
 * Make the script executable and move it to the standard bin(ary) directory
 
   ```sh
-  $ sudo chmod +x /usr/local/bin/thumbdrive-scb-backup.sh
+  $ sudo chmod +x /usr/local/bin/scb-backup.sh
   ```
-  
+
 ### Run backup script in background
 
 We'll setup the backup script as a systemd service to run in the background and start automatically on system startup.
@@ -182,21 +311,21 @@ We'll setup the backup script as a systemd service to run in the background and 
 * Create a new service file
   
   ```sh
-  sudo nano /etc/systemd/system/thumbdrive-scb-backup.service
+  sudo nano /etc/systemd/system/scb-backup.service
   ```
 
 * Paste the following lines. Save and exit.
   
   ```ini
-  # RaspiBolt: systemd unit for automatic SCB copy to thumbdrive
-  # /etc/systemd/system/thumbdrive-scb-backup.service
+  # RaspiBolt: systemd unit for automatic SCB backup
+  # /etc/systemd/system/scb-backup.service
 
   [Unit]
-  Description=Thumbdrive SCB Backup daemon
+  Description=SCB Backup daemon
   After=lnd.service
 
   [Service]
-  ExecStart=/usr/local/bin/thumbdrive-scb-backup.sh
+  ExecStart=/usr/local/bin/scb-backup.sh
   Restart=always
   RestartSec=1
   User=lnd
@@ -208,307 +337,54 @@ We'll setup the backup script as a systemd service to run in the background and 
 * Enable and start the service, check its status (it should be 'active')
   
   ```sh
-  $ sudo systemctl enable thumbdrive-scb-backup.service
-  $ sudo systemctl start thumbdrive-scb-backup.service
-  $ sudo systemctl status thumbdrive-scb-backup.service
+  $ sudo systemctl enable scb-backup.service
+  $ sudo systemctl start scb-backup.service
+  $ sudo systemctl status scb-backup.service
   ```
-  
+
 ### Test
 
-We now cause the `channel.backup` to change and see if a copy gets uploaded to the thumbdrive.
+We now cause the default `channel.backup` file to change and see if a copy gets uploaded to the desired backup locations.
 
-* Open the live logging output of the service
+* Open the live logging output of the SCB backup systemd service
   
   ```sh
-  $ sudo journalctl -f -u thumbdrive-scb-backup.service
+  $ sudo journalctl -f -u scb-backup.service
+  > [...]
+  > Feb 05 10:55:09 raspibolt scb-backup.sh[25782]: Watches established.
   ```
 
 * Start your SSH program (eg. PuTTY) a second time and log in as “admin”. Commands for the second session start with the prompt $2.
-* Simulate a `channel.backup` file change with the `touch` command (that simply updates the timestamp of the file but not its content) and then exit the session.
+* Simulate a `channel.backup` file change with the `touch` command (don't worry! it simply updates the timestamp of the file but not its content) and then exit the session.
   
   ```sh
-  $2 sudo touch /data/lnd-backup/channel.backup
+  $2 sudo touch ~/.lnd/data/chain/bitcoin/mainnet/channel.backup
   $2 exit
   ```
   
-* Go back to the first SSH session, in the logs, you should see the following new entries
+* Go back to the first SSH session, in the logs, you should see new entries similar to these:
   
   ```sh
   > [...]
-  > Dec 27 17:39:52 raspibolt thumbdrive-scb-backup.sh[127014]: /data/lnd-backup/channel.backup OPEN
-  > Dec 27 17:39:52 raspibolt thumbdrive-scb-backup.sh[127012]: Copying backup file...
-  > Dec 27 17:39:52 raspibolt thumbdrive-scb-backup.sh[127320]: Setting up watches.
-  > Dec 27 17:39:52 raspibolt thumbdrive-scb-backup.sh[127320]: Watches established.
+  > Feb 05 11:05:11 raspibolt scb-backup.sh[25885]: Local backup is enabled
+  > Feb 05 11:05:11 raspibolt scb-backup.sh[25885]: Copying backup file to local storage device...
+  > Feb 05 11:05:11 raspibolt scb-backup.sh[25885]: Success! The file is now locally backed up!
+  > [...]
+  > Feb 05 11:05:13 raspibolt scb-backup.sh[25885]: Success! The file is now remotely backed up!
+  > Feb 05 11:05:13 raspibolt scb-backup.sh[25885]: Waiting for an update of the SCB file...
   > [...]
   ```
 
-* Check the content of your USB thumbdrive. It should now contain a backup file with the date/time corresponding to the test made just above
+* Check the content of your local storage device. It should now contain a backup file with the date/time corresponding to the test made just above
   
   ```sh
-  $ ls -la /mnt/thumbdrive-scb
-  > -rwxr-xr-x 1 lnd  lnd     45 Dec 27 17:39 channel-20211227-173403.backup
-  ```
-  
-You're set! Each time you'll open a new channel or close a channel, a timestamped copy of the backup file is saved to the USB thumbdrive.
-
----
-
-## (Optional) Remote backup: GitHub
-
-The thumbdrive-based setup protects the backup from a SSD drive failure. However, it does not protect against a situation where both the SSD drive and USB thumbdrive are destroyed at the same time (*e.g.* fire, flood, etc.).  
-
-To protect against this situation, it is necessary to send the backup to a remote location. We will use a private repository on GitHub which is FOSS and free. The SCB file is already encrypted and can therefore be sent to the repository as is and without the need for additional encryption.
-
-### Create a GitHub repository
-
-* Go to [GitHub](https://github.com/){:target="_blank"} and sign up for a new user account (or use an existing one)
-
-* Create a new repository: [https://github.com/new](https://github.com/new){:target="_blank"}
-  * Type the following repository name: `lnd-backup`
-  * Select "Private" (rather than the default "Public")
-  * Click on "Create repository"
-
-### Clone the repository to the node
-
-* With the "admin" user, backup  the existing `lnd-backup` folder
-
-  ```sh
-  $ sudo mv /data/lnd-backup /data/lnd-backup.bak
-  ```
-
-* Using the "bitcoin" user, create a pair of SSH keys. When prompt, just press "Enter" to confirm the default SSH directory and to not setting up a password.
-
-  ```sh
-  $ sudo su - bitcoin
-  $ ssh-keygen -t rsa -b 4096
-  > Generating public/private rsa key pair.
-  > Enter file in which to save the key (/home/bitcoin/.ssh/id_rsa): 
-  > Created directory '/home/bitcoin/.ssh'.
-  > Enter passphrase (empty for no passphrase): 
-  > Enter same passphrase again: 
-  > Your identification has been saved in /home/bitcoin/.ssh/id_rsa
-  > Your public key has been saved in /home/bitcoin/.ssh/id_rsa.pub
-  > [...]
-  ```
-
-* Display the public key
-
-  ```sh
-  $ cat /home/bitcoin/.ssh/id_rsa.pub
-  > ssh-rsa 1234abcd... bitcoin@raspibolt
-  ```
-
-* Go back to the GitHub repository webpage
-  * Click on "Settings", then "Deploy keys", then "Add deploy keys"
-  * Type a title (e.g., SCB bitcoin user)
-  * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... bitcoin@raspibolt`)
-  * Click "Add key"
-
-* Still with user "bitcoin", set up global Git configuration values. The name and email are required but can be dummy values.
-
-  ```sh
-  $ cd /data
-  $ git config --global user.name "RaspiBolt"
-  $ git config --global user.email "raspibolt@dummyemail.com"
-  ```
-
-* Clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes`.
-
-  ```sh
-  $ git clone git@github.com:YourUserName/lnd-backup.git
-  > Cloning into 'lnd-backup'...
-  > The authenticity of host 'github.com (140.82.121.3)' can't be established.
-  > ECDSA key fingerprint is SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM.
-  > Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-  > Warning: Permanently added 'github.com,140.82.121.3' (ECDSA) to the list of known hosts.
-  > warning: You appear to have cloned an empty repository.
-  $ cd lnd-backup
-  $ ls -la
-  > drwxr-xr-x  3 bitcoin bitcoin 4096 Dec 27 18:55 .
-  > drwxr-xr-x 12 bitcoin bitcoin 4096 Dec 27 18:55 ..
-  > drwxr-xr-x  7 bitcoin bitcoin 4096 Dec 27 18:56 .git
-  ```
-
-* For the backup file to be updated by LND, the folder has to belong to the "lnd" user. With user "admin", change the owner to "lnd"
-
-  ```sh
-  $ exit
-  $ sudo chown -R lnd:lnd /data/lnd-backup
-  ```
-
-### Manual backup to remote GitHub directory
-
-#### Move backup file
-
-* Move your latest `channel.backup` file to the newly created folder
-
-  ```sh
-  $ sudo mv /data/lnd-backup.bak/channel.backup /data/lnd-backup
-  $ sudo ls -la /data/lnd-backup
-  > drwxr-xr-x  3 bitcoin bitcoin  4096 Dec 27 19:18 .
-  > drwxr-xr-x 12 bitcoin bitcoin  4096 Dec 27 19:07 ..
-  > drwxr-xr-x  8 bitcoin bitcoin  4096 Dec 27 19:25 .git
-  > -rw-r--r--  1 bitcoin bitcoin 11957 Dec 27 19:18 channel.backup
-  ```
-
-#### Allow user "lnd" to access the remote GitHub repo
-
-* Using the "lnd" user, create a pair of SSH keys and display the public key string
-
-  ```sh
-  $ sudo su - lnd
-  $ ssh-keygen -t rsa -b 4096
-  $ cat /home/bitcoin/.ssh/id_rsa.pub
-  > ssh-rsa 5678efgh... lnd@raspibolt
-  ```
-
-* Delete the "SCB bitcoin user" key, we don't need it anymore
-  * Go back to the GitHub repository webpage
-  * Click on "Settings", then "Deploy keys"
-  * Click on "Delete" within the "SCB bitcoin user" box
-
-* Add the new key fro user "lnd"
-  * Click on "Add deploy keys"
-  * Type a title (e.g., SCB lnd user)
-  * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... lnd@raspibolt`)
-  * Tick the box "Allow write access" (it is needed to pushes changes to the GitHub repo)
-  * Click "Add key"
-
-#### Push changes to remote repo
-
-* Go back to your SSH session. Still with user "lnd", enter the Git repository, commit the content of the folder and push it to your remote GitHub repository 
-
-  ```sh
-  $ cd /data/lnd-backup
-  $ git add .
-  $ git commit -m "SCB"
-  $ git push --set-upstream origin master
-  ```
-
-* Check that the backup file is now in your remote GitHub repository (in the "<> code" tab)
-
-* Exit the "lnd" user
-
-  ```sh
-  $ exit
-  ```
-
-### Automatic backup to remote GitHub directory
-
-#### Create script
-
-* With user admin, create a new shell script file
-
-  ```sh
-  $ sudo nano /usr/local/bin/github-scb-backup.sh
-  ```
-
-* Check the following lines of code and paste them in `nano`. Save and exit.
-
-  ```sh
-  #!/bin/bash
-  
-  # The script waits for a change in /data/lnd-backup/channel.backup. 
-  # When a change happens, it pushes the content of the backup folder to the remote GitHub repo
-
-  # Location of Git repo, source file and formatted backup file to send to remote repo
-  GITREPO="/data/lnd-backup"
-  SOURCEFILE="/data/lnd-backup/channel.backup"
-  BACKUPFILE="/data/lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
-
-  # Backup function
-  run_backup_on_change () {
-    echo "Entering Git repository..."
-    cd $GITREPO
-    echo "Making a timestamped copy of channel.backup..."
-    cp $SOURCEFILE $BACKUPFILE
-    echo "Committing changes and adding a timestamped commit message"
-    git add .
-    git commit -m "SCB"
-    echo "Pushing changes to remote repository..."
-    git push --set-upstream origin master
-    echo "Success! The file is now remotely backed up!"
-  }
-
-  # Monitoring function
-  run () {
-    while true; do
-        inotifywait $SOURCEFILE
-        echo "channel.backup has been changed!"
-        run_backup_on_change
-    done
-  }
-  
-  run
-  ```
-
-* Make the script executable and move it to the standard bin(ary) directory
-
-  ```sh
-  $ sudo chmod +x /usr/local/bin/github-scb-backup.sh
-  ```
-  
-#### Run backup script in background
-
-We'll setup the backup script as a systemd service to run in the background and start automatically on system startup.
-
-* Create a new service file
-  
-  ```sh
-  sudo nano /etc/systemd/system/github-scb-backup.service
-  ```
-
-* Paste the following lines. Save and exit.
-  
-  ```ini
-  # RaspiBolt: systemd unit for automatic SCB copy to GitHub
-  # /etc/systemd/system/github-scb-backup.service
-
-  [Unit]
-  Description=Github SCB Backup daemon
-  After=lnd.service
-
-  [Service]
-  ExecStart=/usr/local/bin/github-scb-backup.sh
-  Restart=always
-  RestartSec=1
-  StandardOutput=syslog
-  StandardError=syslog
-  User=lnd
-
-  [Install]
-  WantedBy=multi-user.target
-  ```
-  
-* Enable and start the service, check its status (it should be 'active')
-  
-  ```sh
-  $ sudo systemctl enable github-scb-backup.service
-  $ sudo systemctl start github-scb-backup.service
-  $ sudo systemctl status github-scb-backup.service
-  ```
-
-* To monitor the logs
-
-  ```sh
-  $ sudo journalctl -f -u github-scb-backup.service
-  > Dec 28 14:05:09 raspibolt github-scb-backup.sh[139204]: Setting up watches.
-  > Dec 28 14:05:09 raspibolt github-scb-backup.sh[139204]: Watches established.
-  ```
-
-### Test
-
-We now cause the `channel.backup` to change and see if a copy gets uploaded to the thumbdrive.
-
-* Still with user "admin", simulate a `channel.backup` file change
-  
-  ```sh
-  $ sudo touch /data/lnd-backup/channel.backup
+  $ ls -la /mnt/storage-device-scb
+  > -rwxr-xr-x 1 lnd  lnd  14011 Feb  5 10:59 channel-20220205-105949.backup
   ```
 
 * Check your GitHub repository (in the "<> code" tab). It should now contain the latest timestamped backup file
 
-You're set! Each time you'll open a new channel or close a channel, the new `channel.backup` file will be pushed to your remote GitHub repository.
+You're set! Each time you'll open a new channel or close a channel, a timestamped copy of the backup file will automatically be saved to your desired backup location(s).
 
 <br /><br />
 
