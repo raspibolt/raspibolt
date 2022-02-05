@@ -174,6 +174,7 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
   ```sh
   $ git clone git@github.com:YourUserName/remote-lnd-backup.git
   > Cloning into 'lnd-backup'...
+  > [...]
   ```
   
 ### Test
