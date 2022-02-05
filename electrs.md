@@ -438,7 +438,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   > v9.9.9
 
   # check out the most recent release (replace v9.9.9 with the actual version)
-  $ git checkout v9.9.9 https://github.com/romanz/electrs.git
+  $ git checkout v9.9.9
 
   # Compile the source code
   $ cargo clean

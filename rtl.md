@@ -149,7 +149,7 @@ Now we take the sample configuration file and add change it to our needs.
 * Copy the sample config file, and open it in the text editor.
 
   ```sh
-  cp docs/Sample-RTL-Config.json ./RTL-Config.json
+  cp Sample-RTL-Config.json ./RTL-Config.json
   nano RTL-Config.json
   ```
 

@@ -220,6 +220,12 @@ Still logged in as user "bitcoin", let's start "bitcoind" manually.
 
 * Once everything looks ok, stop "bitcoind" with `Ctrl-C`
 
+* Grant the "bitcoin" group read-permission for the debug log file:
+  
+  ```sh
+  $ chmod g+r /data/bitcoin/debug.log
+  ```
+
 * Exit the “bitcoin” user session back to user “admin”
 
   ```sh
@@ -326,7 +332,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   Exit with `Ctrl-C`
 
   ```sh
-  $ systemctl status bitcoind.service
+  $ sudo systemctl status bitcoind.service
   > * bitcoind.service - Bitcoin daemon
   >      Loaded: loaded (/etc/systemd/system/bitcoind.service; enabled; vendor preset: enabled)
   >      Active: active (running) since Thu 2021-11-25 22:50:59 GMT; 7s ago
