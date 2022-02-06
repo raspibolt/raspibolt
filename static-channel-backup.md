@@ -62,15 +62,9 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 
 ### Formatting
 
-* To ensure that the storage device does not contain malicious code, we will format it on our local computer (select a name easy to recognize, *e.g.*, "SCB backup"). The following guides can be applied to both the thumbdrive and the microSD card.
+* To ensure that the storage device does not contain malicious code, we will format it on our local computer (select a name easy to recognize, *e.g.*, "SCB backup"). The following external guides explain how to format your USB thumbdrive or microSD card on [Windows](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-in-windows-12893){:target="_blank"}, [macOS](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}, or [Linux](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}.
 
-  * On Linux, follow [this tutorial](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}
-  
-  * On Windows, follow [this tutorial](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-in-windows-12893){:target="_blank"}
-  
-  * On Mac, follow [this tutorial](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}
-
-* Once formatted, plug the storage device into your Pi (if using a thumbdrive, use one of the USB 2.0 (black) port). 
+* Once formatted, plug the storage device into your Pi. If using a thumbdrive, use one of the USB 2.0 (black) port. 
 
 ###  Set up a mounting point for the storage device
 
