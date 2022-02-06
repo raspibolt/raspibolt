@@ -181,7 +181,6 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
   $ git add .
   $ git commit -m "testing"
   $ git push --set-upstream origin master
-  $ rm test
   ```
 
 * Check that a copy of the test file is now in your remote GitHub repository (in the "<> code" tab).
