@@ -82,7 +82,7 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 
 ### Formatting
 
-* To ensure that the storage device does not contain malicious code, we will format it on our local computer (select a name easy to recognize, *e.g.*, "SCB backup"). The following external guides explain how to format your USB thumbdrive or microSD card on [Windows](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-in-windows-12893){:target="_blank"}, [macOS](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}, or [Linux](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}.
+* To ensure that the storage device does not contain malicious code, we will format it on our local computer (select a name easy to recognize, *e.g.*, "SCB backup" and choose the FAT filesystem). The following external guides explain how to format your USB thumbdrive or microSD card on [Windows](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-in-windows-12893){:target="_blank"}, [macOS](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}, or [Linux](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}.
 
 * Once formatted, plug the storage device into your Pi. If using a thumbdrive, use one of the USB 2.0 (black) port. 
 
