@@ -199,10 +199,13 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
 
 * Check that a copy of the test file is now in your remote GitHub repository (in the "<> code" tab).
 
-* Go back to the SSH session, delete the test file, and exit the "lnd" user
+* Go back to the SSH session, delete the test file, commit this change and exit the "lnd" user
 
   ```sh
   $ rm test
+  $ git add .
+  $ git commit -m 'removing test file'
+  $ git push
   $ exit
   ```
 
