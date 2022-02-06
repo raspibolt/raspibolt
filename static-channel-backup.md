@@ -250,7 +250,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   # Local backup function
   run_local_backup_on_change () {
     echo "Copying backup file to local storage device..."
-    cp $SOURCEFILE $LOCAL_BACKUP_FILE
+    cp "$SOURCEFILE" "$LOCAL_BACKUP_FILE"
     echo "Success! The file is now locally backed up!"
   }
 
@@ -259,7 +259,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
     echo "Entering Git repository..."
     cd $GITREPO
     echo "Making a timestamped copy of channel.backup..."
-    cp $SOURCEFILE $REMOTE_BACKUP_FILE
+    cp "$SOURCEFILE" "$REMOTE_BACKUP_FILE"
     echo "Committing changes and adding a message"
     git add .
     git commit -m "SCB"
