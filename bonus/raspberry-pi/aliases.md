@@ -137,7 +137,7 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   
   ```
   
-* Execute a `source` command to register changes to the `.bashrc` file
+* Execute a `source` command to register changes to the `.bash_aliases` file
 
   ```sh 
   $ source ~/.bash_aliases 
