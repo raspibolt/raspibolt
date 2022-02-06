@@ -36,7 +36,7 @@ You need the following hardware:
 * Raspberry Pi 4, with 4+ GB RAM
 * official Raspberry Pi power adapter: other adapters are a common cause for reliability issues
 * external storage: 1+ TB with USB3, an SSD is recommended
-* external storage: a USB thumbdrive (even the smallest size thumdrive will do)
+* optional: a small USB thumbdrive or microSD card
 * optional: Raspberry Pi case
 
 Whaaat? No microSD card? Yes, we'll boot the operating system directly to the external drive.
