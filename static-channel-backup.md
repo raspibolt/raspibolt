@@ -77,8 +77,8 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 * Create the mounting directory and make it immutable
 
   ```sh
-  $ sudo mkdir /mnt/storage-device-scb
-  $ sudo chattr +i /mnt/storage-device-scb
+  $ sudo mkdir /mnt/static-channel-backup-external
+  $ sudo chattr +i /mnt/static-channel-backup-external
   ```
 
 * List the devices and copy the `UUID` of the storage device into a text editor on your local computer (e.g. here `123456`).
@@ -107,18 +107,18 @@ and copy them into a text editor on your local computer (e.g. here GID is `XXXX`
   ```
   
   ```ini
-  UUID=123456 /mnt/storage-device-scb vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=XXXX,uid=YYYY 0 0
+  UUID=123456 /mnt/static-channel-backup-external vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=XXXX,uid=YYYY 0 0
   ```
   
   🔍 *more: [fstab guide](https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/){:target="_blank"}*
 
-* Mount the drive and check the file system. Is “/mnt/storage-device-scb” listed?
+* Mount the drive and check the file system. Is “/mnt/static-channel-backup-external” listed?
 
   ```sh
   $ sudo mount -a
   $ df -h /mnt/storage-device-scb
   > Filesystem      Size  Used Avail Use% Mounted on
-  > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/storage-device-scb
+  > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/static-channel-backup-external
   ```
 
 ---
@@ -242,7 +242,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
     
   # Locations of source SCB file, formatted backup files and Git repo
   SOURCEFILE="/home/lnd/.lnd/data/chain/bitcoin/mainnet/channel.backup"
-  LOCAL_BACKUP_FILE="/mnt/storage-device-scb/channel-$(date +"%Y%m%d-%H%M%S").backup"
+  LOCAL_BACKUP_FILE="/mnt/static-channel-backup-external/channel-$(date +"%Y%m%d-%H%M%S").backup"
   GITREPO="/data/lnd/remote-lnd-backup"
   REMOTE_BACKUP_FILE="/data/lnd/remote-lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
 
