@@ -233,6 +233,11 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   ```sh
   #!/bin/bash
   
+  # Safety bash script options
+  # The -e option causes a bash script to exit immediately when a command fails
+  # The -u option causes the bash shell to treat unset variables as an error and exit immediately. 
+  set -eu
+  
   # The script waits for a change in ~/.lnd/data/chain/bitcoin/mainnet/channel.backup.
   # When a change happens, it creates a backup of the file locally on a storage device and/or remotely in a GitHub repo
 
