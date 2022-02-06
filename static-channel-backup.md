@@ -176,7 +176,7 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
 * Still with user "lnd", enter the Git repository, create a dummy file and push it to your remote GitHub repository 
 
   ```sh
-  $ cd /data/lnd-backup
+  $ cd /data/remote-lnd-backup
   $ touch test
   $ git add .
   $ git commit -m "testing"
