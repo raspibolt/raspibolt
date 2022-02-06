@@ -52,6 +52,26 @@ We recommend to use both methods, but you can choose either one of them, dependi
 
 ---
 
+## Preparations
+
+By default, LND saves the Static Channel Bacup file here: `~/.lnd/.lnd/data/chain/bitcoin/mainnet/channel.backup`. Make sure that the `lnd.conf` does not contain the `backupfilepath` option that modifies the backup location (as was used in a previous version of the RaspiBolt v3).
+
+* With the "admin" user, check that your `lnd.conf` file does not contain this line. If so, delete it or comment it out and restart LND.
+
+  ```sh
+  $ sudo nano /data/lnd/lnd.conf
+  ```
+
+  ```ini
+  #backupfilepath=/data/lnd-backup/channel.backup
+  ```
+
+  ```sh
+  $ sudo systemctl restart lnd
+  ```
+
+---
+
 ## Local backup preparations
 
 Follow this section if you plan to backup your SCB locally. Otherwise, if you plan to have a remote backup only, move to the [next section](https://github.com/VajraOfIndra/RaspiBolt/edit/thumbrdive-scb-backup/static-channel-backup.md#remote-backup-preparations).
