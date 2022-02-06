@@ -232,19 +232,21 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
 
   ```sh
   #!/bin/bash
-  
-  # Safety bash script options
-  # The -e option causes a bash script to exit immediately when a command fails
-  # The -u option causes the bash shell to treat unset variables as an error and exit immediately. 
-  set -eu
-  
-  # The script waits for a change in ~/.lnd/data/chain/bitcoin/mainnet/channel.backup.
-  # When a change happens, it creates a backup of the file locally on a storage device and/or remotely in a GitHub repo
 
-  # By default, both methods are used. If you do NOT want to use one of the method, replace "true" by "false" in the two variables below:
-  LOCAL_BACKUP_ENABLED="true"
-  REMOTE_BACKUP_ENABLED="true"
-    
+  # Safety bash script options
+  # -e causes a bash script to exit immediately when a command fails
+  # -u causes the bash shell to treat unset variables as an error and exit immediately.
+  set -eu
+
+  # The script waits for a change in ~/.lnd/data/chain/bitcoin/mainnet/channel.backup.
+  # When a change happens, it creates a backup of the file locally 
+  #   on a storage device and/or remotely in a GitHub repo
+
+  # By default, both methods are used. If you do NOT want to use one of the 
+  #   method, replace "true" by "false" in the two variables below:
+  LOCAL_BACKUP_ENABLED=true
+  REMOTE_BACKUP_ENABLED=true
+
   # Locations of source SCB file, formatted backup files and Git repo
   SOURCEFILE="/home/lnd/.lnd/data/chain/bitcoin/mainnet/channel.backup"
   LOCAL_BACKUP_FILE="/mnt/static-channel-backup-external/channel-$(date +"%Y%m%d-%H%M%S").backup"
@@ -272,7 +274,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
     git push --set-upstream origin master
     echo "Success! The file is now remotely backed up!"
   }
-  
+
 
   # Monitoring function
   run () {
@@ -281,21 +283,19 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
         inotifywait $SOURCEFILE
         echo "channel.backup has been changed!"
 
-        if [ "$LOCAL_BACKUP_ENABLED" == "true" ]
-        then
+        if [ "$LOCAL_BACKUP_ENABLED" == true ]; then
           echo "Local backup is enabled"
           run_local_backup_on_change
         fi
 
-        if [ "$REMOTE_BACKUP_ENABLED" == "true" ]
-        then
+        if [ "$REMOTE_BACKUP_ENABLED" == true ]; then
           echo "Remote backup is enabled"
           run_remote_backup_on_change
         fi
 
     done
   }
-  
+
   run
   ```
  
