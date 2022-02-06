@@ -232,7 +232,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
 * Create a new shell script file
 
   ```sh
-  $ sudo nano /usr/local/bin/scb-backup.sh
+  $ sudo nano /usr/local/bin/scb-backup
   ```
 
 * Check the following lines of code and paste them in nano. By default, both local and remote backup methods are enabled in the script. If you do not plan to use one of the method, change the corresponding variable (`LOCAL_BACKUP_ENABLED` or `REMOTE_BACKUP_ENABLED`) to "false". Save and exit.
@@ -309,7 +309,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
 * Make the script executable and move it to the standard bin(ary) directory
 
   ```sh
-  $ sudo chmod +x /usr/local/bin/scb-backup.sh
+  $ sudo chmod +x /usr/local/bin/scb-backup
   ```
 
 ### Run backup script in background
@@ -333,7 +333,7 @@ We'll setup the backup script as a systemd service to run in the background and 
   After=lnd.service
 
   [Service]
-  ExecStart=/usr/local/bin/scb-backup.sh
+  ExecStart=/usr/local/bin/scb-backup
   Restart=always
   RestartSec=1
   User=lnd
