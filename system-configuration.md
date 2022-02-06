@@ -139,10 +139,10 @@ The “Advanced Packaging Tool” (apt) makes this easy.
 
   💡 Do this regularly every few months to get security-related updates.
 
-* Install `git`, a distributed version control system that will be used to install electrs, the block explorer and Ride The Lightning
+* Make sure that all necessary software packages are installed:
 
   ```sh
-  $ sudo apt install git --install-recommends
+  $ sudo apt install wget curl gpg git --install-recommends
   ```
 
 ---
