@@ -262,12 +262,12 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   # Remote backup function
   run_remote_backup_on_change () {
     echo "Entering Git repository..."
-    cd $GITREPO
+    cd $GITREPO || exit
     echo "Making a timestamped copy of channel.backup..."
     cp "$SOURCEFILE" "$REMOTE_BACKUP_FILE"
     echo "Committing changes and adding a message"
     git add .
-    git commit -m "SCB"
+    git commit -m "Static Channel Backup $(date +"%Y%m%d-%H%M%S")"
     echo "Pushing changes to remote repository..."
     git push --set-upstream origin master
     echo "Success! The file is now remotely backed up!"
