@@ -161,17 +161,11 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
   * Tick the box "Allow write access" (it is needed to pushes changes to the GitHub repo)
   * Click "Add key"
 
-* Still with user "lnd", set up global Git configuration values. The name and email are required but can be dummy values.
+* Set up global Git configuration values (the name and email are required but can be dummy values). Then, clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes` and press "Enter".
 
   ```sh
-  $ cd /data/lnd
   $ git config --global user.name "RaspiBolt"
   $ git config --global user.email "raspibolt@dummyemail.com"
-  ```
-
-* Clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes` and press "Enter".
-
-  ```sh
   $ git clone git@github.com:YourUserName/remote-lnd-backup.git
   > Cloning into 'lnd-backup'...
   > [...]
