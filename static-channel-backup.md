@@ -386,14 +386,14 @@ We now cause the default `channel.backup` file to change and see if a copy gets 
   > [...]
   ```
 
-* Check the content of your local storage device. It should now contain a backup file with the date/time corresponding to the test made just above
+* If you enabled local backup, check the content of your local storage device. It should now contain a backup file with the date/time corresponding to the test made just above
   
   ```sh
   $ ls -la /mnt/storage-device-scb
   > -rwxr-xr-x 1 lnd  lnd  14011 Feb  5 10:59 channel-20220205-105949.backup
   ```
 
-* Check your GitHub repository (in the "<> code" tab). It should now contain the latest timestamped backup file
+* If you enabled remote backup, check your GitHub repository (in the "<> code" tab). It should now contain the latest timestamped backup file
 
 You're set! Each time you'll open a new channel or close a channel, a timestamped copy of the backup file will automatically be saved to your desired backup location(s).
 
