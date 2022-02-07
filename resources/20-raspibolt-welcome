@@ -377,7 +377,7 @@ channel_db_size=$(du -h ${lnd_dir}/data/graph/mainnet/channel.db | awk '{print $
 
 # Gather Electrs data
 # ------------------------------------------------------------------------------
-printf "%0.s#" {1..75}
+printf "%0.s#" {1..74}
 echo -ne '\r### Loading Electrum data \r'
 
 electrs_running=$(systemctl is-active electrs)
@@ -402,7 +402,7 @@ fi
 
 # Gather Bitcoin Explorer data
 # ------------------------------------------------------------------------------
-printf "%0.s#" {1..78}
+printf "%0.s#" {1..76}
 echo -ne '\r### Loading Block Explorer data \r'
 
 #btcrpcexplorer
@@ -427,7 +427,7 @@ fi
 
 # Gather RTL data
 # ------------------------------------------------------------------------------
-printf "%0.s#" {1..81}
+printf "%0.s#" {1..78}
 echo -ne '\r### Loading RTL data \r'
 
 #rtl
@@ -482,7 +482,7 @@ ${color_red}    (  : '${color_yellow}/／${color_red}:  )     ${electrsversion_c
 ${color_red}     '~ .~${color_yellow}°${color_red}~. ~'                                 ${color_grey}Channel.db size: ${color_green}%s
 ${color_red}         '~'          ${color_yellow}%-20s${color_grey}${btcrpcexplorer_color}%-4s
 ${color_red}                      ${btcrpcexplorerversion_color}%-24s   ${color_yellow}%-20s${rtl_color}%-4s
-                                                 ${rtlversion_color}%-24s
+${color_red}                                                 ${rtlversion_color}%-24s
 
 ${color_grey}For others to connect to this lightning node
 ${color_grey}%s
@@ -503,5 +503,3 @@ ${color_grey}%s
 "${btcrpcexplorerversion}" "RTL" "${rtl_running}" \
 "${rtlversion}" \
 "${ln_connect_guidance}"
-
-
