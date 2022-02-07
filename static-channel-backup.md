@@ -57,7 +57,7 @@ The guide will show you two possible automatic backup methods:
 | LOCAL       | YES               | NO                      | Drive failure only                     |NO                   | 
 | REMOTE      | NO                | YES                     | Drive failure & widespread node damage |YES                  | 
 
-We recommend to use both methods, but you can choose either one of them, depending on your own requirements and preferences. Wahetever method you've chosen, follow the "Preparations" section, then follow the optional local or/and remote backup sections depending on your choosen method(s). Finally, folllow the "Test" section that works for whatever method you've chosen.
+We recommend to use both methods, but you can choose either one of them, depending on your own requirements and preferences. Whatever method you've chosen, follow the "Preparations" section, then follow the optional local or/and remote backup sections depending on your choosen method(s). Finally, follow the "Test" section that works for whatever method you've chosen.
 
 ---
 
