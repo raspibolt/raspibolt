@@ -244,8 +244,6 @@ We now need to modify the nginx configuration to create a web server for the web
 * Paste the following configuration line. Save and exit
 
   ```ini
-  ## mempool-ssl.conf
-  
           proxy_read_timeout 300;
           proxy_connect_timeout 300;
           proxy_send_timeout 300;
@@ -324,13 +322,10 @@ We now need to modify the nginx configuration to create a web server for the web
       listen 4081 ssl;
       listen [::]:4081 ssl;
       server_name _;
-  
-      # TLS
       ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
       ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
-      #ssl_session_cache shared:SSL:1m;
       ssl_session_timeout 4h;
-      ssl_protocols TLSv1.2 TLSv1.3;
+      ssl_protocols TLSv1.3;
       ssl_prefer_server_ciphers on;
   
       include /etc/nginx/snippets/nginx-mempool.conf;
@@ -365,76 +360,36 @@ We now need to modify the nginx configuration to create a web server for the web
   pid /run/nginx.pid;
   include /etc/nginx/modules-enabled/*.conf;
 
-  # worker_rlimit_nofile 100000;
-
   events {
           worker_connections 768;
-          # multi_accept on;
   }
 
   http {
-          ##
-          # Basic Settings
-          ##
-          
           sendfile on;
           tcp_nopush on;
           tcp_nodelay on;
           keepalive_timeout 65;
           types_hash_max_size 2048;
           server_tokens off;
-          
-          # server_names_hash_bucket_size 64;
-          # server_name_in_redirect off;
-          
           include /etc/nginx/mime.types;
           default_type application/octet-stream;
-          
-          ##
-          # SSL Settings
-          ##
-          
-          ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POO>
+          ssl_protocols TLSv1.3;
           ssl_prefer_server_ciphers on;
-          
-          ##
-          # Logging Settings
-          ##
-          
           access_log /var/log/nginx/access.log;
           error_log /var/log/nginx/error.log;
-          
-          ##
-          # Gzip Settings
-          ##
-          
           gzip on;
-          
-          # gzip_vary on;
-          # gzip_proxied any;
-          # gzip_comp_level 6;
-          # gzip_buffers 16 8k;
-          # gzip_http_version 1.1;
-          # gzip_types text/plain text/css application/json application/javascrip>
-          
-          ##
-          # Virtual Host Configs
-          ##
-          
           include /etc/nginx/conf.d/*.conf;
           include /etc/nginx/sites-enabled/*;
   }
-  
+
   stream {
           ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
           ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
           ssl_session_cache shared:SSL:1m;
           ssl_session_timeout 4h;
-          ssl_protocols TLSv1.2 TLSv1.3;
+          ssl_protocols TLSv1.3;
           ssl_prefer_server_ciphers on;
-          
           include /etc/nginx/streams-enabled/*.conf;
-  
   }
   ```
 
@@ -515,13 +470,13 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ sudo su - mempool
   ```
 
-* Fetch the latest GitHub repository information, display the latest release tag (v9.99.9 in this example), and update:
+* Fetch the latest GitHub repository information and update:
 
   ```sh 
   $ cd mempool
   $ git fetch
-  $ git describe --tags --abbrev=0
-  $ git checkout v9.99.9
+  $ latestrelease=$(curl -s https://api.github.com/repos/mempool/mempool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+  $ git checkout $latestrelease
   ```
   
 * Then follow the installation process described in the guide in the [Backend section](#backend) up to, and including the nginx section .
