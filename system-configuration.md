@@ -24,7 +24,7 @@ Let's start with the configuration.
 
 ---
 
-## Add users
+## Add the admin user
 
 We will use the primary user "admin" instead of "pi" to make this guide more universal.
 
@@ -46,21 +46,6 @@ We will use the primary user "admin" instead of "pi" to make this guide more uni
 
   ```sh
   $ sudo adduser admin sudo
-  ```
-
-The Bitcoin Core application will run in the background (as a "daemon") and use the separate user “bitcoin” for security reasons.
-This user does not have admin rights and cannot change the system configuration.
-
-* Create the user "bitcoin"
-
-  ```sh
-  $ sudo adduser --gecos "" --disabled-password bitcoin
-  ```
-
-* Add the user "admin" to the group "bitcoin" as well
-
-  ```sh
-  $ sudo adduser admin bitcoin
   ```
 
 ---
@@ -153,11 +138,11 @@ We'll store all application data in the dedicated directory `/data/`.
 This allows for better security because it's not inside any user's home directory.
 Additionally, it's easier to move that directory somewhere else, for instance to a separate drive, as you can just mount any storage option to `/data/`.
 
-* Create the directory and make user "bitcoin" its owner
+* Create the directory and make user "admin" its owner
 
   ```sh
   $ sudo mkdir /data
-  $ sudo chown bitcoin:bitcoin /data
+  $ sudo chown admin. /data
   ```
 
 ---
