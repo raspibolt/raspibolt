@@ -58,10 +58,10 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   alias showversion='echo The installed versions of the services are as follows: ; \
     bitcoind --version ; \
     lnd --version ; \
-    echo "BTC RPC Explorer: $(jq '.version' < /home/btcrpcexplorer/btc-rpc-explorer/package.json)" ; \
+    echo "BTC RPC Explorer: $(cat /home/btcrpcexplorer/btc-rpc-explorer/package.json 2>/dev/null | jq '.version' < /home/btcrpcexplorer/btc-rpc-explorer/package.json)" ; \
     echo "Electrs: version $(head -n 1 /home/admin/rust/electrs/RELEASE-NOTES.md)" ;
     tor --version ; \
-    echo "RTL: $(jq '.version' < /home/rtl/RTL/package.json)" ; \
+    echo "RTL: $(cat /home/rtl/RTL/package.json 2>/dev/null | jq '.version' < /home/rtl/RTL/package.json)" ; \
     echo NPM: v`npm --version` ; \
     echo NodeJS: node -v ; \
     lntop --version ; \
