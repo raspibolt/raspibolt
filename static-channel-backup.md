@@ -39,16 +39,25 @@ This SCB-based recovery method has several consequences worth bearing in mind:
 This is why it is recommended to set up an automatic SCB update mechanism that:
 
 1. Create a new (or update an existing) SCB file each time you open a channel (and close, although this is less important)
-1. Save the SCB file in another location than the SSD drive (to ensure that the SCB survive in case of drive failure)
+1. Save the SCB file in another location than the SSD drive (to ensure that the SCB survives in case of drive failure)
 
 You can read more about SCBs in [this section of 'Mastering the Lighning Network'](https://github.com/lnbook/lnbook/blob/ec806916edd6f4d1b2f9da2fef08684f80acb671/05_node_operations.asciidoc#node-and-channel-backups){:target="_blank"}.
 
-The guide will show how to set up an automatic Static Channel Backup:
+---
 
-1. Locally, to a USB thumbdrive or microSD plugged into the Pi: in case of SSD drive failure only
-1. Remotely, to a GitHub repository: in case of widespread node damage (e.g. flood, fire, etc)
+## Choose your preferred method(s)
 
-We recommend to use both methods, but you can choose either one of them, depending on your own requirements and preferences.
+The guide will show you two possible automatic backup methods:
+
+* A LOCAL  backup method: This method stores the backup SCB on an USB thumbdrive or microSD card plugged into your Pi.
+* A REMOTE backup method: This method sends the backup SCB to a GitHub repository
+
+| Method      | Requires hardware | Requires GitHub account | Protects against                       | Relies on 3rd-party |
+| :---------: | :---------------: |:----------------------: |:-------------------------------------: |:------------------: | 
+| LOCAL       | YES               | NO                      | Drive failure only                     |NO                   | 
+| REMOTE      | NO                | YES                     | Drive failure & widespread node damage |YES                  | 
+
+We recommend to use both methods, but you can choose either one of them, depending on your own requirements and preferences. Wahetever method you've chosen, follow the "Preparations" section, then follow the optional local or/and remote backup sections depending on your choosen method(s). Finally, folllow the "Test" section that works for whatever method you've chosen.
 
 ---
 
