@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![](images/60_balance.png)
+![lnbalance illustration](../../images/60_balance.png)
 
 ---
 
