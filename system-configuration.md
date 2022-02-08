@@ -60,43 +60,6 @@ You will be prompted to enter your admin password from time to time for increase
 
 ---
 
-## Check USB3 drive performance
-
-A performant USB3 drive is essential for your node.
-The Raspberry Pi 4 supports these out of the box, but is a bit picky.
-Some USB3 adapters for external drives are not compatible and need a workaround to be usable.
-
-Let's check if your drive works well as-is, or if additional configuration is needed.
-
-* Install the software to measure the performance of your drive
-
-  ```sh
-  $ sudo apt update
-  $ sudo apt install hdparm
-  ```
-
-* Your external disk should be connected as `/dev/sda`.
-  Check if this is the case by listing the names of connected block devices
-
-  ```sh
-  $ lsblk -pli
-  ```
-
-* Measure the speed of your external drive
-
-  ```sh
-  $ sudo hdparm -t --direct /dev/sda
-  > Timing O_DIRECT disk reads: 932 MB in  3.00 seconds = 310.23 MB/sec
-  ```
-
-If the measured speed is more than 50 MB/s, you're good, no further action needed.
-
-If the speed of your USB3 drive is not acceptable, we need to configure the USB driver to ignore the UAS interface.
-
-Check the [Fix bad USB3 performance](troubleshooting.md#fix-bad-usb3-performance) entry in the Troubleshooting guide to learn how.
-
----
-
 ## System update
 
 It is important to keep the system up-to-date with security patches and application updates.
@@ -124,6 +87,42 @@ The “Advanced Packaging Tool” (apt) makes this easy.
   ```sh
   $ sudo apt install wget curl gpg git --install-recommends
   ```
+
+---
+
+## Check USB3 drive performance
+
+A performant USB3 drive is essential for your node.
+The Raspberry Pi 4 supports these out of the box, but is a bit picky.
+Some USB3 adapters for external drives are not compatible and need a workaround to be usable.
+
+Let's check if your drive works well as-is, or if additional configuration is needed.
+
+* Install the software to measure the performance of your drive
+
+  ```sh
+  $ sudo apt install hdparm
+  ```
+
+* Your external disk should be connected as `/dev/sda`.
+  Check if this is the case by listing the names of connected block devices
+
+  ```sh
+  $ lsblk -pli
+  ```
+
+* Measure the speed of your external drive
+
+  ```sh
+  $ sudo hdparm -t --direct /dev/sda
+  > Timing O_DIRECT disk reads: 932 MB in  3.00 seconds = 310.23 MB/sec
+  ```
+
+If the measured speed is more than 50 MB/s, you're good, no further action needed.
+
+If the speed of your USB3 drive is not acceptable, we need to configure the USB driver to ignore the UAS interface.
+
+Check the [Fix bad USB3 performance](troubleshooting.md#fix-bad-usb3-performance) entry in the Troubleshooting guide to learn how.
 
 ---
 
