@@ -95,7 +95,7 @@ You can read more on [How to securely install Bitcoin](https://medium.com/@luked
 The Bitcoin Core application will run in the background as a daemon and use the separate user “bitcoin” for security reasons.
 This user does not have admin rights and cannot change the system configuration.
 
-* Create the user "bitcoin"
+* With user "admin", create the Bitcoin data folder
 
   ```sh
   $ sudo adduser --gecos "" --disabled-password bitcoin
