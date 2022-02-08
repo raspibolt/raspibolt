@@ -104,17 +104,6 @@ The “Advanced Packaging Tool” (apt) makes this easy.
   $ ssh admin@raspibolt.local
   ```
 
-  To change the system configuration and files that don't belong to the "admin", you have to prefix commands with `sudo`.
-  You will be prompted to enter your admin password from time to time for increased security.
-
-* Instruct your shell to always use the default language settings.
-  This prevents annoying error messages.
-
-  ```sh
-  $ echo "export LC_ALL=C" >> ~/.bashrc
-  $ source ~/.bashrc
-  ```
-
 * Update the operating system and all installed software packages
 
   ```sh
