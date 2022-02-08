@@ -48,6 +48,17 @@ We will use the primary user "admin" instead of "pi" to make this guide more uni
   $ sudo adduser admin sudo
   ```
 
+* Logout from the `pi` user... `admin` will be used from that point forward
+
+  ```sh
+  $ exit
+  ```
+
+* Create a new connection with the `admin` user
+
+  Use the same [technique used previously](/remote-access.html#access-with-secure-shell) to 
+  login with `admin` instead of `pi`
+
 ---
 
 ## Check USB3 drive performance
