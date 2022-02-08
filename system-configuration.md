@@ -131,7 +131,6 @@ Additionally, it's easier to move that directory somewhere else, for instance to
 
   ```sh
   $ sudo mkdir /data
-  $ sudo chown admin. /data
   ```
 
 ---
