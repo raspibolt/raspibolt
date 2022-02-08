@@ -24,17 +24,9 @@ Let's start with the configuration.
 
 ---
 
-## Add the admin user
+## Add the admin user (and log in with it)
 
 We will use the primary user "admin" instead of "pi" to make this guide more universal.
-
-* Instruct your shell (the command line) to always use the default language settings.
-  This prevents annoying error messages
-
-  ```sh
-  $ echo "export LC_ALL=C" >> ~/.bashrc
-  $ source ~/.bashrc
-  ```
 
 * Create a new user called "admin" with your `password [A]`
 
@@ -47,8 +39,9 @@ We will use the primary user "admin" instead of "pi" to make this guide more uni
   ```sh
   $ sudo adduser admin sudo
   ```
+  
 
-* Logout from the `pi` user... `admin` will be used from that point forward
+* Exit your current "pi" user session and exit SSH
 
   ```sh
   $ exit
@@ -56,8 +49,14 @@ We will use the primary user "admin" instead of "pi" to make this guide more uni
 
 * Create a new connection with the `admin` user
 
-  Use the same [technique used previously](/remote-access.html#access-with-secure-shell) to 
-  login with `admin` instead of `pi`
+* Log in again using SSH (see [Access with Secure Shell](remote-access.html#access-with-secure-shell) section), but now with the user "admin" and your `password [A]`
+
+  ```sh
+  $ ssh admin@raspibolt.local
+  ```
+
+To change the system configuration and files that don't belong to user "admin", you have to prefix commands with `sudo`.
+You will be prompted to enter your admin password from time to time for increased security.
 
 ---
 
@@ -100,19 +99,15 @@ Check the [Fix bad USB3 performance](troubleshooting.md#fix-bad-usb3-performance
 
 ## System update
 
-Exit your current "pi" user session and exit SSH
-
-```sh
-$ exit
-```
-
 It is important to keep the system up-to-date with security patches and application updates.
 The “Advanced Packaging Tool” (apt) makes this easy.
 
-* Log in again using SSH, but now with the user "admin" and  your `password [A]`
+* Instruct your shell to always use the default language settings.
+  This prevents annoying error messages.
 
   ```sh
-  $ ssh admin@raspibolt.local
+  $ echo "export LC_ALL=C" >> ~/.bashrc
+  $ source ~/.bashrc
   ```
 
 * Update the operating system and all installed software packages
@@ -138,7 +133,7 @@ We'll store all application data in the dedicated directory `/data/`.
 This allows for better security because it's not inside any user's home directory.
 Additionally, it's easier to move that directory somewhere else, for instance to a separate drive, as you can just mount any storage option to `/data/`.
 
-* Create the directory and make user "admin" its owner
+* Create the data directory
 
   ```sh
   $ sudo mkdir /data
