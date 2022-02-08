@@ -112,12 +112,6 @@ This user does not have admin rights and cannot change the system configuration.
 Bitcoin Core uses by default the folder `.bitcoin` in the user's home.
 Instead of creating this directory, we create a data directory in the general data location `/data` and link to it.
 
-* Switch to user "admin"
-
-  ```sh
-  $ sudo su - admin
-  ```
-
 * Create the Bitcoin data folder
 
   ```sh
