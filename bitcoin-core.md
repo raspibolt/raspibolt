@@ -116,7 +116,7 @@ Instead of creating this directory, we create a data directory in the general da
 
   ```sh
   $ mkdir /data/bitcoin
-  $ chown bitcoin:bitcoin /data/bitcoin
+  $ sudo chown bitcoin:bitcoin /data/bitcoin
   ```
 
 * Switch to user "bitcoin"
