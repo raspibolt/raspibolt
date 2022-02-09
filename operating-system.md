@@ -36,7 +36,7 @@ As a result, it should work smoothly with Raspberry Pis while still being compat
 In order to write the operating system to the external drive, we will use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"} application v1.7+, which has been updated to include the 64-bit version of the operating system.
 
 * Start the Raspberry Pi Imager
-* Select "ChOOSE OS" > "Raspberry Pi OS (Other)" > "Raspberry Pi OS Lite (64-bit)" to have the relevant image flashed to your drive.
+* Select "CHOOSE OS" > "Raspberry Pi OS (Other)" > "Raspberry Pi OS Lite (64-bit)" to have the relevant image flashed to your drive
 
 ## Configure boot options
 
