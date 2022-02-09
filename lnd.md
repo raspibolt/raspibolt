@@ -281,7 +281,7 @@ Once LND is started, the process waits for us to create the integrated Bitcoin w
   ...
   ```
 
-These 24 words (combined with your optional passphrase)  is all that you need to restore the Bitcoin on-chain wallet.
+These 24 words (combined with your optional passphrase) is all that you need to restore the Bitcoin on-chain wallet.
 The current state of your channels, however, cannot be recreated from this seed.
 For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
