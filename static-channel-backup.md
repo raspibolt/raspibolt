@@ -8,7 +8,7 @@ parent: Lightning
 # Lightning: Static Channel Backup
 {: .no_toc }
 
-We set up an automatic Static Channel Backup on a local storage device and/or a remote GitHub repository to recover lightning funds in case of SSD drive failure.
+We set up a local or remote "Static Channel Backup" for Lightning. A monitoring script keeps it up-to-date to enable the recovery of your Lightning funds in case of hardware failure.
 
 ![GitHub remote backup](images/remote-scb-backup.png)
 
@@ -22,52 +22,56 @@ We set up an automatic Static Channel Backup on a local storage device and/or a 
 
 ---
 
-## Why are channel backups important?
+## Why are Lightning channel backups important?
 
-Static Channels Backup (SCB) is a feature of LND that allows for the onchain recovery of lightning channel balances in the case of a bricked node. Despite its name, it does not allow the recovery of your LN channels but simply increases the chance that you'll recover all (or most) of your offchain (local) balances.  
+The Static Channels Backup (SCB) is a feature of LND that allows for the on-chain recovery of lightning channel balances in the case of a bricked node. Despite its name, it does not allow the recovery of your LN channels but increases the chance that you'll recover all (or most) of your off-chain (local) balances.
 
-The SCB contains all the necessary channel information used for the recovery process which is called the Data Loss Protection (DLP). It is a foolproof safe backup mechanism (*i.e.*, there is no risk of penalty transactions being triggered which would result in the entire local). During recovery, the SCB is used by LND to know who were your peers with whom you had channels. LND send all your online peers a request to force close the channel on their end. Without this method, you would need to either contact the peer yourself to ask them to force close the channel or else wait for them to force close on their own, resulting in probably several channels being kept opened for possible weeks or months. If one of these peers themselves have a technical issue and brick their node, then the channel becomes a zombie channel with possibly no chance of ever recovering the funds in it.  
+The SCB contains all the necessary channel information used for the recovery process called Data Loss Protection (DLP). It is a safe backup mechanism with no risk of provoking penalty transactions that could lead to losing channel balances. The SCB contains all necessary peer and channel information, allowing LND to send a request to force-close the channel on their end to all your previous online peers. Without this method, you would need to contact your peers manually or wait for them to force-close on their own eventually.
 
 This SCB-based recovery method has several consequences worth bearing in mind:
 
-* It relies on the good will of the peer, *i.e.*, a malicious peer could refuse to force close the channel and the funds would remain in limbo until they do
+* This method relies on the goodwill of the peer: a malicious peer could refuse to force-close the channel, and the funds would remain locked up.
 
-* If a peer is offline, the request to force close cannot be sent, and therefore the funds in that channel will remain in limbo until this peer comes back online and initiate a force closure (with the additional danger of the peer *never* coming back online and the funds remaining locked in the 2-of-2 multisig forever)
+* Recovery only works with online peers: LND cannot send a request to force-close the channel if a peer is offline. Therefore, the funds in that channel will remain locked up until this peer comes back online, or possibly forever if that peer doesn't come back.
 
-* Since LND uses the SCB to know which peers to send the force closure request, the SCB file has to be updated each time you open a new channel, otherwise you encur the risk of having funds in channels
+* The backup needs to be up-to-date: Since LND needs to know about your peers and channels, the SCB needs to be updated every time you open a new channel.
 
-This is why it is recommended to set up an automatic SCB update mechanism that:
+You need to set up an automated SCB update mechanism that:
 
-1. Create a new (or update an existing) SCB file each time you open a channel (and close, although this is less important)
-1. Save the SCB file in another location than the SSD drive (to ensure that the SCB survives in case of drive failure)
+1. Creates or updates your SCB file each time you open a channel (or close one, although this is less important)
+1. Stores the SCB file to a different backup location to ensure that it is available in case of a failing SSD.
 
 You can read more about SCBs in [this section of 'Mastering the Lighning Network'](https://github.com/lnbook/lnbook/blob/ec806916edd6f4d1b2f9da2fef08684f80acb671/05_node_operations.asciidoc#node-and-channel-backups){:target="_blank"}.
 
 ---
 
-## Choose your preferred method(s)
+## Choose your preferred backup method(s)
 
-The guide will show you two possible automatic backup methods:
+This guide covers two automated backup methods:
 
-* A LOCAL  backup method: This method stores the backup SCB on an USB thumbdrive or microSD card plugged into your Pi.
-* A REMOTE backup method: This method sends the backup SCB to a GitHub repository
+* **LOCAL**: store the backup on a USB thumbdrive or microSD card plugged into your Pi
+* **REMOTE**: send the encrypted backup to a private GitHub repository
 
 | Method      | Requires hardware | Requires GitHub account | Protects against                       | Relies on 3rd-party |
-| :---------: | :---------------: |:----------------------: |:-------------------------------------: |:------------------: | 
-| LOCAL       | YES               | NO                      | Drive failure only                     |NO                   | 
-| REMOTE      | NO                | YES                     | Drive failure & widespread node damage |YES                  | 
+| :---------: | :---------------: |:----------------------: |:-------------------------------------: |:------------------: |
+| LOCAL       | YES               | NO                      | Drive failure only                     |NO                   |
+| REMOTE      | NO                | YES                     | Drive failure & widespread node damage |YES                  |
 
-We recommend to use both methods, but you can choose either one of them, depending on your own requirements and preferences. Whatever method you've chosen, follow the "Preparations" section, then follow the optional local or/and remote backup sections depending on your choosen method(s). Finally, follow the "Test" section that works for whatever method you've chosen.
+We recommend to use both methods, but you can choose either one of them, depending on your own requirements and preferences. Whatever method you choose:
+
+1. follow the "Preparations" section first, then
+1. follow the optional local or/and remote backup sections.
+1. Finally, follow the "Test" section that works for whatever method you've chosen.
 
 ---
 
 ## Preparations
 
-We prepare a bash script that can automatically backup the LND SCB file on change to the local and/or remote backup locations.
+We prepare a shell script that automatically updates the LND SCB file on a change in your backup location(s).
 
-### Check SCB location
+### Check SCB file location
 
-By default, LND saves the SCB file here: `~/.lnd/.lnd/data/chain/bitcoin/mainnet/channel.backup`. Make sure that the `lnd.conf` does not contain the `backupfilepath` option that modifies the backup location (as was used in a previous version of the RaspiBolt v3).
+By default, LND saves the SCB file here: `/data/lnd/data/chain/bitcoin/mainnet/channel.backup`. Ensure that the `lnd.conf` does not contain the `backupfilepath` option that modifies the backup location (as was used in a previous version of the RaspiBolt v3).
 
 * With the "admin" user, check that your `lnd.conf` file does not contain this line. If so, delete it or comment it out and restart LND.
 
@@ -85,20 +89,19 @@ By default, LND saves the SCB file here: `~/.lnd/.lnd/data/chain/bitcoin/mainnet
 
 ### Install inotify-tools
 
-`inotify-tools` allows to use `inotify` (a tool that monitors files and directories) within shell scripts.  
+Installing `inotify-tools` allows us to use `inotify`, an application that monitors files and directories for changes.
 
-We will use it to monitor changes in the `channel.backup` file updated by LND each time a channel is opened or closed.
+We will use it to monitor the `channel.backup` file and detect updates by LND each time a channel is opened or closed.
 
 * Install `inotify-tools`
 
   ```sh
-  $ sudo apt update
   $ sudo apt install inotify-tools
   ```
 
 ### Create script
 
-We create a shell script that uses `inotify` to monitor changes in `channel.backup` and make a copy of it on change.
+We create a shell script to monitor `channel.backup` and make a copy to our backup locations if it changes.
 
 * Create a new shell script file
 
@@ -106,7 +109,7 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   $ sudo nano /usr/local/bin/scb-backup
   ```
 
-* Check the following lines of code and paste them in nano. By default, both local and remote backup methods are disabled in the script, we will enable one or both of them in the next sections, depending on your preferences. Save and exit.
+* Check the following lines of code and paste them into the text editor. By default, both local and remote backup methods are disabled. We will enable one or both of them in the next sections, depending on your preferences. Save and exit.
 
   ```ini
   #!/bin/bash
@@ -117,10 +120,10 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
   set -eu
 
   # The script waits for a change in ~/.lnd/data/chain/bitcoin/mainnet/channel.backup.
-  # When a change happens, it creates a backup of the file locally 
+  # When a change happens, it creates a backup of the file locally
   #   on a storage device and/or remotely in a GitHub repo
 
-  # By default, both methods are used. If you do NOT want to use one of the 
+  # By default, both methods are used. If you do NOT want to use one of the
   #   method, replace "true" by "false" in the two variables below:
   LOCAL_BACKUP_ENABLED=false
   REMOTE_BACKUP_ENABLED=false
@@ -176,8 +179,8 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
 
   run
   ```
- 
-* Make the script executable and move it to the standard bin(ary) directory
+
+* Make the script executable
 
   ```sh
   $ sudo chmod +x /usr/local/bin/scb-backup
@@ -188,13 +191,13 @@ We create a shell script that uses `inotify` to monitor changes in `channel.back
 We set up the backup script as a systemd service to run in the background and start automatically on system startup.
 
 * Create a new service file
-  
+
   ```sh
   sudo nano /etc/systemd/system/scb-backup.service
   ```
 
 * Paste the following lines. Save and exit.
-  
+
   ```ini
   # RaspiBolt: systemd unit for automatic SCB backup
   # /etc/systemd/system/scb-backup.service
@@ -212,9 +215,9 @@ We set up the backup script as a systemd service to run in the background and st
   [Install]
   WantedBy=multi-user.target
   ```
-  
+
 * Enable and start the service, check its status (it should be 'active')
-  
+
   ```sh
   $ sudo systemctl enable scb-backup.service
   $ sudo systemctl start scb-backup.service
@@ -223,9 +226,9 @@ We set up the backup script as a systemd service to run in the background and st
 
 ---
 
-## (Optional) Local backup
+## Option 1: Local backup
 
-Follow this section if you plan to backup your SCB locally. Otherwise, if you plan to have a remote backup only, move to the [next section](https://github.com/VajraOfIndra/RaspiBolt/edit/thumbrdive-scb-backup/static-channel-backup.md#(optional)-remote-backup).
+Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](#(optional)-remote-backup).
 
 ### Storage device size
 
@@ -233,9 +236,9 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 
 ### Formatting
 
-* To ensure that the storage device does not contain malicious code, we will format it on our local computer (select a name easy to recognize, *e.g.*, "SCB backup" and choose the FAT filesystem). The following external guides explain how to format your USB thumbdrive or microSD card on [Windows](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-in-windows-12893){:target="_blank"}, [macOS](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}, or [Linux](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}.
+* To ensure that the storage device does not contain malicious code, we will format it on our local computer (select a name easy to recognize like "SCB backup" and choose the FAT filesystem). The following external guides explain how to format your USB thumbdrive or microSD card on [Windows](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-in-windows-12893){:target="_blank"}, [macOS](https://www.techsolutions.support.com/how-to/how-to-format-a-usb-drive-on-a-mac-12899){:target="_blank"}, or [Linux](https://phoenixnap.com/kb/linux-format-usb){:target="_blank"}.
 
-* Once formatted, plug the storage device into your Pi. If using a thumbdrive, use one of the USB 2.0 (black) port. 
+* Once formatted, plug the storage device into your Pi. If using a thumbdrive, use one of the black USB2 ports.
 
 ###  Set up a mounting point for the storage device
 
@@ -246,82 +249,81 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
   $ sudo chattr +i /mnt/static-channel-backup-external
   ```
 
-* List the devices and copy the `UUID` of the storage device into a text editor on your local computer (e.g. here `123456`).
-  
+* List active block devices and copy the `UUID` of your backup device into a text editor on your local computer (e.g. here `123456`).
+
   ```sh
   $ lsblk -o NAME,MOUNTPOINT,UUID,FSTYPE,SIZE,LABEL,MODEL
   > NAME   MOUNTPOINT UUID                                 FSTYPE   SIZE LABEL      MODEL
   > sda                                                           931.5G            SSD_PLUS_1000GB
-  > |-sda1 /boot      DBF3-0E3A                            vfat     256M boot       
-  > `-sda2 /          b73b1dc9-6e12-4e68-9d06-1a1892663226 ext4   931.3G rootfs     
+  > |-sda1 /boot      DBF3-0E3A                            vfat     256M boot
+  > `-sda2 /          b73b1dc9-6e12-4e68-9d06-1a1892663226 ext4   931.3G rootfs
   > sdb               123456                               vfat     1.9G SCB backup UDisk
   ```
 
-* Now, get the "lnd" user identifier (UID) and the "lnd" group identifier (GID) from the `/etc/passwd` database of all user accounts. 
-and copy them into a text editor on your local computer (e.g. here GID is `XXXX` and UID is `YYYY`)
-  
+* Get the "lnd" user identifier (UID) and the "lnd" group identifier (GID) from the `/etc/passwd` database of all user accounts. Copy these values into a text editor on your local computer (e.g. here GID `XXXX` and UID `YYYY`)
+
   ```sh
   $ awk -F ':' '$1=="lnd" {print "GID: "$3" / UID: "$4}'  /etc/passwd
   > GID: XXXX / UID: YYYY
   ```
 
-* Edit the `fstab` file and add the following as a new line at the end, replacing `123456`, `XXXX` and `YYYY` with your own `UUID`, `GID` and `UID`
+* Edit your Filesystem Table configuration file and add the following as a new line at the end, replacing `123456`, `XXXX` and `YYYY` with your own `UUID`, `GID` and `UID`
 
   ```sh
   $ sudo nano /etc/fstab
   ```
-  
+
   ```ini
   UUID=123456 /mnt/static-channel-backup-external vfat auto,noexec,nouser,rw,sync,nosuid,nodev,noatime,nodiratime,nofail,umask=022,gid=XXXX,uid=YYYY 0 0
   ```
-  
+
   🔍 *more: [fstab guide](https://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/){:target="_blank"}*
 
 * Mount the drive and check the file system. Is “/mnt/static-channel-backup-external” listed?
 
   ```sh
   $ sudo mount -a
-  $ df -h /mnt/storage-device-scb
+  $ df -h static-channel-backup-external
   > Filesystem      Size  Used Avail Use% Mounted on
   > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/static-channel-backup-external
   ```
 
 ### Enable the local backup function in the script
 
-* Edit the backup script by changing the variable value at line 14 to `true`. Save and exit.
+* Enable the local backup in the script by changing the variable value for `LOCAL_BACKUP_ENABLED` at line 14 to `true`. Save and exit.
 
   ```sh
   $ sudo nano --linenumbers /usr/local/bin/scb-backup
   ```
-  
+
   ```ini
   $ LOCAL_BACKUP_ENABLED=true
   ```
 
-* Reload the systemd service to take in account the change
+* Restart the systemd service to take in account the change
 
   ```sh
-  $ systemctl daemon-reload
+  $ sudo systemctl restart scb-backup
   ```
 
 ---
 
-## (Optional) Remote backup preparations
+## Option 2: Remote backup preparations
 
-Follow this section if you plan to backup your SCB remotely. Otherwise, if you plan to have a local backup only, move to the [next section](https://github.com/VajraOfIndra/RaspiBolt/edit/thumbrdive-scb-backup/static-channel-backup.md#test).
+Follow this section if you want a remote backup. If you already set up a local backup, and don't want a remote backup, skip to the [next section](https://github.com/VajraOfIndra/RaspiBolt/edit/thumbrdive-scb-backup/static-channel-backup.md#test).
 
 ### Create a GitHub repository
 
-* Go to [GitHub](https://github.com/){:target="_blank"} and sign up for a new user account (or use an existing one)
+* Go to [GitHub](https://github.com/){:target="_blank"}, sign up for a new user account, or log in with an existing one
 
 * Create a new repository: [https://github.com/new](https://github.com/new){:target="_blank"}
   * Type the following repository name: `remote-lnd-backup`
   * Select "Private" (rather than the default "Public")
   * Click on "Create repository"
 
-### Clone the repository to the node
+### Clone the repository to your node
 
-* Using the "lnd" user, create a pair of SSH keys. When prompted, just press "Enter" to confirm the default SSH directory and to not set up a password.
+* Using the "lnd" user, create a pair of SSH keys. When prompted, press "Enter" to confirm the default SSH directory and not set up a password.
 
   ```sh
   $ sudo su - lnd
@@ -333,7 +335,7 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
 * Display the public key
 
   ```sh
-  $ cat /home/lnd/.ssh/id_rsa.pub
+  $ cat ~/.ssh/id_rsa.pub
   > ssh-rsa 1234abcd... lnd@raspibolt
   ```
 
@@ -341,7 +343,7 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
   * Click on "Settings", then "Deploy keys", then "Add deploy keys"
   * Type a title (e.g., "SCB")
   * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... lnd@raspibolt`)
-  * Tick the box "Allow write access" (it is needed to pushes changes to the GitHub repo)
+  * Tick the box "Allow write access" to enable this key to push changes to the repository
   * Click "Add key"
 
 * Set up global Git configuration values (the name and email are required but can be dummy values). Then, clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes` and press "Enter".
@@ -356,7 +358,7 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
 
 ### Test
 
-* Still with user "lnd", enter the Git repository, create a dummy file and push it to your remote GitHub repository 
+* Still with user "lnd", enter your local Git repository, create a dummy file and push it to your remote GitHub repository
 
   ```sh
   $ cd /data/lnd/remote-lnd-backup
@@ -366,7 +368,7 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
   $ git push --set-upstream origin master
   ```
 
-* Check that a copy of the test file is now in your remote GitHub repository (in the "<> code" tab).
+* Check that a copy of the test file is now in your remote GitHub repository (in the `[ <> Code ]` tab).
 
 * Go back to the SSH session, delete the test file, commit this change and exit the "lnd" user
 
@@ -380,30 +382,32 @@ Follow this section if you plan to backup your SCB remotely. Otherwise, if you p
 
 ### Enable the remote backup function in the script
 
-* Edit the backup script by changing the variable value at line 15 to `true`. Save and exit.
+* Enable the remote backup in the script by changing the variable value for `REMOTE_BACKUP_ENABLED` at line 15 to `true`. Save and exit.
 
   ```sh
   $ sudo nano --linenumbers /usr/local/bin/scb-backup
   ```
-  
+
   ```ini
   $ REMOTE_BACKUP_ENABLED=true
   ```
 
-* Reload the systemd service to take in account the change
+* Restart the systemd service to take in account the change
 
   ```sh
-  $ systemctl daemon-reload
+  $ sudo systemctl restart scb-backup
   ```
 
 ---
 
 ## Test
 
-We now cause the default `channel.backup` file to change and see if a copy gets uploaded to the desired backup location(s).
+The automated backup is now up and running.
+To test if everything works, we now cause the default `channel.backup` file to change.
+Then we check if a copy gets stored at the intended backup location(s).
 
-* Open the live logging output of the SCB backup systemd service
-  
+* Follow the system log entries for the SCB backup service in real-time
+
   ```sh
   $ sudo journalctl -f -u scb-backup.service
   > [...]
@@ -412,14 +416,14 @@ We now cause the default `channel.backup` file to change and see if a copy gets 
 
 * Start your SSH program (eg. PuTTY) a second time and log in as "admin". Commands for the second session start with the prompt $2.
 * Simulate a `channel.backup` file change with the `touch` command (don't worry! it simply updates the timestamp of the file but not its content) and then exit the session.
-  
+
   ```sh
-  $2 sudo touch ~/.lnd/data/chain/bitcoin/mainnet/channel.backup
+  $2 sudo touch /data/lnd/data/chain/bitcoin/mainnet/channel.backup
   $2 exit
   ```
-  
-* Go back to the first SSH session, in the logs, you should see new entries similar to these (depending on which backup methods you enabled):
-  
+
+* Switch back to the first SSH session. In the logs, you should see new entries similar to these (depending on which backup methods you enabled):
+
   ```sh
   > [...]
   > Feb 05 11:05:11 raspibolt scb-backup.sh[25885]: Local backup is enabled
@@ -431,16 +435,16 @@ We now cause the default `channel.backup` file to change and see if a copy gets 
   > [...]
   ```
 
-* If you enabled local backup, check the content of your local storage device. It should now contain a backup file with the date/time corresponding to the test made just above
-  
+* If you enabled the local backup, check the content of your local storage device. It should now contain a backup file with the date/time corresponding to the test made just above
+
   ```sh
   $ ls -la /mnt/storage-device-scb
   > -rwxr-xr-x 1 lnd  lnd  14011 Feb  5 10:59 channel-20220205-105949.backup
   ```
 
-* If you enabled remote backup, check your GitHub repository (in the "<> code" tab). It should now contain the latest timestamped backup file
+* If you enabled the remote backup, check your GitHub repository (in the `[ <> Code ]` tab). It should now contain the latest timestamped backup file
 
-You're set! Each time you'll open a new channel or close a channel, a timestamped copy of the backup file will automatically be saved to your desired backup location(s).
+You're set! Each time you open a new channel or close an existing one, the monitoring script will automatically save a timestamped copy of the  backup file to your backup location(s).
 
 <br /><br />
 
