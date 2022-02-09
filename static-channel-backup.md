@@ -67,7 +67,7 @@ We prepare a bash script that can automatically backup the LND SCB file on chang
 
 ### Check SCB location
 
-By default, LND saves the SCB file here: `/data/lnd/data/chain/bitcoin/mainnet/channel.backup`. Make sure that the `lnd.conf` does not contain the `backupfilepath` option that modifies the backup location (as was used in a previous version of the RaspiBolt v3).
+By default, LND saves the SCB file here: `~/.lnd/.lnd/data/chain/bitcoin/mainnet/channel.backup`. Make sure that the `lnd.conf` does not contain the `backupfilepath` option that modifies the backup location (as was used in a previous version of the RaspiBolt v3).
 
 * With the "admin" user, check that your `lnd.conf` file does not contain this line. If so, delete it or comment it out and restart LND.
 
