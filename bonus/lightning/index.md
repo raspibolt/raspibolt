@@ -17,11 +17,6 @@ has_toc: false
 
 ---
 
-## Resilience
-* **[Automatic Static Channel Backup (SCB) to Dropbox](static-backup-dropbox.md)** - (for RaspiBolt v1 & v2) have an updated SCB copy in case you brick your node and want to recover your funds onchain
-
----
-
 ## Dashboards & Wallets
 
 #### *CLI-only*

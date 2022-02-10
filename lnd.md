@@ -99,14 +99,6 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   $ sudo chown -R lnd:lnd /data/lnd
   ```
 
-* Also create a separate directory for the channel backup.
-  Alternatively, you can [mount a USB thumbdrive to this location](https://linuxconfig.org/howto-mount-usb-drive-in-linux){:target="_blank"} for added redundancy.
-
-  ```sh
-  $ sudo mkdir /data/lnd-backup
-  $ sudo chown -R lnd:lnd /data/lnd-backup
-  ```
-
 * Open a "lnd" user session
 
   ```sh
@@ -172,7 +164,6 @@ To improve the security of your wallet, check out these more advanced methods:
   debuglevel=info
   maxpendingchannels=5
   listen=localhost
-  backupfilepath=/data/lnd-backup/channel.backup
 
   # Password: automatically unlock wallet with the password in this file
   # -- comment out to manually unlock wallet, and see RaspiBolt guide for more secure options
@@ -706,4 +697,4 @@ Upgrading LND can lead to a number of issues.
 
 ---
 
-Next: [Ride The Lightning >>](rtl.md)
+Next: [Static Channel Backup >>](static-channel-backup.md)
