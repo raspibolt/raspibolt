@@ -46,8 +46,8 @@ This also speeds up the initial sync time for the blockchain significantly.
 
 You might also want to get this optional hardware:
 
-* optional: Raspberry Pi case: to protect yout Pi and cool it down
-* optional: a small USB thumbdrive (or microSD card) to store a backup of the LND Static Channel Backup (an important file that helps you recover your funds in case of SSD drive failure). Note that this backup step can also be done without the use of any physical storage device. You can make that choice when the time comes (after installing LND).
+* optional: Raspberry Pi case to protect your Pi and cool it down
+* optional: optional: a small USB thumbdrive or microSD card to create regular local backups of your Lightning channels
 
 ---
 
