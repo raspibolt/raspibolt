@@ -300,7 +300,7 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
   $ LOCAL_BACKUP_ENABLED=true
   ```
 
-* Restart the systemd service to take in account the change
+* Restart the systemd service to activate the change
 
   ```sh
   $ sudo systemctl restart scb-backup
@@ -392,7 +392,7 @@ Follow this section if you want a remote backup. If you already set up a local b
   $ REMOTE_BACKUP_ENABLED=true
   ```
 
-* Restart the systemd service to take in account the change
+* Restart the systemd service to activate the change
 
   ```sh
   $ sudo systemctl restart scb-backup
