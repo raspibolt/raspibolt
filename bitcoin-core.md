@@ -107,6 +107,12 @@ This user does not have admin rights and cannot change the system configuration.
   $ sudo adduser admin bitcoin
   ```
 
+* Allow the user "bitcoin" to configure Tor directly by adding it to the "debian-tor" group
+
+  ```sh
+  $ sudo adduser bitcoin debian-tor
+  ```
+
 ### Create data folder
 
 Bitcoin Core uses by default the folder `.bitcoin` in the user's home.
@@ -238,7 +244,7 @@ Still logged in as user "bitcoin", let's start "bitcoind" manually.
 * Once everything looks ok, stop "bitcoind" with `Ctrl-C`
 
 * Grant the "bitcoin" group read-permission for the debug log file:
-  
+
   ```sh
   $ chmod g+r /data/bitcoin/debug.log
   ```
