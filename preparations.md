@@ -47,7 +47,7 @@ This also speeds up the initial sync time for the blockchain significantly.
 You might also want to get this optional hardware:
 
 * optional: Raspberry Pi case to protect your Pi and cool it down
-* optional: optional: a small USB thumbdrive or microSD card to create regular local backups of your Lightning channels
+* optional: a small USB thumbdrive or microSD card to create regular local backups of your Lightning channels
 
 ---
 
