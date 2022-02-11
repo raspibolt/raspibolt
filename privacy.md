@@ -124,6 +124,9 @@ A few examples:
 
 * **Windows**: configure PuTTY as described in this guide [Torifying PuTTY](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorifyHOWTO/Putty){:target="_blank"} by the Tor Project.
 
+  * **Note:** If you are using Putty and fail to connect to your pi by setting port 9050 in the Putty proxy settings, try setting port 9150 instead.
+  * Also make sure to run Tor in the background by installing and running the Tor browser.
+
 * **MacOS and Linux**: use `torify` or `torsocks`.
   Both work similarly; just use whatever you have available:
 
