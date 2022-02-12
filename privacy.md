@@ -78,12 +78,6 @@ We need to enable Tor to accept instructions through its control port, with the 
   $ sudo systemctl reload tor
   ```
 
-* Allow the user "bitcoin" to configure Tor directly
-
-  ```sh
-  $ sudo adduser bitcoin debian-tor
-  ```
-
 Not all network traffic is routed over the Tor network.
 But we now have the base to configure sensitive applications to use it.
 
