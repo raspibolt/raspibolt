@@ -36,7 +36,6 @@ You need the following hardware:
 * Raspberry Pi 4, with 4+ GB RAM
 * official Raspberry Pi power adapter: other adapters are a common cause for reliability issues
 * external storage: 1+ TB with USB3, an SSD is recommended
-* optional: Raspberry Pi case
 
 Whaaat? No microSD card? Yes, we'll boot the operating system directly to the external drive.
 
@@ -44,6 +43,11 @@ The complete Bitcoin blockchain must be stored locally to run a Lightning node, 
 You can buy a cheap hard disk enclosure and reuse an old hard disk.
 We recommend getting a modern 2.5" SSD that can be powered through the USB connection to the Pi directly.
 This also speeds up the initial sync time for the blockchain significantly.
+
+You might also want to get this optional hardware:
+
+* optional: Raspberry Pi case to protect your Pi and cool it down
+* optional: a small USB thumbdrive or microSD card to create regular local backups of your Lightning channels
 
 ---
 

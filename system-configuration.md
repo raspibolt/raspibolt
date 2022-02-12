@@ -24,17 +24,9 @@ Let's start with the configuration.
 
 ---
 
-## Add users
+## Add the admin user (and log in with it)
 
 We will use the primary user "admin" instead of "pi" to make this guide more universal.
-
-* Instruct your shell (the command line) to always use the default language settings.
-  This prevents annoying error messages
-
-  ```sh
-  $ echo "export LC_ALL=C" >> ~/.bashrc
-  $ source ~/.bashrc
-  ```
 
 * Create a new user called "admin" with your `password [A]`
 
@@ -47,20 +39,53 @@ We will use the primary user "admin" instead of "pi" to make this guide more uni
   ```sh
   $ sudo adduser admin sudo
   ```
+  
 
-The Bitcoin Core application will run in the background (as a "daemon") and use the separate user “bitcoin” for security reasons.
-This user does not have admin rights and cannot change the system configuration.
-
-* Create the user "bitcoin"
+* Exit your current "pi" user session and exit SSH
 
   ```sh
-  $ sudo adduser --gecos "" --disabled-password bitcoin
+  $ exit
   ```
 
-* Add the user "admin" to the group "bitcoin" as well
+* Create a new connection with the `admin` user
+
+* Log in again using SSH (see [Access with Secure Shell](remote-access.html#access-with-secure-shell) section), but now with the user "admin" and your `password [A]`
 
   ```sh
-  $ sudo adduser admin bitcoin
+  $ ssh admin@raspibolt.local
+  ```
+
+To change the system configuration and files that don't belong to user "admin", you have to prefix commands with `sudo`.
+You will be prompted to enter your admin password from time to time for increased security.
+
+---
+
+## System update
+
+It is important to keep the system up-to-date with security patches and application updates.
+The “Advanced Packaging Tool” (apt) makes this easy.
+
+* Instruct your shell to always use the default language settings.
+  This prevents annoying error messages.
+
+  ```sh
+  $ echo "export LC_ALL=C" >> ~/.bashrc
+  $ source ~/.bashrc
+  ```
+
+* Update the operating system and all installed software packages
+
+  ```sh
+  $ sudo apt update
+  $ sudo apt full-upgrade
+  ```
+
+  💡 Do this regularly every few months to get security-related updates.
+
+* Make sure that all necessary software packages are installed:
+
+  ```sh
+  $ sudo apt install wget curl gpg git --install-recommends
   ```
 
 ---
@@ -76,7 +101,6 @@ Let's check if your drive works well as-is, or if additional configuration is ne
 * Install the software to measure the performance of your drive
 
   ```sh
-  $ sudo apt update
   $ sudo apt install hdparm
   ```
 
@@ -102,62 +126,17 @@ Check the [Fix bad USB3 performance](troubleshooting.md#fix-bad-usb3-performance
 
 ---
 
-## System update
-
-Exit your current "pi" user session and exit SSH
-
-```sh
-$ exit
-```
-
-It is important to keep the system up-to-date with security patches and application updates.
-The “Advanced Packaging Tool” (apt) makes this easy.
-
-* Log in again using SSH, but now with the user "admin" and  your `password [A]`
-
-  ```sh
-  $ ssh admin@raspibolt.local
-  ```
-
-  To change the system configuration and files that don't belong to the "admin", you have to prefix commands with `sudo`.
-  You will be prompted to enter your admin password from time to time for increased security.
-
-* Instruct your shell to always use the default language settings.
-  This prevents annoying error messages.
-
-  ```sh
-  $ echo "export LC_ALL=C" >> ~/.bashrc
-  $ source ~/.bashrc
-  ```
-
-* Update the operating system and all installed software packages
-
-  ```sh
-  $ sudo apt update
-  $ sudo apt full-upgrade
-  ```
-
-  💡 Do this regularly every few months to get security-related updates.
-
-* Make sure that all necessary software packages are installed:
-
-  ```sh
-  $ sudo apt install wget curl gpg git htop jq qrencode --install-recommends
-  ```
-
----
-
 ## Data directory
 
 We'll store all application data in the dedicated directory `/data/`.
 This allows for better security because it's not inside any user's home directory.
 Additionally, it's easier to move that directory somewhere else, for instance to a separate drive, as you can just mount any storage option to `/data/`.
 
-* Create the directory and make user "bitcoin" its owner
+* Create the data directory
 
   ```sh
   $ sudo mkdir /data
-  $ sudo chown bitcoin:bitcoin /data
+  $ sudo chown admin:admin /data
   ```
 
 ---
