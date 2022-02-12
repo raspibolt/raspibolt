@@ -51,6 +51,13 @@ This guide explains how to reconstruct the Bitcoin white paper PDF using your ow
   $ mkdir bitcoin-white-paper
   $ cd bitcoin-white-paper
   ```
+  
+* Install `jq`, a JSON processor that will be used to parse the transaction data
+
+  ```sh
+  $ sudo apt update
+  $ sudo apt install jq --install-recommends
+  ```
 
 * Use `bitcoin-cli` to download and create the PDF
 

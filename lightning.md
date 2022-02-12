@@ -22,6 +22,7 @@ Check out [Understanding the Lightning Network](https://bitcoinmagazine.com/tech
 
 ---
 
-To enable the Lightning Network on your RaspiBolt, we install LND, the "Lightning Network Daemon".
-We'll then add "Ride The Lightning", a web-based node management tool.
+To enable the Lightning Network on your RaspiBolt, we install LND, the "Lightning Network Daemon". 
+We then set up an automatic Static Channel Backup to protect ourselves in case of failure of the SSD drive. 
+We'll then add "Ride The Lightning", a web-based node management tool. 
 Together, they make operating your node a breeze.
