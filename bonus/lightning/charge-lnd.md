@@ -52,8 +52,7 @@ Table of contents
 * if you need to install pip3
 
   ```sh
-  $ sudo apt-get install python3-pip
-  > [...]
+  $ sudo apt install python3-pip
   $ pip3 --version
   > pip 20.3.4 from /usr/lib/python3/dist-packages/pip (python 3.9)
   ```
