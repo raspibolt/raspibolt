@@ -32,9 +32,9 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.1-beta/lnd-linux-arm64-v0.14.1-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.1-beta/manifest-v0.14.1-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.1-beta/manifest-guggero-v0.14.1-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.2-beta/lnd-linux-arm64-v0.14.2-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.2-beta/manifest-v0.14.2-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.2-beta/manifest-guggero-v0.14.2-beta.sig
   ```
 
 * You should already have the public key from LND's developer [Oliver Gugger](https://github.com/guggero){:target="_blank"} from the Bitcoin Core installation.
@@ -50,7 +50,7 @@ We'll download, verify and install LND.
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-guggero-v0.14.1-beta.sig manifest-v0.14.1-beta.txt
+  $ gpg --verify manifest-guggero-v0.14.2-beta.sig manifest-v0.14.2-beta.txt
   > gpg: Signature made Wed Nov 24 22:15:46 2021 GMT
   > gpg:                using RSA key F4FC70F07310028424EFC20A8E4256593F177720
   > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
@@ -62,17 +62,17 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.14.1-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.14.1-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.14.2-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.14.2-beta.tar.gz: OK
   ```
 
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.14.1-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.1-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.14.2-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.2-beta/*
   $ lnd --version
-  > lnd version 0.14.1-beta commit=v0.14.1-beta
+  > lnd version 0.14.2-beta commit=v0.14.2-beta
   ```
 
 ### Data directory
@@ -97,14 +97,6 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   ```sh
   $ sudo mkdir /data/lnd
   $ sudo chown -R lnd:lnd /data/lnd
-  ```
-
-* Also create a separate directory for the channel backup.
-  Alternatively, you can [mount a USB thumbdrive to this location](https://linuxconfig.org/howto-mount-usb-drive-in-linux){:target="_blank"} for added redundancy.
-
-  ```sh
-  $ sudo mkdir /data/lnd-backup
-  $ sudo chown -R lnd:lnd /data/lnd-backup
   ```
 
 * Open a "lnd" user session
@@ -172,7 +164,6 @@ To improve the security of your wallet, check out these more advanced methods:
   debuglevel=info
   maxpendingchannels=5
   listen=localhost
-  backupfilepath=/data/lnd-backup/channel.backup
 
   # Password: automatically unlock wallet with the password in this file
   # -- comment out to manually unlock wallet, and see RaspiBolt guide for more secure options
@@ -230,7 +221,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.14.1-beta commit=v0.14.1-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.14.2-beta commit=v0.14.2-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
@@ -281,7 +272,7 @@ Once LND is started, the process waits for us to create the integrated Bitcoin w
   ...
   ```
 
-These 24 words (combined with your optional passphrase `password [D]`)  is all that you need to restore the Bitcoin on-chain wallet.
+These 24 words is all that you need to restore the Bitcoin on-chain wallet.
 The current state of your channels, however, cannot be recreated from this seed.
 For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
@@ -706,4 +697,4 @@ Upgrading LND can lead to a number of issues.
 
 ---
 
-Next: [Ride The Lightning >>](rtl.md)
+Next: [Static Channel Backup >>](static-channel-backup.md)
