@@ -17,16 +17,12 @@ has_toc: false
 
 ---
 
-## Resilience
-* **[Automatic Static Channel Backup (SCB) to Dropbox](static-backup-dropbox.md)** - (for RaspiBolt v1 & v2) have an updated SCB copy in case you brick your node and want to recover your funds onchain
-
----
-
 ## Dashboards & Wallets
 
 #### *CLI-only*
 * **[lntop](lntop.md)** - lntop is an interactive text-mode channels viewer for Unix systems
-* **[Additional scripts: show balance & channels](additional-scripts.md)** - additional bash scripts to display a balance overview as well as a nicely formatted channels overview
+* **[lnbalance](script-lnbalance.md)** -  a simple node balances viewer
+* **[lnchannels](script-lnchannels.md)** - a simple channels viewer
 
 #### *GUI - Desktop*
 * **[Zap](zap.md)** - a cross platform Lightning Network wallet focused on user experience and ease of use
