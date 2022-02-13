@@ -34,7 +34,7 @@ Table of contents
 
 ## Requirements
 
-* LND (or LND as part of Lightning Terminal/litd)
+* LND
 * Python
 
 ---
