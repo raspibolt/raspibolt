@@ -34,7 +34,7 @@ Table of contents
 
 ## Requirements
 
-* LND (or LND as part of Lightning Terminal/litd)
+* LND v0.11+
 * Go v1.13+
 
 ---
@@ -99,17 +99,10 @@ Calculate the SHA256 hash of the downloaded file, it should be the same number a
   $ sudo adduser circuitbreaker lnd
   ```
  
-* Log in as user "cicuitbreaker" and test the Go is accessible by this new user
+* With user "circuitbreaker", create a symbolic link to the `lnd` directory, in order for `circuitbreaker` to be allowed to interact with `lnd`
 
   ```sh
   $ sudo su - circuitbreaker
-  $ go version 
-  > go version go1.17.4 linux/arm64
-  ```
- 
-* Create a symbolic link to the `lnd` directory, in order for `circuitbreaker` to be allowed to interact with `lnd`
-
-  ```sh
   $ ln -s /data/lnd /home/circuitbreaker/.lnd
   ```
 
@@ -276,7 +269,6 @@ By default, Circuit Breaker reads its configuration file located at `~/.circuitb
 
   ```sh
   $ sudo systemctl enable circuitbreaker
-  > Created symlink /etc/systemd/system/multi-user.target.wants/circuitbreaker.service -> /etc/systemd/system/circuitbreaker.service.
   $ sudo systemctl start circuitbreaker
   $ systemctl status circuitbreaker
   > circuitbreaker.service - Circuit Breaker, a lightning firewall
