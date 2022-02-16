@@ -228,7 +228,7 @@ We set up the backup script as a systemd service to run in the background and st
 
 ## Option 1: Local backup
 
-Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](#(optional)-remote-backup).
+Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](https://raspibolt.org/static-channel-backup.html#(optional)-remote-backup).
 
 ### Storage device size
 
@@ -310,7 +310,7 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 
 ## Option 2: Remote backup preparations
 
-Follow this section if you want a remote backup. If you already set up a local backup, and don't want a remote backup, skip to the [next section](https://github.com/VajraOfIndra/RaspiBolt/edit/thumbrdive-scb-backup/static-channel-backup.md#test).
+Follow this section if you want a remote backup. If you already set up a local backup, and don't want a remote backup, skip to the [next section](https://raspibolt.org/static-channel-backup.html#test-1).
 
 ### Create a GitHub repository
 

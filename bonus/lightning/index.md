@@ -17,6 +17,11 @@ has_toc: false
 
 ---
 
+## Security
+* **[Circuit Breaker](circuit-breaker.md)** - a lightning firewall to protect your node against HTLC flooding attacks
+
+---
+
 ## Dashboards & Wallets
 
 #### *CLI-only*
