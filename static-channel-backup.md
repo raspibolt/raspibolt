@@ -129,10 +129,10 @@ We create a shell script to monitor `channel.backup` and make a copy to our back
   REMOTE_BACKUP_ENABLED=false
 
   # Locations of source SCB file, formatted backup files and Git repo
-  SOURCEFILE="/home/lnd/.lnd/data/chain/bitcoin/mainnet/channel.backup"
+  SOURCEFILE="~/.lnd/data/chain/bitcoin/mainnet/channel.backup"
   LOCAL_BACKUP_FILE="/mnt/static-channel-backup-external/channel-$(date +"%Y%m%d-%H%M%S").backup"
-  GITREPO="/data/lnd/remote-lnd-backup"
-  REMOTE_BACKUP_FILE="/data/lnd/remote-lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
+  GITREPO="~/.lnd/remote-lnd-backup"
+  REMOTE_BACKUP_FILE="~/.lnd/remote-lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
 
 
   # Local backup function
@@ -351,7 +351,7 @@ Follow this section if you want a remote backup. If you already set up a local b
   ```sh
   $ git config --global user.name "RaspiBolt"
   $ git config --global user.email "raspibolt@dummyemail.com"
-  $ cd /data/lnd
+  $ cd ~/.lnd
   $ git clone git@github.com:YourUserName/remote-lnd-backup.git
   > Cloning into 'remote-lnd-backup'...
   > [...]
