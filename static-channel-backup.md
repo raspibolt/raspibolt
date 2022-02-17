@@ -346,13 +346,14 @@ Follow this section if you want a remote backup. If you already set up a local b
   * Tick the box "Allow write access" to enable this key to push changes to the repository
   * Click "Add key"
 
-* Set up global Git configuration values (the name and email are required but can be dummy values). Then, clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes` and press "Enter".
+* Set up global Git configuration values (the name and email are required but can be dummy values). Then, move to the LND data folder and clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes` and press "Enter".
 
   ```sh
   $ git config --global user.name "RaspiBolt"
   $ git config --global user.email "raspibolt@dummyemail.com"
+  $ cd /data/lnd
   $ git clone git@github.com:YourUserName/remote-lnd-backup.git
-  > Cloning into 'lnd-backup'...
+  > Cloning into 'remote-lnd-backup'...
   > [...]
   ```
 
@@ -361,7 +362,7 @@ Follow this section if you want a remote backup. If you already set up a local b
 * Still with user "lnd", enter your local Git repository, create a dummy file and push it to your remote GitHub repository
 
   ```sh
-  $ cd /data/lnd/remote-lnd-backup
+  $ cd remote-lnd-backup
   $ touch test
   $ git add .
   $ git commit -m "testing"
