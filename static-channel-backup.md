@@ -228,7 +228,7 @@ We set up the backup script as a systemd service to run in the background and st
 
 ## Option 1: Local backup
 
-Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](https://raspibolt.org/static-channel-backup.html#(optional)-remote-backup).
+Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](https://raspibolt.org/static-channel-backup.html#option-2-remote-backup-preparations).
 
 ### Storage device size
 
