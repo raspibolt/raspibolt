@@ -76,7 +76,7 @@ lnconnect can generate a URI and create a QR code that can then be read by Zeus.
   $ lndconnect --host=abcdefg..............xyz.onion --port=8080
   ```
   
-* It will be a big QR code so maximize your terminal window and use CTRL - to shrink the code further to fit the screen
+* It will be a big QR code, so maximize your terminal window and use `CTRL`+`-` to shrink the code further to fit the screen
 
 * Keep the SSH session with the QR code opened, it will be needed later
 
