@@ -30,15 +30,17 @@ Table of contents
 
 ---
 
-## Install Zap Desktop on your computer
+## Install Zap Desktop
+
+We install Zap Desktop on a local computer.
 
 ### Download
 
 * In the Zap repository [releases page](https://github.com/LN-Zap/zap-desktop/releases){:target="_blank"}, select the latest release and download the following files:
-  * *For Linux:* the `.AppImage`, *e.g.* `Zap-linux-x86_64-v0.7.5-beta.AppImage`
-  * *For Windows:* the `.exe`, *e.g.* `Zap-linux-x86_64-v0.7.5-beta.AppImage`
-  * *For Mac:* the Mac `.zip`, *e.g.* `Zap-mac-v0.7.5-beta.zip`
-  * *For all:* the file containing the list of expected SHA256 checksums: *e.g.* `SHASUMS256.txt.asc`
+  * *For Windows:* the `.exe`, *e.g.* `Zap-win-v0.7.6-beta.exe`
+  * *For Mac:* the Mac `.dmg`, *e.g.* `Zap-mac-v0.7.6-beta.dmg`
+  * *For Linux:* the `.AppImage`, *e.g.* `Zap-linux-x86_64-v0.7.6-beta.AppImage`
+  * *For all:* the file containing the list of the expected SHA256 checksums: *e.g.* `SHASUMS256.txt.asc`
 
 ### Verify
 
@@ -46,11 +48,6 @@ Table of contents
 
 ### Install
 
-* *For Linux:* 
-   * Right-click on the AppImage and click the ‘Properties’ entry
-   * Switch to the ‘Permissions‘ tab
-   * Click the ‘Allow executing file as program’ checkbox (or for some OSes, the ‘Is executable’ checkbox or select ‘Anyone’ in the ‘Execute’ drop down list)
-   * Then double-clik on the AppImage file
 * *For Windows:* 
   * Double-click on the .exe file
 * *For Mac:* 
@@ -59,6 +56,11 @@ Table of contents
   * Drag-and-drop the ‘Zap.app‘ file to the ‘Applications‘ folder
   * Unmount the image and navigate to Applications folder
   * Double click on the ‘Zap.app‘ file
+* *For Linux:* 
+   * Right-click on the AppImage and click the ‘Properties’ entry
+   * Switch to the ‘Permissions‘ tab
+   * Click the ‘Allow executing file as program’ checkbox (or for some OSes, the ‘Is executable’ checkbox or select ‘Anyone’ in the ‘Execute’ drop down list)
+   * Then double-clik on the AppImage file
 
 ---
 
@@ -83,14 +85,8 @@ Table of contents
 * Backup and delete the existing `tls.cert` and `tls.key` files and restart LND to recreate them. 
 
   ```sh
-  $ sudo mv /home/lnd/.lnd/tls.cert /home/lnd/.lnd/tls.cert.bak
-  $ sudo mv /home/lnd/.lnd/tls.key /home/lnd/.lnd/tls.key.bak
-  ```
-  
-* Copy the new `tls.cert` to the user "admin".  
- 
-  ```sh
-  $ sudo cp /home/lnd/.lnd/tls.cert /home/admin/.lnd
+  $ sudo mv ~/.lnd/tls.cert ~/.lnd/tls.cert.bak
+  $ sudo mv ~/.lnd/tls.key ~/.lnd/tls.key.bak
   ```
 
 * Restart LND (if you did not set up the LND wallet auto-unlock, unlock the wallet with `lncli unlock`)  
@@ -110,11 +106,11 @@ Table of contents
 
 ---
 
-## Connect Zap Desktop to your node 
+## Local connection
 
 We will connect Zap to the RaspiBolt using a connection string that includes the connection and authentication information.
 
-### Install lndconnect on the node
+### Install lndconnect
 
 [lndconnect](https://github.com/LN-Zap/lndconnect){:target="_blank"}, created by Zap, is a utility that generates a QR Code or URI to connect applications to LND instances.
 
@@ -127,7 +123,7 @@ We will connect Zap to the RaspiBolt using a connection string that includes the
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lndconnect-linux-arm64-v0.2.0/lndconnect
   $ rm lndconnect-linux-arm64-v0.2.0.tar.gz
   $ rm -R lndconnect-linux-arm64-v0.2.0
-  $ cd ~/
+  $ cd
   ```
 
 * Generate the connection string (the -i option include the local IP; the -j option generates a string rather than a QR code)
@@ -137,23 +133,54 @@ We will connect Zap to the RaspiBolt using a connection string that includes the
   > lndconnect://...
   ```
 
-### Configure Zap: 
+### Connection
 
 * If Zap is not already launched, start Zap on your desktop
-
 * Choose the `Connect to your node` option
-
-![Zap welcome screen](images/71_zap_desktop1.png)
-
 * Paste the connection string generated above (starting with with `lndconnect://...`)
+* Add a wallet name for your owe use (e.g., "MyRaspiBoltNode")
+* Click "Next". In the new window, check that the dipslayed IP belongs to your node, then click "Next".
 
-* Confirm and connect
+### Security
 
-* Confirm the settings on the following screen and you are done!
+* Go to "File" > "Preferences" > "Security" and enable the application password
 
-![Zap Desktop wallet](images/71_zap_desktop4.png)
+You're set! You can now use Zap on your computer to send and receive LN payments, open and close channels and monitor your node.
 
-* Go to "File", "Preferences", "Security" and enable app password
+---
+
+## Optional: Remote access over Tor
+
+You can easily add a Tor hidden service on the RaspiBolt and use Zap outside your local network.
+
+* Add the following three lines in the section for “location-hidden services” in the `torrc` file. Save and exit.
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```ini
+  $ HiddenServiceDir /var/lib/tor/hidden_service_lnd_REST/
+  $ HiddenServiceVersion 3
+  $ HiddenServicePort 8080 127.0.0.1:8080
+  ```  
+
+* Reload Tor configuration and get your connection address.
+
+  ```sh 
+  $ sudo systemctl reload tor
+  $ sudo cat /var/lib/tor/hidden_service_lnd_REST/hostname
+  > abcdefg..............xyz.onion
+  ```
+
+* Generate the connection string after replacing `abcdefg..............xyz.onion` with your own `.onion`.
+
+  ```sh 
+  $ lndconnect --host=abcdefg..............xyz.onion --port=8080 --nocert -j
+  > lndconnect://...
+  ```
+
+* Connect Zap to the node following [the instructions above](https://github.com/VajraOfIndra/RaspiBolt/edit/zap-desktop-update/bonus/lightning/zap-desktop.md#connection).
 
 <br /><br />
 
