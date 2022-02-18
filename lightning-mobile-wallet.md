@@ -108,9 +108,9 @@ On iOS, download it from the Apple App Store.
 
 ---
 
-### Add a password
+### Security
 
-For added security, you can add a password.
+Anyone using Zeus on your phone has control over your node and all its funds. It is strongly recommended to set up a password for the app.
 
 * In the app, go to the settings and select 'Security' and set a passphrase (save your passphrase somewhere safe, e.g., your password manager).
 
