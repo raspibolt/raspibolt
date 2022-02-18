@@ -63,9 +63,7 @@ Zeus will access the node via Tor.
   $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.2.0/lndconnect-linux-arm64-v0.2.0.tar.gz
   $ tar -xvf lndconnect-linux-arm64-v0.2.0.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lndconnect-linux-arm64-v0.2.0/lndconnect
-  $ rm lndconnect-linux-arm64-v0.2.0.tar.gz
-  $ rm -R lndconnect-linux-arm64-v0.2.0
-  $ cd ~/
+  $ cd
   ```
 
 ### Create a lndconnect QR code
