@@ -68,7 +68,7 @@ Zeus will access the node via Tor.
 
 ### Create a lndconnect QR code
 
-lnconnect can generate a URI and create a QR code that can then be read by Zeus.
+lnconnect generates a URI and displays it as a QR code that Zeus can read.
 
 * Still with the "admin" user, use the following command. Make sure to replace the .onion address with the one you generated above.
 
