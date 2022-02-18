@@ -118,7 +118,7 @@ Anyone using Zeus on your phone has control over your node and all its funds. It
 
 ## Zeus in action
 
-Below is a list of Zeus existing (ticked) and coming soon (unticked) features:
+Below is a list of Zeus existing and planned features:
 
 ![Zeus](images/zeus-features.png)
 
