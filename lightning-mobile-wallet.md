@@ -96,7 +96,7 @@ On iOS, download it from the Apple App Store.
 
 * Open Zeus and click on 'Get started'
 
-* The screen proposes several settings, we'll come back to them later, for now select 'Connect a node' at the top, and then '+ Add a new node'
+* Select 'Connect a node' at the top, and then '+ Add a new node'
 
 * Click on 'Use Tor'
 
