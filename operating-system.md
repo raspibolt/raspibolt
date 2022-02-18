@@ -33,18 +33,17 @@ As a result, it should work smoothly with Raspberry Pis while still being compat
 
 ## Get Raspberry Pi OS
 
-We will use the "Rasberry Pi Imager" application to write the operating system to the external drive.
-Unfortunately, the 64-bit version of the Raspberry Pi OS is not integrated yet, so we need to download it manually.
+In order to write the operating system to the external drive, we will use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"} application v1.7+.
 
-* Download the latest [RasPi OS Lite (64-bit)](https://downloads.raspberrypi.org/raspios_lite_arm64/images/){:target="_blank"} disk image.
-  Simply get the ZIP file named similarly to `2021-10-30-raspios-bullseye-arm64-lite.zip`.
-  Its size should be around 400 MB.
-
-* Download and install the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"} for your regular operating system.
+* Start the Raspberry Pi Imager
+* Select "CHOOSE OS" > "Raspberry Pi OS (Other)" > "Raspberry Pi OS Lite (64-bit)" to have the relevant image flashed to your drive
 
 ## Configure boot options
 
-Start the Raspberry Pi Imager and open the "Advanced options" by pressing `Ctrl`+`Shift`+`X` simultaneously.
+Open the "Advanced options" by pressing the cogwheel that has appeared in the bottom right corner of the application window:
+
+![image](images/operating-system_imager-start.png)
+
 You can now pre-configure the operating system even before it's started for the first time.
 
 Configure the advanced options as follows:
@@ -72,8 +71,7 @@ Configure the advanced options as follows:
 ## Write the operating system to the external drive
 
 * Connect the external drive to your regular computer
-* Click on "CHOOSE OS" and select "Use custom"
-* Select the downloaded RasPi OS disk image file
+* Make sure that "Raspberry Pi OS Lite (64bit)" is selected
 * Click on "CHOOSE STORAGE"
 * Select your external drive
 * Click on "WRITE"
@@ -88,6 +86,26 @@ It should display a "Success" message after.
 * Connect it to your Pi
 * If you did not configure the Wifi settings: connect the Pi to your network with an ethernet cable
 * Start the Pi by connecting it to the power adapter using the USB-C cable
+
+## Does it boot?
+
+The 🔴 red LED on the Pi will indicate that the device is powered on.
+
+The 🟢 green LED should be flickering constantly after a few seconds, indicating activity.
+If the green LED is lit constantly, without flickering, your Pi is probably not yet configured to boot from USB.
+
+To enable booting from USB, follow these steps:
+
+1. Get your hands on a microSD card (all data will be deleted, but you only need it once)
+1. Using the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"}, write config bootloader to enable "USB Boot" to the microSD card
+  (select Misc utility images / Bootloader / USB Boot)
+1. Boot your Pi with this microSD card
+1. Once the green LED blinks constantly, you can disconnect the power
+1. Remove the microSD card and start your Pi again with the SSD connected
+
+This procedure is also explained in more detail in the helpful guide [How to Boot Raspberry Pi 4 From a USB SSD](https://www.tomshardware.com/how-to/boot-raspberry-pi-4-usb){:target="_blank"}.
+
+Your Raspberry Pi should now boot from the SSD attached via USB.
 
 ## Fallback: if you can't boot from your external drive
 

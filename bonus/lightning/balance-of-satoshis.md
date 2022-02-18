@@ -35,22 +35,22 @@ Table of contents
 ## Requirements
 
 * LND (or LND as part of Lightning Terminal/litd)
-* Node v12.0+
+* Node.js v12.20+
 
 ---
 
 ## Installation
 
-### Check NodeJS
+### Check Node.js
 
-* NojeJS v14.0 or above should have been installed for the BTC RPC Explorer. We can check our version of NodeJS with user "admin": 
+* Noje.js v16 should have been installed for the BTC RPC Explorer and RTL. We can check our version of Node.js with user "admin":
 
   ```sh
   $ node -v
-  > v14.18.2
+  > v16.13.2
   ```
 
-* If the version is v12.0 or above, you can move to the next section. If NodeJS is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
+* If the version is v12 or above, you can move to the next section. If Node.js is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
 
 ### Create the "bos" user and prepare the directory
 

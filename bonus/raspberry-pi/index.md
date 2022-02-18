@@ -17,6 +17,11 @@ has_toc: false
 
 ---
 
+## System administration
+* **[Aliases](aliases.md)** - set up CLI command shortcuts to simplify your node management experience
+
+---
+
 ## Security
 * **[Hardware-based (Trezor) SSH authentification](trezor-agent.md)** - a safer way to SSH to your device using your hardware wallet
 
