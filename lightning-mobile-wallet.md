@@ -100,11 +100,11 @@ On iOS, download it from the Apple App Store.
 
 * Click on 'Use Tor'
 
-* Click on 'Scan LNDConnect config' and when prompted, allow Zeus to take pictures
+* Click on 'Scan LNDConnect config' and allow Zeus to take pictures when prompted
 
 * Scan the QR code generated earlier
 
-* Click on 'Save settings', Zeus is now connecting to your node, it might take a while the first time.
+* Click on 'Save settings'. Zeus is now connecting to your node, and it might take a while the first time.
 
 ---
 
