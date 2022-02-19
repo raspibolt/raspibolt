@@ -2,7 +2,7 @@
 layout: default
 title: Web Dashboard
 nav_order: 10
-parent: Lightning
+parent: Node Management
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
 
