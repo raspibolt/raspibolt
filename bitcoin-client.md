@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Bitcoin Core
+title: Bitcoin client
 nav_order: 10
 parent: Bitcoin
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-# Bitcoin Core
+# Bitcoin client
 {: .no_toc }
 
 We install [Bitcoin Core](https://bitcoin.org/en/bitcoin-core/){:target="_blank"}, the reference client implementation of the Bitcoin network.
@@ -469,4 +469,4 @@ When upgrading, there might be breaking changes, or changes in the data structur
 
 ---
 
-Next: [Electrum >>](electrs.md)
+Next: [Electrum server >>](electrs.md)
