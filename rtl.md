@@ -304,3 +304,7 @@ Make sure to read the release notes first.
   ```
 
 <br /><br />
+
+---
+
+Next: [Node Management >>](node-management.md)
