@@ -96,7 +96,7 @@ We set up [Homer](https://github.com/bastienwirtz/homer#readme){:target="_blank"
   }
   ```
 
-*  Create a symlink in the sites-enabled directory
+* Create a symlink in the sites-enabled directory
 
   ```sh
   $ sudo ln -sf /etc/nginx/sites-available/homer-ssl.conf /etc/nginx/sites-enabled/
@@ -221,7 +221,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
 
 ### First start
 
-Test starting Homer manually first to make sure it works.
+* Test starting Homer manually first to make sure it works.
 
   ```sh
   $ sudo su - homer
@@ -233,7 +233,7 @@ Now point your browser to the secure access point provided by the nginx server, 
 
 Your browser will display a warning, because we use a self-signed SSL certificate. There’s nothing we can do about that, because we would need a proper domain name (e.g. https://yournode.com) to get an official certificate which browsers recognize. Click on “Advanced” and proceed to the Homer dashboard interface.
 
-If everything worked, stop Homer in the terminal with `Ctrl`+`C` and exit the "homer" user session.
+* If everything worked, stop Homer in the terminal with `Ctrl`+`C` and exit the "homer" user session.
 
   ```sh
   $ exit
