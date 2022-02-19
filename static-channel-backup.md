@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Static Channel Backup
+title: Static channel backup
 nav_order: 15
 parent: Lightning
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-# Lightning: Static Channel Backup
+# Static channel backup
 {: .no_toc }
 
 We set up a local or remote "Static Channel Backup" for Lightning. A monitoring script keeps it up-to-date to enable the recovery of your Lightning funds in case of hardware failure.
@@ -451,5 +451,5 @@ You're set! Each time you open a new channel or close an existing one, the monit
 
 ---
 
-Next: [Ride The Lightning >>](rtl.md)
+Next: [Web app >>](lightning-web-app.md)
 
