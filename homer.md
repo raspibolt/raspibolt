@@ -70,29 +70,29 @@ We set up [Homer](https://github.com/bastienwirtz/homer#readme){:target="_blank"
   $ sudo nano /etc/nginx/sites-available/homer-ssl.conf
   ```
 
-  ```sh
-  $ ## homer-ssl.conf
-  $
-  $
-  $ server {
-  $     listen 4091 ssl;
-  $     listen [::]:4091 ssl;
-  $     server_name _;
-  $ 
-  $     ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
-  $     ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
-  $     ssl_session_timeout 4h;
-  $     ssl_protocols TLSv1.3;
-  $     ssl_prefer_server_ciphers on;
-  $ 
-  $     access_log /var/log/nginx/access_homer.log;
-  $     error_log /var/log/nginx/error_homer.log;
-  $ 
-  $     root /var/www/homer;
-  $     index index.html;
-  $ 
-  $ 
-  $ }
+  ```ini
+  ## homer-ssl.conf
+  
+  
+  server {
+      listen 4091 ssl;
+      listen [::]:4091 ssl;
+      server_name _;
+  
+      ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+      ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+      ssl_session_timeout 4h;
+      ssl_protocols TLSv1.3;
+      ssl_prefer_server_ciphers on;
+
+      access_log /var/log/nginx/access_homer.log;
+      error_log /var/log/nginx/error_homer.log;
+ 
+      root /var/www/homer;
+      index index.html;
+  
+  
+  }
   ```
 
 *  Create a symlink in the sites-enabled directory
@@ -121,92 +121,92 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   ```
 
   ```ini
-  $ --
-  $ # Homepage configuration
-  $ 
-  $ title: "RaspiBolt Dashboard"
-  $ subtitle: "Homer"
-  $ logo: "logo.png"
-  $ 
-  $ header: true
-  $ footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
-  $ 
-  $ # Optional theme customization
-  $ theme: default
-  $ colors:
-  $   light:
-  $     highlight-primary: "#3367d6"
-  $     highlight-secondary: "#4285f4"
-  $     highlight-hover: "#5a95f5"
-  $     background: "#f5f5f5"
-  $     card-background: "#ffffff"
-  $     text: "#363636"
-  $     text-header: "#ffffff"
-  $     text-title: "#303030"
-  $     text-subtitle: "#424242"
-  $     card-shadow: rgba(0, 0, 0, 0.1)
-  $     link: "#3273dc"
-  $     link-hover: "#363636"
-  $   dark:
-  $   highlight-primary: "#3367d6"
-  $    highlight-secondary: "#4285f4"
-  $     highlight-hover: "#5a95f5"
-  $     background: "#131313"
-  $     card-background: "#2b2b2b"
-  $     text: "#eaeaea"
-  $     text-header: "#ffffff"
-  $     text-title: "#fafafa"
-  $     text-subtitle: "#f5f5f5"
-  $     card-shadow: rgba(0, 0, 0, 0.4)
-  $     link: "#3273dc"
-  $     link-hover: "#ffdd57"
-  $ 
-  $ # Optional message
-  $ message:
-  $   style: "is-dark"
-  $   title: "RaspiBolt"
-  $   icon: "fab fa-raspberry-pi"
-  $   content: "Bitcoin & Lightning Node"
-  $ 
-  $ # Optional navbar
-  $ # links: [] # Allows for navbar (dark mode, layout, and search) without any links
-  $ links:
-  $   - name: "Guide"
-  $     icon: "fas fa-book"
-  $     url: "https://www.raspibolt.org/"
-  $     target: "_blank"  
-  $   - name: "Community"
-  $     icon: "fab fa-telegram"
-  $     url: "https://t.me/raspibolt/"
-  $     target: "_blank"  
-  $   - name: "Contribute"
-  $     icon: "fab fa-github"
-  $     url: "https://github.com/raspibolt/raspibolt"
-  $     target: "_blank" # optional html a tag target attribute
-  $
-  $ # Services
-  $ # First level array represent a group.
-  $ # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will>
-  $ services:
-  $   - name: "Bitcoin"
-  $     icon: "fab fa-bitcoin"
-  $     items:
-  $       - name: "BTC RPC Explorer"
-  $         icon: "fab fa-wpexplorer"
-  $         subtitle: "Blockchain explorer"
-  $         tag: "app"
-  $         url: "https://192.168.0.171:4000/"
-  $         target: "_blank"
-  $   - name: "Lightning"
-  $     icon: "fas fa-bolt"
-  $     items:
-  $       - name: "Ride The Lightning"
-  $         icon: "fas fa-horse-head"
-  $         subtitle: "Web app"
-  $         tag: "app"
-  $         url: "https://192.168.0.171:4001/rtl/login"
-  $         target: "_blank"
-  $ 
+  --
+  # Homepage configuration
+  
+  title: "RaspiBolt Dashboard"
+  subtitle: "Homer"
+  logo: "logo.png"
+  
+  header: true
+  footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
+  
+  # Optional theme customization
+  theme: default
+  colors:
+    light:
+      highlight-primary: "#3367d6"
+      highlight-secondary: "#4285f4"
+      highlight-hover: "#5a95f5"
+      background: "#f5f5f5"
+      card-background: "#ffffff"
+      text: "#363636"
+      text-header: "#ffffff"
+      text-title: "#303030"
+      text-subtitle: "#424242"
+      card-shadow: rgba(0, 0, 0, 0.1)
+      link: "#3273dc"
+      link-hover: "#363636"
+    dark:
+    highlight-primary: "#3367d6"
+      highlight-secondary: "#4285f4"
+      highlight-hover: "#5a95f5"
+      background: "#131313"
+      card-background: "#2b2b2b"
+      text: "#eaeaea"
+      text-header: "#ffffff"
+      text-title: "#fafafa"
+      text-subtitle: "#f5f5f5"
+      card-shadow: rgba(0, 0, 0, 0.4)
+      link: "#3273dc"
+      link-hover: "#ffdd57"
+  
+  # Optional message
+  message:
+    style: "is-dark"
+    title: "RaspiBolt"
+    icon: "fab fa-raspberry-pi"
+    content: "Bitcoin & Lightning Node"
+  
+  # Optional navbar
+  # links: [] # Allows for navbar (dark mode, layout, and search) without any links
+  links:
+    - name: "Guide"
+      icon: "fas fa-book"
+      url: "https://www.raspibolt.org/"
+      target: "_blank"  
+    - name: "Community"
+      icon: "fab fa-telegram"
+      url: "https://t.me/raspibolt/"
+      target: "_blank"  
+    - name: "Contribute"
+      icon: "fab fa-github"
+      url: "https://github.com/raspibolt/raspibolt"
+      target: "_blank" # optional html a tag target attribute
+  
+  # Services
+  # First level array represent a group.
+  # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will>
+  services:
+    - name: "Bitcoin"
+      icon: "fab fa-bitcoin"
+      items:
+        - name: "BTC RPC Explorer"
+          icon: "fab fa-wpexplorer"
+          subtitle: "Blockchain explorer"
+          tag: "app"
+          url: "https://192.168.0.171:4000/"
+          target: "_blank"
+    - name: "Lightning"
+      icon: "fas fa-bolt"
+      items:
+        - name: "Ride The Lightning"
+          icon: "fas fa-horse-head"
+          subtitle: "Web app"
+          tag: "app"
+          url: "https://192.168.0.171:4001/rtl/login"
+          target: "_blank"
+  
   ```
   
 🔍 * If you want to tweak the dashboard to your own tatse, check the full configuration guidelines on the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}.
@@ -249,22 +249,22 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
   ```
 
   ```ini
-  $ # RaspiBolt: systemd unit for Homer
-  $ # /etc/systemd/system/homer.service
-  $ 
-  $ [Unit]
-  $ Description=Homer
-  $ After=lnd.service
-  $ 
-  $ [Service]
-  $ WorkingDirectory=/home/homer/homer
-  $ ExecStart=/usr/bin/npm run serve
-  $ User=homer
-  $ 
-  $ Restart=always
-  $ RestartSec=30
-  $ 
-  $ [Install]
-  $ WantedBy=multi-user.target
+  # RaspiBolt: systemd unit for Homer
+  # /etc/systemd/system/homer.service
+  
+  [Unit]
+  Description=Homer
+  After=lnd.service
+  
+  [Service]
+  WorkingDirectory=/home/homer/homer
+  ExecStart=/usr/bin/npm run serve
+  User=homer
+  
+  Restart=always
+  RestartSec=30
+  
+  [Install]
+  WantedBy=multi-user.target
   ```
 
