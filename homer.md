@@ -5,6 +5,7 @@ nav_order: 10
 parent: Lightning
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
+
 # Web Dashboard
 {: .no_toc }
 
@@ -268,3 +269,57 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
   WantedBy=multi-user.target
   ```
 
+* Enable the service, start it and check log logging output.
+
+  ```sh
+  $ sudo systemctl enable homer
+  $ sudo systemctl start homer
+  $ sudo journalctl -f -u homer
+  ```
+
+---
+
+## For the future: Homer upgrade
+
+Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:target="_blank"} is straight-forward. Make sure to read the release notes first.
+
+* From user “admin”, stop the service and open a "homer" user session.
+
+  ```sh
+  $ sudo systemctl stop homer
+  $ sudo su - homer
+  ```
+
+* Fetch the latest GitHub repository information (v9.99.9 in this example), and update:
+
+  ```sh
+  $ cd homer
+  $ git fetch
+  $ git describe --tags --abbrev=0
+  $ git checkout v9.99.9
+  $ npm install
+  $ npm run build
+  $ exit
+  ```
+  
+* With the "admin" user, copy over the updated distributable output and re-create the symlink to the configuration file
+
+  ```sh
+  $ sudo rsync -av --delete /home/homer/homer/dist/ /var/www/homer/
+  $ sudo chown -R www-data:www-data /var/www/homer
+  $ sudo ln -s /data/homer/config.yml /var/www/homer/assets/config.yml
+  $ sudo chown www-data:www-data /var/www/homer/assets/config.yml
+  ```
+
+* Start the service again.
+
+  ```sh
+  $ sudo systemctl start homer
+  $ sudo journalctl -f -u homer
+  ```
+
+<br /><br />
+
+---
+
+Next: [Bonus Section >>](bonus/index.md)
