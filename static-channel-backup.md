@@ -129,10 +129,10 @@ We create a shell script to monitor `channel.backup` and make a copy to our back
   REMOTE_BACKUP_ENABLED=false
 
   # Locations of source SCB file, formatted backup files and Git repo
-  SOURCEFILE="/home/lnd/.lnd/data/chain/bitcoin/mainnet/channel.backup"
+  SOURCEFILE="~/.lnd/data/chain/bitcoin/mainnet/channel.backup"
   LOCAL_BACKUP_FILE="/mnt/static-channel-backup-external/channel-$(date +"%Y%m%d-%H%M%S").backup"
-  GITREPO="/data/lnd/remote-lnd-backup"
-  REMOTE_BACKUP_FILE="/data/lnd/remote-lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
+  GITREPO="~/.lnd/remote-lnd-backup"
+  REMOTE_BACKUP_FILE="~/.lnd/remote-lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
 
 
   # Local backup function
@@ -228,7 +228,7 @@ We set up the backup script as a systemd service to run in the background and st
 
 ## Option 1: Local backup
 
-Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](#(optional)-remote-backup).
+Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](https://raspibolt.org/static-channel-backup.html#option-2-remote-backup-preparations).
 
 ### Storage device size
 
@@ -310,7 +310,7 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 
 ## Option 2: Remote backup preparations
 
-Follow this section if you want a remote backup. If you already set up a local backup, and don't want a remote backup, skip to the [next section](https://github.com/VajraOfIndra/RaspiBolt/edit/thumbrdive-scb-backup/static-channel-backup.md#test).
+Follow this section if you want a remote backup. If you already set up a local backup, and don't want a remote backup, skip to the [next section](https://raspibolt.org/static-channel-backup.html#test-1).
 
 ### Create a GitHub repository
 
@@ -346,13 +346,14 @@ Follow this section if you want a remote backup. If you already set up a local b
   * Tick the box "Allow write access" to enable this key to push changes to the repository
   * Click "Add key"
 
-* Set up global Git configuration values (the name and email are required but can be dummy values). Then, clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes` and press "Enter".
+* Set up global Git configuration values (the name and email are required but can be dummy values). Then, move to the LND data folder and clone your newly created empty repository. Replace `YourUserName` with your own GitHub username. When prompted "Are you sure you want to continue connecting", type `yes` and press "Enter".
 
   ```sh
   $ git config --global user.name "RaspiBolt"
   $ git config --global user.email "raspibolt@dummyemail.com"
+  $ cd ~/.lnd
   $ git clone git@github.com:YourUserName/remote-lnd-backup.git
-  > Cloning into 'lnd-backup'...
+  > Cloning into 'remote-lnd-backup'...
   > [...]
   ```
 
@@ -361,7 +362,7 @@ Follow this section if you want a remote backup. If you already set up a local b
 * Still with user "lnd", enter your local Git repository, create a dummy file and push it to your remote GitHub repository
 
   ```sh
-  $ cd /data/lnd/remote-lnd-backup
+  $ cd remote-lnd-backup
   $ touch test
   $ git add .
   $ git commit -m "testing"
