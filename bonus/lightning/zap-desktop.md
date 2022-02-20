@@ -34,7 +34,7 @@ Table of contents
 
 ### Update LND TLS certificate
 
-We allow connections to Bitcoin Core from the local area network.
+We allow connections to LND gRPC from the local area network.
 
 * Open the LND configuration file
 
@@ -101,23 +101,23 @@ Download and install Zap for your operating system following [this guide from Za
 
 ### Connection
 
-* If Zap is not already launched, start Zap on your desktop
+* Launch Zap
 * Choose the `Connect to your node` option
 * Paste the connection string generated above (starting with with `lndconnect://...`)
-* Add a wallet name for your owe use (e.g., "MyRaspiBoltNode")
-* Click "Next". In the new window, check that the dipslayed IP belongs to your node, then click "Next".
+* Add a wallet name (e.g., "MyRaspiBoltNode")
+* Click "Next". In the new window, check that the displayed IP belongs to your node, then click "Next".
 
 ### Security
 
 * Go to "File" > "Preferences" > "Security" and enable the application password
 
-You're set! You can now use Zap on your computer to send and receive LN payments, open and close channels and monitor your node.
+You're set! You can now use Zap on your computer to send and receive LN payments, open and close channels, and monitor your node.
 
 ---
 
 ## Optional: Remote access over Tor
 
-You can easily add a Tor hidden service on the RaspiBolt and use Zap outside your local network.
+You can add a Tor hidden service on the RaspiBolt and use Zap outside your local network.
 
 * Add the following three lines in the section for “location-hidden services” in the `torrc` file. Save and exit.
 
@@ -131,7 +131,7 @@ You can easily add a Tor hidden service on the RaspiBolt and use Zap outside you
   $ HiddenServicePort 8080 127.0.0.1:8080
   ```  
 
-* Reload Tor configuration and get your connection address.
+* Reload Tor configuration and get your connection address
 
   ```sh 
   $ sudo systemctl reload tor
@@ -139,14 +139,60 @@ You can easily add a Tor hidden service on the RaspiBolt and use Zap outside you
   > abcdefg..............xyz.onion
   ```
 
-* Generate the connection string after replacing `abcdefg..............xyz.onion` with your own `.onion`.
+* Generate the connection string after replacing `abcdefg..............xyz.onion` with your own Tor hidden service address generated just above
 
   ```sh 
   $ lndconnect --host=abcdefg..............xyz.onion --port=8080 --nocert -j
-  > lndconnect://...
+  > lndconnect:// abcdefg..............xyz.onion:10009?cert=...
   ```
 
-* Connect Zap to the node following [the instructions above](https://github.com/VajraOfIndra/RaspiBolt/edit/zap-desktop-update/bonus/lightning/zap-desktop.md#connection).
+* Connect Zap to the node following [the instructions above](https://github.com/VajraOfIndra/RaspiBolt/edit/zap-desktop-update/bonus/lightning/zap-desktop.md#connection) but this time using the lndconnect address created just above with the Tor hidden service address.
+
+---
+
+## Update
+
+Zap download and install updates automatically by default. If you want to disable the auto-update and update Zap manually: Go to "File" > "Preferences" > "General", and click on the autoupdate slider and "Save".
+
+---
+
+## Uninstall
+
+If you stop using Zap, it is safer to restrict access to LND gRPC. But make sure that no other program require access to it (e.g., if you've installed Lightning Terminal with a remote connection to LND)
+
+* Open the LND configuration file and comment out the following two lines:
+
+  ```sh
+  $ sudo nano ~/.lnd/lnd.conf
+  ```
+  
+  ```ini
+  #tlsextraip=192.168.0.0/16
+  #rpclisten=0.0.0.0:10009
+  ```
+
+* Backup and delete the existing `tls.cert` and `tls.key` files and restart LND to recreate them. 
+
+  ```sh
+  $ sudo mv ~/.lnd/tls.cert ~/.lnd/tls.cert.bak
+  $ sudo mv ~/.lnd/tls.key ~/.lnd/tls.key.bak
+  $ sudo systemctl restart lnd
+  ```
+
+* Display the firewall status and note the number of LND grpc rule (e.g. below, X)
+  
+  ```sh
+  $ sudo ufw status numbered
+  > [...]
+  > [ X] 10009                      ALLOW IN    192.168.0.0/16             # allow LND grpc from local LAN
+  > [...]
+  ```
+
+* Delete the rule. When prompted, check that you are deleting the desired rule and confirm.
+
+  ```sh
+  $ sudo ufw delete X
+  ```
 
 <br /><br />
 
