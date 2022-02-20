@@ -30,51 +30,19 @@ Table of contents
 
 ---
 
-## Install Zap Desktop
-
-We install Zap Desktop on a local computer.
-
-### Download
-
-* In the Zap repository [releases page](https://github.com/LN-Zap/zap-desktop/releases){:target="_blank"}, select the latest release and download the following files:
-  * *For Windows:* the `.exe`, *e.g.* `Zap-win-v0.7.6-beta.exe`
-  * *For Mac:* the Mac `.dmg`, *e.g.* `Zap-mac-v0.7.6-beta.dmg`
-  * *For Linux:* the `.AppImage`, *e.g.* `Zap-linux-x86_64-v0.7.6-beta.AppImage`
-  * *For all:* the file containing the list of the expected SHA256 checksums: *e.g.* `SHASUMS256.txt.asc`
-
-### Verify
-
-* Follow the [instructions provided by Zap](https://github.com/LN-Zap/zap-desktop/blob/master/docs/SIGNATURES.md){:target="_blank"}
-
-### Install
-
-* *For Windows:* 
-  * Double-click on the .exe file
-* *For Mac:* 
-  * Double-click to unzip the file
-  * Navigate to the newly unzipped folder
-  * Drag-and-drop the ‘Zap.app‘ file to the ‘Applications‘ folder
-  * Unmount the image and navigate to Applications folder
-  * Double click on the ‘Zap.app‘ file
-* *For Linux:* 
-   * Right-click on the AppImage and click the ‘Properties’ entry
-   * Switch to the ‘Permissions‘ tab
-   * Click the ‘Allow executing file as program’ checkbox (or for some OSes, the ‘Is executable’ checkbox or select ‘Anyone’ in the ‘Execute’ drop down list)
-   * Then double-clik on the AppImage file
-
----
-
-## Preparation on the Pi
+## Preparations
 
 ### Update LND TLS certificate
 
-* Allow connections to the RaspiBolt from your own local network (the netmask `/16` restricts access to all computers with an IP address of 192.168.*.*).  
+We allow connections to Bitcoin Core from the local area network.
+
+* Open the LND configuration file
 
   ```sh
-  $ sudo nano /home/lnd/.lnd/lnd.conf
+  $ sudo nano ~/.lnd/lnd.conf
   ```
 
-* Add the following lines to the section `[Application Options]`:  
+* Add the following lines to the section `[Application Options]`. The netmask `/16` restricts access to all computers with an IP address of 192.168.*.* (i.e., the local network).
   
   ```ini
   # Add local network IP address to LND's TLS certificate
@@ -87,51 +55,49 @@ We install Zap Desktop on a local computer.
   ```sh
   $ sudo mv ~/.lnd/tls.cert ~/.lnd/tls.cert.bak
   $ sudo mv ~/.lnd/tls.key ~/.lnd/tls.key.bak
-  ```
-
-* Restart LND (if you did not set up the LND wallet auto-unlock, unlock the wallet with `lncli unlock`)  
-  
-  ```sh
   $ sudo systemctl restart lnd
   ```
 
 ### Firewall
 
-* Configure firewall to allow incoming requests from local network only  
+* Configure the UFW firewall to allow incoming requests from local network only  
   
   ```sh
   $ sudo ufw allow from 192.168.0.0/16 to any port 10009 comment 'allow LND grpc from local LAN'
   $ sudo ufw status
   ```
 
----
-
-## Local connection
-
-We will connect Zap to the RaspiBolt using a connection string that includes the connection and authentication information.
-
 ### Install lndconnect
 
+We will connect Zap to the RaspiBolt using a connection string that includes the connection and authentication information. 
 [lndconnect](https://github.com/LN-Zap/lndconnect){:target="_blank"}, created by Zap, is a utility that generates a QR Code or URI to connect applications to LND instances.
 
-* With the "admin" user, download the binary and install it
+* Still with the "admin" user, download the binary and install it
 
   ```sh
   $ cd /tmp
   $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.2.0/lndconnect-linux-arm64-v0.2.0.tar.gz
   $ tar -xvf lndconnect-linux-arm64-v0.2.0.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lndconnect-linux-arm64-v0.2.0/lndconnect
-  $ rm lndconnect-linux-arm64-v0.2.0.tar.gz
-  $ rm -R lndconnect-linux-arm64-v0.2.0
   $ cd
   ```
 
-* Generate the connection string (the -i option include the local IP; the -j option generates a string rather than a QR code)
+* Generate the connection string (the `-i` option include the local IP; the `-j` option generates a string rather than the default QR code)
   
   ```sh
   $ lndconnect -i -j
-  > lndconnect://...
+  > lndconnect://192.168.0.171:10009?cert=...
   ```
+
+---
+
+## Zap
+
+Now that we configured the node, we can install Zap on the local computer and connect it to our node.
+
+### Installation
+
+Download and install Zap for your operating system following [this guide from Zap](https://github.com/LN-Zap/zap-desktop#install){:target="_blank"}. Before installing Zap, you can verify the release following [this guide](https://github.com/LN-Zap/zap-desktop/blob/master/docs/SIGNATURES.md){:target="_blank"}.
 
 ### Connection
 
