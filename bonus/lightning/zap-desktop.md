@@ -115,41 +115,6 @@ You're set! You can now use Zap on your computer to send and receive LN payments
 
 ---
 
-## Optional: Remote access over Tor
-
-You can add a Tor hidden service on the RaspiBolt and use Zap outside your local network.
-
-* Add the following three lines in the section for “location-hidden services” in the `torrc` file. Save and exit.
-
-  ```sh
-  $ sudo nano /etc/tor/torrc
-  ```
-
-  ```ini
-  $ HiddenServiceDir /var/lib/tor/hidden_service_lnd_REST/
-  $ HiddenServiceVersion 3
-  $ HiddenServicePort 8080 127.0.0.1:8080
-  ```  
-
-* Reload Tor configuration and get your connection address
-
-  ```sh 
-  $ sudo systemctl reload tor
-  $ sudo cat /var/lib/tor/hidden_service_lnd_REST/hostname
-  > abcdefg..............xyz.onion
-  ```
-
-* Generate the connection string after replacing `abcdefg..............xyz.onion` with your own Tor hidden service address generated just above
-
-  ```sh 
-  $ lndconnect --host=abcdefg..............xyz.onion --port=8080 --nocert -j
-  > lndconnect:// abcdefg..............xyz.onion:8080?cert=...
-  ```
-
-* Connect Zap to the node following [the instructions above](https://github.com/VajraOfIndra/RaspiBolt/edit/zap-desktop-update/bonus/lightning/zap-desktop.md#connection) but this time using the lndconnect address created just above with the Tor hidden service address.
-
----
-
 ## Update
 
 Zap download and install updates automatically by default. If you want to disable the auto-update and update Zap manually: 
