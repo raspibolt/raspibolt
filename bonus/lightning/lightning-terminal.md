@@ -44,6 +44,19 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 
 ---
 
+## Preparations
+
+### Firewall
+
+* Configure the UFW firewall to allow incoming HTTPS requests:
+
+  ```sh
+  $ sudo ufw allow 8443/tcp comment 'allow Lightning Terminal SSL'
+  $ sudo ufw status
+  ```
+
+---
+
 ## Installation
 
 ### Download, verify and install
@@ -52,10 +65,10 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.1-alpha/lightning-terminal-linux-arm64-v0.6.1-alpha.tar.gz
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.1-alpha/manifest-v0.6.1-alpha.txt
-  $ sha256sum --check manifest-v0.6.1-alpha.txt --ignore-missing
-  > lightning-terminal-linux-arm64-v0.6.1-alpha.tar.gz: OK
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.4-alpha/lightning-terminal-linux-arm64-v0.6.4-alpha.tar.gz
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.4-alpha/manifest-v0.6.4-alpha.txt
+  $ sha256sum --check manifest-v0.6.4-alpha.txt --ignore-missing
+  > lightning-terminal-linux-arm64-v0.6.4-alpha.tar.gz: OK
   ```
 
 * Import the project's lead maintainer (Oliver Gugger) PGP key from Keybase 
@@ -70,8 +83,8 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 * Using the key, verify the authenticity of the checksums file
   
   ```sh
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.1-alpha/manifest-v0.6.1-alpha.sig
-  $ gpg --verify manifest-v0.6.1-alpha.sig manifest-v0.6.1-alpha.txt
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.4-alpha/manifest-v0.6.4-alpha.sig
+  $ gpg --verify manifest-v0.6.4-alpha.sig manifest-v0.6.4-alpha.txt
   > [...]
   > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
   > [...]
@@ -80,10 +93,10 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 * Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
 
   ```sh
-  $ tar -xzf lightning-terminal-linux-arm64-v0.6.1-alpha.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.6.1-alpha/*
+  $ tar -xzf lightning-terminal-linux-arm64-v0.6.4-alpha.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.6.4-alpha/*
   $ litd --lnd.version
-  > litd version 0.14.1-beta commit=lightning-terminal-v0.6.1-alpha
+  > litd version 0.14.2-beta commit=lightning-terminal-v0.6.4-alpha
   ```
 
 ### User and data directories
@@ -170,8 +183,8 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
   # Remote lnd options
   remote.lnd.rpcserver=127.0.0.1:10009
-  remote.lnd.macaroonpath=/home/lit/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
-  remote.lnd.tlscertpath=/home/lit/.lnd/tls.cert
+  remote.lnd.macaroonpath=~/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
+  remote.lnd.tlscertpath=~/.lnd/tls.cert
   
   #################
   #     Loop      #
@@ -186,7 +199,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   # This option avoids the creation of channels with nodes with whom you already have a channel (set to 0 if you don't mind)
   pool.newnodesonly=1
   # Path to Pool's own macaroon
-  pool.macaroonpath=/home/lit/.pool/mainnet/pool.macaroon
+  pool.macaroonpath=~/.pool/mainnet/pool.macaroon
     
   ##################
   #     Faraday    #
@@ -197,7 +210,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   # The minimum amount of time that a channel must be monitored for before recommending termination
   faraday.min_monitored=72h
   # Path to Faraday's own macaroon
-  faraday.macaroonpath=/home/lit/.faraday/mainnet/faraday.macaroon
+  faraday.macaroonpath=~/.faraday/mainnet/faraday.macaroon
     
   ###################
   # Faraday-Bitcoin #
@@ -213,36 +226,11 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 🔍 *Notice that the options for Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
 
-### Aliases
-
-For now, softwares packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them, using flags (e.g., `pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list`, do not try it now as Lightning Terminal is not running yet!).  
-
-Rather than always typing the flags, we can create aliases for the "admin" user.
-
-* Still with user "admin", create an alias file and paste the following line. Save and exit.
+* Exit the "lit" user session
 
   ```sh
-  $ cd ~/
-  $ nano .bash_aliases
+  $ exit
   ```
-
-  ```ini
-  ######################
-  # Lightning Terminal #
-  ######################
-  
-  alias litfaraday="frcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
-  alias litloop="loop --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
-  alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert" 
-  ```
-
-* Activate the aliases
-
-  ```sh
-  $ source .bashrc
-  ```
-
-* To use Loop, Pool or Faraday from the CLI, use the alias followed by the desired command (e.g., `litpool accounts list`, much simpler!)
 
 ---
 
@@ -344,6 +332,37 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
   ```sh
   $ sudo journalctl -f -u litd
   ```
+
+### Aliases
+
+For now, softwares packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them, using flags (e.g., `pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list`, do not try it now as Lightning Terminal is not running yet!).  
+
+Rather than always typing the flags, we can create aliases for the "admin" user.
+
+* With user "admin", create an alias file and paste the following line. Save and exit.
+
+  ```sh
+  $ cd
+  $ nano .bash_aliases
+  ```
+
+  ```ini
+  ######################
+  # Lightning Terminal #
+  ######################
+  
+  alias litfaraday="frcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  alias litloop="loop --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert" 
+  ```
+
+* Activate the aliases
+
+  ```sh
+  $ source .bashrc
+  ```
+
+* To use Loop, Pool or Faraday from the CLI, use the alias followed by the desired command (e.g., `litpool accounts list`, much simpler!)### Aliases
 
 ### Settings
 
