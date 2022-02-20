@@ -86,7 +86,7 @@ We will connect Zap to the RaspiBolt using a connection string that includes the
   
   ```sh
   $ lndconnect -i -j
-  > lndconnect://192.168.0.171:10009?cert=...
+  > lndconnect://192.168.0.20:10009?cert=...
   ```
 
 ---
