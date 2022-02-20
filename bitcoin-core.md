@@ -90,22 +90,45 @@ This is a precaution to make sure that this is an official release and not a mal
 🔍 *Verifying signed software is important, not only for Bitcoin.
 You can read more on [How to securely install Bitcoin](https://medium.com/@lukedashjr/how-to-securely-install-bitcoin-9bfeca7d3b2a){:target="_blank"} by Luke-Jr.*
 
+### Create the bitcoin user
+
+The Bitcoin Core application will run in the background as a daemon and use the separate user “bitcoin” for security reasons.
+This user does not have admin rights and cannot change the system configuration.
+
+* Create the user bitcoin
+
+  ```sh
+  $ sudo adduser --gecos "" --disabled-password bitcoin
+  ```
+
+* Add the user "admin" to the group "bitcoin" as well
+
+  ```sh
+  $ sudo adduser admin bitcoin
+  ```
+
+* Allow the user "bitcoin" to configure Tor directly by adding it to the "debian-tor" group
+
+  ```sh
+  $ sudo adduser bitcoin debian-tor
+  ```
 
 ### Create data folder
 
 Bitcoin Core uses by default the folder `.bitcoin` in the user's home.
 Instead of creating this directory, we create a data directory in the general data location `/data` and link to it.
 
-* Switch to user "bitcoin"
-
-  ```sh
-  $ sudo su - bitcoin
-  ```
-
 * Create the Bitcoin data folder
 
   ```sh
   $ mkdir /data/bitcoin
+  $ sudo chown bitcoin:bitcoin /data/bitcoin
+  ```
+
+* Switch to user "bitcoin"
+
+  ```sh
+  $ sudo su - bitcoin
   ```
 
 * Create the symbolic link `.bitcoin` that points to that directory
@@ -220,6 +243,12 @@ Still logged in as user "bitcoin", let's start "bitcoind" manually.
 
 * Once everything looks ok, stop "bitcoind" with `Ctrl-C`
 
+* Grant the "bitcoin" group read-permission for the debug log file:
+
+  ```sh
+  $ chmod g+r /data/bitcoin/debug.log
+  ```
+
 * Exit the “bitcoin” user session back to user “admin”
 
   ```sh
@@ -326,7 +355,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   Exit with `Ctrl-C`
 
   ```sh
-  $ systemctl status bitcoind.service
+  $ sudo systemctl status bitcoind.service
   > * bitcoind.service - Bitcoin daemon
   >      Loaded: loaded (/etc/systemd/system/bitcoind.service; enabled; vendor preset: enabled)
   >      Active: active (running) since Thu 2021-11-25 22:50:59 GMT; 7s ago

@@ -24,22 +24,21 @@ We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL#readme
 
 ## Preparations
 
-### Install NodeJS
+### Install Node.js
 
-Starting with user “admin”, we switch to user “root” and add the Node JS package repository.
-We’ll use version 14 which is well-tested with all web applications used in this guide.
-If you installed BTC RPC Explorer, then you've already accomplisehd this step.
-When finished, exit the “root” user session.
+Starting with user “admin”, we add the Node.js package repository.
+We’ll use version 16 which is the latest stable version.
+If you installed BTC RPC Explorer, then you've already accomplished this step.
 
-* Add the NodeJS software repository
+* Add the Node.js software repository
 
   ```sh
-  $ curl -sL https://deb.nodesource.com/setup_14.x | bash -E -
+  $ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
   ```
 
-* Install NodeJS using the apt package manager
+* Install Node.js using the apt package manager
   ```
-  $ sudo apt-get install nodejs
+  $ sudo apt install nodejs
   ```
 
 ### Firewall & reverse proxy
@@ -150,7 +149,7 @@ Now we take the sample configuration file and add change it to our needs.
 * Copy the sample config file, and open it in the text editor.
 
   ```sh
-  cp docs/Sample-RTL-Config.json ./RTL-Config.json
+  cp Sample-RTL-Config.json ./RTL-Config.json
   nano RTL-Config.json
   ```
 
