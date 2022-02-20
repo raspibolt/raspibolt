@@ -486,7 +486,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
   $ lncli connect 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f@34.239.230.56:9735
   ```
 
-* **Open a channel** using the `<pubkey>` and the channel capacity in satoshis.
+* **Open a channel** using the `<pubkey>` only (*i.e.*, the part of the URI before the `@`) and the channel capacity in satoshis.
 
   [`openchannel`](https://api.lightning.community/#openchannel){:target="_blank"}
 
