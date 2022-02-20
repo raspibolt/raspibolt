@@ -143,7 +143,7 @@ You can add a Tor hidden service on the RaspiBolt and use Zap outside your local
 
   ```sh 
   $ lndconnect --host=abcdefg..............xyz.onion --port=8080 --nocert -j
-  > lndconnect:// abcdefg..............xyz.onion:10009?cert=...
+  > lndconnect:// abcdefg..............xyz.onion:8080?cert=...
   ```
 
 * Connect Zap to the node following [the instructions above](https://github.com/VajraOfIndra/RaspiBolt/edit/zap-desktop-update/bonus/lightning/zap-desktop.md#connection) but this time using the lndconnect address created just above with the Tor hidden service address.
