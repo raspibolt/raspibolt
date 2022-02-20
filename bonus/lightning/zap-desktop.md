@@ -152,7 +152,10 @@ You can add a Tor hidden service on the RaspiBolt and use Zap outside your local
 
 ## Update
 
-Zap download and install updates automatically by default. If you want to disable the auto-update and update Zap manually: Go to "File" > "Preferences" > "General", and click on the autoupdate slider and "Save".
+Zap download and install updates automatically by default. If you want to disable the auto-update and update Zap manually: 
+* Go to "File" > "Preferences" > "General"
+* Click on the autoupdate slider
+* Click "Save"
 
 ---
 
