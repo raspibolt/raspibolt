@@ -87,7 +87,7 @@ Once you set up your new RaspiBolt 3, restore your old LND node setup.
   $ lsblk -pli
   $ sudo mount /dev/sdb1 /mnt/thumbdrive/
   $ sudo rsync -rhvPog --append-verify /mnt/thumbdrive/lnd /data
-  $ sudo chown -r lnd:lnd /data/lnd
+  $ sudo chown -R lnd:lnd /data/lnd
   ```
 
 ### Backup & Restore Bitcoin data
