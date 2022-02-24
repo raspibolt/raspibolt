@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: LNTOP terminal dashboard
+# Bonus guide: LNTOP terminal dashboard
 {: .no_toc }
 
 ---
@@ -32,15 +32,15 @@ Table of contents
 
 ---
 
-### Install lntop
+## Install lntop
 
 * As user “admin”, download the application, checksums, and the corresponding signature file
 
   ```sh
   $ cd /tmp/
-  $ wget https://github.com/edouardparis/lntop/releases/download/v0.2.0/lntop-v0.2.0-Linux-arm64.tar.gz
-  $ wget https://github.com/edouardparis/lntop/releases/download/v0.2.0/checksums-lntop-v0.2.0.txt
-  $ wget https://github.com/edouardparis/lntop/releases/download/v0.2.0/checksums-lntop-v0.2.0.txt.sig
+  $ wget https://github.com/edouardparis/lntop/releases/download/v0.3.0/lntop-v0.3.0-Linux-arm64.tar.gz
+  $ wget https://github.com/edouardparis/lntop/releases/download/v0.3.0/checksums-lntop-v0.3.0.txt
+  $ wget https://github.com/edouardparis/lntop/releases/download/v0.3.0/checksums-lntop-v0.3.0.txt.sig
   ```
 
 * Get the PGP key from Edouard, developer of lntop.
@@ -56,8 +56,8 @@ Table of contents
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify checksums-lntop-v0.2.0.txt.sig checksums-lntop-v0.2.0.txt
-  > gpg: Signature made Fri Dec  3 09:29:24 2021 GMT
+  $ gpg --verify checksums-lntop-v0.3.0.txt.sig checksums-lntop-v0.3.0.txt
+  > gpg: Signature made Fri Jan 14 09:37:27 2022 GMT
   > gpg:                using RSA key A8BA5205BFCBC668853D560247EEBB014DD80918
   > gpg: Good signature from "Edouard (Personal) <m@edouard.paris>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -68,26 +68,26 @@ Table of contents
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check checksums-lntop-v0.2.0.txt --ignore-missing
-  > lntop-v0.2.0-Linux-arm64.tar.gz: OK
+  $ sha256sum --check checksums-lntop-v0.3.0.txt --ignore-missing
+  > lntop-v0.3.0-Linux-arm64.tar.gz: OK
   ```
 
 * If everything checks out, you can install the application
 
   ```sh
-  $ tar -xvf lntop-v0.2.0-Linux-arm64.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin release/lntop
+  $ tar -xvf lntop-v0.3.0-Linux-arm64.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin release-v0.3.0/lntop
   ```
 
 ---
 
 ### Run lntop
 
-Depending on the size of your LND channel database, lntop can take quite a while to start.
+* Depending on the size of your LND channel database, lntop can take quite a while to start.
 
-```sh
-$ lntop
-```
+  ```sh
+  $ lntop
+  ```
 
 ---
 
@@ -125,6 +125,32 @@ To use all the functionalities of lntop, use the following keys:
 * **d** = Sort out column, descending order
 
 * **F10 (or q or Ctrl+C)** = Quit lntop
+
+---
+
+## Update
+
+* With user "admin", check the version of lntop that is installed on your node
+
+  ```sh
+  $ lntop --version
+  > lntop version v...
+  ```
+  
+* Check the lntop repository for [new releases](https://github.com/edouardparis/lntop/releases){:target="_blank"}.
+
+* Follow the [installation guidelines](https://raspibolt.org/bonus/lightning/lntop.html#install-lntop) while making sure to replace the file names to match the latest version if necessary.
+
+---
+
+## Uninstall
+
+* To remove lntop, simply delete the installed binary
+
+  ```sh
+  $ cd /usr/local/bin
+  $ rm -r lntop
+  ```
 
 <br /><br />
 
