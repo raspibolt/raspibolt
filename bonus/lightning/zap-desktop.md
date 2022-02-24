@@ -34,9 +34,9 @@ Table of contents
 
 ### Update LND TLS certificate
 
-We allow connections to LND gRPC from the local area network.
+We enable access to LND through Remote Procedure Calls (RPC), allowing the Zap Desktop application to communicate with LND directly. This access is restricted to devices on the local network.
 
-* Open the LND configuration file
+* With user "admin", open the LND configuration file
 
   ```sh
   $ sudo nano ~/.lnd/lnd.conf
@@ -60,7 +60,7 @@ We allow connections to LND gRPC from the local area network.
 
 ### Firewall
 
-* Configure the UFW firewall to allow incoming requests from local network only  
+* Configure the UFW firewall to allow incoming requests from the local network only  
   
   ```sh
   $ sudo ufw allow from 192.168.0.0/16 to any port 10009 comment 'allow LND grpc from local LAN'
@@ -126,7 +126,7 @@ Zap download and install updates automatically by default. If you want to disabl
 
 ## Uninstall
 
-If you stop using Zap, it is safer to restrict access to LND gRPC. But make sure that no other program require access to it (e.g., if you've installed Lightning Terminal with a remote connection to LND)
+If you stop using Zap, it is safer to restrict access to LND gRPC. But make sure that no other program requires access to it (e.g., if you've installed Lightning Terminal with a remote connection to LND)
 
 * Open the LND configuration file and comment out the following two lines:
 
