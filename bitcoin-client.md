@@ -469,4 +469,4 @@ When upgrading, there might be breaking changes, or changes in the data structur
 
 ---
 
-Next: [Electrum server >>](electrs.md)
+Next: [Electrum server >>](electrum-server.md)
