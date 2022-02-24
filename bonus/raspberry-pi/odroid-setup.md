@@ -27,7 +27,7 @@ Status: Not tested v3
 
 This guide describes how to setup RaspiBolt using an Odroid XU4 or compatible hardware (like Odroid HC1, [HC2] (https://www.hardkernel.com/shop/odroid-hc2-home-cloud-two/) and many others).
 
-![Odroid XU4](images/76_odroidxu4.png)
+![Odroid XU4](../../images/76_odroidxu4.png)
 
 The Odroid series is an alternative low-cost, light-weight computer based on ARM processors. There are a series of computers available at the manufacturer [Hardkernel](https://www.hardkernel.com/). The Odroid XU4 is roughly in the same league as the Raspberry Pi4 when it comes to computing power and price.
 
@@ -310,12 +310,12 @@ This can take up to a week or two when using an Odroid XU4, depending mostly on 
 ## Bitcoin Core upgrade
 
 If you want to upgrade to a new release of Bitcoin Core in the future, check out the FAQ section:
-[How to upgrade Bitcoin Core](raspibolt_faq.md#how-to-upgrade-bitcoin-core)
+[How to upgrade Bitcoin Core](../../faq.md#how-to-upgrade-bitcoin-core)
 
 #### Run Bitcoind and Sync Blockchain
 
 #### Using Bitcoin Node
- 
+
 ------
 
 << Back: [+ Raspberry Pi](index.md)

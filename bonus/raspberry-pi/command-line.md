@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: Pimp the command line  
+## Bonus guide: Pimp the command line
 {: .no_toc }
 
 Difficulty: Easy
@@ -26,7 +26,7 @@ Status: Not tested v3
 </details>
 
 ### Command prompt
-You can prettify your command prompt for each user by enabling color output and setting a custom prompt. 
+You can prettify your command prompt for each user by enabling color output and setting a custom prompt.
 
 * Open and edit `.bashrc`  as shown below, save and exit
   `$ nano /home/admin/.bashrc`
@@ -42,19 +42,19 @@ PS1="${debian_chroot:+($debian_chroot)}\[\e[33m\]\u \[\033[01;34m\]\w\[\e[33;40m
 alias ls='ls -la --color=always'
 ```
 
-![Pimp prompt](images/60_pimp_prompt.png)
+![Pimp prompt](../../images/60_pimp_prompt.png)
 
-* Reload configuration  
+* Reload configuration
   `source /home/admin/.bashrc`
 
-![Pimped prompt](images/60_pimp_prompt_result.png)
+![Pimped prompt](../../images/60_pimp_prompt_result.png)
 
 ### Bash completion
 As user “admin”, install bash completion scripts for Bitcoin Core and all Lightning projects. You then can complete commands by pressing the Tab key (e.g. bitcoin-cli getblockch [Tab] → bitcoin-cli getblockchaininfo )
 
 ```sh
 $ cd /home/admin/download
-$ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/bitcoin-cli.bash-completion 
+$ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/bitcoin-cli.bash-completion
 $ wget https://raw.githubusercontent.com/lightningnetwork/lnd/master/contrib/lncli.bash-completion
 $ sudo cp *.bash-completion /etc/bash_completion.d/
 ```
@@ -63,4 +63,4 @@ Bash completion will be enabled after your next login.
 
 ------
 
-<< Back: [+ Raspberry Pi](index.md) 
+<< Back: [+ Raspberry Pi](index.md)

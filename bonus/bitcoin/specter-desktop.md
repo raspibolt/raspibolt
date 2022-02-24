@@ -340,7 +340,7 @@ Test Specter Desktop manually first to make sure it works.
 
 - Next we will test that Specter Desktop can detect your hardware wallet. Go to **Settings _(top right)_** -> **USB Devices _(tab)_** -> **Test connection _(bottom)_**. A blue popup should appear to the top of the page with the message `"Device detected successfully! USB connections configured correctly!"`
 
-  ![Hardware device check](images/76_specter_desktop1.gif)
+  ![Hardware device check](../../images/76_specter_desktop1.gif)
 
 - Stop Specter Desktop in the terminal with Ctrl-C and exit the "specter" user session.
   ```sh
@@ -414,7 +414,7 @@ With this option, Specter is installed ***only*** on the user's laptop/computer 
   - Specter only needs to be setup and maintained in one place
 
 **Disadvantages**
-  - The Bitcoin RPC port must be made available outside of the Raspberry Pi's internal `localhost` network. It must first be made available to the local LAN network, and then optionally to the wider web via port forwarding if the user wishes to use Specter outside the local LAN network. 
+  - The Bitcoin RPC port must be made available outside of the Raspberry Pi's internal `localhost` network. It must first be made available to the local LAN network, and then optionally to the wider web via port forwarding if the user wishes to use Specter outside the local LAN network.
 
     This comes with its own security considerations that the user should be wary of.
 

@@ -457,7 +457,7 @@ When upgrading, there might be breaking changes, or changes in the data structur
 * There's no need to stop the application.
   Simply install the new version and restart the service.
 
-* Download, verify, extract and install the Bitcoin Core binaries as described in the [Bitcoin section](bitcoin-core.md) of this guide.
+* Download, verify, extract and install the Bitcoin Core binaries as described in the [Bitcoin section](bitcoin-client.md) of this guide.
 
 * Restart the Bitcoin Core systemd unit
 

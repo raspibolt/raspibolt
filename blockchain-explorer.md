@@ -42,7 +42,7 @@ For the BTC RPC Explorer to work, you need your full node to index all transacti
 
 * If you followed this guide, the transaction index parameter is already enabled (`txindex=1`), and you can skip to the next section.
 
-* If this is not the case, you need to set the `txindex=1` parameter in your Bitcoin Core configuration file (`bitcoin.conf`): [Bitcoin node configuration](bitcoin-core.md#configuration).
+* If this is not the case, you need to set the `txindex=1` parameter in your Bitcoin Core configuration file (`bitcoin.conf`): [Bitcoin node configuration](bitcoin-client.md#configuration).
 
 * After adding the parameter, restart Bitcoin Core, which will now index the whole blockchain
 
