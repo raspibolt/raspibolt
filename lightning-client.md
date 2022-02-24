@@ -278,7 +278,7 @@ The current state of your channels, however, cannot be recreated from this seed.
 For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
 🚨 This information must be kept secret at all times.
-* **Write these 24 words down manually on a piece of paper and store it in a safe place.** 
+* **Write these 24 words down manually on a piece of paper and store it in a safe place.**
 You can use a simple piece of paper, write them on a proper [backup card](https://shiftcrypto.ch/backupcard/backupcard_print.pdf){:target="_blank"}), or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
 This piece of paper is all an attacker needs to completely empty your on-chain wallet!
 Do not store it on a computer.
@@ -686,7 +686,7 @@ Upgrading LND can lead to a number of issues.
 * As "admin" user, stop the LND service
   `$ sudo systemctl stop lnd`
 
-* Download, verify and install the latest LND binaries as described in the [LND section](lnd.md) of this guide.
+* Download, verify and install the latest LND binaries as described in the [LND section](lightning-client.md) of this guide.
 
 * Restart the services with the new configuration
 

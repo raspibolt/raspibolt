@@ -20,9 +20,9 @@ Where possible, I'll link to the relevant part of the guide. If you see any disc
 
 ---
 
-## [General FAQ](raspibolt_faq.md)
+## [General FAQ](faq.md)
 
-I collected frequent questions not directly related with issues in a separate [General FAQ](raspibolt_faq.md) section:
+I collected frequent questions not directly related with issues in a separate [General FAQ](faq.md) section:
 
 * Can I get rich by routing Lightning payments?
 * Can I attach the Ext4 formatted hard disk to my Windows computer?
@@ -113,7 +113,7 @@ In that case we recommend visiting the [Raspberry Pi Troubleshooting forum](http
 
 The most important ports are 22, 8333, 9735 and 1900/udp. Others can be necessary for bonus guides, and there may be additional ports open on your Pi (eg. the `(v6)` variants).
 
-It is essential to have the right subnet mask, like `192.168.0.0/24`  (see [guide](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall)).
+It is essential to have the right subnet mask, like `192.168.0.0/24`  (see [guide](security.md#enabling-the-uncomplicated-firewall)).
 
 ```
 $ sudo ufw status

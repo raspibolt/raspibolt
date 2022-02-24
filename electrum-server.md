@@ -36,7 +36,7 @@ Wallets like the [BitBoxApp](https://shiftcrypto.ch/app/){:target="_blank"}, [El
 
 ## Preparations
 
-Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-core.html#reduce-dbcache-after-full-sync) after full sync.
+Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-client.md#reduce-dbcache-after-full-sync) after full sync.
 
 ### Install dependencies
 

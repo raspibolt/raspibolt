@@ -46,7 +46,7 @@ Before using this setup, please familiarize yourself with all components by sett
   $ sudo pip3 install setuptools
   ```
 
-* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](raspibolt_20_pi.md#enabling-the-uncomplicated-firewall))
+* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](../../security.md#enabling-the-uncomplicated-firewall))
   ```sh
   $ sudo ufw allow from 192.168.0.0/24 to any port 50002 comment 'allow EPS from local network'
   $ sudo ufw enable
@@ -118,7 +118,7 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
   $ pip3 install --user .
   ```
 
-  ![Install Electrum Personal Server with Python Pip](./images/60_eps_pip_install.png)
+  ![Install Electrum Personal Server with Python Pip](../../images/60_eps_pip_install.png)
 
 ### First start
 The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately, in Raspberry Pi OS this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path), but it's not necessary in this guide.
@@ -143,7 +143,7 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
     $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg
     ```
 
-  [![Run Electrum Personal Server manually](images/60_eps_first-start.png)](images/60_eps_first-start.png)
+  [![Run Electrum Personal Server manually](../../images/60_eps_first-start.png)](../../images/60_eps_first-start.png)
 
 ### Connect Electrum
 
@@ -153,11 +153,11 @@ On your regular computer, configure Electrum to use your RaspiBolt:
 * Uncheck "Select server automatically"
 * Enter the IP of your RaspiBolt (eg. 192.168.0.20) in the address field
 
-  [![Connect Electrum to RaspiBolt](images/60_eps_electrum-connect.png)](images/60_eps_electrum-connect.png)
+  [![Connect Electrum to RaspiBolt](../../images/60_eps_electrum-connect.png)](../../images/60_eps_electrum-connect.png)
 
 * `Close` and check connection in tab "Console"
 
-  [![Check Electrum console](images/60_eps_electrumwallet.png)](images/60_eps_electrumwallet.png)
+  [![Check Electrum console](../../images/60_eps_electrumwallet.png)](../../images/60_eps_electrumwallet.png)
 
 * This can also be achived by starting the Electrum wallet with the following command line arguments:
   `--oneserver --server 192.168.0.20:50002:s`

@@ -34,7 +34,7 @@ Table of contents
 
 ## Acknowledgments
 
-The following list of aliases was derived from contributions by [RobClark56](https://github.com/robclark56){:target="_blank"} and [marcosdub](https://github.com/marcosdub){:target="_blank"}.
+The following list of aliases was derived from contributions by [RobClark56](https://github.com/robclark56){:target="_blank"} and `marcosdub`.
 
 ---
 
@@ -51,10 +51,10 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   ```ini
   ##################
   # GENERAL STATUS #
-  ################## 
-  
+  ##################
+
   alias livehealth='sudo watch -n 1 "vcgencmd measure_clock arm; vcgencmd measure_temp"'
- 
+
   alias showversion='echo The installed versions of the services are as follows: ; \
     bitcoind --version ; \
     lnd --version ; \
@@ -66,54 +66,54 @@ The following list of aliases was derived from contributions by [RobClark56](htt
     echo NodeJS: node -v ; \
     lntop --version ; \
     htop --version ; nginx -v'
-    
+
   alias statuservices='echo The status of the services is as follows, press the space key to advance: ; \
     sudo systemctl status bitcoind lnd rtl electrs btcrpcexplorer tor ssh fail2ban ufw vncserver-x11-serviced'
-  
+
   ##################
   # START SERVICES #
   ##################
-  
+
   alias startbitcoind='sudo systemctl start bitcoind'
   alias startelectrs='sudo systemctl start electrs'
   alias startexplorer='sudo systemctl start btcrpcexplorer'
   alias startlnd='sudo systemctl start lnd'
   alias startrtl='sudo systemctl start rtl'
-  
+
   ##################
   # SERVICE STATUS #
   ##################
-  
+
   alias statusbitcoind='sudo systemctl status bitcoind'
   alias statuselectrs='sudo systemctl status electrs'
   alias statusexplorer='sudo systemctl status btcrpcexplorer'
   alias statuslnd='sudo systemctl status lnd'
   alias statusrtl='sudo systemctl status rtl'
-  
+
   ##################
   # STOP SERVICES  #
   ##################
-  
+
   alias stopbitcoind='sudo systemctl stop bitcoind'
   alias stopelectrs='sudo systemctl stop electrs'
   alias stopcexplorer='sudo systemctl stop btcrpcexplorer'
   alias stoplnd='sudo systemctl stop lnd'
   alias stoprtl='sudo systemctl stop rtl'
-  
+
   ##################
   #  SERVICE LOGS  #
   ##################
-  
+
   alias bitcoindlogs='sudo tail -f /mnt/ext/bitcoin/debug.log'
   alias electrslogs='sudo journalctl -f -u electrs'
   alias btcrpcexplorerlogs='sudo journalctl -f -u btcrpcexplorer'
   alias lndlogs='sudo journalctl -f -u lnd'
   alias rtllogs='sudo journalctl -f -u rtl'
-  
+
   ##################
   #       LND      #
   ##################
-  
+
   alias unlock='lncli unlock'
   alias newaddress='lncli newaddress p2wkh'
   alias txns='lncli listchaintxns'
@@ -127,20 +127,20 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   alias connect='lncli connect'
   alias payinvoice='lncli payinvoice'
   alias addinvoice='lncli addinvoice'
-  
+
   ##################
   # LND Watchtower #
   ##################
-  
+
   alias wtclientinfo='lncli wtclient towers'
   alias wtserverinfo='lncli tower info'
-  
+
   ```
-  
+
 * Execute a `source` command to register changes to the `.bash_aliases` file
 
-  ```sh 
-  $ source ~/.bash_aliases 
+  ```sh
+  $ source ~/.bash_aliases
   ```
 
 ---
@@ -155,7 +155,7 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   > frequency(48)= 124121523
   > temp=37.0'C
   ```
-  
+
   ```sh
   $ showversion
   > The installed versions of the services are as follows:
@@ -168,7 +168,7 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   > NPM: v8.1.2
   > NodeJS: node -v
   > lntop version v0.2.0
-  > htop 3.0.5 
+  > htop 3.0.5
   > nginx version: nginx/1.18.0
   ```
 
