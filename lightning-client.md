@@ -697,4 +697,4 @@ Upgrading LND can lead to a number of issues.
 
 ---
 
-Next: [Static channel backup >>](static-channel-backup.md)
+Next: [Channel backup >>](channel-backup.md)
