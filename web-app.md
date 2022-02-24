@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Ride The Lightning
+title: Web app
 nav_order: 50
 parent: Lightning
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-# Ride The Lightning
+# Web app
 {: .no_toc }
 
 We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL#readme){:target="_blank"}, a powerful web interface to manage your Lightning node.

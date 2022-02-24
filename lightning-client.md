@@ -1,11 +1,11 @@
 ---
 layout: default
-title: LND
+title: Lightning client
 nav_order: 10
 parent: Lightning
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-# Lightning: LND
+# Lightning client
 {: .no_toc }
 
 We set up [LND](https://github.com/lightningnetwork/lnd/blob/master/README.md){:target="_blank"}, the Lightning Network Daemon by [Lightning Labs](https://lightning.engineering/){:target="_blank"}.
@@ -698,4 +698,4 @@ Upgrading LND can lead to a number of issues.
 
 ---
 
-Next: [Static Channel Backup >>](static-channel-backup.md)
+Next: [Channel backup >>](channel-backup.md)
