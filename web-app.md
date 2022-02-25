@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Web app
-nav_order: 50
+nav_order: 30
 parent: Lightning
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
