@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-# Bonus guide: lnbalance script
+# Bonus guide: lnbalance
 {: .no_toc }
 
 ---
@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![lnbalance illustration](../../images/60_balance.png)
+![lnbalance illustration](../../../images/60_balance.png)
 
 ---
 
