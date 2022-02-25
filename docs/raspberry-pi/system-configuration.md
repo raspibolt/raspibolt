@@ -49,7 +49,7 @@ We will use the primary user "admin" instead of "pi" to make this guide more uni
 
 * Create a new connection with the `admin` user
 
-* Log in again using SSH (see [Access with Secure Shell](remote-access.html#access-with-secure-shell) section), but now with the user "admin" and your `password [A]`
+* Log in again using SSH (see [Access with Secure Shell](remote-access.md#access-with-secure-shell) section), but now with the user "admin" and your `password [A]`
 
   ```sh
   $ ssh admin@raspibolt.local
