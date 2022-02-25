@@ -36,7 +36,7 @@ Wallets like the [BitBoxApp](https://shiftcrypto.ch/app/){:target="_blank"}, [El
 
 ## Preparations
 
-Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-client.md#reduce-dbcache-after-full-sync) after full sync.
+Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-client.md#reduce-dbcache-after-full-sync)#prepare-nginx-reverse-proxy after full sync.
 
 ### Install dependencies
 
@@ -48,7 +48,7 @@ Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-cli
 
 ### Firewall & reverse proxy
 
-In the [Security section](../../docs/raspberry-pi/security.md), we already set up NGINX as a reverse proxy.
+In the [Security section](../../docs/raspberry-pi/security.md#), we already set up NGINX as a reverse proxy.
 Now we can add the Electrs configuration.
 
 * Enable NGINX reverse proxy to add SSL/TLS encryption to the Electrs communication.
