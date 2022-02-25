@@ -70,7 +70,7 @@ You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 
 ### Firewall & reverse proxy
 
-In the [Security section](../../docs/raspberry-pi/security.md), we set up NGINX as a reverse proxy.
+In the [Security section](../../docs/raspberry-pi/security.md#prepare-nginx-reverse-proxy), we set up NGINX as a reverse proxy.
 Now we can add the BTC RPC Explorer configuration.
 
 * Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to the BTC RPC Explorer
