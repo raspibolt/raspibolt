@@ -42,7 +42,7 @@ In order to write the operating system to the external drive, we will use the [R
 
 Open the "Advanced options" by pressing the cogwheel that has appeared in the bottom right corner of the application window:
 
-![image](images/operating-system_imager-start.png)
+![image](../../images/operating-system_imager-start.png)
 
 You can now pre-configure the operating system even before it's started for the first time.
 
@@ -64,7 +64,7 @@ Configure the advanced options as follows:
 * **That's it.**
   You can ignore the other options.
 
-![Raspberry Pi Imager: advanced settings](images/operating-system_imager-settings.png)
+![Raspberry Pi Imager: advanced settings](../../images/operating-system_imager-settings.png)
 
 * Click "SAVE".
 
@@ -110,7 +110,7 @@ Your Raspberry Pi should now boot from the SSD attached via USB.
 ## Fallback: if you can't boot from your external drive
 
 We assume that you can boot directly from the external drive.
-This method works for most modern drives, but if it doesn't work in your case, please follow the fallback instructions [Boot from microSD card instead of external drive](bonus/raspberry-pi/boot-from-microsd-card.md).
+This method works for most modern drives, but if it doesn't work in your case, please follow the fallback instructions [Boot from microSD card instead of external drive](../../bonus/raspberry-pi/boot-from-microsd-card.md).
 
 <br /><br />
 
