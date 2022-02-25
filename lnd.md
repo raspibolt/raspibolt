@@ -174,6 +174,7 @@ To improve the security of your wallet, check out these more advanced methods:
   bitcoin.basefee=1000
   bitcoin.feerate=1
   minchansize=100000
+  accept-keysend=true
   accept-amp=true
   protocol.wumbo-channels=true
   protocol.no-anchors=false
