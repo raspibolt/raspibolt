@@ -11,7 +11,7 @@ parent: Bitcoin
 
 Run your own private blockchain explorer with [BTC RPC Explorer](https://github.com/janoside/btc-rpc-explorer){:target="_blank"}. Trust your node, not some external services.
 
-![BTC RPC Explorer home screen with dark theme](images/btcrpcexplorer-homepage.png)
+![BTC RPC Explorer home screen with dark theme](../../images/btcrpcexplorer-homepage.png)
 
 ---
 
@@ -70,7 +70,7 @@ You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 
 ### Firewall & reverse proxy
 
-In the [Security section](security.md), we set up NGINX as a reverse proxy.
+In the [Security section](../../docs/raspberry-pi/security.md), we set up NGINX as a reverse proxy.
 Now we can add the BTC RPC Explorer configuration.
 
 * Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to the BTC RPC Explorer
@@ -344,5 +344,5 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
 
 ---
 
-Next: [Lightning >>](lightning.md)
+Next: [Lightning >>](../../docs/lightning/index.md)
 
