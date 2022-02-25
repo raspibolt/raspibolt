@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![circuit-breaker-tweet](../../images/circuit-breaker-tweet.png)
+![circuit-breaker-tweet](../../../images/circuit-breaker-tweet.png)
 
 ---
 
