@@ -16,20 +16,21 @@ Difficulty: Intermediate
 Status: Not tested v3
 {: .label .label-yellow }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
+---
+
+Table of contents
+{: .text-delta }
+
 1. TOC
 {:toc}
-</details>
+
+---
 
 This guide describes how to use Zap iOS from within your own network, the same that also connects your RaspiBolt.
 
-![Zap iOS](images/72_zapios.png)
+![Zap iOS](../../../images/72_zapios.png)
 
-Zap is a free Lightning Network wallet focused on good user experience and ease of use. It is in alpha testing, so **use it at your own risk**. You can find more details in the [Zap iOS GitHub repository](https://github.com/LN-Zap/zap-iOS). If you find bugs, you can contribute to this project by [reporting issues](https://github.com/LN-Zap/zap-iOS/issues).
+Zap is a free Lightning Network wallet focused on good user experience and ease of use. It is in alpha testing, so **use it at your own risk**. You can find more details in the [Zap iOS GitHub repository](https://github.com/LN-Zap/zap-iOS){:target="_blank"}. If you find bugs, you can contribute to this project by [reporting issues](https://github.com/LN-Zap/zap-iOS/issues){:target="_blank"}.
 
 ### Preparation on the RaspiBolt
 
@@ -100,18 +101,16 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 * Open the Zap iOS on your phone.
 
 * Scan the QR code and check/modify the ip address you want to use to connect. It should be something like `192.168.x.x`.
-  ![Zap IOS scan example](images/72_zapios_scan.png)
+  ![Zap IOS scan example](../../../images/72_zapios_scan.png)
 
 * A successful connection will take you into the Zap iOS application:
-  ![Zap iOS succesful example](images/72_zapios_succesful.png)
+  ![Zap iOS succesful example](../../../images/72_zapios_succesful.png)
 
 🚨 REMEMBER: If you change `lnd.conf` you need to delete & recreate the `tls.cert`, and also re-create and re-scan the QR code from the Zap iOS app. Do not forget to copy the new `tls.cert` and `admin.macaroon` files to the admin user.
 
 💡 It is perfectly possible to use Zap iOS on-the-go (from the public internet) and connect to your node at home, but this involves creating new TLS certificates and reduces security. You need to set `tlsextraip=<YOUR_PUBLIC_IP>` and allow the ufw firewall to listen on 10009 from everywhere.
 
 ### Connect Zap iOS to RaspiBolt over Tor
-
-* [Install Tor](raspibolt_69_tor.md#installing-tor)
 
 * Edit LND config file to enable REST interface on port 8080
   ```
@@ -151,6 +150,6 @@ The nifty helper tool LND Connect helps to pair the RaspiBolt with the iPhone, e
 
 * Create new wallet in Zap iOS and scan QR code
 
-------
+---
 
 << Back: [+ Lightning](index.md)
