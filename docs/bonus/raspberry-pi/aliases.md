@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![alias](../../images/alias-example.png)
+![alias](../../../images/alias-example.png)
 
 ---
 
@@ -186,4 +186,4 @@ The following list of aliases was derived from contributions by [RobClark56](htt
 
 ---
 
-<< Back: [+ Lightning](index.md)
+<< Back: [+ Raspberry Pi](index.md)
