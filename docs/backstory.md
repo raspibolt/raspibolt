@@ -64,4 +64,4 @@ Thanks to everyone who cares about Bitcoin and feels that running your own Bitco
 
 ---
 
-Next: [Rasperry Pi >>](docs/raspberry-pi/index.md)
+Next: [Rasperry Pi >>](raspberry-pi/index.md)
