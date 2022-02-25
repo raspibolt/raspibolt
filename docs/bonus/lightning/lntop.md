@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![lntop](../../images/74_lntop.png)
+![lntop](../../../images/74_lntop.png)
 
 ---
 
@@ -139,7 +139,7 @@ To use all the functionalities of lntop, use the following keys:
   
 * Check the lntop repository for [new releases](https://github.com/edouardparis/lntop/releases){:target="_blank"}.
 
-* Follow the [installation guidelines](https://raspibolt.org/bonus/lightning/lntop.html#install-lntop) while making sure to replace the file names to match the latest version if necessary.
+* Follow the [installation guidelines](#install-lntop) while making sure to replace the file names to match the latest version if necessary.
 
 ---
 
