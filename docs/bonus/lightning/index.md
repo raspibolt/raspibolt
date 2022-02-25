@@ -26,8 +26,8 @@ has_toc: false
 
 #### *CLI-only*
 * **[lntop](lntop.md)** - lntop is an interactive text-mode channels viewer for Unix systems
-* **[lnbalance](script-lnbalance.md)** -  a simple node balances viewer
-* **[lnchannels](script-lnchannels.md)** - a simple channels viewer
+* **[lnbalance](lnbalance.md)** -  a simple node balances viewer
+* **[lnchannels](lnchannels.md)** - a simple channels viewer
 
 #### *GUI - Desktop*
 * **[Zap](zap-desktop.md)** - a cross platform Lightning Network wallet focused on user experience and ease of use
