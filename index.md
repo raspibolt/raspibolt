@@ -100,7 +100,7 @@ Unfortunately, a seamless update is not possible because RaspiBolt 3 uses an ent
 The general structure of the setup stays the same, however.
 We recommend setting up the RaspiBolt from scratch, but you can then copy over essential data.
 
-[Read how to do that in the FAQ section](faq.md#can-i-update-my-raspibolt-2-to-the-new-version).
+[Read how to do that in the FAQ section](docs/faq.md#can-i-update-my-raspibolt-2-to-the-new-version).
 
 ## Looking for an older version of this guide?
 
