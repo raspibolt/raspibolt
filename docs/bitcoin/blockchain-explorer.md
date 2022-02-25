@@ -344,5 +344,5 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
 
 ---
 
-Next: [Lightning >>](../../docs/lightning/index.md)
+Next: [Lightning >>](../lightning/index.md)
 
