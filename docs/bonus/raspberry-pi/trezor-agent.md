@@ -16,18 +16,19 @@ Difficulty: Easy
 Status: Not tested v3
 {: .label .label-yellow }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
+---
+
+Table of contents
+{: .text-delta }
+
 1. TOC
 {:toc}
-</details>
+
+---
 
 It is possible to SSH to your device using your Trezor (It should be possible with Ledger and Keepkey but I haven't tried)
 
-* Using romanz's trezor-agent https://github.com/romanz/trezor-agent and Trezor's documentation https://wiki.trezor.io/Apps:SSH_agent
+* Using romanz's trezor-agent [https://github.com/romanz/trezor-agent](https://github.com/romanz/trezor-agent){:target="_blank"} and Trezor's documentation [https://wiki.trezor.io/Apps:SSH_agent](https://wiki.trezor.io/Apps:SSH_agent){:target="_blank"}
 * This Process is currently only available on Linux
 
 On your main machine -
