@@ -117,7 +117,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
   ```sh
   $ ls -la
   ```
-  ![symlinks](images/lnd-symlink-colour.png)
+  ![symlinks](../../images/lnd-symlink-colour.png)
 
 ### Wallet password
 
@@ -675,7 +675,7 @@ A quick reference with common commands to play around with:
 ## For the future: upgrade LND
 
 Upgrading LND can lead to a number of issues.
-**Always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases) completely to understand the changes. These also cover a lot of additional topics and many new features not mentioned here.
+**Always** read the [LND release notes](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} completely to understand the changes. These also cover a lot of additional topics and many new features not mentioned here.
 
 * Check your lnd version
 
@@ -686,7 +686,7 @@ Upgrading LND can lead to a number of issues.
 * As "admin" user, stop the LND service
   `$ sudo systemctl stop lnd`
 
-* Download, verify and install the latest LND binaries as described in the [LND section](lightning-client.md) of this guide.
+* Download, verify and install the latest LND binaries as described in the [LND section](lightning-client.md#installation) of this guide.
 
 * Restart the services with the new configuration
 
