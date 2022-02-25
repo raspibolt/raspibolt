@@ -26,7 +26,7 @@ Enjoy the ride!
 
 ## Can I attach the Ext4 formatted hard disk to my Windows computer?
 
-The Ext4 file system is not compatible with standard Windows, but with additional software like  [Linux File Systems](https://www.paragon-software.com/home/linuxfs-windows/#faq) by Paragon Software (they offer a 10 days free trial) it is possible.
+The Ext4 file system is not compatible with standard Windows, but with additional software like  [Linux File Systems](https://www.paragon-software.com/home/linuxfs-windows/#faq){:target="_blank"} by Paragon Software (they offer a 10 days free trial) it is possible.
 
 ---
 
@@ -144,9 +144,9 @@ For a specific command, you can enter `man [command]` to display the manual page
 ## Where can I get more information?
 If you want to learn more about Bitcoin and are curious about the inner workings of the Lightning Network, the following articles in Bitcoin Magazine offer a very good introduction:
 
-* [What is Bitcoin?](https://bitcoinmagazine.com/guides/what-bitcoin)
-* [Understanding the Lightning Network](https://bitcoinmagazine.com/articles/understanding-the-lightning-network-part-building-a-bidirectional-payment-channel-1464710791/)
-* [Bitcoin resources](https://www.lopp.net/bitcoin-information.html) and [Lightning Network resources](https://www.lopp.net/lightning-information.html) by Jameson Lopp
+* [What is Bitcoin?](https://bitcoinmagazine.com/guides/what-bitcoin){:target="_blank"}
+* [Understanding the Lightning Network](https://bitcoinmagazine.com/articles/understanding-the-lightning-network-part-building-a-bidirectional-payment-channel-1464710791/){:target="_blank"}
+* [Bitcoin resources](https://www.lopp.net/bitcoin-information.html){:target="_blank"} and [Lightning Network resources](https://www.lopp.net/lightning-information.html){:target="_blank"} by Jameson Lopp
 
 
 ---
