@@ -20,7 +20,7 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
-![bos-rebalance](../../images/bos-illustration.png)
+![bos-rebalance](../../../images/bos-illustration.png)
 
 ---
 
@@ -50,7 +50,7 @@ Table of contents
   > v16.13.2
   ```
 
-* If the version is v12 or above, you can move to the next section. If Node.js is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
+* If the version is v12 or above, you can move to the next section. If Node.js is not installed, follow [this guide](../../blockchain-explorer.md#install-nodejs) to install it.
 
 ### Create the "bos" user and prepare the directory
 
@@ -184,7 +184,7 @@ Circular rebalancing allows to send satoshis out through one channel (which has 
 
 A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network' by Antonopoulos *et al.* ([source](https://github.com/lnbook/lnbook/blob/ec806916edd6f4d1b2f9da2fef08684f80acb671/05_node_operations.asciidoc#rebalancing-channels){:target="_blank"}) (Alice (A), is your node, Bob (B) and and Chan (C) are two peers with whom you have an opened channel with):
 
-![circular-rebalancing](../../images/circular-rebalancing-lnbook.png)
+![circular-rebalancing](../../../images/circular-rebalancing-lnbook.png)
 
 * To rebalance a channel (to node B) with high outbound and a channel with high inbound (to node C), use the `rebalance` command.
 
@@ -348,7 +348,7 @@ If you want to uninstall Balance of Satoshis:
 
 Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
 
-![bos-tg-bot](../../images/bos-bot.png)
+![bos-tg-bot](../../../images/bos-bot.png)
 
 *Requirements:* a Telegram account
 
@@ -362,7 +362,7 @@ Balance of Satoshis allows connecting a node to a Telegram bot to receive update
 
 ### Torify
 
-To avoid leaking our node IP address to Telegram, we can force bos to use Tor using the [`torify`](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorifyHOWTO) utility. To do this, we first need to edit the `torsocks.conf` file.
+To avoid leaking our node IP address to Telegram, we can force bos to use Tor using the [`torify`](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorifyHOWTO){:target="_blank"} utility. To do this, we first need to edit the `torsocks.conf` file.
 
 * Using the "admin" user, edit the `torsocks.conf` file by uncommenting the `AllowOutboundLocalhost` and setting the value to 1. Save (Ctrl+O) and exit (Ctrl+X)
   
