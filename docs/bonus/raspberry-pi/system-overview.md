@@ -19,7 +19,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![MotD system overview](../../images/system-overview.png)
+![MotD system overview](../../../images/system-overview.png)
 
 ---
 
