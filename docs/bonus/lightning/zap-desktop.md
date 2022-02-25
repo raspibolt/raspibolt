@@ -18,7 +18,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![lntop](../../images/zap-desktop.png)
+![lntop](../../../images/zap-desktop.png)
 
 ---
 
