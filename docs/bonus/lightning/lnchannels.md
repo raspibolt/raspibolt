@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-# Bonus guide: lnchannels script
+# Bonus guide: lnchannels
 {: .no_toc }
 
 ---
@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![lnchannels](../../images/script-lnchannels.png)
+![lnchannels](../../../images/script-lnchannels.png)
 
 ---
 
