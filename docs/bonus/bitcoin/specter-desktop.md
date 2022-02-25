@@ -17,14 +17,15 @@ Difficulty: Intermediate
 Status: Not tested v3
 {: .label .label-yellow }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
+---
+
+Table of contents
+{: .text-delta }
+
 1. TOC
 {:toc}
-</details>
+
+---
 
 The Specter Desktop app is a project that's working on making a convenient and user-friendly GUI around Bitcoin Core with a focus on ***multisignature setup with hardware wallets and airgapped devices***.
 
@@ -193,7 +194,7 @@ These instructions will clone the repo to fetch the latest version and then "pip
     ```
 
 
-- Add the following udev rules based on the devices you require support for. The rules are based on [rules from the `bitcoin-core` repo](https://github.com/bitcoin-core/HWI/blob/master/hwilib/udev/README.md).
+- Add the following udev rules based on the devices you require support for. The rules are based on [rules from the `bitcoin-core` repo](https://github.com/bitcoin-core/HWI/blob/master/hwilib/udev/README.md){:target="_blank"}.
 
   - #### Ledger
 
@@ -340,7 +341,7 @@ Test Specter Desktop manually first to make sure it works.
 
 - Next we will test that Specter Desktop can detect your hardware wallet. Go to **Settings _(top right)_** -> **USB Devices _(tab)_** -> **Test connection _(bottom)_**. A blue popup should appear to the top of the page with the message `"Device detected successfully! USB connections configured correctly!"`
 
-  ![Hardware device check](../../images/76_specter_desktop1.gif)
+  ![Hardware device check](../../../images/76_specter_desktop1.gif)
 
 - Stop Specter Desktop in the terminal with Ctrl-C and exit the "specter" user session.
   ```sh
@@ -394,7 +395,7 @@ If you would like to connect your hardware wallets to your laptop/computer inste
 
 With this, Specter is also downloaded and installed on the laptop/computer and then connected to the instance running on the Raspberry Pi. The two instances then communicate with the local laptop/computer instance handling the direct USB connection and the remote instance handling the connection to `bitcoind` via its RPC interface.
 
-**\> Instructions for configuring this setup can be found at [hwibridge.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/hwibridge.md).**
+** Instructions for configuring this setup can be found at [hwibridge.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/hwibridge.md){:target="_blank"}.**
 
 **Advantages**
   - The Bitcoin RPC ports remains locked down and local only to the Raspberry Pi
@@ -408,7 +409,7 @@ With this, Specter is also downloaded and installed on the laptop/computer and t
 
 With this option, Specter is installed ***only*** on the user's laptop/computer and then made to talk directly to the Bitcoin RPC to get its blockchain data and access to the Bitcoin network.
 
-**\> Instructions for configuring this setup can be found at [connect-your-node.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/connect-your-node.md).**
+** Instructions for configuring this setup can be found at [connect-your-node.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/connect-your-node.md){:target="_blank"}.**
 
 **Advantages**
   - Specter only needs to be setup and maintained in one place
@@ -424,7 +425,7 @@ This is similar to **Option 1** in that two running instances of Specter Desktop
 
 This 3rd option is more involved though since the user must also install/configure Tor, setup Tor hidden services for each instance on it's machine, and then configure both instances to communicate with each other through a Tor proxy.
 
-**\> Instructions for configuring this setup can be found at [tor.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/tor.md).**
+**\> Instructions for configuring this setup can be found at [tor.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/tor.md){:target="_blank"}.**
 
 **Advantages**
   - The Bitcoin RPC ports remains locked down and local only to the Raspberry Pi
@@ -440,13 +441,13 @@ This 3rd option is more involved though since the user must also install/configu
 
 For certain hardware wallets that are air-gapped and communicate via QR code only, an SSL certificate must be configure for the Specter Desktop service running inside the browser.
 
-**\> Instructions for setting this up can be found at [self-signed-certificates.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/self-signed-certificates.md).**
+**\> Instructions for setting this up can be found at [self-signed-certificates.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/self-signed-certificates.md){:target="_blank"}.**
 
 ---
 
 # Upgrade
 
-Updating to a [new release](https://github.com/cryptoadvance/specter-desktop/releases) should be straight-forward, but make sure to check out [the changes](https://github.com/cryptoadvance/specter-desktop/releases/latest) first.
+Updating to a [new release](https://github.com/cryptoadvance/specter-desktop/releases){:target="_blank"} should be straight-forward, but make sure to check out [the changes](https://github.com/cryptoadvance/specter-desktop/releases/latest){:target="_blank"} first.
 
 - From user “admin”, stop the service and open a "specter" user session
   ```sh
