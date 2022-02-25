@@ -477,3 +477,7 @@ $ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log
 We will extend this troubleshooting guide constantly with findings that have been or will be reported in the issues section.
 
 <br /><br />
+
+---
+
+Next: [FAQ >>](faq.md)
