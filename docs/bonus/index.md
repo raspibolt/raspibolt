@@ -49,4 +49,4 @@ All bonus guides are rated with labels to help you assess the difficulty of each
 
 ---
 
-Next: [Troubleshooting](../troubleshooting.md) >>
+Next: [Troubleshooting](../../troubleshooting.md) >>
