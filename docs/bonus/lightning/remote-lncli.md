@@ -16,14 +16,15 @@ Difficulty: Easy
 Status: Not tested v3
 {: .label .label-yellow }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
+---
+
+Table of contents
+{: .text-delta }
+
 1. TOC
 {:toc}
-</details>
+
+---
 
 It is possible to run *lnd* on the RaspiBolt, and *lncli* on a different computer. The instructions below explain how to install *lncli* on a Windows PC and communicate with the RaspiBolt. Instructions for different computer systems (MAC, Linux, ...) will be very similar.
 
@@ -59,7 +60,7 @@ rpclisten=0.0.0.0:10009
 - Download the file for your OS. For Windows10 it will generally be lnd-windows-amd64-vx.x.x.zip
 
 - Open the compressed file and extract the lncli application (e.g. lncli.exe) to your desktop.
-  ![Zip File](../../images/60_remote_zip.png)
+  ![Zip File](../../../images/60_remote_zip.png)
 
 - Open a CMD window
   `Press Win+R, enter cmd, then press Enter`
@@ -91,7 +92,7 @@ GLOBAL OPTIONS:
   * Remote: `/home/bitcoin/.lnd/`
   * Files: `See below`
 
- ![Files to Copy](../../images/60_winLND.png)
+ ![Files to Copy](../../../images/60_winLND.png)
 
 
  - Back on the RaspiBolt: Reset admin.macaroon permissions
