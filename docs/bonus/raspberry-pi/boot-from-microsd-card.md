@@ -35,9 +35,9 @@ Table of contents
 To boot from a microSD card and store the data on an external drive, there are a few additional steps compared to the default RaspiBolt guide.
 Below is a summary of the main differences, with detailed guidance in the following sections.
 
-1. [Operating system](../../operating-system.md):
+1. [Operating system](../../raspberry-pi/operating-system.md):
   * write the operating system to the microSD card instead of the external drive
-1. [System configuration](../../system-configuration.md):
+1. [System configuration](../../raspberry-pi/system-configuration.md):
   * attach the external drive
   * test the USB3 performance
   * format the drive
@@ -55,9 +55,9 @@ When writing RasPiOS to the boot medium, use a high-quality microSD card of 8+ G
 
 Connect your external drive to the Raspberry Pi using one of the blue USB3 ports.
 
-Follow the [System configuration](../../system-configuration.md) section until you reach [Data directory](../../system-configuration.md#data-directory), continuing with the instructions below.
+Follow the [System configuration](../../raspberry-pi/system-configuration.md) section until you reach [Data directory](../../raspberry-pi/system-configuration.md#data-directory), continuing with the instructions below.
 
-In case your external drive shows poor performance, follow the [Fix bad USB3 performance](../../troubleshooting.md#fix-bad-usb3-performance) instructions, as mentioned in the guide.
+In case your external drive shows poor performance, follow the [Fix bad USB3 performance](../../../troubleshooting.md#fix-bad-usb3-performance) instructions, as mentioned in the guide.
 
 
 #### Format external drive
