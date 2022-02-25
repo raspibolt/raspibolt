@@ -228,7 +228,7 @@ We set up the backup script as a systemd service to run in the background and st
 
 ## Option 1: Local backup
 
-Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](https://raspibolt.org/docs/lightning/channel-backup.html#option-2-remote-backup-preparations).
+Follow this section if you want a local backup. If you only want a remote backup, skip to the [next section](#option-2-remote-backup-preparations).
 
 ### Storage device size
 
@@ -310,7 +310,7 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 
 ## Option 2: Remote backup preparations
 
-Follow this section if you want a remote backup. If you already set up a local backup, and don't want a remote backup, skip to the [next section](https://raspibolt.org/docs/lightning/channel-backup.html#test-1).
+Follow this section if you want a remote backup. If you already set up a local backup, and don't want a remote backup, skip to the [next section](#test-1).
 
 ### Create a GitHub repository
 
