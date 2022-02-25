@@ -25,11 +25,11 @@ Status: Not tested v3
 {:toc}
 </details>
 
-This guide describes how to setup RaspiBolt using an Odroid XU4 or compatible hardware (like Odroid HC1, [HC2] (https://www.hardkernel.com/shop/odroid-hc2-home-cloud-two/) and many others).
+This guide describes how to setup RaspiBolt using an Odroid XU4 or compatible hardware (like Odroid HC1, [HC2](https://www.hardkernel.com/shop/odroid-hc2-home-cloud-two/){:target="_blank"} and many others).
 
-![Odroid XU4](../../images/76_odroidxu4.png)
+![Odroid XU4](../../../images/76_odroidxu4.png)
 
-The Odroid series is an alternative low-cost, light-weight computer based on ARM processors. There are a series of computers available at the manufacturer [Hardkernel](https://www.hardkernel.com/). The Odroid XU4 is roughly in the same league as the Raspberry Pi4 when it comes to computing power and price.
+The Odroid series is an alternative low-cost, light-weight computer based on ARM processors. There are a series of computers available at the manufacturer [Hardkernel](https://www.hardkernel.com/){:target="_blank"}. The Odroid XU4 is roughly in the same league as the Raspberry Pi4 when it comes to computing power and price.
 
 This guide aims to provide an end-to-end solution to install on Odroid. Nevertheless, it is recommended to review the original RaspiBolt guide for the Raspberry Pi, to help you understand the origins of this guide and its deviations.
 
@@ -47,13 +47,13 @@ You need:
 
 #### Operating System / Linux
 
-You will install a Linux distribution that is compatible with the Odroid XU4 platform. See [Odroid XU4 Downloads](https://wiki.odroid.com/odroid-xu4/getting_started/os_installation_guide?redirect=1#tab__odroid-xu4)
+You will install a Linux distribution that is compatible with the Odroid XU4 platform. See [Odroid XU4 Downloads](https://wiki.odroid.com/odroid-xu4/getting_started/os_installation_guide?redirect=1#tab__odroid-xu4){:target="_blank"}
 
 The node runs headless, that means without keyboard or display, so the operating system Ubuntu Minimal is used.
 
 1. Write down the user and password for Ubuntu Minimal from the link above.
 2. Download the Ubuntu Minimal disk image file
-3. Write the disk image file to your SD Card using a [Etcher](https://www.balena.io/etcher/) or similar OS flashing software
+3. Write the disk image file to your SD Card using a [Etcher](https://www.balena.io/etcher/){:target="_blank"} or similar OS flashing software
 
 #### Initial boot
 Now it's time to boot your Odroid for the first time.
@@ -113,7 +113,7 @@ You will likely let your Odroid run at all times. These are some helpful command
   * `shutdown`
 
 ### Bitcoin Node
-Now that our Odroid OS is running, we want to install a full Bitcoin node with the Bitcoin Blockchain on the Odroid. The blockchain is continuously growing with every block, see [chain size](https://bitcoinvisuals.com/chain-size), hence we will use the hard disk for the blockchain data.
+Now that our Odroid OS is running, we want to install a full Bitcoin node with the Bitcoin Blockchain on the Odroid. The blockchain is continuously growing with every block, see [chain size](https://bitcoinvisuals.com/chain-size){:target="_blank"}, hence we will use the hard disk for the blockchain data.
 
 #### Prepare Hard Disk
 If you haven't connected your hard disk yet, please connect it now after you shutdown your Odroid and disconnected it from the power supply.
@@ -310,12 +310,12 @@ This can take up to a week or two when using an Odroid XU4, depending mostly on 
 ## Bitcoin Core upgrade
 
 If you want to upgrade to a new release of Bitcoin Core in the future, check out the FAQ section:
-[How to upgrade Bitcoin Core](../../faq.md#how-to-upgrade-bitcoin-core)
+[How to upgrade Bitcoin Core](../../../faq.md#how-to-upgrade-bitcoin-core)
 
 #### Run Bitcoind and Sync Blockchain
 
 #### Using Bitcoin Node
 
-------
+---
 
-<< Back: [+ Raspberry Pi](index.md)
+<< Back: [+ Raspberry Pi](../index.md)
