@@ -54,7 +54,7 @@ If you somehow locked yourself out of your Pi, you can connect it to a display a
 
 ### Fix bad USB3 performance
 
-If the speed of your USB3 drive tested with `hdparm` in the [System configuration](system-configuration.md) section is not acceptable, we need to configure the USB driver to ignore the UAS interface.
+If the speed of your USB3 drive tested with `hdparm` in the [System configuration](raspberry-pi/system-configuration.md) section is not acceptable, we need to configure the USB driver to ignore the UAS interface.
 
 * Get the Vendor and Product ID for your USB3 drive.
   Run the following command and look for the name of your drive or adapter.
@@ -103,9 +103,9 @@ The additional configuration parameters (called "quirks") for the USB driver mus
 
 You should see a significant increase in performance.
 If the test still shows a very slow read speed, your drive or USB3 adapter might not be compatible with the Raspberry Pi.
-In that case we recommend visiting the [Raspberry Pi Troubleshooting forum](https://forums.raspberrypi.com/viewforum.php?f=28) or simply trying out hardware alternatives.
+In that case we recommend visiting the [Raspberry Pi Troubleshooting forum](https://forums.raspberrypi.com/viewforum.php?f=28){:target="_blank"} or simply trying out hardware alternatives.
 
-🔍 *more: [Raspberry Pi forum: bad performance with USB3 SSDs](https://forums.raspberrypi.com/viewtopic.php?f=28&t=245931)*
+🔍 *more: [Raspberry Pi forum: bad performance with USB3 SSDs](https://forums.raspberrypi.com/viewtopic.php?f=28&t=245931){:target="_blank"}*
 
 ---
 
@@ -113,7 +113,7 @@ In that case we recommend visiting the [Raspberry Pi Troubleshooting forum](http
 
 The most important ports are 22, 8333, 9735 and 1900/udp. Others can be necessary for bonus guides, and there may be additional ports open on your Pi (eg. the `(v6)` variants).
 
-It is essential to have the right subnet mask, like `192.168.0.0/24`  (see [guide](security.md#enabling-the-uncomplicated-firewall)).
+It is essential to have the right subnet mask, like `192.168.0.0/24`  (see [guide](raspberry-pi/security.md#enabling-the-uncomplicated-firewall)).
 
 ```
 $ sudo ufw status
