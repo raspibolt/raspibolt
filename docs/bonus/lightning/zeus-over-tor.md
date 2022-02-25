@@ -16,7 +16,7 @@ Difficulty: Intermediate
 Status: Not tested v3
 {: .label .label-yellow }
 
-Download the Zeus app, APKs available here: https://github.com/ZeusLN/zeus/releases, 
+Download the Zeus app, APKs available here: [https://github.com/ZeusLN/zeus/releases](https://github.com/ZeusLN/zeus/releases){:target="_blank"}, 
 on F-Droid and Google Play.
 
 Log in to your RaspiBolt through ssh.
@@ -59,7 +59,7 @@ $ export GOPATH=/usr/local/gocode
 $ export PATH=$PATH:$GOPATH/bin
 ```
 
-Install [lndconnect](https://github.com/LN-Zap/lndconnect):
+Install [lndconnect](https://github.com/LN-Zap/lndconnect){:target="_blank"}:
 ```
 $ cd ~/download
 $ wget https://github.com/LN-Zap/lndconnect/releases/download/v0.1.0/lndconnect-linux-armv7-v0.1.0.tar.gz
