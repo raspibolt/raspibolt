@@ -16,14 +16,15 @@ Difficulty: Intermediate
 Status: Not tested v3
 {: .label .label-yellow }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
+---
+
+Table of contents
+{: .text-delta }
+
 1. TOC
 {:toc}
-</details>
+
+---
 
 This is a guide for upgrading the external drive. Periodically, as the size of the blockchain grows, you will need to upgrade to a larger drive.
 
@@ -34,7 +35,7 @@ This is a guide for upgrading the external drive. Periodically, as the size of t
 You should make a backup of any important files before proceeding with this operation.
 
 At a minimum, it's recommended to make a backup of the LND static channel backups.
-Please check the [Lightning Channel Backup](../../channel-backup.md) section for more details.
+Please check the [Channel Backup](../../lightning/channel-backup.md) section for more details.
 
 ---
 
@@ -102,7 +103,7 @@ The Raspberry Pi 4 supports USB3 drives, but is very picky.
 A lot of USB3 adapters for external drives are not compatible and need a manual workaround to be usable.
 We will now check if your drive works well as-is, or if additional configuration is needed.
 
-🔍 *more: [Raspberry Pi forum: bad performance with USB3 SSDs](https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=245931){:target="_blank"}*
+🔍 *more: [Raspberry Pi forum: bad performance with USB3 SSDs](../../raspberry-pi/system-configuration.md#check-usb3-drive-performance){:target="_blank"}*
 
 * First, lets get some information about your drive from the kernel messages.
   Clear the kernel buffer, and follow the new messages (let the last command run):
@@ -159,7 +160,7 @@ We will now check if your drive works well as-is, or if additional configuration
   It's very important to keep track of which block device and partition applies to the original vs new drive
 
 * If your external drive (e.g. `sdb`) does not contain any partitions (e.g. no `sdb1`), create a partition first using as described here:
-  <https://superuser.com/questions/643765/creating-ext4-partition-from-console>
+  [https://superuser.com/questions/643765/creating-ext4-partition-from-console](https://superuser.com/questions/643765/creating-ext4-partition-from-console){:target="_blank"}
 
 * Now, let's test the read performance of your drive.
   Make sure to use the right partition name (used with the `/dev/` prefix).
