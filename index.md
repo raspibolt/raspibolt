@@ -64,20 +64,20 @@ If you like to learn about Linux, Bitcoin, and Lightning, then this guide is for
 
 We aim to keep the core of this guide well maintained and up-to-date:
 
-1. [Raspberry Pi](raspberry-pi/index.md): prepare the hardware and set up the operating system
-1. [Bitcoin](bitcoin/index.md): sync your own Bitcoin full node, Electrum server, and Blockchain Explorer
-1. [Lightning](lightning/index.md): run your own Lightning client with web-based node management
+1. [Raspberry Pi](docs/raspberry-pi/index.md): prepare the hardware and set up the operating system
+1. [Bitcoin](docs/bitcoin/index.md): sync your own Bitcoin full node, Electrum server, and Blockchain Explorer
+1. [Lightning](docs/lightning/index.md): run your own Lightning client with web-based node management
 
 The bonus section contains more specific guides that build on top of the main section.
 More fun, lots of knowledge, but with lesser maintenance guarantees.
 Everything is optional.
 
-* [Bonus guides](bonus/index.md)
+* [Bonus guides](docs/bonus/index.md)
 
 Running into issues?
 
-* [Troubleshooting](troubleshooting.md): first aid to debug your system
-* [FAQ](faq.md): frequently asked questions and further reading
+* [Troubleshooting](docs/troubleshooting.md): first aid to debug your system
+* [FAQ](docs/faq.md): frequently asked questions and further reading
 
 ---
 
@@ -110,4 +110,4 @@ If you're looking for an older version of this guide, you can still check out th
 
 ---
 
-Get started: [Backstory >>](backstory.md)
+Get started: [Backstory >>](docs/backstory.md)
