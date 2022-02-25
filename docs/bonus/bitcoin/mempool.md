@@ -21,7 +21,7 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
-![Mempool](../../images/mempool.png)
+![Mempool](../../../images/mempool.png)
 
 ---
 
@@ -56,7 +56,7 @@ To run Mempool, we need to run Node.js v16 or above.
   > v16.13.1
   ```
 
-* If Node.js is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
+* If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
 ### Firewall
 
