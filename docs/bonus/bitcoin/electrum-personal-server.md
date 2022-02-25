@@ -28,15 +28,15 @@ Status: Not tested v3
 
 ### Introduction
 
-The best way to safekeep your bitcoin (meaning the best combination of security and usability) is to use a hardware wallet (like [Ledger](https://www.ledgerwallet.com/) or [Trezor](https://trezor.io/)) in combination with your own Bitcoin node. This gives you security, privacy and eliminates the need to trust a third party to verify transactions.
+The best way to safekeep your bitcoin (meaning the best combination of security and usability) is to use a hardware wallet (like [Ledger](https://www.ledgerwallet.com/){:target="_blank"} or [Trezor](https://trezor.io/)){:target="_blank"} in combination with your own Bitcoin node. This gives you security, privacy and eliminates the need to trust a third party to verify transactions.
 
 With the RaspiBolt setup, the Bitcoin Core wallet on the node can only be used from the command line as no graphical user interface is installed. As Bitcoin Core does not offer support for hardware wallets, only a "hot wallet" (exposed to the internet) can be realized.
 
-One possibility to use Bitcoin Core with more functionality is to set up an additional [ElectrumX](https://github.com/kyuupichan/electrumx) server and then use the great [Electrum wallet](https://electrum.org/) (on your regular computer) that integrates with hardware wallets. But this setup is not easy, and the overhead is more than a Raspberry Pi can handle.
+One possibility to use Bitcoin Core with more functionality is to set up an additional [ElectrumX](https://github.com/kyuupichan/electrumx){:target="_blank"} server and then use the great [Electrum wallet](https://electrum.org/){:target="_blank"} (on your regular computer) that integrates with hardware wallets. But this setup is not easy, and the overhead is more than a Raspberry Pi can handle.
 
-The new [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) makes it possible to connect Electrum (using your hardware wallet) directly to your RaspiBolt. In contrast to ElectrumX, this is not a full server that serves multiple users, but your own dedicated backend.
+The new [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server){:target="_blank"} makes it possible to connect Electrum (using your hardware wallet) directly to your RaspiBolt. In contrast to ElectrumX, this is not a full server that serves multiple users, but your own dedicated backend.
 
-Before using this setup, please familiarize yourself with all components by setting up your own Electrum wallet, visiting the linked project websites and reading [The Electrum Personal Server Will Give Users the Full Node Security They Need](https://bitcoinmagazine.com/articles/electrum-personal-server-will-give-users-full-node-security-they-need/) in Bitcoin Magazine.
+Before using this setup, please familiarize yourself with all components by setting up your own Electrum wallet, visiting the linked project websites and reading [The Electrum Personal Server Will Give Users the Full Node Security They Need](https://bitcoinmagazine.com/articles/electrum-personal-server-will-give-users-full-node-security-they-need/){:target="_blank"} in Bitcoin Magazine.
 
 ### Preparations
 
@@ -46,7 +46,7 @@ Before using this setup, please familiarize yourself with all components by sett
   $ sudo pip3 install setuptools
   ```
 
-* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](../../security.md#enabling-the-uncomplicated-firewall))
+* Configure firewall to allow incoming requests (please check if you need to adjust the subnet mask as [described in original setup](../../raspberry-pi/security.md#enabling-the-uncomplicated-firewall))
   ```sh
   $ sudo ufw allow from 192.168.0.0/24 to any port 50002 comment 'allow EPS from local network'
   $ sudo ufw enable
@@ -66,7 +66,7 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
 * Open a "bitcoin" user session and change into the home directory
   `$ sudo su - bitcoin`
 
-* Download, verify and extract the latest release (check the [Releases page](https://github.com/chris-belcher/electrum-personal-server/releases) on Github for the correct links)
+* Download, verify and extract the latest release (check the [Releases page](https://github.com/chris-belcher/electrum-personal-server/releases){:target="_blank"} on Github for the correct links)
 
   ```sh
   # create new directory on external hdd
@@ -118,10 +118,10 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
   $ pip3 install --user .
   ```
 
-  ![Install Electrum Personal Server with Python Pip](../../images/60_eps_pip_install.png)
+  ![Install Electrum Personal Server with Python Pip](../../../images/60_eps_pip_install.png)
 
 ### First start
-The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately, in Raspberry Pi OS this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path), but it's not necessary in this guide.
+The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately, in Raspberry Pi OS this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path){:target="_blank"}, but it's not necessary in this guide.
 
   * The first time the server is run it will import all configured addresses as watch-only into the Bitcoin node. This can take up to 10 minutes, after that the program will exit.
     ```sh
@@ -143,7 +143,7 @@ The Electrum Personal Server scripts are installed in the directory `/home/bitco
     $ /home/bitcoin/.local/bin/electrum-personal-server /home/bitcoin/electrum-personal-server/config.cfg
     ```
 
-  [![Run Electrum Personal Server manually](../../images/60_eps_first-start.png)](../../images/60_eps_first-start.png)
+  [![Run Electrum Personal Server manually](../../../images/60_eps_first-start.png)
 
 ### Connect Electrum
 
@@ -153,11 +153,11 @@ On your regular computer, configure Electrum to use your RaspiBolt:
 * Uncheck "Select server automatically"
 * Enter the IP of your RaspiBolt (eg. 192.168.0.20) in the address field
 
-  [![Connect Electrum to RaspiBolt](../../images/60_eps_electrum-connect.png)](../../images/60_eps_electrum-connect.png)
+  [![Connect Electrum to RaspiBolt](../../../images/60_eps_electrum-connect.png)
 
 * `Close` and check connection in tab "Console"
 
-  [![Check Electrum console](../../images/60_eps_electrumwallet.png)](../../images/60_eps_electrumwallet.png)
+  [![Check Electrum console](../../../images/60_eps_electrumwallet.png)
 
 * This can also be achived by starting the Electrum wallet with the following command line arguments:
   `--oneserver --server 192.168.0.20:50002:s`
