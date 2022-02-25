@@ -16,14 +16,15 @@ Difficulty: Easy
 Status: Not tested v3
 {: .label .label-yellow }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
+---
+
+Table of contents
+{: .text-delta }
+
 1. TOC
 {:toc}
-</details>
+
+---
 
 ### Command prompt
 You can prettify your command prompt for each user by enabling color output and setting a custom prompt.
@@ -42,12 +43,12 @@ PS1="${debian_chroot:+($debian_chroot)}\[\e[33m\]\u \[\033[01;34m\]\w\[\e[33;40m
 alias ls='ls -la --color=always'
 ```
 
-![Pimp prompt](../../images/60_pimp_prompt.png)
+![Pimp prompt](../../../images/60_pimp_prompt.png)
 
 * Reload configuration
   `source /home/admin/.bashrc`
 
-![Pimped prompt](../../images/60_pimp_prompt_result.png)
+![Pimped prompt](../../../images/60_pimp_prompt_result.png)
 
 ### Bash completion
 As user “admin”, install bash completion scripts for Bitcoin Core and all Lightning projects. You then can complete commands by pressing the Tab key (e.g. bitcoin-cli getblockch [Tab] → bitcoin-cli getblockchaininfo )
