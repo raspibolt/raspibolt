@@ -48,7 +48,7 @@ Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-cli
 
 ### Firewall & reverse proxy
 
-In the [Security section](security.md), we already set up NGINX as a reverse proxy.
+In the [Security section](../../docs/raspberry-pi/security.md), we already set up NGINX as a reverse proxy.
 Now we can add the Electrs configuration.
 
 * Enable NGINX reverse proxy to add SSL/TLS encryption to the Electrs communication.
@@ -346,14 +346,14 @@ If you start Electrum, the green LED in the bottom right indicates an active con
 If you connect over Tor, make sure that Tor is installed on your regular computer.
 There are two options:
 
-* Easy: download, install and run [Tor Browser](https://www.torproject.org).
+* Easy: download, install and run [Tor Browser](https://www.torproject.org){:target="_blank"}.
   * The application must be started manually and run in the background whe you want to connect over Tor.
   * Tor proxy available on port `9150`
 
 * Expert: install Tor as a background service
   * The background service must be installed, and is always active in the background.
   * Tor proxy available on port `9050`
-  * See further installation instructions for [Windows](https://bitstobytes.org/tor), [macOS](https://deepdarkweb.github.io/how-to-install-tor-on-macos-tutorial/), and Linux (`sudo apt install tor`).
+  * See further installation instructions for [Windows](https://bitstobytes.org/tor){:target="_blank"}, [macOS](https://deepdarkweb.github.io/how-to-install-tor-on-macos-tutorial/){:target="_blank"}, and Linux (`sudo apt install tor`).
 
 Now we need to specifiy the Tor address for Electrs and the local Tor proxy port in the Electrum configuration.
 
@@ -403,7 +403,7 @@ If you have Tor installed on your computer, you can access your RaspiBolt remote
 * Enable it and confirm the proxy address (usually the default `127.0.0.1:9050`)
 * When adding your RaspiBolt full node as described above, use your Tor address (e.g. `gwdllz5g7vky2q4gr45zGuvopjzf33czreca3a3exosftx72ekppkuqd.onion:50002`)
 
-![BitBoxApp](images/electrum_BitBoxApp.png)
+![BitBoxApp](../../images/electrum_BitBoxApp.png)
 
 ---
 
