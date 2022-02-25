@@ -122,7 +122,7 @@ If the measured speed is more than 50 MB/s, you're good, no further action neede
 
 If the speed of your USB3 drive is not acceptable, we need to configure the USB driver to ignore the UAS interface.
 
-Check the [Fix bad USB3 performance](../../troubleshooting.md#fix-bad-usb3-performance) entry in the Troubleshooting guide to learn how.
+Check the [Fix bad USB3 performance](../troubleshooting.md#fix-bad-usb3-performance) entry in the Troubleshooting guide to learn how.
 
 ---
 
