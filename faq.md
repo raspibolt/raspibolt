@@ -61,7 +61,7 @@ Copy it to a USB thumbdrive, so that you can restore it later.
 * Copy the whole LND data directory to the thumbdrive
 
   ```sh
-  $ sudo rsync -rhvP --append-verify /mnt/ext/lnd /mnt/thumbdrive/
+  $ sudo rsync -rhvPog --append-verify /mnt/ext/lnd /mnt/thumbdrive/
   ```
 
 * Also make sure to create a Static Channel Backup file and copy it to the thumbdrive
@@ -86,7 +86,8 @@ Once you set up your new RaspiBolt 3, restore your old LND node setup.
   $ sudo mkdir /mnt/thumbdrive
   $ lsblk -pli
   $ sudo mount /dev/sdb1 /mnt/thumbdrive/
-  $ sudo rsync -rhvP --append-verify /mnt/thumbdrive/lnd /data
+  $ sudo rsync -rhvPog --append-verify /mnt/thumbdrive/lnd /data
+  $ sudo chown -R lnd:lnd /data/lnd
   ```
 
 ### Backup & Restore Bitcoin data
@@ -101,13 +102,13 @@ When **Reusing the old drive** for your new node, you must first copy the data t
 * Example for network copy
 
     ```sh
-    $ rsync -rhvP --append-verify admin@raspibolt.local:/mnt/ext/bitcoin /your-local-directory
+    $ rsync -rhvPog --append-verify admin@raspibolt.local:/mnt/ext/bitcoin /your-local-directory
     ```
 
 * Example for local drive-to-drive copy with both drives mounted
 
     ```sh
-    $ rsync -rhvP --append-verify /mnt/old-raspibolt-drive/bitcoin /mnt/raspibolt-v3-drive/data
+    $ rsync -rhvPog --append-verify /mnt/old-raspibolt-drive/bitcoin /mnt/raspibolt-v3-drive/data
     ```
 
 ---

@@ -30,7 +30,7 @@ has_toc: false
 * **[lnchannels](script-lnchannels.md)** - a simple channels viewer
 
 #### *GUI - Desktop*
-* **[Zap](zap.md)** - a cross platform Lightning Network wallet focused on user experience and ease of use
+* **[Zap](zap-desktop.md)** - a cross platform Lightning Network wallet focused on user experience and ease of use
 
 #### *GUI - Mobile*
 * **[Zeus (Android)](zeus-over-tor.md)** - connect to your node over VPN or Tor, make payments with lightning or on-chain, manage your channels, and more
