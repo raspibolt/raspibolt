@@ -49,7 +49,7 @@ Table of contents
   $ pip3 --version
   ```
 
-* if you need to install pip3
+* If you need to install pip3
 
   ```sh
   $ sudo apt install python3-pip
