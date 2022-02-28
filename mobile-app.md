@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Mobile app
+title: Web app
 nav_order: 60
 parent: Lightning
 ---
@@ -96,7 +96,7 @@ On iOS, download it from the Apple App Store.
 
 * Open Zeus and click on 'Get started'
 
-* Select 'Connect a node' at the top, and then '+ Add a new node'
+* Select 'Connect to an lnd node' at the top, and then '+ Add a new node'
 
 * Click on 'Use Tor'
 
