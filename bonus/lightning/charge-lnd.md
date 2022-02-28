@@ -83,13 +83,13 @@ Table of contents
   $ sudo adduser chargelnd lnd
   ```
   
-* With the "charge-lnd" user, clone the charge-lnd repository, enter the directory and install the program and required packages using `pip3` (do _not_ forget the dot at the end of the pip command!)
+* With the "charge-lnd" user, clone the charge-lnd repository, enter the directory and install the program and required packages using `pip3`
 
   ```sh
   $ sudo su - chargelnd
   $ git clone https://github.com/accumulator/charge-lnd.git
   $ cd charge-lnd
-  $ pip3 install -r requirements.txt .
+  $ pip3 install -r requirements.txt
   ```
 
 * Add the `charge-lnd` binary file location to `PATH`
