@@ -252,7 +252,7 @@ Then exit the charge-lnd user.
 
 You can make the script run automatically at regular time intervals by using a cron job. For example, you could run the charge-lnd program every 6 hours.
 
-🚨 Warning: It is not in your interest, nor in the interest of the wider network, to set up very short intervals between each policay change. Frequent channel policy update spams the LN gossip network and results in less accurate LN graphs overall as it takes a long time for a policy update to reach most of the nodes in the network.
+🚨 Warning: It is not in your interest, nor in the interest of the wider network, to set up very short intervals between each policy change. Frequent channel policy update spams the LN gossip network and results in less accurate LN graphs overall as it takes a long time for a policy update to reach most of the nodes in the network.
 
 * We the "admin" user, create and edit (option -e) the `crontab` file of the "charge-lnd" user (option -u). 
 If asked, select the `/bin/nano` text editor (type 1 and enter)
