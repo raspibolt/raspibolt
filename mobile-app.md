@@ -86,25 +86,25 @@ lnconnect generates a URI and displays it as a QR code that Zeus can read.
 
 ### Install the Zeus app
 
-On Android, download the Zeus app on F-Droid or Google Play.  
-
-On iOS, download it from the Apple App Store.
+Download the Zeus app for your mobile phone. 
+Check the [Zeus website](https://zeusln.app/){:target="_blank"} for the direct download links to the Apple App Store or Google Play. 
+Or get it from the [F-Droid store](https://f-droid.org/en/packages/app.zeusln.zeus/){:target="_blank"}, the catalogue of FOSS Android apps.
 
 ---
 
 ### Connect Zeus to your node
 
-* Open Zeus and click on 'Get started'
+* Open Zeus and click on `Get started`
 
-* Select 'Connect to an lnd node' at the top, and then '+ Add a new node'
+* Click on `CONNECT A NODE` and then tap on the `+` at the top to add your node
 
-* Click on 'Use Tor'
+* Enter a Nickname for your node (e.g., "RaspiBolt")
 
-* Click on 'Scan LNDConnect config' and allow Zeus to take pictures when prompted
+* Click on `Scan lndconnect config` and, if prompted, allow Zeus to use the camera
 
 * Scan the QR code generated earlier
 
-* Click on 'Save settings'. Zeus is now connecting to your node, and it might take a while the first time.
+* Click on `SAVE NODE CONFIG`. Zeus is now connecting to your node, and it might take a while the first time.
 
 ---
 
@@ -112,7 +112,9 @@ On iOS, download it from the Apple App Store.
 
 Anyone using Zeus on your phone has control over your node and all its funds. It is strongly recommended to set up a password for the app.
 
-* In the app, go to the settings and select 'Security' and set a passphrase (save your passphrase somewhere safe, e.g., your password manager).
+* In the app, tap on the Zeus icon in the top-left corner
+* Click on `Security` and `Set/Change Password` to enter a password or PIN
+* Save your password or PIN somewhere safe, e.g., in your password manager
 
 ---
 
@@ -126,7 +128,7 @@ Below is a list of Zeus existing and planned features:
 
 ## Update
 
-To update Zeus, update the app using F-Droid, Play Store or the Apple Store.
+To update Zeus, update the app using the same app store you used to install it.
 
 ---
 
