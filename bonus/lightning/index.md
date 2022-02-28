@@ -40,6 +40,7 @@ has_toc: false
 
 ## Liquidity management (rebalancing)
 * **[Balance of Satoshis](balance-of-satoshis.md)** - a tool to rebalance your channels and set up a LN node monitoring Telegram bot
+* **[rebalance-lnd](rebalance-lnd.md)** - a simple script to manage your channel liquidity by doing circular rebalancing
 
 ---
 
