@@ -5,7 +5,7 @@ nav_order: 10
 parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD040 -->
-{% include_relative include_metatags.md %}
+{% include include_metatags.md %}
 
 # Preparations
 {: .no_toc }

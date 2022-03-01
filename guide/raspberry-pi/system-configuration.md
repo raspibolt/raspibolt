@@ -5,7 +5,7 @@ nav_order: 30
 parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-{% include_relative include_metatags.md %}
+{% include include_metatags.md %}
 
 # System configuration
 {: .no_toc }
@@ -39,7 +39,7 @@ We will use the primary user "admin" instead of "pi" to make this guide more uni
   ```sh
   $ sudo adduser admin sudo
   ```
-  
+
 
 * Exit your current "pi" user session and exit SSH
 

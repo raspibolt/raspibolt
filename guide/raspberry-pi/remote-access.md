@@ -5,7 +5,7 @@ nav_order: 20
 parent: Raspberry Pi
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
-{% include_relative include_metatags.md %}
+{% include include_metatags.md %}
 
 # Remote access
 {: .no_toc }
