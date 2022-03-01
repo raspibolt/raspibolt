@@ -43,6 +43,11 @@ has_toc: false
 
 ---
 
+## Fee management
+* **[charge-lnd](charge-lnd.md)** - a simple policy-based fee manager for LND
+
+---
+
 ## Even more Extras 
 
 ### [RaspiBolt Extras by Rob Clark](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md){:target="_blank"}
