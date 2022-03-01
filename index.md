@@ -46,7 +46,7 @@ Your Bitcoin node will offer the following functionality:
 * **Bitcoin**: direct and trustless participation in the Bitcoin peer-to-peer network, full validation of blocks and transactions
 * **Electrum server**: connect your compatible wallets (including hardware wallets) to your own node
 * **Blockchain Explorer**: web-based Explorer to privately look up transactions, blocks, and more
-* **Lightning**: full client with stable long-term channels and a web-based management interface
+* **Lightning**: full client with stable long-term channels and web-based and mobile-based management interfaces
 * **Always on**: services are constantly synced and available 24/7
 * **Reachable from anywhere**: connect to all your services through the Tor network
 
@@ -66,7 +66,7 @@ We aim to keep the core of this guide well maintained and up-to-date:
 
 1. [Raspberry Pi](raspberry-pi.md): prepare the hardware and set up the operating system
 1. [Bitcoin](bitcoin.md): sync your own Bitcoin full node, Electrum server, and Blockchain Explorer
-1. [Lightning](lightning.md): run your own Lightning client with web-based node management
+1. [Lightning](lightning.md): run your own Lightning client with web-based and mobile-based node management
 
 The bonus section contains more specific guides that build on top of the main section.
 More fun, lots of knowledge, but with lesser maintenance guarantees.
