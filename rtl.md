@@ -307,4 +307,4 @@ Make sure to read the release notes first.
 
 ---
 
-Next: [Mobile Wallet >>](lightning-mobile-wallet.md)
+Next: [Mobile app >>](mobile-app.md)
