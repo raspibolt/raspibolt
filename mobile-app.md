@@ -94,17 +94,17 @@ Or get it from the [F-Droid store](https://f-droid.org/en/packages/app.zeusln.ze
 
 ### Connect Zeus to your node
 
-* Open Zeus and click on `Get started`
+* Open Zeus and click on "GET STARTED"
 
-* Click on `CONNECT A NODE` and then tap on the `+` at the top to add your node
+* Click on "CONNECT A NODE" and then tap on the "+" at the top to add your node
 
 * Enter a Nickname for your node (e.g., "RaspiBolt")
 
-* Click on `Scan lndconnect config` and, if prompted, allow Zeus to use the camera
+* Click on "Scan lndconnect config" and, if prompted, allow Zeus to use the camera
 
 * Scan the QR code generated earlier
 
-* Click on `SAVE NODE CONFIG`. Zeus is now connecting to your node, and it might take a while the first time.
+* Click on "SAVE NODE CONFIG". Zeus is now connecting to your node, and it might take a while the first time.
 
 ---
 
@@ -113,7 +113,7 @@ Or get it from the [F-Droid store](https://f-droid.org/en/packages/app.zeusln.ze
 Anyone using Zeus on your phone has control over your node and all its funds. It is strongly recommended to set up a password for the app.
 
 * In the app, tap on the Zeus icon in the top-left corner
-* Click on `Security` and `Set/Change Password` to enter a password or PIN
+* Click on "Security" and "Set/Change Password" to enter a password or PIN
 * Save your password or PIN somewhere safe, e.g., in your password manager
 
 ---
