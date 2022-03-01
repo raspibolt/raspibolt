@@ -412,7 +412,7 @@ If everything is running smoothly, this is the perfect time to familiarize yours
   * you definitely need to have a [real copy](https://bitcoinbook.info/){:target="_blank"} of this book!
   * read it online on [Github](https://github.com/bitcoinbook/bitcoinbook){:target="_blank"}
 
-  ![Mastering Bitcoin](images/30_mastering_bitcoin_book.jpg){:target="_blank"}
+  ![Mastering Bitcoin](../../images/30_mastering_bitcoin_book.jpg){:target="_blank"}
 
 * [**Learning Bitcoin from the Command Line**](https://github.com/ChristopherA/Learning-Bitcoin-from-the-Command-Line/blob/master/README.md){:target="_blank"} by Christopher Allen gives a thorough deep dive into understanding the technical aspects of Bitcoin.
 

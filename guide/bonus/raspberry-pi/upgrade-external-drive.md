@@ -257,7 +257,7 @@ We will now check if your drive works well as-is, or if additional configuration
   #   use  dphys-swapfile swap[on|off]  for that
   ```
 
-  🔍 *more: [complete fstab guide](http://www.linuxstall.com/fstab){:target="_blank"}*
+  🔍 *more: [How fstab works – introduction to the /etc/fstab file on Linux](https://linuxconfig.org/how-fstab-works-introduction-to-the-etc-fstab-file-on-linux){:target="_blank"}*
 
 * Create the directory to add the hard disk and set the correct owner
 

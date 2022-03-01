@@ -48,7 +48,7 @@ Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-cli
 
 ### Firewall & reverse proxy
 
-In the [Security section](../../docs/raspberry-pi/security.md#), we already set up NGINX as a reverse proxy.
+In the [Security section](../raspberry-pi/security.md), we already set up NGINX as a reverse proxy.
 Now we can add the Electrs configuration.
 
 * Enable NGINX reverse proxy to add SSL/TLS encryption to the Electrs communication.
@@ -311,7 +311,7 @@ Only proceed with the next section once Electrs is ready.
 
 [Electrum wallet](https://electrum.org){:target="_blank"} is a well-established, feature-rich Bitcoin wallet for power-users that supports most hardware wallets.
 
-![Electrum Wallet local](images/electrum-wallet-tor.png){:target="_blank"}
+![Electrum Wallet local](../../images/electrum-wallet-tor.png){:target="_blank"}
 
 ### Force single server connection
 

@@ -43,7 +43,7 @@ If you installed BTC RPC Explorer, then you've already accomplished this step.
 
 ### Firewall & reverse proxy
 
-In the [Security section](../../docs/raspberry-pi/security.md#prepare-nginx-reverse-proxy), we already set up NGINX as a reverse proxy.
+In the [Security section](../raspberry-pi/security.md#prepare-nginx-reverse-proxy), we already set up NGINX as a reverse proxy.
 Now we can add the RTL configuration.
 
 * Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to RTL

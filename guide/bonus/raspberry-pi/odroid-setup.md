@@ -310,7 +310,7 @@ This can take up to a week or two when using an Odroid XU4, depending mostly on 
 ## Bitcoin Core upgrade
 
 If you want to upgrade to a new release of Bitcoin Core in the future, check out the FAQ section:
-[How to upgrade Bitcoin Core](../../../faq.md#how-to-upgrade-bitcoin-core)
+[How to upgrade Bitcoin Core](../../faq.md#how-to-upgrade-bitcoin-core)
 
 #### Run Bitcoind and Sync Blockchain
 

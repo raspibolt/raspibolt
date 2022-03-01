@@ -94,7 +94,7 @@ $ ls -la
   by pressing ⬆️ (arrow up) and ⬇️ (arrow down) on your keyboard, you can recall previously entered commands.
 
 * **Common Linux commands**:
-  For a very selective reference list of Linux commands, please refer to the [FAQ](faq.md) page.
+  For a very selective reference list of Linux commands, please refer to the [FAQ](../faq.md) page.
 
 * **Use admin privileges**:
   Our regular user has no direct admin privileges.

@@ -57,7 +57,7 @@ Connect your external drive to the Raspberry Pi using one of the blue USB3 ports
 
 Follow the [System configuration](../../raspberry-pi/system-configuration.md) section until you reach [Data directory](../../raspberry-pi/system-configuration.md#data-directory), continuing with the instructions below.
 
-In case your external drive shows poor performance, follow the [Fix bad USB3 performance](../../../troubleshooting.md#fix-bad-usb3-performance) instructions, as mentioned in the guide.
+In case your external drive shows poor performance, follow the [Fix bad USB3 performance](../../troubleshooting.md#fix-bad-usb3-performance) instructions, as mentioned in the guide.
 
 
 #### Format external drive

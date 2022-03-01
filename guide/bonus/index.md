@@ -27,7 +27,7 @@ In the following categories, you can find various additional and optional guides
 All bonus guides are rated with labels to help you assess the difficulty of each guide, and if it is tested against the most recent version of the main guide.
 
 * Difficulty: indicates how difficult the bonus guide is in term of installation procedure or usage
-  
+
   Difficulty: Easy
   {: .label .label-green }
 
@@ -41,7 +41,7 @@ All bonus guides are rated with labels to help you assess the difficulty of each
 
   Status: Tested v3
   {: .label .label-green }
-  
+
   Status: Not tested v3
   {: .label .label-yellow }
 

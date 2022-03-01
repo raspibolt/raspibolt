@@ -64,20 +64,20 @@ If you like to learn about Linux, Bitcoin, and Lightning, then this guide is for
 
 We aim to keep the core of this guide well maintained and up-to-date:
 
-1. [Raspberry Pi](docs/raspberry-pi/index.md): prepare the hardware and set up the operating system
-1. [Bitcoin](docs/bitcoin/index.md): sync your own Bitcoin full node, Electrum server, and Blockchain Explorer
-1. [Lightning](docs/lightning/index.md): run your own Lightning client with web-based node management
+1. [Raspberry Pi](guide/raspberry-pi/index.md): prepare the hardware and set up the operating system
+1. [Bitcoin](guide/bitcoin/index.md): sync your own Bitcoin full node, Electrum server, and Blockchain Explorer
+1. [Lightning](guide/lightning/index.md): run your own Lightning client with web-based node management
 
 The bonus section contains more specific guides that build on top of the main section.
 More fun, lots of knowledge, but with lesser maintenance guarantees.
 Everything is optional.
 
-* [Bonus guides](docs/bonus/index.md)
+* [Bonus guides](guide/bonus/index.md)
 
 Running into issues?
 
-* [Troubleshooting](docs/troubleshooting.md): first aid to debug your system
-* [FAQ](docs/faq.md): frequently asked questions and further reading
+* [Troubleshooting](guide/troubleshooting.md): first aid to debug your system
+* [FAQ](guide/faq.md): frequently asked questions and further reading
 
 ---
 
@@ -100,7 +100,7 @@ Unfortunately, a seamless update is not possible because RaspiBolt 3 uses an ent
 The general structure of the setup stays the same, however.
 We recommend setting up the RaspiBolt from scratch, but you can then copy over essential data.
 
-[Read how to do that in the FAQ section](docs/faq.md#can-i-update-my-raspibolt-2-to-the-new-version).
+[Read how to do that in the FAQ section](guide/faq.md#can-i-update-my-raspibolt-2-to-the-new-version).
 
 ## Looking for an older version of this guide?
 
@@ -110,4 +110,4 @@ If you're looking for an older version of this guide, you can still check out th
 
 ---
 
-Get started: [Backstory >>](docs/backstory.md)
+Get started: [Backstory >>](guide/backstory.md)

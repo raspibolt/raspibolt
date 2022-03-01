@@ -47,7 +47,7 @@ This was the original goal of the RaspiBolt guide back in 2017: simply buying a 
 I used the [Eclair](https://github.com/ACINQ/eclair){:target="_blank"} Lighting implementation back then, on Lightning testnet, as mainnet was not even running yet.
 Oh, how time flies...
 
-[![Buying a Blockaccino](images/backstory_blockaccino.png)](https://vimeo.com/252693058){:target="_blank"}
+[![Buying a Blockaccino](../images/backstory_blockaccino.png)](https://vimeo.com/252693058){:target="_blank"}
 
 Watch the [original screencast](https://vimeo.com/252693058){:target="_blank"} from back then.
 
