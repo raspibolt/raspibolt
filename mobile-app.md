@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Web app
+title: Mobile app
 nav_order: 60
 parent: Lightning
 ---
