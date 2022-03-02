@@ -37,4 +37,10 @@ has_toc: false
 
 ---
 
+## Testnet
+
+* **[Running a Testnet Raspibolt Node](testnet.md)** - configure your RaspiBolt for use on testnet
+
+---
+
 << Back: [Bonus Section](../index.md)
