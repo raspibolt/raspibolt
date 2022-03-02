@@ -142,11 +142,10 @@ To use rebalance-lnd, use the "rebalance-lnd" user.
 
 If you want to uninstall rebalance-lnd:
 
-* Log in with the "root" user and delete the "rebalance-lnd" user. This also removes all files of that user, including the rebalance-lnd installation.
+* Log in with the "admin" user and delete the "rebalance-lnd" user. This also removes all files of that user, including the rebalance-lnd installation.
 
   ```sh
-  $ sudo su -
-  $ userdel -r rebalance-lnd
+  $ sudo userdel -r rebalance-lnd
   $ exit
   ```
 
