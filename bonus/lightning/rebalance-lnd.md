@@ -107,15 +107,15 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
 
 To use rebalance-lnd, use the "rebalance-lnd" user.
 
-* To rebalance two channels, use the following command (the channel ID is the short 18 digits channel ID, but 123456x123x1 and 123456:123:1 formats are also accepted)
+* To rebalance a channel, simply choose a channel with too little inbound capacity (e.g., a 2M sats channel with only 200,000 sats on your local side). The program will automatically select the source channel, the amount sent and the maximum economic fee that should be pay.
 
  ```sh
-  $ rebalance.py --amount AmountInSats --fee-ppm-limit FeeRateInPPM --from NodeAShortChannelID --to NodeBShortChannelID
-  > Sending AmountInSats satoshis from channel [...]
-  > [...]
+  $ rebalance.py --to ChannelID
   ```
-  
-* There are many more options available to fine-tuned your rebalancing strategy. Find more information about them in the [README](https://github.com/C-Otto/rebalance-lnd){:target="_blank"} page of C-Otto's repository.
+
+Note that the fee selection is dependent on the fee policy applied to the channels used in the rebalance. Make sure that you are ok with the fee rates for these channels before running the rebalancing script.  
+
+There are many more options available to fine-tuned your rebalancing strategy. Find more information about them in the [README](https://github.com/C-Otto/rebalance-lnd){:target="_blank"} page of C-Otto's repository. Also, check [this video tutorial](https://youtu.be/0r3Th42zfDk?t=779){:target="_blank"} by Jonathan Levi that explains very well how rebalance-lnd works.
 
 ---
 
