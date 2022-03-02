@@ -161,6 +161,8 @@ The table below shows which commands are permitted by each macaroon
 |feereport|Yes|Yes|No|
 |updatechanpolicy|Yes|No|No|
 |fwdinghistory|Yes|Yes|No|
+|resetmc|Yes|No|No|
+|querymc|Yes|Yes|No|
 
 *Guide by robclark56, thanks!*
 
