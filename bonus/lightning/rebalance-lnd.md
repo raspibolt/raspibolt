@@ -107,7 +107,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
 
 To use rebalance-lnd, use the "rebalance-lnd" user.
 
-* To rebalance a channel, simply choose a channel with too little inbound capacity (e.g., a 2M sats channel with only 200,000 sats on your local side). The program will automatically select the source channel, the amount sent and the maximum economic fee that should be pay.
+* To rebalance a channel, simply choose a channel with too little inbound capacity (e.g., a 2M sats channel with only 200,000 sats on your local side). The program will automatically select the source channel, the amount sent and the maximum economic fee that should be pay. Replace `ChannelID` with the short 18 digits channel ID (but 123456x123x1 and 123456:123:1 formats are also accepted).
 
  ```sh
   $ rebalance.py --to ChannelID
