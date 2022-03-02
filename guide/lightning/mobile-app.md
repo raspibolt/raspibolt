@@ -8,10 +8,10 @@ parent: Lightning
 # Mobile app
 {: .no_toc }
 
-We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platform mobile app that connect to your LN node over Tor.  
+We install [Zeus](https://zeusln.app/){:target="_blank"}, a cross-platform mobile app that connect to your LN node over Tor.
 Make payments with lightning or on-chain and manage your channels while you're on the go.
 
-![Zeus](images/zeus.png)
+![Zeus](../../images/zeus.png)
 
 ---
 
@@ -72,10 +72,10 @@ lnconnect generates a URI and displays it as a QR code that Zeus can read.
 
 * Still with the "admin" user, use the following command. Make sure to replace the .onion address with the one you generated above.
 
-  ```sh  
+  ```sh
   $ lndconnect --host=abcdefg..............xyz.onion --port=8080
   ```
-  
+
 * It will be a big QR code, so maximize your terminal window and use `CTRL`+`-` to shrink the code further to fit the screen
 
 * Keep the SSH session with the QR code opened, it will be needed later
@@ -86,8 +86,8 @@ lnconnect generates a URI and displays it as a QR code that Zeus can read.
 
 ### Install the Zeus app
 
-Download the Zeus app for your mobile phone. 
-Check the [Zeus website](https://zeusln.app/){:target="_blank"} for the direct download links to the Apple App Store or Google Play. 
+Download the Zeus app for your mobile phone.
+Check the [Zeus website](https://zeusln.app/){:target="_blank"} for the direct download links to the Apple App Store or Google Play.
 Or get it from the [F-Droid store](https://f-droid.org/en/packages/app.zeusln.zeus/){:target="_blank"}, the catalogue of FOSS Android apps.
 
 ---
@@ -122,7 +122,7 @@ Anyone using Zeus on your phone has control over your node and all its funds. It
 
 Below is a list of Zeus existing and planned features:
 
-![Zeus](images/zeus-features.png)
+![Zeus](../../images/zeus-features.png)
 
 ---
 
@@ -149,7 +149,7 @@ To uninstall, you need to uninstall the app on your phone and deactivate the LND
   #HiddenServiceVersion 3
   #HiddenServicePort 8080 127.0.0.1:8080
   ```
-  
+
   ```sh
   $ sudo systemctl reload tor
   ```
@@ -158,4 +158,4 @@ To uninstall, you need to uninstall the app on your phone and deactivate the LND
 
 ---
 
-Next: [Bonus section >>](bonus/index.md)
+Next: [Bonus section >>](../bonus/index.md)

@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[rebalance-lnd](https://github.com/C-Otto/rebalance-lnd){:target="_blank"}  (created by C-Otto) is a tool to manage your channel liquidity by doing circular rebalancing; i.e. sending sats out of a channel with too much outbound/local liquidity back to one of your channel with too much inbound/remote liquidity. 
+[rebalance-lnd](https://github.com/C-Otto/rebalance-lnd){:target="_blank"}  (created by C-Otto) is a tool to manage your channel liquidity by doing circular rebalancing; i.e. sending sats out of a channel with too much outbound/local liquidity back to one of your channel with too much inbound/remote liquidity.
 You just pay the routing fees and can set up some maximum fees that you're ok to pay.
 
 Difficulty: Easy
@@ -21,7 +21,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![rebalance-lnd illustration](../../images/rebalance-lnd-illustration.png)
+![rebalance-lnd illustration](../../../images/rebalance-lnd-illustration.png)
 
 ---
 
@@ -45,7 +45,7 @@ Table of contents
 pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is already installed and install it if needed.
 
 * With user "admin", check if pip3 is already installed with the following command. If you don't get an output with a version number it means you need to install pip3 (otherwise, move to the next section 'Install rebalance-lnd).
-  
+
   ```sh
   $ pip3 --version
   ```
@@ -63,13 +63,13 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
 
 ### Install rebalance-lnd
 
-* We create a "rebalance-lnd" user and we make it part of the "bitcoin" group (to be able to interact with LND)  
+* We create a "rebalance-lnd" user and we make it part of the "bitcoin" group (to be able to interact with LND)
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" rebalance-lnd
   $ sudo adduser rebalance-lnd lnd
   ```
-  
+
 * With the "charge-lnd" user, clone the charge-lnd repository, enter the directory and install the program and required packages using `pip3` (do _not_ forget the dot at the end of the pip command!)
 
   ```sh
@@ -87,14 +87,14 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
   `
 
 * Test if the installation was successful by running the program
- 
+
   ```sh
   $ rebalance.py
   > usage: rebalance.py [-h] [--lnddir LNDDIR] [--network NETWORK] [--grpc GRPC]
   > [...]
   ```
-  
-* We are going to create a simlink to the LND directory. We'll place the link in the home directory of the "charge-lnd" user to match the default LND directory used by rebalance-lnd (~/.lnd) 
+
+* We are going to create a simlink to the LND directory. We'll place the link in the home directory of the "charge-lnd" user to match the default LND directory used by rebalance-lnd (~/.lnd)
 
   ```sh
   $ ln -s /data/lnd/ /home/rebalance-lnd/.lnd
@@ -102,7 +102,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
   ```
 
 ---
-  
+
 ### rebalance-lnd in action
 
 To use rebalance-lnd, use the "rebalance-lnd" user.
@@ -114,7 +114,7 @@ To use rebalance-lnd, use the "rebalance-lnd" user.
   > Sending AmountInSats satoshis from channel [...]
   > [...]
   ```
-  
+
 * There are many more options available to fine-tuned your rebalancing strategy. Find more information about them in the [README](https://github.com/C-Otto/rebalance-lnd){:target="_blank"} page of C-Otto's repo.
 
 ---
@@ -127,9 +127,9 @@ To use rebalance-lnd, use the "rebalance-lnd" user.
   $ sudo su - rebalance-lnd
   $ cd rebalance-lnd
   ```
-  
+
 * Fetch the latest version and install it
-  
+
   ```sh
   $ git fetch
   $ git describe --tags --abbrev=0

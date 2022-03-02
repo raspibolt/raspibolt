@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![charge-lnd policies](../../images/charge-lnd-illustration.png)
+![charge-lnd policies](../../../images/charge-lnd-illustration.png)
 
 ---
 
@@ -44,7 +44,7 @@ Table of contents
 `pip` is not installed by default on Raspberry Pi OS Lite (64-bit).
 
 * With user "admin", check if pip3 is already installed with the following command. If you don't get an output with a version number it means you need to install pip3 (otherwise, move to the next section "Install charge-lnd").
-  
+
   ```sh
   $ pip3 --version
   ```
@@ -68,21 +68,21 @@ Table of contents
   * `info:read`
 
 * With the "lnd" user, create (or 'bake') a suitably limited LND macaroon, then exit back to "admin"
- 
+
   ```sh
   $ sudo su - lnd
   $ lncli bakemacaroon offchain:read offchain:write onchain:read info:read --save_to=~/.lnd/data/chain/bitcoin/mainnet/charge-lnd.macaroon
   > Macaroon saved to /home/lnd/.lnd/data/chain/bitcoin/mainnet/charge-lnd.macaroon
   $ exit
   ```
-  
+
 * With user "admin", create a new user "chargelnd" and make it a member of the "lnd" group
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" chargelnd
   $ sudo adduser chargelnd lnd
   ```
-  
+
 * With the "charge-lnd" user, clone the charge-lnd repository, enter the directory and install the program and required packages using `pip3`
 
   ```sh
@@ -123,7 +123,7 @@ Table of contents
   >                        path to config file
   ```
 
-* Create a symlink to the LND directory. Place it in the home directory of the "chargelnd" user to match the default LND directory used by charge-lnd (*i.e.* `~/.lnd`) 
+* Create a symlink to the LND directory. Place it in the home directory of the "chargelnd" user to match the default LND directory used by charge-lnd (*i.e.* `~/.lnd`)
 
   ```sh
   $ ln -s /data/lnd /home/chargelnd/.lnd
@@ -135,12 +135,12 @@ Table of contents
   $ cd ~/
   $ ls -la
   ```
-  
+
 ---
 
 ## Configuration file
 
-For this example, we will use a policy that: 
+For this example, we will use a policy that:
 
 1. Defines some default parameters
 
@@ -149,7 +149,7 @@ For this example, we will use a policy that:
 1. Then ignores some channels that we want to deal with manually (*e.g.* a liquidity sink)
 
 1. And finally apply a fixed fee rate for two groups of channels
-  
+
 🚨 Warning: The policy below is just an example, _do_ change the policy according to your own strategy and needs! All the options are listed and described [here](https://github.com/accumulator/charge-lnd){:target="_blank"}
 
 * Still with user "chargelnd", create and open a configuration file
@@ -200,7 +200,7 @@ For this example, we will use a policy that:
 	<node_pubkey_5>
   strategy = static
   fee_ppm = 50
-  
+
   [5_high_fees_policy]
   node.id = <node_pubkey_6>,
 	<node_pubkey_7>
@@ -208,7 +208,7 @@ For this example, we will use a policy that:
   fee_ppm = 200
   ```
 
-* Test if the syntax is correct or if it contains some errors using the --check option. 
+* Test if the syntax is correct or if it contains some errors using the --check option.
 Indicate where the configuration file is located using the -c option
 
   ```sh
@@ -254,7 +254,7 @@ You can make the script run automatically at regular time intervals by using a c
 
 🚨 Warning: It is not in your interest, nor in the interest of the wider network, to set up very short intervals between each policy change. Frequent channel policy update spams the LN gossip network and results in less accurate LN graphs overall as it takes a long time for a policy update to reach most of the nodes in the network.
 
-* We the "admin" user, create and edit (option -e) the `crontab` file of the "charge-lnd" user (option -u). 
+* We the "admin" user, create and edit (option -e) the `crontab` file of the "charge-lnd" user (option -u).
 If asked, select the `/bin/nano` text editor (type 1 and enter)
 
   ```sh
@@ -269,10 +269,10 @@ If asked, select the `/bin/nano` text editor (type 1 and enter)
   ##########################################
 
   # Run charge-lnd every 2 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
-  21 */6 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log 
+  21 */6 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log
   ```
 
-  * The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/6_*_*_*){:target="_blank"}. 
+  * The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/6_*_*_*){:target="_blank"}.
   * `/home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config` is the command to be run and where to find it (its path) together with the required option(s) (here the location of the configuration file).
   * `> /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log` records the updates in a `my-charge-lnd.log` log file.
 
@@ -309,7 +309,7 @@ If you need to check the log files:
   ```
 
 * Fetch the latest version and install it (*e.g.* v9.9.9)
-  
+
   ```sh
   $ git fetch
   $ git describe --tags --abbrev=0
@@ -322,7 +322,7 @@ If you need to check the log files:
   $ pip3 install -r requirements.txt .
   > [...]
   ```
-  
+
 ---
 
 ## Uninstall
