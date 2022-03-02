@@ -240,7 +240,7 @@ Then exit the charge-lnd user.
   $ exit
   ```
 
-* Double-check the fee policy on all your channels (e.g. using [RTL](https://raspibolt.org/rtl.html) or [lntop](https://raspibolt.org/bonus/lightning/lntop.html)) to ensure that you are happy with the changes!
+* Double-check the fee policy on all your channels (e.g. using [RTL](../../lightning/web-app.md) or [lntop](lntop.md)) to ensure that you are happy with the changes!
 
 🔍: _To see all the possible policy types and options and some examples, check the charge-lnd [Github page](https://github.com/accumulator/charge-lnd#charge-lnd){:target="_blank"}._
 
