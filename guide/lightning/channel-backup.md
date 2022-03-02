@@ -119,7 +119,7 @@ We create a shell script to monitor `channel.backup` and make a copy to our back
   # -u causes the bash shell to treat unset variables as an error and exit immediately.
   set -eu
 
-  # The script waits for a change in ~/.lnd/data/chain/bitcoin/mainnet/channel.backup.
+  # The script waits for a change in /data/lnd/data/chain/bitcoin/mainnet/channel.backup.
   # When a change happens, it creates a backup of the file locally
   #   on a storage device and/or remotely in a GitHub repo
 
@@ -128,26 +128,26 @@ We create a shell script to monitor `channel.backup` and make a copy to our back
   LOCAL_BACKUP_ENABLED=false
   REMOTE_BACKUP_ENABLED=false
 
-  # Locations of source SCB file, formatted backup files and Git repo
-  SOURCEFILE="~/.lnd/data/chain/bitcoin/mainnet/channel.backup"
-  LOCAL_BACKUP_FILE="/mnt/static-channel-backup-external/channel-$(date +"%Y%m%d-%H%M%S").backup"
-  GITREPO="~/.lnd/remote-lnd-backup"
-  REMOTE_BACKUP_FILE="~/.lnd/remote-lnd-backup/channel-$(date +"%Y%m%d-%H%M%S").backup"
-
+  # Locations of source SCB file and the backup target directories (local and remote)
+  SCB_SOURCE_FILE="/data/lnd/data/chain/bitcoin/mainnet/channel.backup"
+  LOCAL_BACKUP_DIR="/mnt/static-channel-backup-external"
+  REMOTE_BACKUP_DIR="/data/lnd/remote-lnd-backup"
 
   # Local backup function
   run_local_backup_on_change () {
     echo "Copying backup file to local storage device..."
-    cp "$SOURCEFILE" "$LOCAL_BACKUP_FILE"
+    echo "$1"
+    cp "$SCB_SOURCE_FILE" "$1"
     echo "Success! The file is now locally backed up!"
   }
 
   # Remote backup function
   run_remote_backup_on_change () {
     echo "Entering Git repository..."
-    cd $GITREPO || exit
+    cd $REMOTE_BACKUP_DIR || exit
     echo "Making a timestamped copy of channel.backup..."
-    cp "$SOURCEFILE" "$REMOTE_BACKUP_FILE"
+    echo "$1"
+    cp "$SCB_SOURCE_FILE" "$1"
     echo "Committing changes and adding a message"
     git add .
     git commit -m "Static Channel Backup $(date +"%Y%m%d-%H%M%S")"
@@ -161,17 +161,20 @@ We create a shell script to monitor `channel.backup` and make a copy to our back
   run () {
     while true; do
 
-        inotifywait $SOURCEFILE
+        inotifywait $SCB_SOURCE_FILE
         echo "channel.backup has been changed!"
+
+        LOCAL_BACKUP_FILE="$LOCAL_BACKUP_DIR/channel-$(date +"%Y%m%d-%H%M%S").backup"
+        REMOTE_BACKUP_FILE="$REMOTE_BACKUP_DIR/channel-$(date +"%Y%m%d-%H%M%S").backup"
 
         if [ "$LOCAL_BACKUP_ENABLED" == true ]; then
           echo "Local backup is enabled"
-          run_local_backup_on_change
+          run_local_backup_on_change "$LOCAL_BACKUP_FILE"
         fi
 
         if [ "$REMOTE_BACKUP_ENABLED" == true ]; then
           echo "Remote backup is enabled"
-          run_remote_backup_on_change
+          run_remote_backup_on_change "$REMOTE_BACKUP_FILE"
         fi
 
     done
