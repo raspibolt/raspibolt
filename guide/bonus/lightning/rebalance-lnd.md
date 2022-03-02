@@ -44,8 +44,7 @@ Table of contents
 
 pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is already installed and install it if needed.
 
-* With user "admin", check if pip3 is already installed with the following command. If you don't get an output with a version number it means you need to install pip3 (otherwise, move to the next section 'Install rebalance-lnd).
-
+* With user "admin", check if pip3 is already installed with the following command. If you don't get an output with a version number it means you need to install pip3 (otherwise, move to the next section 'Install rebalance-lnd').
   ```sh
   $ pip3 --version
   ```
@@ -70,7 +69,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
   $ sudo adduser rebalance-lnd lnd
   ```
 
-* With the "charge-lnd" user, clone the charge-lnd repository, enter the directory and install the program and required packages using `pip3` (do _not_ forget the dot at the end of the pip command!)
+* With the "rebalance-lnd" user, clone the rebalance-lnd repository, enter the directory and install the program and required packages using `pip3`
 
   ```sh
   $ sudo su - rebalance-lnd
@@ -84,7 +83,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
   ```sh
   $ echo 'export PATH=$PATH:/home/rebalance-lnd/rebalance-lnd' >> /home/rebalance-lnd/.bashrc
   $ source /home/rebalance-lnd/.bashrc
-  `
+  ```
 
 * Test if the installation was successful by running the program
 
@@ -94,7 +93,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
   > [...]
   ```
 
-* We are going to create a simlink to the LND directory. We'll place the link in the home directory of the "charge-lnd" user to match the default LND directory used by rebalance-lnd (~/.lnd)
+* We are going to create a symlink to the LND directory. We'll place the link in the home directory of the "rebalance-lnd" user to match the default LND directory used by rebalance-lnd (~/.lnd)
 
   ```sh
   $ ln -s /data/lnd/ /home/rebalance-lnd/.lnd
@@ -107,15 +106,15 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
 
 To use rebalance-lnd, use the "rebalance-lnd" user.
 
-* To rebalance two channels, use the following command (the channel ID is the short 18 digits channel ID)
+* To rebalance, simply choose a channel with too little outbound liquidity (e.g., a 2M sats channel with only 200,000 sats on your local side). The program will automatically find a suitable source channel, the amount to send and the maximum economic fee that may be paid for the rebalance transaction. Replace `ChannelID` with the short 18 digits channel ID (123456x123x1 and 123456:123:1 formats are also accepted).
 
  ```sh
-  $ rebalance.py --amount AmountInSats --fee-ppm-limit FeeRateInPPM --from NodeAShortChannelID --to NodeBShortChannelID
-  > Sending AmountInSats satoshis from channel [...]
-  > [...]
+  $ rebalance.py --to ChannelID
   ```
 
-* There are many more options available to fine-tuned your rebalancing strategy. Find more information about them in the [README](https://github.com/C-Otto/rebalance-lnd){:target="_blank"} page of C-Otto's repo.
+Note that the fee limit depends on the fee policy applied to the channels used in the rebalance. Make sure that you are OK with the fee rates for your channels before running the rebalancing script, i.e. charge higher fee rates for channels where you want to have more outbound liquidity and charge lower fee rates for channels where you want to have more inbound liquidity.
+
+There are many more options available to fine-tune your rebalancing strategy. Find more information about them in the [README](https://github.com/C-Otto/rebalance-lnd){:target="_blank"} page of C-Otto's repository. Also, check [this video tutorial](https://youtu.be/0r3Th42zfDk?t=779){:target="_blank"} by Jonathan Levi that explains very well how rebalance-lnd works.
 
 ---
 
@@ -131,14 +130,7 @@ To use rebalance-lnd, use the "rebalance-lnd" user.
 * Fetch the latest version and install it
 
   ```sh
-  $ git fetch
-  $ git describe --tags --abbrev=0
-  > v2.1
-  $ git reset --hard HEAD
-  > HEAD is now at 3ff8c87 Merge pull request #246 from C-Otto/dependabot/pip/googleapis-common-protos-1.54.0
-  $ git checkout v9.9
-  > Note: switching to 'v9.9'.
-  > [...]
+  $ git pull
   $ pip3 install -r requirements.txt
   > [...]
   ```
@@ -149,11 +141,10 @@ To use rebalance-lnd, use the "rebalance-lnd" user.
 
 If you want to uninstall rebalance-lnd:
 
-* Log in with the "root" user and delete the "rebalance-lnd" user
+* Log in with the "admin" user and delete the "rebalance-lnd" user. This also removes all files of that user, including the rebalance-lnd installation.
 
   ```sh
-  $ sudo su -
-  $ userdel -r rebalance-lnd
+  $ sudo userdel -r rebalance-lnd
   $ exit
   ```
 
