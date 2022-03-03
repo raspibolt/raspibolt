@@ -231,6 +231,41 @@ In order to do that, we create a systemd unit that starts the service on boot di
   $ sudo journalctl -f -u rtl
   ```
 
+---
+
+## Homer
+
+We can now add the web service to the Homer dashboard.
+
+* Open the Homer configuration file
+
+  ```sh
+  $ sudo nano /data/homer/config.yml
+  ```
+
+* In the "Lightning" group of the "Service" section, add the service configuration lines after `items` for the "Lightning" group to look like this:
+
+  ```ini
+    - name: "Lightning"
+      icon: "fas fa-bolt"
+      items:
+        - name: "Ride The Lightning"
+          icon: "fas fa-horse-head"
+          #logo: "assets/tools/rtl.png"
+          subtitle: "Node manager"
+          tag: "app"
+          url: "https://192.168.0.171:4001/rtl/login"
+          target: "_blank"
+  ```
+
+* Save and exit
+
+* Open the dashboard in your browser ([https://raspibolt.local:4091](https://raspibolt.local:4091){:target="_blank"}) or refresh the page (`F5`) if already open.
+
+![Homer - Bitcoin section](images/homer-part-3.png)
+  
+---
+
 ## Optional
 
 ### Remote access over Tor
