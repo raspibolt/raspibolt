@@ -157,7 +157,52 @@ The BTC-RPC-Explorer has also a functionality to extract the data from the node 
 * Look-up the transaction ID in the explorer: `54e48e5f5c656b26c3bca14a8c95aa583d07ebe84dde3b7dd4a78f4e4186e713`
 * Click on the link "bitcoin whitepaper" in the top box, this will generate the PDF from the node blockchain and displays it as a pdf file in the browser.
 * Alternatively, use the following URL: [https://raspibolt.local:4000/bitcoin-whitepaper](https://raspibolt.local:4000/bitcoin-whitepaper){:target="_blank"}
- 
+
+---
+
+## Optional: Homer
+
+If you've [installed Homer](../../raspberry-pi/web-dashboard,md), you can add a button to the dashboard to download the white paper from your blockchain using the BTC RPC Explorer.
+
+* Download an appropriate logo. For example, what about the oldest known Bitcoin logo created by Satoshi himself and [visible](https://github.com/trottier/original-bitcoin/blob/master/src/rc/bitcoin.ico){:target="_blank"} in the first released Bitcoin client?
+
+  ```sh
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-old-bitcoin.png
+  $ sudo mv logo-old-bitcoin.png /var/www/homer/assets/tools
+
+
+* Open the Homer configuration file
+
+  ```sh
+  $ sudo nano /data/homer/config.yml
+  ```
+
+* In the "Service" section, add the following configuration lines at the end to create a new group (e.g., "Resources") and item 
+
+  ```ini
+    - name: "Resources"
+      icon: "fas fa-book-open"
+      items:
+        - name: "White paper"
+          logo: "assets/tools/old-bitcoin.png"
+          subtitle: "Download from the blockchain"
+          tag: "app"
+          url: "https://raspibolt.local:4000/bitcoin-whitepaper"
+          target: "_blank"
+  ```
+
+* 
+
+  ```ini
+  columns: 3
+  ```
+
+* Save and exit
+
+* Open the dashboard in your browser (https://raspibolt.local:4091{:target="_blank"}) or refresh the page (F5) if already open.
+
+![White paper in Homer](../../../images/homer-white-paper.png)
+
 ---
 
 << Back: [+ Bitcoin](index.md)
