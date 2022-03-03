@@ -34,9 +34,9 @@ The dashboard contains the following configurable features:
   * *the various RaspiBolt community groups (Telegram, Reddit, Twitter, Amboss)*
   * *your node profile on several lightning explorers (Amboss, Web Terminal, 1ML)*
 
-* *a welcome message displaying the next block miner fee from the Mempool blockchain explorer public API*
+* a welcome message displaying the next block miner fee from the Mempool blockchain explorer public API
 
-* *links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning")*
+* links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning")
 
 Here we'll install Homer and set up the basic configuration. We'll then add the relevant web services (BTC RPC Explorer, Ride The Lightning) later in the guide after having installed them.
 
