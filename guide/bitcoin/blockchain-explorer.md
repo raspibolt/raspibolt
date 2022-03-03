@@ -277,7 +277,42 @@ In order to do that, we create a systemd unit that starts the service on boot di
 
 * You can now access your own BTC RPC Explorer from within your local network by browsing to <https://raspibolt.local:4000>{:target="_blank"} (or your equivalent IP address).
 
-### Remote access over Tor (optional)
+---
+
+## Homer
+
+We can now add the web service to the Homer dashboard.
+
+* Open the Homer configuration file
+
+  ```sh
+  $ sudo nano /data/homer/config.yml
+  ```
+
+* In the "Bitcoin" group of the "Service" section, add the service configuration lines after `items` for the "Bitcoin" section to look like this:
+
+  ```ini
+   - name: "Bitcoin"
+      icon: "fab fa-bitcoin"
+      items:
+        - name: "BTC RPC Explorer"
+          icon: "fab fa-wpexplorer"
+          #logo: "assets/tools/btcrpcexplorer.png"
+          subtitle: "Blockchain explorer"
+          tag: "app"
+          url: "https://192.168.0.171:4000/"
+          target: "_blank"
+  ```
+
+* Save and exit.
+
+* Open the dashboard in your browser ([https://raspibolt.local:4091](https://raspibolt.local:4091){:target="_blank"}) or refresh the page (`F5`) if already open.
+
+![Homer - Bitcoin section](images/homer-part-2.png)
+
+--
+
+## Remote access over Tor (optional)
 
 Do you want to access your personal blockchain explorer remotely?
 You can easily do so by adding a Tor hidden service on the RaspiBolt and accessing the BTC RPC Explorer with the Tor browser from any device.
