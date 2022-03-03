@@ -11,6 +11,20 @@ parent: Raspberry Pi
 
 We set up [Homer](https://github.com/bastienwirtz/homer#readme){:target="_blank"}, a simple static web dashboard to keep our web services on hand, from a simple YAML configuration file. 
 
+![Homer](../../images/homer-part-1.png)
+
+---
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+## Introduction
+
 The dashboard contains the following configurable features:
 * A title and RaspiBolt logo
 * A top banner containing clearnet exertnal links to various useful websites:
@@ -23,16 +37,6 @@ The dashboard contains the following configurable features:
 Here we'll install Homer and set up the basic configuration. We'll then add the relevant web services (BTC RPC Explorer, Ride The Lightning) later in the guide after having installed them.
 
 *Note:* If you don't plan to use any self-hosted web services (e.g., if you plan to use CLI-only), you can skip this entire web dashboard section.
-
-![Homer](../../images/homer-part-1.png)
-
----
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
 
 ---
 
