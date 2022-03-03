@@ -92,8 +92,8 @@ We download the RaspiBolt v3 logo and place it inside the website data folder.
 
   ```sh
   $ cd ~/tmp
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/raspibolt3-logo-no-text.png
-  $ sudo mv raspibolt3-logo-no-text.png /var/www/homer/assets/tools
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-raspibolt.png
+  $ sudo mv logo-raspibolt.png /var/www/homer/assets/tools
   ```
 
 ### nginx
@@ -168,7 +168,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   ################################
   title: "RaspiBolt Dashboard"
   subtitle: "Homer"
-  logo: "assets/tools/raspibolt3-logo-no-text.png"
+  logo: "assets/tools/logo-raspibolt.png"
   
   header: true
   footer: '<p><em>The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.</em> (Bitcoin genesis block)</p>'
