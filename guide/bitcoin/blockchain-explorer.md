@@ -289,7 +289,7 @@ We can now add the web service to the Homer dashboard.
   $ sudo nano /data/homer/config.yml
   ```
 
-* In the "Bitcoin" group of the "Service" section, add the service configuration lines after `items` for the "Bitcoin" section to look like this:
+* In the "Bitcoin" group of the "Service" section, add the service configuration lines after `items` for the "Bitcoin" group to look like this:
 
   ```ini
    - name: "Bitcoin"
@@ -304,7 +304,7 @@ We can now add the web service to the Homer dashboard.
           target: "_blank"
   ```
 
-* Save and exit.
+* Save and exit
 
 * Open the dashboard in your browser ([https://raspibolt.local:4091](https://raspibolt.local:4091){:target="_blank"}) or refresh the page (`F5`) if already open.
 
