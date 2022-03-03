@@ -191,7 +191,7 @@ If you've [installed Homer](../../raspberry-pi/web-dashboard,md), you can add a 
           target: "_blank"
   ```
 
-* 
+* Since we created a new group, you might want to add a new column to the dashboard. Set the number of columns in the top section
 
   ```ini
   columns: 3
