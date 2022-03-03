@@ -459,6 +459,38 @@ Point your browser to the secure access point provided by the nginx web proxy, f
 
 ---
 
+## Optional: Homer
+
+If you've [installed Homer](../../raspberry-pi/web-dashboard,md), you can add Mempool to the dashboard.
+
+* Download the Mempool logo and move it to the Homer web data folder
+
+  ```sh
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-mempool.png
+  $ sudo mv logo-mempool.png /var/www/homer/assets/tools
+
+
+* Open the Homer configuration file
+
+  ```sh
+  $ sudo nano /data/homer/config.yml
+  ```
+
+* In the "Bitcoin" group of the "Service" section, add the following configuration lines below `items:`
+
+  ```ini
+        - name: "Mempool"
+          logo: "assets/tools/logo-mempool.png"
+          subtitle: "Mempool visualizer"
+          tag: "app"
+          url: "https://192.168.0.171:4081"
+          target: "_blank"
+  ```
+
+![Mempool](../../../images/homer-mempool.png)
+
+---
+
 ## Upgrade
 
 Updating to a new release is straight-forward. Make sure to read the release notes first.
