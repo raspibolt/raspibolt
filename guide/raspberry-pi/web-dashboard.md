@@ -71,6 +71,18 @@ We set up [Homer](https://github.com/bastienwirtz/homer#readme){:target="_blank"
   $ sudo chown -R www-data:www-data /var/www/homer
   ```
 
+### Logos
+
+We download the RaspiBolt v3 logo and place it inside the website data folder.
+
+* Download the logo and move it to the Homer web data folder
+
+  ```sh
+  $ cd ~/tmp
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/raspibolt3-logo-no-text.png
+  $ sudo mv raspibolt3-logo-no-text.png /var/www/homer/assets/tools
+  ```
+
 ### nginx
 
 * Switch back to the "homer" user and create a nginx configuration file for the Homer website with a HTTPS server listening on port 4091
@@ -143,8 +155,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   ################################
   title: "RaspiBolt Dashboard"
   subtitle: "Homer"
-  icon: "fab fa-raspberry-pi"
-  #logo: "assets/tools/raspibolt3.png"
+  logo: "assets/tools/raspibolt3-logo-no-text.png"
   
   header: true
   footer: '<p><em>The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.</em> (Bitcoin genesis block)</p>'
