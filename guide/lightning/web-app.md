@@ -237,6 +237,13 @@ In order to do that, we create a systemd unit that starts the service on boot di
 
 We can now add the web service to the Homer dashboard.
 
+* Download the Ride The Lightning logo and move it to the Homer web data folder
+
+  ```sh
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-rtl.png
+  $ sudo mv logo-rtl.png /var/www/homer/assets/tools
+  ```
+
 * Open the Homer configuration file
 
   ```sh
@@ -250,8 +257,7 @@ We can now add the web service to the Homer dashboard.
       icon: "fas fa-bolt"
       items:
         - name: "Ride The Lightning"
-          icon: "fas fa-horse-head"
-          #logo: "assets/tools/rtl.png"
+          logo: "assets/tools/logo-rtl.png"
           subtitle: "Node manager"
           tag: "app"
           url: "https://192.168.0.171:4001/rtl/login"
