@@ -268,7 +268,7 @@ We can now add the web service to the Homer dashboard.
 
 * Open the dashboard in your browser ([https://raspibolt.local:4091](https://raspibolt.local:4091){:target="_blank"}) or refresh the page (`F5`) if already open.
 
-![Homer - Bitcoin section](images/homer-part-3.png)
+![Homer with BTC RPC Explorer & RTL](../../images/homer-part-3.png)
   
 ---
 
