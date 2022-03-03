@@ -85,6 +85,13 @@ rpcbind=127.0.0.1
 # rpcport=18443
 ```
 
+Note that the testnet data is stored in `/data/bitcoin/testnet3`. To check the log file, use `tail -f /data/bitcoin/testnet3/debug.log`.
+
+Because the authentication cookie now located in `/data/bitcoin/testnet3/.cookie`, the command in the `systemd` unit `bitcoind.service` to grant the group `bitcoin` read permissions in `/etc/systemd/system/bitcoind.service` needs to be changed to:
+```ini
+-startupnotify="chmod g+r /home/bitcoin/.bitcoin/testnet3/.cookie"
+```
+
 ## Electrs
 File location: `/data/electrs/electrs.conf`
 ```ini
@@ -108,6 +115,11 @@ log_filters = "INFO"
 timestamp = true
 ```
 
+Check the logs using
+```sh
+$ sudo journalctl -u electrs -f
+```
+
 ## NGINX
 File location: `/etc/nginx/streams-enabled/electrs-testnet-reverse-proxy.conf`
 ```ini
@@ -121,19 +133,46 @@ server {
 }
 ```
 
+Your nginx might need to be reloaded using:
+```sh
+$ sudo nginx -t
+$ sudo systemctl reload nginx
+$ sudo ufw allow 60002/tcp comment 'allow Electrum SSL Testnet'
+```
+
 ## Tor
+Create a separate service for testnet over Tor:
+
 File location: `/etc/tor/torrc`
 ```ini
 ############### This section is just for location-hidden services ###
-HiddenServiceDir /var/lib/tor/hidden_service_electrs/
+HiddenServiceDir /var/lib/tor/hidden_service_electrs_testnet/
 HiddenServiceVersion 3
 HiddenServicePort 60002 127.0.0.1:60002
 ```
 
-## Interacting with the LND daemon
+Once that's done, you'll need to start the service using:
+```sh
+$ sudo systemctl reload tor
+$ sudo cat /var/lib/tor/hidden_service_electrs_testnet/hostname
+```
+
+## LDN
+File location: `/data/lnd/lnd.conf`
+```ini
+bitcoin.active=1
+# bitcoin.mainnet=1
+```
+
+And the following command gives members of the group `lnd` permission to traverse the LND directories to reach the macaroons:
+```sh
+$ sudo chmod -R g+X /data/lnd/data/
+```
+
+### Interacting with the LND daemon
 Note that when interacting with the LND daemon, you'll need to use the `--network testnet` option like so:
 ```sh
-lncli --network testnet walletbalance
+$ lncli --network testnet walletbalance
 ```
 
 ---
