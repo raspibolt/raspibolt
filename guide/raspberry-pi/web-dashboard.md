@@ -161,9 +161,11 @@ We download the RaspiBolt v3 logo and place it inside the website data folder.
 
 ### Configuration
 
-A sample configuration file is available at `/home/homer/homer/dist/assets/config.yml.dist`. We will create a configuration file derived from this default configuration but tailored to the RaspiBolt. First, we add a link to the Cockpit web service and also some links to some handy RaspiBolt-related external websites in the toolbar.
+A sample configuration file is available at `/home/homer/homer/dist/assets/config.yml.dist`. We will create a configuration file derived from this default configuration but tailored to the RaspiBolt.
 
-* Create a new configuration file in the Homer data directory and paste the following configuration settings. In the url entries in the service section, replace `raspibolt.local` with your own IP. Save and exit.
+* Create a new configuration file in the Homer data directory and paste the following configuration settings and change the following items:
+  * In the last three links in the "Optional navbar" section, in the `name:` entry, you can replace "My node" by your node alias
+  * Still in these last three links, in the `url:` entry, replace `<node_pubkey>` with your own node pubkey
 
   ```sh
   $ sudo nano /data/homer/config.yml
@@ -256,15 +258,15 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
       icon: "fab fa-adn"
       url: "https://www.amboss.space/community/2f1891ba-e145-4297-a1ed-70ab4b6dcc3a"
       target: "_blank"
-    - name: "Indra on Amboss"
+    - name: "My node on Amboss"
       icon: "fas fa-chart-line"
       url: "https://www.amboss.space/node/<node_pubkey>"
       target: "_blank"
-    - name: "Indra on Web Terminal"
+    - name: "My node on Web Terminal"
       icon: "fas fa-chart-line"
       url: "https://terminal.lightning.engineering/#/<node_pubkey>"
       target: "_blank"
-    - name: "Indra on 1ML"
+    - name: "My node on 1ML"
       icon: "fas fa-chart-line"
       url: "https://1ml.com/node/<node_pubkey>"
       target: "_blank"
@@ -281,8 +283,6 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
       icon: "fas fa-bolt"
       items:
   ```
-  
-🔍 * If you want to tweak the dashboard to your own taste, check the full configuration guidelines on the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}.
 
 * Create a symlink to the configuration file and change its ownshership to the "www-data" user
 
@@ -301,7 +301,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   $ npm run serve
   ```
   
-Now point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your nodes IP address, e.g. https://192.168.0.20:4091).  
+Now point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
 
 Your browser will display a warning, because we use a self-signed SSL certificate. There’s nothing we can do about that, because we would need a proper domain name (e.g. https://yournode.com) to get an official certificate which browsers recognize. Click on “Advanced” and proceed to the Homer dashboard interface.
 
@@ -350,6 +350,8 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
   ```
 
 You're set! You can now use the dashboard to have a quick access to Cockpit and some external websites. We will add more web services in the Bitcoin and Lightning sections of the guide.
+
+🔍 * If you want to tweak the dashboard to your own taste, check the full configuration guidelines on the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
 
 ---
 
