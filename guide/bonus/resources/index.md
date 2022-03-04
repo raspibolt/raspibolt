@@ -12,8 +12,8 @@ has_toc: false
 ---
 
 ## Compilations of links
-* **[Bitcoin Minds](bitcoin-minds.md)** - a comprehensive collection of online Bitcoin and Lightning resources
-* **[Bitcoin Only](bitcoin-only.md)** - a comprehensive collection of Bitcoin and Lightning resources
+* **[Bitcoin Minds](bitcoin-minds.md)** - self-hosted website with a comprehensive collection of online Bitcoin and Lightning resources
+* **[Bitcoin Only](bitcoin-only.md)** - self-hosted website with a comprehensive collection of Bitcoin and Lightning resources
 
 ---
 
