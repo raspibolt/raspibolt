@@ -250,7 +250,7 @@ We can now add the web service to the Homer dashboard.
   $ sudo nano /data/homer/config.yml
   ```
 
-* In the "Lightning" group of the "Service" section, add the service configuration lines after `items` for the "Lightning" group to look like this:
+* In the "Lightning" group of the "Service" section, add the service configuration lines after `items` for the "Lightning" group to look like this. If needed, in the `url:` entry, replace `raspibolt.local` by your node's ID address (e.g., 192.168.0.20).
 
   ```ini
     - name: "Lightning"
@@ -260,7 +260,7 @@ We can now add the web service to the Homer dashboard.
           logo: "assets/tools/logo-rtl.png"
           subtitle: "Node manager"
           tag: "app"
-          url: "https://192.168.0.171:4001/rtl/login"
+          url: "https://raspibolt:local:4001/rtl/login"
           target: "_blank"
   ```
 
