@@ -31,10 +31,4 @@ has_toc: false
 
 ---
 
-## Fun
-
-* **[Download the white paper](white-paper.md)** - download the Bitcoin white paper directly from your blockchain data
-
----
-
 << Back: [Bonus Section](../index.md)
