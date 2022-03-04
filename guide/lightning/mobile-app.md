@@ -87,20 +87,21 @@ lnconnect generates a URI and displays it as a QR code that Zeus can read.
 ### Install the Zeus app
 
 Download the Zeus app for your mobile phone.
-Check the [Zeus website](https://zeusln.app/){:target="_blank"} for the direct download links to the Apple App Store or Google Play.
-Or get it from the [F-Droid store](https://f-droid.org/en/packages/app.zeusln.zeus/){:target="_blank"}, the catalogue of FOSS Android apps.
+Check the [Zeus website](https://zeusln.app/){:target="_blank"} for the direct download links to the Apple App Store or Google Play.  
+
+On Android, if you can't or do not want to use Google Play, you can get Zeus from the [F-Droid store](https://f-droid.org/en/packages/app.zeusln.zeus/){:target="_blank"} or simply [download the APK](https://zeusln.app/){:target="_blank"}, tap it and install it. If it's the first time you install an APK on your phone you will be asked to authorize the app to install unknown apps, simply follow the on-screen instructions to do so.
 
 ---
 
 ### Connect Zeus to your node
 
-* Open Zeus and click on "GET STARTED"
+* Open Zeus and tap on "GET STARTED"
 
-* Click on "CONNECT A NODE" and then tap on the "+" at the top to add your node
+* Tap on "Connect a node" and then tap on the "+" at the top right to add your node
 
 * Enter a Nickname for your node (e.g., "RaspiBolt")
 
-* Click on "Scan lndconnect config" and, if prompted, allow Zeus to use the camera
+* Click on "SCAN LNDCONNECT CONFIG" and, if prompted, allow Zeus to use the camera
 
 * Scan the QR code generated earlier
 
