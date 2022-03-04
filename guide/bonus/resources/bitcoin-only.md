@@ -21,7 +21,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![Bitcoin Only](../../images/bitcoin-only.png)
+![Bitcoin Only](../../../images/bitcoin-only.png)
 
 ---
 
