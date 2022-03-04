@@ -177,7 +177,7 @@ If you've [installed Homer](../../raspberry-pi/web-dashboard,md), you can add a 
   $ sudo nano /data/homer/config.yml
   ```
 
-* In the "Service" section, add the following configuration lines at the end to create a new group (e.g., "Resources") and item 
+* In the "Service" section, add the following configuration lines at the end to create a new group (e.g., "Resources") and item. If needed, in the `url:` entry, replace `raspibolt.local` by your node's ID address (e.g., 192.168.0.20).
 
   ```ini
     - name: "Resources"
