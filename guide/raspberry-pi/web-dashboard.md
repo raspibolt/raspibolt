@@ -359,7 +359,7 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
 
 You're set! You can now use the dashboard to have a quick access to Cockpit and some external websites. We will add more web services in the Bitcoin and Lightning sections of the guide.
 
-🔍 * If you want to tweak the dashboard to your own taste, check the full configuration guidelines on the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
+🔍 *Note:* If you want to tweak the dashboard to your own taste, check the full configuration guidelines on the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
 
 ---
 
