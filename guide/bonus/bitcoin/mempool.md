@@ -476,14 +476,14 @@ If you've [installed Homer](../../raspberry-pi/web-dashboard,md), you can add Me
   $ sudo nano /data/homer/config.yml
   ```
 
-* In the "Bitcoin" group of the "Service" section, add the following configuration lines below `items:`
+* In the "Bitcoin" group of the "Service" section, add the following configuration lines below `items:`. If needed, in the `url:` entry, replace `raspibolt.local` by your node's ID address (e.g., 192.168.0.20).
 
   ```ini
         - name: "Mempool"
           logo: "assets/tools/logo-mempool.png"
           subtitle: "Mempool visualizer"
           tag: "app"
-          url: "https://192.168.0.171:4081"
+          url: "https://raspibolt.local:4081"
           target: "_blank"
   ```
 
