@@ -19,6 +19,7 @@ In the following categories, you can find various additional and optional guides
 * **[Raspberry Pi](raspberry-pi/index.md)**
 * **[Bitcoin](bitcoin/index.md)**
 * **[Lightning](lightning/index.md)**
+* **[Resources](resources/index.md)**
 
 ---
 

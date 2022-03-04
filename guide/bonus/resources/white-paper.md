@@ -160,4 +160,4 @@ The BTC-RPC-Explorer has also a functionality to extract the data from the node 
  
 ---
 
-<< Back: [+ Bitcoin](index.md)
+<< Back: [+ Resources](index.md)
