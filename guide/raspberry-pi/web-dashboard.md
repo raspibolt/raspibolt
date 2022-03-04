@@ -32,7 +32,7 @@ The dashboard contains the following configurable features:
 * a top banner containing clearnet exertnal links to various useful websites:
   * *the RaspiBolt guide*
   * *the various RaspiBolt community groups (Telegram, Reddit, Twitter, Amboss)*
-  * *your node profile on several lightning explorers (Amboss, Web Terminal, 1ML)*
+  * *your node profile on several lightning network explorers (Amboss, Web Terminal, LnRouter Terminal Debugger, LNnodeinsight and 1ML)*
 
 * a welcome message displaying the next block miner fee from the Mempool blockchain explorer public API
 
@@ -164,8 +164,8 @@ We download the RaspiBolt v3 logo and place it inside the website data folder.
 A sample configuration file is available at `/home/homer/homer/dist/assets/config.yml.dist`. We will create a configuration file derived from this default configuration but tailored to the RaspiBolt.
 
 * Create a new configuration file in the Homer data directory and paste the following configuration settings and change the following items:
-  * In the last three links in the "Optional navbar" section, in the `name:` entry, you can replace "My node" by your node alias
-  * Still in these last three links, in the `url:` entry, replace `<node_pubkey>` with your own node pubkey
+  * In the last six links in the "Optional navbar" section, in the `name:` entry, you can replace "My node" by your node alias
+  * Still in these last six links, in the `url:` entry, replace `<node_pubkey>` with your own node pubkey
 
   ```sh
   $ sudo nano /data/homer/config.yml
@@ -258,18 +258,26 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
       icon: "fab fa-adn"
       url: "https://www.amboss.space/community/2f1891ba-e145-4297-a1ed-70ab4b6dcc3a"
       target: "_blank"
-    - name: "My node on Amboss"
+    - name: "My node on: Amboss"
       icon: "fas fa-chart-line"
       url: "https://www.amboss.space/node/<node_pubkey>"
       target: "_blank"
-    - name: "My node on Web Terminal"
-      icon: "fas fa-chart-line"
+    - name: "Web Terminal"
       url: "https://terminal.lightning.engineering/#/<node_pubkey>"
       target: "_blank"
-    - name: "My node on 1ML"
-      icon: "fas fa-chart-line"
+    - name: "LnRouter Debugger"
+      url: "https://lnrouter.app/scores/terminal?id=<node_pubkey>"
+      target: "_blank"
+    - name: "LNnodeinsight"
+      url: "https://lnnodeinsight.com/?/<node_pubkey>"
+      target: "_blank"
+    - name: "LN+"
+      url: "https://lightningnetwork.plus/nodes/<node_pubkey>"
+      target: "_blank"
+    - name: "1ML"
       url: "https://1ml.com/node/<node_pubkey>"
       target: "_blank"
+
 
   ################################
   # Services                     #
