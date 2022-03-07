@@ -89,7 +89,7 @@ Table of contents
   $ sudo su - chargelnd
   $ git clone https://github.com/accumulator/charge-lnd.git
   $ cd charge-lnd
-  $ pip3 install -r requirements.txt
+  $ pip3 install -r requirements.txt .
   ```
 
 * Add the `charge-lnd` binary file location to `PATH`
