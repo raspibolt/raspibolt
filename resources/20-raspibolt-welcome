@@ -140,17 +140,19 @@ if [ "${gitupdate}" -eq "1" ]; then
   # Calls to github
   btcgit=$(curl -s https://api.github.com/repos/bitcoin/bitcoin/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
   lndgit=$(curl -s https://api.github.com/repos/lightningnetwork/lnd/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-  # Electrs and RPC Explorer dont have a latest release, just tags
+  # Electrs, RPC Explorer and RTL dont have a latest release, just tags
   electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
   btcrpcexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
+  rtlgit=$(curl -s https://api.github.com/repos/Ride-The-Lightning/RTL/tags | jq -r '.[0].name')
   # write to file TODO: convert to JSON for sanity
-  printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
+  printf "%s\n%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" "${rtlgit}" > "${gitstatusfile}"
 else
   # read from file
   btcgit=$(sed -n '1p' < "${gitstatusfile}")
   lndgit=$(sed -n '2p' < "${gitstatusfile}")
   electrsgit=$(sed -n '3p' < "${gitstatusfile}")
   btcrpcexplorergit=$(sed -n '4p' < "${gitstatusfile}")
+  rtlgit=$(sed -n '5p' < "${gitstatusfile}")
 
   # fill if not yet set
   if [ -z "$btcgit" ]; then
@@ -165,7 +167,10 @@ else
   if [ -z "$btcrpcexplorergit" ]; then
     btcrpcexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
   fi
-  printf "%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" > "${gitstatusfile}"
+    if [ -z "$rtlgit" ]; then
+    rtlgit=$(curl -s https://api.github.com/repos/Ride-The-Lightning/RTL/tags | jq -r '.[0].name')
+  fi
+  printf "%s\n%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" "${rtlgit}" > "${gitstatusfile}"
 fi
 
 # create variable btcversion
@@ -372,7 +377,7 @@ channel_db_size=$(du -h ${lnd_dir}/data/graph/mainnet/channel.db | awk '{print $
 
 # Gather Electrs data
 # ------------------------------------------------------------------------------
-printf "%0.s#" {1..75}
+printf "%0.s#" {1..74}
 echo -ne '\r### Loading Electrum data \r'
 
 electrs_running=$(systemctl is-active electrs)
@@ -397,7 +402,7 @@ fi
 
 # Gather Bitcoin Explorer data
 # ------------------------------------------------------------------------------
-printf "%0.s#" {1..78}
+printf "%0.s#" {1..76}
 echo -ne '\r### Loading Block Explorer data \r'
 
 #btcrpcexplorer
@@ -417,6 +422,31 @@ else
   else
     btcrpcexplorerversion="$btcrpcexplorerpi"" Update!"
     btcrpcexplorerversion_color="${color_red}"
+  fi
+fi
+
+# Gather RTL data
+# ------------------------------------------------------------------------------
+printf "%0.s#" {1..78}
+echo -ne '\r### Loading RTL data \r'
+
+#rtl
+rtl_running=$(systemctl is-active rtl)
+rtl_color="${color_green}"
+if [ -z "${rtl_running##*inactive*}" ]; then
+  rtl_running="down"
+  rtl_color="${color_red}\e[7m"
+  rtlversion=""
+  rtlversion_color="${color_red}"
+else
+  rtl_running="up"
+  rtlpi=$(git --git-dir /home/rtl/RTL/.git describe --tags)
+  if [ "$rtlpi" = "$rtlgit" ]; then
+    rtlversion="$rtlpi"
+    rtlversion_color="${color_green}"
+  else
+    rtlversion="$rtlpi"" Update!"
+    rtlversion_color="${color_red}"
   fi
 fi
 
@@ -451,7 +481,8 @@ ${color_red}   ~ .~ (  ${color_yellow}/ ／${color_red}. ~    ${color_yellow}%-2
 ${color_red}    (  : '${color_yellow}/／${color_red}:  )     ${electrsversion_color}%-26s ${color_grey}%s/%s channels
 ${color_red}     '~ .~${color_yellow}°${color_red}~. ~'                                 ${color_grey}Channel.db size: ${color_green}%s
 ${color_red}         '~'          ${color_yellow}%-20s${color_grey}${btcrpcexplorer_color}%-4s
-${color_red}                      ${btcrpcexplorerversion_color}%-24s
+${color_red}                      ${btcrpcexplorerversion_color}%-24s   ${color_yellow}%-20s${rtl_color}%-4s
+${color_red}                                                 ${rtlversion_color}%-24s
 
 ${color_grey}For others to connect to this lightning node
 ${color_grey}%s
@@ -469,6 +500,6 @@ ${color_grey}%s
 "${electrsversion}" "${ln_channels_online}" "${ln_channels_total}" \
 "${channel_db_size}" \
 "Block Explorer" "${btcrpcexplorer_running}" \
-"${btcrpcexplorerversion}" \
+"${btcrpcexplorerversion}" "RTL" "${rtl_running}" \
+"${rtlversion}" \
 "${ln_connect_guidance}"
-
