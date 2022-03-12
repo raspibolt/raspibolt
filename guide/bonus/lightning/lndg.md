@@ -12,16 +12,16 @@ has_toc: false
 
 ---
 
-[LNDg](https://www.google.com/search?q=github+LNDg++lightning+node){:target="_blank"} is a lite GUI web interface
-to analyze lnd data and manage your node with automation.
+[LNDg](https://github.com/cryptosharks131/lndg){:target="_blank"} is a lite GUI web interface
+to analyze LND data and manage your node with automation.
 
-Difficulty: Simple
-{: .label .label-green }
+Difficulty: Intermediate
+{: .label .label-yellow }
 
 Status: Tested v3
 {: .label .label-green }
 
-![LNDg](../../images/lndg.png)
+![LNDg](../../../images/lndg.png)
 
 ---
 
