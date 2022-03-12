@@ -75,7 +75,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
   $ sudo su - rebalance-lnd
   $ git clone https://github.com/C-Otto/rebalance-lnd.git
   $ cd rebalance-lnd/
-  $ pip3 install -r requirements.txt
+  $ pip3 install -r requirements.txt .
   ```
 
 * Add the rebalance-lnd binary file location to PATH
