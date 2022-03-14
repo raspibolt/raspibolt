@@ -82,12 +82,21 @@ We are going to install thunderhub in the home directory since it doesn't take m
 
 ### Configuration
 
-* Still with user "thunderhub", edit the configuration file.
+* Still with user "thunderhub", create a symbolic link pointing to your lnd data directory.
+  Check if the link is working. If nothing is displayed in red you are good to go.
+
+  ```sh
+  $ ln -s /data/lnd /home/thunderhub/.lnd
+  $ ls -la
+  ```
+
+* Copy and open the configuration file
 
   ```sh
   $ cp ~/thunderhub/.env ~/thunderhub/.env.local
   $ nano ~/thunderhub/.env
   ```
+
 
 * Uncomment the following lines, save and exit:
 
@@ -119,8 +128,8 @@ We are going to install thunderhub in the home directory since it doesn't take m
   accounts:
     - name: 'RaspiBolt'
       serverUrl: '127.0.0.1:10009'
-      macaroonPath: '/home/bitcoin/.lnd/data/chain/bitcoin/mainnet/admin.macaroon'
-      certificatePath: '/home/bitcoin/.lnd/tls.cert'
+      macaroonPath: '/home/thunderhub/.lnd/data/chain/bitcoin/mainnet/admin.macaroon'
+      certificatePath: '/home/thunderhub/.lnd/tls.cert'
       password: 'accountpassword'
   ```
 
