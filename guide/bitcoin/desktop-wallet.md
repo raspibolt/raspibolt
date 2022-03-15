@@ -182,20 +182,13 @@ To connect via Tor to Electrs or Bitcoin Core, the server must have a Tor connec
   * *For "Bitcoin Core":* this is the address advertised by Bitcoin Core each time it starts. To obtain it run:
     *  `sudo tail -f -n 50000 /data/bitcoin/debug.log | grep "tor: Got service ID"` 
     *  If there is no output, re-run the command after restarting Bitcoin Core
-* The Tor proxy should already be enabled. If not, enable it qnd use `127.0.0.1` in the first box and `9150` in the second box (or `9050` if you run Tor as a background service)
+* The Tor proxy should already be enabled. If not, enable it and use `127.0.0.1` in the first box and `9150` in the second box (or `9050` if you run Tor as a background service)
 * Click on "Test connection". A green tick should appear on the button and you should see something similar to the following output:
 
   ```
   > Connected to [...] on protocol version 1.4
   > [...]
   ```
-
-If there is a connection error message, it is likely because you have Tor already running on your computer. In that case:
-* *If the Tor Browser is opened:* close it and try the "Test connection" button again.
-* *If the Tor Browser is not opened, or if the issue persists after closing it, it is possible that Tor is running as a background service:*
-  * In Sparrow, enable "Use proxy" by clicking on the slider (it should become blue)
-  * On the "Proxy URL line, use `localhost` for the first box and `9150` for the second box.
-  * Click on "Test connection"
 
 You're set! Sparrow is now configured to connect to your node wherever you are.
 
