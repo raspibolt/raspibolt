@@ -57,7 +57,7 @@ Still on your local computer, download, verify and install Sparrow.
 
 Sparrow can connect to either your own Electrum server, or directly to your Bitcoin Core, or to a public Electrum server. We will connect Sparrow to our own Electrum server as it is the most private and secure option. For more information about the privacy and security trade-offs of the various server options, read the following [article](https://www.sparrowwallet.com/docs/best-practices.html){:target="_blank"} by Craig Raw, the author of Sparrow.
 
-If you did not install Electrs or another Electrum server on your node and want to connect Sparrow to your Bitcoin Core, go to the [optional section below](#connect-to-bitcoin-core-(optional)).
+If you did not install Electrs or another Electrum server on your node and want to connect Sparrow directly to Bitcoin Core, follow these [optional guidelines](#(optional)-connect-to-bitcoin-core).
 
 ![Sparrow stages](../../images/sparrow-stages.png)
 
@@ -89,6 +89,11 @@ If there is a connection error message, try the following troubleshooting:
   * On Windows: `C:\Users\remi\AppData\Roaming\Sparrow\certs`
   * On macOS: `~/.sparrow/cert`
   * On Linux: `~/.sparrow/cert`
+
+* Close the server configuration window
+* Check that the wallet is properly connected to Electrs and using the Tor proxy by checking the two icons in the bottom right corner of the wallet
+  * the first icon should be grey (not red) and if you mouse hover it should display "External Tor proxy enabled" message
+  * the second icon should be a blue slider button and if you ouse over it it should display "Connected to [...] at height [...]"
 
 You're set! Sparrow is now configured to connect to your Electrum server from within your LAN.
 
@@ -175,9 +180,19 @@ Configure Sparrow to connect to Bitcoin Core.
   > [...]
   ```
 
-![Sparrow connect to Bitcoin Core](../../images/sparrow-core.png)
+If there is a connection error message, try the following troubleshooting:
+* Make sure that your computer is not connected to any "guest" WiFi network at home. A "guest" WiFi network prevents the computer to connect to any other devices on the local network, such as your node.
+* If you have used Sparrow before on this computer, try to connect again after deleting the existing certificates that are stored within the `certs` folder:
+  * On Windows: `C:\Users\remi\AppData\Roaming\Sparrow\certs`
+  * On macOS: `~/.sparrow/cert`
+  * On Linux: `~/.sparrow/cert`
 
-You're set! Sparrow is now configured to connect to Bitcoin Core from within your LAN.
+* Close the server configuration window
+* Check that the wallet is properly connected to Electrs and using the Tor proxy by checking the two icons in the bottom right corner of the wallet
+  * the first icon should be grey (not red) and if you mouse hover it should display "External Tor proxy enabled" message
+  * the second icon should be a blue slider button and if you ouse over it it should display "Connected to [...] at height [...]"
+
+You're set! Sparrow is now configured to connect to your Bitcoin Core from within your LAN.
 
 ---
 
