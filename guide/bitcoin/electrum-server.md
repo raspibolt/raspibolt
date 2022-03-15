@@ -459,4 +459,4 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
 ---
 
-Next: [Blockchain explorer >>](blockchain-explorer.md)
+Next: [Desktop wallet >>](desktop-wallet.md)
