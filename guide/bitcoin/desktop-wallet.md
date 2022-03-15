@@ -187,10 +187,12 @@ If there is a connection error message, try the following troubleshooting:
   * On macOS: `~/.sparrow/cert`
   * On Linux: `~/.sparrow/cert`
 
+Now, let's go back to the wallet and check that the server and proxy are working properly.
+
 * Close the server configuration window
-* Check that the wallet is properly connected to Electrs and using the Tor proxy by checking the two icons in the bottom right corner of the wallet
-  * the first icon should be grey (not red) and if you mouse hover it should display "External Tor proxy enabled" message
-  * the second icon should be a blue slider button and if you ouse over it it should display "Connected to [...] at height [...]"
+* Check the two icons in the bottom right corner of the wallet window
+  * the first icon should be grey (not red) and a mouse hover should display "External Tor proxy enabled"
+  * the second icon should be a blue slider button and a mouse over should display "Connected to [...] at height [...]"
 
 You're set! Sparrow is now configured to connect to your Bitcoin Core from within your LAN.
 
