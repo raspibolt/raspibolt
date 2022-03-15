@@ -14,9 +14,9 @@ We install the [Sparrow](https://github.com/romanz/electrs/){:target="_blank"} d
 ![Sparrow wallet](../../images/sparrow.png)
 
 If you'd like to install another desktop wallet and connect it to your node, we have bonus guides for:
-* [BitBoxApp](../bonus/bitcoin/wallet-bitboxapp.md)
-* [Electrum](../bonus/bitcoin/wallet-electrum.md)
-* [Specter Desktop](../bonus/bitcoin/wallet-specter-desktop.md)
+* [BitBoxApp](../bonus/bitcoin/bitboxapp.md)
+* [Electrum](../bonus/bitcoin/electrum.md)
+* [Specter Desktop](../bonus/bitcoin/specter-desktop.md)
 
 ---
 
@@ -203,6 +203,7 @@ You're set! Sparrow is now configured to connect to your node wherever you are.
 
 ## Sparrow in action
 
+Congratulations, you have now a Bitcoin desktop wallet, capable of securing your bitcoin, running with your own trustless Bitcoin full node!  
 Sparrow is a powerful wallet that allows you to use the most advanced features for securing your bitcoins and preserve your privacy.
 
 With Sparrow you can:
