@@ -360,22 +360,21 @@ Balance of Satoshis allows connecting a node to a Telegram bot to receive update
 * Once the bot is created, the BotFather will give you a HTTP API token, copy it and keep it somewhere safe (like in a password manager). Note that if you lose this token, you could always get it agin by typing `/myBot` in the BotFather feed.
 * You also get a link to your bot (in the form: t.me/[your_bot_username]) click on it and it will redirect you to your new bot feed. Keep Telegram opened.
 
-### Torify
+### Tor Proxy (requires v11.50.1+)
 
-To avoid leaking our node IP address to Telegram, we can force bos to use Tor using the [`torify`](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorifyHOWTO){:target="_blank"} utility. To do this, we first need to edit the `torsocks.conf` file.
+To avoid leaking our node IP address to Telegram, we can tell bos to use Tor (or VPN) using the flag `--use-proxy <file>`.
 
-* Using the "admin" user, edit the `torsocks.conf` file by uncommenting the `AllowOutboundLocalhost` and setting the value to 1. Save (Ctrl+O) and exit (Ctrl+X)
+* As user "bos", create and edit a new file `proxy_agent.json`. Insert host and port of your Tor (or VPN or other proxy) instance. Save (Ctrl+O) and exit (Ctrl+X)
 
   ```sh
-  $ sudo nano /etc/tor/torsocks.conf
+  $ sudo su - bos
+  $ nano balanceofsatoshis/proxy_agent.json
   ```
   ```ini
-  AllowOutboundLocalhost 1
-  ```
-* Restart Tor
-
-  ```sh
-  $ sudo systemctl reload tor
+   {
+      "host": "127.0.0.1",
+      "port": 9050
+   } 
   ```
 
 ### Use bos to connect your node to the bot
@@ -386,10 +385,10 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
   $ sudo su - bos
   ```
 
-* Now, we are going to request bos to connect our node to the TG bot
+* Now, we are going to request bos to connect our node to the TG bot via proxy
 
   ```sh
-  $ /usr/bin/torify bos telegram
+  $ bos telegram --use-proxy /home/bos/balanceofsatoshis/proxy_agent.json
   ```
 
 * When prompted, enter the HTTP API token that the @BotFather gave you earlier
@@ -410,7 +409,7 @@ To avoid leaking our node IP address to Telegram, we can force bos to use Tor us
   $ exit
   ```
 
-### Permannent connection and autostart on boot
+### Permanent connection and autostart on boot
 
 Now we’ll make sure our Telegram Bot command starts as a systemd service on the Raspberry Pi so it’s always running.
 
@@ -431,7 +430,7 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   After=lnd.service
 
   [Service]
-  ExecStart=/usr/bin/torify /home/bos/balanceofsatoshis/bos telegram --connect YourConnectionCode
+  ExecStart=/home/bos/balanceofsatoshis/bos telegram --connect YourConnectionCode --use-proxy /home/bos/balanceofsatoshis/proxy_agent.json
   User=bos
   Restart=always
   TimeoutSec=120
@@ -456,7 +455,7 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   >    Tasks: 11 (limit: 4164)
   >      CPU: 7.981s
   >   CGroup: /system.slice/bos-telegram.service
-  >           `-4682 node /home/bos/.npm-global/bin/bos telegram --connect 1536853548
+  >           `-4682 node /home/bos/.npm-global/bin/bos telegram --connect YourConnectionCode --use-proxy /home/bos/balanceofsatoshis/proxy_agent.json
   ```
 
 * To monitor the live logging output use the following command. Exit with Ctrl+C.
