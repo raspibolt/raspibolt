@@ -93,10 +93,9 @@ If there is a connection error message, try the following troubleshooting:
 Now, let's go back to the wallet and check that the server and proxy are working properly.
 
 * Close the server configuration window
-* Check the two icons in the bottom right corner of the wallet window
+* Check the two icons in the bottom right corner of the wallet window ![status icons](../../images/sparrow-server-proxy-icons.png)
   * the first icon should be grey (not red) and a mouse hover should display "External Tor proxy enabled"
   * the second icon should be a blue slider button and a mouse over should display "Connected to [...] at height [...]"
-  * ![status icons](../../images/sparrow-server-proxy-icons.png)
 
 You're set! Sparrow is now configured to connect to your Electrum server from within your LAN.
 
