@@ -10,13 +10,15 @@ has_toc: false
 # Bonus guide: Lightning Terminal
 {: .no_toc }
 
+[Lightning Terminal](https://github.com/lightninglabs/lightning-terminal){:target="_blank"} is a web UI to help LND node operators managing their channels liquidity with the use of the Loop and Pool commercial services.
+
 Difficulty: Medium
 {: .label .label-yellow }
 
 Status: Tested v3
 {: .label .label-green }
 
-![lightning-terminal](images/lightning-terminal.png)
+![lightning-terminal](../../../images/lightning-terminal.png)
 
 ---
 
@@ -30,9 +32,7 @@ Table of contents
 
 ## Introduction
 
-We install [Lightning Terminal](https://github.com/lightninglabs/lightning-terminal){:target="_blank"}, a browser-based interface for managing channel liquidity.  
-
-Lightning Terminal, developped by Lighining Labs, aims at providing additional tools for operators to manage their node and channel balances. Below is a summary of Lighting Terminal's features:
+Lightning Terminal, developped by Lighining Labs, aims at providing additional tools for LND node operators to manage their node and channel balances. Below is a summary of Lighting Terminal's features:
 
 * Visualize your channel balances in a web GUI
 * Run a single daemon (`litd`) that integrates the Loop (`loopd`), Pool (`poold`) and Faraday (`faraday`) daemons
@@ -40,7 +40,7 @@ Lightning Terminal, developped by Lighining Labs, aims at providing additional t
 * Pool client (`pool`): Buy and sell inbound liquidity using the peer-to-peer auction-based Pool exchange using the CLI or web GUI 
 * Faraday client (`frcli`): Run the Faraday daemon on your node that provides a CLI-based LN node accounting service
 
-Because Pool is alpha software, Lightning Terminal is alpha software too.  
+Because Pool is alpha software, Lightning Terminal is also alpha software.  
 
 ---
 
@@ -65,10 +65,10 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.4-alpha/lightning-terminal-linux-arm64-v0.6.4-alpha.tar.gz
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.4-alpha/manifest-v0.6.4-alpha.txt
-  $ sha256sum --check manifest-v0.6.4-alpha.txt --ignore-missing
-  > lightning-terminal-linux-arm64-v0.6.4-alpha.tar.gz: OK
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.5-alpha/lightning-terminal-linux-arm64-v0.6.5-alpha.tar.gz
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.5-alpha/manifest-v0.6.5-alpha.txt
+  $ sha256sum --check manifest-v0.6.5-alpha.txt --ignore-missing
+  > lightning-terminal-linux-arm64-v0.6.5-alpha.tar.gz: OK
   ```
 
 * Import the project's lead maintainer (Oliver Gugger) PGP key from Keybase 
@@ -83,8 +83,8 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 * Using the key, verify the authenticity of the checksums file
   
   ```sh
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.4-alpha/manifest-v0.6.4-alpha.sig
-  $ gpg --verify manifest-v0.6.4-alpha.sig manifest-v0.6.4-alpha.txt
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.5-alpha/manifest-v0.6.5-alpha.sig
+  $ gpg --verify manifest-v0.6.5-alpha.sig manifest-v0.6.5-alpha.txt
   > [...]
   > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
   > [...]
@@ -93,10 +93,10 @@ Because Pool is alpha software, Lightning Terminal is alpha software too.
 * Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
 
   ```sh
-  $ tar -xzf lightning-terminal-linux-arm64-v0.6.4-alpha.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.6.4-alpha/*
+  $ tar -xzf lightning-terminal-linux-arm64-v0.6.5-alpha.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.6.5-alpha/*
   $ litd --lnd.version
-  > litd version 0.14.2-beta commit=lightning-terminal-v0.6.4-alpha
+  > litd version 0.14.2-beta commit=lightning-terminal-v0.6.5-alpha
   ```
 
 ### User and data directories
