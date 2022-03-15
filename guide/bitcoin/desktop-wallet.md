@@ -231,8 +231,6 @@ To connect via Tor to Electrs or Bitcoin Core, the server must have a Tor connec
 
 You're set! Sparrow is now configured to connect to your node over Tor and you can use it wherever you are.
 
----
-
 <br /><br />
 
 ---
