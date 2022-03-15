@@ -115,7 +115,7 @@ With Sparrow you can:
 * Create multisig wallets for improved security
 * Coinjoin your coins for improved privacy
 
-For more information and tutorials, visit the [Sparrow documentation webpage](https://sparrowwallet.com/docs/){:target="_blank"}.
+For more information, tutorials and support, visit the [Sparrow documentation webpage](https://sparrowwallet.com/docs/){:target="_blank"} and their [Telegram group](https://t.me/sparrowwallet){:target="_blank"}.
 
 ---
 
