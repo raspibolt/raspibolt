@@ -385,7 +385,7 @@ Rather than always typing the flags, we can create aliases for the "admin" user.
 
 ### Lightning Node Connect
 
-![web-terminal](images/terminal-web-dashboard.png)
+![web-terminal](../../../images/terminal-web-dashboard.png)
 
 #### Introduction
 
@@ -415,95 +415,25 @@ Congrats! You've connected your node to the web Terminal and can now manage it f
 
 [Loop](https://github.com/lightninglabs/loop){:target="_blank"} is a non-custodial service offered by Lightning Labs that makes it easy to move bitcoin into and out of the Lightning Network: deposit to a Bitcoin address without closing channels with Loop In, convert outbound liquidity into inbound liquidity with Loop Out, refill depleted Lightning channels with Loop In.
 
-![loop](images/loop.png)
+You can loop in/out using the CLI (check `litloop --help`), the Lightning Terminal, the web Terminal or the Ride The Lightning web UI (see [next section of the guide](#optional-set-up-the-loop-service-in-ride-the-lightning))
 
-As an example, we will show how to use loop out to move some sats out of a channel and receive it onchain. This could help a merchant when a channel has been used for payments and is now all outbound. By using loop out, some liquidity is moved to the other side which allows the channel to be used again by clients, while the funds oved onchain can now be stored in cold storage.
-
-#### Loop out
-
-* Log in to Lightning Terminal
-* Click on the "Loop" button
-* Select a channel which is mostly outbound (they will be colour-coded in red in the Terminal)
-  * e.g. a channel with 1,000,000 sats on your side and 0 sats on the remote side
-* Click on the "Loop Out" button
-* The slider represents your local (outbound) balance. Select how much of it you want to send on your onchain address, which is also the amount you want to move to the remote (inbound) side of the channel.
-  * e.g. to move 500,000 sats (out of 1,000,000 sats) onchain, place the slider at the 500,000 sats mark
-* Click on "Additional Options"
-* Specify a confirmation target. Tp reduce fees, and if the mempool is not busy (check [mempool.space](https://mempool.space/){:target="_blank"}), use a very large value (e.g. 400, the maximum allowed) to get a fee close to 1 sa/vB.
-* If you're ok with the sats going to your LND wallet, leave the "Destination" blank. If you want to send it to an external wallet, paste a segwit address from that external wallet.
-* Click "Next"
-* Review the proposed transaction and fees (in sats and % of the amount sent). The fee is an estimation of the total fee that includes: 1) the on-chain fee + 2) the service fee for Loop Out; + 3) the estimated off-chain routing fee. The real fee might differ from this estimation.
-* If you're happy with the fees, click "Confirm"
-
-Congrats! You've done your first lightning submarine swap!
-
-#### More information
-
-* You can loop in/out using the CLI (check `litloop --help`), the Lightning Terminal, the web Terminal or the Ride The Lightning web UI (see [next section of the guide](rtl.md))
-* To get more information, check out the following resources:
-  * [Loop webpage](https://lightning.engineering/loop/){:target="_blank"}
-  * [Loop documentation](https://docs.lightning.engineering/lightning-network-tools/loop){:target="_blank"}
-  * [Loop GitHub repository](https://github.com/lightninglabs/loop){:target="_blank"}
-  * [Lightning Labs blog post announcement](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}
-
+* **For more information:** Check out the Loop [webpage](https://lightning.engineering/loop/){:target="_blank"}, [documentation page](https://docs.lightning.engineering/lightning-network-tools/loop){:target="_blank"}, [GitHub repository](https://github.com/lightninglabs/loop){:target="_blank"} and the Lightning Labs [blog post announcement](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}.
 
 ### Pool
 
 [Pool](https://github.com/lightninglabs/pool){:target="_blank"} is a marketplace for Lightning channels. You can rent a channel when you need inbound liquidity or earn an income by leasing a channel.
 
-![pool](images/pool.png)
+Pool requires to fund an account from your LND onchain wallet. This account will be used to draw the sats required to open channels and pay the Pool fees. Make sure you fund your LND wallet with at least the amount of sats you'd like to have in your Pool account. Note that using Pool will trigger the automatic creation of an LSAT identification token that costs 1,000 sats.
 
-#### Preparations
+You can use Pool using the CLI (check `litpool --help`), the Lightning Terminal or the web Terminal.
 
-Pool requires to fund an account from your LND onchain wallet. This account will be used to draw the sats required to open channels and pay Pool fees. Make sure you fund your LND wallet with at least the amount of sats you'd like to have in your Pool account.
-
-#### Create a Pool account
-
-* Log in to the Lightning Terminal UI
-* In the left menu, click on "Lightning Pool"
-* Click "Open an account"
-* Type the desired amount whit which you want to fund your account
-* Change the "Expires in" parameters if you'd like a longer expiration deadline (closing or reopening an account at the end of the account lifetime requires one or two onchain transactions and therefore onchain fees; if you plan to use Pool long-term, increase the duration to save on fees)
-* Select a confirmation target you are comfortable with (e.g. 1 sat/vB)
-* Click "Fund"
-
-#### Submit a bid
-
-You can use the sats in your account to open channels to bidders and earn a one-off premium based on channel size and rate.
-
-* In the left menu, click on "Bid"
-* In "Desired Inbound Liquidity", select the size of the channel you are looking for, e.g. `2000000`
-* In "Bid Premium", select a premium you are ready to pay, expressed in sats. Check the recent awarded auctions for reasonable expectations.
-  * If the last few auctions offered 25 bps and you'd like to pay the same rate, multiply your desired channel size by the rate and divide by 100,000:
-    * 25 * 2,000,000 / 100,000 = 5,000 sats -> Use `5000` as the "Ask premium"
-    * Check at the bottom of the menu that the rate is indeed 25 bps
-* Click on "View additional options"
-* Select a channel duration. The peer that will open a 2M sats channel to your node will be committed to keep the channel opened for this duration at the minimum. If they close before, they will not be paid the premium and will be banned from the Pool server.
-* Select a minimum channel size (e.g. `1000000` sats) that you are ok with. It could be the same value as the desired channel size above.
-* Choose a max batch fee rate. check the on-going rate at the top of the Terminal and select a value slightly higher.
-* Choose if you want a channel only from Tier 1 (T1) nodes or from any nodes. The Tier ranking is done by Lightning Labs based on a number of parameters (e.g. node capacity, number of channels, uptime etc). T1 nodes are nodes that are considered as potentially good routers, i.e. they have more capacity, channels, uptime etc than T0 nodes. Expect to pay a higher rate for T1 nodes than for T0 nodes.
-* Review your bid details at the bottom. In particular, check that your offered premium rate is what you expect.
-* If you want to submit the bid, click on "Place bid oreder".
-* The bid will appear in the open orders section of the central panel. 
-* You can now close Lightning Terminal. Your bid will be taken into consideration by the Pool server and if an ask matches your bid, a channel will be opened to your node and sats will be taken from your Pool account to pay for the fees (a share of the onchain fees + Pool service fees + premium to peer that opens the channel)
-
-Congrats! You've done your first Pool bid!
-
-#### More information
-
-* If you want to earn sats to open channels to bidders, choose "Ask" instead of "Bid"
-* You can use Pool using the CLI (check `litpool --help`), the Lightning Terminal or the web Terminal.
-* To get more information, check out the following resources:
-  * [Pool webpage](https://lightning.engineering/pool/){:target="_blank"}
-  * [Pool documentation](https://docs.lightning.engineering/lightning-network-tools/pool){:target="_blank"}
-  * [Pool GitHub repository](https://github.com/lightninglabs/pool){:target="_blank"}
-  * [Lightning Labs blog post announcement](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}
+* **For more information:** Check out the Pool [webpage](https://lightning.engineering/pool/){:target="_blank"}, [documentation](https://docs.lightning.engineering/lightning-network-tools/pool){:target="_blank"}, [GitHub repository](https://github.com/lightninglabs/pool){:target="_blank"} and Lightning Labs [blog post announcement](https://blog.lightning.engineering/announcement/2020/02/05/loop-beta.html){:target="_blank"}.
 
 ### Faraday
 
 [Faraday](https://github.com/lightninglabs/faraday){:target="_blank"} is a suite of accounting CLI-based tools for LND node operators.
 
-* Check the Faraday commands
+* To check the list of available commands
 
   ```sh
   $ litfaraday --help
@@ -511,32 +441,14 @@ Congrats! You've done your first Pool bid!
   >   frcli - command line tool for faraday
   > [...]
   ```
-  
-The following commands are avaialble:
-
-* `insights`: expose metrics gathered for one or many channels.
-* `revenue`: generate a revenue report over a time period for one or many channels.
-* `outliers`: close recommendations based whether channels are outliers based on a variety of metrics.
-* `threshold`: close recommendations based on thresholds a variety of metrics.
-* `audit`: produce an accounting report for your node over a period of time. 
-* `fiat`: get the USD price for an amount of Bitcoin at a given time, currently obtained from CoinCap's historical price API.
-* `closereport`: provides a channel specific fee report, including fees paid on chain.
-
-#### More information
-
-* To obtain more details about each of these commands, type `litfaraday <command_name> --help`
-* To get more information, check out the following resources:
-  * [Faraday documentation](https://docs.lightning.engineering/lightning-network-tools/faraday){:target="_blank"}
-  * [Faraday GitHub repository](https://github.com/lightninglabs/faraday){:target="_blank"}
-  * [Lightning Labs blog post announcement](https://lightning.engineering/posts/2020-04-02-faraday/){:target="_blank"}
-  * [Latest feature blog post](https://lightning.engineering/posts/2020-09-15-faraday-accounting/){:target="_blank"}
-
+ 
+* **For more information:** Check out the Faraday [documentation page](https://docs.lightning.engineering/lightning-network-tools/faraday){:target="_blank"}, the [GitHub repository](https://github.com/lightninglabs/faraday){:target="_blank"}, the Lightning Labs [blog post announcement](https://lightning.engineering/posts/2020-04-02-faraday/){:target="_blank"} and their latest feature [blog post](https://lightning.engineering/posts/2020-09-15-faraday-accounting/){:target="_blank"}.
 
 ---
 
 ## Optional: Set up the Loop service in Ride The Lightning
 
-If you have installed [Ride The Lightning](https://raspibolt.org/rtl.html), you can use the Loop submarine swap service directly from the RTL GUI:
+If you have installed [Ride The Lightning](../../web-app.md), you can use the Loop submarine swap service directly from the RTL GUI:
 
 * Go the the navigation menu in the top left (if it's hidden, click on the hamburger symbol)
 * Click on "Node Config"
