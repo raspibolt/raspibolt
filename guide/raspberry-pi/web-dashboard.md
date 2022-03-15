@@ -335,7 +335,7 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
   
   [Unit]
   Description=Homer
-  After=lnd.service
+  After=network.target
   
   [Service]
   WorkingDirectory=/home/homer/homer
