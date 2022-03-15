@@ -23,14 +23,14 @@ We set up [Electrs](https://github.com/romanz/electrs/){:target="_blank"} to ser
 
 ## Bitcoin with hardware wallets
 
-The best way to safekeep your bitcoin (meaning the best combination of security and usability) is to use a hardware wallet (like [BitBox](https://shiftcrypto.ch/bitbox02){:target="_blank"}, [Ledger](https://www.ledger.com){:target="_blank"} or [Trezor](https://trezor.io){:target="_blank"}) in combination with your own Bitcoin node.
+The best way to safekeep your bitcoin (meaning the best combination of security and usability) is to use a hardware wallet (like [BitBox](https://shiftcrypto.ch/bitbox02){:target="_blank"}, [Coldcard](https://coldcard.com/){:target="_blank"} , [Ledger](https://www.ledger.com){:target="_blank"} or [Trezor](https://trezor.io){:target="_blank"}) in combination with your own Bitcoin node.
 This gives you security, privacy and eliminates the need to trust a third party to verify transactions.
 
 Bitcoin Core on the RaspiBolt itself is not meant to hold funds.
 
-One possibility to use Bitcoin Core with your Bitcoin wallets is to use an Electrum Server as middleware.
+One possibility to use Bitcoin Core with your Bitcoin wallets is to use an Electrum server as middleware.
 It imports data from Bitcoin Core and provides it to software wallets supporting the Electrum protocol.
-Wallets like the [BitBoxApp](https://shiftcrypto.ch/app/){:target="_blank"}, [Electrum wallet](https://electrum.org/){:target="_blank"} or [Sparrow Wallet](https://sparrowwallet.com/){:target="_blank"} that support hardware wallets can then be used with your own sovereign Bitcoin node.
+Desktop wallets like [Sparrow](https://sparrowwallet.com/){:target="_blank"}, the [BitBoxApp](https://shiftcrypto.ch/app/){:target="_blank"}, [Electrum](https://electrum.org/){:target="_blank"} or [Specter Desktop](https://specter.solutions/desktop/){:target="_blank"} that support hardware wallets can then be used with your own sovereign Bitcoin node.
 
 ---
 
@@ -299,7 +299,7 @@ Note that the remote device needs to have Tor installed as well.
 
 💡 Electrs must first fully index the blockchain and compact its database before you can connect to it with your wallets.
 This can take a few hours.
-Only proceed with the next section once Electrs is ready.
+Only proceed with the [next section](desktop-wallet.md) once Electrs is ready.
 
 * To check if Electrs is still indexing, you can follow the log output
 
