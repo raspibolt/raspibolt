@@ -37,7 +37,7 @@ Sparrow also connects to a couple of external services to get the Bitcoin price 
 
 ### Tor
 
-For Sparrow to use Tor to connect to the external services, Tor has to be running on your computer, either as a background service (reachable on port 9050) or by opening the Tor Browser (reachable on port 9150).
+For Sparrow to connect to the external services via Tor, Tor has to be running on your computer. You can run the Tor Browser and use port 9150 on localhost or else run Tor as a background service and use port 9050.
 
 Here, we'll use the Tor Browser and port 9150 as it is easier to set up on Windows and macOS.
 
