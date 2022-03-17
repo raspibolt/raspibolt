@@ -19,9 +19,6 @@ has_toc: false
 
 ## Privacy
 
-#### *Exchange*
-* **[Bisq](bisq.md)** - Buy and sell non-KYC bitcoins on Bisq, a decentralized exchange
-
 #### *Coinjoin*
 * **[JoinMarket](https://github.com/kristapsk/raspibolt-extras/blob/master/joinmarket.md){:target="_blank"}** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
 
