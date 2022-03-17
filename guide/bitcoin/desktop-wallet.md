@@ -25,7 +25,7 @@ We install the [Sparrow](https://github.com/romanz/electrs/){:target="_blank"} d
 
 ## Introduction
 
-Sparrow can connect to either your own Electrum server, or directly to your Bitcoin Core, or to a public Electrum server. We will connect Sparrow to our own Electrum server as it is the most private and secure option. For more information about the privacy and security trade-offs of the various server connection options, read the following [article](https://www.sparrowwallet.com/docs/best-practices.html){:target="_blank"} by Craig Raw, the author of Sparrow.
+We will connect Sparrow to our own Electrum server as it is the most private and secure option. For more information about the privacy and security trade-offs of the various server connection options, read the following [article](https://www.sparrowwallet.com/docs/best-practices.html){:target="_blank"} by Craig Raw, the author of Sparrow.
 
 ![Sparrow stages](../../images/sparrow-stages.png)
 
@@ -74,9 +74,9 @@ We now configure Sparrow to connect to your node within your local network.
 
 * Click on the "Private Electrum" tab
 * On the "URL" line, paste `raspibolt.local` or your node IP (e.g. `192.168.0.20`) in the first box and `50002` in the second box
-* Enable SSL by clicking on the slider (it should become blue)
+* Enable SSL by clicking on the slider
 * Enable the Tor proxy by clicking on the "Use proxy" slider
-* On the "Proxy URL" line, paste `127.0.0.1` in the first box and `9150` in the second box (or `9050` if you run Tor as a background service)
+* On the "Proxy URL" line, paste `127.0.0.1` in the first box and either `9150` or `9050` in the second box depending if you run the Tor Browser or Tor as a background service.
 * Click on "Test Connection". A green tick should appear on the button and you should see something similar to the following output:
 
   ```
@@ -97,8 +97,8 @@ Now, let's go back to the wallet and check that the server and proxy are working
 
 * Close the server configuration window
 * Check the two icons in the bottom right corner of the wallet window ![status icons](../../images/sparrow-server-proxy-icons.png)
-  * the first icon should be grey (not red) and a mouse hover should display "External Tor proxy enabled"
-  * the second icon should be a blue slider button and a mouse over should display "Connected to [...] at height [...]"
+  * The first icon should be grey, not red; and a mouse hover should display "External Tor proxy enabled"
+  * The second icon should be a blue slider button and a mouse over should display "Connected to [...] at height [...]"
 
 You're set! Sparrow is now configured to connect to your Electrum server from within your LAN.
 
@@ -142,12 +142,12 @@ you can obtain it again by running the following command with "admin" on your no
 ### Sparrow configuration
 
 * Open Sparrow
-* Navigate to the server configuration page (`Ctrl`+`p` then click on "Server")
+* Navigate to the server configuration page by hitting `Ctrl`+`p` then click on "Server"
 * Click on the "Private Electrum" tab. If you've already have an existing clearnet connection, click on "Edit Existing Connection".
 * On the "URL" line, paste your Tor hidden service connection address (e.g. "abcd...1234.onion") in the first box and `50002` in the second box
-* Enable SSL by clicking on the slider (it should become blue)
+* Enable SSL by clicking on the slider
 * Enable the Tor proxy by clicking on the "Use proxy" slider
-* On the "Proxy URL" line, paste `127.0.0.1` in the first box and `9150` in the second box (or `9050` if you run Tor as a background service)
+* On the "Proxy URL" line, paste `127.0.0.1` in the first box and either `9150` or `9050` in the second box depending if you run the Tor Browser or Tor as a background service.
 * Click on "Test Connection". A green tick should appear on the button and you should see something similar to the following output:
 
   ```
