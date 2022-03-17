@@ -31,12 +31,6 @@ has_toc: false
 
 ---
 
-## Decentralized exchange
-
-* **[Bisq](bisq.md)** - a decentralized exchange running as a desktop app on your computer to buy and sell non-KYC bitcoins
-
----
-
 ## Fun
 
 * **[Download the white paper](white-paper.md)** - download the Bitcoin white paper directly from your blockchain data
