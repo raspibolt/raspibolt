@@ -11,9 +11,15 @@ has_toc: false
 
 ---
 
-## Electrum Servers
+## Electrum servers
 
 * **[Electrum Personal Server](electrum-personal-server.md)** - an alternative to Electrs
+
+---
+
+## Decentralized exchanges
+
+* **[Bisq](bisq.md)** - a decentralized exchange running as a desktop app on your computer to buy and sell non-KYC bitcoins
 
 ---
 
