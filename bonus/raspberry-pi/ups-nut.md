@@ -71,8 +71,9 @@ Start the service. If successful, you should get a list of drivers used.
 
 Check status to verify service is active.
 
-`$ sudo service nut-server status`
 '$ sudo service nut-server restart'
+`$ sudo service nut-server status`
+
 Use the `upsc` command to view additional status. Replace `UPS-Name` with whatever you used in `ups.conf`. You should see the configuration of the UPS.
 
 `$ upsc UPS-Name`
