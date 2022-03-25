@@ -71,7 +71,7 @@ Start the service. If successful, you should get a list of drivers used.
 
 Check status to verify service is active.
 
-'$ sudo service nut-server restart'
+`$ sudo service nut-server restart`
 `$ sudo service nut-server status`
 
 Use the `upsc` command to view additional status. Replace `UPS-Name` with whatever you used in `ups.conf`. You should see the configuration of the UPS.
@@ -94,7 +94,8 @@ Configure the monitor that will alert watch, alert, and shutdown the device if n
 
 Modify upsmon.conf with what it should do as events occur. Pretty large config file, but the primary item to find is the MONITOR area (capital letters are necessary). You’re telling it to monitor your UPS that is locally connected. The 1 is the power value and shouldn’t be changed unless you’re connected to multiple UPS (not typical). You then use the `upsmon` username and password you configured in `upsd.users` and the master indicates that it’ll shut down this computer last (which is fine since this is a single node application)
 
-sudo nano /etc/nut/upsmon.conf
+`sudo nano /etc/nut/upsmon.conf`
+
 ```
 MONITOR UPS-Name@localhost 1 upsmon secretpassword1 master
 ```
