@@ -72,7 +72,7 @@ Start the service. If successful, you should get a list of drivers used.
 Check status to verify service is active.
 
 `$ sudo service nut-server status`
-
+'$ sudo service nut-server restart'
 Use the `upsc` command to view additional status. Replace `UPS-Name` with whatever you used in `ups.conf`. You should see the configuration of the UPS.
 
 `$ upsc UPS-Name`
@@ -93,6 +93,7 @@ Configure the monitor that will alert watch, alert, and shutdown the device if n
 
 Modify upsmon.conf with what it should do as events occur. Pretty large config file, but the primary item to find is the MONITOR area (capital letters are necessary). You’re telling it to monitor your UPS that is locally connected. The 1 is the power value and shouldn’t be changed unless you’re connected to multiple UPS (not typical). You then use the `upsmon` username and password you configured in `upsd.users` and the master indicates that it’ll shut down this computer last (which is fine since this is a single node application)
 
+sudo nano /etc/nut/upsmon.conf
 ```
 MONITOR UPS-Name@localhost 1 upsmon secretpassword1 master
 ```
@@ -113,13 +114,13 @@ $ sudo chmod 640 /etc/nut/upsd.users /etc/nut/upsmon.conf
 Restart daemons
 
 ```
-$ sudo services nut-server restart
-$ sudo services nut-client restart
+$ sudo service nut-server restart
+$ sudo service nut-client restart
 ```
 
 View available commands of UPS. Might come in handy to silence the alarm. Replace `UPS-Name` with the name you used in `ups.conf`.
 ```
-$ sudo upscmd –l UPS-Name
+$ upscmd –l UPS-Name
 ```
 ---
 
@@ -130,7 +131,7 @@ For the real test, unplug the UPS and let it drain. To speed the process up, plu
 $ upsc UPS-NAME
 ```
 Most models will have a field that is called `battery.charge` that you can monitor progress on.
-You may also want to recall you can disable the alarm on many models. Fine the variable on your system with `upscmd –l UPS-Name`. You can then mute it using the applicable command. Common example below. You’ll be prompted for a username and password. Use the admin and password you defined in `upsd.users`.
+You may also want to recall you can disable the alarm on many models. Find the variable on your system with `upscmd –l UPS-Name`. You can then mute it using the applicable command. Common example below. You’ll be prompted for a username and password. Use the admin and password you defined in `upsd.users`.
 ```
 upscmd UPS-Name beeper.mute
 ```
