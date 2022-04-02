@@ -35,6 +35,9 @@ has_toc: false
 #### *GUI - Mobile*
 * **[Zap (iOS)](zap-ios.md)** - a neat interface to manage peers & channels, make payments and create invoices
 
+#### *GUI, API - Web*
+* **[LNBits](lnbits.md)** - a lightning wallet/accounts system
+
 ---
 
 ## Liquidity management (rebalancing)
