@@ -449,7 +449,14 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
   $ sudo systemctl enable homer
   $ sudo systemctl start homer
   $ sudo journalctl -f -u homer
+  > [...]
+  > Apr 06 00:28:21 raspibolt npm[20097]:   App running at:
+  > Apr 06 00:28:21 raspibolt npm[20097]:   - Local:   http://localhost:8081
+  > Apr 06 00:28:21 raspibolt npm[20097]:   - Network: http://192.168.X.XXX:8081
+
   ```
+
+* Wait a few minutes for the server to start and for the logs to show that the app is running. Then, point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
 
 You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bonus/bitcoin/mempool.md), the [white paper](../bonus/bitcoin/white-paper.md), ThunderHub, Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
 
