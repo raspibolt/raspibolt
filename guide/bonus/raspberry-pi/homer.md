@@ -1,17 +1,24 @@
 ---
 layout: default
-title: Web dashboard
-nav_order: 70
-parent: Raspberry Pi
+title:Homer
+parent: + Raspberry Pi
+grand_parent: Bonus Section
+nav_exclude: true
+has_toc: false
 ---
-<!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
 
-# Web dashboard
+# Bonus guide: Homer
 {: .no_toc }
 
 We set up [Homer](https://github.com/bastienwirtz/homer#readme){:target="_blank"}, a simple static web dashboard to keep our web services on hand, from a simple YAML configuration file. 
 
-![Homer](../../images/homer-part-1.png)
+Difficulty: Easy
+{: .label .label-green }
+
+Status: Tested v3
+{: .label .label-green }
+
+![Homer](../../images/homer-part-3.png)
 
 ---
 
@@ -25,11 +32,11 @@ We set up [Homer](https://github.com/bastienwirtz/homer#readme){:target="_blank"
 
 ## Introduction
 
-The dashboard contains the following configurable features:
+The dashboard contains the following items that you can edit at any time:
 
-* a title and RaspiBolt logo
+* a title and the RaspiBolt logo
 
-* a top banner containing clearnet exertnal links to various useful websites:
+* a top banner containing clearnet external links to various useful websites:
   * *the RaspiBolt guide*
   * *the various RaspiBolt community groups (Telegram, Reddit, Twitter, Amboss)*
   * *your node profile on several lightning network explorers (Amboss, Web Terminal, LnRouter Terminal Debugger, LNnodeinsight and 1ML)*
@@ -38,9 +45,7 @@ The dashboard contains the following configurable features:
 
 * links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning")
 
-Here we'll install Homer and set up the basic configuration. We'll then add the relevant web services (BTC RPC Explorer, Ride The Lightning) later in the guide after having installed them.
-
-*Note:* If you don't plan to use any self-hosted web services (e.g., if you plan to use CLI-only), you can skip this entire web dashboard section.
+We'll first install Homer and set up the basic configuration. We'll then add the relevant web services from  the core guide (BTC RPC Explorer, Ride The Lightning).
 
 ---
 
@@ -101,7 +106,9 @@ We download the RaspiBolt v3 logo and place it inside the website data folder.
   ```sh
   $ cd ~/tmp
   $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-raspibolt.png
-  $ sudo mv logo-raspibolt.png /var/www/homer/assets/tools
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-btcrpcexplorer.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-rtl.png
+  $ sudo mv logo-*.png /var/www/homer/assets/tools
   ```
 
 ### nginx
@@ -176,8 +183,8 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   ################################
   # HOMEPAGE CONFIGURATION       #
   ################################
-  title: "RaspiBolt Dashboard"
-  subtitle: "Homer"
+  title: "RaspiBolt Web Services"
+  subtitle: "Homer dashboard"
   logo: "assets/tools/logo-raspibolt.png"
   
   header: true
@@ -285,12 +292,32 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   # First level array represents a group. Second level arrays represent items.
   services:
     - name: "Bitcoin"
-      icon: "fab fa-bitcoin"
-      items:
+       icon: "fab fa-bitcoin"
+       items:
+         - name: "BTC RPC Explorer"
+           logo: "assets/tools/logo-btcrpcexplorer.png"
+           subtitle: "Blockchain explorer"
+           tag: "app"
+           url: "https://raspibolt.local:4000/"
+           target: "_blank"
+         #- name: "Mempool"
+         #  logo: "assets/tools/logo-mempool.png"
+         #  subtitle: "Mempool visualizer"
+         #  tag: "app"
+         #  url: "https://raspibolt.local:4081/"
+         #  target: "_blank"
     - name: "Lightning"
       icon: "fas fa-bolt"
       items:
+        - name: "Ride The Lightning"
+          logo: "assets/tools/logo-rtl.png"
+          subtitle: "Node manager"
+          tag: "app"
+          url: "https://raspibolt:local:4001/rtl/login"
+          target: "_blank"
   ```
+
+🔍 *Note:* Your self-hosted web service links are configured in the last "Services" section. The default configuration enables the links for BTC RPC Explorer in the "Bitcoin" group and Ride The Lightning in the "Lightning" group. To add more web services, simply add a new item under the relevant group. An example is provided with Mempool (to enable it, simply uncomment the 6 lines of the Mempool item). You can also add more groups/columns by changing the value of the `columns:` variable, at the top of the configuration file.
 
 * Create a symlink to the configuration file and change its ownshership to the "www-data" user
 
@@ -357,9 +384,9 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
   $ sudo journalctl -f -u homer
   ```
 
-You're set! You can now use the dashboard to have a quick access to Cockpit and some external websites. We will add more web services in the Bitcoin and Lightning sections of the guide.
+You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bonus/bitcoin/mempool.md), the [white paper](../bonus/bitcoin/white-paper.md), ThunderHub, Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
 
-🔍 *Note:* If you want to tweak the dashboard to your own taste, check the full configuration guidelines on the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
+🔍 *Note:* If you want to tweak the dashboard to your own taste, check the full configuration guidelines in the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
 
 ---
 
@@ -402,8 +429,77 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
   $ sudo journalctl -f -u homer
   ```
 
-<br /><br />
-
 ---
 
-Next: [Bitcoin >>](../bitcoin/index.md)
+## Uninstall
+
+* Stop the systemd service and delete the configuration file
+
+  ```sh
+  $ sudo systemctl stop homer
+  $ sudo rm /etc/systemd/system/homer.service
+  ```
+
+* Remove the firewall rules
+
+  ```sh
+  $ sudo systemctl stop homer
+  $ sudo systemctl disable homer
+  $ sudo rm /etc/systemd/system/homer.service
+  ```
+
+* Display the UFW firewall rules and notes the numbers of the rules for Homer (e.g., X and Y below)
+
+  ```sh
+  $ sudo ufw status numbered
+  > [...]
+  > [X] 4091/tcp                   ALLOW IN    Anywhere                   # allow Homer SSL
+  > [...]
+  > [Y] 4091/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow Homer SSL
+  ```
+
+* Delete the two Homer rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
+
+  ```sh
+  $ sudo ufw delete Y
+  $ sudo ufw delete X 
+  ```
+
+* Delete the nginx website directory, the web server configuration file and its symlink
+
+  ```sh
+  $ sudo rm -r /var/www/homer
+  $ sudo rm /etc/nginx/sites-available/homer-ssl.conf
+  $ sudo rm /etc/nginx/sites-enabled/homer-ssl.conf
+  ```
+
+* Test and reload nginx configuration
+
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  $ sudo systemctl restart nginx
+  ```
+
+* Delete the "homer" user. Do not worry about the `userdel: mempool mail spool (/var/mail/homer) not found`.
+
+  ```sh
+  $ sudo su -
+  $ userdel -r homer
+  > userdel: homer mail spool (/var/mail/homer) not found
+  ```
+
+* (Optional) Delete the data folder that contains the YAML configuration file for the Homer dashboard. If you plan to reinstall Homer in the future, you could keep this data folder to not lose your configuration settings.
+
+  ```sh
+  $ sudo rm -r /data/homer
+  ```
+
+<br /><br />
+
+------
+
+<< Back: [+ Raspberry Pi](index.md)
+
+

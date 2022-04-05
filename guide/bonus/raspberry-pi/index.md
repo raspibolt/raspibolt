@@ -14,6 +14,7 @@ has_toc: false
 ## Dashboards & Appearance
 * **[System overview](system-overview.md)** - your RaspiBolt will greet you with a quick system summary on login
 * **[Pimp the command line](command-line.md)** - make your command line prompt shine with a golden ฿ and use more colors overall
+* **[Homer](homer.md)** - a homepage for all your web services
 
 ---
 

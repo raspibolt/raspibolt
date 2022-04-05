@@ -279,45 +279,6 @@ In order to do that, we create a systemd unit that starts the service on boot di
 
 ---
 
-## Homer
-
-We can now add the web service to the Homer dashboard.
-
-* Download the BTC RPC Explorer logo and move it to the Homer web data folder
-
-  ```sh
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-btcrpcexplorer.png
-  $ sudo mv logo-btcrpcexplorer.png /var/www/homer/assets/tools
-  ```
-
-* Open the Homer configuration file
-
-  ```sh
-  $ sudo nano /data/homer/config.yml
-  ```
-
-* In the "Bitcoin" group of the "Service" section, add the service configuration lines after `items` for the "Bitcoin" group to look like this. If needed, in the `url:` entry, replace `raspibolt.local` by your node's ID address (e.g., 192.168.0.20).
-
-  ```ini
-   - name: "Bitcoin"
-      icon: "fab fa-bitcoin"
-      items:
-        - name: "BTC RPC Explorer"
-          logo: "assets/tools/logo-btcrpcexplorer.png"
-          subtitle: "Blockchain explorer"
-          tag: "app"
-          url: "https://raspibolt.local:4000/"
-          target: "_blank"
-  ```
-
-* Save and exit
-
-* Open the dashboard in your browser ([https://raspibolt.local:4091](https://raspibolt.local:4091){:target="_blank"}) or refresh the page (`F5`) if already open.
-
-![Homer - Bitcoin section](../../images/homer-part-2.png)
-
---
-
 ## Remote access over Tor (optional)
 
 Do you want to access your personal blockchain explorer remotely?

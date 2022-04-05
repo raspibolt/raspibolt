@@ -140,4 +140,4 @@ A few examples:
 
 ---
 
-Next: [Web dashboard >>](web-dashboard.md)
+Next: [Bitcoin >>](../bitcoin/index.md)
