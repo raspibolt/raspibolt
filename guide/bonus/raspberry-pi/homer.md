@@ -1,6 +1,6 @@
 ---
 layout: default
-title:Homer
+title: Homer
 parent: + Raspberry Pi
 grand_parent: Bonus Section
 nav_exclude: true
