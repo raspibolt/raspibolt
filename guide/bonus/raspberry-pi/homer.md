@@ -78,7 +78,7 @@ The dashboard contains the following items that you can edit at any time:
 * Retrieve the source code repository and install Homer
 
   ```sh
-  $ git clone https://github.com/bastienwirtz/homer.git
+  $ git clone --branch 22.02.1 https://github.com/bastienwirtz/homer.git
   $ cd homer
   $ npm install
   $ npm run build
@@ -99,22 +99,25 @@ The dashboard contains the following items that you can edit at any time:
 
 ### Logos
 
-* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos and place them inside the website data folder.
+* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from a repository containing a collection of Bitcoin and Lightning apps logos
 
   ```sh
-  $ cd ~/tmp
+  $ cd /tmp
   $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/raspibolt3.png
   $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/btcrpcexplorer.png
   $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/rtl.png
-  $ sudo mv logo-*.png /var/www/homer/assets/tools
+
+* Using the wildcard `*`, move all the png pictures to the nginx website data folder. Note: If you have other png images in your /tmp folder, do not use the following command, instead, move each file one by one.
+  
+  ```sh
+  $ sudo mv *.png /var/www/homer/assets/tools
   ```
 
 ### nginx
 
-* Switch back to the "homer" user and create a nginx configuration file for the Homer website with a HTTPS server listening on port 4091
+* Create a nginx configuration file for the Homer website with a HTTPS server listening on port 4091
 
-  ```sh
-  $ sudo su - homer 
+  ```sh 
   $ nano /etc/nginx/sites-available/homer-ssl.conf
   ```
 
@@ -143,16 +146,73 @@ The dashboard contains the following items that you can edit at any time:
   }
   ```
 
-* Exit the "homer" user session back to user "admin"
-
-  ```sh
-  $ exit
-  ```
-
 * Create a symlink in the sites-enabled directory
 
   ```sh
   $ sudo ln -sf /etc/nginx/sites-available/homer-ssl.conf /etc/nginx/sites-enabled/
+  ```
+
+* Open the existing nginx configuration file
+
+  ```sh
+  $ sudo nano /etc/nginx/nginx.conf
+  ```
+
+* Paste the following web server configuration lines between the "events" and "streams" contexts
+
+  ```sh
+  http {
+
+          ##
+          # Basic Settings
+          ##
+
+          sendfile on;
+          tcp_nopush on;
+          types_hash_max_size 2048;
+          server_tokens off;
+
+          # server_names_hash_bucket_size 64;
+          # server_name_in_redirect off;
+
+          include /etc/nginx/mime.types;
+          default_type application/octet-stream;
+
+          ##
+          # SSL Settings
+          ##
+
+          ssl_protocols TLSv1.3;
+          ssl_prefer_server_ciphers on;
+
+          ##
+          # Logging Settings
+          ##
+
+          access_log /var/log/nginx/access.log;
+          error_log /var/log/nginx/error.log;
+
+          ##
+          # Gzip Settings
+          ##
+ 
+          gzip on;
+ 
+          # gzip_vary on;
+          # gzip_proxied any;
+          # gzip_comp_level 6;
+          # gzip_buffers 16 8k;
+          # gzip_http_version 1.1;
+          # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+          ##
+          # Virtual Host Configs
+          ##
+
+          include /etc/nginx/conf.d/*.conf;
+          include /etc/nginx/sites-enabled/*;
+  }
+
   ```
 
 * Test and reload nginx configuration
@@ -334,7 +394,16 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   $ npm run serve
   ```
   
-Now point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
+* Wait a couple of minutes for the server to start, until the following message is displayed
+
+  ```sh
+  > [...]
+  >   App running at:
+  >   - Local:   http://localhost:8081 
+  >   - Network: http://192.168.0.171:8081
+  ```
+
+* Now point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
 
 Your browser will display a warning, because we use a self-signed SSL certificate. There’s nothing we can do about that, because we would need a proper domain name (e.g. https://yournode.com) to get an official certificate which browsers recognize. Click on “Advanced” and proceed to the Homer dashboard interface.
 
