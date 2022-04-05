@@ -277,9 +277,7 @@ In order to do that, we create a systemd unit that starts the service on boot di
 
 * You can now access your own BTC RPC Explorer from within your local network by browsing to <https://raspibolt.local:4000>{:target="_blank"} (or your equivalent IP address).
 
----
-
-## Remote access over Tor (optional)
+### Remote access over Tor (optional)
 
 Do you want to access your personal blockchain explorer remotely?
 You can easily do so by adding a Tor hidden service on the RaspiBolt and accessing the BTC RPC Explorer with the Tor browser from any device.

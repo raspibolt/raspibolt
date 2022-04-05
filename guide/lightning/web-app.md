@@ -231,8 +231,6 @@ In order to do that, we create a systemd unit that starts the service on boot di
   $ sudo journalctl -f -u rtl
   ```
 
----
-
 ## Optional
 
 ### Remote access over Tor
