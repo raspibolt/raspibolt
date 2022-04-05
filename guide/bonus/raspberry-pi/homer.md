@@ -18,15 +18,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![Homer](../../images/homer-part-3.png)
-
----
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
+![Homer](../../../images/homer.png)
 
 ---
 
@@ -41,11 +33,9 @@ The dashboard contains the following items that you can edit at any time:
   * *the various RaspiBolt community groups (Telegram, Reddit, Twitter, Amboss)*
   * *your node profile on several lightning network explorers (Amboss, Web Terminal, LnRouter Terminal Debugger, LNnodeinsight and 1ML)*
 
-* a welcome message displaying the next block miner fee from the Mempool blockchain explorer public API
+* a welcome message displaying the next block miner fee from the Mempool blockchain explorer public API. It refreshes every 10 seconds.
 
 * links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning")
-
-We'll first install Homer and set up the basic configuration. We'll then add the relevant web services from  the core guide (BTC RPC Explorer, Ride The Lightning).
 
 ---
 
@@ -90,7 +80,7 @@ We'll first install Homer and set up the basic configuration. We'll then add the
   $ exit
   ```
 
-* Move the distributable output into a webroot folder and change its ownership to the “www-data” user.
+* Move the distributable output into a nginx website data folder and change its ownership to the “www-data” user.
 
   ```sh
   $ sudo rsync -av --delete /home/homer/homer/dist/ /var/www/homer/
@@ -99,15 +89,13 @@ We'll first install Homer and set up the basic configuration. We'll then add the
 
 ### Logos
 
-We download the RaspiBolt v3 logo and place it inside the website data folder.
-
-* Download the logo and move it to the Homer web data folder
+* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos and place them inside the website data folder.
 
   ```sh
   $ cd ~/tmp
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-raspibolt.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-btcrpcexplorer.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/RaspiBolt/homer-new/images/logo-rtl.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/raspibolt3.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/btcrpcexplorer.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/rtl.png
   $ sudo mv logo-*.png /var/www/homer/assets/tools
   ```
 
@@ -185,7 +173,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   ################################
   title: "RaspiBolt Web Services"
   subtitle: "Homer dashboard"
-  logo: "assets/tools/logo-raspibolt.png"
+  logo: "assets/tools/raspibolt3.png"
   
   header: true
   footer: '<p><em>The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.</em> (Bitcoin genesis block)</p>'
@@ -295,7 +283,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
        icon: "fab fa-bitcoin"
        items:
          - name: "BTC RPC Explorer"
-           logo: "assets/tools/logo-btcrpcexplorer.png"
+           logo: "assets/tools/btcrpcexplorer.png"
            subtitle: "Blockchain explorer"
            tag: "app"
            url: "https://raspibolt.local:4000/"
@@ -310,7 +298,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
       icon: "fas fa-bolt"
       items:
         - name: "Ride The Lightning"
-          logo: "assets/tools/logo-rtl.png"
+          logo: "assets/tools/rtl.png"
           subtitle: "Node manager"
           tag: "app"
           url: "https://raspibolt:local:4001/rtl/login"
