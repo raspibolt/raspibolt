@@ -333,7 +333,7 @@ We now need to modify the nginx configuration to create a web server for the web
   }
   ```
 
-* Create a symlink in the sites-enabled directpry
+* Create a symlink in the sites-enabled directory
 
   ```sh
   $ sudo ln -sf /etc/nginx/sites-available/mempool-ssl.conf /etc/nginx/sites-enabled/
