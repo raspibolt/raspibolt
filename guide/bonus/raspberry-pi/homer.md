@@ -10,6 +10,8 @@ has_toc: false
 # Bonus guide: Homer
 {: .no_toc }
 
+---
+
 We set up [Homer](https://github.com/bastienwirtz/homer#readme){:target="_blank"}, a simple static web dashboard to keep our web services on hand, from a simple YAML configuration file. 
 
 Difficulty: Easy
@@ -19,6 +21,14 @@ Status: Tested v3
 {: .label .label-green }
 
 ![Homer](../../../images/homer.png)
+
+---
+
+Table of contents
+{: .text-delta }
+
+1. TOC
+{:toc}
 
 ---
 
