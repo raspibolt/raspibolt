@@ -130,6 +130,12 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   $ ln -s /data/faraday /home/admin/.faraday
   ```
 
+* Display the links and check that they’re not shown in red (this would indicate an error)
+
+  ```sh
+  $ ls -la
+  ```
+
 * Open a “lit” user session
   
   ```sh 
@@ -226,12 +232,6 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 🔍 *Notice that the options for Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
 
-* Exit the "lit" user session
-
-  ```sh
-  $ exit
-  ```
-
 ---
 
 ## Run Lightning Terminal
@@ -245,7 +245,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   ```
 
 * Test that Lightning Terminal is working by visiting the web UI
-  * Past the following URL in your browser: [https://raspibolt.local::8443/](https://raspibolt.local::8443/){:target="_blank"} (replace raspibolt.local by your node IP address if required)
+  * Past the following URL in your browser: [https://raspibolt.local:8443/](https://raspibolt.local::8443/){:target="_blank"} (replace raspibolt.local by your node IP address if required)
   * Note that the first time you connect, your browser will display a warning due to the fact the SSL certificate is self-generated. On Firefox, simply click "Advanced" and then "Accept the risks and continue" (or similar wording in other browsers)
   * Enter password [E] when prompted.
   * (Optional) Follow the walkthrough to have a first introduction to Lightning Terminal GUI. Otherwise, click "No thanks" to skip it.
