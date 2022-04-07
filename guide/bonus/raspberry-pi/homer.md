@@ -118,7 +118,7 @@ The dashboard contains the following items that you can edit at any time:
 * Create a nginx configuration file for the Homer website with a HTTPS server listening on port 4091
 
   ```sh 
-  $ nano /etc/nginx/sites-available/homer-ssl.conf
+  $ sudo nano /etc/nginx/sites-available/homer-ssl.conf
   ```
 
   ```ini
