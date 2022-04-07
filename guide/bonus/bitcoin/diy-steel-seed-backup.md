@@ -21,7 +21,7 @@ Difficulty: Simple
 Status: Tested v3
 {: .label .label-green }
 
-![DIY steel mnemonic backup](../../../diy-steel-mnemonic-backup.png)
+![DIY steel mnemonic backup](../../../images/diy-steel-mnemonic-backup.png)
 
 ---
 
