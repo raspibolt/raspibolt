@@ -47,7 +47,7 @@ But paper is easily destroyed by water, fire or even a pet that loves chewing th
 
 Various steel backup solutions have been created the last few years. You can find a comprehensive list of them and how they performed under stress tests on [Jameson Lopp's website](https://jlopp.github.io/metal-bitcoin-storage-reviews/){:target="_blank"}.
 
-![Mnemonics to private key illustration](../../../blockplate_crush.png)
+![Mnemonics to private key illustration](../../../images/blockplate_crush.png)
 
 While great, most of these techniques have one major downside... they require you to buy from a company a ready-made item which sole use case is as a bitcoin mnemonics backup. Which means that the seller will know that you probably have some bitcoin... and worst, if their customer database get hacked, anyone could quickly know that you probably have some bitcoins.
 
