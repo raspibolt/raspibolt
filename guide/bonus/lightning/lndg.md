@@ -12,11 +12,10 @@ has_toc: false
 
 ---
 
-[LNDg](https://github.com/cryptosharks131/lndg){:target="_blank"} is a lite GUI web interface
-to analyze LND data and manage your node with automation.
+[LNDg](https://github.com/cryptosharks131/lndg){:target="_blank"} is a lite GUI web interface to help you manually manage your node and automate operations such as rebalancing, fee adjustemnts and channel node opening.
 
-Difficulty: Intermediate
-{: .label .label-yellow }
+Difficulty: Hard
+{: .label .label-red }
 
 Status: Tested v3
 {: .label .label-green }
@@ -132,7 +131,15 @@ A first time password will be output, save it somewhere safe (e.g., your passwor
 * The initial login user is "lndg-admin" and the password is the one generated just above. 
 If you didn't save the password, you can get it again with: `nano /home/lndg/lndg/data/lndg-admin.txt`
 
-* Shut down the server with `Ctrl+c` and exit the "lndg" user session
+* Shut down the server with `Ctrl+c` 
+
+* For extra security, delete the text file that contains the password
+
+  ```sh
+  $ rm /home/lndg/lndg/data/lndg-admin.txt
+  ```
+
+* Exit the "lndg" user session
 
   ```sh
   $ exit
@@ -174,8 +181,8 @@ In order to do that, we create a systemd unit that starts the service on boot di
 * Enable the service, start it and check log logging output.
 
   ```sh
-  $ sudo systemctl enable lndg
-  $ sudo systemctl start lndg
+  $ sudo systemctl enable lndg.service
+  $ sudo systemctl start lndg.service
   $ sudo journalctl -f -u lndg
   ```
 
@@ -205,7 +212,7 @@ To have updated information in the GUI, it is necessary to regularly run the scr
 * Create a service file for the `jobs.sh` script
 
   ```sh
-  $ sudo nano /etc/systemd/system/lndg.service
+  $ sudo nano /etc/systemd/system/lndg-jobs.service
   ```
 
   ```ini
