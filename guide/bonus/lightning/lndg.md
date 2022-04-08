@@ -192,6 +192,8 @@ In order to do that, we create a systemd unit that starts the service on boot di
   $ sudo journalctl -f -u lndg.service
   ```
 
+You can now access LNDg from within your local network by browsing to http://raspibolt.local:8889 (or your equivalent IP address).
+
 ### Backend refreshes
 
 LNDg uses a Python script (`~/lndg/jobs.py`), to gather data about your node that is then displayed in the GUI dashboard. 
