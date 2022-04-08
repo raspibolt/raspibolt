@@ -178,12 +178,18 @@ In order to do that, we create a systemd unit that starts the service on boot di
   WantedBy=multi-user.target
   ```
 
-* Enable the service, start it and check log logging output.
+* Enable, start and then check the status of the service. Exit with `Ctrl`+`c`.
 
   ```sh
   $ sudo systemctl enable lndg.service
   $ sudo systemctl start lndg.service
-  $ sudo journalctl -f -u lndg
+  $ sudo systemctl status lndg.service
+  ```
+
+* Check LNDg logs
+ 
+  ```sh
+  $ sudo journalctl -f -u lndg.service
   ```
 
 ### Backend refreshes
@@ -191,36 +197,39 @@ In order to do that, we create a systemd unit that starts the service on boot di
 LNDg uses a Python script (`~/lndg/jobs.py`), to gather data about your node that is then displayed in the GUI dashboard. 
 To have updated information in the GUI, it is necessary to regularly run the script to collect new data.
 
-* As user “lndg”, create a simple bash file to call `jobs.py`
+* As user “lndg”, create a bash file to call `jobs.py` and paste the following lines. Save and exit.
 
   ```sh
   $ sudo su - lndg
+  $ cd lndg
   $ nano ~/lndg/jobs.sh
-  
+  ```
+
   ```ini
   #!/bin/bash
   
   /home/lndg/lndg/.venv/bin/python /home/lndg/lndg/jobs.py
   ```
 
-* Make the script executable by user “lndg”
+* Make the script executable by user “lndg” then exit the "lndg" user session
 
   ```sh
   $ chmod u+x jobs.sh
+  $ exit
   ```
 
 * Create a service file for the `jobs.sh` script
 
   ```sh
-  $ sudo nano /etc/systemd/system/lndg-jobs.service
+  $ sudo nano /etc/systemd/system/jobs-lndg.service
   ```
 
   ```ini
   # RaspiBolt: systemd unit for LNDg
-  # /etc/systemd/system/lndg.service
+  # /etc/systemd/system/jobs-lndg.service
   
   [Unit]
-  Description=LNDg
+  Description=LNDg jobs
   After=lnd.service
 
   [Service]
@@ -237,10 +246,10 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   WantedBy=multi-user.target
   ```
 
-* Create a timer file to run `jobs.sh` every 60 seconds
+* Create a timer file to run `jobs.sh` every 60 seconds. Save and exit.
 
   ```sh
-  $ sudo nano /etc/systemd/system/lndg.timer
+  $ sudo nano /etc/systemd/system/jobs-lndg.timer
   ```
 
   ```ini
@@ -256,10 +265,141 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   WantedBy=timers.target
   ```
 
-* Enable the timer to run the jobs service file at the specified interval
+* Enable the timer to run the jobs service file at the specified interval. Check the status of the timer and exit with `Ctrl`+`c`.
 
   ```sh
-  $ sudo systemctl enable lndg.timer
-  $ sudo systemctl start lndg.timer
+  $ sudo systemctl enable jobs-lndg.timer
+  $ sudo systemctl start jobs-lndg.timer
+  $ sudo systemctl status jobs-lndg.timer
   ```
 
+### Rebalancer runs
+
+LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circular rebalancing payments based on user-defined parameters.
+
+* Log in with user "lndg" and enter the LNDg repository
+
+  ```sh
+  $ sudo su - lndg
+  $ cd lndg
+  ```
+
+* As user “lndg”, create a bash file to call `rebalance.py` and paste the following lines. Save and exit.
+
+  ```sh
+  $ nano /home/lndg/lndg/rebalancer.sh
+  ```
+  
+  ```ini
+  #!/bin/bash
+
+  /home/lndg/lndg/.venv/bin/python /home/lndg/lndg/rebalancer.py
+  ```
+* Make the script executable by user “lndg” then exit the "lndg" user session
+
+  ```sh
+  $ chmod u+x rebalancer.sh
+  $ exit
+  ```
+
+* Create a service file for the `rebalancer.sh` script
+
+  ```sh
+  $ sudo nano /etc/systemd/system/rebalancer-lndg.service
+  ```
+
+  ```ini
+  [Unit]
+  Description=Run Rebalancer For Lndg
+
+  [Service]
+  User=lndg
+  Group=lndg
+  ExecStart=/usr/bin/bash /home/lndg/lndg/rebalancer.sh
+  StandardError=append:/var/log/lnd_rebalancer_error.log
+  RuntimeMaxSec=3600
+  ```
+
+* Create a timer file to run `jobs.sh` every 60 seconds. Save and exit.
+
+  ```sh
+  $ sudo nano /etc/systemd/system/rebalancer-lndg.timer
+  ```
+
+  ```ini
+  [Unit]
+  Description=Run Lndg Jobs Every 60 Seconds
+
+  [Timer]
+  OnBootSec=300
+  OnUnitActiveSec=60
+  AccuracySec=1
+  
+  [Install]
+  WantedBy=timers.target
+  ```
+
+* Enable and start the timer to run the rebalancer service file at the specified interval. Check the status of the timer and exit with `Ctrl`+`c`.
+
+  ```sh
+  $ sudo systemctl enable rebalancer-lndg.timer
+  $ sudo systemctl start rebalancer-lndg.timer
+  $ sudo systemctl status rebalancer-lndg.timer
+  ```
+
+### HTLC failure stream data
+
+* Log in with user "lndg" and enter the LNDg repository
+
+  ```sh
+  $ sudo su - lndg
+  $ cd lndg
+  ```
+
+* As user “lndg”, create a bash file to call `rebalance.py` and paste the following lines. Save and exit.
+
+  ```sh
+  $ nano /home/lndg/lndg/htlc_stream.sh
+  ```
+  
+  ```ini
+  #!/bin/bash
+
+  /home/<run_as_user>/lndg/.venv/bin/python /home/<run_as_user>/lndg/htlc_stream.py
+  ```
+* Make the script executable by user “lndg” then exit the "lndg" user session
+
+  ```sh
+  $ chmod u+x htlc_stream.sh
+  $ exit
+  ```
+
+* Create a service file for the `rebalancer.sh` script
+
+  ```sh
+  $ sudo nano /etc/systemd/system/htlc-stream-lndg.service
+  ```
+
+  ```ini
+  [Unit]
+  Description=Run HTLC Stream For Lndg
+
+  [Service]
+  User=lndg
+  Group=lndg
+  ExecStart=/usr/bin/bash /home/lndg/lndg/htlc_stream.sh
+  StandardError=append:/var/log/lnd_htlc_stream_error.log
+  Restart=on-failure
+  RestartSec=60s
+  
+  [Install]
+  WantedBy=multi-user.target
+  ```
+
+* Enable, start and then check the status of the service. Exit with `Ctrl`+`c`.
+
+  ```sh
+  $ sudo systemctl enable htlc-stream-lndg.service
+  $ sudo systemctl start htlc-stream-lndg.service
+  $ sudo systemctl status htlc-stream-lndg.service
+  ```
