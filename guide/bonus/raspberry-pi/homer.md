@@ -106,6 +106,8 @@ The dashboard contains the following items that you can edit at any time:
   $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/raspibolt3.png
   $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/btcrpcexplorer.png
   $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/rtl.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/old-bitcoin.png
+  ```
 
 * Using the wildcard `*`, move all the png pictures to the nginx website data folder. Note: If you have other png images in your /tmp folder, do not use the following command, instead, move each file one by one.
   
@@ -246,7 +248,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   
   header: true
   footer: '<p><em>The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.</em> (Bitcoin genesis block)</p>'
-  columns: 2
+  columns: 3
   connectivityCheck: true
 
   ################################
@@ -371,6 +373,15 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           subtitle: "Node manager"
           tag: "app"
           url: "https://raspibolt.local:4001/rtl/login"
+          target: "_blank"
+    - name: "Resources"
+      icon: "fas fa-book-open
+      items:
+        - name: "White paper"
+          logo: "assets/tools/old-bitcoin.png"
+          subtitle: "Download from your node"
+          tag: "app"
+          url: "https://raspibolt.local:4000/bitcoin-whitepaper"
           target: "_blank"
   ```
 
