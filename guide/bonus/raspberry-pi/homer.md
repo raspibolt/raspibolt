@@ -349,20 +349,20 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   # First level array represents a group. Second level arrays represent items.
   services:
     - name: "Bitcoin"
-       icon: "fab fa-bitcoin"
-       items:
-         - name: "BTC RPC Explorer"
-           logo: "assets/tools/btcrpcexplorer.png"
-           subtitle: "Blockchain explorer"
-           tag: "app"
-           url: "https://raspibolt.local:4000/"
-           target: "_blank"
-         #- name: "Mempool"
-         #  logo: "assets/tools/logo-mempool.png"
-         #  subtitle: "Mempool visualizer"
-         #  tag: "app"
-         #  url: "https://raspibolt.local:4081/"
-         #  target: "_blank"
+      icon: "fab fa-bitcoin"
+      items:
+        - name: "BTC RPC Explorer"
+          logo: "assets/tools/btcrpcexplorer.png"
+          subtitle: "Blockchain explorer"
+          tag: "app"
+          url: "https://raspibolt.local:4000/"
+          target: "_blank"
+        #- name: "Mempool"
+        #  logo: "assets/tools/logo-mempool.png"
+        #  subtitle: "Mempool visualizer"
+        #  tag: "app"
+        #  url: "https://raspibolt.local:4081/"
+        #  target: "_blank"
     - name: "Lightning"
       icon: "fas fa-bolt"
       items:
@@ -370,7 +370,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           logo: "assets/tools/rtl.png"
           subtitle: "Node manager"
           tag: "app"
-          url: "https://raspibolt:local:4001/rtl/login"
+          url: "https://raspibolt.local:4001/rtl/login"
           target: "_blank"
   ```
 
