@@ -399,7 +399,7 @@ We now need to modify the nginx configuration to create a web server for the web
   $ sudo nano /lib/systemd/system/nginx.service
   ```
 
-  Add this line to the nginx systemd configuration file under the `[Service]` section
+  Add this line under the `[Service]` section
 
   ```ini
   ExecStartPre=/bin/bash -c 'until host mempool.space; do sleep 1; done;'
