@@ -237,7 +237,6 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   ```
 
   ```ini
-  ---
   ################################
   # HOMEPAGE CONFIGURATION       #
   ################################
