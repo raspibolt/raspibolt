@@ -9,7 +9,7 @@ parent: Bitcoin
 # Desktop wallet
 {: .no_toc }
 
-We install the [Sparrow](https://github.com/romanz/electrs/){:target="_blank"} desktop wallet on a computer and connect it to your Electrum server on your node for private bitcoin on-chain transactions.  
+We install the [Sparrow](https://github.com/sparrowwallet/sparrow){:target="_blank"} desktop wallet on a computer and connect it to your Electrum server on your node for private bitcoin on-chain transactions.  
 
 ![Sparrow wallet](../../images/sparrow.png)
 
