@@ -78,7 +78,7 @@ The dashboard contains the following items that you can edit at any time:
 * Retrieve the source code repository and install Homer
 
   ```sh
-  $ git clone --branch v22.02.1 https://github.com/bastienwirtz/homer.git
+  $ git clone https://github.com/bastienwirtz/homer.git
   $ cd homer
   $ npm install
   $ npm run build
