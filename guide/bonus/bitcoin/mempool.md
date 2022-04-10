@@ -35,10 +35,10 @@ Table of contents
 
 ## Requirements
 
-* Bitcoin
+* Minimum RAM: 4 GB
+* Bitcoin Core
 * Electrs
 * Node.js v16+
-* MariaDB
 * nginx
 
 ---
