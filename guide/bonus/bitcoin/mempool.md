@@ -179,6 +179,14 @@ For improved security, we create the new user "mempool" that will run the Mempoo
       "USERNAME": "mempool",
       "PASSWORD": "mempool",
       "DATABASE": "mempool"
+    },
+    "SOCKS5PROXY": {
+      "ENABLED": true,
+      "HOST": "127.0.0.1",
+      "PORT": 9050
+    },
+    "PRICE_DATA_SERVER": {
+      "TOR_URL": "http://wizpriceje6q5tdrxkyiazsgu7irquiqjy2dptezqhrtu7l2qelqktid.onion/getAllMarketPrices"
     }
   }
   ```
