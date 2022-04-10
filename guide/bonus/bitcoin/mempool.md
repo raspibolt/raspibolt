@@ -139,7 +139,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ nano mempool-config.json
   ```
 
-* Paste the following lines. In the CORE_RPC section, replace the username with "raspibolt" and password with your password [B].
+* Paste the following lines. In the CORE_RPC section, replace the username and password with your username (e.g., "raspibolt") and password [B].
 
 
   ```sh
