@@ -73,7 +73,7 @@ We prepare a shell script that automatically updates the LND SCB file on a chang
 
 By default, LND saves the SCB file here: `~/.lnd/data/chain/bitcoin/mainnet/channel.backup`. Ensure that the `lnd.conf` does not contain the `backupfilepath` option that modifies the backup location (as was used in a previous version of the RaspiBolt v3).
 
-* With the "admin" user, check that your `lnd.conf` file does not contain this line. If so, delete it or comment it out and restart LND.
+* With the "admin" user, check that your `lnd.conf` file does not contain this line. If so, delete it or comment it out.
 
   ```sh
   $ sudo nano /data/lnd/lnd.conf
@@ -82,6 +82,23 @@ By default, LND saves the SCB file here: `~/.lnd/data/chain/bitcoin/mainnet/chan
   ```ini
   #backupfilepath=/data/lnd-backup/channel.backup
   ```
+
+There may also be a backup file `channel.backup` from a previous installation with a size of 0 Bytes and root access rights. If this file exists, it must be deleted. The backup file is correctly created with the access permissions of lnd the next time the LND is restarted.
+
+* Check if the file channel.backup exists with a size of 0 Bytes and root access rights
+
+  ```sh
+  $ ls -al ~/.lnd/data/chain/bitcoin/mainnet/channel.backup
+  >-rw-r--r-- 1 root root 0 Feb  1 09:58 /home/admin/.lnd/data/chain/bitcoin/mainnet/channel.backup
+  ```
+
+* If the file `~/.lnd/data/chain/bitcoin/mainnet/channel.backup` exists, then it must be removed:
+
+  ```sh
+  $ sudo rm ~/.lnd/data/chain/bitcoin/mainnet/channel.backup
+  ```
+
+* Now: Restart LND
 
   ```sh
   $ sudo systemctl restart lnd
@@ -286,7 +303,7 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 
   ```sh
   $ sudo mount -a
-  $ df -h static-channel-backup-external
+  $ df -h /mnt/static-channel-backup-external
   > Filesystem      Size  Used Avail Use% Mounted on
   > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/static-channel-backup-external
   ```
@@ -343,7 +360,7 @@ Follow this section if you want a remote backup. If you already set up a local b
   ```
 
 * Go back to the GitHub repository webpage
-  * Click on "Settings", then "Deploy keys", then "Add deploy keys"
+  * Click on "Settings", then "Deploy keys", then "Add deploy key"
   * Type a title (e.g., "SCB")
   * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... lnd@raspibolt`)
   * Tick the box "Allow write access" to enable this key to push changes to the repository
@@ -442,7 +459,7 @@ Then we check if a copy gets stored at the intended backup location(s).
 * If you enabled the local backup, check the content of your local storage device. It should now contain a backup file with the date/time corresponding to the test made just above
 
   ```sh
-  $ ls -la /mnt/storage-device-scb
+  $ ls -la /mnt/static-channel-backup-external
   > -rwxr-xr-x 1 lnd  lnd  14011 Feb  5 10:59 channel-20220205-105949.backup
   ```
 
