@@ -538,7 +538,7 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ sudo mv /etc/nginx/nginx.conf.bak2 /etc/nginx/nginx.conf
   ```
   
-* Test and reload NGINX configuration
+* Test and reload nginx configuration
   
   ```sh
   $ sudo nginx -t
