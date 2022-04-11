@@ -236,7 +236,7 @@ The Mempool configuration file contains the Bitcoin Core RPC username and passwo
 * Still with user "admin", change the ownership of the configuration file
  
   ```sh
-  $ sudo chown 600 /home/mempool/mempool/backend/mempool-config.json
+  $ sudo chmod 600 /home/mempool/mempool/backend/mempool-config.json
   ```
 
 ### nginx
