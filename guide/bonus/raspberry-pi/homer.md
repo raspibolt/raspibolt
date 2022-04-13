@@ -296,13 +296,13 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   ################################
   message:
     url: https://mempool.space/api/v1/fees/recommended
-  mapping:
-    content: 'fastestFee'
-  refreshInterval: 10000
-  style: "is-dark"
-  title: "Recommended miner fee for next block (sats/vB):"
-  icon: "fas fa-gem"
-  content: "Oops... something's not working, I can't fetch that information!"
+    mapping:
+      content: 'fastestFee'
+    refreshInterval: 10000
+    style: "is-dark"
+    title: "Recommended miner fee for next block (sats/vB):"
+    icon: "fas fa-gem"
+    content: "Oops... something's not working, I can't fetch that information!"
   
   ################################
   # Optional navbar              #
@@ -383,7 +383,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           url: "https://raspibolt.local:4001/rtl/login"
           target: "_blank"
     - name: "Resources"
-      icon: "fas fa-book-open
+      icon: "fas fa-book-open"
       items:
         - name: "White paper"
           logo: "assets/tools/old-bitcoin.png"
