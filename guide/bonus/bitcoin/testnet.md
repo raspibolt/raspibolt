@@ -120,7 +120,7 @@ Check the logs using
 $ sudo journalctl -u electrs -f
 ```
 
-## NGINX
+### NGINX
 File location: `/etc/nginx/streams-enabled/electrs-testnet-reverse-proxy.conf`
 ```ini
 upstream electrs {
@@ -140,7 +140,7 @@ $ sudo systemctl reload nginx
 $ sudo ufw allow 60002/tcp comment 'allow Electrum SSL Testnet'
 ```
 
-## Tor
+### Tor
 Create a separate service for testnet over Tor:
 
 File location: `/etc/tor/torrc`
@@ -157,7 +157,7 @@ $ sudo systemctl reload tor
 $ sudo cat /var/lib/tor/hidden_service_electrs_testnet/hostname
 ```
 
-## LDN
+## LND
 File location: `/data/lnd/lnd.conf`
 ```ini
 bitcoin.active=1
