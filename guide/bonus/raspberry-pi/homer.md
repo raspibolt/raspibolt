@@ -235,7 +235,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   * Still in these last six links, in the `url:` entry, replace `<node_pubkey>` with your own node pubkey
   * **Trick:** To easily find and replace all the occurence of `<node_pubkey>` in nano, after pasting the lines below:
     * Press `Ctrl`+`w` and then `Ctrl`+`r`
-    * In the prompt, type or paste `<node_pubkey>` (the search term), press `Enter`; then paste your node pubkey and (the replacement term) and press `Enter`.
+    * In the prompt, type or paste `<node_pubkey>` and press `Enter`; then paste your node pubkey and press `Enter`.
     * Nano will highlight the first occurence of the search term. Press `y` to replace it with your node pubkey
     * Nano will then move to the next occurence. Repeat these steps until all occurences have been found and replaced!
 
