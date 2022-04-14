@@ -271,7 +271,7 @@ If asked, select the `/bin/nano` text editor (type 1 and enter)
   ##########################################
 
   # Run charge-lnd every 2 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
-  21 */6 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log
+  21 */6 * * * /home/chargelnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log
   ```
 
   * The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/6_*_*_*){:target="_blank"}.
