@@ -103,24 +103,26 @@ Table of contents
 
   ```sh
   $ charge-lnd -h
-  > usage: charge-lnd [-h] [--lnddir LNDDIR] [--grpc GRPC]
-  >                  [--electrum-server ELECTRUM_SERVER] [--dry-run] [--check]
-  >                  [-v] -c CONFIG
+  > usage: charge-lnd [-h] [--lnddir LNDDIR] [--tlscert TLS_CERT_PATH]
+  >                  [--macaroon MACAROON_PATH] [--grpc GRPC] [--electrum-server ELECTRUM_SERVER]
+  >                  [--dry-run] [--check] [-v] -c CONFIG
   >
   > optional arguments:
-  >  -h, --help            show this help message and exit
-  >  --lnddir LNDDIR       (default ~/.lnd) lnd directory
-  >  --grpc GRPC           (default localhost:10009) lnd gRPC endpoint
-  >  --electrum-server ELECTRUM_SERVER
-  >                        (optional, no default) electrum server host:port .
-  >                        Needed for onchain_fee.
-  >  --dry-run             Do not perform actions (for testing), print what we
-  >                        would do to stdout
-  >  --check               Do not perform actions, only check config file for
-  >                        valid syntax
-  >  -v, --verbose         Be more verbose
-  >  -c CONFIG, --config CONFIG
-  >                        path to config file
+  > -h, --help            show this help message and exit
+  > --lnddir LNDDIR       (default ~/.lnd) lnd directory
+  > --tlscert TLS_CERT_PATH
+  >                       (default [lnddir]/tls.cert) path to lnd TLS certificate
+  > --macaroon MACAROON_PATH
+  >                       (default [lnddir]/data/chain/bitcoin/mainnet/charge-lnd.macaroon) path to lnd auth macaroon
+  > --grpc GRPC           (default localhost:10009) lnd gRPC endpoint
+  > --electrum-server ELECTRUM_SERVER
+  >                      (optional, no default) electrum server host:port[:s]. 
+  >                      Needed for onchain_fee. Append ':s' for SSL connection
+  > --dry-run             Do not perform actions (for testing), print what we would do to stdout
+  > --check               Do not perform actions, only check config file for valid syntax
+  > -v, --verbose         Be more verbose
+  > -c CONFIG, --config CONFIG
+  >                      path to config file
   ```
 
 * Create a symlink to the LND directory. Place it in the home directory of the "chargelnd" user to match the default LND directory used by charge-lnd (*i.e.* `~/.lnd`)
