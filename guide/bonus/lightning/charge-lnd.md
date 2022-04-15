@@ -103,26 +103,24 @@ Table of contents
 
   ```sh
   $ charge-lnd -h
-  > usage: charge-lnd [-h] [--lnddir LNDDIR] [--tlscert TLS_CERT_PATH]
-  >                  [--macaroon MACAROON_PATH] [--grpc GRPC] [--electrum-server ELECTRUM_SERVER]
-  >                  [--dry-run] [--check] [-v] -c CONFIG
+  > usage: charge-lnd [-h] [--lnddir LNDDIR] [--grpc GRPC]
+  >                  [--electrum-server ELECTRUM_SERVER] [--dry-run] [--check]
+  >                  [-v] -c CONFIG
   >
   > optional arguments:
-  > -h, --help            show this help message and exit
-  > --lnddir LNDDIR       (default ~/.lnd) lnd directory
-  > --tlscert TLS_CERT_PATH
-  >                       (default [lnddir]/tls.cert) path to lnd TLS certificate
-  > --macaroon MACAROON_PATH
-  >                       (default [lnddir]/data/chain/bitcoin/mainnet/charge-lnd.macaroon) path to lnd auth macaroon
-  > --grpc GRPC           (default localhost:10009) lnd gRPC endpoint
-  > --electrum-server ELECTRUM_SERVER
-  >                      (optional, no default) electrum server host:port[:s]. 
-  >                      Needed for onchain_fee. Append ':s' for SSL connection
-  > --dry-run             Do not perform actions (for testing), print what we would do to stdout
-  > --check               Do not perform actions, only check config file for valid syntax
-  > -v, --verbose         Be more verbose
-  > -c CONFIG, --config CONFIG
-  >                      path to config file
+  >  -h, --help            show this help message and exit
+  >  --lnddir LNDDIR       (default ~/.lnd) lnd directory
+  >  --grpc GRPC           (default localhost:10009) lnd gRPC endpoint
+  >  --electrum-server ELECTRUM_SERVER
+  >                        (optional, no default) electrum server host:port .
+  >                        Needed for onchain_fee.
+  >  --dry-run             Do not perform actions (for testing), print what we
+  >                        would do to stdout
+  >  --check               Do not perform actions, only check config file for
+  >                        valid syntax
+  >  -v, --verbose         Be more verbose
+  >  -c CONFIG, --config CONFIG
+  >                        path to config file
   ```
 
 * Create a symlink to the LND directory. Place it in the home directory of the "chargelnd" user to match the default LND directory used by charge-lnd (*i.e.* `~/.lnd`)
@@ -166,13 +164,10 @@ For this example, we will use a policy that:
   #################################################
   # Charge-lnd - Automatic fee policy adjustement #
   #################################################
-
   ## COMMANDS TO TEST YOUR FEE STRATEGY
   # ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config --check
   # ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config --dry-run
-
   ## FEE STRATEGY
-
   [1_defaults]
   # place holder for your defaults for your fee policies
   # no strategy, so this only sets some defaults
@@ -181,28 +176,24 @@ For this example, we will use a policy that:
   min_htlc_msat = 1000
   max_htlc_msat_ratio = 1
   time_lock_delta = 40
-
   [2_9999_basefee_policy]
   # '9999BaseFee' should be evaluated first before other fees are set
   # e.g. if local balance is <500,000 sats, increase base fees very high
   chan.max_local_balance = 500000
   strategy = static
   base_fee_msat = 9999000
-
   [3_ignore_policy]
   # This policy is for ignoring specific nodes (e.g. a LOOP channel that we want to control manually)
   # The pubkey of the choosen nodes have to be listed below, separated with a comma
   node.id = <node_pubkey_1>,
 	<node_pubkey_2>
   strategy = ignore
-
   [4_low_fees_policy]
   node.id = <node_pubkey_3>,
 	<node_pubkey_4>,
 	<node_pubkey_5>
   strategy = static
   fee_ppm = 50
-
   [5_high_fees_policy]
   node.id = <node_pubkey_6>,
 	<node_pubkey_7>
@@ -269,9 +260,8 @@ If asked, select the `/bin/nano` text editor (type 1 and enter)
   ##########################################
   # 1 - Fee policy updates with charge-lnd #
   ##########################################
-
   # Run charge-lnd every 2 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
-  21 */6 * * * /home/chargelnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log
+  21 */6 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log
   ```
 
   * The stars and numbers at the start defines the interval at which the job will be run. You can double-check it by using this online tool: [https://crontab.guru](https://crontab.guru/#21_*/6_*_*_*){:target="_blank"}.
