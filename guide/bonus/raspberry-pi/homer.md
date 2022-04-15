@@ -84,11 +84,35 @@ The dashboard contains the following items that you can edit at any time:
   $ npm run build
   ```
 
-* Exit the "homer" user session back to user "admin"
+### Logos
+
+Homer allows for the use of icons and images. We'll import a few logos to make the dashboard look nicer.
+
+* Still with user "Homer", create a folder that will contain all the logos in the Homer data folder
+
+  ```sh
+  $ mkdir /data/homer/tools
+  $ cd /data/homer/tools
+  ```
+
+* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from a repository containing a collection of Bitcoin and Lightning apps logos
+
+  ```sh
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/raspibolt3.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/btcrpcexplorer.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/rtl.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/old-bitcoin.png
+  ```
+
+* Exit the "homer" user
 
   ```sh
   $ exit
   ```
+
+### Website data folder
+
+The build command generated all the required files for the Homer website. We just need to move it to the proper location expected by the nginx web server.
 
 * Move the distributable output into a nginx website data folder and change its ownership to the “www-data” user.
 
@@ -97,22 +121,14 @@ The dashboard contains the following items that you can edit at any time:
   $ sudo chown -R www-data:www-data /var/www/homer
   ```
 
-### Logos
+By default, the logos for Homer are located in the "/var/www/homer/assets/tools" folder. 
+However, if you want to re-install Homer for whatever reason, you will have to re-download and move all the logos. Instead, we'll create a symlink to our Homer data folder created above.
 
-* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from a repository containing a collection of Bitcoin and Lightning apps logos
+* Create a symlink to the logos folder and change its ownership
 
   ```sh
-  $ cd /tmp
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/raspibolt3.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/btcrpcexplorer.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/rtl.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/old-bitcoin.png
-  ```
-
-* Using the wildcard `*`, move all the png pictures to the nginx website data folder. Note: If you have other png images in your /tmp folder, do not use the following command, instead, move each file one by one.
-  
-  ```sh
-  $ sudo mv *.png /var/www/homer/assets/tools
+  $ sudo ln -s /data/homer/tools /var/www/homer/assets
+  $ sudo chown -h www-data:www-data /var/www/homer/assets/tools
   ```
 
 ### nginx
