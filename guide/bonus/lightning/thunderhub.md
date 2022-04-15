@@ -87,8 +87,8 @@ We are going to install Thunderhub in the home directory since it doesn't need t
   ```sh
   $ sudo adduser --disabled-password --gecos "" thunderhub
   $ sudo adduser thunderhub lnd
-  $ sudo cp /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/thunderhub/thunderhub/admin.macaroon
-  $ sudo chown thunderhub:thunderhub /home/thunderhub/thunderhub/admin.macaroon
+  $ sudo cp /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/thunderhub/admin.macaroon
+  $ sudo chown thunderhub:thunderhub /home/thunderhub/admin.macaroon
   $ sudo su - thunderhub
   ```
 
@@ -127,6 +127,8 @@ We are going to install Thunderhub in the home directory since it doesn't need t
   # Server Configs
   # -----------
   LOG_LEVEL='debug'
+  TOR_PROXY_SERVER=socks://127.0.0.1:9050
+  NODE_ENV=production
   PORT=3010
 
   # -----------
@@ -151,7 +153,7 @@ We are going to install Thunderhub in the home directory since it doesn't need t
   accounts:
     - name: 'RaspiBolt'
       serverUrl: '127.0.0.1:10009'
-      macaroonPath: '/home/thunderhub/thunderhub/admin.macaroon'
+      macaroonPath: '/home/thunderhub/admin.macaroon'
       certificatePath: '/home/thunderhub/.lnd/tls.cert'
       password: 'accountpassword'
   ```
