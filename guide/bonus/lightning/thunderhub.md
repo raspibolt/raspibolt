@@ -165,7 +165,7 @@ Test starting Thunderhub manually first to make sure it works.
 * Let's do a first start to make sure it's running as expected.
   Make sure we are in the Thunderhub directory and start the web server.
 
- ```
+ ```sh
   $ cd ~/thunderhub
   $ npm run start
   ```
@@ -175,7 +175,7 @@ Test starting Thunderhub manually first to make sure it works.
 
 * Stop ThunderHub in the terminal with `Ctrl`-`C` and exit the "thunderhub" user session.
 
-  ```
+  ```sh
   $ exit
   ```
 
