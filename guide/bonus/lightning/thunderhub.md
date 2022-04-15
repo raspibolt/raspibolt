@@ -174,9 +174,6 @@ Test starting Thunderhub manually first to make sure it works.
 * Now point your browser to `https://raspibolt.local:4002` (or whatever you chose as hostname) or the ip address (e.g. `https://192.168.0.20:4002`).
   You should see the home page of ThunderHub.
 
-* If you see a lot of errors on the RaspiBolt command line, then you have to change file permissions maybe,  
-  because Thunderhub can't "access" the `.lnd` directory.
-
 * Stop ThunderHub in the terminal with `Ctrl`-`C` and exit the "thunderhub" user session.
 
   ```
@@ -229,7 +226,7 @@ In order to do that we create a systemd unit that starts the service on boot dir
   $ sudo journalctl -f -u thunderhub
   ```
 
-* You can now access ThunderHub from within your local network by browsing to <http://raspibolt.local:3010> (or your equivalent ip address).
+* You can now access ThunderHub from within your local network by browsing to <https://raspibolt.local:4002> (or your equivalent ip address).
 
 ---
 
