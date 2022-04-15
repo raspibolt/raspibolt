@@ -73,7 +73,7 @@ We prepare a shell script that automatically updates the LND SCB file on a chang
 
 By default, LND saves the SCB file here: `~/.lnd/data/chain/bitcoin/mainnet/channel.backup`. Ensure that the `lnd.conf` does not contain the `backupfilepath` option that modifies the backup location (as was used in a previous version of the RaspiBolt v3).
 
-* With the "admin" user, check that your `lnd.conf` file does not contain this line. If so, delete it or comment it out.
+* With the "admin" user, check that your `lnd.conf` file does not contain this line. If so, delete it or comment it out and restart LND.
 
   ```sh
   $ sudo nano /data/lnd/lnd.conf
@@ -82,23 +82,6 @@ By default, LND saves the SCB file here: `~/.lnd/data/chain/bitcoin/mainnet/chan
   ```ini
   #backupfilepath=/data/lnd-backup/channel.backup
   ```
-
-There may also be a backup file `channel.backup` from a previous installation with a size of 0 Bytes and root access rights. If this file exists, it must be deleted. The backup file is correctly created with the access permissions of lnd the next time the LND is restarted.
-
-* Check if the file channel.backup exists with a size of 0 Bytes and root access rights
-
-  ```sh
-  $ ls -al ~/.lnd/data/chain/bitcoin/mainnet/channel.backup
-  >-rw-r--r-- 1 root root 0 Feb  1 09:58 /home/admin/.lnd/data/chain/bitcoin/mainnet/channel.backup
-  ```
-
-* If the file `~/.lnd/data/chain/bitcoin/mainnet/channel.backup` exists, then it must be removed:
-
-  ```sh
-  $ sudo rm ~/.lnd/data/chain/bitcoin/mainnet/channel.backup
-  ```
-
-* Now: Restart LND
 
   ```sh
   $ sudo systemctl restart lnd
