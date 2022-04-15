@@ -20,7 +20,7 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
-![bos-rebalance](../../../images/bos-illustration.png)
+![bos-rebalance](../../images/bos-illustration.png)
 
 ---
 
@@ -50,7 +50,7 @@ Table of contents
   > v16.13.2
   ```
 
-* If the version is v12 or above, you can move to the next section. If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it.
+* If the version is v12 or above, you can move to the next section. If Node.js is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs) to install it.
 
 ### Create the "bos" user and prepare the directory
 
@@ -67,7 +67,7 @@ Table of contents
   ```sh
   $ ln -s /data/lnd /home/bos/.lnd
   ```
-
+  
 * Display the link and check that it's not shown in red (this would indicate an error)
 
   ```sh
@@ -75,7 +75,7 @@ Table of contents
   ```
 
 * Add the bos binary file location to PATH
-
+ 
   ```sh
   $ echo 'export PATH=$PATH:/home/bos/balanceofsatoshis' >> /home/bos/.bashrc
   $ source /home/bos/.bashrc
@@ -93,14 +93,14 @@ Table of contents
   ```
 
 * Still with user "bos", download the source code and install it
-
+  
   ```sh
   $ git clone https://github.com/alexbosworth/balanceofsatoshis.git
   $ cd balanceofsatoshis
   ```
-
-* Find the most recent tag and verify the signature. Add the `--tags` option to select even a lightweight/non-annotated tag. Add the `--abbrev=0` option to remove any long-format tag names.
-
+  
+* Find the most recent tag and verify the signature. Add the `--tags` option to select even a lightweight/non-annotated tag. Add the `--abbrev=0` option to remove any long-format tag names. 
+    
   ```sh
   $ git describe --tags --abbrev=0
   > v11.14.0
@@ -112,11 +112,11 @@ Table of contents
   ```
 
 * Install Balance of Satoshis locally
-
+  
   ```sh
   $ npm install
   > [...]
-  ```
+  ```  
 
 * Check the version with the `-V` option
 
@@ -124,9 +124,9 @@ Table of contents
   $ bos -V
   > v11.14.0
   ```
-
+  
 ---
-
+  
 ## Balance of Satoshis in action
 
 To use Balance of Satoshis, we will use the "bos" user.
@@ -134,34 +134,34 @@ To use Balance of Satoshis, we will use the "bos" user.
 ### Introduction
 
 * To see a list of all available commands run the following command
-
+  
   ```sh
   $ bos help
-  > bos 11.14.0
-  >
+  > bos 11.14.0 
+  > 
   > USAGE
-  >
+  > 
   >   bos <command> [options]
-  >
+  >   
   > COMMANDS
-  >
+  > 
   >   accounting <category>               Get an accounting rundown
   >   [...]
   ```
-
+  
 * To see detailed information about an individual command, add the name of the command, e.g. with the command `rebalance`
-
+  
   ```sh
   $ bos help rebalance
-  > bos 11.14.0
-  >
+  > bos 11.14.0 
+  > 
   > USAGE
-  >
-  >   bos rebalance
+  > 
+  >   bos rebalance 
   >   Change the liquidity profile of two peers
   > [...]
   ```
-
+  
 * Get a short report of your LN node with pubkey, alias, local capacity, mempool information and recent routing activity
 
   ```sh
@@ -178,26 +178,26 @@ To use Balance of Satoshis, we will use the "bos" user.
   > [...]
   ```
 
-### Circular rebalancing
+### Circular rebalancing  
 
-Circular rebalancing allows to send satoshis out through one channel (which has too little inbound liquidity) and back through another channel (which has too little outbound liquidity).
+Circular rebalancing allows to send satoshis out through one channel (which has too little inbound liquidity) and back through another channel (which has too little outbound liquidity). 
 
 A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network' by Antonopoulos *et al.* ([source](https://github.com/lnbook/lnbook/blob/ec806916edd6f4d1b2f9da2fef08684f80acb671/05_node_operations.asciidoc#rebalancing-channels){:target="_blank"}) (Alice (A), is your node, Bob (B) and and Chan (C) are two peers with whom you have an opened channel with):
 
-![circular-rebalancing](../../../images/circular-rebalancing-lnbook.png)
+![circular-rebalancing](../../images/circular-rebalancing-lnbook.png)
 
 * To rebalance a channel (to node B) with high outbound and a channel with high inbound (to node C), use the `rebalance` command.
 
   ```sh
   $ bos rebalance --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
   ```
-
+  
 * E.g. using the example above:
-  *  with node B being the [Bitrefill node](https://amboss.space/node/03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac){:target="_blank"},
-  *  node C being the [CoinOS node](https://amboss.space/node/02868e12f320073cad0c2959c42559fbcfd1aa326fcb943492ed7f02c9820aa399){:target="_blank"}
-  *  rebalancing 50,000 sats
+  *  with node B being the [Bitrefill node](https://amboss.space/node/03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac){:target="_blank"}, 
+  *  node C being the [CoinOS node](https://amboss.space/node/02868e12f320073cad0c2959c42559fbcfd1aa326fcb943492ed7f02c9820aa399){:target="_blank"} 
+  *  rebalancing 50,000 sats 
   *  with a maximum fee rate that you are ready to pay of 100 ppm max
-
+  
   ```sh
   $ bos rebalance --amount 50000 --max-fee-rate 100 --in 02868e12f320073cad0c2959c42559fbcfd1aa326fcb943492ed7f02c9820aa399 --out 03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac
   ```
@@ -207,9 +207,9 @@ A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network
   ```sh
   $ bos rebalance --minutes [NUMBER_OF_MINUTES] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
   ```
-
+  
 * If you notice that a node in the tried paths is repeatedly the cause of failures, you can ask BoS to ignore this node during path finding by adding the `--avoid` option
-
+  
   ```sh
   $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid [NODE_PUBKEY] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
   ```
@@ -224,26 +224,26 @@ BoS allows to create user-defined tags to classify nodes and then be used in the
 
   ```sh
   $ bos tags avoid-nodes --add [NODE_Y_PUBKEY] --add [NODE_Z_PUBKEY]
-  > tag:
+  > tag: 
   >   alias: avoid-nodes
   >   id:    abc123...
-  >   nodes:
+  >   nodes: 
   >     - [NODE_Y_PUBKEY]
   >     - [NODE_Z_PUBKEY]
   ```
-
+  
 * Check the content of an existing tag
 
   ```sh
   $ bos tags
-  > tags:
+  > tags: 
   >   alias: avoid-nodes
   >   id:    abc123...
-  >   nodes:
+  >   nodes: 
   >     - [NODE_Y_PUBKEY]
   >     - [NODE_Z_PUBKEY]
   ```
-
+  
 * Use the tag in commands, e.g. with `bos rebalance`
 
   ```sh
@@ -279,7 +279,7 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
   ```
 
 * Update the local repository by downloading the new commits from the source repository and check if a new tag/version is available (e.g. here v99.99.9)
-
+ 
   ```sh
   $ git fetch
   > [...]
@@ -287,8 +287,8 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
   ```
 
 * Find the most recent tag. Add the `--tags` option to select even a lightweight/non-annotated tag. Add the `--abbrev=0` option to remove any long-format tag names.
-
-  ```sh
+  
+  ```sh 
   $ git describe --tags --abbrev=0
   > v11.14.0
   ```
@@ -302,24 +302,24 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
 
 * Switch to new branch identified with `git fetch` (i.e. v99.99.9) and check that it is now  the most recent tag
 
-  ```sh
+  ```sh  
   $ git checkout v99.99.9
   > Previous HEAD position was 1b2a38d add docs for coop close on open
   > HEAD is now at dd58fc0 [...]
   $ git describe --tags --abbrev=0
   > v99.99.9
   ```
-
+  
 * Check the GPG signature of the new version
-
+ 
   ```sh
   $ git verify-tag v99.99.9
   > gpg: Signature made Tue 07 Dec 2021 03:57:11 GMT
   > gpg:                using RSA key DE23E73BFA8A0AD5587D2FCDE80D2F3F311FD87E
   > gpg: Good signature from "Alex Bosworth <alex.bosworth@gmail.com>" [unknown]
   > [...]
-  ```
-
+  ```  
+  
 * Install the new version and check this it has been installed properly
 
   ```sh
@@ -340,7 +340,7 @@ If you want to uninstall Balance of Satoshis:
   ```sh
   $ sudo su -
   $ userdel -r bos
-  ```
+  ``` 
 
 ---
 
@@ -348,7 +348,7 @@ If you want to uninstall Balance of Satoshis:
 
 Balance of Satoshis allows connecting a node to a Telegram bot to receive updates about routing forwards, channel opening and closing events, successful rebalancing payments, payments received, keysend messages etc. It also saves a copy of `channel.backup` (SCB) each time there is a channel being opened or closed.
 
-![bos-tg-bot](../../../images/bos-bot.png)
+![bos-tg-bot](../../images/bos-bot.png)
 
 *Requirements:* a Telegram account
 
@@ -360,37 +360,38 @@ Balance of Satoshis allows connecting a node to a Telegram bot to receive update
 * Once the bot is created, the BotFather will give you a HTTP API token, copy it and keep it somewhere safe (like in a password manager). Note that if you lose this token, you could always get it agin by typing `/myBot` in the BotFather feed.
 * You also get a link to your bot (in the form: t.me/[your_bot_username]) click on it and it will redirect you to your new bot feed. Keep Telegram opened.
 
-### Tor Proxy (requires v11.50.1+)
+### Torify
 
-To avoid leaking our node IP address to Telegram, we can tell bos to use Tor (or VPN) using the flag `--use-proxy <file>`.
+To avoid leaking our node IP address to Telegram, we can force bos to use Tor using the [`torify`](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/TorifyHOWTO) utility. To do this, we first need to edit the `torsocks.conf` file.
 
-* As user "bos", create and edit a new file `proxy_agent.json`. Insert host and port of your Tor (or VPN or other proxy) instance. Save (Ctrl+O) and exit (Ctrl+X)
-
+* Using the "admin" user, edit the `torsocks.conf` file by uncommenting the `AllowOutboundLocalhost` and setting the value to 1. Save (Ctrl+O) and exit (Ctrl+X)
+  
   ```sh
-  $ sudo su - bos
-  $ nano balanceofsatoshis/proxy_agent.json
+  $ sudo nano /etc/tor/torsocks.conf
   ```
   ```ini
-   {
-      "host": "127.0.0.1",
-      "port": 9050
-   } 
+  AllowOutboundLocalhost 1
+  ```
+* Restart Tor
+  
+  ```sh
+  $ sudo systemctl reload tor
   ```
 
 ### Use bos to connect your node to the bot
 
 * Change to the "bos" user
-
+  
   ```sh
   $ sudo su - bos
   ```
 
-* Now, we are going to request bos to connect our node to the TG bot via proxy
-
+* Now, we are going to request bos to connect our node to the TG bot
+  
   ```sh
-  $ bos telegram --use-proxy /home/bos/balanceofsatoshis/proxy_agent.json
+  $ /usr/bin/torify bos telegram
   ```
-
+  
 * When prompted, enter the HTTP API token that the @BotFather gave you earlier
 
 * Go to your new TG bot feed and type `/connect`. Your bot will give you a connection code
@@ -404,12 +405,12 @@ To avoid leaking our node IP address to Telegram, we can tell bos to use Tor (or
 * Your TG bot will now receive notifications from your nodes for various events as described in the introduction.
 
 * Leave the temporary session by pressing Ctrl+C and log out of the "bos" user
-
+  
   ```sh
   $ exit
   ```
 
-### Permanent connection and autostart on boot
+### Permannent connection and autostart on boot 
 
 Now we’ll make sure our Telegram Bot command starts as a systemd service on the Raspberry Pi so it’s always running.
 
@@ -418,9 +419,9 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   ```sh
   $ sudo nano /etc/systemd/system/bos-telegram.service
   ```
-
+  
 * Paste the following configuration. Replace YourConnectionCode with your own connection code provided by your bot above. Save and exit.
-
+  
   ```ini
   # /etc/systemd/system/bos-telegram.service
 
@@ -429,8 +430,8 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   Wants=lnd.service
   After=lnd.service
 
-  [Service]
-  ExecStart=/home/bos/balanceofsatoshis/bos telegram --connect YourConnectionCode --use-proxy /home/bos/balanceofsatoshis/proxy_agent.json
+  [Service] 
+  ExecStart=/usr/bin/torify /home/bos/balanceofsatoshis/bos telegram --connect YourConnectionCode
   User=bos
   Restart=always
   TimeoutSec=120
@@ -439,11 +440,11 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   StandardError=journal
 
   [Install]
-  WantedBy=multi-user.target
+  WantedBy=multi-user.target 
   ```
-
+  
 * Enable the service, start it and check the status of the service. You should also receive a connection message from your TG bot ('Connect to ...').
-
+  
   ```sh
   $ sudo systemctl enable bos-telegram.service
   $ sudo systemctl start bos-telegram.service
@@ -455,8 +456,8 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   >    Tasks: 11 (limit: 4164)
   >      CPU: 7.981s
   >   CGroup: /system.slice/bos-telegram.service
-  >           `-4682 node /home/bos/.npm-global/bin/bos telegram --connect YourConnectionCode --use-proxy /home/bos/balanceofsatoshis/proxy_agent.json
-  ```
+  >           `-4682 node /home/bos/.npm-global/bin/bos telegram --connect 1536853548
+  ``` 
 
 * To monitor the live logging output use the following command. Exit with Ctrl+C.
 
