@@ -19,7 +19,6 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
-![thunderhub](../../images/75_thunderhub_channel_view.png)
 
 ---
 
@@ -41,7 +40,7 @@ Table of contents
   $ node -v
   > v16.14.2
   ```
-* If the version is v14.15 or above, you can move to the next section. If Node.js is not installed, follow [this guide](https://raspibolt.org/btcrpcexplorer.html#install-nodejs){:target="_blank"} to install it.
+* If the version is v14.15 or above, you can move to the next section. If Node.js is not installed, follow [this guide](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs){:target="_blank"} to install it.
 
 ### Firewall & Reverse Proxy
 
