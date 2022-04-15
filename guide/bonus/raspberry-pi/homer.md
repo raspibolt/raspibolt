@@ -522,9 +522,9 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
 
   ```sh
   $ sudo rsync -av --delete /home/homer/homer/dist/ /var/www/homer/
-  $ sudo chown -R www-data:www-data /var/www/homer
   $ sudo ln -s /data/homer/config.yml /var/www/homer/assets/config.yml
-  $ sudo chown www-data:www-data /var/www/homer/assets/config.yml
+  $ sudo ln -s /data/homer/tools /var/www/homer/assets/
+  $ sudo chown -R www-data:www-data /var/www/homer
   ```
 
 * Start the service again.
@@ -595,7 +595,7 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
   > userdel: homer mail spool (/var/mail/homer) not found
   ```
 
-* (Optional) Delete the data folder that contains the YAML configuration file for the Homer dashboard. If you plan to reinstall Homer in the future, you could keep this data folder to not lose your configuration settings.
+* (Optional) Delete the data folder that contains the YAML configuration file and the logos picture files for the Homer dashboard. If you plan to reinstall Homer in the future, you could keep this data folder to not lose your configuration settings.
 
   ```sh
   $ sudo rm -r /data/homer
