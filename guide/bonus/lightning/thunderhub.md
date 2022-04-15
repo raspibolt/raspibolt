@@ -292,4 +292,13 @@ Updating to a [new release](https://github.com/apotdevin/thunderhub/releases) sh
   
 ---
 
+## Uninstall
+
+* Remove user `thunderhub` entirely with
+
+  ```sh
+  $ sudo deluser -r thunderhub
+  ```
+* Remove Tor hidden service from `/etc/tor/torrc` and `sudo systemctl reload tor`
+
 <<Back: [+ Lightning](index.md)
