@@ -164,13 +164,13 @@ For this example, we will use a policy that:
   #################################################
   # Charge-lnd - Automatic fee policy adjustement #
   #################################################
-  
+
   ## COMMANDS TO TEST YOUR FEE STRATEGY
   # ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config --check
   # ~/.local/bin/charge-lnd -c ~/charge-lnd/charge-lnd.config --dry-run
-  
+
   ## FEE STRATEGY
-  
+
   [1_defaults]
   # place holder for your defaults for your fee policies
   # no strategy, so this only sets some defaults
@@ -179,28 +179,28 @@ For this example, we will use a policy that:
   min_htlc_msat = 1000
   max_htlc_msat_ratio = 1
   time_lock_delta = 40
-  
+
   [2_9999_basefee_policy]
   # '9999BaseFee' should be evaluated first before other fees are set
   # e.g. if local balance is <500,000 sats, increase base fees very high
   chan.max_local_balance = 500000
   strategy = static
   base_fee_msat = 9999000
-  
+
   [3_ignore_policy]
   # This policy is for ignoring specific nodes (e.g. a LOOP channel that we want to control manually)
   # The pubkey of the choosen nodes have to be listed below, separated with a comma
   node.id = <node_pubkey_1>,
 	<node_pubkey_2>
   strategy = ignore
-  
+
   [4_low_fees_policy]
   node.id = <node_pubkey_3>,
 	<node_pubkey_4>,
 	<node_pubkey_5>
   strategy = static
   fee_ppm = 50
-  
+
   [5_high_fees_policy]
   node.id = <node_pubkey_6>,
 	<node_pubkey_7>
@@ -267,7 +267,7 @@ If asked, select the `/bin/nano` text editor (type 1 and enter)
   ##########################################
   # 1 - Fee policy updates with charge-lnd #
   ##########################################
-  
+
   # Run charge-lnd every 2 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
   21 */6 * * * /home/charge-lnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log
   ```
