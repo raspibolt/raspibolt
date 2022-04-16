@@ -468,7 +468,7 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
 
 ### Bos Telegram bot in action
 
-* The bot will notify you of the followibg events on your LN node:
+* The bot will notify you of the following events on your LN node:
   * 💵 - A payment being received (if it's a keysend with a message, the message will be decoded and displayed
   * 💰 - Routing/forward events
   * ☯️ - Sucessful rebalancing payment you initiated
