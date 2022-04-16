@@ -37,10 +37,10 @@ Table of contents
 ## Preparations
 
 ### Install dependencies
-* Install the Python `venv` module using the apt package manager.
+* Install necessary dependencies using the apt package manager.
 
   ```sh
-  $ sudo apt install python3-venv
+  $ sudo apt install libffi-dev libpq-dev python3-venv
   ```
 
 ### Firewall & reverse proxy
@@ -97,7 +97,7 @@ Table of contents
 
 * Open a new "lnbits" user session and create symlinks to the LND and LNBits data directories.
 
-  ```
+  ```sh
   $ sudo su - lnbits
   $ ln -s /data/lnd /home/lnbits/.lnd
   $ ln -s /data/LNBits /home/lnbits/.LNBits
@@ -109,6 +109,7 @@ Table of contents
   $ git clone --branch 0.7.0 https://github.com/lnbits/lnbits-legend lnbits
   $ cd lnbits
   $ python3 -m venv venv
+  $ ./venv/bin/pip install setuptools wheel --upgrade
   $ ./venv/bin/pip install -r requirements.txt
   $ ./venv/bin/pip install pylightning
   ```
