@@ -47,6 +47,8 @@ The dashboard contains the following items that you can edit at any time:
 
 * links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning")
 
+This guide assumes that you have followed the main RaspiBolt guide and installed both [BTC RPC Explorer](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html) and [Ride The Lightning](https://raspibolt.org/guide/lightning/web-app.html). If not, you could edit the configuration file to remove their links from the dashboard.
+
 ---
 
 ## Preparations
@@ -406,7 +408,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           target: "_blank"
   ```
 
-🔍 *Note:* Your self-hosted web service links are configured in the last "Services" section. The default configuration enables the links for BTC RPC Explorer in the "Bitcoin" group and Ride The Lightning in the "Lightning" group. To add more web services, simply add a new item under the relevant group. An example is provided with Mempool (to enable it, simply uncomment the 6 lines of the Mempool item). You can also add more groups/columns by changing the value of the `columns:` variable, at the top of the configuration file.
+🔍 *Note:* Your self-hosted web service links are configured in the last "Services" section. The default configuration enables the links for BTC RPC Explorer in the "Bitcoin" group and Ride The Lightning in the "Lightning" group. To add more web services, simply add a new item under the relevant group. An example is provided with [Mempool](https://raspibolt.org/guide/bonus/bitcoin/mempool.html) (to enable it, simply uncomment the 6 lines of the Mempool item). You can also add more groups/columns by changing the value of the `columns:` variable, at the top of the configuration file.
 
 * Create a symlink to the configuration file and change its ownshership to the "www-data" user
 
@@ -489,7 +491,7 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
 
 * Wait a few minutes for the server to start and for the logs to show that the app is running. Then, point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
 
-You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bonus/bitcoin/mempool.md), the [white paper](../bonus/bitcoin/white-paper.md), ThunderHub, Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
+You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bonus/bitcoin/mempool.md), [ThunderHub](https://raspibolt.org/guide/bonus/lightning/thunderhub.html), [LNBits](https://raspibolt.org/guide/bonus/lightning/lnbits.html), Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
 
 🔍 *Note:* If you want to tweak the dashboard to your own taste, check the full configuration guidelines in the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
 
