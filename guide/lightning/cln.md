@@ -1,10 +1,8 @@
 ---
 layout: default
-title: Core Lightning
-parent: + Lightning
-grand_parent: Bonus Section
-nav_exclude: true
-has_toc: false
+title: Channel backup
+nav_order: 20
+parent: Lightning
 ---
 
 # Bonus guide: Core Lightning
