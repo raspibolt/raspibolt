@@ -5,7 +5,7 @@ nav_order: 20
 parent: Lightning
 ---
 
-# Bonus guide: Core Lightning
+# Core Lightning
 {: .no_toc }
 
 ---
