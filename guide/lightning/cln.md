@@ -17,8 +17,8 @@ It can be used for the RaspiBolt as a replacement for LND or it can be run along
 Difficulty: Medium
 {: .label .label-yellow }
 
-Status: Tested v3
-{: .label .label-green }
+Status: Draft v3 (x64)
+{: .label .label-red }
 
 ---
 
