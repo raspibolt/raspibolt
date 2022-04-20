@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Channel backup
+title: CLN (core-lightning)
 nav_order: 20
 parent: Lightning
 ---
