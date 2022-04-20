@@ -72,8 +72,6 @@ sudo pip3 install mistune==0.8.4
 
 # setup user
 sudo su - cln
-
-
 # create symlinks
 ln -s /data/cln /home/cln/.lightning
 ln -s /data/bitcoin /home/cln/.bitcoin
@@ -98,7 +96,7 @@ gpg --verify SHA256SUMS.asc
 
 # install python requirements
 pip3 install --upgrade pip
-pip3 install --user markupsafe==2.0.1 # fix needed to successful compilation on Ubuntu
+pip3 install --user markupsafe==2.0.1 # fix needed for successful compilation on Ubuntu
 pip3 install --user -r requirements.txt
 
 
@@ -139,7 +137,7 @@ autocleaninvoice-expired-by=86400
 
 # wallet settings (optional replication)
 wallet=sqlite3:///data/cln/bitcoin/lightning.sqlite3 
-# auto replication (requires latest head v11+) e.g.: wallet=sqlite3://data/cln/bitcoin/lightning.sqlite3:/home/cln/lightning_backup.sqlite3)
+# replication (requires latest head v0.11+) e.g.: wallet=sqlite3://data/cln/bitcoin/lightningd.sqlite3:/home/cln/lightningd.sqlite3)
 
 # network
 proxy=127.0.0.1:9050
@@ -177,7 +175,7 @@ ln -s /data/cln /home/admin/.lightning
 sudo chmod -R g+x /data/cln/bitcoin/
 
 nano .bashrc
-alias=""
+alias="" (TODO)
 
 
 
