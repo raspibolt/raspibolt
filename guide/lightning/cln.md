@@ -5,12 +5,12 @@ nav_order: 20
 parent: Lightning
 ---
 
-# Core Lightning
+# CLN - Core Lightning
 {: .no_toc }
 
 ---
 
-[Core Lightning](https://github.com/ElementsProject/lightning/blob/master/README.md){:target="_blank"} 
+[CLN - Core Lightning](https://github.com/ElementsProject/lightning/blob/master/README.md){:target="_blank"} 
 is a lightweight, highly customizable and standard compliant implementation of the Lightning Network protocol. 
 It can be used for the RaspiBolt as a replacement for LND or it can be run alongside it to create a second lightning nodes running on the same machine.
 
