@@ -127,7 +127,7 @@ $ upscmd –l UPS-Name
 ---
 
 ### Testing
-Unplug the UPS from the wall and you should get an alert that the system is now running on battery power. If you plug it back in, you should get notified that it’s back “on line power”.
+Unplug the UPS from the wall and you should get a system alert on your console or terminal window (assuming you are logged in to your Raspibolt) that the system is now running on battery power. If you plug it back in, you should get notified that it’s back “on line power”.
 For the real test, unplug the UPS and let it drain. To speed the process up, plug in a laptop, lamp, etc. Check for status of the battery by running the below.
 ```
 $ upsc UPS-NAME
