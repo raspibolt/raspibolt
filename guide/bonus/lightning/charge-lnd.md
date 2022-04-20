@@ -306,14 +306,14 @@ If you need to check the log files:
   $ cd charge-lnd
   $ pip3 show charge-lnd
   > Name: charge-lnd
-  > Version: 0.2.8
+  > Version: 0.2.10
   ```
 
 * Fetch the latest version and install it (*e.g.* v9.9.9)
 
   ```sh
   $ git fetch
-  $ git describe --tags --abbrev=0
+  $ git tag | sort --version-sort | tail -n 1
   > v9.9.9
   $ git reset --hard HEAD
   > HEAD is now at [...]
