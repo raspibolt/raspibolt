@@ -120,6 +120,8 @@ rgb=<your hex color>
 network=bitcoin
 log-file=/data/cln/cln.log
 log-level=info
+# for admin to interact with lightning-cli
+rpc-file-mode=0660
 
 # default fees and channel min size
 fee-base=1000
@@ -156,8 +158,6 @@ nano .bashrc
 alias lightning-cli="./lightning/cli/lightning-cli"
 alias lightningd="./lightning/lightningd/lightningd"
 
-# create symlink
-ln -s /data/cln /home/admin/.lightning
 
 
 # create password file for encrypted hsm
@@ -170,7 +170,14 @@ exit
 # adjust permission of password file
 sudo chmod 0400 /home/cln/.clnpw
 
+# create symlink
+ln -s /data/cln /home/admin/.lightning
 
+# allow admin to use lightning-cli command
+sudo chmod -R g+x /data/cln/bitcoin/
+
+nano .bashrc
+alias=""
 
 
 
