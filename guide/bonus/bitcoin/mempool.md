@@ -467,6 +467,45 @@ Point your browser to the secure access point provided by the nginx web proxy, f
 
 ---
 
+## Tor Hidden Service
+
+To expose mempool app via a Tor hidden service (if only Tor address is used, no ports need to be opened by the firewall): 
+
+* Edit `torrc` file 
+
+```sh
+sudo nano /etc/tor/torrc
+```
+
+* and add the following entry under section `hidden services`:
+
+```ini
+# Mempool Hidden Service
+HiddenServiceDir /var/lib/tor/mempool
+HiddenServicePort 80 127.0.0.1:8999
+```
+
+* Reload Tor config (sometimes a restart is needed)
+
+```bash
+sudo systemctl reload tor
+```
+
+* Get onion address
+
+```bash 
+sudo cat /var/lib/tor/mempool/hostname
+> afjubiu3brwo3tb34otb3......onion
+``` 
+
+* Open Tor browser and insert the address:
+
+```http
+http://afjubiu3brwo3tb34otb3......onion
+```
+
+---
+
 ## Upgrade
 
 Updating to a new release is straight-forward. Make sure to read the release notes first.
