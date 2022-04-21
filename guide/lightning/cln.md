@@ -175,7 +175,7 @@ ln -s /data/cln /home/admin/.lightning
 sudo chmod -R g+x /data/cln/bitcoin/
 
 nano .bashrc
-alias="" (TODO)
+alias lightning-cli="/home/cln/lightning/cli/lightning-cli"
 
 
 
