@@ -497,7 +497,104 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
 
 You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bonus/bitcoin/mempool.md), [ThunderHub](https://raspibolt.org/guide/bonus/lightning/thunderhub.html), [LNBits](https://raspibolt.org/guide/bonus/lightning/lnbits.html), Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
 
-🔍 *Note:* If you want to tweak the dashboard to your own taste, check the full configuration guidelines in the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}. Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
+🔍 *Note:* If you want to tweak the dashboard to your own taste, . Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
+
+---
+
+## Personalize your homepage
+
+You can easily personalize your Homer homepage by editing the YAML configuration file.
+
+* Edit the configuration file
+
+  ```sh
+  $ sudo nano /data/homer/config.yml
+  ```
+
+* Once you finish editing the file, save and close and then refresh your Homer webpage.
+
+### Adding a new group
+
+This guide set three groups: "Bitcoin", "Lightning" and "Resources". You can add as many groups as you want. 
+
+* If you want to add a new group (e.g., a "Sysadmin" group), go to the "Services" section at the end of the file 
+* Add the following lines under the `Services:` entry:
+  
+  ```ini
+    - name: "Sysadmin"
+      icon: "fab fa-wave-pulse"
+      items:
+  ```
+
+**Note:** Make sure that there are two spaces in front of the `-` in the first line. Homer will not load is there are some alignment issues.
+
+You can now add one or more items (e.g., web services) to your new group.
+
+Since you created a new group, you might want to display it in new column.
+
+* In the first section "Homepage configuratioN", change the column value to the desired number of columns
+
+  ```ini
+  columns: 4
+  ```
+
+### Adding a web service button
+
+If you want to add a new web service button to one of your existing group, add sme item configuration lines under the `items:` entry. For example if you want to add the Mempool web service under the "Bitcoin" group. The `[...]` represents other item configuration lines, do NOT copy/paste.
+  
+  ```ini
+    - name: "Bitcoin"
+      icon: "fab fa-bitcoin"
+      items:
+        [...]
+        - name: "Mempool"
+          logo: "assets/tools/mempool.png"
+          subtitle: "Mempool visualizer"
+          tag: "app"
+          url: "https://raspibolt.local:4081/"
+          target: "_blank"
+  ```
+
+### Using logos
+
+In general if you want to use logos in Homer, you simply need to use the `logo:` entry and paste the path of the PNG between double-quotes as value.
+
+You can find a collection of Bitcoin and Lightning logos in the following GitHub repository: [Bitcoin & Lightning Logos](https://github.com/VajraOfIndra/homer-bitcoin-logos#readme=){:target="_blank"}
+
+![Logos repository](../../../images/logo-repository.png)
+
+* Click on the logo you would like to use
+* Then click on the "Download" button (top right banner just above the logo image
+* Copy the URL to the clipboard, e.g., https://...mempool.png
+* With user "homer" on your node, move to the logo folder and download the file by pasting the URL after `wget`
+
+  ```sh
+  $ sudo su - homer
+  $ cd /data/homer/tools
+  $ wget https://...mempool.png
+  $ ls -la
+  $ exit
+  ```
+
+### Using icons
+
+In general if you want to use logos in Homer, you simply need to use the `icon:` entry in place of `logo:` and then use a Font Awesome icon code between qdouble-quotes value.
+
+You can search for icons from the [Font Awesome website](https://fontawesome.com/search){:target="_blank"}.
+
+* Search for an icon with a keyword in the search box; e.g., "coin"
+* Click on an icon you want to use; e.g., "coins"
+* Select the style you prefer (e.g. bold, thin etc)
+* In the HTML code snippet, make a note of the green text; e.g, `fa-solid fa-coins`
+* Paste this code snippet, between double quotes, as value after `icon:`
+
+**Notes:**
+* Not all Font Awesome icons are accepted by Homer. 
+* You can replace `fa-solid` by `fas`; `fa-brands` by `fab` etc.
+
+### More
+
+You can edit many more features such as the API-based welcome message, the top banner clearnet links, the footer and many more things. Check the full configuration guidelines in the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}.
 
 ---
 
