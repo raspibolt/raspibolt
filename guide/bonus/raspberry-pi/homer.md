@@ -540,7 +540,9 @@ Since you created a new group, you might want to display it in new column.
 
 ### Adding a web service button
 
-If you want to add a new web service button to one of your existing group, add sme item configuration lines under the `items:` entry. For example if you want to add the Mempool web service under the "Bitcoin" group. The `[...]` represents other item configuration lines, do NOT copy/paste.
+If you want to add a new web service button to one of your existing group, add some item configuration lines under the `items:` entry. 
+
+* For example if you want to add the Mempool web service under the "Bitcoin" group, add the following lines (the `[...]` and the lines above represent the existing configuration lines in the file, do NOT copy/paste)
   
   ```ini
     - name: "Bitcoin"
