@@ -45,7 +45,7 @@ The dashboard contains the following items that you can edit at any time:
 
 * a welcome message displaying the next block miner fee from the Mempool blockchain explorer public API. It refreshes every 10 seconds.
 
-* links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning")
+* links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning", "Resources")
 
 This guide assumes that you have followed the main RaspiBolt guide and installed both [BTC RPC Explorer](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html) and [Ride The Lightning](https://raspibolt.org/guide/lightning/web-app.html). If not, you could edit the configuration file to remove their links from the dashboard.
 
@@ -72,7 +72,7 @@ This guide assumes that you have followed the main RaspiBolt guide and installed
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" homer
-  $ mkdir /data/homer
+  $ sudo mkdir /data/homer
   $ sudo chown homer:homer /data/homer
   $ sudo su - homer
   ```
@@ -97,13 +97,15 @@ Homer allows for the use of icons and images. We'll import a few logos to make t
   $ cd /data/homer/tools
   ```
 
-* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from a repository containing a collection of Bitcoin and Lightning apps logos
+* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from a [GitHub repository](https://github.com/VajraOfIndra/homer-bitcoin-logos) containing a collection of Bitcoin and Lightning apps logos.
+Check that all the logos are in the folder.
 
   ```sh
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/raspibolt3.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/btcrpcexplorer.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/rtl.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/old-bitcoin.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/png/raspibolt3.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/png/btcrpcexplorer.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/png/rtl.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/png/old-bitcoin.png
+  $ ls -la
   ```
 
 * Exit the "homer" user
@@ -116,21 +118,20 @@ Homer allows for the use of icons and images. We'll import a few logos to make t
 
 The build command generated all the required files for the Homer website. We just need to move it to the proper location expected by the nginx web server.
 
-* Move the distributable output into a nginx website data folder and change its ownership to the “www-data” user.
+* Move the distributable output into a nginx website data folder
 
   ```sh
   $ sudo rsync -av --delete /home/homer/homer/dist/ /var/www/homer/
-  $ sudo chown -R www-data:www-data /var/www/homer
   ```
 
 By default, the logos for Homer are located in the "/var/www/homer/assets/tools" folder. 
-However, if you want to re-install Homer for whatever reason, you will have to re-download and move all the logos. Instead, we'll create a symlink to our Homer data folder created above.
+However, if you want to re-install Homer for whatever reason, you will have to re-download and re-move all the logos. Instead, let's create a symlink to our folder containing all the logos.
 
-* Create a symlink to the logos folder and change its ownership
+* Delete the existing tools directory and replace it with a symlink to the logos folder
 
   ```sh
+  $ sudo rm -r /var/www/homer/assets/tools
   $ sudo ln -s /data/homer/tools /var/www/homer/assets
-  $ sudo chown -h www-data:www-data /var/www/homer/assets/tools
   ```
 
 ### nginx
@@ -178,7 +179,7 @@ However, if you want to re-install Homer for whatever reason, you will have to r
   $ sudo nano /etc/nginx/nginx.conf
   ```
 
-* Paste the following web server configuration lines between the "events" and "streams" contexts
+* Paste the following web server configuration lines between the "events" and "streams" contexts. Note: Skip this step if you have already installed a program that requires a nginx http server (e.g., [Mempool](https://raspibolt.org/guide/bonus/bitcoin/mempool.html)).
 
   ```sh
   http {
@@ -234,17 +235,6 @@ However, if you want to re-install Homer for whatever reason, you will have to r
   }
 
   ```
-
-* Test and reload nginx configuration
-
-  ```sh
-  $ sudo nginx -t
-  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-  > nginx: configuration file /etc/nginx/nginx.conf test is successful
-  $ sudo systemctl restart nginx
-  ```
-
-### Configuration
 
 A sample configuration file is available at `/home/homer/homer/dist/assets/config.yml.dist`. We will create a configuration file derived from this default configuration but tailored to the RaspiBolt.
 
@@ -414,7 +404,21 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
 
   ```sh
   $ sudo ln -s /data/homer/config.yml /var/www/homer/assets/config.yml
-  $ sudo chown homer:www-data /var/www/homer/assets/config.yml
+  ```
+  
+* Change the ownership of the Homer web folder to the “www-data” user
+
+  ```sh
+  $ sudo chown -hR www-data:www-data /var/www/homer
+  ```
+
+* Test and reload nginx configuration
+
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  $ sudo systemctl restart nginx
   ```
 
 ### First start
@@ -514,6 +518,7 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
   $ cd homer
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
+  > v9.99.9
   $ git checkout v9.99.9
   $ npm install
   $ npm run build
@@ -541,13 +546,6 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
 ## Uninstall
 
 * Stop the systemd service and delete the configuration file
-
-  ```sh
-  $ sudo systemctl stop homer
-  $ sudo rm /etc/systemd/system/homer.service
-  ```
-
-* Remove the firewall rules
 
   ```sh
   $ sudo systemctl stop homer
@@ -579,6 +577,24 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
   $ sudo rm /etc/nginx/sites-available/homer-ssl.conf
   $ sudo rm /etc/nginx/sites-enabled/homer-ssl.conf
   ```
+
+* Delete (or comment out) the web server context from the main nginx configuration file. Note: Skip this step if you run another program that depends on the nginx web server (e.g., [Memnpool](https://raspibolt.org/guide/bonus/bitcoin/mempool.html)).
+
+  ```sh
+  $ sudo nano /etc/nginx/nginx.conf
+  ```
+  
+  ```ini
+  #http {
+  
+        ##
+        # Basic Settings
+        ##
+
+        #sendfile on;
+        # [...]
+  
+  #}
 
 * Test and reload nginx configuration
 
