@@ -513,7 +513,7 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
   ```sh
   $ cd homer
   $ git fetch
-  $ git describe --tags --abbrev=0
+  $ git tag | sort --version-sort | tail -n 1
   $ git checkout v9.99.9
   $ npm install
   $ npm run build
