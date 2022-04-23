@@ -501,7 +501,7 @@ sudo cat /var/lib/tor/mempool/hostname
 * Open Tor browser and insert the address:
 
 ```http
-http://afjubiu3brwo3tb34otb3......onion
+https://afjubiu3brwo3tb34otb3......onion
 ```
 
 ---
