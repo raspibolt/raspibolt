@@ -484,6 +484,7 @@ sudo nano /etc/tor/torrc
 HiddenServiceDir /var/lib/tor/hidden_service_mempool
 HiddenServiceVersion 3
 HiddenServicePort 443 127.0.0.1:4081
+``` 
 
 * Reload Tor config (sometimes a restart is needed)
 
