@@ -481,10 +481,9 @@ sudo nano /etc/tor/torrc
 
 ```ini
 # Mempool Hidden Service
-HiddenServiceDir /var/lib/tor/mempool
+HiddenServiceDir /var/lib/tor/hidden_service_mempool
 HiddenServiceVersion 3
-HiddenServicePort 80 127.0.0.1:80
-```
+HiddenServicePort 443 127.0.0.1:4081
 
 * Reload Tor config (sometimes a restart is needed)
 
