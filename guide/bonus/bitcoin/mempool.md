@@ -494,7 +494,7 @@ sudo systemctl reload tor
 * Get onion address
 
 ```bash 
-sudo cat /var/lib/tor/mempool/hostname
+sudo cat /var/lib/tor/hidden_service_mempool/hostname
 > afjubiu3brwo3tb34otb3......onion
 ``` 
 
