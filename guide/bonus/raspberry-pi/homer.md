@@ -373,7 +373,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           url: "https://raspibolt.local:4000/"
           target: "_blank"
         #- name: "Mempool"
-        #  logo: "assets/tools/logo-mempool.png"
+        #  logo: "assets/tools/mempool.png"
         #  subtitle: "Mempool visualizer"
         #  tag: "app"
         #  url: "https://raspibolt.local:4081/"
