@@ -565,7 +565,7 @@ You can find a collection of Bitcoin and Lightning logos in the following GitHub
 
 * Click on the logo you would like to use
 * Then click on the "Download" button (top right banner just above the logo image)
-* Copy the URL to the clipboard, e.g., https://...mempool.png
+* Copy the URL to the clipboard, e.g., https://raw...mempool.png
 * With user "homer" on your node, move to the logo folder and download the file by pasting the URL after `wget`
 
   ```sh
