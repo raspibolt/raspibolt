@@ -225,14 +225,13 @@ PrivateDevices=true
 WantedBy=multi-user.target
 ##############################################
 
-# check CLN startup in a separate terminal
-sudo journalctl -f -u cln
-
 # refresh systemd services
 sudo systemctl daemon-reload
 sudo systemctl enable cln.service
 sudo systemctl start cln.service
 
+# check CLN logs 
+sudo journalctl -f -u cln
 
 # final test after cln.service started ok
 sudo su - cln 
