@@ -497,8 +497,6 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
 
 You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bitcoin/mempool.md), [ThunderHub](../lightning/thunderhub.md), [LNBits](../lightning/lnbits.md), Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
 
-🔍 *Note:* If you want to tweak the dashboard to your own taste, . Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
-
 ---
 
 ## Personalize your homepage
@@ -595,6 +593,8 @@ You can search for icons from the [Font Awesome website](https://fontawesome.com
 * You can replace `fa-solid` by `fas`; `fa-brands` by `fab` etc.
 
 ### More
+
+Read about styling options on the [Bulma CSS framework webpage](https://bulma.io/documentation/components/message/#colors){:target="_blank"}.
 
 You can edit many more features such as the API-based welcome message, the top banner clearnet links, the footer and many more things. Check the full configuration guidelines in the [Homer repository](https://github.com/bastienwirtz/homer/blob/main/docs/configuration.md){:target="_blank"}.
 
