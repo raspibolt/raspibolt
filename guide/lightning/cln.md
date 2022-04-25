@@ -166,7 +166,7 @@ nano ~/.clnpw
 exit
 
 # adjust permission of password file
-sudo chmod 0400 /home/cln/.clnpw
+sudo chmod 0600 /home/cln/.clnpw
 
 # create symlink
 ln -s /data/cln /home/admin/.lightning
@@ -226,12 +226,12 @@ WantedBy=multi-user.target
 ##############################################
 
 # check CLN startup in a separate terminal
-sudo journalctl -f
+sudo journalctl -f -u cln
 
 # refresh systemd services
 sudo systemctl daemon-reload
+sudo systemctl enable cln.service
 sudo systemctl start cln.service
-
 
 
 # final test after cln.service started ok
