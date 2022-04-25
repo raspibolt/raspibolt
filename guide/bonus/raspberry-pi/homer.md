@@ -571,7 +571,7 @@ You can find a collection of Bitcoin and Lightning logos in the following GitHub
   ```sh
   $ sudo su - homer
   $ cd /data/homer/tools
-  $ wget https://...mempool.png
+  $ wget https://raw...mempool.png
   $ ls -la
   $ exit
   ```
