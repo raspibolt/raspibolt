@@ -97,14 +97,14 @@ Homer allows for the use of icons and images. We'll import a few logos to make t
   $ cd /data/homer/tools
   ```
 
-* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from a [GitHub repository](https://github.com/VajraOfIndra/homer-bitcoin-logos) containing a collection of Bitcoin and Lightning apps logos.
-Check that all the logos are in the folder.
+* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from a [GitHub repository](https://github.com/VajraOfIndra/awesome-bitcoin-logos) containing a collection of Bitcoin and Lightning apps logos. 
+Then check that all the logos are in the folder.
 
   ```sh
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/png/raspibolt3.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/png/btcrpcexplorer.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/png/rtl.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/homer-bitcoin-logos/main/png/old-bitcoin.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/awesome-bitcoin-logos/main/png/raspibolt3.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/awesome-bitcoin-logos/main/png/btcrpcexplorer.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/awesome-bitcoin-logos/main/png/rtl.png
+  $ wget https://raw.githubusercontent.com/VajraOfIndra/awesome-bitcoin-logos/main/png/old-bitcoin.png
   $ ls -la
   ```
 
@@ -124,7 +124,7 @@ The build command generated all the required files for the Homer website. We jus
   $ sudo rsync -av --delete /home/homer/homer/dist/ /var/www/homer/
   ```
 
-By default, the logos for Homer are located in the "/var/www/homer/assets/tools" folder. 
+By default, the logos for Homer are located in the `/var/www/homer/assets/tools` folder. 
 However, if you want to re-install Homer for whatever reason, you will have to re-download and re-move all the logos. Instead, let's create a symlink to our folder containing all the logos.
 
 * Delete the existing tools directory and replace it with a symlink to the logos folder
@@ -179,7 +179,7 @@ However, if you want to re-install Homer for whatever reason, you will have to r
   $ sudo nano /etc/nginx/nginx.conf
   ```
 
-* Paste the following web server configuration lines between the "events" and "streams" contexts. Note: Skip this step if you have already installed a program that requires a nginx http server (e.g., [Mempool](https://raspibolt.org/guide/bonus/bitcoin/mempool.html)).
+* Paste the following web server configuration lines between the "events" and "streams" contexts. Note: Skip this step if you have already installed a program that requires a nginx http server (e.g., [Mempool](../bitcoin/mempool.md)).
 
   ```sh
   http {
@@ -398,7 +398,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           target: "_blank"
   ```
 
-🔍 *Note:* Your self-hosted web service links are configured in the last "Services" section. The default configuration enables the links for BTC RPC Explorer in the "Bitcoin" group and Ride The Lightning in the "Lightning" group. To add more web services, simply add a new item under the relevant group. An example is provided with [Mempool](https://raspibolt.org/guide/bonus/bitcoin/mempool.html) (to enable it, simply uncomment the 6 lines of the Mempool item). You can also add more groups/columns by changing the value of the `columns:` variable, at the top of the configuration file.
+🔍 *Note:* Your self-hosted web service links are configured in the last "Services" section. The default configuration enables the links for BTC RPC Explorer in the "Bitcoin" group and Ride The Lightning in the "Lightning" group. To add more web services, simply add a new item under the relevant group. An example is provided with [Mempool](../bitcoin/mempool.md) (to enable it, simply uncomment the 6 lines of the Mempool item). You can also add more groups/columns by changing the value of the `columns:` variable, at the top of the configuration file.
 
 * Create a symlink to the configuration file and change its ownshership to the "www-data" user
 
@@ -495,7 +495,7 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
 
 * Wait a few minutes for the server to start and for the logs to show that the app is running. Then, point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
 
-You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bonus/bitcoin/mempool.md), [ThunderHub](https://raspibolt.org/guide/bonus/lightning/thunderhub.html), [LNBits](https://raspibolt.org/guide/bonus/lightning/lnbits.html), Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
+You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bitcoin/mempool.md), [ThunderHub](../lightning/thunderhub.md), [LNBits](../lightning/lnbits.md), Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
 
 🔍 *Note:* If you want to tweak the dashboard to your own taste, . Search for compatible icons on the [Font Awesome webpage](https://fontawesome.com/icons){:target="_blank"}. Read about styling options on the [Bulma CSS framework webapge](https://bulma.io/documentation/components/message/#colors){:target="_blank"}. After a change, save the YAML file and refresh the dashboard in your browser.
 
@@ -561,9 +561,9 @@ If you want to add a new web service button to one of your existing group, add s
 
 In general if you want to use logos in Homer, you simply need to use the `logo:` entry and paste the path of the PNG between double-quotes as value.
 
-You can find a collection of Bitcoin and Lightning logos in the following GitHub repository: [Bitcoin & Lightning Logos](https://github.com/VajraOfIndra/homer-bitcoin-logos#readme=){:target="_blank"}
+You can find a collection of Bitcoin and Lightning logos in the following GitHub repository: [Awesome Bitcoin Logos](https://github.com/VajraOfIndra/awesome-bitcoin-logos/#awesome-bitcoin-logos=){:target="_blank"}
 
-![Logos repository](../../../images/logo-repository.png)
+![Logos repository](../../../images/awesome-bitcoin-logos.png)
 
 * Click on the logo you would like to use
 * Then click on the "Download" button (top right banner just above the logo image
@@ -677,7 +677,7 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
   $ sudo rm /etc/nginx/sites-enabled/homer-ssl.conf
   ```
 
-* Delete (or comment out) the web server context from the main nginx configuration file. Note: Skip this step if you run another program that depends on the nginx web server (e.g., [Memnpool](https://raspibolt.org/guide/bonus/bitcoin/mempool.html)).
+* Delete (or comment out) the web server context from the main nginx configuration file. Note: Skip this step if you run another program that depends on the nginx web server (e.g., [Mempool](../bitcoin/mempool.md)).
 
   ```sh
   $ sudo nano /etc/nginx/nginx.conf
