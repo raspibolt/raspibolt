@@ -45,7 +45,7 @@ The dashboard contains the following items that you can edit at any time:
 
 * a welcome message displaying the next block miner fee from the Mempool blockchain explorer public API. It refreshes every 10 seconds.
 
-* links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning", "Resources")
+* links to your self-hosted web services, organized by categories (e.g., "Bitcoin", "Lightning", "Resources"). We will create a link for the BTC RPC Explorer web app (under "Bitcoin", one for the Ride The Lightning web app (under "Lightning") and one to dowload the white paper directly from your blockchain via a BTC RPC Explorer function (under "Resources").
 
 This guide assumes that you have followed the main RaspiBolt guide and installed both [BTC RPC Explorer](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html) and [Ride The Lightning](https://raspibolt.org/guide/lightning/web-app.html). If not, you could edit the configuration file to remove their links from the dashboard.
 
