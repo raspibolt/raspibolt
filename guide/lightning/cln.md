@@ -42,25 +42,34 @@ Core Lightning (previously c-lightning) was one of the first implementation of t
 
 ---
 
-## Guide (x64!)
+## User creation
 
+We will download, verify, install and setup CLN. 
+
+* As user "admin", create a new user "cln" and add it to groups "bitcoin" and "debian-tor"
 
 ```sh
-## CLN Installation
-
-# create new CLN user as user "admin"
 sudo adduser --disabled-password --gecos "" cln
 sudo usermod -a -G bitcoin,debian-tor cln
 sudo adduser admin cln
+```
 
-# create datadirs for cln and plugins
+## Data directories
+
+* Create data directories for CLN and future plugins. Adjust permissions.
+
+```sh
 sudo mkdir /data/cln
 sudo mkdir /data/cl-plugins-available
 sudo chown -R cln:cln /data/cln
 sudo chown -R cln:cln /data/cl-plugins-available
+```
 
+## Installation
 
-# install dependencies
+* Install needed dependencies to compile CLN's source code.
+
+```sh
 sudo apt-get install -y \
    autoconf automake build-essential git libtool libgmp-dev \
    libsqlite3-dev python3 python3-mako net-tools zlib1g-dev libsodium-dev \
@@ -68,51 +77,69 @@ sudo apt-get install -y \
 sudo apt-get install -y postgresql libpq-dev
 sudo pip3 install mrkd==0.2.0
 sudo pip3 install mistune==0.8.4
+```
 
+* Open a "cln" user session and create symbolic links to bitcoin and cln data directories.
 
-# setup user
+```sh
 sudo su - cln
-# create symlinks
+
 ln -s /data/cln /home/cln/.lightning
 ln -s /data/bitcoin /home/cln/.bitcoin
-# check
+```
+
+* Display the links and check that they're not shown in red (indicating errors)
+
+```sh
 ls -la
+```
 
+* As user "cln" download the git repository 
 
-# get CLN repo
+```sh
+#TODO: update to v0.11 if available
 git clone https://github.com/ElementsProject/lightning.git
 cd lightning
-# choose v0.10.2 or head
-git reset --hard v0.10.2 
-#git reset --hard HEAD
+git reset --hard v0.11.0
+``` 
 
-# verify - check who released current version
+* Don't trust, verify! Check who released the current version and get their signing keys and verify checksums.
+
+```sh
 wget -O "pgp_keys.asc" https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/cdecker.txt
 gpg --import ./pgp_keys.asc
-wget https://github.com/ElementsProject/lightning/releases/download/v0.10.2/SHA256SUMS
-wget https://github.com/ElementsProject/lightning/releases/download/v0.10.2/SHA256SUMS.asc
+wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0/SHA256SUMS
+wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0/SHA256SUMS.asc
 gpg --verify SHA256SUMS.asc
+```
 
+* Download user specific python packages
 
-# install python requirements
+```sh
 pip3 install --upgrade pip
 pip3 install --user markupsafe==2.0.1 # fix needed for successful compilation on Ubuntu
 pip3 install --user -r requirements.txt
+```
 
+* Configure and build CLN
 
-# build and install libs
+```sh
 ./configure --enable-experimental-features
 make
+```
 
+## Configuration
 
+* Create and setup the configuration file for CLN
 
-
-# configuration
+```sh
 cd /home/cln/.lightning
 nano config
+```
 
-## config file
-##############################################
+* Insert the following content, adjust parameters in brackets to your likings
+
+```ini
 alias=<your fancy alias>
 rgb=<your hex color>
 network=bitcoin
@@ -135,55 +162,78 @@ funding-confirms=2
 autocleaninvoice-cycle=86400
 autocleaninvoice-expired-by=86400
 
-# wallet settings (optional replication)
-wallet=sqlite3:///data/cln/bitcoin/lightning.sqlite3 
-# replication (requires latest head v0.11+) e.g.: wallet=sqlite3://data/cln/bitcoin/lightningd.sqlite3:/home/cln/lightningd.sqlite3)
+# wallet settings (replication recommended)
+wallet=sqlite3://data/cln/bitcoin/lightningd.sqlite3:/home/cln/lightningd.sqlite3)
+
+# no replication:
+#wallet=sqlite3:///data/cln/bitcoin/lightning.sqlite3 
 
 # network
 proxy=127.0.0.1:9050
 bind-addr=0.0.0.0:9736
 addr=statictor:127.0.0.1:9736
 always-use-proxy=true
-##############################################
+```
 
+* Create shortcuts and aliases for easier command handling
 
-
-
-# create shortcuts/aliases
+```sh
 nano .bashrc
+```
 
-# add at end of file
+* Append the following at the end of the file
+
+```sh
 alias lightning-cli="./lightning/cli/lightning-cli"
 alias lightningd="./lightning/lightningd/lightningd"
+```
 
+## Wallet password
 
+* Create a password file for encrypted_hsm (equivalent to LND's wallet password)
 
-# create password file for encrypted hsm
+```sh
 nano ~/.clnpw
 # insert your password
+# take note of your password
+```
 
-# switch to admin
+* Switch back to user "admin"
+
+```sh
 exit
+```
 
-# adjust permission of password file
+* For security, adjust the permissions of the password file
+
+```sh
 sudo chmod 0600 /home/cln/.clnpw
+```
 
-# create symlink
+## Allow user "admin" to work with CLN
+
+* Allow "admin" to access `lightning-cli` command. Create a sym link, adjust permissions and create an alias.
+
+```sh
 ln -s /data/cln /home/admin/.lightning
 
-# allow admin to use lightning-cli command
 sudo chmod -R g+x /data/cln/bitcoin/
 
 nano .bashrc
 alias lightning-cli="/home/cln/lightning/cli/lightning-cli"
+```
 
+## Autostart on boot
 
+* As "admin", create a systemd service that is automatically run on system startup
 
-## set up systemd.service (as admin)
+```sh
 sudo nano /etc/systemd/system/cln.service
+```
 
-# add cln.service:
-##############################################
+* Insert the following content
+
+```ini
 # RaspiBolt: systemd unit for cln
 # /etc/systemd/system/cln.service
 
@@ -223,17 +273,44 @@ PrivateDevices=true
 
 [Install]
 WantedBy=multi-user.target
-##############################################
+```
 
-# refresh systemd services
+* Enable, start and unlock CLN
+
+```sh
 sudo systemctl daemon-reload
 sudo systemctl enable cln.service
 sudo systemctl start cln.service
+```
 
-# check CLN logs 
+* Daemon information is now written into system journal. Check the journal for CLN messages with the following command
+
+```sh
 sudo journalctl -f -u cln
+```
 
-# final test after cln.service started ok
+## CLN in action
+
+* If `cln.service` started without errors, we can check out and try CLN commands 
+
+```sh
 sudo su - cln 
 lightning-cli --version
+lightning-cli getinfo
 ```
+
+## Upgrade CLN
+
+* Upgrade CLN with care and follow the instructions on CLN repository completely to understand the changes. 
+* Redo the steps "Download, verify and installation" as described above in this guide.
+* Verify with `lightning-cli --version` that the update applied.
+* Restart the systemd service for the update to take effect and reload configuration.
+
+```sh
+sudo systemctl restart cln.service
+```
+
+<br /><br />
+---
+
+Next: [Web app >>](web-app.md)
