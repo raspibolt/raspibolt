@@ -17,7 +17,7 @@ It can be used for the RaspiBolt as a replacement for LND or it can be run along
 Difficulty: Medium
 {: .label .label-yellow }
 
-Status: Draft v3 (x64)
+Status: Draft v3
 {: .label .label-red }
 
 ---
@@ -42,9 +42,11 @@ Core Lightning (previously c-lightning) was one of the first implementation of t
 
 ---
 
-## User creation
+## Installation
 
 We will download, verify, install and setup CLN. 
+
+### User creation
 
 * As user "admin", create a new user "cln" and add it to groups "bitcoin" and "debian-tor"
 
@@ -54,7 +56,7 @@ sudo usermod -a -G bitcoin,debian-tor cln
 sudo adduser admin cln
 ```
 
-## Data directories
+### Data directories
 
 * Create data directories for CLN and future plugins. Adjust permissions.
 
@@ -65,7 +67,7 @@ sudo chown -R cln:cln /data/cln
 sudo chown -R cln:cln /data/cl-plugins-available
 ```
 
-## Installation
+### Dependencies & sym links
 
 * Install needed dependencies to compile CLN's source code.
 
@@ -94,6 +96,8 @@ ln -s /data/bitcoin /home/cln/.bitcoin
 ls -la
 ```
 
+### Download
+
 * As user "cln" download the git repository 
 
 ```sh
@@ -121,6 +125,8 @@ pip3 install --user markupsafe==2.0.1 # fix needed for successful compilation on
 pip3 install --user -r requirements.txt
 ```
 
+### Building CLN
+
 * Configure and build CLN
 
 ```sh
@@ -129,6 +135,8 @@ make
 ```
 
 ## Configuration
+
+### Config file
 
 * Create and setup the configuration file for CLN
 
@@ -175,6 +183,8 @@ addr=statictor:127.0.0.1:9736
 always-use-proxy=true
 ```
 
+### Shortcuts & Aliases
+
 * Create shortcuts and aliases for easier command handling
 
 ```sh
@@ -188,7 +198,7 @@ alias lightning-cli="./lightning/cli/lightning-cli"
 alias lightningd="./lightning/lightningd/lightningd"
 ```
 
-## Wallet password
+### Wallet password
 
 * Create a password file for encrypted_hsm (equivalent to LND's wallet password)
 
@@ -210,7 +220,7 @@ exit
 sudo chmod 0600 /home/cln/.clnpw
 ```
 
-## Allow user "admin" to work with CLN
+### Allow user "admin" to work with CLN
 
 * Allow "admin" to access `lightning-cli` command. Create a sym link, adjust permissions and create an alias.
 
@@ -223,7 +233,7 @@ nano .bashrc
 alias lightning-cli="/home/cln/lightning/cli/lightning-cli"
 ```
 
-## Autostart on boot
+### Autostart on boot
 
 * As "admin", create a systemd service that is automatically run on system startup
 
@@ -309,7 +319,6 @@ lightning-cli getinfo
 ```sh
 sudo systemctl restart cln.service
 ```
-
 <br /><br />
 ---
 
