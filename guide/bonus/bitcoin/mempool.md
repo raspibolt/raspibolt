@@ -467,43 +467,43 @@ Point your browser to the secure access point provided by the nginx web proxy, f
 
 ---
 
-## Tor Hidden Service
+## Remote access over Tor (optional)
 
-To expose mempool app via a Tor hidden service (if only Tor address is used, no ports need to be opened by the firewall): 
+To expose Mempool app via a Tor hidden service (if only Tor address is used, no ports need to be opened by the firewall): 
 
 * Edit `torrc` file 
 
-```sh
-sudo nano /etc/tor/torrc
-```
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
 
 * and add the following entry under section `hidden services`:
 
-```ini
-# Mempool Hidden Service
-HiddenServiceDir /var/lib/tor/hidden_service_mempool
-HiddenServiceVersion 3
-HiddenServicePort 443 127.0.0.1:4081
-``` 
+  ```ini
+  # Mempool Hidden Service
+  HiddenServiceDir /var/lib/tor/hidden_service_mempool
+  HiddenServiceVersion 3
+  HiddenServicePort 443 127.0.0.1:4081
+  ``` 
 
 * Reload Tor config (sometimes a restart is needed)
 
-```bash
-sudo systemctl reload tor
-```
+  ```sh
+  $ sudo systemctl reload tor
+  ```
 
 * Get onion address
 
-```bash 
-sudo cat /var/lib/tor/hidden_service_mempool/hostname
-> afjubiu3brwo3tb34otb3......onion
-``` 
+  ```sh 
+  $ sudo cat /var/lib/tor/hidden_service_mempool/hostname
+  > afjubiu3brwo3tb34otb3......onion
+  ``` 
 
 * Open Tor browser and insert the address:
 
-```http
-https://afjubiu3brwo3tb34otb3......onion
-```
+  ```http
+  https://afjubiu3brwo3tb34otb3......onion
+  ```
 
 ---
 
