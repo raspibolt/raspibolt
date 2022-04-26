@@ -44,11 +44,11 @@ Core Lightning (previously c-lightning) was one of the first implementation of t
 
 ## Installation
 
-We will download, verify, install and setup CLN. 
+We will download, verify, install and configure CLN on your RaspiBolt setup. This can be done independently from an existing LND installation. In fact, you can run both at the same time if you wish to.  
 
-### User creation
+### User Creation
 
-* As user "admin", create a new user "cln" and add it to groups "bitcoin" and "debian-tor"
+* As "admin", create a new user named "cln" and add it to groups "bitcoin" and "debian-tor". Also add "admin" to group "cln" for later use.
 
 ```sh
 sudo adduser --disabled-password --gecos "" cln
@@ -58,7 +58,7 @@ sudo adduser admin cln
 
 ### Data directories
 
-* Create data directories for CLN and future plugins. Adjust permissions.
+* Create data directories for CLN and future plugins. Adjust permissions afterwards.
 
 ```sh
 sudo mkdir /data/cln
@@ -67,9 +67,9 @@ sudo chown -R cln:cln /data/cln
 sudo chown -R cln:cln /data/cl-plugins-available
 ```
 
-### Dependencies & sym links
+### Dependencies & Symbolic Links
 
-* Install needed dependencies to compile CLN's source code.
+* Install required dependencies to compile CLN's source code.
 
 ```sh
 sudo apt-get install -y \
@@ -90,7 +90,7 @@ ln -s /data/cln /home/cln/.lightning
 ln -s /data/bitcoin /home/cln/.bitcoin
 ```
 
-* Display the links and check that they're not shown in red (indicating errors)
+* Display the links and check that they're not shown in red (indicating errors).
 
 ```sh
 ls -la
@@ -98,36 +98,35 @@ ls -la
 
 ### Download
 
-* As user "cln" download the git repository 
+* As user "cln" download the git repository to the home folder of user "cln".
 
 ```sh
-#TODO: update to v0.11 if available
+#TODO: update to v0.11.0.1 if available
 git clone https://github.com/ElementsProject/lightning.git
 cd lightning
-git reset --hard v0.11.0
+git reset --hard v0.11.0.1
 ``` 
 
-* Don't trust, verify! Check who released the current version and get their signing keys and verify checksums.
+* Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `OK`.
 
 ```sh
 wget -O "pgp_keys.asc" https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/cdecker.txt
 gpg --import ./pgp_keys.asc
-wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0/SHA256SUMS
-wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0/SHA256SUMS.asc
+wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0.1/SHA256SUMS
+wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0.1/SHA256SUMS.asc
 gpg --verify SHA256SUMS.asc
 ```
 
-* Download user specific python packages
+* Download user specific python packages.
 
 ```sh
-pip3 install --upgrade pip
 pip3 install --user markupsafe==2.0.1 # fix needed for successful compilation on Ubuntu
 pip3 install --user -r requirements.txt
 ```
 
 ### Building CLN
 
-* Configure and build CLN
+* Configure and build the source code. Experimental features will be activated. Read more about them [here](https://lightning.readthedocs.io/lightningd-config.5.html#experimental-options).
 
 ```sh
 ./configure --enable-experimental-features
@@ -136,16 +135,16 @@ make
 
 ## Configuration
 
-### Config file
+### Config File
 
-* Create and setup the configuration file for CLN
+* Create and edit the configuration file for CLN.
 
 ```sh
 cd /home/cln/.lightning
 nano config
 ```
 
-* Insert the following content, adjust parameters in brackets to your likings
+* Insert the following content, adjust parameters in brackets to your likings. At least remove the brackets else cln will not start up correctly! Choose if you want to replicate CLN's channel database file to separate storage. It's good practice to keep a synchronous state of the database somewhere else to be able to recover off-chain funds in case of emergency.
 
 ```ini
 alias=<your fancy alias>
@@ -157,8 +156,8 @@ log-level=info
 rpc-file-mode=0660
 
 # default fees and channel min size
-fee-base=1000
-fee-per-satoshi=1
+fee-base=<1000>
+fee-per-satoshi=<1>
 min-capacity-sat=<your minchansize>
 
 ## optional
@@ -171,10 +170,10 @@ autocleaninvoice-cycle=86400
 autocleaninvoice-expired-by=86400
 
 # wallet settings (replication recommended)
-wallet=sqlite3://data/cln/bitcoin/lightningd.sqlite3:/home/cln/lightningd.sqlite3)
+wallet=sqlite3:///data/cln/bitcoin/lightningd.sqlite3:/home/cln/lightningd.sqlite3
 
 # no replication:
-#wallet=sqlite3:///data/cln/bitcoin/lightning.sqlite3 
+#wallet=sqlite3:///data/cln/bitcoin/lightning.sqlite3
 
 # network
 proxy=127.0.0.1:9050
@@ -185,13 +184,13 @@ always-use-proxy=true
 
 ### Shortcuts & Aliases
 
-* Create shortcuts and aliases for easier command handling
+* Create shortcuts and aliases for easier command handling.
 
 ```sh
 nano .bashrc
 ```
 
-* Append the following at the end of the file
+* Append the following at the end of the file.
 
 ```sh
 alias lightning-cli="./lightning/cli/lightning-cli"
@@ -201,7 +200,7 @@ alias lightningd="./lightning/lightningd/lightningd"
 
 ### Allow user "admin" to work with CLN
 
-* Allow "admin" to access `lightning-cli` command. Create a sym link, adjust permissions and create an alias. (Switch back to user "admin")
+* Allow "admin" to access CLN commands. Create a symlink, adjust permissions and create aliases (Switch back to user "admin" with `exit`).
 
 ```sh
 exit
@@ -218,13 +217,13 @@ alias hsmtool="/home/cln/lightning/tools/hsmtool"
 
 ### Autostart on boot
 
-* As "admin", create a systemd service that is automatically run on system startup
+* As "admin", create a systemd service that is automatically run on system startup.
 
 ```sh
 sudo nano /etc/systemd/system/cln.service
 ```
 
-* Insert the following content
+* Insert the following content:
 
 ```ini
 # RaspiBolt: systemd unit for cln
@@ -267,7 +266,7 @@ PrivateDevices=true
 WantedBy=multi-user.target
 ```
 
-* Enable, start and unlock CLN
+* Enable and startup CLN.
 
 ```sh
 sudo systemctl daemon-reload
@@ -275,7 +274,7 @@ sudo systemctl enable cln.service
 sudo systemctl start cln.service
 ```
 
-* Daemon information is now written into system journal. Check the journal for CLN messages with the following command
+* Daemon information is now written into system journal. See the journal for CLN messages with the following command.
 
 ```sh
 sudo journalctl -f -u cln
@@ -283,12 +282,13 @@ sudo journalctl -f -u cln
 
 ## CLN in action
 
-* If `cln.service` started without errors, we can check out and try CLN commands 
+* If `cln.service` started without errors, we can check out and try CLN commands.
 
 ```sh
 sudo su - cln 
 lightning-cli --version
 lightning-cli getinfo
+lightning-cli listfunds
 ```
 
 ## Backup
@@ -329,12 +329,12 @@ ExecStart=/bin/sh -c '/home/cln/lightning/lightningd/lightningd \
                        --pid-file=/run/lightningd/lightningd.pid'
 ```
 
-* With this change, CLN requires you to enter the password on every restart. To automate this follow the steps below to auto-unlock on startup.
+* With this change CLN requires you to enter the password on every restart. To automate this follow the steps below to auto-unlock on startup.
 
 
 ### Auto-Unlocking on Startup
 
-* As user "cln", create a password file to auto-unlock on startup (equivalent to LND's wallet password) and enter the choosen encryption password from above step.
+* As user "cln", create a password file to auto-unlock on startup (equivalent to LND's wallet password) and enter the choosen encryption password from the step above.
 
 ```sh
 nano ~/.clnpw
@@ -347,13 +347,13 @@ nano ~/.clnpw
 sudo chmod 0600 /home/cln/.clnpw
 ```
 
-* Change systemd service.
+* Change systemd service accordingly. Open systemd file.
 
 ```sh
 sudo nano /etc/systemd/system/cln.service
 ```
 
-* Edit the following line like this:
+* Edit the `ExecStart` line like this:
 
 ```ini
 ExecStart=/bin/sh -c ' (cat /home/cln/.clnpw;echo;cat /home/cln/.clnpw) | \
@@ -363,7 +363,8 @@ ExecStart=/bin/sh -c ' (cat /home/cln/.clnpw;echo;cat /home/cln/.clnpw) | \
                        --encrypted-hsm
                        --pid-file=/run/lightningd/lightningd.pid'
 ```
-* Reload systemd configuration and restart to test:
+
+* Reload systemd configuration and restart it:
 
 ```sh
 sudo systemctl daemon-reload
