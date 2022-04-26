@@ -326,7 +326,7 @@ ExecStart=/bin/sh -c '/home/cln/lightning/lightningd/lightningd \
 * With this change, CLN requires you to enter the password on every restart. To automate this follow the steps below to auto-unlock on startup.
 
 
-## Auto-Unlocking on Startup
+### Auto-Unlocking on Startup
 
 * As user "cln", create a password file to auto-unlock on startup (equivalent to LND's wallet password) and enter the choosen encryption password from above step.
 
@@ -364,8 +364,6 @@ sudo systemctl daemon-reload
 sudo systemctl start cln.service
 ```
 
-
-<br /><br />
 ---
 
 Next: [Web app >>](web-app.md)
