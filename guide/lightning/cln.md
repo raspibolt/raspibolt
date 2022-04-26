@@ -101,7 +101,6 @@ ls -la
 * As user "cln" download the git repository to the home folder of user "cln".
 
 ```sh
-#TODO: update to v0.11.0.1 if available
 git clone https://github.com/ElementsProject/lightning.git
 cd lightning
 git reset --hard v0.11.0.1
@@ -169,7 +168,7 @@ funding-confirms=2
 autocleaninvoice-cycle=86400
 autocleaninvoice-expired-by=86400
 
-# wallet settings (replication recommended)
+# wallet settings (replication recommended, adjust backup path)
 wallet=sqlite3:///data/cln/bitcoin/lightningd.sqlite3:/home/cln/lightningd.sqlite3
 
 # no replication:
@@ -353,7 +352,7 @@ sudo chmod 0600 /home/cln/.clnpw
 sudo nano /etc/systemd/system/cln.service
 ```
 
-* Edit the `ExecStart` line like this:
+* Edit `ExecStart` line like this:
 
 ```ini
 ExecStart=/bin/sh -c ' (cat /home/cln/.clnpw;echo;cat /home/cln/.clnpw) | \
