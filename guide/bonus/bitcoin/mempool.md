@@ -474,7 +474,7 @@ To expose Mempool app via a Tor hidden service (if only Tor address is used, no 
 * Edit `torrc` file 
 
   ```sh
-  sudo nano /etc/tor/torrc
+  $ sudo nano /etc/tor/torrc
   ```
 
 * and add the following entry under section `hidden services`:
@@ -489,13 +489,13 @@ To expose Mempool app via a Tor hidden service (if only Tor address is used, no 
 * Reload Tor config (sometimes a restart is needed)
 
   ```sh
-  sudo systemctl reload tor
+  $ sudo systemctl reload tor
   ```
 
 * Get onion address
 
   ```sh 
-  sudo cat /var/lib/tor/hidden_service_mempool/hostname
+  $ sudo cat /var/lib/tor/hidden_service_mempool/hostname
   > afjubiu3brwo3tb34otb3......onion
   ``` 
 
