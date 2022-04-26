@@ -362,7 +362,7 @@ else
 fi
 
 #create variable lndversion
-lndpi=$(lncli -version | sed -n 's/^.*commit=//p')
+lndpi=$(lncli getinfo | sed -n 's/^\(.*\)=\(.\+\?\)"\(.*\)/\2/p')
 if [ "${lndpi}" = "${lndgit}" ]; then
   lndversion="${lndpi}"
   lndversion_color="${color_green}"

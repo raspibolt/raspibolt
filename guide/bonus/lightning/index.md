@@ -35,6 +35,10 @@ has_toc: false
 #### *GUI - Mobile*
 * **[Zap (iOS)](zap-ios.md)** - a neat interface to manage peers & channels, make payments and create invoices
 
+#### *GUI, API - Web*
+* **[LNBits](lnbits.md)** - a lightning wallet/accounts system
+* **[ThunderHub](thunderhub.md)** - a browser interface to manage all parts of your LN node like forwarding fees, channel opening/closing, usage of lnurl and much more.
+
 ---
 
 ## Liquidity management (rebalancing)
