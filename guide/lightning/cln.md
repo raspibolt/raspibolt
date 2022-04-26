@@ -198,39 +198,22 @@ alias lightning-cli="./lightning/cli/lightning-cli"
 alias lightningd="./lightning/lightningd/lightningd"
 ```
 
-### Wallet password
-
-* Create a password file for encrypted_hsm (equivalent to LND's wallet password)
-
-```sh
-nano ~/.clnpw
-# insert your password
-# take note of your password
-```
-
-* Switch back to user "admin"
-
-```sh
-exit
-```
-
-* For security, adjust the permissions of the password file
-
-```sh
-sudo chmod 0600 /home/cln/.clnpw
-```
 
 ### Allow user "admin" to work with CLN
 
-* Allow "admin" to access `lightning-cli` command. Create a sym link, adjust permissions and create an alias.
+* Allow "admin" to access `lightning-cli` command. Create a sym link, adjust permissions and create an alias. (Switch back to user "admin")
 
 ```sh
+exit
+
 ln -s /data/cln /home/admin/.lightning
 
 sudo chmod -R g+x /data/cln/bitcoin/
 
 nano .bashrc
 alias lightning-cli="/home/cln/lightning/cli/lightning-cli"
+alias lightningd="/home/cln/lightning/lightningd/lightningd"
+alias hsmtool="/home/cln/lightning/tools/hsmtool"
 ```
 
 ### Autostart on boot
@@ -259,7 +242,6 @@ ExecStart=/bin/sh -c ' (cat /home/cln/.clnpw;echo;cat /home/cln/.clnpw) | \
                        /home/cln/lightning/lightningd/lightningd \
                        --conf=/data/cln/config \
                        --daemon \
-                       --encrypted-hsm \
                        --pid-file=/run/lightningd/lightningd.pid'
 
 ExecStop=/bin/sh -c '/home/cln/lightning/cli/lightning-cli stop'
@@ -319,6 +301,70 @@ lightning-cli getinfo
 ```sh
 sudo systemctl restart cln.service
 ```
+<br /><br />
+
+## Optional Steps
+
+### Wallet Encryption
+
+* Encrypt `hsm_secret` with a password as user "cln". Choose a password of your choice and take a note!
+
+```sh
+hsmtool encrypt .lightning/bitcoin/hsm_secret
+> YourFancyPassword
+```
+* Adjust systemd service after encrypting. Edit `ExecStart` command and add parameter `--encrypted-hsm`, like so:
+
+```sh
+ExecStart=/bin/sh -c '/home/cln/lightning/lightningd/lightningd \
+                       --conf=/data/cln/config \
+                       --daemon \
+                       --encrypted-hsm \
+                       --pid-file=/run/lightningd/lightningd.pid'
+```
+
+* With this change, CLN requires you to enter the password on every restart. To automate this follow the steps below to auto-unlock on startup.
+
+
+## Auto-Unlocking on Startup
+
+* As user "cln", create a password file to auto-unlock on startup (equivalent to LND's wallet password) and enter the choosen encryption password from above step.
+
+```sh
+nano ~/.clnpw
+> YourFancyPassword
+```
+
+* As "admin", adjust permissions of the password file (read-only for the user).
+
+```sh
+sudo chmod 0600 /home/cln/.clnpw
+```
+
+* Change systemd service.
+
+```sh
+sudo nano /etc/systemd/system/cln.service
+```
+
+* Edit the following line like this:
+
+```ini
+ExecStart=/bin/sh -c ' (cat /home/cln/.clnpw;echo;cat /home/cln/.clnpw) | \
+                       /home/cln/lightning/lightningd/lightningd \
+                       --conf=/data/cln/config \
+                       --daemon \
+                       --encrypted-hsm
+                       --pid-file=/run/lightningd/lightningd.pid'
+```
+* Reload systemd configuration and restart to test:
+
+```sh
+sudo systemctl daemon-reload
+sudo systemctl start cln.service
+```
+
+
 <br /><br />
 ---
 
