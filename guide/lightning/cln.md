@@ -291,6 +291,12 @@ lightning-cli --version
 lightning-cli getinfo
 ```
 
+## Backup
+
+* It is at least recommended to backup the wallet file `hsm_secret` that you can find in CLN's data directory `home/cln/.lightning/bitcoin/`. 
+* For more detailed information, please have a look at the official [docs](https://lightning.readthedocs.io/FAQ.html#how-to-backup-my-wallet) and RaspiBlitz' incredible [FAQ](https://github.com/rootzoll/raspiblitz/blob/dev/FAQ.cl.md#backups).
+
+
 ## Upgrade CLN
 
 * Upgrade CLN with care and follow the instructions on CLN repository completely to understand the changes. 
@@ -307,7 +313,7 @@ sudo systemctl restart cln.service
 
 ### Wallet Encryption
 
-* Encrypt `hsm_secret` with a password as user "cln". Choose a password of your choice and take a note!
+* Encrypt `hsm_secret` with a password as user "cln". Choose a password and take a note!
 
 ```sh
 hsmtool encrypt .lightning/bitcoin/hsm_secret
