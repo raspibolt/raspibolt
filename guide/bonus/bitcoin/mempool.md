@@ -465,7 +465,6 @@ Now we’ll make sure Mempool starts as a service on the Raspberry Pi so it’s 
 
 Point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4081](https://raspibolt.local:4081){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4081).
 
-
 ---
 
 ## Remote access over Tor (optional)
