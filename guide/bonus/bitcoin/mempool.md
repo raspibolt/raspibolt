@@ -35,10 +35,10 @@ Table of contents
 
 ## Requirements
 
-* Bitcoin
+* Minimum RAM: 4 GB
+* Bitcoin Core
 * Electrs
 * Node.js v16+
-* MariaDB
 * nginx
 
 ---
@@ -139,7 +139,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ nano mempool-config.json
   ```
 
-* Paste the following lines. In the CORE_RPC section, replace the username with "raspibolt" and password with your password [B].
+* Paste the following lines. In the CORE_RPC section, replace the username and password with your username (e.g., "raspibolt") and password [B].
 
 
   ```sh
@@ -179,6 +179,14 @@ For improved security, we create the new user "mempool" that will run the Mempoo
       "USERNAME": "mempool",
       "PASSWORD": "mempool",
       "DATABASE": "mempool"
+    },
+    "SOCKS5PROXY": {
+      "ENABLED": true,
+      "HOST": "127.0.0.1",
+      "PORT": 9050
+    },
+    "PRICE_DATA_SERVER": {
+      "TOR_URL": "http://wizpriceje6q5tdrxkyiazsgu7irquiqjy2dptezqhrtu7l2qelqktid.onion/getAllMarketPrices"
     }
   }
   ```
@@ -228,7 +236,7 @@ The Mempool configuration file contains the Bitcoin Core RPC username and passwo
 * Still with user "admin", change the ownership of the configuration file
  
   ```sh
-  $ sudo chown 600 /home/mempool/mempool/backend/mempool-config.json
+  $ sudo chmod 600 /home/mempool/mempool/backend/mempool-config.json
   ```
 
 ### nginx
@@ -459,6 +467,46 @@ Point your browser to the secure access point provided by the nginx web proxy, f
 
 ---
 
+## Remote access over Tor (optional)
+
+To expose Mempool app via a Tor hidden service (if only Tor address is used, no ports need to be opened by the firewall): 
+
+* Edit `torrc` file 
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+* and add the following entry under section `hidden services`:
+
+  ```ini
+  # Mempool Hidden Service
+  HiddenServiceDir /var/lib/tor/hidden_service_mempool
+  HiddenServiceVersion 3
+  HiddenServicePort 443 127.0.0.1:4081
+  ``` 
+
+* Reload Tor config (sometimes a restart is needed)
+
+  ```sh
+  $ sudo systemctl reload tor
+  ```
+
+* Get onion address
+
+  ```sh 
+  $ sudo cat /var/lib/tor/hidden_service_mempool/hostname
+  > afjubiu3brwo3tb34otb3......onion
+  ``` 
+
+* Open Tor browser and insert the address:
+
+  ```http
+  https://afjubiu3brwo3tb34otb3......onion
+  ```
+
+---
+
 ## Upgrade
 
 Updating to a new release is straight-forward. Make sure to read the release notes first.
@@ -530,7 +578,7 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ sudo mv /etc/nginx/nginx.conf.bak2 /etc/nginx/nginx.conf
   ```
   
-* Test and reload NGINX configuration
+* Test and reload nginx configuration
   
   ```sh
   $ sudo nginx -t
