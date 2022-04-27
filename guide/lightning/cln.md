@@ -73,12 +73,9 @@ sudo chown -R cln:cln /data/cl-plugins-available
 
 ```sh
 sudo apt-get install -y \
-   autoconf automake build-essential git libtool libgmp-dev \
-   libsqlite3-dev python3 python3-mako net-tools zlib1g-dev libsodium-dev \
-   gettext
-sudo apt-get install -y postgresql libpq-dev
-sudo pip3 install mrkd==0.2.0
-sudo pip3 install mistune==0.8.4
+  autoconf automake build-essential git libtool libgmp-dev libsqlite3-dev \
+  python3 python3-pip net-tools zlib1g-dev libsodium-dev gettext
+pip3 install --upgrade pip
 ```
 
 * Open a "cln" user session and create symbolic links to bitcoin and cln data directories.
@@ -109,7 +106,7 @@ git reset --hard v0.11.0.1
 * Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `OK`.
 
 ```sh
-wget -O "pgp_keys.asc" https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/cdecker.txt
+wget -O "pgp_keys.asc" https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/rustyrussell.txt
 gpg --import ./pgp_keys.asc
 wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0.1/SHA256SUMS
 wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0.1/SHA256SUMS.asc
@@ -119,8 +116,9 @@ gpg --verify SHA256SUMS.asc
 * Download user specific python packages.
 
 ```sh
-pip3 install --user markupsafe==2.0.1 # fix needed for successful compilation on Ubuntu
-pip3 install --user -r requirements.txt
+pip3 install --user mrkd==0.2.0
+pip3 install --user mistune==0.8.4
+pip3 install --user poetry
 ```
 
 ### Building CLN
@@ -128,6 +126,7 @@ pip3 install --user -r requirements.txt
 * Configure and build the source code. Experimental features will be activated. Read more about them [here](https://lightning.readthedocs.io/lightningd-config.5.html#experimental-options).
 
 ```sh
+poetry install
 ./configure --enable-experimental-features
 make
 ```
@@ -194,6 +193,7 @@ nano .bashrc
 ```sh
 alias lightning-cli="./lightning/cli/lightning-cli"
 alias lightningd="./lightning/lightningd/lightningd"
+alias hsmtool="./lightning/tools/hsmtool"
 ```
 
 
@@ -236,8 +236,7 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-ExecStart=/bin/sh -c ' (cat /home/cln/.clnpw;echo;cat /home/cln/.clnpw) | \
-                       /home/cln/lightning/lightningd/lightningd \
+ExecStart=/bin/sh -c '/home/cln/lightning/lightningd/lightningd \
                        --conf=/data/cln/config \
                        --daemon \
                        --pid-file=/run/lightningd/lightningd.pid'
@@ -298,8 +297,8 @@ lightning-cli listfunds
 
 ## Upgrade CLN
 
-* Upgrade CLN with care and follow the instructions on CLN repository completely to understand the changes. 
-* Redo the steps "Download, verify and installation" as described above in this guide.
+* Upgrade CLN with care and follow the instructions on CLN repository completely to understand the changes.
+* Remove the git repository or `git pull` from within and redo the verification and building steps as described above.
 * Verify with `lightning-cli --version` that the update applied.
 * Restart the systemd service for the update to take effect and reload configuration.
 
