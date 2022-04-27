@@ -269,7 +269,7 @@ If asked, select the `/bin/nano` text editor (type 1 and enter)
   # 1 - Fee policy updates with charge-lnd #
   ##########################################
 
-  # Run charge-lnd every 2 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
+  # Run charge-lnd every 6 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
   21 */6 * * * /home/chargelnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log
   ```
 
