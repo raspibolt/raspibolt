@@ -78,7 +78,7 @@ We now configure Sparrow to connect to your node within your local network.
   > [...]
   ```
 
-![Sparrow connect to Electrs](../../images/sparrow-electrum+proxy.png)
+![Sparrow connect to Electrs](../../images/sparrow-electrum-no-proxy.png)
 
 If there is a connection error message, try the following troubleshooting:
 * Make sure that your computer is not connected to any "guest" WiFi network at home. A "guest" WiFi network prevents the computer to connect to any other devices on the local network, such as your node.
@@ -90,8 +90,8 @@ If there is a connection error message, try the following troubleshooting:
 Now, let's go back to the wallet and check that the server and proxy are working properly.
 
 * Close the server configuration window
-* Check the two icons in the bottom right corner of the wallet window ![status icons](../../images/sparrow-server-proxy-icons.png)
-  * The second icon should be a blue slider button and a mouse over should display "Connected to [...] at height [...]"
+* Check the icon in the bottom right corner of the wallet window ![status icon](../../images/sparrow-server-icon.png)
+  * The icon should be a blue slider button and a mouse over should display "Connected to [...] at height [...]"
 
 You're set! Sparrow is now configured to connect to your Electrum server from within your local network.
 
@@ -139,14 +139,14 @@ you can obtain it again by running the following command with "admin" on your no
 * Click on the "Private Electrum" tab. If you've already have an existing clearnet connection, click on "Edit Existing Connection".
 * On the "URL" line, paste your Tor hidden service connection address (e.g. "abcd...1234.onion") in the first box and `50002` in the second box
 * Enable SSL by clicking on the slider
-* Enable the Tor proxy by clicking on the "Use proxy" slider
-* On the "Proxy URL" line, paste `127.0.0.1` in the first box and either `9150` or `9050` in the second box depending if you run the Tor Browser or Tor as a background service.
 * Click on "Test Connection". A green tick should appear on the button and you should see something similar to the following output:
 
   ```
   > Connected to [...] on protocol version 1.4
   > [...]
   ```
+
+![Sparrow connect to Electrs via Tor](../../images/sparrow-electrum-tor-no-proxy.png)
 
 You're set! Sparrow is now configured to connect to your node over Tor and you can use it wherever you are.
 
@@ -182,6 +182,8 @@ Here, we'll use the Tor Browser and port 9150 as it is easier to set up on Windo
   > Connected to [...] on protocol version 1.4
   > [...]
   ```
+
+![Tor daemon proxy usage](../../images/sparrow-tor-proxy.png)
 
 Now, let's go back to the wallet and check that the proxy is working properly.
 
