@@ -258,7 +258,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 ### Autostart on boot
 
-Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd unit that starts the service on boot directly after LND.
+Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd service unit file that starts the service on boot directly after LND.
 
 * Create the Lightning Terminal systemd unit with the following content. Save and exit.
   
@@ -335,7 +335,7 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
 
 ### Aliases
 
-For now, softwares packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them, using flags (e.g., `pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list`, do not try it now as Lightning Terminal is not running yet!).  
+For now, software packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them, using flags (e.g., `pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list`, do not try it now as Lightning Terminal is not running yet!).  
 
 Rather than always typing the flags, we can create aliases for the "admin" user.
 
@@ -370,16 +370,16 @@ Rather than always typing the flags, we can create aliases for the "admin" user.
 
 * In the left menu, click on "Settings"
 
-* Click on "Channel balance mode" and select the case that best corresponds to your usage of your LN node
-  * Choose "Receiving" if you plan to mostly receive LN payments (e.g. if you're a merchant)
-  * Choose "Sending" if you plan to mostly send LN payments (e.g. if you're a casual end-user)
-  * Choose "Routing" if your main goal is to route payments (e.g. if you're a LN router)
+* Click on "Channel balance mode", make a selection according to your LN node type
+  * Merchant: "Receiving"
+  * Casual end user: "Sending"
+  * Routing node: "Routing"
 
 * Go back to "Settings"
 
-* Click on "Bitcoin Transaction URL" and replace the default URL (`https://mempool.space/tx/{txid}`) by your own explorer (`https://raspibolt.local:4000/tx/{txid}`, replace raspibolt.local by your node IP if necessary). This will preserve your privacy when looking up transactions from the Terminal.
+* Click on "Bitcoin Transaction URL" and replace the default URL `https://mempool.space/tx/{txid}` by your own explorer: `https://raspibolt.local:4000/tx/{txid}`. Replace `raspibolt.local` by your node IP if necessary. This will preserve your privacy when looking up transactions from the Terminal.
 
-* Optional: Replace the default Lightning Node URL (`https://1ml.com/node/{pubkey}`) by the Amboss explorer (`https://amboss.space/node/{pubkey}`
+* Optional: Replace the default Lightning Node URL `https://1ml.com/node/{pubkey}` by the Amboss explorer: `https://amboss.space/node/{pubkey}`
 
 * Click "Save changes"
 
