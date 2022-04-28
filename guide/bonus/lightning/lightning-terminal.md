@@ -258,9 +258,9 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 ### Autostart on boot
 
-Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd service unit file that starts the service on boot directly after LND.
+Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd service file that starts Lightning Terminal on boot directly after LND.
 
-* Create the Lightning Terminal systemd unit with the following content. Save and exit.
+* Create the Lightning Terminal systemd service with the following content. Save and exit.
   
   ```sh
   $ sudo nano /etc/systemd/system/litd.service
