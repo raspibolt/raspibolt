@@ -137,7 +137,7 @@ you can obtain it again by running the following command with "admin" on your no
 ### Sparrow configuration
 
 * Open Sparrow
-* Navigate to the server configuration page by hitting `Ctrl`+`P` (or  `Cmd`+`P` on OSX) then click on "Server"
+* Navigate to the server configuration page by hitting `Ctrl`+`P`, or  `Cmd`+`P` on OSX, then click on "Server"
 * Click on the "Private Electrum" tab. If you've already have an existing clearnet connection, click on "Edit Existing Connection".
 * On the "URL" line, paste your Tor hidden service connection address (e.g. "abcd...1234.onion") in the first box and `50002` in the second box
 * Enable SSL by clicking on the slider
@@ -178,7 +178,7 @@ Here, we'll use the Tor Browser and port 9150 as it is easier to set up on Windo
 ### Wallet configuration
 
 * Open Sparrow
-* Navigate to the server configuration page by hitting `Ctrl`+`P` (or  `Cmd`+`P` on OSX) then click on "Server"
+* Navigate to the server configuration page by hitting `Ctrl`+`P`, or  `Cmd`+`P` on OSX, then click on "Server"
 * Click on the "Private Electrum" tab. If you've already have an existing clearnet connection, click on "Edit Existing Connection".
 * Enable the Tor proxy by clicking on the "Use proxy" slider
 * On the "Proxy URL" line, paste `127.0.0.1` in the first box and either `9150` or `9050` in the second box depending if you run the Tor Browser or Tor as a background service.
