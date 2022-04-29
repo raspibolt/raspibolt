@@ -132,11 +132,6 @@ We are going to install Thunderhub in the home directory since it doesn't need t
   PORT=3010
 
   # -----------
-  # Interface Configs
-  # -----------
-  THEME='dark'
-
-  # -----------
   # Account Configs
   # -----------
   ACCOUNT_CONFIG_PATH='/home/thunderhub/thunderhub/thubConfig.yaml'
