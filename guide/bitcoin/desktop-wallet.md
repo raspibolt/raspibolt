@@ -83,11 +83,11 @@ We now configure Sparrow to connect to your node within your local network.
 If there is a connection error message, try the following troubleshooting:
 * Make sure that your computer is not connected to any "guest" WiFi network at home. A "guest" WiFi network prevents the computer to connect to any other devices on the local network, such as your node.
 * If you have used Sparrow Wallet before on this computer, try to connect again after deleting the existing certificates that are stored within the `certs` folder:
-  * On Windows: `C:\Users\remi\AppData\Roaming\Sparrow\certs`
-  * On macOS: `~/.sparrow/cert`
-  * On Linux: `~/.sparrow/cert`
+  * On Windows: `C:\Users\<username>\AppData\Roaming\Sparrow\certs`
+  * On macOS: `~/.sparrow/certs`
+  * On Linux: `~/.sparrow/certs`
 
-Now, let's go back to the wallet and check that the server and proxy are working properly.
+Let's go back to the wallet and check that it is connected to our own Electrum server.
 
 * Close the server configuration window
 * Check the icon in the bottom right corner of the wallet window ![status icon](../../images/sparrow-server-icon.png)
@@ -135,7 +135,7 @@ you can obtain it again by running the following command with "admin" on your no
 ### Sparrow configuration
 
 * Open Sparrow
-* Navigate to the server configuration page by hitting `Ctrl`+`p` then click on "Server"
+* Navigate to the server configuration page by hitting `Ctrl`+`P` (or  `Cmd`+`P` on OSX) then click on "Server"
 * Click on the "Private Electrum" tab. If you've already have an existing clearnet connection, click on "Edit Existing Connection".
 * On the "URL" line, paste your Tor hidden service connection address (e.g. "abcd...1234.onion") in the first box and `50002` in the second box
 * Enable SSL by clicking on the slider
@@ -154,7 +154,11 @@ You're set! Sparrow is now configured to connect to your node over Tor and you c
 
 ## (Optional) Set up a Tor proxy for external services
 
-Sparrow Wallet connects to external services to fetch exchange rates or when facilitating CoinJoins. This can reveal your IP address. If you care for maximum privacy, we recommend using Tor to obscure this information.
+If a Tor proxy is configured in Sparrow, all external connections use Tor. This includes rate fetching, coinjoin etc - even transaction broadcasting is then done via external service (like blockstream.info) over Tor for additional privacy. Where-ever possible, the onion URLs of these services are used.
+
+Sparrow can be configured to use an internal (bundled) or external Tor proxy. To use the internal proxy, an onion Electrum server URL must be specified, and the 'Use Proxy' toggle must be off. Therefore, the following section only applies if you connect to your Electrum server using the local IP address within your local network (e.g., `raspibolt.local` or `192.168.0.20`). If you're using a Tor onion address to connect to your node, then Sparrow is already using the internal proxy and there is nothing else to be done!
+
+If you're using a local connection, we recommend that you set up this external Tor proxy as described below for maximal privacy.
 
 ### Preparations on your computer
 
@@ -172,7 +176,7 @@ Here, we'll use the Tor Browser and port 9150 as it is easier to set up on Windo
 ### Wallet configuration
 
 * Open Sparrow
-* Navigate to the server configuration page by hitting `Ctrl`+`p` then click on "Server"
+* Navigate to the server configuration page by hitting `Ctrl`+`P` (or  `Cmd`+`P` on OSX) then click on "Server"
 * Click on the "Private Electrum" tab. If you've already have an existing clearnet connection, click on "Edit Existing Connection".
 * Enable the Tor proxy by clicking on the "Use proxy" slider
 * On the "Proxy URL" line, paste `127.0.0.1` in the first box and either `9150` or `9050` in the second box depending if you run the Tor Browser or Tor as a background service.
