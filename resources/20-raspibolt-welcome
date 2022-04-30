@@ -415,7 +415,7 @@ if [ -z "${btcrpcexplorer_running##*inactive*}" ]; then
   btcrpcexplorerversion_color="${color_red}"
 else
   btcrpcexplorer_running="up"
-  btcrpcexplorerpi=$(git --git-dir /home/btcrpcexplorer/btc-rpc-explorer/.git describe --tags)
+  btcrpcexplorerpi=v$(cd /home/btcrpcexplorer/btc-rpc-explorer; npm version | grep -oP "'btc-rpc-explorer': '\K(.*)(?=')")
   if [ "$btcrpcexplorerpi" = "$btcrpcexplorergit" ]; then
     btcrpcexplorerversion="$btcrpcexplorerpi"
     btcrpcexplorerversion_color="${color_green}"
@@ -440,7 +440,7 @@ if [ -z "${rtl_running##*inactive*}" ]; then
   rtlversion_color="${color_red}"
 else
   rtl_running="up"
-  rtlpi=$(git --git-dir /home/rtl/RTL/.git describe --tags)
+  rtlpi=v$(cd /home/rtl/RTL; npm version | grep -oP "rtl: '\K(.*)(?=-beta')")
   if [ "$rtlpi" = "$rtlgit" ]; then
     rtlversion="$rtlpi"
     rtlversion_color="${color_green}"
