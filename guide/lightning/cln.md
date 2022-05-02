@@ -1,7 +1,7 @@
 ---
 layout: default
 title: CLN (core-lightning)
-nav_order: 20
+nav_order: 30
 parent: Lightning
 ---
 
@@ -274,11 +274,9 @@ lightning-cli listfunds
 
 ## Allow user "admin" to work with CLN
 
-* Allow "admin" to access CLN commands. Create a symlink, adjust permissions and create aliases (Switch back to user "admin" with `exit`).
+* Allow "admin" to access CLN commands. Create a symlink, adjust permissions and create aliases (switch to "admin" with `exit`).
 
 ```sh
-exit
-
 ln -s /data/cln /home/admin/.lightning
 
 sudo chmod -R g+x /data/cln/bitcoin/
