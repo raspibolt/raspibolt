@@ -106,7 +106,7 @@ Table of contents
 * Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
 
   ```sh
-  $ git clone --branch 0.7.0 https://github.com/lnbits/lnbits-legend lnbits
+  $ git clone --branch 0.8.0 https://github.com/lnbits/lnbits-legend lnbits
   $ cd lnbits
   $ python3 -m venv venv
   $ ./venv/bin/pip install setuptools wheel --upgrade
@@ -251,14 +251,14 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ sudo su - lnbits
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest `0.7.0` in this example), and update:
+* Fetch the latest GitHub repository information, display the release tags (use the latest `0.8.0` in this example), and update:
 
   ```sh
   $ cd /home/lnbits/lnbits
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout 0.7.0
+  $ git checkout 0.8.0
   $ ./venv/bin/pip install -r requirements.txt
   $ exit
   ```
