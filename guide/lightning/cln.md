@@ -176,7 +176,7 @@ wallet=sqlite3:///data/cln/bitcoin/lightningd.sqlite3:/home/cln/lightningd.sqlit
 # network
 proxy=127.0.0.1:9050
 bind-addr=0.0.0.0:9736
-addr=statictor:127.0.0.1:9736
+addr=statictor:127.0.0.1:9051/torport=9736
 always-use-proxy=true
 ```
 
