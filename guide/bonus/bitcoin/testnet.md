@@ -11,6 +11,8 @@ has_toc: false
 # Bonus guide: RaspiBolt on Testnet
 {: .no_toc }
 
+You can run your RaspiBolt node on testnet to develop and experiment with new applications, without putting real money at risk. This bonus guide highlights all configuration changes compared to the main guide.
+
 Difficulty: Medium
 {: .label .label-yellow }
 
@@ -141,7 +143,7 @@ $ sudo ufw allow 60002/tcp comment 'allow Electrum SSL Testnet'
 ```
 
 ### Tor
-Create a separate service for testnet over Tor:
+Create a separate service for testnet over Tor by adding the following lines in the `location-hidden services` section:
 
 File location: `/etc/tor/torrc`
 ```ini
@@ -158,10 +160,15 @@ $ sudo cat /var/lib/tor/hidden_service_electrs_testnet/hostname
 ```
 
 ## LND
+The following are the lines that need changing in the LND configuration file.
+
 File location: `/data/lnd/lnd.conf`
 ```ini
+[Bitcoin]
 bitcoin.active=1
-# bitcoin.mainnet=1
+#bitcoin.mainnet=1
+bitcoin.testnet=1
+bitcoin.node=bitcoind
 ```
 
 And the following command gives members of the group `lnd` permission to traverse the LND directories to reach the macaroons:

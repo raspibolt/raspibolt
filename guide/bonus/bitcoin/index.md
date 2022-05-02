@@ -39,7 +39,7 @@ has_toc: false
 
 ## Testnet
 
-* **[Running a Testnet Raspibolt Node](testnet.md)** - configure your RaspiBolt for use on testnet
+* **[Running a Testnet RaspiBolt Node](testnet.md)** - configure your RaspiBolt for use on testnet
 
 ---
 
