@@ -17,8 +17,8 @@ It can be used for the RaspiBolt as a replacement for LND or it can be run along
 Difficulty: Medium
 {: .label .label-yellow }
 
-Status: Draft v3
-{: .label .label-red }
+Status: Tested v3
+{: .label .label-green }
 
 ---
 
@@ -75,7 +75,7 @@ sudo chown -R cln:cln /data/cl-plugins-available
 sudo apt-get install -y \
   autoconf automake build-essential git libtool libgmp-dev libsqlite3-dev \
   python3 python3-pip net-tools zlib1g-dev libsodium-dev gettext
-pip3 install --upgrade pip
+pip3 install --user --upgrade pip
 ```
 
 * Open a "cln" user session and create symbolic links to bitcoin and cln data directories.
@@ -103,22 +103,21 @@ cd lightning
 git reset --hard v0.11.0.1
 ``` 
 
-* Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `OK`.
+* Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `Good Signature`.
 
 ```sh
 wget -O "pgp_keys.asc" https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/rustyrussell.txt
 gpg --import ./pgp_keys.asc
-wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0.1/SHA256SUMS
-wget https://github.com/ElementsProject/lightning/releases/download/v0.11.0.1/SHA256SUMS.asc
-gpg --verify SHA256SUMS.asc
+git verify-tag v0.11.0.1
 ```
 
-* Download user specific python packages.
+* Download user specific python packages and set path for `poetry`.
 
 ```sh
 pip3 install --user mrkd==0.2.0
 pip3 install --user mistune==0.8.4
 pip3 install --user poetry
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
 ### Building CLN
@@ -185,6 +184,7 @@ always-use-proxy=true
 * Create shortcuts and aliases for easier command handling.
 
 ```sh
+cd ~/
 nano .bashrc
 ```
 
@@ -196,23 +196,6 @@ alias lightningd="./lightning/lightningd/lightningd"
 alias hsmtool="./lightning/tools/hsmtool"
 ```
 
-
-### Allow user "admin" to work with CLN
-
-* Allow "admin" to access CLN commands. Create a symlink, adjust permissions and create aliases (Switch back to user "admin" with `exit`).
-
-```sh
-exit
-
-ln -s /data/cln /home/admin/.lightning
-
-sudo chmod -R g+x /data/cln/bitcoin/
-
-nano .bashrc
-alias lightning-cli="/home/cln/lightning/cli/lightning-cli"
-alias lightningd="/home/cln/lightning/lightningd/lightningd"
-alias hsmtool="/home/cln/lightning/tools/hsmtool"
-```
 
 ### Autostart on boot
 
@@ -289,6 +272,23 @@ lightning-cli getinfo
 lightning-cli listfunds
 ```
 
+## Allow user "admin" to work with CLN
+
+* Allow "admin" to access CLN commands. Create a symlink, adjust permissions and create aliases (Switch back to user "admin" with `exit`).
+
+```sh
+exit
+
+ln -s /data/cln /home/admin/.lightning
+
+sudo chmod -R g+x /data/cln/bitcoin/
+
+nano .bashrc
+alias lightning-cli="/home/cln/lightning/cli/lightning-cli"
+alias lightningd="/home/cln/lightning/lightningd/lightningd"
+alias hsmtool="/home/cln/lightning/tools/hsmtool"
+```
+
 ## Backup
 
 * It is at least recommended to backup the wallet file `hsm_secret` that you can find in CLN's data directory `home/cln/.lightning/bitcoin/`. 
@@ -358,7 +358,7 @@ ExecStart=/bin/sh -c ' (cat /home/cln/.clnpw;echo;cat /home/cln/.clnpw) | \
                        /home/cln/lightning/lightningd/lightningd \
                        --conf=/data/cln/config \
                        --daemon \
-                       --encrypted-hsm
+                       --encrypted-hsm \
                        --pid-file=/run/lightningd/lightningd.pid'
 ```
 
