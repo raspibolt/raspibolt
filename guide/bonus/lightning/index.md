@@ -11,6 +11,11 @@ has_toc: false
 
 ---
 
+## Lightning clients
+* **[Core Lightning (CLN)](cln.md)** - An alternative lightning client to LND or if you want to run a Core Lightning node alongside your LND node.
+
+---
+
 ## Maintenance
 * **[Auto unlock LND on startup](auto-unlock.md)** - (for RaspiBolt v1 & v2) a script to automatically unlocks the wallet on startup or service-restart
 * **[Use lncli on a different computer](remote-lncli.md)** - control your Lightning node from a different computer within you network, eg. from a Windows machine
