@@ -1,11 +1,13 @@
 ---
 layout: default
-title: CLN (core-lightning)
-nav_order: 30
-parent: Lightning
+title: Core Lightning
+parent: + Lightning
+grand_parent: Bonus Section
+nav_exclude: true
+has_toc: false
 ---
 
-# CLN - Core Lightning
+# Bonus guide: Core Lightning
 {: .no_toc }
 
 ---
@@ -367,6 +369,8 @@ sudo systemctl daemon-reload
 sudo systemctl start cln.service
 ```
 
+<br /><br />
+
 ---
 
-Next: [Web app >>](web-app.md)
+<< Back: [+ Lightning](index.md)
