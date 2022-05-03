@@ -204,7 +204,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * As "admin", create a systemd service that is automatically run on system startup.
 
   ```sh
-  sudo nano /etc/systemd/system/cln.service
+  $ sudo nano /etc/systemd/system/cln.service
   ```
 
 * Insert the following content:
