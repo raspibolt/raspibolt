@@ -110,7 +110,7 @@ tail -f /data/cln/cl.log
 
 * It should output log entries infos like so:
 
-```log
+```
 INFO    plugin-clboss: clboss 0.12
 INFO    plugin-clboss: ChannelFeeManager: zerobasefee: allow
 INFO    plugin-clboss: New block at xxxxxx
