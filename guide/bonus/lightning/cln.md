@@ -335,7 +335,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * As user "cln", create a password file to auto-unlock on startup (equivalent to LND's wallet password) and enter the choosen encryption password from the step above.
 
   ```sh
-  nano ~/.clnpw
+  $ nano ~/.clnpw
   ```
 
   ```ini
@@ -345,13 +345,13 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * As "admin", adjust permissions of the password file (read-only for the user).
 
   ```sh
-   sudo chmod 0600 /home/cln/.clnpw
+  $ sudo chmod 0600 /home/cln/.clnpw
   ```
 
 * Change systemd service accordingly. Open systemd file.
 
   ```sh
-  sudo nano /etc/systemd/system/cln.service
+  $ sudo nano /etc/systemd/system/cln.service
   ```
 
 * Edit `ExecStart` line like this:
