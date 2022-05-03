@@ -43,7 +43,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/bitcoin-core-22.0/bitcoin-22.0-aarch64-linux-gnu.tar.gz
+  $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/bitcoin-23.0-aarch64-linux-gnu.tar.gz
 
   # download the list of cryptographic checksum
   $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
@@ -70,10 +70,14 @@ This is a precaution to make sure that this is an official release and not a mal
 
 * Verify that the checksums file is cryptographically signed by the release signing keys.
   The following command prints signature checks for each of the public keys that signed the checksums.
-  Each signature will show the following text:
-
+  
   ```sh
   $ gpg --verify SHA256SUMS.asc
+  ```
+
+* Check that at least a few signatures show the following text
+
+  ```sh
   > gpg: Good signature from ...
   > Primary key fingerprint: ...
   ```
