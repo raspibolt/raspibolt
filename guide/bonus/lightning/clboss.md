@@ -96,7 +96,7 @@ plugin=/data/cl-plugins-available/clboss-0.12/clboss
 
 ## Restart Service
 
-* As "admin", reload systemd configuration by restarting the service:
+* As "admin", reload CLN configuration by restarting the service:
 
 ```sh
 sudo systemctl restart cln.service
