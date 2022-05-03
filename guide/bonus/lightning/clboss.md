@@ -52,70 +52,70 @@ We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is
 
 * As "admin", install required dependencies to compile CLBoss's source code.
 
-```sh
-sudo apt install -y build-essential pkg-config libev-dev \
-     libcurl4-gnutls-dev libsqlite3-dev dnsutils
-```
+  ```sh
+  $ sudo apt install -y build-essential pkg-config libev-dev \
+                      libcurl4-gnutls-dev libsqlite3-dev dnsutils
+  ```
 
 * Switch back to user "cln".
 
-```sh
-sudo su - cln
-```
+  ```sh
+  $ sudo su - cln
+  ```
 
 * Download latest version and untar it to CLN's plugin folder `/data/cl-plugins-available`.
 
-```sh
-cd /data/cl-plugins-available
-wget https://github.com/ZmnSCPxj/clboss/releases/download/v0.12/clboss-0.12.tar.gz
-tar xfv clboss-0.12.tar.gz
-cd clboss-0.12
-```
+  ```sh
+  $ cd /data/cl-plugins-available
+  $ wget https://github.com/ZmnSCPxj/clboss/releases/download/v0.12/clboss-0.12.tar.gz
+  $ tar xfv clboss-0.12.tar.gz
+  $ cd clboss-0.12
+  ```
 
 ## Compilation
 
 * Compile it.
-```sh
-./configure
-make
-```
+  ```sh
+  $ ./configure
+  $ make
+  ```
 
 ## Configuration
 
 * Add the plugin to CLN config.
 
-```sh
-nano /data/cln/config
-```
+  ```sh
+  $ nano /data/cln/config
+  ```
 
 * Append this line to end of file:
 
-```sh
-plugin=/data/cl-plugins-available/clboss-0.12/clboss
-```
+  ```ini
+  plugin=/data/cl-plugins-available/clboss-0.12/clboss
+  ```
 
 ## Restart Service
 
 * As "admin", reload CLN configuration by restarting the service:
 
-```sh
-sudo systemctl restart cln.service
-```
+  ```sh
+  $ sudo systemctl restart cln.service
+  ```
 
 * Check if it's running.
 
-```sh
-sudo tail -f /data/cln/cl.log
-```
+  ```sh
+  $ sudo tail -f /data/cln/cl.log
+  ```
 
 * It should output log entry infos like these:
 
-```
-INFO    plugin-clboss: clboss 0.12
-INFO    plugin-clboss: ChannelFeeManager: zerobasefee: allow
-INFO    plugin-clboss: New block at xxxxxx
-INFO    plugin-clboss: Started.
-```
+  ```ini
+  INFO    plugin-clboss: clboss 0.12
+  INFO    plugin-clboss: ChannelFeeManager: zerobasefee: allow
+  INFO    plugin-clboss: New block at xxxxxx
+  INFO    plugin-clboss: Started.
+  ```
 
 <br /><br />
 
