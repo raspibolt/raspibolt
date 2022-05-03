@@ -14,7 +14,7 @@ has_toc: false
 
 [CLBoss](https://github.com/ZmnSCPxj/clboss){:target="_blank"} 
 is an automated manager for CLN nodes. It's capable of automatically opening channels to useful nodes, acquiring inbound capacity through boltz swaps, rebalancing existing channels and setting competitive forwarding fees.
-Read more about it [here](https://zmnscpxj.github.io/clboss/index.html).
+Read more about it [here](https://zmnscpxj.github.io/clboss/index.html){:target="_blank"}.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -46,7 +46,7 @@ CLBoss - an automated CLN node management tool. This guide shows how to install 
 
 ## Installation
 
-We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is a plugin that we will place into `/data/cl-plugins-available` and load via CLN's configuration file.
+We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is a plugin that we will place into `/data/cl-plugins-available/` and load via CLN's configuration file.
 
 ## Dependencies
 
