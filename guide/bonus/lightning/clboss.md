@@ -96,7 +96,7 @@ plugin=/data/cl-plugins-available/clboss-0.12/clboss
 
 ## Restart Service
 
-* Reload systemd configuration and restart it:
+* As "admin", reload systemd configuration by restarting the service:
 
 ```sh
 sudo systemctl restart cln.service
@@ -105,10 +105,10 @@ sudo systemctl restart cln.service
 * Check if it's running.
 
 ```sh
-tail -f /data/cln/cl.log
+sudo tail -f /data/cln/cl.log
 ```
 
-* It should output log entries infos like so:
+* It should output log entry infos like these:
 
 ```
 INFO    plugin-clboss: clboss 0.12
