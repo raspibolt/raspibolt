@@ -37,11 +37,10 @@ We'll download, verify and install LND.
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/manifest-roasbeef-v0.14.3-beta.sig
   ```
 
-* You should already have the public key from LND's developer [Oliver Gugger](https://github.com/guggero){:target="_blank"} from the Bitcoin Core installation.
-  If not, you can get it now and add it to our GPG keyring
+* Get the public key from the LND developer, [Olaoluwa Osuntokun](https://github.com/guggero){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
 
   ```sh
-  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/roasbeef.asc | gpg --import
+  $ curl https://keybase.io/roasbeef/pgp_keys.asc | gpg --import
   > ...
   > gpg: key 372CBD7633C61696: public key "Olaoluwa Osuntokun <laolu32@gmail.com>" imported
   > ...
