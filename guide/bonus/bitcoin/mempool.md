@@ -117,7 +117,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   ```sql
   MDB$ create database mempool;
   > Query OK, 1 row affected (0.001 sec)
-  MDB$ grant all privileges on mempool.* to 'mempool'@'%' identified by 'mempool';
+  MDB$ grant all privileges on mempool.* to 'mempool'@'localhost' identified by 'mempool';
   > Query OK, 0 rows affected (0.012 sec)
   MDB$ exit
   ```
