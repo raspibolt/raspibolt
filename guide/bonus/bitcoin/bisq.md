@@ -177,6 +177,14 @@ Congrats! You're now ready to start buying and selling Bitcoin on Bisq in a secu
 
 ---
 
+## Update
+
+Bisq will let you know when a new update is available. Simply follow the instructions on their announcement to download, verify and install the update.
+
+![Bisq update](../../../images/bis-update.png)
+
+---
+
 ## Uninstall
 
 If you stop using Bisq for an extended period of time, it is worth deactivating the bloom filter feature in Bitcoin Core.
