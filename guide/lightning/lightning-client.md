@@ -32,47 +32,47 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.2-beta/lnd-linux-arm64-v0.14.2-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.2-beta/manifest-v0.14.2-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.2-beta/manifest-guggero-v0.14.2-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/lnd-linux-arm64-v0.14.3-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/manifest-v0.14.3-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/manifest-roasbeef-v0.14.3-beta.sig
   ```
 
-* You should already have the public key from LND's developer [Oliver Gugger](https://github.com/guggero){:target="_blank"} from the Bitcoin Core installation.
-  If not, you can get it now and add it to our GPG keyring
+* Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
 
   ```sh
-  $ curl https://keybase.io/guggero/pgp_keys.asc | gpg --import
+  $ curl https://keybase.io/roasbeef/pgp_keys.asc | gpg --import
   > ...
-  > gpg: key 0x8E4256593F177720: public key "Oliver Gugger <gugger@gmail.com>" imported
+  > gpg: key 372CBD7633C61696: public key "Olaoluwa Osuntokun <laolu32@gmail.com>" imported
   > ...
   ```
 
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-guggero-v0.14.2-beta.sig manifest-v0.14.2-beta.txt
-  > gpg: Signature made Wed Nov 24 22:15:46 2021 GMT
-  > gpg:                using RSA key F4FC70F07310028424EFC20A8E4256593F177720
-  > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
+  $ gpg --verify manifest-roasbeef-v0.14.3-beta.sig manifest-v0.14.3-beta.txt
+  > gpg: Signature made Mon Apr 18 21:26:47 2022 BST
+  > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
+  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: F4FC 70F0 7310 0284 24EF  C20A 8E42 5659 3F17 7720  ```
+  > Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
+  >     Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
   ```
 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.14.2-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.14.2-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.14.3-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.14.3-beta.tar.gz: OK
   ```
 
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.14.2-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.2-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.14.3-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.3-beta/*
   $ lnd --version
-  > lnd version 0.14.2-beta commit=v0.14.2-beta
+  > lnd version 0.14.3-beta commit=v0.14.3-beta
   ```
 
 ### Data directory

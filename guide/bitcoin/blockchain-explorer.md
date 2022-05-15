@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Blockchain explorer
-nav_order: 30
+nav_order: 40
 parent: Bitcoin
 ---
 <!-- markdownlint-disable MD014 MD022 MD025 MD033 MD036 MD040 -->
