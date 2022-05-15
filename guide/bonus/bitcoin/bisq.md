@@ -44,7 +44,7 @@ The guide will show you how to:
 
 ---
 
-## Install Bisq
+## Installation
 
 * Download Bisq on your local computer using the appropriate binary for your OS: [https://bisq.network/downloads/](https://bisq.network/downloads/){:target="_blank"}
 
@@ -174,6 +174,28 @@ For the national currency account and trading configuration options, please refe
 * In the pop-up window that just appeared, read the information and then click on "Set password, I already made a backup". Once done, close the confirmation window.
 
 Congrats! You're now ready to start buying and selling Bitcoin on Bisq in a secure and private way.
+
+---
+
+## Uninstall
+
+If you stop using Bisq for an extended period of time, it is worth deactivating the bloom filter feature in Bitcoin Core.
+
+* In `bitcoin.conf`, comment out the following line. Save and exit.
+
+  ```sh
+  $ sudo nano /data/bitcoin/bitcoin.conf
+  ```
+
+  ```ini
+  #whitelist=bloomfilter@127.0.0.1/32    # for Bisq
+  ```
+
+* Restart Bitcoin Core (if you didn't set up automatic LND wallet unlock, remember to unlock it after `bitcoind` restarted)
+
+  ```sh
+  $ sudo systemctl restart bitcoind
+  ```
 
 <br /><br />
 
