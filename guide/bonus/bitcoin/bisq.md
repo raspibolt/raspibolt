@@ -79,7 +79,7 @@ For Bisq to connect to your Bitcoin Core node, the bloom filters have to be acti
 * Still with user admin, run the following command and make a copy of the .onion address and port (e.g. here, `123...abc.onion:8333`)
 
   ```sh
-  sudo tail -n 500 -f /data/bitcoin/debug.log | grep "tor: Got service ID"
+  $ sudo tail -n 500 -f /data/bitcoin/debug.log | grep "tor: Got service ID"
   > 022-01-01T22:18:17Z tor: Got service ID 123...abc, advertising service 123...abc.onion:8333
   ```
 
