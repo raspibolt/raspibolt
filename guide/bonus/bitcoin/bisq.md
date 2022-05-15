@@ -181,7 +181,7 @@ Congrats! You're now ready to start buying and selling Bitcoin on Bisq in a secu
 
 Bisq will let you know when a new update is available. Simply follow the instructions on their announcement to download, verify and install the update.
 
-![Bisq update](../../../images/bis-update.png)
+![Bisq update](../../../images/bisq-update.png)
 
 ---
 
