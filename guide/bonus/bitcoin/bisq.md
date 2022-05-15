@@ -93,7 +93,7 @@ To avoid this, we will start Bisq the first time using the command line to force
 * On your personal computer where you installed Bisq, open a command line terminal
 
 * We will start Bisq with two flags that will force it to connect to Tor only and using our own Bitcoin Core onion address. 
-Replace `123...abc.onion:8333` by your own Bitcoin Core .onion address that you obtained above.
+Replace `123...abc.onion:8333` with your own Bitcoin Core .onion address that you obtained above.
   
   ```sh
   $ /opt/bisq/bin/Bisq -btcNodes=123...abc.onion:8333 -useTorForBtc=true
@@ -109,7 +109,7 @@ Replace `123...abc.onion:8333` by your own Bitcoin Core .onion address that you 
 
 * In the box just below, paste your Bitcoin Core node .onion address (`123...abc.onion:8333`)
 
-* Click on any other tab at the top. Bisq will ask you to shut down the program to make your change effectice.
+* Click on any other tab at the top. Bisq will ask you to shut down the program to make your change effective.
 
 * Click "Shut down"
 
@@ -137,8 +137,8 @@ For the national currency account and trading configuration options, please refe
 
 * Use the following information:
   * Name: Choose a name (e.g., `RaspiBolt`)
-  * Transaction URL: `https://raspibolt.local:4000/tx/` (replace rapsibolt.local by your node IP address if required)
-  * Address URL: `https://raspibolt.local:4000/address/` (replace rapsibolt.local by your node IP address if required)
+  * Transaction URL: `https://raspibolt.local:4000/tx/` (replace raspibolt.local with your node IP address if required)
+  * Address URL: `https://raspibolt.local:4000/address/` (replace raspibolt.local with your node IP address if required)
 
 * Click "Save"
 
