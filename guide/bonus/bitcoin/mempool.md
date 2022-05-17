@@ -102,7 +102,14 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ sudo apt update
   $ sudo apt install mariadb-server mariadb-client
   ```
-  
+
+* Generate random password for "mempool" MariaDB user. This password will be needed for one command and then in config file below. Let's call it "Password[M]".
+
+  ```sh
+  $ gpg --gen-random --armor 1 16
+  > G53Lp+V7JYmo9JpVa72bGw==
+  ```
+
 * Now, open the MariaDB shell. 
 
   ```sh
@@ -112,12 +119,12 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   > MariaDB [(none)]>
   ```
 
-* Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell with start with "MDB$"
+* Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell with start with "MDB$". Change "Password[M]" to the random password generated above.
 
   ```sql
   MDB$ create database mempool;
   > Query OK, 1 row affected (0.001 sec)
-  MDB$ grant all privileges on mempool.* to 'mempool'@'%' identified by 'mempool';
+  MDB$ grant all privileges on mempool.* to 'mempool'@'localhost' identified by 'Password[M]';
   > Query OK, 0 rows affected (0.012 sec)
   MDB$ exit
   ```
@@ -139,7 +146,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ nano mempool-config.json
   ```
 
-* Paste the following lines. In the CORE_RPC section, replace the username and password with your username (e.g., "raspibolt") and password [B].
+* Paste the following lines. In the CORE_RPC section, replace the username and password with your username (e.g., "raspibolt") and password [B]. Change "Password[M]" to the random password generated above.
 
 
   ```sh
@@ -177,7 +184,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
       "HOST": "127.0.0.1",
       "PORT": 3306,
       "USERNAME": "mempool",
-      "PASSWORD": "mempool",
+      "PASSWORD": "Password[M]",
       "DATABASE": "mempool"
     },
     "SOCKS5PROXY": {

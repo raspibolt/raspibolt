@@ -37,6 +37,12 @@ has_toc: false
 
 ---
 
+## Decentralized exchange
+
+* **[Bisq](bisq.md)** -  a decentralized exchange desktop app connected to your node to privately buy and sell non-KYC bitcoins
+
+---
+
 ## Fun
 
 * **[Download the white paper](white-paper.md)** - download the Bitcoin white paper directly from your blockchain data

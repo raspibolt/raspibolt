@@ -37,7 +37,7 @@ We'll download, verify and install LND.
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/manifest-roasbeef-v0.14.3-beta.sig
   ```
 
-* Get the public key from the LND developer, [Olaoluwa Osuntokun](https://github.com/guggero){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
+* Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
 
   ```sh
   $ curl https://keybase.io/roasbeef/pgp_keys.asc | gpg --import
