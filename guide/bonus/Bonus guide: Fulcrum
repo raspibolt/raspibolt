@@ -1,0 +1,184 @@
+Fulcrum is a fast & nimble SPV server for Bitcoin Cash & Bitcoin BTC. Created by Calin Culianu (calin.culianu@gmail.com). It can be used as a alternative
+to electrum due to its favorable features as we can see in Craig Raw's comparison of performance:
+https://www.sparrowwallet.com/docs/server-performance.html
+
+Personal note: I have never written any guide on GitHub or contributed to the code of any project. There may be mistakes in formatting etc.
+but I will try to work on them, perhaps some more experienced user can use this guide and rework it, until I learn how to use this new thing to me correctly
+
+I will refer to two sources as they helped me set up Fulcrum myself.
+- Ministry of Nodes video on fulcrum: https://www.youtube.com/watch?v=SpQRrbJt7cg
+- openoms guide for raspiblitz: https://github.com/openoms/bitcoin-tutorials/blob/master/fulcrum.md
+
+
+1. Requirements
+- Bitcoin Core
+- Nginx
+- Minimum RAM: 4 GB
+
+
+2. Installation
+
+a) Bitcoin Core
+I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bitcoin.conf. As it is a neccesary requirement for Fulcrum to work, along with
+pruning being disabled.
+
+First we need to set up settings in Bitcoin Core configuration file - add new lines if they are not present
+
+  txindex=1
+  rpcworkqueue=512
+  rpcthreads=128
+  rpcuser=YourUserName
+  rpcpassword=Password_B
+  whitelist=download@127.0.0.1
+  zmqpubhashblock=tcp://0.0.0.0:8433
+  
+These are suggested optimizations for raspberry pi as I met complications with RAM and performance causing Fulcrum to crash, inspired from openoms guide
+
+b) fulcrum
+As we have our bitcoin core set up for fulcrum to work, we can now move to second part of the installation - fulcrum itself
+First we need to download fulcrum into our downloads folder which we will create along the way for having a tidy workspace. We will as well create a new two
+folders "fulcrum" for our  and "fulcrum_db" for our future fulcrum database
+
+Making a folders:
+  $ cd /home/admin/
+  $ mkdir downloads
+  $ mkdir fulcrum
+  $ mkdir fulcrum_db
+  
+Downloading fulcrum for raspberry pi, opening and unpackaging it, moving all unpackaged files to our created fulcrum directory
+  $ cd downloads
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.6.0/Fulcrum-1.6.0-arm64-linux.tar.gz
+  $ tar xvf Fulcrum-1.6.0-arm64-linux.tar.gz
+  $ mv Fulcrum-1.6.0-arm64-linux/* /home/admin/fulcrum
+
+When we move to the fulcrum directory, we can see that several files have been created, we will focus on "fulcrum-example-config.conf"
+  $ cd home/admin/fulcrum
+  $ ls
+
+First, we rename the example conf file to "fulcrum.conf" and generate SSL keys (skip all questions just by pressing enter). We will then create two files - cert.pem and key.pem,
+also renamed example file
+  $ cd home/admin/fulcrum
+  $ mv fulcrum-example-config.conf fulcrum.conf
+  $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+  $ ls
+
+  Next, we have to set up our fulcrum configurations. Delete all white lines you can find and copy these, they are put together as its easier to work with.
+  We point fulcrum to our generated keys and disable peering. Also in this file I have found troubles without optimizations for raspberry pi. Choose either one
+  for raspberry 4GB or 8GB depending on your hardware. RPC user and password values we will use in following configurations, so make sure they are same.
+
+  $ sudo nano home/admin/fulcrum/fulcrum.conf
+  
+  # FULCRUM SET UP
+  datadir = /home/admin/fulcrum_db
+  bitcoind = 127.0.0.1:8332
+  rpcuser = YourUserName
+  rpcpassword = Password_B
+  ssl = 0.0.0.0:50002
+  cert = /home/admin/fulcrum/cert.pem
+  key = /home/admin/fulcrum/key.pem
+  peering = false
+  announce = false
+
+  # Optimization for raspberry pi 4B
+  bitcoind_timeout = 300
+  bitcoind_clients = 1
+  worker_threads = 1
+  db_mem=1024
+  db_max_open_files=200
+  fast-sync = 1024
+  
+  # for 8GB RAM
+  #db_max_open_files=500
+  #fast-sync = 2048
+  
+  Now we have configured our conf file for success, however we need to set up fulcrum to start automatically by creating fulcrum service and set up configuration file.
+  Copy following values. I have added "bitcoind.service" after "network.target" as to my understanding, fulcrum will follow not only after start of raspberry,
+  but also after bitcoin daemon starting. I have experienced fulcrum not being able to connect to my bitcoin daemon - probably because starting first before 
+  bitcoin core. We also point service to two paths a) Fulcrum with big F created in our /home/admin/fulcrum/ folder, it is the launcher. b) our configuration
+  file which follows after a space with Fulcrum Launcher path
+
+  $ sudo nano /etc/systemd/system/fulcrum.service
+  
+  #fulcrum.service set up
+  [Unit]
+  Description=Fulcrum
+  After=network.target bitcoind.service
+
+  [Service]
+  ExecStart=/home/admin/fulcrum/Fulcrum /home/admin/fulcrum/fulcrum.conf
+  User=YourUserName
+  LimitNOFILE=8192
+  TimeoutStopSec=30min
+
+  [Install]
+  WantedBy=multi-user.target
+  #end
+  
+  If all set up right, we should finally run fulcrum on our device without problems. 
+
+  $ sudo systemctl enable fulcrum.service
+  $ sudo systemctl start fulcrum.service
+
+  We can check if everything goes right using these commands
+
+  $ sudo systemctl status fulcrum.service
+  $ sudo journalctl -fu fulcrum.service
+
+  Other lines worth mentioning, they explain themselves - use in need of restart or stopping the service
+
+  $ sudo systemctl restart fulcrum.service
+  $ sudo systemctl stop fulcrum.service
+
+
+3. NginX reverse proxy
+  Here I severely lack knowledge, however as my reasoning went - we need to listen on ports 50001 and 50002. This set up to achieve that was covered in electrs raspibolt
+  guide. I am not sure if we need specify "fulcrum" instead of "electrs" values there as fulcrum is variation of electrs and for me it appears that more
+  importat are the facts, that ports work. However I would ask here for corrections if neccesary. Copy following values.
+
+  $ sudo nano /etc/nginx/streams-enabled/electrs-reverse-proxy.conf
+  
+  # Reverse proxy setup
+  upstream electrs {
+  server 127.0.0.1:50001;
+  }
+
+  server {
+    listen 50002 ssl;
+    proxy_pass electrs;
+  }
+  #END
+  
+Restart NginX 
+  $ sudo systemctl reload nginx
+  $ sudo nginx -t
+  
+ Allow firewall
+  $ sudo ufw allow 50002/tcp comment 'allow Electrum SSL'
+
+
+4. Tor hidden service
+Same reasoning. Would like to ask for correction if neccesary. Copy following values under your SSH values
+
+  $ sudo nano /etc/tor/torrc
+  
+  ############### This section is just for location-hidden services ###
+  HiddenServiceDir /var/lib/tor/hidden_service_electrs/
+  HiddenServiceVersion 3
+  HiddenServicePort 50002 127.0.0.1:50002
+  
+Restart Tor and view your hidden service name
+  $ sudo systemctl reload tor
+  $ sudo cat /var/lib/tor/hidden_service_electrs/hostname
+
+
+
+Possible errors:
+fulcrum will miss some permissions in specified folders in error. Fix that using 
+
+  $ chmod --- /path/
+  
+where "---" stands for neccesary command. Or any other way I am not aware of. 
+
+
+
+I would love to ask for corrections to this amateur written guide. Thank you.
