@@ -25,6 +25,8 @@ pruning being disabled.
 
 First we need to set up settings in Bitcoin Core configuration file - add new lines if they are not present
 
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf 
+
   txindex=1
   rpcworkqueue=512
   rpcthreads=128
