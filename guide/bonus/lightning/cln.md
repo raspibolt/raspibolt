@@ -419,8 +419,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Copy content to datadir:
 
   ```sh
-  $ sudo cp -r ~/c-lightning-REST-0.7.2 /data/cl-plugins-available/
-  $ sudo chown -R cln:cln /data/cl-plugins-available/c-lightning-REST-0.7.2/
+  $ cp -r ~/c-lightning-REST-0.7.2/ /data/cl-plugins-available/
   ```
 
 * Install c-lightning-Rest as plugin:
@@ -438,6 +437,14 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   rest-docport=4091
   rest-protocol=http
   ```
+* As user admin, copy `access.macaroon` to `home directory` of user `rtl`:
+
+  ```sh
+  $ exit
+  $ sudo cp /data/cl-plugins-available/c-lightning-REST-0.7.2/certs/access.macaroon /home/rtl/
+  $ sudo chown rtl:rtl /home/rtl/access.macaroon
+  ```
+
   
 * Restart `cln.service` and look for errors in cln's log: `tail -f /data/cln/cln.log`. Positive results look like this:
 
@@ -450,7 +457,14 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ### Configuring RTL
 
-* By the following configuration we tell RTL to connect to our CLN node. Additionally adjust `multiPass` to your desired login password.
+* By the following configuration we tell RTL to connect to our CLN node.
+
+  ```sh
+  $ sudo su - rtl
+  $ nano /home/rtl/RTL/RTL-Config.json
+  ```
+
+* Edit or add the following content. Additionally adjust `multiPass` to your desired login password.
 
   ```ini
   {
@@ -467,7 +481,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
         "lnNode": "CLN Node",
         "lnImplementation": "CLT",
         "Authentication": {
-          "macaroonPath": "/data/cl-plugins-available/cln-rest/certs",
+          "macaroonPath": "/home/rtl",
           "configPath": "/data/cln/config"
         },
         "Settings": {
@@ -486,11 +500,13 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   }
   ```
 
-* Startup RTL and connect via browser`: 
+* As user admin, restart cln.service and startup RTL and connect via browser`: 
 
   ```sh 
-  $ sudo systemctl start RTL
+  $ sudo systemctl restart cln
+  $ sudo systemctl start rtl
   ```
+* Access RTL via your local IP: `https://<your-local-ip>:4002`
 
 
 <br /><br />
