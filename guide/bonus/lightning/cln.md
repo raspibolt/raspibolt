@@ -415,13 +415,42 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ cd c-lightning-REST-0.7.2
   $ npm install --only=prod
   ```
+  
+* Copy content to datadir:
 
+  ```sh
+  $ sudo cp -r ~/c-lightning-REST-0.7.2 /data/cl-plugins-available/
+  $ sudo chown -R cln:cln /data/cl-plugins-available/c-lightning-REST-0.7.2/
+  ```
 
+* Install c-lightning-Rest as plugin:
+
+  ```sh
+  $ sudo nano /data/cln/config
+  ```
+  
+* Add at the end of the file:
+
+  ```ini
+  # cln-rest-plugin
+  plugin=/data/cl-plugins-available/c-lightning-REST-0.7.2/plugin.js
+  rest-port=3092
+  rest-docport=4091
+  rest-protocol=http
+  ```
+  
+* Restart `cln.service` and look for errors in cln's log: `tail -f /data/cln/cln.log`. Positive results look like this:
+
+  ```sh
+  UNUSUAL plugin-plugin.js: --- Starting the cl-rest server ---
+  UNUSUAL plugin-plugin.js: --- cl-rest api server is ready and listening on port: 3092 ---
+  UNUSUAL plugin-plugin.js: --- cl-rest doc server is ready and listening on port: 4091 ---
+  ```
 
 
 ### Configuring RTL
 
-* The following configuration tells RTL that we want to connect to a CLN node. Adjust `multiPass` to your desired login password.
+* By the following configuration we tell RTL to connect to our CLN node. Additionally adjust `multiPass` to your desired login password.
 
   ```ini
   {
@@ -448,7 +477,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
           "fiatConversion": true,
           "currencyUnit": "EUR",
           "logLevel": "ERROR",
-          "lnServerUrl": "http://127.0.0.1:3002",
+          "lnServerUrl": "http://127.0.0.1:3092",
           "enableOffers": true
         }
       }
@@ -457,6 +486,11 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   }
   ```
 
+* Startup RTL and connect via browser`: 
+
+  ```sh 
+  $ sudo systemctl start RTL
+  ```
 
 
 <br /><br />
