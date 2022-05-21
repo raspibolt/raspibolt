@@ -371,16 +371,16 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ sudo systemctl daemon-reload
   $ sudo systemctl start cln.service
   ```
-  
+
 ## c-lightning-Rest & RTL
 
 * c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST).
-* In this chapter we are going to add c-lightning Rest as CLN plugin and furthermore link RTL for CLN node management. 
-* The installation of RTL is already described [here](https://raspibolt.org/guide/lightning/web-app.html), so we are only going to take a look at the configuration of `RTL-Config.json`.
+* In this chapter we are going to add c-lightning-Rest as CLN plugin and furthermore connect RTL for CLN node management. 
+* The installation of RTL is already described [here](https://raspibolt.org/guide/lightning/web-app.html), so we are focusing on the configuration.
 
 ### c-lightning-Rest plugin
 
-* Setting up c-lightning-Rest as plugin for CLN. Because of that, we need to do this as user "cln". So first we need to download and verify c-lightning-Rest code:
+* Setting up c-lightning-Rest as plugin for CLN requires us to be user "cln". So first we need to download and verify the c-lightning-Rest package:
 
   ```sh
   $ sudo su - cln
@@ -437,7 +437,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   rest-docport=4091
   rest-protocol=http
   ```
-* As user admin, copy `access.macaroon` to `home directory` of user `rtl`:
+* As user admin, copy `access.macaroon` to home directory of user `rtl`:
 
   ```sh
   $ exit
@@ -454,17 +454,16 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   UNUSUAL plugin-plugin.js: --- cl-rest doc server is ready and listening on port: 4091 ---
   ```
 
-
 ### Configuring RTL
 
-* By the following configuration we tell RTL to connect to our CLN node.
+* By the following configuration we tell RTL to connect to our CLN node. Change to user `rtl`:
 
   ```sh
   $ sudo su - rtl
   $ nano /home/rtl/RTL/RTL-Config.json
   ```
 
-* Edit or add the following content. Additionally adjust `multiPass` to your desired login password.
+* Edit or add the following content. Adjust `multiPass` to your desired login password, if not already set.
 
   ```ini
   {
@@ -500,10 +499,10 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   }
   ```
 
-* As user admin, restart cln.service and startup RTL and connect via browser`: 
+* As user admin, startup RTL and connect via browser`: 
 
-  ```sh 
-  $ sudo systemctl restart cln
+  ```sh
+  $ exit
   $ sudo systemctl start rtl
   ```
 * Access RTL via your local IP: `https://<your-local-ip>:4002`
