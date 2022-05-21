@@ -371,6 +371,93 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ sudo systemctl daemon-reload
   $ sudo systemctl start cln.service
   ```
+  
+## c-lightning-Rest & RTL
+
+* c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST).
+* In this chapter we are going to add c-lightning Rest as CLN plugin and furthermore link RTL for CLN node management. 
+* The installation of RTL is already described [here](https://raspibolt.org/guide/lightning/web-app.html), so we are only going to take a look at the configuration of `RTL-Config.json`.
+
+### c-lightning-Rest plugin
+
+* Setting up c-lightning-Rest as plugin for CLN. Because of that, we need to do this as user "cln". So first we need to download and verify c-lightning-Rest code:
+
+  ```sh
+  $ sudo su - cln
+  $ cd ~
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.7.2.tar.gz
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.7.2/v0.7.2.tar.gz.asc
+  ```
+
+* Verify the release:
+
+  ```sh
+  $ gpg --verify v0.7.2.tar.gz.asc v0.7.2.tar.gz
+  ```
+  
+* Output should be like:
+
+  ```sh
+  gpg: Signature made Mon 09 May 2022 06:37:59 PM EDT
+  gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
+  gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
+  gpg:                 aka "Suheb (approves) <39208279+saubyk@users.noreply.github.com>" [unknown]
+  gpg:                 aka "Suheb <39208279+saubyk@users.noreply.github.com>" [unknown]
+  gpg: WARNING: This key is not certified with a trusted signature!
+  gpg:          There is no indication that the signature belongs to the owner.
+  Primary key fingerprint: 3E9B D443 6C28 8039 CA82  7A92 00C9 E2BC 2E45 666F
+  ```
+  
+* Extract and install with `npm`:
+
+  ```sh
+  $ tar xvf v0.7.2.tar.gz 
+  $ cd c-lightning-REST-0.7.2
+  $ npm install --only=prod
+  ```
+
+
+
+
+### Configuring RTL
+
+* The following configuration tells RTL that we want to connect to a CLN node. Adjust `multiPass` to your desired login password.
+
+  ```ini
+  {
+    "multiPass": "<yourfancypassword>",
+    "port": "3000",
+    "SSO": {
+      "rtlSSO": 0,
+      "rtlCookiePath": "",
+      "logoutRedirectLink": ""
+    },
+    "nodes": [
+      {
+        "index": 1,
+        "lnNode": "CLN Node",
+        "lnImplementation": "CLT",
+        "Authentication": {
+          "macaroonPath": "/data/cl-plugins-available/cln-rest/certs",
+          "configPath": "/data/cln/config"
+        },
+        "Settings": {
+          "userPersona": "OPERATOR",
+          "themeMode": "DAY",
+          "themeColor": "INDIGO",
+          "fiatConversion": true,
+          "currencyUnit": "EUR",
+          "logLevel": "ERROR",
+          "lnServerUrl": "http://127.0.0.1:3002",
+          "enableOffers": true
+        }
+      }
+    ],
+    "defaultNodeIndex": 1
+  }
+  ```
+
+
 
 <br /><br />
 
