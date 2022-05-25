@@ -48,6 +48,8 @@ Install NUT.
 Go the NUT site https://networkupstools.org/stable-hcl.html and find the driver for your UPS. If you cannot find your device, try `usbhid-ups` as it appears to be a default driver that may or may not work for you.
 It’s time to configure the UPS. The `UPS-Name` is whatever you want to call it. Port should be set to auto. Desc is whatever you want to describe it, though probably unnecessary unless you work with multiple UPS.
 
+NOTE: Depending on the driver/hardware of your system, you may need to comment out maxretry. If you receive a fatal error during the process that 'maxretry' is not a valid variable name, you'll want to comment it out while performing the below step. You can also consult the NUT user manual online at https://networkupstools.org/docs/user-manual.chunked/index.html
+
 `$ sudo nano /etc/nut/ups.conf`
 
 ```
