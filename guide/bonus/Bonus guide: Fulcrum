@@ -153,19 +153,19 @@ also renamed example file
 
   $ sudo systemctl status fulcrum.service
   $ sudo journalctl -fu fulcrum.service
-
+  
+---
   Other lines worth mentioning, they explain themselves - use in need of restart or stopping the service
 
   $ sudo systemctl restart fulcrum.service
   $ sudo systemctl stop fulcrum.service
   
-  ---
   DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES.
   in case of that happening:
   $ sudo systemctl stop fulcrum.service
   $ sudo rm -r /data/fulcrum/fulcrum_db; sudo mkdir /data/fulcrum/fulcrum_db
   $ sudo systemctl restart fulcrum.service
-  ---
+---
   
   Allow ports for future connecting:
   $ sudo ufw allow 50001
