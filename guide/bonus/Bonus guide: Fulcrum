@@ -128,7 +128,22 @@ also renamed example file
   similiar line in fstab file
   
   $ sudo nano /etc/fstab
-  - delete noexec in config, add permissions to the folders if you will encouner errors in next steps during the checks.
+  - delete noexec in config, add permissions to the folders if you will encouner errors in next steps during the checks. Command at the end of the guide.
+
+  create a swapfile of at least 10GB space - fulcrum crashes without it being in place
+  
+  $ sudo fallocate -l 10G /swapfile
+  $ sudo chmod 600 /swapfile
+  $ sudo mkswap /swapfile
+  $ sudo swapon /swapfile
+  
+  make swapfile pernament (neccesary reboots etc.)
+  
+  $ sudo cp /etc/fstab /etc/fstab.back
+  add following line at the end:
+  /swapfile none swap sw 0 0
+  
+  $ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
   Start fulcrum:
   $ sudo systemctl enable fulcrum.service
@@ -144,11 +159,13 @@ also renamed example file
   $ sudo systemctl restart fulcrum.service
   $ sudo systemctl stop fulcrum.service
   
+  ---
   DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES.
   in case of that happening:
   $ sudo systemctl stop fulcrum.service
   $ sudo rm -r /data/fulcrum/fulcrum_db; sudo mkdir /data/fulcrum/fulcrum_db
   $ sudo systemctl restart fulcrum.service
+  ---
   
   Allow ports for future connecting:
   $ sudo ufw allow 50001
@@ -165,3 +182,6 @@ GUIDE LACKS:
 Nginx reverse proxy
 Tor hidden service
 Connection without THS - using IP address and port
+
+Remove swapfile after DB being synced:
+https://itsfoss.com/create-swap-file-linux/
