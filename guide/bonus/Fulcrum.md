@@ -221,15 +221,15 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo ufw allow 50002
   ```
  
-* Set swapfile to default after finishing db sync
+* Set swapfile to defaults after finishing db sync
 
   ```sh
-  sudo nano /etc/dphys-swapfile
+  $ sudo nano /etc/dphys-swapfile
   ```
   
   ```sh
-  CONF_SWAPSIZE=10000
-  CONF_MAXSWAP=10000
+  #CONF_SWAPSIZE=10000
+  #CONF_MAXSWAP=2000
   ```
   
   ```sh
