@@ -160,7 +160,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   WantedBy=multi-user.target
   ```
   
-  * If you are booting from SD card, you wont be able to execute from SSD as it is not permitted. You will achieve that deleting "noexec" line in fstab file, add permissions to the folders if you will encouner errors later during start of fulcrum
+* If you are booting from SD card, you wont be able to execute from SSD as it is not permitted. You will achieve that deleting "noexec" line in fstab file, add permissions to the folders if you will encouner errors later during start of fulcrum
   
   ```sh
   $ sudo nano /etc/fstab
