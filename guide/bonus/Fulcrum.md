@@ -224,6 +224,10 @@ We have our bitcoin core configuration file set up and now we can move to next p
 * Set swapfile to default after finishing db sync
 
   ```sh
+  sudo nano /etc/dphys-swapfile
+  ```
+  
+  ```sh
   CONF_SWAPSIZE=10000
   CONF_MAXSWAP=10000
   ```
