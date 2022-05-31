@@ -13,8 +13,7 @@ has_toc: false
 
 ---
 
-[Fulcrum](https://github.com/cculianu/Fulcrum){:target="_blank"} Fulcrum is a fast & nimble SPV server for Bitcoin Cash & Bitcoin BTC. Created by Calin Culianu (calin.culianu@gmail.com). It can be used as an alternative
-to electrum due to its favorable features, as we can see in Craig Raw's comparison of performance:
+[Fulcrum](https://github.com/cculianu/Fulcrum){:target="_blank"} Fulcrum is a fast & nimble SPV server for Bitcoin Cash & Bitcoin BTC. Created by Calin Culianu (calin.culianu@gmail.com). It can be used as an alternative to an electrum server because of its performance, as we can see in Craig Raw's comparison of servers:
 https://www.sparrowwallet.com/docs/server-performance.html
 
 Difficulty: Medium
@@ -25,74 +24,91 @@ Status: Tested v3
 
 ---
 
-Personal note: I have never written any guide on GitHub or contributed to the code of any project. There may be mistakes in formatting etc.
-but I will try to work on them, perhaps some more experienced user can use this guide and rework it, until I learn how to use this new thing to me correctly
+Table of contents
+{: .text-delta }
 
-I will refer to two sources as they helped me set up Fulcrum myself. I recommend checking them. 
-- Ministry of Nodes video on fulcrum: https://www.youtube.com/watch?v=SpQRrbJt7cg
-- openoms guide for raspiblitz: https://github.com/openoms/bitcoin-tutorials/blob/master/fulcrum.md
+1. TOC
+{:toc}
 
-Special thanks to those sources for great material how to run fulcrum, however addiotional configuration was neccesary for raspberry pi 4.
-
-
-1. Requirements
-- Bitcoin Core
-- Raspberry pi 4 (4GB or 8GB)
-- Little over 100GB of storage free for fulcrum database
+---
 
 
-2. Installation
+## Requirements
+* Bitcoin
+* nginx
+* Little over 100GB of free storage for fulcrum database
 
-a) Bitcoin Core
-I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bitcoin.conf. If not, please add that configuration into the bitcoin.conf file
-and wait ~ 7 hours for it to sync, as it is a neccesary requirement for Fulcrum to work, along with pruning not being active.
+---
 
-First we need to set up settings in Bitcoin Core configuration file - add new lines if they are not present.
+## Preparations
 
+### Bitcoin Core
 
-  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf / or your way to config file
+I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bitcoin.conf. If not, please add that configuration into the bitcoin.conf file and wait ~ 7 hours for it to sync, as it is a neccesary requirement for Fulcrum to work, along with pruning not being active.
 
+* First we need to set up settings in Bitcoin Core configuration file
+
+  ```sh
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  ```
+  
+* Make sure you have following configuration in your config file
+
+  ```sh
   txindex=1
   rpcuser=bitcoin
   rpcpassword=Password_B
   whitelist=download@127.0.0.1
   zmqpubhashblock=tcp://0.0.0.0:8433
+  ```
   
-These are suggested optimizations for raspberry pi as I met complications with RAM and performance causing Fulcrum to crash, inspired from openoms guide
+## Installation
 
-b) fulcrum
-As we have our bitcoin core set up for fulcrum to work, we can now move to second part of the installation - fulcrum itself
-First we need to download fulcrum. We will create directories along the way for the server.
+### Download and set up fulcrum
 
-Making a folders:
+We have our bitcoin core configuration file set up and now we can move to next part - installation of Fulcrum
+
+* Create a following folders
+
+  ```sh
   $ sudo mkdir /data/fulcrum
   $ sudo mkdir /data/fulcrum/fulcrum_db
   $ sudo chown bitcoin:bitcoin /data/fulcrum
+   ```
   
-Downloading fulcrum for raspberry pi, opening and unpackaging it, moving all unpackaged files to our created fulcrum directory
+* Download fulcrum for raspberry pi, open and unpackage it, move all files to our fulcrum directory
+ 
+  ```sh
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.6.0/Fulcrum-1.6.0-arm64-linux.tar.gz
   $ tar xvf Fulcrum-1.6.0-arm64-linux.tar.gz
   $ sudo mv Fulcrum-1.6.0-arm64-linux/* /data/fulcrum
+  ```
 
-When we move to the fulcrum directory, we can see that several files have been created, we will focus on "fulcrum-example-config.conf".
+* We can see that several files have been created, we will focus on "fulcrum-example-config.conf"
+
+  ```sh
   $ cd /data/fulcrum
   $ ls
+  ```
+  
+* First, we rename the example conf file to "fulcrum.conf" and generate SSL keys (skip all questions just by pressing enter). We will then create two files - cert.pem and key.pem
 
-First, we rename the example conf file to "fulcrum.conf" and generate SSL keys (skip all questions just by pressing enter). We will then create two files - cert.pem and key.pem,
-also renamed example file
-
+  ```sh
   $ cd /data/fulcrum
   $ sudo mv fulcrum-example-config.conf fulcrum.conf
   $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
   $ ls
+  ```
 
-  Next, we have to set up our fulcrum configurations. Delete all white lines you can find and copy these, we will put them all together as its easier to work with.
-  We point fulcrum to our generated keys and disable peering. Also in this file I have found troubles without optimizations for raspberry pi. Choose either one
-  for raspberry 4GB or 8GB depending on your hardware.
+* Next, we have to set up our fulcrum configurations. Delete all white lines you can find and copy these, we will put them all together as its easier to work with
+* I have found troubles without optimizations for raspberry pi. Choose either one for raspberry 4GB or 8GB depending on your hardware.
 
+  ```sh
   $ sudo nano /data/fulcrum/fulcrum.conf
+  ```
   
+  ```sh
   # FULCRUM SET UP
   datadir = /data/fulcrum/fulcrum_db
   bitcoind = 127.0.0.1:8332
@@ -115,16 +131,15 @@ also renamed example file
   # for 8GB RAM
   #db_max_open_files=500
   #fast-sync = 2048
+  ```
   
-  Now we have configured our conf file for success, however we need to set up fulcrum to start automatically by creating fulcrum service and set up configuration file.
-  Copy following values. I have added "bitcoind.service" instead of "network.target" as to my understanding, fulcrum will follow after bitcoind starting.
-  I have experienced fulcrum not being able to connect to my bitcoin daemon - probably because starting first before bitcoin core and causing troubles. 
-  We also point service to two paths:
-  a) Fulcrum with big F created in our /data/fulcrum/ folder, it is the launcher. 
-  b) our configuration file which follows after a space with Fulcrum Launcher path
+* Now we have configured our conf file for fulcrum, however we need to set up fulcrum to start automatically by creating fulcrum service and set up configuration file
 
+  ```sh
   $ sudo nano /etc/systemd/system/fulcrum.service
+  ```
   
+  ```sh
   [Unit]
   Description=Fulcrum
   Wants=bitcoind.service
@@ -143,63 +158,77 @@ also renamed example file
 
   [Install]
   WantedBy=multi-user.target
+  ```
   
+  * If you are booting from SD card, you wont be able to execute from SSD as it is not permitted. You will achieve that deleting "noexec" line in fstab file, add permissions to the folders if you will encouner errors later during start of fulcrum
   
-  If all set up right, we should finally run fulcrum on our device without problems. 
-  
-  !!! If you are booting from SD card, you wont be able to execute from SSD as it is not permitted. You will achieve that deleting "noexec" or something
-  similiar line in fstab file
-  
+  ```sh
   $ sudo nano /etc/fstab
-  - delete noexec in config, add permissions to the folders if you will encouner errors in next steps during the checks. Command at the end of the guide.
+  ```
+  
+### Increase swapfile
+  
+* Increase size of a swapfile to at least 10GB space - fulcrum crashes without it being in place. Uncomment and edit following lines
+  
+  ```sh
+  $ sudo nano /etc/dphys-swapfile
+  ```
+  
+  ```sh
+  CONF_SWAPSIZE=10000
+  CONF_MAXSWAP=10000
+  ```
+  
+  ```sh
+  $ sudo dphys-swapfile install
+  $ sudo systemctl restart dphys-swapfile.service
+  ```
+  
+### Start fulcrum
 
-  create a swapfile of at least 10GB space - fulcrum crashes without it being in place
-  
-  $ sudo fallocate -l 10G /swapfile
-  $ sudo chmod 600 /swapfile
-  $ sudo mkswap /swapfile
-  $ sudo swapon /swapfile
-  
-  make swapfile pernament (neccesary reboots etc.)
-  
-  $ sudo cp /etc/fstab /etc/fstab.back
-  add following line at the end:
-  /swapfile none swap sw 0 0
-  
-  $ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
-
-  Start fulcrum:
+  ```sh
   $ sudo systemctl enable fulcrum.service
   $ sudo systemctl start fulcrum.service
+  ```
 
-  We can check if everything goes right using these commands
+* We can check if everything goes right using these commands
 
+  ```sh
   $ sudo systemctl status fulcrum.service
   $ sudo journalctl -fu fulcrum.service
+  ```
   
----
-  Other lines worth mentioning, they explain themselves - use in need of restart or stopping the service
+* Other lines worth mentioning, they explain themselves - use in need of restart or stopping the service
 
+  ```
   $ sudo systemctl restart fulcrum.service
   $ sudo systemctl stop fulcrum.service
+  ```
   
   DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES.
-  in case of that happening:
+  in case of that happening, start sync from scratch:
+  
+  ```sh
   $ sudo systemctl stop fulcrum.service
   $ sudo rm -r /data/fulcrum/fulcrum_db; sudo mkdir /data/fulcrum/fulcrum_db
   $ sudo systemctl restart fulcrum.service
----
+  ```
   
-  Allow ports for future connecting:
+* Allow ports SSL/TCP:
+
+  ```sh
   $ sudo ufw allow 50001
   $ sudo ufw allow 50002
+  ```
+ 
+* Set swapfile to default after finishing db sync
 
-Possible errors:
-fulcrum will miss some permissions in specified folders in error. Fix that using 
-
-  $ chmod --- /path/
+  ```sh
+  CONF_SWAPSIZE=10000
+  CONF_MAXSWAP=10000
+  ```sh
   
-where "---" stands for neccesary command.
-
-Remove swapfile after DB being synced:
-https://itsfoss.com/create-swap-file-linux/
+  ```sh
+  $ sudo dphys-swapfile install
+  $ sudo systemctl restart dphys-swapfile.service
+  ```
