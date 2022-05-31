@@ -226,7 +226,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   ```sh
   CONF_SWAPSIZE=10000
   CONF_MAXSWAP=10000
-  ```sh
+  ```
   
   ```sh
   $ sudo dphys-swapfile install
