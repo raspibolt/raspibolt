@@ -199,7 +199,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   
 * Other lines worth mentioning, they explain themselves - use in need of restart or stopping the service
 
-  ```
+  ```sh
   $ sudo systemctl restart fulcrum.service
   $ sudo systemctl stop fulcrum.service
   ```
