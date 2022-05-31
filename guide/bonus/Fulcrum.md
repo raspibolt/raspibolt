@@ -101,8 +101,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ ls
   ```
 
-* Next, we have to set up our fulcrum configurations. Delete all white lines you can find and copy these, we will put them all together as its easier to work with
-* I have found troubles without optimizations for raspberry pi. Choose either one for raspberry 4GB or 8GB depending on your hardware.
+* Next, we have to set up our fulcrum configurations. Delete all white lines you can find and copy these, we will put them all together as its easier to work with. I have found troubles without optimizations for raspberry pi. Choose either one for raspberry 4GB or 8GB depending on your hardware.
 
   ```sh
   $ sudo nano /data/fulcrum/fulcrum.conf
