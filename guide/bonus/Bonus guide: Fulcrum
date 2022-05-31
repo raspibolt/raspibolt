@@ -38,7 +38,7 @@ Special thanks to those sources for great material how to run fulcrum, however a
 1. Requirements
 - Bitcoin Core
 - Raspberry pi 4 (4GB or 8GB)
-- Little over 100GB of storage free for fulcrum and space for future blocks.
+- Little over 100GB of storage free for fulcrum database
 
 
 2. Installation
@@ -53,8 +53,6 @@ First we need to set up settings in Bitcoin Core configuration file - add new li
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf / or your way to config file
 
   txindex=1
-  rpcworkqueue=512
-  rpcthreads=128
   rpcuser=bitcoin
   rpcpassword=Password_B
   whitelist=download@127.0.0.1
@@ -131,19 +129,21 @@ also renamed example file
   Description=Fulcrum
   Wants=bitcoind.service
   After=bitcoind.service
+  StartLimitBurst=2
+  StartLimitIntervalSec=20
 
   [Service]
-  ExecStart=/data/fulcrum/Fulcrum /data/fulcrum/fulcrum.conf
+  ExecStart=/data/fulcrum/app/Fulcrum /data/fulcrum/app/fulcrum.conf
+  KillSignal=SIGINT
   User=bitcoin
-  Type=simple
-  TimeoutSec=120
-  RestartSec=30
-  KillMode=process
-  Restart=always
+  Type=exec
+  TimeoutStopSec=300
+  RestartSec=5
+  Restart=on-failure
 
   [Install]
   WantedBy=multi-user.target
-  #end
+  
   
   If all set up right, we should finally run fulcrum on our device without problems. 
   
@@ -200,11 +200,6 @@ fulcrum will miss some permissions in specified folders in error. Fix that using
   $ chmod --- /path/
   
 where "---" stands for neccesary command.
-
-GUIDE LACKS:
-Nginx reverse proxy
-Tor hidden service
-Connection without THS - using IP address and port
 
 Remove swapfile after DB being synced:
 https://itsfoss.com/create-swap-file-linux/
