@@ -442,6 +442,14 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   [Install]
   WantedBy=multi-user.target
   ```
+  
+* Note: A new option was added to change the display of amounts (satoshis) from `0.00011111` to `11,111` or `11.111` (depending on your locale): `--use-small-units`. To enable this, add it to the command `bos telegram`:
+
+  ```ini
+  [...]
+  ExecStart=/home/bos/balanceofsatoshis/bos telegram --use-small-units --connect YourConnectionCode --use-proxy /home/bos/balanceofsatoshis/proxy_agent.json
+  [...]
+  ``` 
 
 * Enable the service, start it and check the status of the service. You should also receive a connection message from your TG bot ('Connect to ...').
 
