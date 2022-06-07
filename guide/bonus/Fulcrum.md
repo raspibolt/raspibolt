@@ -55,11 +55,30 @@ I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bi
 * Make sure you have following configuration in your config file
 
   ```sh
+  ### BTC DAEMON
   txindex=1
+  server=1
+  daemon=1 
+  
+  ### RPC
   rpcuser=bitcoin
   rpcpassword=Password_B
+  rpcport=8332
+  rpcbind=127.0.0.1
+  rpcallowip=127.0.0.1
+  rpcallowip=0.0.0.0/0
+  
+  ### REST
   whitelist=download@127.0.0.1
-  zmqpubhashblock=tcp://0.0.0.0:8433
+  zmqpubhashblock=tcp://0.0.0.0:28334
+  ```
+  
+  ```sh
+  sudo ufw allow 8332
+  ```
+  
+  ```sh
+  sudo systemctl restart bitcoind
   ```
   
 ## Installation
@@ -92,12 +111,10 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ ls
   ```
   
-* First, we rename the example conf file to "fulcrum.conf" and generate SSL keys (skip all questions just by pressing enter). We will then create two files - cert.pem and key.pem
-
+* First, we rename the example conf file to "fulcrum.conf"
   ```sh
   $ cd /data/fulcrum
   $ sudo mv fulcrum-example-config.conf fulcrum.conf
-  $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
   $ ls
   ```
 
@@ -113,14 +130,12 @@ We have our bitcoin core configuration file set up and now we can move to next p
   bitcoind = 127.0.0.1:8332
   rpcuser = bitcoin
   rpcpassword = Password_B
-  ssl = 0.0.0.0:50002 # or tcp = 0.0.0.0:50001
-  cert = /data/fulcrum/cert.pem
-  key = /data/fulcrum/key.pem
+  tcp = 0.0.0.0:50001
   peering = false
   announce = false
 
   # Optimization for raspberry pi 4B
-  bitcoind_timeout = 300
+  bitcoind_timeout = 600
   bitcoind_clients = 1
   worker_threads = 1
   db_mem=1024
@@ -213,11 +228,10 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo systemctl restart fulcrum.service
   ```
   
-* Allow ports SSL/TCP:
+* Allow ports TCP:
 
   ```sh
   $ sudo ufw allow 50001
-  $ sudo ufw allow 50002
   ```
  
 * Set swapfile to defaults after finishing db sync - it will then be created dynamically
@@ -235,3 +249,46 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo dphys-swapfile install
   $ sudo systemctl restart dphys-swapfile.service
   ```
+
+### Create tor hidden service
+
+ ```sh
+  $ sudo nano /etc/tor/torrc
+ ```
+ 
+ * Edit torrc
+
+ ```sh
+ ### Fulcrum ###
+HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
+HiddenServiceVersion 3
+HiddenServicePort 50001 127.0.0.1:50001
+ ```
+ ```sh
+ $ sudo systemctl reload tor
+ ```
+ 
+ * Print your hostname and save it
+ 
+ ```sh
+ $ sudo cat /var/lib/tor/hidden_service_fulcrum/hostname
+ xyz... .onion
+ ```
+ 
+ * Go to fulcrum.conf
+ 
+ ```sh
+  $ sudo nano /data/fulcrum/fulcrum.conf
+ ```
+ 
+ * Add following lines
+ 
+ ```sh
+ ### TOR
+ tor_hostname=xyz... .onion
+ tor_tcp_port=50001
+ ```
+ ```sh
+ $ sudo systemctl restart fulcrum.service
+ ```
+ * You should now be able to connect to your fulcrum server remotely via Tor using your hostname and port 50001
