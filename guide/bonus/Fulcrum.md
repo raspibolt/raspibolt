@@ -74,11 +74,11 @@ I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bi
   ```
   
   ```sh
-  sudo ufw allow 8332
+  $ sudo ufw allow 8332
   ```
   
   ```sh
-  sudo systemctl restart bitcoind
+  $ sudo systemctl restart bitcoind
   ```
   
 ## Installation
