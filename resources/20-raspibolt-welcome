@@ -143,7 +143,7 @@ if [ "${gitupdate}" -eq "1" ]; then
   # Electrs, RPC Explorer and RTL dont have a latest release, just tags
   electrsgit=$(curl -s https://api.github.com/repos/romanz/electrs/tags | jq -r '.[0].name')
   btcrpcexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
-  rtlgit=$(curl -s https://api.github.com/repos/Ride-The-Lightning/RTL/tags | jq -r '.[0].name')
+  rtlgit=$(curl -s https://api.github.com/repos/Ride-The-Lightning/RTL/tags | jq -r '.[] | select(.name | test("rc") | not) | .name' | head -n 1)
   # write to file TODO: convert to JSON for sanity
   printf "%s\n%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" "${rtlgit}" > "${gitstatusfile}"
 else
@@ -167,8 +167,8 @@ else
   if [ -z "$btcrpcexplorergit" ]; then
     btcrpcexplorergit=$(curl -s https://api.github.com/repos/janoside/btc-rpc-explorer/tags | jq -r '.[0].name')
   fi
-    if [ -z "$rtlgit" ]; then
-    rtlgit=$(curl -s https://api.github.com/repos/Ride-The-Lightning/RTL/tags | jq -r '.[0].name')
+  if [ -z "$rtlgit" ]; then
+    rtlgit=$(curl -s https://api.github.com/repos/Ride-The-Lightning/RTL/tags | jq -r '.[] | select(.name | test("rc") | not) | .name' | head -n 1)
   fi
   printf "%s\n%s\n%s\n%s\n%s\n" "${btcgit}" "${lndgit}" "${electrsgit}" "${btcrpcexplorergit}" "${rtlgit}" > "${gitstatusfile}"
 fi
