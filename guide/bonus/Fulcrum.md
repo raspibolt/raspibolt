@@ -92,7 +92,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   ```sh
   $ sudo mkdir /data/fulcrum
   $ sudo mkdir /data/fulcrum/fulcrum_db
-  $ sudo chown bitcoin:bitcoin /data/fulcrum
+  $ sudo chown bitcoin:bitcoin /data/fulcrum/*
    ```
   
 * Download fulcrum for raspberry pi, open and unpackage it, move all files to our fulcrum directory
@@ -162,7 +162,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   StartLimitIntervalSec=20
 
   [Service]
-  ExecStart=/data/fulcrum/app/Fulcrum /data/fulcrum/app/fulcrum.conf
+  ExecStart=/data/fulcrum/Fulcrum /data/fulcrum/fulcrum.conf
   KillSignal=SIGINT
   User=bitcoin
   Type=exec
