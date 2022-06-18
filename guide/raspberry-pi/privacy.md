@@ -126,7 +126,7 @@ A few examples:
 
   * **Note:** If you are using PuTTy and fail to connect to your Pi by setting port 9050 in the PuTTy proxy settings, try setting port 9150 instead. When Tor runs as an installed application instead of a background process it uses port 9150.
 
-* **MacOS and Linux**: use `torify` or `torsocks`.
+* **Linux**: use `torify` or `torsocks`.
   Both work similarly; just use whatever you have available:
 
   ```sh
@@ -134,6 +134,42 @@ A few examples:
   ```
   ```sh
   $ torsocks ssh admin@abcdefg..............xyz.onion
+  ```
+
+  * **macOS**: Using `torify` or `torsocks` may not work due to Apple's *System Integrity Protection (SIP)* which will deny access to `/usr/bin/ssh`.
+
+  To work around this, first make sure Tor is installed and running on your Mac:
+
+  ```sh
+  $ brew install tor && brew services start tor
+  ```
+
+  Add the six lines below to your local SSH config file. Choose any Hostnickname you want, save and exit.
+
+  ```sh
+  $ sudo nano .ssh/config
+  ```
+
+  ```sh
+  # Config for Raspibolt
+  Host raspibolt-tor
+    Hostname abcdefg..............xyz.onion
+    User admin
+    Port 22
+    CheckHostIP no
+    ProxyCommand /usr/bin/nc -x localhost:9050 %h %p
+  ```
+
+  Restart Tor
+
+  ```sh
+  $ brew services restart tor
+  ```
+
+  You should now be able to SSH to your Raspibolt through Tor
+
+  ```sh
+  $ ssh raspibolt-tor
   ```
 
 <br /><br />
