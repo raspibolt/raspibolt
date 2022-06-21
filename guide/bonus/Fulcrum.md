@@ -34,9 +34,11 @@ Table of contents
 
 
 ## Requirements
+
 * Bitcoin
 * nginx
 * Little over 100GB of free storage for fulcrum database
+* Little over 100GB of free storage for fulcrum database backup
 
 ---
 
@@ -213,6 +215,12 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo journalctl -fu fulcrum.service
   ```
   
+* Allow ports TCP:
+
+  ```sh
+  $ sudo ufw allow 50001
+  ```
+  
 * Other lines worth mentioning, they explain themselves - use in need of restart or stopping the service
 
   ```sh
@@ -220,18 +228,14 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo systemctl stop fulcrum.service
   ```
   
-* Allow ports TCP:
-
-  ```sh
-  $ sudo ufw allow 50001
-  ```
-  
-  DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES.
-  in case of that happening, start sync from scratch.
+  DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES -
+  in case of that happening, start sync from scratch using troubleshooting guide below.
   
 ## After Installation
 
 Continue after fulcrum db sync is finished 
+
+### Set swapfile to defaults
  
 * Set swapfile to defaults after finishing db sync - it will then be created dynamically
 
@@ -322,6 +326,7 @@ Because the sync can take up to 5 days and more, it is important to have at leas
   ```sh
   $ sudo systemctl stop fulcrum.service
   $ sudo rm -r /data/fulcrum/fulcrum_db; sudo mkdir /data/fulcrum/fulcrum_db
+  $ sudo chown bitcoin:bitcoin /data/fulcrum/*
   $ sudo systemctl restart fulcrum.service
   ```
   
@@ -332,6 +337,6 @@ Because the sync can take up to 5 days and more, it is important to have at leas
   ```sh
   $ sudo systemctl stop fulcrum.service
   $ sudo rm -r /data/fulcrum/fulcrum_db/*
-  $ sudo cp /data/fulcrum/fulcrum_db_backup/* /data/fulcrum/fulcrum_db
+  $ sudo cp /data/fulcrum/fulcrum_db_backup/* /data/fulcrum/fulcrum_db/
   $ sudo systemctl restart fulcrum.service
   ```
