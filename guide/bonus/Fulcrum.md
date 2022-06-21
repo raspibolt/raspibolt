@@ -92,6 +92,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   ```sh
   $ sudo mkdir /data/fulcrum
   $ sudo mkdir /data/fulcrum/fulcrum_db
+  $ sudo mkdir /data/fulcrum/fulcrum_db_backup/
   $ sudo chown bitcoin:bitcoin /data/fulcrum/*
    ```
   
@@ -219,20 +220,18 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo systemctl stop fulcrum.service
   ```
   
-  DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES.
-  in case of that happening, start sync from scratch:
-  
-  ```sh
-  $ sudo systemctl stop fulcrum.service
-  $ sudo rm -r /data/fulcrum/fulcrum_db; sudo mkdir /data/fulcrum/fulcrum_db
-  $ sudo systemctl restart fulcrum.service
-  ```
-  
 * Allow ports TCP:
 
   ```sh
   $ sudo ufw allow 50001
   ```
+  
+  DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES.
+  in case of that happening, start sync from scratch.
+  
+## After Installation
+
+Continue after fulcrum db sync is finished 
  
 * Set swapfile to defaults after finishing db sync - it will then be created dynamically
 
@@ -264,6 +263,7 @@ HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
 HiddenServiceVersion 3
 HiddenServicePort 50001 127.0.0.1:50001
  ```
+ 
  ```sh
  $ sudo systemctl reload tor
  ```
@@ -291,4 +291,47 @@ HiddenServicePort 50001 127.0.0.1:50001
  ```sh
  $ sudo systemctl restart fulcrum.service
  ```
+ 
  * You should now be able to connect to your fulcrum server remotely via Tor using your hostname and port 50001
+
+### Backup the database
+
+Because the sync can take up to 5 days and more, it is important to have at least any backup of the database. It doesnt need to be the latest one and you can backup only once, it is still better to sync for a few hours instead of week (from scratch)
+
+ ```sh
+ $ sudo systemctl stop fulcrum.service
+ $ sudo cp /data/fulcrum/fulcrum_db/* /data/fulcrum/fulcrum_db_backup/
+ ```
+ 
+ * Process can take up to an hour, do not interrupt until it is done. Restart fulcrum when it is done.
+
+ ```sh
+ $ sudo systemctl restart fulcrum.service
+ ```
+ 
+---
+
+## Troubleshooting
+
+---
+
+### Corrupting a database during initial sync
+
+* If you corrupted the fulcrum database during initial sync (power outage, hard kill) you need to start from the scratch
+
+  ```sh
+  $ sudo systemctl stop fulcrum.service
+  $ sudo rm -r /data/fulcrum/fulcrum_db; sudo mkdir /data/fulcrum/fulcrum_db
+  $ sudo systemctl restart fulcrum.service
+  ```
+  
+### Corrupting a database after the finishning initial sync 
+
+* If you corrupted the fulcrum database after initial sync, copy your fulcrum database backup into db file 
+
+  ```sh
+  $ sudo systemctl stop fulcrum.service
+  $ sudo rm -r /data/fulcrum/fulcrum_db/*
+  $ sudo cp /data/fulcrum/fulcrum_db_backup/* /data/fulcrum/fulcrum_db
+  $ sudo systemctl restart fulcrum.service
+  ```
