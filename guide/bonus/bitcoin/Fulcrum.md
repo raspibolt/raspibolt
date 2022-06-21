@@ -37,8 +37,7 @@ Table of contents
 
 * Bitcoin
 * nginx
-* Little over 100GB of free storage for fulcrum database
-* Little over 100GB of free storage for fulcrum database backup
+* Either over 200GB of free storage for fulcrum database and backup - or 100GB of free space on raspibolt device and another on different backup disk
 
 ---
 
