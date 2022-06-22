@@ -69,7 +69,7 @@ I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bi
   rpcallowip=127.0.0.1
   rpcallowip=0.0.0.0/0
   
-  ### REST
+  ### For Fulcrum/Electrs
   whitelist=download@127.0.0.1
   zmqpubhashblock=tcp://0.0.0.0:28334
   ```
@@ -245,7 +245,7 @@ Continue after fulcrum db sync is finished
   
   ```sh
   #CONF_SWAPSIZE=10000
-  CONF_MAXSWAP=2000
+  CONF_MAXSWAP=2000 #Desired maximal size of swapfile - depends on your system (recommended: 2GB - 2x RAM, 4GB - 1x RAM, 8GB - 0.5x RAM)
   ```
   
   ```sh
