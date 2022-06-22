@@ -36,8 +36,8 @@ Table of contents
 ## Requirements
 
 * Bitcoin
-* nginx
-* Either over 200GB of free storage for fulcrum database and backup - or 100GB of free space on raspibolt device and another on different backup disk
+* Nginx
+* Little over 100GB of free storage for database and the same amount for backup (same or different disk)
 
 ---
 
@@ -114,6 +114,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   ```
   
 * First, we rename the example conf file to "fulcrum.conf"
+
   ```sh
   $ cd /data/fulcrum
   $ sudo mv fulcrum-example-config.conf fulcrum.conf
@@ -147,6 +148,12 @@ We have our bitcoin core configuration file set up and now we can move to next p
   # for 8GB RAM
   #db_max_open_files=500
   #fast-sync = 2048
+  ```
+  
+* Allow ports TCP:
+
+  ```sh
+  $ sudo ufw allow 50001
   ```
   
 * Now we have configured our conf file for fulcrum, however we need to set up fulcrum to start automatically by creating fulcrum service and set up configuration file
@@ -214,12 +221,6 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo journalctl -fu fulcrum.service
   ```
   
-* Allow ports TCP:
-
-  ```sh
-  $ sudo ufw allow 50001
-  ```
-  
 * Other lines worth mentioning, they explain themselves - use in need of restart or stopping the service
 
   ```sh
@@ -258,33 +259,33 @@ Continue after fulcrum db sync is finished
   $ sudo nano /etc/tor/torrc
  ```
  
- * Edit torrc
+* Edit torrc
 
  ```sh
  ### Fulcrum ###
-HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
-HiddenServiceVersion 3
-HiddenServicePort 50001 127.0.0.1:50001
+ HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
+ HiddenServiceVersion 3
+ HiddenServicePort 50001 127.0.0.1:50001
  ```
  
  ```sh
  $ sudo systemctl reload tor
  ```
  
- * Print your hostname and save it
+* Print your hostname and save it
  
  ```sh
  $ sudo cat /var/lib/tor/hidden_service_fulcrum/hostname
  xyz... .onion
  ```
  
- * Go to fulcrum.conf
+* Go to fulcrum.conf
  
  ```sh
-  $ sudo nano /data/fulcrum/fulcrum.conf
+ $ sudo nano /data/fulcrum/fulcrum.conf
  ```
  
- * Add following lines
+* Add following lines
  
  ```sh
  ### TOR
