@@ -144,15 +144,20 @@ A few examples:
   $ brew install tor && brew services start tor
   ```
 
-  Add the six lines below to your local SSH config file. Choose any Hostnickname you want, save and exit.
+  You can SSH to your Pi "out of the box" with the following proxy command:
+
+  ```sh
+  $ ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p" admin@abcdefg..............xyz.onion
+  ```
+
+  For a more permanent solution, add these six lines below to your local SSH config file. Choose any Hostnickname you want, save and exit.
 
   ```sh
   $ sudo nano .ssh/config
   ```
 
   ```sh
-  # Config for Raspibolt
-  Host raspibolt-tor
+  Host HOSTNICKNAME
     Hostname abcdefg..............xyz.onion
     User admin
     Port 22
@@ -166,10 +171,10 @@ A few examples:
   $ brew services restart tor
   ```
 
-  You should now be able to SSH to your Raspibolt through Tor
+  You should now be able to SSH to your Pi with
 
   ```sh
-  $ ssh raspibolt-tor
+  $ ssh HOSTNICKNAME
   ```
 
 <br /><br />
