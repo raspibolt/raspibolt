@@ -269,7 +269,7 @@ If asked, select the `/bin/nano` text editor (type 1 and enter)
   # 1 - Fee policy updates with charge-lnd #
   ##########################################
 
-  # Run charge-lnd every 2 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
+  # Run charge-lnd every 6 hours at the 21st minute; and log the updates in the /tmp/my_charge-lnd.log log file
   21 */6 * * * /home/chargelnd/.local/bin/charge-lnd -c /home/chargelnd/charge-lnd.config > /tmp/my-charge-lnd.log 2>&1; date >> /tmp/my-charge-lnd.log
   ```
 
@@ -306,14 +306,14 @@ If you need to check the log files:
   $ cd charge-lnd
   $ pip3 show charge-lnd
   > Name: charge-lnd
-  > Version: 0.2.8
+  > Version: 0.2.10
   ```
 
 * Fetch the latest version and install it (*e.g.* v9.9.9)
 
   ```sh
   $ git fetch
-  $ git describe --tags --abbrev=0
+  $ git tag | sort --version-sort | tail -n 1
   > v9.9.9
   $ git reset --hard HEAD
   > HEAD is now at [...]

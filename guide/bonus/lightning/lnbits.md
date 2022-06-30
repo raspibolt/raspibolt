@@ -56,7 +56,7 @@ Table of contents
     server 127.0.0.1:5000;
   }
   server {
-    listen 4002 ssl;
+    listen 4003 ssl;
     proxy_pass lnbits;
   }
   ```
@@ -71,7 +71,7 @@ Table of contents
 * Configure the firewall to allow incoming HTTPS requests.
 
   ```sh
-  $ sudo ufw allow 4002/tcp comment 'allow LNBits SSL'
+  $ sudo ufw allow 4003/tcp comment 'allow LNBits SSL'
   $ sudo ufw status
   ```
 
@@ -106,7 +106,7 @@ Table of contents
 * Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
 
   ```sh
-  $ git clone --branch 0.7.0 https://github.com/lnbits/lnbits-legend lnbits
+  $ git clone --branch 0.8.0 https://github.com/lnbits/lnbits-legend lnbits
   $ cd lnbits
   $ python3 -m venv venv
   $ ./venv/bin/pip install setuptools wheel --upgrade
@@ -153,7 +153,7 @@ Table of contents
   $ ./venv/bin/uvicorn lnbits.__main__:app --port 5000
   ```
 
-Now point your browser to the secure access point provided by the NGINX web proxy, for example <https://raspibolt.local:4002> (or your node's IP address like <https://192.168.0.20:4002>).
+Now point your browser to the secure access point provided by the NGINX web proxy, for example <https://raspibolt.local:4003> (or your node's IP address like <https://192.168.0.20:4003>).
 
 Your browser will display a warning because we use a self-signed SSL certificate. Click on "Advanced" and proceed to the LNBits web interface.
 
@@ -210,7 +210,7 @@ Your browser will display a warning because we use a self-signed SSL certificate
   $ sudo journalctl -f -u lnbits
   ```
 
-* You can now access LNBits from within your local network by browsing to <https://raspibolt.local:4002>{:target="_blank"} (or your equivalent IP address).
+* You can now access LNBits from within your local network by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address).
 
 ### Remote access over Tor (optional)
 
@@ -225,7 +225,7 @@ Your browser will display a warning because we use a self-signed SSL certificate
   ############### This section is just for location-hidden services ###
   HiddenServiceDir /var/lib/tor/hidden_service_lnbits/
   HiddenServiceVersion 3
-  HiddenServicePort 443 127.0.0.1:4002
+  HiddenServicePort 443 127.0.0.1:4003
   ```
 
 * Reload Tor configuration and get your connection address.
@@ -251,14 +251,14 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ sudo su - lnbits
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest `0.7.0` in this example), and update:
+* Fetch the latest GitHub repository information, display the release tags (use the latest `0.8.0` in this example), and update:
 
   ```sh
   $ cd /home/lnbits/lnbits
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout 0.7.0
+  $ git checkout 0.8.0
   $ ./venv/bin/pip install -r requirements.txt
   $ exit
   ```
