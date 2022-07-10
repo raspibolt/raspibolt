@@ -549,7 +549,7 @@ It's good practice to add a few watchtowers, just to be on the safe side.
 
 * Check if the watchtower is active
 
-  ```json
+  ```sh
   $ lncli wtclient towers
   {
       "towers": [
