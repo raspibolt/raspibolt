@@ -568,6 +568,18 @@ It's good practice to add a few watchtowers, just to be on the safe side.
   ```
 * Check out this [list of altruistic public watchtowers](https://github.com/openoms/lightning-node-management/issues/4){:target="_blank"} maintained by Openoms, and add a few more.
 
+* If you want to list your towers
+
+  ```sh
+  $ lncli wtclient towers
+  ```
+
+* If you want to deactivate an active tower
+
+  ```sh
+  $ lncli wtclient remove <pubkey>
+  ```
+
 ### More commands
 
 A quick reference with common commands to play around with:
