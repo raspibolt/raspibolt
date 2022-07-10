@@ -544,7 +544,7 @@ It's good practice to add a few watchtowers, just to be on the safe side.
 
   ```sh
   $ sudo su - lnd
-  $ lncli wtclient add 0301135932e89600b3582513c648d46213dc425c7666e3380faa7dbb51f7e6a3d6@tower4excc3jdaoxcqzbw7gzipoknzqn3dbnw2kfdfhpvvbxagrzmfad.onion:9911
+  $ lncli wtclient add 023bad37e5795654cecc69b43599da8bd5789ac633c098253f60494bde602b60bf@iiu4epqzm6cydqhezueenccjlyzrqeruntlzbx47mlmdgfwgtrll66qd.onion:9911
   ```
 
 * Check if the watchtower is active
@@ -554,15 +554,15 @@ It's good practice to add a few watchtowers, just to be on the safe side.
   {
       "towers": [
           {
-              "pubkey": "0301135932e89600b3582513c648d46213dc425c7666e3380faa7dbb51f7e6a3d6",
+              "pubkey": "023bad37e5795654cecc69b43599da8bd5789ac633c098253f60494bde602b60bf",
               "addresses": [
-                  "tower4excc3jdaoxcqzbw7gzipoknzqn3dbnw2kfdfhpvvbxagrzmfad.onion:9911"
+                  "iiu4epqzm6cydqhezueenccjlyzrqeruntlzbx47mlmdgfwgtrll66qd.onion:9911"
               ],
               "active_session_candidate": true,
               "num_sessions": 0,
               "sessions": [
               ]
-          }
+          },
       ]
   }
   ```
