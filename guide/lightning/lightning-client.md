@@ -32,15 +32,15 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/lnd-linux-arm64-v0.14.3-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/manifest-v0.14.3-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/manifest-roasbeef-v0.14.3-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/lnd-linux-arm64-v0.15.0-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-v0.15.0-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-roasbeef-v0.15.0-beta.sig
   ```
 
 * Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
 
   ```sh
-  $ curl https://keybase.io/roasbeef/pgp_keys.asc | gpg --import
+  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/roasbeef.asc | gpg --import
   > ...
   > gpg: key 372CBD7633C61696: public key "Olaoluwa Osuntokun <laolu32@gmail.com>" imported
   > ...
@@ -49,8 +49,8 @@ We'll download, verify and install LND.
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.14.3-beta.sig manifest-v0.14.3-beta.txt
-  > gpg: Signature made Mon Apr 18 21:26:47 2022 BST
+  $ gpg --verify manifest-roasbeef-v0.15.0-beta.sig manifest-v0.15.0-beta.txt
+  > gpg: Signature made Fri Jun 24 00:50:22 2022 EEST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -62,17 +62,17 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.14.3-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.14.3-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.15.0-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.15.0-beta.tar.gz: OK
   ```
 
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.14.3-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.3-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.15.0-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.0-beta/*
   $ lnd --version
-  > lnd version 0.14.3-beta commit=v0.14.3-beta
+  > lnd version 0.15.0-beta commit=v0.15.0-beta
   ```
 
 ### Data directory
