@@ -159,7 +159,6 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   # Electrs settings
   electrum_rpc_addr = "127.0.0.1:50001"
   db_dir = "/data/electrs/db"
-  index_lookup_limit = 1000
 
   # Logging
   log_filters = "INFO"
