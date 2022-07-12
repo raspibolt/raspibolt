@@ -132,11 +132,12 @@ A few examples:
   ```sh
   $ torify ssh admin@abcdefg..............xyz.onion
   ```
+
   ```sh
   $ torsocks ssh admin@abcdefg..............xyz.onion
   ```
 
-  * **macOS**: Using `torify` or `torsocks` may not work due to Apple's *System Integrity Protection (SIP)* which will deny access to `/usr/bin/ssh`.
+* **macOS**: Using `torify` or `torsocks` may not work due to Apple's *System Integrity Protection (SIP)* which will deny access to `/usr/bin/ssh`.
 
   To work around this, first make sure Tor is installed and running on your Mac:
 
@@ -150,7 +151,7 @@ A few examples:
   $ ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p" admin@abcdefg..............xyz.onion
   ```
 
-  For a more permanent solution, add these six lines below to your local SSH config file. Choose any Hostnickname you want, save and exit.
+  For a more permanent solution, add these six lines below to your local SSH config file. Choose any HOSTNICKNAME you want, save and exit.
 
   ```sh
   $ sudo nano .ssh/config
