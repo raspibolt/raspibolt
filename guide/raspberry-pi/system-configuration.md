@@ -25,12 +25,18 @@ Let's start with the configuration.
 
 ## Create a new connection
 
-We will use the primary user "admin" which we already configured in the Raspberry Pi Imager (see [Configure boot options](operating-system.md#configure-boot-options)).
+We will use the primary user "admin" which we already configured in the Raspberry Pi Imager (see [Configure boot options](operating-system.md#configure-boot-options) section).
 
-* Log in again using SSH (see [Access with Secure Shell](remote-access.md#access-with-secure-shell) section), with the user "admin" and your `password [A]`
+* Log in again using SSH (see [Access with Secure Shell](remote-access.md#access-with-secure-shell) section), with user "admin" and your `password [A]`
 
   ```sh
   $ ssh admin@raspibolt.local
+  ```
+
+* You can exit an SSH session any time with
+
+  ```sh
+  $ exit
   ```
 
 To change the system configuration and files that don't belong to user "admin", you have to prefix commands with `sudo`.

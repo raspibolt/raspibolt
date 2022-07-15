@@ -54,7 +54,7 @@ Configure the advanced options as follows:
 
 * **Enable SSH**: activate the checkbox and select "Use password authentication"
 
-  This will allow you to connect to the Raspberry Pi remotely using "*S*ecure *SH*ell" without ever connecting it to a keyboard or screen.
+  This will allow you to connect to the Raspberry Pi remotely using "**S**ecure **SH**ell" without ever connecting it to a keyboard or screen.
 
 * **Set username and password**: activate the checkbox and enter `admin` together with your `password [A]`.
 
