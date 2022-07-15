@@ -25,7 +25,7 @@ Let's start with the configuration.
 
 ## Create a new connection
 
-We will use the primary user "admin" which we configured in the boot options in the Raspberry Pi Imager (see [Configure boot options](operating-system.md#configure-boot-options)).
+We will use the primary user "admin" which we already configured in the Raspberry Pi Imager (see [Configure boot options](operating-system.md#configure-boot-options)).
 
 * Log in again using SSH (see [Access with Secure Shell](remote-access.md#access-with-secure-shell) section), with the user "admin" and your `password [A]`
 
