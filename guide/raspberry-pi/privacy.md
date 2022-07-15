@@ -126,14 +126,56 @@ A few examples:
 
   * **Note:** If you are using PuTTy and fail to connect to your Pi by setting port 9050 in the PuTTy proxy settings, try setting port 9150 instead. When Tor runs as an installed application instead of a background process it uses port 9150.
 
-* **MacOS and Linux**: use `torify` or `torsocks`.
+* **Linux**: use `torify` or `torsocks`.
   Both work similarly; just use whatever you have available:
 
   ```sh
   $ torify ssh admin@abcdefg..............xyz.onion
   ```
+
   ```sh
   $ torsocks ssh admin@abcdefg..............xyz.onion
+  ```
+
+* **macOS**: Using `torify` or `torsocks` may not work due to Apple's *System Integrity Protection (SIP)* which will deny access to `/usr/bin/ssh`.
+
+  To work around this, first make sure Tor is installed and running on your Mac:
+
+  ```sh
+  $ brew install tor && brew services start tor
+  ```
+
+  You can SSH to your Pi "out of the box" with the following proxy command:
+
+  ```sh
+  $ ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p" admin@abcdefg..............xyz.onion
+  ```
+
+  For a more permanent solution, add these six lines below to your local SSH config file. Choose any HOSTNICKNAME you want, save and exit.
+
+  ```sh
+  $ sudo nano .ssh/config
+  ```
+
+  ```sh
+  Host HOSTNICKNAME
+    Hostname abcdefg..............xyz.onion
+    User admin
+    Port 22
+    CheckHostIP no
+    ProxyCommand /usr/bin/nc -x localhost:9050 %h %p
+  ```
+
+  Restart Tor
+
+  ```sh
+  $ brew services restart tor
+  ```
+
+  You should now be able to SSH to your Pi with
+
+  ```sh
+  $ ssh HOSTNICKNAME
   ```
 
 <br /><br />
