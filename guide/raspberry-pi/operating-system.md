@@ -61,7 +61,7 @@ Configure the advanced options as follows:
   This will create the user `admin` which we will use primarily in this guide, making it more universal.
 
 * **Configure wifi**: if you'll run the RaspiBolt connected to your wireless network, simply enter the wifi name ("SSID") and password.
-  Also change "Wifi country" to the two-letter [ISO2 code](https://www.iso.org/obp/ui/#search){:target="_blank"} of your country (e.g., `DE`).
+  Also change "Wifi country" to the two-letter [ISO2 code](https://www.iso.org/obp/ui/#search){:target="_blank"} of your country (e.g., `US`).
 
   If you'll connect your RaspiBolt with a network cable, simply skip this setting.
 

@@ -33,7 +33,7 @@ We will use the primary user "admin" which we already configured in the Raspberr
   $ ssh admin@raspibolt.local
   ```
 
-* You can exit an SSH session any time with
+* You can exit your session any time with
 
   ```sh
   $ exit
