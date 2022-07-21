@@ -47,7 +47,8 @@ Table of contents
 
 I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bitcoin.conf. If not, please add that configuration into the bitcoin.conf file and wait ~ 7 hours for it to sync, as it is a neccesary requirement for Fulcrum to work, along with pruning not being active.
 
-* First we need to set up settings in Bitcoin Core configuration file
+* First we need to set up settings in Bitcoin Core configuration file. 
+We will be using RPCCOOKIE for authentication, therefore it is neccesary to remove or comment #rpcauth and #rpcpassword!! If you are using other services using bitcoin core, it is neccesary to authenticate using rpcauth!
 
   ```sh
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
@@ -61,9 +62,15 @@ I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bi
   server=1
   daemon=1 
   
+  ### NETWORK
+  listen=1
+  listenonion=1
+  proxy=127.0.0.1:9050
+  bind=127.0.0.1
+  
   ### RPC
-  rpcuser=bitcoin
-  rpcpassword=Password_B
+  #rpcuser must be commented!
+  #rpcpassword must be commented!
   rpcport=8332
   rpcbind=127.0.0.1
   rpcallowip=127.0.0.1
@@ -120,8 +127,20 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo mv fulcrum-example-config.conf fulcrum.conf
   $ ls
   ```
+  
+* We will create fulcrum user and add him to bitcoin group
+ ```sh
+  $ sudo adduser --disabled-password --gecos "" fulcrum
+  $ sudo adduser fulcrum bitcoin
+  ```
 
-* Next, we have to set up our fulcrum configurations. Delete all white lines you can find and copy these, we will put them all together as its easier to work with. I have found troubles without optimizations for raspberry pi. Choose either one for raspberry 4GB or 8GB depending on your hardware.
+* Generate cert and key files for SSL
+  ```sh
+  $ cd /data/fulcrum
+  $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+  ```
+
+* Next, we have to set up our fulcrum configurations. Delete all white lines you can find and copy these, we will put them all together as it is easier to work with. I have found troubles without optimizations for raspberry pi. Choose either one for raspberry 4GB or 8GB depending on your hardware.
 
   ```sh
   $ sudo nano /data/fulcrum/fulcrum.conf
@@ -131,9 +150,10 @@ We have our bitcoin core configuration file set up and now we can move to next p
   # FULCRUM SET UP
   datadir = /data/fulcrum/fulcrum_db
   bitcoind = 127.0.0.1:8332
-  rpcuser = bitcoin
-  rpcpassword = Password_B
-  tcp = 0.0.0.0:50001
+  rpccookie=/home/bitcoin/.bitcoin/.cookie
+  cert = /data/fulcrum/cert.pem
+  key = /data/fulcrum/key.pem
+  ssl = 0.0.0.0:50002
   peering = false
   announce = false
 
@@ -150,10 +170,10 @@ We have our bitcoin core configuration file set up and now we can move to next p
   #fast-sync = 2048
   ```
   
-* Allow ports TCP:
+* Allow port SSL:
 
   ```sh
-  $ sudo ufw allow 50001
+  $ sudo ufw allow 50002
   ```
   
 * Now we have configured our conf file for fulcrum, however we need to set up fulcrum to start automatically by creating fulcrum service and set up configuration file
@@ -173,7 +193,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   [Service]
   ExecStart=/data/fulcrum/Fulcrum /data/fulcrum/fulcrum.conf
   KillSignal=SIGINT
-  User=bitcoin
+  User=fulcrum
   Type=exec
   TimeoutStopSec=300
   RestartSec=5
@@ -294,6 +314,7 @@ Continue after fulcrum db sync is finished
  ```
  ```sh
  $ sudo systemctl restart fulcrum.service
+ $ sudo ufw allow 50001
  ```
  
  * You should now be able to connect to your fulcrum server remotely via Tor using your hostname and port 50001
