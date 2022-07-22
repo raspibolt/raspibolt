@@ -45,7 +45,7 @@ Table of contents
 ### Bitcoin Core
 
 * First we need to set up settings in Bitcoin Core configuration file. 
-* We will be using rpccookie for authentication, therefore it is neccesary to remove or comment #rpcauth and #rpcpassword!! If you are using other services using bitcoin core, you must authenticate using rpcauth!
+* We will be using rpccookie for authentication, therefore it is neccesary to remove or comment #rpcauth and #rpcpassword!! If you are using other services using bitcoin core, you must authenticate using rpcauth or the cookie
 
   ```sh
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
@@ -54,11 +54,6 @@ Table of contents
 * Make sure you have following lines in your config file
 
   ```sh
-  ### RPC
-  #rpcuser must be commented!
-  #rpcpassword must be commented!
-  rpcport=8332
-  
   ### For Fulcrum/Electrs
   whitelist=download@127.0.0.1
   ```
