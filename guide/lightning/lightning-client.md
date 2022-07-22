@@ -342,6 +342,7 @@ Now, let's set up LND to start automatically on system startup.
   # Service execution
   ###################
   ExecStart=/usr/local/bin/lnd
+  ExecStop=/usr/local/bin/lncli stop
 
   # Process management
   ####################
