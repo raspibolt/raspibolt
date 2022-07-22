@@ -56,23 +56,13 @@ I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bi
 * Make sure you have following lines in your config file
 
   ```sh
-  ### BTC DAEMON
-  txindex=1
-  
   ### RPC
   #rpcuser must be commented!
   #rpcpassword must be commented!
   rpcport=8332
-  rpcbind=127.0.0.1
-  rpcallowip=127.0.0.1
-  rpcallowip=0.0.0.0/0
   
   ### For Fulcrum/Electrs
   whitelist=download@127.0.0.1
-  ```
-  
-  ```sh
-  $ sudo ufw allow 8332
   ```
   
   ```sh
@@ -97,7 +87,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo mkdir /data/fulcrum
   $ sudo mkdir /data/fulcrum/fulcrum_db
   $ sudo mkdir /data/fulcrum/fulcrum_db_backup/
-  $ sudo chown -R fulcrum:fulcrum /data/fulcrum/*
+  $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
    ```
   
 * Download fulcrum for raspberry pi, open and unpackage it, move all files to our fulcrum directory
@@ -302,9 +292,9 @@ Continue after fulcrum db sync is finished
  tor_hostname=xyz... .onion
  tor_ssl_port=50002
  ```
+ 
  ```sh
  $ sudo systemctl restart fulcrum.service
- $ sudo ufw allow 50002
  ```
  
  * You should now be able to connect to your fulcrum server remotely via Tor using your hostname and port 50002
