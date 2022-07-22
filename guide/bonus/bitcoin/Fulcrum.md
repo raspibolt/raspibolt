@@ -36,7 +36,6 @@ Table of contents
 ## Requirements
 
 * Bitcoin
-* Nginx
 * Little over 100GB of free storage for database and the same amount for backup (same or different disk)
 
 ---
@@ -45,28 +44,20 @@ Table of contents
 
 ### Bitcoin Core
 
-I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bitcoin.conf. If not, please add that configuration into the bitcoin.conf file and wait ~ 7 hours for it to sync, as it is a neccesary requirement for Fulcrum to work, along with pruning not being active.
+I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bitcoin.conf. If not, please add that line into the bitcoin.conf file and wait ~ 7 hours for it to sync. It is a neccesary requirement for Fulcrum to work, along with pruning not being active.
 
 * First we need to set up settings in Bitcoin Core configuration file. 
-We will be using RPCCOOKIE for authentication, therefore it is neccesary to remove or comment #rpcauth and #rpcpassword!! If you are using other services using bitcoin core, it is neccesary to authenticate using rpcauth!
+* We will be using rpccookie for authentication, therefore it is neccesary to remove or comment #rpcauth and #rpcpassword!! If you are using other services using bitcoin core, you must authenticate using rpcauth!
 
   ```sh
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
   ```
   
-* Make sure you have following configuration in your config file
+* Make sure you have following lines in your config file
 
   ```sh
   ### BTC DAEMON
   txindex=1
-  server=1
-  daemon=1 
-  
-  ### NETWORK
-  listen=1
-  listenonion=1
-  proxy=127.0.0.1:9050
-  bind=127.0.0.1
   
   ### RPC
   #rpcuser must be commented!
@@ -78,7 +69,6 @@ We will be using RPCCOOKIE for authentication, therefore it is neccesary to remo
   
   ### For Fulcrum/Electrs
   whitelist=download@127.0.0.1
-  zmqpubhashblock=tcp://0.0.0.0:28334
   ```
   
   ```sh
@@ -95,22 +85,28 @@ We will be using RPCCOOKIE for authentication, therefore it is neccesary to remo
 
 We have our bitcoin core configuration file set up and now we can move to next part - installation of Fulcrum
 
+* We will create fulcrum user and add him to bitcoin group
+  ```sh
+  $ sudo adduser --disabled-password --gecos "" fulcrum
+  $ sudo adduser fulcrum bitcoin
+  ```
+
 * Create a following folders
 
   ```sh
   $ sudo mkdir /data/fulcrum
   $ sudo mkdir /data/fulcrum/fulcrum_db
   $ sudo mkdir /data/fulcrum/fulcrum_db_backup/
-  $ sudo chown bitcoin:bitcoin /data/fulcrum/*
+  $ sudo chown -R fulcrum:fulcrum /data/fulcrum/*
    ```
   
 * Download fulcrum for raspberry pi, open and unpackage it, move all files to our fulcrum directory
  
   ```sh
   $ cd /tmp
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.6.0/Fulcrum-1.6.0-arm64-linux.tar.gz
-  $ tar xvf Fulcrum-1.6.0-arm64-linux.tar.gz
-  $ sudo mv Fulcrum-1.6.0-arm64-linux/* /data/fulcrum
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.7.0/Fulcrum-1.7.0-arm64-linux.tar.gz
+  $ tar xvf Fulcrum-1.7.0-arm64-linux.tar.gz
+  $ sudo mv Fulcrum-1.7.0-arm64-linux/* /data/fulcrum
   ```
 
 * We can see that several files have been created, we will focus on "fulcrum-example-config.conf"
@@ -128,12 +124,6 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ ls
   ```
   
-* We will create fulcrum user and add him to bitcoin group
- ```sh
-  $ sudo adduser --disabled-password --gecos "" fulcrum
-  $ sudo adduser fulcrum bitcoin
-  ```
-
 * Generate cert and key files for SSL
   ```sh
   $ cd /data/fulcrum
@@ -285,7 +275,7 @@ Continue after fulcrum db sync is finished
  ### Fulcrum ###
  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
  HiddenServiceVersion 3
- HiddenServicePort 50001 127.0.0.1:50001
+ HiddenServicePort 50002 127.0.0.1:50002
  ```
  
  ```sh
@@ -310,14 +300,14 @@ Continue after fulcrum db sync is finished
  ```sh
  ### TOR
  tor_hostname=xyz... .onion
- tor_tcp_port=50001
+ tor_ssl_port=50002
  ```
  ```sh
  $ sudo systemctl restart fulcrum.service
- $ sudo ufw allow 50001
+ $ sudo ufw allow 50002
  ```
  
- * You should now be able to connect to your fulcrum server remotely via Tor using your hostname and port 50001
+ * You should now be able to connect to your fulcrum server remotely via Tor using your hostname and port 50002
 
 ### Backup the database
 
@@ -347,7 +337,7 @@ Because the sync can take up to 5 days and more, it is important to have at leas
   ```sh
   $ sudo systemctl stop fulcrum.service
   $ sudo rm -r /data/fulcrum/fulcrum_db; sudo mkdir /data/fulcrum/fulcrum_db
-  $ sudo chown bitcoin:bitcoin /data/fulcrum/*
+  $ sudo chown -R fulcrum:fulcrum /data/fulcrum/*
   $ sudo systemctl restart fulcrum.service
   ```
   
