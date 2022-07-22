@@ -44,8 +44,6 @@ Table of contents
 
 ### Bitcoin Core
 
-I suggest that Bitcoin Core is already synced and "txindex=1" has been set in bitcoin.conf. If not, please add that line into the bitcoin.conf file and wait ~ 7 hours for it to sync. It is a neccesary requirement for Fulcrum to work, along with pruning not being active.
-
 * First we need to set up settings in Bitcoin Core configuration file. 
 * We will be using rpccookie for authentication, therefore it is neccesary to remove or comment #rpcauth and #rpcpassword!! If you are using other services using bitcoin core, you must authenticate using rpcauth!
 
