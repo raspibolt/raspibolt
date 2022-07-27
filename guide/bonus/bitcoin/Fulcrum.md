@@ -40,35 +40,14 @@ Table of contents
 
 ---
 
-## Preparations
-
-### Bitcoin Core
-
-* First we need to set up settings in Bitcoin Core configuration file. 
-* We will be using rpccookie for authentication, therefore it is neccesary to remove or comment #rpcauth and #rpcpassword!! If you are using other services using bitcoin core, you must authenticate using rpcauth or the cookie
-
-  ```sh
-  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
-  ```
-  
-* Make sure you have following lines in your config file
-
-  ```sh
-  ### For Fulcrum/Electrs
-  whitelist=download@127.0.0.1
-  ```
-  
-  ```sh
-  $ sudo systemctl restart bitcoind
-  ```
-  
 ## Installation
 
 ### Download and set up fulcrum
 
 We have our bitcoin core configuration file set up and now we can move to next part - installation of Fulcrum
 
-* We will create fulcrum user and add him to bitcoin group
+* We will create fulcrum user and add him to bitcoin group with user "admin"
+
   ```sh
   $ sudo adduser --disabled-password --gecos "" fulcrum
   $ sudo adduser fulcrum bitcoin
@@ -79,8 +58,6 @@ We have our bitcoin core configuration file set up and now we can move to next p
   ```sh
   $ sudo mkdir /data/fulcrum
   $ sudo mkdir /data/fulcrum/fulcrum_db
-  $ sudo mkdir /data/fulcrum/fulcrum_db_backup/
-  $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
    ```
   
 * Download fulcrum for raspberry pi, open and unpackage it, move all files to our fulcrum directory
@@ -90,16 +67,10 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.7.0/Fulcrum-1.7.0-arm64-linux.tar.gz
   $ tar xvf Fulcrum-1.7.0-arm64-linux.tar.gz
   $ sudo mv Fulcrum-1.7.0-arm64-linux/* /data/fulcrum
-  ```
-
-* We can see that several files have been created, we will focus on "fulcrum-example-config.conf"
-
-  ```sh
-  $ cd /data/fulcrum
-  $ ls
+  $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
   ```
   
-* First, we rename the example conf file to "fulcrum.conf"
+* First, we have to rename the example conf file to "fulcrum.conf"
 
   ```sh
   $ cd /data/fulcrum
@@ -107,8 +78,10 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ ls
   ```
   
-* Generate cert and key files for SSL
+* Switch to the “fulcrum” user, change to fulcrum data forlder and generate cert and key files for SSL
+
   ```sh
+  $ sudo su - fulcrum
   $ cd /data/fulcrum
   $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
   ```
@@ -134,12 +107,12 @@ We have our bitcoin core configuration file set up and now we can move to next p
   bitcoind_timeout = 600
   bitcoind_clients = 1
   worker_threads = 1
-  db_mem=1024
-  db_max_open_files=200
+  deb_mem=1024.0
+  db_max_open_files=60
   fast-sync = 1024
   
   # for 8GB RAM
-  #db_max_open_files=500
+  #db_max_open_files=100
   #fast-sync = 2048
   ```
   
@@ -176,7 +149,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   WantedBy=multi-user.target
   ```
   
-* If you are booting from SD card, you wont be able to execute from SSD as it is not permitted. You will achieve that deleting "noexec" line in fstab file, add permissions to the folders if you will encouner errors later during start of fulcrum
+* If you are booting from SD card, you will not be able to execute from SSD as it is not permitted. You will achieve that deleting "noexec" line in fstab file, add permissions to the folders if you will encounter errors later during start of fulcrum
   
   ```sh
   $ sudo nano /etc/fstab
@@ -214,13 +187,6 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo journalctl -fu fulcrum.service
   ```
   
-* Other lines worth mentioning, they explain themselves - use in need of restart or stopping the service
-
-  ```sh
-  $ sudo systemctl restart fulcrum.service
-  $ sudo systemctl stop fulcrum.service
-  ```
-  
   DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES -
   in case of that happening, start sync from scratch using troubleshooting guide below.
   
@@ -230,7 +196,7 @@ Continue after fulcrum db sync is finished
 
 ### Set swapfile to defaults
  
-* Set swapfile to defaults after finishing db sync - it will then be created dynamically
+* Set swapfile to defaults after finishing db sync - it will then be created dynamically, comment following lines
 
   ```sh
   $ sudo nano /etc/dphys-swapfile
@@ -238,7 +204,7 @@ Continue after fulcrum db sync is finished
   
   ```sh
   #CONF_SWAPSIZE=10000
-  CONF_MAXSWAP=2000 #Desired maximal size of swapfile - depends on your system (recommended: 2GB - 2x RAM, 4GB - 1x RAM, 8GB - 0.5x RAM)
+  #CONF_MAXSWAP=2000
   ```
   
   ```sh
@@ -246,7 +212,13 @@ Continue after fulcrum db sync is finished
   $ sudo systemctl restart dphys-swapfile.service
   ```
 
-### Create tor hidden service
+### Remote access over Tor (optional)
+To use your Fulcrum server when you're on the go, you can easily create a Tor hidden service.
+This way, you can connect the BitBoxApp or Electrum wallet also remotely, or even share the connection details with 
+friends and family.
+Note that the remote device needs to have Tor installed as well.
+
+* Add the following three lines in the section for "location-hidden services" in the `torrc` file.
 
  ```sh
   $ sudo nano /etc/tor/torrc
@@ -255,39 +227,19 @@ Continue after fulcrum db sync is finished
 * Edit torrc
 
  ```sh
- ### Fulcrum ###
+ ############### This section is just for location-hidden services ###
+ # Hidden Service Fulcrum SSL
  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
  HiddenServiceVersion 3
  HiddenServicePort 50002 127.0.0.1:50002
  ```
  
+* Reload Tor configuration and get your connection address.
+
  ```sh
  $ sudo systemctl reload tor
- ```
- 
-* Print your hostname and save it
- 
- ```sh
  $ sudo cat /var/lib/tor/hidden_service_fulcrum/hostname
- xyz... .onion
- ```
- 
-* Go to fulcrum.conf
- 
- ```sh
- $ sudo nano /data/fulcrum/fulcrum.conf
- ```
- 
-* Add following lines
- 
- ```sh
- ### TOR
- tor_hostname=xyz... .onion
- tor_ssl_port=50002
- ```
- 
- ```sh
- $ sudo systemctl restart fulcrum.service
+ > abcdefg..............xyz.onion
  ```
  
  * You should now be able to connect to your fulcrum server remotely via Tor using your hostname and port 50002
