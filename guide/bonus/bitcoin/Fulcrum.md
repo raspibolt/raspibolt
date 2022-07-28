@@ -171,11 +171,9 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
   ```
   
   ```sh
-  # override fractional calculations and specify a fixed swap size 
-  _zram_fixedsize="6G"
- 
-  # compression algorithm to employ (lzo, lz4, zstd, lzo-rle) 
-  _zram_algorithm="lz4"
+  # portion of system ram to use as zram swap (expression: "1/2", "2/3", "0.5", etc)
+  # default: "1/2"
+  _zram_fraction="1/2"
   ```
   
   ```sh
