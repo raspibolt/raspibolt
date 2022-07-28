@@ -158,22 +158,6 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
   $ cd zram-swap && sudo ./install.sh
   ```
   
-  * Set following values in zram configuration file
-  
-  ```sh
-  $ sudo nano /etc/default/zram-swap
-  ```
-  
-  ```sh
-  # portion of system ram to use as zram swap (expression: "1/2", "2/3", "0.5", etc)
-  # default: "1/2"
-  _zram_fraction="1/2"
-  ```
-  
-  ```sh
-  $ systemctl restart zram-swap.service
-  ```
-  
   * Make sure everything works fine
   
   ```sh
