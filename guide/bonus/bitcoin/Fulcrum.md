@@ -172,10 +172,10 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
   
   ```sh
   # override fractional calculations and specify a fixed swap size 
-  _zram_fixedsize="6G"¿? 
+  _zram_fixedsize="6G"
  
   # compression algorithm to employ (lzo, lz4, zstd, lzo-rle) 
-  _zram_algorithm="lzo-rle"
+  _zram_algorithm="lz4"
   ```
   
   ```sh
