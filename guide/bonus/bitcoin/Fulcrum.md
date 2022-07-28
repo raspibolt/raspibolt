@@ -262,3 +262,39 @@ Note that the remote device needs to have Tor installed as well.
 ### Backup the database
 
 Because the sync can take up to 5 days and more, it is recommended to have at least any backup of the database. It doesn't need to be the latest one and you can backup only once, it is still better to sync for a few hours instead of week (from scratch). Should be done on external drive.
+
+### Uninstall Fulcrum
+
+* Disable fulcrum and delete "fulcrum" user
+
+ ```sh
+ $ sudo systemctl stop fulcrum
+ $ sudo systemctl disable fulcrum
+ $ sudo userdel -rf fulcrum
+ ```
+
+* Comment or remove fulcrum settings in torrc 
+
+ ```sh
+ $ sudo nano /etc/tor/torrc
+ ```
+
+ ```sh
+ ############### This section is just for location-hidden services ###
+  # Hidden Service Fulcrum SSL
+ #HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
+ #HiddenServiceVersion 3
+ #HiddenServicePort 50002 127.0.0.1:50002
+ ```
+ 
+ * Close SSL port on firewall
+ 
+ ```sh
+ $ sudo ufw deny 50002
+ ```
+ 
+ * Delete fulcrum directory
+ 
+ ```sh
+ $ sudo rm -rf /data/fulcrum/
+ ```
