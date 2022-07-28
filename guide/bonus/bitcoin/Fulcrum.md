@@ -220,26 +220,7 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
   in case of that happening, start sync from scratch by deleting and recreating fulcrum_db file.
   
 ## After Installation
-
 Continue after fulcrum db sync is finished 
-
-### Set swapfile to defaults
- 
-* Set swapfile to defaults after finishing db sync - it will then be created dynamically, comment following lines
-
-  ```sh
-  $ sudo nano /etc/dphys-swapfile
-  ```
-  
-  ```sh
-  #CONF_SWAPSIZE=10000
-  #CONF_MAXSWAP=10000
-  ```
-  
-  ```sh
-  $ sudo dphys-swapfile install
-  $ sudo systemctl restart dphys-swapfile.service
-  ```
 
 ### Remote access over Tor (optional)
 To use your Fulcrum server when you're on the go, you can easily create a Tor hidden service.
