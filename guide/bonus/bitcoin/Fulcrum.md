@@ -203,7 +203,7 @@ Electrs needs to start automatically on system boot.
   ```
   
   DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES -
-  in case of that happening, start sync from scratch using troubleshooting guide below.
+  in case of that happening, start sync from scratch by deleting and recreating fulcrum_db file.
   
 ## After Installation
 
