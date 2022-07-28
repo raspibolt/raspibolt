@@ -154,22 +154,32 @@ Electrs needs to start automatically on system boot.
   WantedBy=multi-user.target
   ```
   
-### Increase swapfile
+### Install zram-swap
+zram-swap is neccesary for proper functioning of fulcrum during sync process
   
-* Increase size of a swapfile to at least 10GB space - fulcrum crashes without it being in place. Uncomment and edit following lines
+  * Clone and install zram-swap
   
   ```sh
-  $ sudo nano /etc/dphys-swapfile
+  $ git clone https://github.com/foundObjects/zram-swap.git 
+  $ cd zram-swap && sudo ./install.sh
+  ```
+  
+  * Set following values in zram configuration file
+  
+  ```sh
+  $ sudo nano /etc/default/zram-swap
   ```
   
   ```sh
-  CONF_SWAPSIZE=10000
-  CONF_MAXSWAP=10000
+  # override fractional calculations and specify a fixed swap size 
+  _zram_fixedsize="6G"¿? 
+ 
+  # compression algorithm to employ (lzo, lz4, zstd, lzo-rle) 
+  _zram_algorithm="lzo-rle"
   ```
   
   ```sh
-  $ sudo dphys-swapfile install
-  $ sudo systemctl restart dphys-swapfile.service
+  $ systemctl restart zram-swap.service
   ```
   
 ### Start fulcrum
