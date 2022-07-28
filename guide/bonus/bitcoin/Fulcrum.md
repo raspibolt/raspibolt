@@ -69,12 +69,6 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo mv Fulcrum-1.7.0-arm64-linux/* /data/fulcrum
   $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
   ```
-
-  ```sh
-  $ cd /data/fulcrum
-  $ sudo mv fulcrum-example-config.conf fulcrum.conf
-  $ ls
-  ```
   
 * Switch to the “fulcrum” user, change to fulcrum data folder and generate cert and key files for SSL
 
