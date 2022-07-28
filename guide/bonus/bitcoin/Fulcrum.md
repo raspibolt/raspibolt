@@ -69,8 +69,6 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo mv Fulcrum-1.7.0-arm64-linux/* /data/fulcrum
   $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
   ```
-  
-* First, we have to rename the example conf file to "fulcrum.conf"
 
   ```sh
   $ cd /data/fulcrum
@@ -78,7 +76,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ ls
   ```
   
-* Switch to the “fulcrum” user, change to fulcrum data forlder and generate cert and key files for SSL
+* Switch to the “fulcrum” user, change to fulcrum data folder and generate cert and key files for SSL
 
   ```sh
   $ sudo su - fulcrum
@@ -86,14 +84,15 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
   ```
 
-* Next, we have to set up our fulcrum configurations. Delete all white lines you can find and copy these, we will put them all together as it is easier to work with. I have found troubles without optimizations for raspberry pi. Choose either one for raspberry 4GB or 8GB depending on your hardware.
+* Next, we have to set up our fulcrum configurations. Troubles could be found without optimizations for raspberry pi. Choose either one for raspberry 4GB or 8GB depending on your hardware. Create the config file with the following content:
 
   ```sh
   $ sudo nano /data/fulcrum/fulcrum.conf
   ```
   
   ```sh
-  # FULCRUM SET UP
+  # RaspiBolt: fulcrum configuration 
+  # /data/fulcrum/fulcrum.conf
   datadir = /data/fulcrum/fulcrum_db
   bitcoind = 127.0.0.1:8332
   rpccookie=/home/bitcoin/.bitcoin/.cookie
@@ -116,13 +115,19 @@ We have our bitcoin core configuration file set up and now we can move to next p
   #fast-sync = 2048
   ```
   
-* Allow port SSL:
-
   ```sh
-  $ sudo ufw allow 50002
+  $ exit
   ```
   
-* Now we have configured our conf file for fulcrum, however we need to set up fulcrum to start automatically by creating fulcrum service and set up configuration file
+* As user "admin", configure the firewall to allow incoming requests:
+
+  ```sh
+  $ sudo ufw allow 50002/tcp comment 'allow Fulcrum SSL'
+  ```
+  
+## Autostart on boot
+Electrs needs to start automatically on system boot.
+* As user "admin", create the Fulcrum systemd unit and copy/paste the following configuration. Save and exit.
 
   ```sh
   $ sudo nano /etc/systemd/system/fulcrum.service
@@ -147,12 +152,6 @@ We have our bitcoin core configuration file set up and now we can move to next p
 
   [Install]
   WantedBy=multi-user.target
-  ```
-  
-* If you are booting from SD card, you will not be able to execute from SSD as it is not permitted. You will achieve that deleting "noexec" line in fstab file, add permissions to the folders if you will encounter errors later during start of fulcrum
-  
-  ```sh
-  $ sudo nano /etc/fstab
   ```
   
 ### Increase swapfile
@@ -187,6 +186,22 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ sudo journalctl -fu fulcrum.service
   ```
   
+  ```sh
+  -- Journal begins at Mon 2022-04-04 16:41:41 CEST. --
+  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] simdjson: version 0.6.0
+  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] ssl: OpenSSL 1.1.1n  15 Mar 2022
+  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
+  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Fulcrum 1.7.0 (Release 4ee413a) - Thu Jul 28, 2022 12:20:13.064 CEST - starting up ...
+  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Max open files: 524288 (increased from default: 1024)
+  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.065] Loading database ...
+  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.489] DB memory: 512.00 MiB
+  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.491] Coin: BTC
+  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.492] Chain: main
+  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.494] Verifying headers ...
+  Jul 28 12:20:19 rasp Fulcrum[181811]: [2022-07-28 12:20:19.780] Initializing header merkle cache ...
+  Jul 28 12:20:21 rasp Fulcrum[181811]: [2022-07-28 12:20:21.643] Checking tx counts ...
+  ```
+  
   DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES -
   in case of that happening, start sync from scratch using troubleshooting guide below.
   
@@ -204,7 +219,7 @@ Continue after fulcrum db sync is finished
   
   ```sh
   #CONF_SWAPSIZE=10000
-  #CONF_MAXSWAP=2000
+  #CONF_MAXSWAP=10000
   ```
   
   ```sh
@@ -246,4 +261,4 @@ Note that the remote device needs to have Tor installed as well.
 
 ### Backup the database
 
-Because the sync can take up to 5 days and more, it is recommended to have at least any backup of the database. It doesnt need to be the latest one and you can backup only once, it is still better to sync for a few hours instead of week (from scratch). Should be done on external drive.
+Because the sync can take up to 5 days and more, it is recommended to have at least any backup of the database. It doesn't need to be the latest one and you can backup only once, it is still better to sync for a few hours instead of week (from scratch). Should be done on external drive.
