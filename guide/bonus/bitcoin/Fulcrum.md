@@ -157,7 +157,7 @@ Electrs needs to start automatically on system boot.
 ### Install zram-swap
 zram-swap is neccesary for proper functioning of fulcrum during sync process
   
-  * Clone and install zram-swap
+  * Ensure that you are logged with user "admin", clone and install zram-swap
   
   ```sh
   $ git clone https://github.com/foundObjects/zram-swap.git 
@@ -180,6 +180,18 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
   
   ```sh
   $ systemctl restart zram-swap.service
+  ```
+  
+  * Make sure everything works fine
+  
+  ```sh
+  $ sudo cat /proc/swaps
+  ```
+  
+  ```sh
+  Filename                                Type                Size           Used    Priority
+  /var/swap                              file                 102396         0       -2
+  /dev/zram0                             partition           4899744         0        5
   ```
   
 ### Start fulcrum
