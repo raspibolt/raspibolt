@@ -37,9 +37,9 @@ Table of contents
 
 * Bitcoin
 * Little over 100GB of free storage for database (external backup recommended)
-
-Note: Fulcrum is a replacement for an electrs, these two services cannot be run at the same time (due to the same standard ports used)
 ---
+
+Fulcrum is a replacement for an electrs, these two services cannot be run at the same time (due to the same standard ports used)
 
 ## Installation
 
