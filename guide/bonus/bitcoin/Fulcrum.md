@@ -161,6 +161,27 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
   $ cd zram-swap && sudo ./install.sh
   ```
   
+  * Add kernel parameters to make better use of ZRAM
+
+  ```sh
+  $ sudo nano /etc/sysctl.conf
+  ```
+  
+  * Here are the lines you’ll want to add at the end of your /etc/sysctl.conf file:
+
+  ```sh
+  vm.vfs_cache_pressure=500
+  vm.swappiness=100
+  vm.dirty_background_ratio=1
+  vm.dirty_ratio=50
+  ```
+  
+  * Then reboot, or enable with:
+
+  ```sh
+  $ sudo sysctl --system
+  ```
+  
   * Make sure everything works fine
   
   ```sh
@@ -209,13 +230,24 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
 ## After Installation
 Continue after fulcrum db sync is finished 
 
+### To remove the zram (optional)
+
+* Exit of "fulcrum" user and ensure you are logged with user "admin":
+
+  ```sh
+  $ exit
+  $ cd zram-swap
+  $ sudo ./install --uninstall 
+  $ sudo rm /etc/default/zram-swap
+  ```
+
 ### Remote access over Tor (optional)
 To use your Fulcrum server when you're on the go, you can easily create a Tor hidden service.
 This way, you can connect the BitBoxApp or Electrum wallet also remotely, or even share the connection details with 
 friends and family.
 Note that the remote device needs to have Tor installed as well.
 
-* Add the following three lines in the section for "location-hidden services" in the `torrc` file.
+* Ensure that you are logged with user "admin" and add the following three lines in the section for "location-hidden services" in the torrc file.
 
  ```sh
   $ sudo nano /etc/tor/torrc
