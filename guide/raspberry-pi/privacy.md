@@ -78,6 +78,10 @@ We need to enable Tor to accept instructions through its control port, with the 
   $ sudo systemctl reload tor
   ```
 
+* Check the systemd journal to see Tor real time updates output logs.
+
+
+
 Not all network traffic is routed over the Tor network.
 
 ## I2P
@@ -125,10 +129,10 @@ We are to use i2pd (I2P Daemon) is a full-featured C++ implementation of I2P cli
   sudo systemctl status i2p
   ```
 
-* Check the systemd journal to see i2pd time real update state output.
+* Check the systemd journal to see i2p real time updates output logs.
 
   ```sh
-  $ sudo journalctl -f -u i2pd
+  $ sudo journalctl -f -u tor@default
   ```
 
 We now have the base to configure sensitive applications to use it.
