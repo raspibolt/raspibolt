@@ -38,6 +38,7 @@ Table of contents
 * Bitcoin
 * Little over 100GB of free storage for database (external backup recommended)
 
+Note: Fulcrum is a replacement for an electrs, these two services cannot be run at the same time (due to the same standard ports used)
 ---
 
 ## Installation
@@ -56,8 +57,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
 * Create a following folders
 
   ```sh
-  $ sudo mkdir /data/fulcrum
-  $ sudo mkdir /data/fulcrum/fulcrum_db
+  $ sudo mkdir -p /data/fulcrum/fulcrum_db
    ```
   
 * Download fulcrum for raspberry pi, open and unpackage it, move all files to our fulcrum directory
@@ -66,7 +66,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.7.0/Fulcrum-1.7.0-arm64-linux.tar.gz
   $ tar xvf Fulcrum-1.7.0-arm64-linux.tar.gz
-  $ sudo mv Fulcrum-1.7.0-arm64-linux/* /data/fulcrum
+  $ sudo mv Fulcrum-1.7.0-arm64-linux/Fulcrum Fulcrum-1.7.0-arm64-linux/FulcrumAdmin /usr/local/bin
   $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
   ```
   
@@ -81,7 +81,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
 * Next, we have to set up our fulcrum configurations. Troubles could be found without optimizations for raspberry pi. Choose either one for raspberry 4GB or 8GB depending on your hardware. Create the config file with the following content:
 
   ```sh
-  $ sudo nano /data/fulcrum/fulcrum.conf
+  $ nano /data/fulcrum/fulcrum.conf
   ```
   
   ```sh
@@ -120,7 +120,7 @@ We have our bitcoin core configuration file set up and now we can move to next p
   ```
   
 ## Autostart on boot
-Electrs needs to start automatically on system boot.
+Fulcrum needs to start automatically on system boot.
 * As user "admin", create the Fulcrum systemd unit and copy/paste the following configuration. Save and exit.
 
   ```sh
@@ -128,6 +128,8 @@ Electrs needs to start automatically on system boot.
   ```
   
   ```sh
+  # RaspiBolt: systemd unit for Fulcrum
+  # /etc/systemd/system/fulcrum.service
   [Unit]
   Description=Fulcrum
   Wants=bitcoind.service
@@ -136,7 +138,7 @@ Electrs needs to start automatically on system boot.
   StartLimitIntervalSec=20
 
   [Service]
-  ExecStart=/data/fulcrum/Fulcrum /data/fulcrum/fulcrum.conf
+  ExecStart=/usr/local/bin/Fulcrum /data/fulcrum/fulcrum.conf
   KillSignal=SIGINT
   User=fulcrum
   Type=exec
@@ -154,6 +156,7 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
   * Ensure that you are logged with user "admin", clone and install zram-swap
   
   ```sh
+  $ cd /tmp
   $ git clone https://github.com/foundObjects/zram-swap.git 
   $ cd zram-swap && sudo ./install.sh
   ```
