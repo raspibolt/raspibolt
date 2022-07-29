@@ -238,7 +238,9 @@ We'll also set the proper access permissions.
   dbcache=2000
   blocksonly=1
 
-  # Privacy mode (optional) - uncomment all lines frombellow if you want to increase your privacy (include Tor/I2P seed nodes)
+  # Privacy mode (optional) - uncomment all lines from bellow if you want to increase 
+  # your privacy (include Tor/I2P seed nodes)
+  
   #onlynet=onion
   #onlynet=i2p
   #dns=0
