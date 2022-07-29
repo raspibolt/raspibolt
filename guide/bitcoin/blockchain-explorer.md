@@ -168,11 +168,13 @@ found 12 vulnerabilities (8 moderate, 4 high)
   ```
 
 * To get address balances, either an Electrum server or an external service is necessary.
-  Your local Electrs server can provide address transaction lists, balances, and more.
+  Your local Electrs/Fulcrum server can provide address transaction lists, balances, and more. 
+  Choose the appropriate "BTCEXP_ELECTRUM_SERVERS" line depending on whether you have Electrs or Fulcrum installed:
 
   ```sh
   BTCEXP_ADDRESS_API=electrum
-  BTCEXP_ELECTRUM_SERVERS=tcp://127.0.0.1:50001
+  BTCEXP_ELECTRUM_SERVERS=tcp://127.0.0.1:50001 # for Electrs
+  BTCEXP_ELECTRUM_SERVERS=tls://127.0.0.1:50002 # for Fulcrum
   ```
 
 * You can decide whether you want to optimize for more information or for more privacy.
@@ -190,6 +192,12 @@ found 12 vulnerabilities (8 moderate, 4 high)
     BTCEXP_PRIVACY_MODE=true
     BTCEXP_NO_RATES=true
     ```
+
+* You can decide to share whith confidence people your BTC RPC Explorer with limited requests to Bitcoin Core RPC access (confidencial data requests will kept disable), then you should enable this:
+  
+  ```sh
+  BTCEXP_DEMO=true
+  ```
 
 * Optionally, you can add password protection to the web interface.
   Simply add password [D] for the following option, for which the browser will then prompt you.
@@ -291,6 +299,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 
   ```sh
   ############### This section is just for location-hidden services ###
+  # Hidden Service BTC RPC Explorer
   HiddenServiceDir /var/lib/tor/hidden_service_btcrpcexplorer/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:3002
