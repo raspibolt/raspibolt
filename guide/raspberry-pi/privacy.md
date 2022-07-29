@@ -79,10 +79,61 @@ We need to enable Tor to accept instructions through its control port, with the 
   ```
 
 Not all network traffic is routed over the Tor network.
-But we now have the base to configure sensitive applications to use it.
+
+## I2P
+
+[I2P](https://geti2p.net/en/){:target="_blank"} is a universal anonymous network layer. All communications over I2P are anonymous and end-to-end encrypted, participants don't reveal their real IP addresses.
+
+I2P client is a software used for building and using anonymous I2P networks. Such networks are commonly used for anonymous peer-to-peer applications (filesharing, cryptocurrencies) and anonymous client-server applications (websites, instant messengers, chat-servers).
+
+I2P allows people from all around the world to communicate and share information without restrictions.
+
+We are to use i2pd (I2P Daemon) is a full-featured C++ implementation of I2P client.
 
 ---
 
+### Installation
+
+* Ensure that you still logged with user "admin" and install apt-transport-https package
+
+  ```sh
+  $ sudo apt install apt-transport-https
+  ```
+
+* Automatically add repository
+  
+  ```sh
+  $ wget -q -O - https://repo.i2pd.xyz/.help/add_repo | sudo bash -s -
+  ```
+
+* After that you can install i2pd as any other software package
+
+  ```sh
+  $ sudo apt update
+  $ sudo apt install i2pd
+  ```
+
+* Enable autoboot
+
+  ```sh
+  sudo systemctl enable i2p
+  ```
+
+* Check service status
+
+  ```sh
+  sudo systemctl status i2p
+  ```
+
+* Check the systemd journal to see i2pd time real update state output.
+
+  ```sh
+  $ sudo journalctl -f -u i2pd
+  ```
+
+We now have the base to configure sensitive applications to use it.
+
+---
 ## SSH remote access through Tor (optional)
 
 If you want to log into your RaspiBolt with SSH when you're away, you can easily do so by adding a Tor hidden service.
@@ -115,7 +166,7 @@ This makes "calling home" very easy, without the need to configure anything on y
 
 * Save the Tor address in a secure location, e.g., your password manager.
 
-### SSH client
+### SSH client through Tor
 
 You also need to have Tor installed on your regular computer where you start the SSH connection.
 Usage of SSH over Tor differs by client and operating system.
