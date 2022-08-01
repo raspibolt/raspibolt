@@ -287,6 +287,7 @@ Make sure to read the release notes first.
   ```sh
   $ cd /home/rtl/RTL
   $ git fetch
+  $ git reset --hard
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
   $ git checkout v0.12.3
   $ git verify-tag v0.12.3
