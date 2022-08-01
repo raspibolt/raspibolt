@@ -143,7 +143,7 @@ Fulcrum needs to start automatically on system boot.
   User=fulcrum
   Type=exec
   TimeoutStopSec=300
-  RestartSec=5
+  RestartSec=30
   Restart=on-failure
 
   [Install]
