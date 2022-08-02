@@ -43,6 +43,21 @@ Fulcrum is a replacement for an electrs, these two services cannot be run at the
 
 ## Installation
 
+### Set up bitcoin
+
+For best results, enable zmq for the "hasblock"
+
+* Add following line to your bitcoin configuration file
+
+  ```sh
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  ```
+  
+  ```sh
+  # Add at the end of bitcoin.conf
+  zmqpubhashblock=tcp://0.0.0.0:8433
+  ```
+  
 ### Download and set up fulcrum
 
 We have our bitcoin core configuration file set up and now we can move to next part - installation of Fulcrum
