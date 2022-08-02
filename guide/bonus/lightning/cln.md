@@ -132,7 +132,6 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ poetry install
   $ ./configure --enable-experimental-features
   $ poetry run make
-  $ sudo make install
   ```
 
 ## Configuration
