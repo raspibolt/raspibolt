@@ -325,7 +325,7 @@ $ sudo systemctl restart btcrpcexplorer.service
 
 Because the sync can take up to 5 days and more, it is recommended to have at least any backup of the database. It doesn't need to be the latest one and you can backup only once, it is still better to sync for a few hours instead of week (from scratch). Should be done on external drive.
 
-## Uninstall
+## Uninstall fulcrum
 
 Ensure you are logged with user "admin"
 
