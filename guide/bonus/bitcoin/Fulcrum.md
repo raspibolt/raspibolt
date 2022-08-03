@@ -182,7 +182,7 @@ zram-swap is neccesary for proper functioning of fulcrum during sync process
 * Ensure that you are logged with user "admin", clone and install zram-swap
 
 ```sh
-$ sudo mkdir /home/admin/zram && cd /home/admin/zram
+$ cd /home/admin/
 $ git clone https://github.com/foundObjects/zram-swap.git 
 $ cd zram-swap && sudo ./install.sh
 ```
@@ -259,7 +259,7 @@ Continue after fulcrum db sync is finished
 * Remove the zram (optional)
 
 ```sh
-$ cd /home/admin/zram/zram-swap
+$ cd /home/admin/zram-swap
 $ sudo ./install --uninstall 
 $ sudo rm /etc/default/zram-swap
 ```
