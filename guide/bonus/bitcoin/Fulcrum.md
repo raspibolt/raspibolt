@@ -58,6 +58,12 @@ $ sudo nano /data/bitcoin/bitcoin.conf
 zmqpubhashblock=tcp://0.0.0.0:8433
 ```
 
+* Restart Bitcoin Core
+
+```sh
+$ sudo systemctl restart bitcoind
+```
+
 ### Download and set up fulcrum
 
 We have our bitcoin core configuration file set up and now we can move to next part - installation of Fulcrum
