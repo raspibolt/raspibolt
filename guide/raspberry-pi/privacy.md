@@ -78,6 +78,12 @@ We need to enable Tor to accept instructions through its control port, with the 
   $ sudo systemctl reload tor
   ```
 
+* Check the systemd journal to see Tor real time updates output logs.
+  
+  ```sh
+  $ sudo journalctl -f -u tor@default
+  ```
+
 Not all network traffic is routed over the Tor network.
 But we now have the base to configure sensitive applications to use it.
 
@@ -99,7 +105,7 @@ This makes "calling home" very easy, without the need to configure anything on y
 
   ```sh
   ############### This section is just for location-hidden services ###
-
+  # Hidden Service SSH server
   HiddenServiceDir /var/lib/tor/hidden_service_sshd/
   HiddenServiceVersion 3
   HiddenServicePort 22 127.0.0.1:22
