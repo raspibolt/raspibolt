@@ -201,13 +201,28 @@ vm.swappiness=100
 vm.dirty_background_ratio=1
 vm.dirty_ratio=50
 ```
-  
+
 * Then reboot, or enable with:
 
 ```sh
 $ sudo sysctl --system
 ```
-  
+
+* Increase zram-swap size to 10GB. Comment and uncomment these lines.
+
+```sh
+$ sudo nano /etc/default/zram-swap
+```
+
+```sh
+#_zram_fraction="1/2" #Comment this line
+_zram_fixedsize="10G" #Uncomment and edit
+```
+
+```sh
+$ systemctl restart zram-swap.service
+```
+
 * Make sure everything works fine
 
 ```sh
