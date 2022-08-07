@@ -260,7 +260,7 @@ Continue after fulcrum db sync is finished
 
 ```sh
 $ cd /home/admin/zram-swap
-$ sudo ./install --uninstall 
+$ sudo ./install.sh --uninstall 
 $ sudo rm /etc/default/zram-swap
 ```
 
