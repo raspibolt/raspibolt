@@ -15,9 +15,9 @@ alias clearcache='sudo sync && sudo /sbin/sysctl -w vm.drop_caches=3 ; echo Clea
 alias showmainversion='echo The installed versions of the main services are as follows: ; \
   echo `bitcoind --version | grep version` ; \
   lnd --version ; \
-  echo BTC RPC Explorer: `head -n 3 /home/btcrpcexplorer/btc-rpc-explorer/package.json | grep version` ; \
+  echo BTC RPC Explorer: `sudo head -n 3 /home/btcrpcexplorer/btc-rpc-explorer/package.json | grep version` ; \
   echo Electrs: `electrs --version` ; \
-  echo RTL: `head -n 3 /home/rtl/RTL/package.json | grep version` ; \
+  echo RTL: `sudo head -n 3 /home/rtl/RTL/package.json | grep version` ; \
   tor --version ; \
   echo NPM: v`npm --version` ; \
   echo NodeJS: `node -v`; \
@@ -28,10 +28,11 @@ alias showmainversion='echo The installed versions of the main services are as f
 # EXTRAS
 alias showbonusversion='echo The installed versions of the bonus services are as follows: ; \
   circuitbreaker --version ; \
-  echo Thunderhub: `head -n 3 /home/thunderhub/thunderhub/package.json | grep version` ; \
+  echo Thunderhub: `sudo head -n 3 /home/thunderhub/thunderhub/package.json | grep version` ; \
   bos -V ; \
   litd --lnd.version ; \
-  lightning-cli --version'
+  lightning-cli --version ; \
+  ./Fulcrum --version | grep Fulcrum'
 
 alias fail2banreport='sudo fail2ban-client status sshd'
 alias overview='raspibolt'
@@ -169,7 +170,8 @@ alias enablelnbits='sudo systemctl enable lnbits'
 alias enablethunderhub='sudo systemctl enable thunderhub'
 alias enablelitd='sudo systemctl enable litd'
 alias enablecln='sudo systemctl enable cln'
-alias enableallbonus='sudo systemctl enable homer mempool circuitbreaker lnbits thunderhub litd cln'
+alias enablefulcrum='sudo systemctl enable fulcrum'
+alias enableallbonus='sudo systemctl enable homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum'
 
 ########################
 # START BONUS SERVICES #
@@ -182,6 +184,7 @@ alias startlnbits='sudo systemctl start lnbits'
 alias starthunderhub='sudo systemctl start thunderhub'
 alias startlitd='sudo systemctl start litd'
 alias startcln='sudo systemctl start cln'
+alias startfulcrum='sudo systemctl start fulcrum'
 
 #########################
 # STATUS BONUS SERVICES #
@@ -194,8 +197,9 @@ alias statuslnbits='sudo systemctl status lnbits'
 alias statusthunderhub='sudo systemctl status thunderhub'
 alias statuslitd='sudo systemctl status litd'
 alias statuscln='sudo systemctl status cln'
+alias statusfulcrum='sudo systemctl start fulcrum'
 alias statusallbonus='echo The status of the bonus services is as follows, press the space key to advance: ; \
-  sudo systemctl status homer mempool circuitbreaker lnbits thunderhub litd cln'
+  sudo systemctl status homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum'
 
 #######################
 # STOP BONUS SERVICES #
@@ -208,7 +212,8 @@ alias stoplnbits='sudo systemctl stop lnbits'
 alias stopthunderhub='sudo systemctl stop thunderhub'
 alias stoplitd='sudo systemctl stop litd'
 alias stopcln='sudo systemctl stop cln'
-alias stopallbonus='sudo systemctl stop homer mempool circuitbreaker lnbits thunderhub litd cln'
+alias stopfulcrum='sudo systemctl stop fulcrum'
+alias stopallbonus='sudo systemctl stop homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum'
 
 ##########################
 # DISABLE BONUS SERVICES #
@@ -221,7 +226,8 @@ alias disablelnbits='sudo systemctl disable lnbits'
 alias disablethunderhub='sudo systemctl disable thunderhub'
 alias disablelitd='sudo systemctl disable litd'
 alias disablecln='sudo systemctl disable cln'
-alias disableallbonus='sudo systemctl disable homer mempool circuitbreaker lnbits thunderhub litd cln'
+alias disablefulcrum='sudo systemctl disable fulcrum'
+alias disableallbonus='sudo systemctl disable homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum'
 
 #######################
 # BONUS SERVICES LOGS #
@@ -234,3 +240,4 @@ alias lnbitslogs='sudo journalctl -f -u lnbits'
 alias thunderhublogs='sudo journalctl -f -u thunderhub'
 alias litdlogs='sudo journalctl -f -u litd'
 alias clnlogs='sudo journalctl -f -u cln' 
+alias fulcrumlogs='sudo journalctl -f -u fulcrum'

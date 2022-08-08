@@ -40,7 +40,7 @@ The following list of aliases was derived from contributions by [RobClark56](htt
 
 ## Set up aliases
 
-* With user "admin", access to `home` folder and download the aliases list provided by Raspibolt community at Github
+* With user "admin", access to `home` folder and download the aliases list provided by Raspibolt community at Github. Put "yes" if the prompt ask you about overwrite.
 
   ```sh
   $ cd /home/admin
