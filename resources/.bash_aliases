@@ -32,7 +32,7 @@ alias showbonusversion='echo The installed versions of the bonus services are as
   bos -V ; \
   litd --lnd.version ; \
   lightning-cli --version ; \
-  ./Fulcrum --version | grep Fulcrum'
+  Fulcrum --version | grep Fulcrum'
 
 alias fail2banreport='sudo fail2ban-client status sshd'
 alias overview='raspibolt'
