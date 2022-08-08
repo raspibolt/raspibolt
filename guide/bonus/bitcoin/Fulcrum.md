@@ -261,16 +261,18 @@ ssl = 0.0.0.0:50002
 peering = false
 announce = false
 
-# Optimization for Raspberry Pi 4GB RAM
+# Optimizations for Raspberry Pi
 bitcoind_timeout = 600
 bitcoind_clients = 1
 worker_threads = 1
 deb_mem= 1024.0
 db_use_fsync = true
+
+# Use for 4GB RAM
 db_max_open_files= 60
 fast-sync = 1024
 
-# for 8GB RAM (comment the last two lines and uncomment the next)
+# Use for 8GB RAM (Comment 4GB RAM section and uncomment these lines)
 #db_max_open_files= 100
 #fast-sync = 2048
 ```
