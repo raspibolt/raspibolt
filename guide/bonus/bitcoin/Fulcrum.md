@@ -13,7 +13,7 @@ has_toc: false
 
 ---
 
-[Fulcrum](https://github.com/cculianu/Fulcrum){:target="_blank"} Fulcrum is a fast & nimble SPV server for Bitcoin Cash & Bitcoin BTC created by Calin Culianu. It can be used as an alternative to Electrs because of its performance, as we can see in Craig Raw's [comparison](https://www.sparrowwallet.com/docs/server-performance.html) of servers
+[Fulcrum](https://github.com/cculianu/Fulcrum){:target="_blank"} is a fast & nimble SPV server for Bitcoin Cash & Bitcoin BTC created by Calin Culianu. It can be used as an alternative to Electrs because of its performance, as we can see in Craig Raw's [comparison](https://www.sparrowwallet.com/docs/server-performance.html){:target="_blank"} of servers
 
 Difficulty: Medium
 {: .label .label-yellow }
@@ -54,9 +54,9 @@ $ sudo apt install libssl-dev
 
 ### Install zram-swap
 
-zram-swap is necessary for the proper functioning of Fulcrum during sync process using compressed swap in memory (increase performance when memory usage is high)
+zram-swap is a compressed swap in memory and on disk and is necessary for the proper functioning of Fulcrum during the sync process using compressed swap in memory (increase performance when memory usage is high)
 
-* Access to admin home folder, clone the repository of Github and install zram-swap
+* Access to "admin" home folder, clone the repository of GitHub and install zram-swap
 
 ```sh
 $ cd /home/admin/
@@ -64,7 +64,7 @@ $ git clone https://github.com/foundObjects/zram-swap.git
 $ cd zram-swap && sudo ./install.sh
 ```
 
-* Set following size value in zram configuration file. Save a exit
+* Set following size value in zram configuration file. Save and exit
   
 ```sh
 $ sudo nano /etc/default/zram-swap
@@ -81,7 +81,7 @@ _zram_fixedsize="10G" #Uncomment and edit
 $ sudo nano /etc/sysctl.conf
 ```
 
-* Here are the lines you’ll want to add at the end of your /etc/sysctl.conf file to make better use of zram. Save a exit
+* Here are the lines you’ll want to add at the end of your /etc/sysctl.conf file to make better use of zram. Save and exit
 
 ```sh
 vm.vfs_cache_pressure=500
@@ -94,6 +94,12 @@ vm.dirty_ratio=50
 
 ```sh
 $ sudo sysctl --system
+```
+
+* Restart the service
+
+```sh
+$ sudo systemctl restart zram-swap
 ```
 
 * Make sure zram was correctly installed, zram prioritized, and autoboot enabled
@@ -141,7 +147,7 @@ $ sudo ufw allow 50002 comment 'allow Fulcrum SSL'
 
 We need to set up settings in Bitcoin Core configuration file - add new lines if they are not present
 
-* In `bitcoin.conf`, add the following line under `whitelist=download@127.0.0.1          # for Electrs`. Save and exit.
+* In `bitcoin.conf`, add the following line in "# Connections" section. Save and exit.
 
 ```sh
 $ sudo nano /data/bitcoin/bitcoin.conf
@@ -161,7 +167,7 @@ $ sudo systemctl restart bitcoind
 
 ### Download and set up Fulcrum
 
-We have our bitcoin core configuration file set up and now we can move to next part - installation of Fulcrum
+We have our Bitcoin Core configuration file set up and now we can move to next part - installation of Fulcrum
 
 * Download the application, checksums and signature
 
@@ -200,7 +206,7 @@ $ sha256sum --check Fulcrum-1.7.0-arm64-linux.tar.gz.sha256sum
 ```sh
 $ tar -xvf Fulcrum-1.7.0-arm64-linux.tar.gz
 $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-1.7.0-arm64-linux/Fulcrum Fulcrum-1.7.0-arm64-linux/FulcrumAdmin 
-$ ./Fulcrum --version
+$ Fulcrum --version
 > Fulcrum 1.7.0 (Release 4ee413a)
 compiled: gcc 7.5.0
 ...
@@ -223,6 +229,12 @@ $ sudo adduser fulcrum bitcoin
 $ sudo mkdir -p /data/fulcrum/fulcrum_db
 $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
 ```
+* Create a symlink to /home/fulcrum/.fulcrum
+
+```sh
+$ sudo ln -s /data/fulcrum /home/fulcrum/.fulcrum
+$ sudo chown -R fulcrum:fulcrum /home/fulcrum/.fulcrum
+```
 
 * Open a "fulcrum" user session
 
@@ -239,7 +251,7 @@ $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out
 
 ### Configuration
 
-* Next, we have to set up our fulcrum configurations. Troubles could be found without optimizations for Raspberry Pi. Choose either one for Raspberry 4GB or 8GB depending on your hardware. Create the config file with the following content. Save a exit
+* Next, we have to set up our Fulcrum configurations. Troubles could be found without optimizations for Raspberry Pi. Choose either one for Raspberry 4GB or 8GB depending on your hardware. Create the config file with the following content. Save and exit
 
 ```sh
 $ nano /data/fulcrum/fulcrum.conf
@@ -253,7 +265,7 @@ $ nano /data/fulcrum/fulcrum.conf
 bitcoind = 127.0.0.1:8332
 rpccookie= /home/bitcoin/.bitcoin/.cookie
 
-# Fulcrum settings
+# Fulcrum server settings
 datadir = /data/fulcrum/fulcrum_db
 cert = /data/fulcrum/cert.pem
 key = /data/fulcrum/key.pem
@@ -261,19 +273,18 @@ ssl = 0.0.0.0:50002
 peering = false
 announce = false
 
-# Optimizations for Raspberry Pi
+# RPi optimizations
 bitcoind_timeout = 600
 bitcoind_clients = 1
 worker_threads = 1
-deb_mem= 1024.0
-db_use_fsync = true
+deb_mem = 1024.0
 
-# Use for 4GB RAM
-db_max_open_files= 60
+# 4GB RAM (default)
+db_max_open_files = 200
 fast-sync = 1024
 
-# Use for 8GB RAM (Comment 4GB RAM section and uncomment these lines)
-#db_max_open_files= 100
+# 8GB RAM (comment the last two lines and uncomment the next)
+#db_max_open_files= 400
 #fast-sync = 2048
 ```
 
@@ -356,9 +367,9 @@ DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT TH
 
 💡 Fulcrum must first fully index the blockchain and compact its database before you can connect to it with your wallets. This can take a few hours. Only proceed with the [Desktop Wallet Section](desktop-wallet.md) once Fulcrum is ready.
 
-💡 After the initial sync of fulcrum, if you want to still use zram, you can return to the default zram config.
+💡 After the initial sync of Fulcrum, if you want to still use zram, you can return to the default zram config.
 
-* As user "admin", access to zram config again and return to default config. Save a exit
+* As user "admin", access to zram config again and return to default config. Save and exit
   
 ```sh
 $ sudo nano /etc/default/zram-swap
@@ -373,6 +384,12 @@ _zram_fraction="1/2"   #Uncomment this line
 
 ```sh
 $ sudo sysctl --system
+```
+
+* Restart the service
+
+```sh
+$ sudo systemctl restart zram-swap
 ```
 
 * Make sure the change was correctly done
@@ -396,7 +413,7 @@ Filename                                Type                Size           Used 
 To use your Fulcrum server when you're on the go, you can easily create a Tor hidden service.
 This way, you can connect the BitBoxApp or Electrum wallet also remotely, or even share the connection details with friends and family. Note that the remote device needs to have Tor installed as well.
 
-* Ensure that you are logged with user "admin" and add the following three lines in the section for "location-hidden services" in the torrc file. Save a exit
+* Ensure that you are logged with user "admin" and add the following three lines in the section for "location-hidden services" in the torrc file. Save and exit
 
 ```sh
 $ sudo nano /etc/tor/torrc
@@ -460,7 +477,7 @@ $ sudo systemctl stop fulcrum
 
 * Download, verify and install the latest Fulcrum binaries as described in the [Fulcrum section](fulcrum.md#download-and-set-up-fulcrum) of this guide.
 
-## After installation
+## Uninstall
 
 ### Uninstall Fulcrum
 
@@ -482,7 +499,7 @@ $ sudo rm -rf /data/fulcrum/
 
 ### Uninstall Tor hidden service
 
-* Comment or remove fulcrum hidden service in torrc. Save a exit
+* Comment or remove fulcrum hidden service in torrc. Save and exit
 
 ```sh
 $ sudo nano /etc/tor/torrc
