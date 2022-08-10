@@ -351,12 +351,12 @@ Now we’ll make sure Mempool's frontend starts as a service on the Raspberry Pi
   $ sudo systemctl start mempool-frontend
   $ sudo journalctl -f -u mempool-frontend
   ```
-  
+
 ---
 
 ## Mempool in action
 
-Point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4081](https://raspibolt.local:4081){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4081).
+Point your browser to the secure access point provided by the nginx web proxy, for example [http://raspibolt.local:4200](http://raspibolt.local:4200){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4200).
 
 ---
 
