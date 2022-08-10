@@ -381,7 +381,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ### c-lightning-Rest plugin
 
-* Setting up c-lightning-Rest as plugin for CLN requires us to be user "cln". So first we need to download and verify the c-lightning-Rest package:
+* Setting up c-lightning-Rest as plugin for CLN. First we need to download and verify the c-lightning-Rest package:
 
   ```sh
   $ sudo su - cln
@@ -417,13 +417,13 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ npm install --only=prod
   ```
   
-* Copy content to datadir:
+* Copy content to plugin datadir:
 
   ```sh
   $ cp -r ~/c-lightning-REST-0.7.2/ /data/cl-plugins-available/
   ```
 
-* Install c-lightning-Rest as plugin:
+* Setup c-lightning-Rest as plugin:
 
   ```sh
   $ sudo nano /data/cln/config
@@ -438,14 +438,21 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   rest-docport=4091
   rest-protocol=http
   ```
-* As user admin, copy `access.macaroon` to home directory of user `rtl`:
+  
+* As user admin, create and setup user `rtl`:
 
   ```sh
   $ exit
+  $ sudo adduser --disabled-password --gecos "" rtl
+  $ sudo usermod -aG cln rtl
+  ``` 
+
+* Copy `access.macaroon` to home directory of user `rtl`:  
+  
+  ```sh
   $ sudo cp /data/cl-plugins-available/c-lightning-REST-0.7.2/certs/access.macaroon /home/rtl/
   $ sudo chown rtl:rtl /home/rtl/access.macaroon
   ```
-
   
 * Restart `cln.service` and look for errors in cln's log: `tail -f /data/cln/cln.log`. Positive results look like this:
 
