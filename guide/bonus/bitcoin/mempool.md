@@ -39,7 +39,6 @@ Table of contents
 * Bitcoin Core
 * Electrs
 * Node.js v16+
-* nginx
 
 ---
 
@@ -356,7 +355,7 @@ Now we’ll make sure Mempool's frontend starts as a service on the Raspberry Pi
 
 ## Mempool in action
 
-Point your browser to the secure access point provided by the nginx web proxy, for example [http://raspibolt.local:4200](http://raspibolt.local:4200){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4200).
+Point your browser to the secure access point provided by the frontend, for example [http://raspibolt.local:4200](http://raspibolt.local:4200){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4200).
 
 ---
 
@@ -470,26 +469,6 @@ Updating to a new release is straight-forward. Make sure to read the release not
   ```sh
   $ sudo ufw delete Y
   $ sudo ufw delete X  
-  ```
-
-* Remove the nginx configurations for Mempool
-
-  ```sh 
-  $ sudo rm -R /var/www/mempool
-  $ sudo rm /etc/nginx/snippets/nginx-mempool.conf
-  $ sudo rm /etc/nginx/sites-enabled/mempool-ssl.conf
-  $ sudo rm /etc/nginx/sites-available/mempool-ssl.conf
-  $ sudo rm /etc/nginx/nginx.conf
-  $ sudo mv /etc/nginx/nginx.conf.bak2 /etc/nginx/nginx.conf
-  ```
-  
-* Test and reload nginx configuration
-  
-  ```sh
-  $ sudo nginx -t
-  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-  > nginx: configuration file /etc/nginx/nginx.conf test is successful
-  $ sudo systemctl reload nginx
   ```
   
 * Remove MariaDB. When prompted, check the packages that will be removed and type "Y" and "Enter". A blue window will pop up asking if we want to remove all MariaDB databases, select `<Yes>`.
