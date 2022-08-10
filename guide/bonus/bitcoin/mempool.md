@@ -63,7 +63,7 @@ To run Mempool, we need to run Node.js v16 or above.
 * Configure the UFW firewall to allow incoming HTTPS requests
 
   ```sh
-  $ sudo ufw allow 4081/tcp comment 'allow Mempool SSL'
+  $ sudo ufw allow 4200/tcp comment 'allow Mempool'
   $ sudo ufw status
   ```
 
@@ -300,9 +300,9 @@ Now we’ll make sure Mempool's backend starts as a service on the Raspberry Pi 
 * Enable the service, start it and check log logging output.
 
   ```sh  
-  $ sudo systemctl enable mempool
-  $ sudo systemctl start mempool
-  $ sudo journalctl -f -u mempool
+  $ sudo systemctl enable mempool-backend
+  $ sudo systemctl start mempool-backend
+  $ sudo journalctl -f -u mempool-backend
   ```
 
 ### Autostart frontend on boot
@@ -376,7 +376,7 @@ To expose Mempool app via a Tor hidden service (if only Tor address is used, no 
   # Mempool Hidden Service
   HiddenServiceDir /var/lib/tor/hidden_service_mempool
   HiddenServiceVersion 3
-  HiddenServicePort 443 127.0.0.1:4081
+  HiddenServicePort 443 127.0.0.1:4200
   ``` 
 
 * Reload Tor config (sometimes a restart is needed)
@@ -407,7 +407,8 @@ Updating to a new release is straight-forward. Make sure to read the release not
 * From user “admin”, stop the service and open a “mempool” user session.
 
   ```sh
-  $ sudo systemctl stop mempool
+  $ sudo systemctl stop mempool-frontend
+  $ sudo systemctl stop mempool-backend
   $ sudo su - mempool
   ```
 
@@ -420,16 +421,24 @@ Updating to a new release is straight-forward. Make sure to read the release not
   $ git checkout $latestrelease
   ```
   
-* Then follow the installation process described in the guide in the [Backend section](#backend) up to, and including the nginx section .
+* Then follow the installation process described in the [Backend section](#backend) and [Frontend section](#frontend) sections.
 
 * Start the service again
  
   ```sh 
-  $ sudo systemctl start mempool
-  $ sudo journalctl -f -u mempool
+  $ sudo systemctl start mempool-backend
+  $ sudo systemctl start mempool-frontend
   ```
 
-* Point your browser to [https://raspibolt:4081/about](https://raspibolt:4081/about){:target="_blank"} and check that the displayed version is the newest version that you just installed.
+* Both services can be monitored by typing either of these commands
+
+  ```sh
+  $ sudo journalctl -f -u mempool-backend
+  $ sudo journalctl -f -u mempool-frontend
+  ```
+
+
+* Point your browser to [https://raspibolt:4200/about](https://raspibolt:4200/about){:target="_blank"} and check that the displayed version is the newest version that you just installed.
 
 ---
 
@@ -438,8 +447,11 @@ Updating to a new release is straight-forward. Make sure to read the release not
 * Stop, disable and delete the Mempool systemd service
  
   ```sh 
-  $ sudo systemctl stop mempool
-  $ sudo systemctl disable mempool
+  $ sudo systemctl stop mempool-frontend
+  $ sudo systemctl stop mempool-backend
+  $ sudo systemctl disable mempool-frontend
+  $ sudo systemctl disable mempool-backend
+  $ sudo rm /etc/systemd/system/mempool-frontend.service
   $ sudo rm /etc/systemd/system/mempool-backend.service
   ```
 
@@ -448,9 +460,9 @@ Updating to a new release is straight-forward. Make sure to read the release not
   ```sh
   $ sudo ufw status numbered
   > [...]
-  > [X] 4081/tcp                   ALLOW IN    Anywhere                   # allow Mempool SSL
+  > [X] 4200/tcp                   ALLOW IN    Anywhere                   # allow Mempool
   > [...]
-  > [Y] 4081/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow Mempool SSL
+  > [Y] 4200/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow Mempool
   ```
 
 * Delete the two Mempool rules (check that the rule to be deleted is the correct one and type "y" and "Enter" when prompted)
