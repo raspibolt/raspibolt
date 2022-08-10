@@ -240,7 +240,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ npm run serve:local-prod
   ```
 
-* After a few minutes, you should then be able to see to the site by browsing http://raspibolt.local:4200
+* After a few minutes, you should then be able to see to the site by browsing [http://raspibolt.local:4200](http://raspibolt.local:4200){:target="_blank"}
 
 * Press Ctrl+C to exit and come back to the repository root directory
 
