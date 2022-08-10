@@ -123,6 +123,7 @@ The external drive is then attached to the file system and becomes available as 
 
   ```sh
   $ sudo mkdir /data
+  $ sudo chown admin:admin /data
   $ sudo chattr +i /data
   ```
 

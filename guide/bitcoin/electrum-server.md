@@ -100,7 +100,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   ```sh
   $ mkdir /home/admin/rust
   $ cd /home/admin/rust
-  $ git clone --branch v0.9.6 https://github.com/romanz/electrs.git
+  $ git clone --branch v0.9.8 https://github.com/romanz/electrs.git
   $ cd electrs
   ```
 
@@ -108,7 +108,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   ```sh
   $ curl https://romanzey.de/pgp.txt | gpg --import
-  $ git verify-tag v0.9.6
+  $ git verify-tag v0.9.8
   > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
@@ -159,7 +159,6 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   # Electrs settings
   electrum_rpc_addr = "127.0.0.1:50001"
   db_dir = "/data/electrs/db"
-  index_lookup_limit = 1000
 
   # Logging
   log_filters = "INFO"
@@ -328,13 +327,13 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   ```sh
   $ cd /home/admin/rust/electrs
 
-  # update the local source code and show the latest release tag (example: v0.9.6)
+  # update the local source code and show the latest release tag (example: v0.9.8)
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
-  > v0.9.6
+  > v0.9.8
 
-  # check out the most recent release (replace v0.9.6 with the actual version)
-  $ git checkout v0.9.6
+  # check out the most recent release (replace v0.9.8 with the actual version)
+  $ git checkout v0.9.8
 
   # Compile the source code
   $ cargo clean

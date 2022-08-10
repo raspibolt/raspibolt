@@ -102,12 +102,12 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ git clone https://github.com/Ride-The-Lightning/RTL.git
   $ cd RTL
 
-  $ git tag | sort --version-sort | tail -n 1
-  > v0.12.2
+  $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
+  > v0.12.3
 
-  $ git checkout v0.12.2
+  $ git checkout v0.12.3
 
-  $ git verify-tag v0.12.2
+  $ git verify-tag v0.12.3
   > gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
   > gpg:                 aka "Suheb <39208279+saubyk@users.noreply.github.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -282,14 +282,15 @@ Make sure to read the release notes first.
   $ sudo su - rtl
   ```
 
-* Fetch the latest GitHub repository information, display the latest release tag (`v0.12.2` in this example), and update:
+* Fetch the latest GitHub repository information, display the latest release tag, ignoring release cadidates (`v0.12.3` in this example), and update:
 
   ```sh
   $ cd /home/rtl/RTL
   $ git fetch
-  $ git tag | sort --version-sort | tail -n 1
-  $ git checkout v0.12.2
-  $ git verify-tag v0.12.2
+  $ git reset --hard
+  $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
+  $ git checkout v0.12.3
+  $ git verify-tag v0.12.3
   $ npm install --only=prod
   $ exit
   ```

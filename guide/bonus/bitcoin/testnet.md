@@ -105,7 +105,7 @@ network = "testnet"
 daemon_dir= "/home/bitcoin/.bitcoin/"
 daemon_rpc_addr = "127.0.0.1:18332"
 daemon_p2p_addr = "127.0.0.1:18333"
-cookie_file = "/data/bitcoin/testnet3/.cookie
+cookie_file = "/data/bitcoin/testnet3/.cookie"
 
 # Electrs settings
 electrum_rpc_addr = "127.0.0.1:60001"

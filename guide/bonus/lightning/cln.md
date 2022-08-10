@@ -103,7 +103,8 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   ```sh
   $ git clone https://github.com/ElementsProject/lightning.git
   $ cd lightning
-  $ git reset --hard v0.11.0.1
+  $ git fetch --all --tags
+  $ git reset --hard v0.11.1
   ``` 
 
 * Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `Good Signature`.
@@ -111,7 +112,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   ```sh
   $ wget -O "pgp_keys.asc" https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/rustyrussell.txt
   $ gpg --import ./pgp_keys.asc
-  $ git verify-tag v0.11.0.1
+  $ git verify-tag v0.11.1
   ```
 
 * Download user specific python packages and set path for `poetry`.
@@ -194,9 +195,9 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Append the following at the end of the file.
 
   ```ini
-  alias lightning-cli="./lightning/cli/lightning-cli"
-  alias lightningd="./lightning/lightningd/lightningd"
-  alias hsmtool="./lightning/tools/hsmtool"
+  alias lightning-cli="~/lightning/cli/lightning-cli"
+  alias lightningd="~/lightning/lightningd/lightningd"
+  alias hsmtool="~/lightning/tools/hsmtool"
   ```
 
 ### Autostart on boot
