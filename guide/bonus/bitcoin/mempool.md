@@ -326,7 +326,7 @@ Now we’ll make sure Mempool's frontend starts as a service on the Raspberry Pi
 
   [Service]
   WorkingDirectory=/home/mempool/mempool/frontend
-  ExecStart=/usr/bin/npm run serve:local-prod
+  ExecStart=/usr/bin/npm run serve
   User=mempool
 
   # Restart on failure but no more than default times (DefaultStartLimitBurst=5) every 10 minutes (600 seconds). Otherwise stop
