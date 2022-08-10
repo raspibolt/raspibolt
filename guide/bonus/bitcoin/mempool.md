@@ -222,6 +222,16 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   $ cd ~/mempool
   ```
 
+### Restrict access to configuration file
+
+The Mempool configuration file contains the Bitcoin Core RPC username and password which are sensitive information. We'll restrict reading access to this file by user "mempool" only.
+
+* Still with user "admin", change the ownership of the configuration file
+ 
+  ```sh
+  $ sudo chmod 600 /home/mempool/mempool/backend/mempool-config.json
+  ```
+
 ### Frontend
 
 * Still with user "mempool", install the frontend (it will take several minutes) and exit back to the "admin" user
@@ -245,16 +255,6 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 
   ```sh
   $ cd ~/mempool
-  ```
-  
-### Restrict access to configuration file
-
-The Mempool configuration file contains the Bitcoin Core RPC username and password which are sensitive information. We'll restrict reading access to this file by user "mempool" only.
-
-* Still with user "admin", change the ownership of the configuration file
- 
-  ```sh
-  $ sudo chmod 600 /home/mempool/mempool/backend/mempool-config.json
   ```
 
 ### Autostart backend on boot
