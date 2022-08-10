@@ -166,7 +166,12 @@ For improved security, we create the new user "mempool" that will run the Mempoo
       "MEMPOOL_BLOCKS_AMOUNT": 8,
       "PRICE_FEED_UPDATE_INTERVAL": 3600,
       "USE_SECOND_NODE_FOR_MINFEE": false,
-      "EXTERNAL_ASSETS": []
+      "EXTERNAL_ASSETS": [],
+      "EXTERNAL_MAX_RETRY": 1,
+      "EXTERNAL_RETRY_INTERVAL": 0,
+      "USER_AGENT": "mempool",
+      "STDOUT_LOG_MIN_PRIORITY": "debug",
+      "AUTOMATIC_BLOCK_REINDEXING": false
     },
     "CORE_RPC": {
       "HOST": "127.0.0.1",
