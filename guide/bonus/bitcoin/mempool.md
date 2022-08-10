@@ -260,19 +260,19 @@ The Mempool configuration file contains the Bitcoin Core RPC username and passwo
 
 ### Autostart backend on boot
 
-Now we’ll make sure Mempool starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd unit that starts the service on boot directly after Bitcoin Core.
+Now we’ll make sure Mempool's backend starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd unit that starts the service on boot directly after Bitcoin Core.
 
 * As user “admin”, create the service file
 
   ```sh
-  $ sudo nano /etc/systemd/system/mempool.service
+  $ sudo nano /etc/systemd/system/mempool-backend.service
   ```
   
 * Paste the following configuration. Save and exit.  
   
   ```ini 
   # RaspiBolt: systemd unit for Mempool           
-  # /etc/systemd/system/mempool.service
+  # /etc/systemd/system/mempool-backend.service
 
   [Unit]
   Description=mempool
@@ -305,6 +305,53 @@ Now we’ll make sure Mempool starts as a service on the Raspberry Pi so it’s 
   $ sudo journalctl -f -u mempool
   ```
 
+### Autostart frontend on boot
+
+Now we’ll make sure Mempool's frontend starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd unit that starts the service on boot directly after the Mempool backend.
+
+* As user “admin”, create the service file
+
+  ```sh
+  $ sudo nano /etc/systemd/system/mempool-frontend.service
+  ```
+  
+* Paste the following configuration. Save and exit.  
+  
+  ```ini 
+  # RaspiBolt: systemd unit for Mempool           
+  # /etc/systemd/system/mempool-frontend.service
+
+  [Unit]
+  Description=mempool
+  After=mempool-backend.service
+
+  [Service]
+  WorkingDirectory=/home/mempool/mempool/frontend
+  ExecStart=/usr/bin/npm run serve:local-prod
+  User=mempool
+
+  # Restart on failure but no more than default times (DefaultStartLimitBurst=5) every 10 minutes (600 seconds). Otherwise stop
+  Restart=on-failure
+  RestartSec=600
+
+  # Hardening measures
+  PrivateTmp=true
+  ProtectSystem=full
+  NoNewPrivileges=true
+  PrivateDevices=true
+
+  [Install]
+  WantedBy=multi-user.target
+  ```
+
+* Enable the service, start it and check log logging output.
+
+  ```sh  
+  $ sudo systemctl enable mempool-frontend
+  $ sudo systemctl start mempool-frontend
+  $ sudo journalctl -f -u mempool-frontend
+  ```
+  
 ---
 
 ## Mempool in action
@@ -393,7 +440,7 @@ Updating to a new release is straight-forward. Make sure to read the release not
   ```sh 
   $ sudo systemctl stop mempool
   $ sudo systemctl disable mempool
-  $ sudo rm /etc/systemd/system/mempool.service
+  $ sudo rm /etc/systemd/system/mempool-backend.service
   ```
 
 * Display the UFW firewall rules and notes the numbers of the rules for Mempool (e.g., X and Y below)
