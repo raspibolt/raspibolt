@@ -229,16 +229,23 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   
   ```sh
   $ cd frontend
-  $ npm install --prod
-  $ npm run build
+  $ npm install
+  $ npm audit fix
   $ exit
   ```
 
-* Install the output into nginx webroot folder and change its ownership to the "www-data" user
+* Start the frontend to check it is working properly
 
   ```sh
-  $ sudo rsync -av --delete /home/mempool/mempool/frontend/dist/mempool/ /var/www/mempool/
-  $ sudo chown -R www-data:www-data /var/www/mempool
+  $ npm run serve:local-prod
+  ```
+
+* After a few minutes, you should then be able to see to the site by browsing http://raspibolt.local:4200
+
+* Press Ctrl+C to exit and come back to the repository root directory
+
+  ```sh
+  $ cd ~/mempool
   ```
   
 ### Restrict access to configuration file
@@ -251,180 +258,7 @@ The Mempool configuration file contains the Bitcoin Core RPC username and passwo
   $ sudo chmod 600 /home/mempool/mempool/backend/mempool-config.json
   ```
 
-### nginx
-
-We now need to modify the nginx configuration to create a web server for the website on port 4081.
-
-* Create a nginx configuration file for the Mempool website with a server listening on port 4081
-
-  ```sh
-  $ sudo nano /etc/nginx/sites-available/mempool-ssl.conf
-  ```
-
-* Paste the following configuration line. Save and exit
-
-  ```ini
-          proxy_read_timeout 300;
-          proxy_connect_timeout 300;
-          proxy_send_timeout 300;
-  
-          map $http_accept_language $header_lang {
-                  default en-US;
-                  ~*^en-US en-US;
-                  ~*^en en-US;
-                  ~*^ar ar;
-                  ~*^ca ca;
-                  ~*^cs cs;
-                  ~*^de de;
-                  ~*^es es;
-                  ~*^fa fa;
-                  ~*^fr fr;
-                  ~*^ko ko;
-                  ~*^it it;
-                  ~*^he he;
-                  ~*^ka ka;
-                  ~*^hu hu;
-                  ~*^mk mk;
-                  ~*^nl nl;
-                  ~*^ja ja;
-                  ~*^nb nb;
-                  ~*^pl pl;
-                  ~*^pt pt;
-                  ~*^ro ro;
-                  ~*^ru ru;
-                  ~*^sl sl;
-                  ~*^fi fi;
-                  ~*^sv sv;
-                  ~*^th th;
-                  ~*^tr tr;
-                  ~*^uk uk;
-                  ~*^vi vi;
-                  ~*^zh zh;
-                  ~*^hi hi;
-          }
-  
-          map $cookie_lang $lang {
-                  default $header_lang;
-                  ~*^en-US en-US;
-                  ~*^en en-US;
-                  ~*^ar ar;
-                  ~*^ca ca;
-                  ~*^cs cs;
-                  ~*^de de;
-                  ~*^es es;
-                  ~*^fa fa;
-                  ~*^fr fr;
-                  ~*^ko ko;
-                  ~*^it it;
-                  ~*^he he;
-                  ~*^ka ka;
-                  ~*^hu hu;
-                  ~*^mk mk;
-                  ~*^nl nl;
-                  ~*^ja ja;
-                  ~*^nb nb;
-                  ~*^pl pl;
-                  ~*^pt pt;
-                  ~*^ro ro;
-                  ~*^ru ru;
-                  ~*^sl sl;
-                  ~*^fi fi;
-                  ~*^sv sv;
-                  ~*^th th;
-                  ~*^tr tr;
-                  ~*^uk uk;
-                  ~*^vi vi;
-                  ~*^zh zh;
-                  ~*^hi hi;
-          }
-  
-  server {
-      listen 4081 ssl;
-      listen [::]:4081 ssl;
-      server_name _;
-      ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
-      ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
-      ssl_session_timeout 4h;
-      ssl_protocols TLSv1.3;
-      ssl_prefer_server_ciphers on;
-  
-      include /etc/nginx/snippets/nginx-mempool.conf;
-  
-  }
-  ```
-
-* Create a symlink in the sites-enabled directory
-
-  ```sh
-  $ sudo ln -sf /etc/nginx/sites-available/mempool-ssl.conf /etc/nginx/sites-enabled/
-  ```
-
-* Copy the conf file dedicated to the Mempool website in the nginx `snippets` directory
-
-  ```sh
-  $ sudo rsync -av /home/mempool/mempool/nginx-mempool.conf /etc/nginx/snippets
-  ```
-
-* Replace the main nginx configuration file
-
-  ```sh
-  $ sudo mv /etc/nginx/nginx.conf /etc/nginx/raspibolt-nginx.conf.bak
-  $ sudo nano /etc/nginx/nginx.conf
-  ```
-
-* Paste the following configuration lines. Save and exit.
-
-  ```ini
-  user www-data;
-  worker_processes auto;
-  pid /run/nginx.pid;
-  include /etc/nginx/modules-enabled/*.conf;
-
-  events {
-          worker_connections 768;
-  }
-
-  http {
-          sendfile on;
-          tcp_nopush on;
-          tcp_nodelay on;
-          keepalive_timeout 65;
-          types_hash_max_size 2048;
-          server_tokens off;
-          include /etc/nginx/mime.types;
-          default_type application/octet-stream;
-          ssl_protocols TLSv1.3;
-          ssl_prefer_server_ciphers on;
-          access_log /var/log/nginx/access.log;
-          error_log /var/log/nginx/error.log;
-          gzip on;
-          include /etc/nginx/conf.d/*.conf;
-          include /etc/nginx/sites-enabled/*;
-  }
-
-  stream {
-          ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
-          ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
-          ssl_session_cache shared:SSL:1m;
-          ssl_session_timeout 4h;
-          ssl_protocols TLSv1.3;
-          ssl_prefer_server_ciphers on;
-          include /etc/nginx/streams-enabled/*.conf;
-  }
-  ```
-
-* Test and reload nginx configuration
-  
-  ```sh
-  $ sudo nginx -t
-  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-  > nginx: configuration file /etc/nginx/nginx.conf test is successful
-  $ sudo systemctl reload nginx
-  ```
-
----
-
-### Autostart on boot
+### Autostart backend on boot
 
 Now we’ll make sure Mempool starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd unit that starts the service on boot directly after Bitcoin Core.
 
