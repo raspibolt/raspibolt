@@ -246,7 +246,7 @@ The Mempool configuration file contains the Bitcoin Core RPC username and passwo
 * Start the frontend to check it is working properly
 
   ```sh
-  $ npm run serve:local-prod
+  $ npm run serve
   ```
 
 * After a few minutes, you should then be able to see to the site by browsing [http://raspibolt.local:4200](http://raspibolt.local:4200){:target="_blank"}
