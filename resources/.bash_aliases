@@ -10,7 +10,7 @@ alias update='sudo apt update'
 alias listupgradable='sudo apt list --upgradable'
 alias upgrade='sudo apt upgrade'
 alias livehealth='sudo watch -n 1 "vcgencmd measure_clock arm; vcgencmd measure_temp"'
-alias clearcache='sudo sync && sudo /sbin/sysctl -w vm.drop_caches=3 ; echo Cleaned cache successfully'
+alias clearcache='sudo sync && sudo /sbin/sysctl -w vm.drop_caches=3 ; echo Cache cleaned successfully'
 
 alias showmainversion='echo The installed versions of the main services are as follows: ; \
   echo `bitcoind --version | grep version` ; \
@@ -38,6 +38,11 @@ alias fail2banreport='sudo fail2ban-client status sshd'
 alias overview='raspibolt'
 alias testscb-backup='sudo touch /data/lnd/data/chain/bitcoin/mainnet/channel.backup'
 
+# EXTRA LOGS
+alias authlogs='sudo tail -f /var/log/auth.log'
+alias ufwlogs='sudo tail -f /var/log/ufw.log'
+alias fail2banlogs='sudo tail -f /var/log/fail2ban.log'
+
 # NETWORK
 alias whatsLISTEN='echo The follows services are listening: ; \
   sudo lsof -i -P -n | grep LISTEN'
@@ -45,7 +50,7 @@ alias publicip='echo Your public real IP is: ; \
     curl icanhazip.com'
 alias torcheck='echo Checking Tor in your host... ; \
   curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs ; \
-  echo Attention: This advice is really to check if you have correctly installed Tor in your host. If not appear anything it means that you need to install Tor with: sudo apt install tor'
+  echo Attention: This advice is really to check if you have correctly installed Tor in your host. If not appear anything it means that you need to install Tor with command: sudo apt install tor'
 
 ################
 # MAIN SECTION #
@@ -147,7 +152,7 @@ alias openchannel='lncli openchannel'
 alias connect='lncli connect'
 alias payinvoice='lncli payinvoice'
 alias addinvoice='lncli addinvoice'
-alias addAMPinvoice='lncli addinvoice --amp'
+alias addAMPinvoice30d='lncli addinvoice --amp'
 
 ##################
 # LND Watchtower #
@@ -171,7 +176,8 @@ alias enablethunderhub='sudo systemctl enable thunderhub'
 alias enablelitd='sudo systemctl enable litd'
 alias enablecln='sudo systemctl enable cln'
 alias enablefulcrum='sudo systemctl enable fulcrum'
-alias enableallbonus='sudo systemctl enable homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum'
+alias enablei2p='sudo systemctl enable i2pd'
+alias enableallbonus='sudo systemctl enable homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum i2pd'
 
 ########################
 # START BONUS SERVICES #
@@ -185,6 +191,7 @@ alias starthunderhub='sudo systemctl start thunderhub'
 alias startlitd='sudo systemctl start litd'
 alias startcln='sudo systemctl start cln'
 alias startfulcrum='sudo systemctl start fulcrum'
+alias starti2p='sudo systemctl start i2pd'
 
 #########################
 # STATUS BONUS SERVICES #
@@ -197,9 +204,10 @@ alias statuslnbits='sudo systemctl status lnbits'
 alias statusthunderhub='sudo systemctl status thunderhub'
 alias statuslitd='sudo systemctl status litd'
 alias statuscln='sudo systemctl status cln'
-alias statusfulcrum='sudo systemctl start fulcrum'
+alias statusfulcrum='sudo systemctl status fulcrum'
+alias statusi2p='sudo systemctl status i2pd'
 alias statusallbonus='echo The status of the bonus services is as follows, press the space key to advance: ; \
-  sudo systemctl status homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum'
+  sudo systemctl status homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum i2pd'
 
 #######################
 # STOP BONUS SERVICES #
@@ -213,7 +221,8 @@ alias stopthunderhub='sudo systemctl stop thunderhub'
 alias stoplitd='sudo systemctl stop litd'
 alias stopcln='sudo systemctl stop cln'
 alias stopfulcrum='sudo systemctl stop fulcrum'
-alias stopallbonus='sudo systemctl stop homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum'
+alias stopi2p='sudo systemctl stop i2pd'
+alias stopallbonus='sudo systemctl stop homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum i2pd'
 
 ##########################
 # DISABLE BONUS SERVICES #
@@ -227,7 +236,8 @@ alias disablethunderhub='sudo systemctl disable thunderhub'
 alias disablelitd='sudo systemctl disable litd'
 alias disablecln='sudo systemctl disable cln'
 alias disablefulcrum='sudo systemctl disable fulcrum'
-alias disableallbonus='sudo systemctl disable homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum'
+alias disablei2p='sudo systemctl disable i2pd'
+alias disableallbonus='sudo systemctl disable homer mempool circuitbreaker lnbits thunderhub litd cln fulcrum i2pd'
 
 #######################
 # BONUS SERVICES LOGS #
@@ -241,3 +251,4 @@ alias thunderhublogs='sudo journalctl -f -u thunderhub'
 alias litdlogs='sudo journalctl -f -u litd'
 alias clnlogs='sudo journalctl -f -u cln' 
 alias fulcrumlogs='sudo journalctl -f -u fulcrum'
+alias i2plogs='sudo tail -f /var/log/i2pd/i2pd.log'
