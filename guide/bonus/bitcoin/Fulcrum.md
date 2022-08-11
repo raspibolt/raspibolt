@@ -488,7 +488,7 @@ Ensure you are logged with user "admin"
 ```sh
 $ sudo systemctl stop fulcrum
 $ sudo systemctl disable fulcrum
-$ sudo userdel -rf fulcrum
+$ sudo userdel -r fulcrum
 ```
 
 * Delete fulcrum directory
@@ -521,21 +521,25 @@ $ sudo systemctl reload tor
 
 ### Uninstall FW configuration
 
-* Delete firewall rule with the comment 'allow Fulcrum SSL' identifying the number of the rule
+* Stop, disable and delete the Fulcrum systemd service
+ 
+  ```sh 
+  $ sudo systemctl stop fulcrum
+  $ sudo systemctl disable fulcrum
+  $ sudo rm /etc/systemd/system/fulcrum.service
+  ```
 
-```sh
-$ sudo ufw status numbered
-```
+* Display the UFW firewall rules and notes the numbers of the rules for Fulcrum (e.g., X and Y below)
 
-```sh
-Status: active
+  ```sh
+  $ sudo ufw status numbered
+  > [...]
+  > [X] 50002                   ALLOW IN    Anywhere                   # allow Fulcrum SSL
+  > [...]
+  > [Y] 50002 (v6)              ALLOW IN    Anywhere (v6)              # allow Fulcrum SSL
+  ```
 
-     To                         Action      From
-     --                         ------      ----
-[X] 50002                       ALLOW IN    Anywhere             # allow Fulcrum SSL
-```
-
-* Delete the rule with the correct number and confir with "yes"
+* Delete the rule with the correct number and confirm with "yes"
 
 ```sh
 $ sudo ufw delete X
