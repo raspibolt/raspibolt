@@ -367,7 +367,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   ```ini
   #!/bin/bash
 
-  /home/<run_as_user>/lndg/.venv/bin/python /home/<run_as_user>/lndg/htlc_stream.py
+  /home/lndg/lndg/.venv/bin/python /home/lndg/lndg/htlc_stream.py
   ```
 * Make the script executable by user “lndg” then exit the "lndg" user session
 
