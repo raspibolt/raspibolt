@@ -379,7 +379,7 @@ Advice: If you can't do "Login", maybe the cause is because you don't have a cha
 1. Access to "Backup" and ensure that the last date of the backup is the same as before done. It is recommended to download the backup file and store it in a safe place for future recovers. The backup file will be updated automatically in Amboss for every channel opening and closing. You could do this too in the "Tools" section in Thunderhub, "Backups" -> "Backup all channels" -> "Download" button.
 1. In Amboss, access "Monitoring" to configure "Healthcheck Settings".
 
-Feel free to link to Telegram bot notifications, enable different notifications, complete your public node profile in Amboss, and other things in the different sections of your account.
+💡 Feel free to link to Telegram bot notifications, enable different notifications, complete your public node profile in Amboss, and other things in the different sections of your account.
 
 ### Recovering channels using Thunderhub method
 
