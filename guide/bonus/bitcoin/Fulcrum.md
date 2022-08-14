@@ -21,7 +21,7 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
-![Fulcrum](../../../images/fulcrum.png)
+![Fulcrum](/images/fulcrum.png)
 
 ---
 
