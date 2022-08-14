@@ -6,7 +6,9 @@ grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
+
 # Bonus Guide: Install ThunderHub
+
 {: .no_toc }
 
 ---
@@ -19,6 +21,7 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
+![Thunderhub](../../../images/thunderhub.png)
 
 ---
 
@@ -34,12 +37,13 @@ Table of contents
 
 ### Check Node.js
 
-* Node.js v16 should have been installed for the BTC RPC Explorer and RTL. We can check our version of Node.js with user "admin": 
+* Node.js v16 should have been installed for the BTC RPC Explorer and RTL. We can check our version of Node.js with user "admin":
   
   ```sh
   $ node -v
   > v16.14.2
   ```
+
 * If the version is v14.15 or above, you can move to the next section. If Node.js is not installed, follow [this guide](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs){:target="_blank"} to install it.
 
 ### Firewall & Reverse Proxy
@@ -47,15 +51,15 @@ Table of contents
 * Configure firewall to allow incoming HTTP requests from your local network to the web server.
 
   ```sh
-  $ sudo ufw allow from 192.168.0.0/16 to any port 4002 comment 'allow ThunderHub from local network'
-  $ sudo ufw reload
-  $ sudo ufw status
+  $ sudo ufw allow 4002 comment 'allow ThunderHub SSL'
   ```
+
 * Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to Thunderhub
 
   ```sh
   $ sudo nano /etc/nginx/streams-enabled/thunderhub-reverse-proxy.conf
   ```
+
   ```nginx
   upstream thunderhub {
     server 127.0.0.1:3010;
@@ -65,7 +69,9 @@ Table of contents
     proxy_pass thunderhub;
   }
   ```
+
 * Test and reload NGINX configuration
+  
   ```sh
   $ sudo nginx -t
   $ sudo systemctl reload nginx
@@ -81,8 +87,7 @@ We do not want to run Thunderhub code alongside `bitcoind` and `lnd` because of 
 For that we will create a separate user and we will be running the code as the new user.
 We are going to install Thunderhub in the home directory since it doesn't need too much space.
 
-* Create a new "thunderhub" user. The new user needs read-only access to the `tls.cert` and our `admin.macaroon`, 
-  so we add him to the "lnd" group. Open a new session.
+* Create a new "thunderhub" user. The new user needs read-only access to the `tls.cert` and our `admin.macaroon`, so we add him to the "lnd" group. Open a new session.
 
   ```sh
   $ sudo adduser --disabled-password --gecos "" thunderhub
@@ -119,7 +124,6 @@ We are going to install Thunderhub in the home directory since it doesn't need t
   $ nano .env.local
   ```
 
-
 * Edit the following lines, save and exit:
 
   ```ini
@@ -143,6 +147,7 @@ We are going to install Thunderhub in the home directory since it doesn't need t
   $ cd ~/thunderhub
   $ nano thubConfig.yaml 
   ```
+
   ```ini
   masterPassword: 'PASSWORD' # Default password unless defined in account
   accounts:
@@ -162,7 +167,7 @@ Test starting Thunderhub manually first to make sure it works.
 * Let's do a first start to make sure it's running as expected.
   Make sure we are in the Thunderhub directory and start the web server.
 
- ```sh
+  ```sh
   $ cd ~/thunderhub
   $ npm run start
   ```
@@ -234,12 +239,14 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 * Add the following three lines in the section for "location-hidden services" in the `torrc` file.
   Save and exit.
 
- ```sh
+  ```sh
   $ sudo nano /etc/tor/torrc
   ```
 
   ```ini
-  HiddenServiceDir /var/lib/tor/thunderhub
+  ############### This section is just for location-hidden services ###
+  # Hidden Service Thunderhub
+  HiddenServiceDir /var/lib/tor/hidden_service_thunderhub/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:3010
   ```
@@ -247,7 +254,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 * Restart Tor and get your connection address.
 
   ```sh
-  $ sudo systemctl restart tor
+  $ sudo systemctl reload tor
   $ sudo cat /var/lib/tor/thunderhub/hostname
   > abcdefg..............xyz.onion
   ```
@@ -284,18 +291,107 @@ Updating to a [new release](https://github.com/apotdevin/thunderhub/releases) sh
   ```sh
   $ sudo systemctl start thunderhub
   ```
-  
-  <br /><br />
-  
+
 ---
 
 ## Uninstall
 
-* Remove user `thunderhub` entirely with
+### Uninstall service
+
+* Stop, disable and delete the Thunderhub systemd service
+
+   ```sh
+  $ sudo systemctl stop thunderhub
+  $ sudo systemctl disable thunderhub
+  $ sudo rm /etc/systemd/system/thunderhub.service
+  ```
+
+### Uninstall FW configuration
+
+* Display the UFW firewall rules and notes the numbers of the rules for Thunderhub (e.g., X and Y below)
 
   ```sh
-  $ sudo deluser -r thunderhub
+  $ sudo ufw status numbered
+  > [...]
+  > [X] 4002                   ALLOW IN    Anywhere                   # allow Thunderhub SSL
+  > [...]
+  > [Y] 4002 (v6)              ALLOW IN    Anywhere (v6)              # allow Thunderhub SSL
   ```
-* Remove Tor hidden service from `/etc/tor/torrc` and `sudo systemctl reload tor`
+
+* Delete the two Thunderhub rules (check that the rule to be deleted is the correct one and type "y" and "Enter" when prompted)
+
+  ```sh
+  $ sudo ufw delete Y
+  $ sudo ufw delete X  
+  ```
+
+### Uninstall Thunderhub
+
+* Delete the "thunderhub" user. It might take a long time as the Thunderhub user directory is big. Do not worry about the `userdel: thunderhub mail spool (/var/mail/thunderhub) not found`.
+
+  ```sh
+  $ sudo su -
+  $ userdel -r thunderhub
+  > userdel: thunderhub mail spool (/var/mail/thunderhub) not found
+  ```
+
+### Uninstall Tor hidden service
+
+* Comment or remove fulcrum hidden service in torrc. Save and exit
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```sh
+  ############### This section is just for location-hidden services ###
+  # Hidden Service Thunderhub
+  #HiddenServiceDir /var/lib/tor/hidden_service_thunderhub/
+  #HiddenServiceVersion 3
+  #HiddenServicePort 80 127.0.0.1:3010
+  ```
+
+* Reload torrc config
+
+  ```sh
+  $ sudo systemctl reload tor
+  ```
+
+---
+
+## Extras
+
+### Access to your Amboss node account
+
+* In the "Home" screen - "Quick Actions" section, click on Amboss icon "Login", wait to the top right corner notification to show you "Logged in" and click again on the Amboss icon "Go to". This will open a secondary tab in your browser to access your Amboss account node.
+
+Advice: If you can't do "Login", maybe the cause is because you don't have a channel opened yet. Planning to open a small size channel to can be connected with the Lightning Network and to the Amboss node.
+
+* Making sure we are connected to the Amboss account, now back to Thunderhub for the next steps.
+
+### Enable auto backups and healthcheck notifications to Amboss account
+
+1. Open the “Settings” by pressing the cogwheel in the top right corner of the Thunderhub
+1. Switch to "Yes" -> Amboss: "Auto backups" and "Healthcheck Pings"
+1. Test pushing a backup to Amboss by entering in the "Tools" section, to the left main menu
+1. Press to "Push" button to test the correct working
+1. Go back to Amboss website and access "Account" in the main menu
+1. Access to "Backup" and ensure that the last date of the backup is the same as before done. It is recommended to download the backup file and store it in a safe place for future recovers. The backup file will be updated automatically in Amboss for every channel opening and closing. You could do this too in the "Tools" section in Thunderhub, "Backups" -> "Backup all channels" -> "Download" button.
+1. In Amboss, access "Monitoring" to configure "Healthcheck Settings".
+
+Feel free to link to Telegram bot notifications, enable different notifications, complete your public node profile in Amboss, and other things in the different sections of your account.
+
+### Recovering channels using Thunderhub method
+
+After possible data corruption of your LND node, ensure that this old node is completely off. Once you have synced the new node, on-chain recovered with seeds, full on-chain re-scan complete and Thunderhub installed, access to the Thunderhub dashboard
+
+1. Access to the "Tools" section, "Backups" -> "Recover Funds from channels" -> "Recover" button
+1. Enter the complete string text of your previously downloaded channels backup file in the step before and push the "Recover" button. All of the channels that you had opened in your old node will be forced closed and they will appear in the "Pending" tab in the "Channels" section until closings are confirmed
+
+⚠️ Use this guide as a last resort if you have lost access to your node or are unable to start LND due to a fatal error. This guide will close all your channels. Your funds will become available on-chain at varying speeds.
+
+---
+  
+<br /><br />
 
 <<Back: [+ Lightning](index.md)
