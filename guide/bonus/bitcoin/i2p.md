@@ -178,6 +178,29 @@ $ sudo rm /etc/systemd/system/i2pd.service
 $ sudo apt --purge autoremove i2pd
 ```
 
+* Delete or comment the next lines in `bitcoin.conf` file. Save and exit
+
+```sh
+$ sudo nano /data/bitcoin/bitcoin.conf
+```
+
+```sh
+$ sudo nano /data/bitcoin/bitcoin.conf
+```
+
+```sh
+# Network
+# Enable I2P
+#i2pacceptincoming=1
+#i2psam=127.0.0.1:7656
+```
+
+* Restart Bitcoin Core
+
+```sh
+$ sudo systemctl restart bitcoind
+```
+
 <br /><br />
 
 ---
