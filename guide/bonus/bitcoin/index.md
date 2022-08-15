@@ -14,6 +14,7 @@ has_toc: false
 ## Electrum servers
 
 * **[Electrum Personal Server](electrum-personal-server.md)** - an alternative to Electrs
+* **[Fulcrum](fulcrum.md)** - a fast & nimble SPV server for Bitcoin Cash, Bitcoin BTC, and Litecoin.
 
 ---
 
@@ -23,7 +24,7 @@ has_toc: false
 * **[Electrum](electrum.md)** - a feature-rich desktop wallet for power-users
 * **[Specter Desktop](specter-desktop.md)** - a convenient and user-friendly GUI around Bitcoin Core with a focus on multisignature setup with hardware wallets and airgapped devices
 
---- 
+---
 
 ## Blockchain explorers
 
