@@ -74,7 +74,7 @@ $ sudo tail -f /var/log/i2pd/i2pd.log
 $ sudo systemctl status i2pd
 ```
 
-* Expected output:
+* Expected output, find *enabled* label:
 
 ```sh
 * i2pd.service - I2P Router written in C++
@@ -105,30 +105,20 @@ $ sudo apt install lsof
 
 We need to set up settings in Bitcoin Core configuration file to enable I2P connections - add new lines if they are not present.
 
-💡 To speed up the time the network requires to discover other peers under this network, you can optionally add some seed nodes manually
-
-* With user "admin" in `bitcoin.conf`, add the following lines (logs and I2P node seeds are optional additions). Save and exit.
+* With user "admin" in `bitcoin.conf`, add the following lines (additional i2p logs are optional). Save and exit.
 
 ```sh
 $ sudo nano /data/bitcoin/bitcoin.conf
 ```
 
 ```sh
-# Additional logs
+# Additional logs (optional)
 debug=i2p
 
 # Network
 # Enable I2P
 i2pacceptincoming=1
 i2psam=127.0.0.1:7656
-
-# I2P node seeds
-seednode=a5qsnv3maw77mlmmzlcglu6twje6ttctd3fhpbfwcbpmewx6fczq.b32.i2p:0
-seednode=c4gfnttsuwqomiygupdqqqyy5y5emnk5c73hrfvatri67prd7vyq.b32.i2p:0
-seednode=h3r6bkn46qxftwja53pxiykntegfyfjqtnzbm6iv6r5mungmqgmq.b32.i2p:0
-seednode=jz3s4eurm5vzjresf4mwo7oni4bk36daolwxh4iqtewakylgkxmq.b32.i2p:0
-seednode=sedndhv5vpcgdmykyi5st4yqhdxl3hpdtglta4do435wupahhx6q.b32.i2p:0
-seednode=wwbw7nqr3ahkqv62cuqfwgtneekvvpnuc4i4f6yo7tpoqjswvcwa.b32.i2p:0
 ```
 
 * Restart Bitcoin Core
