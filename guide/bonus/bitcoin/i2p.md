@@ -127,7 +127,7 @@ i2psam=127.0.0.1:7656
 $ sudo systemctl restart bitcoind
 ```
 
-* Wait a few minutes until Bitcoin Core started again, enter the next command to obtain your I2P address
+* Wait a few minutes until Bitcoin Core started again, and enter the next command to obtain your I2P address. There is usually some additional delay with the I2P local address appearing after Bitcoin Core already has connected to onion peers.
 
 ```sh
 $ bitcoin-cli getnetworkinfo | grep address.*i2p
