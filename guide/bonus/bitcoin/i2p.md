@@ -20,7 +20,7 @@ has_toc: false
 
 I2P client is a software used for building and using anonymous I2P networks. Such networks are commonly used for anonymous peer-to-peer applications (filesharing, cryptocurrencies) and anonymous client-server applications (websites, instant messengers, chat-servers).
 
-We are to use [i2pd](https://i2pd.readthedocs.io/en/latest/) (I2P Daemon) a full-featured C++ implementation of the I2P client as a Tor network complement.
+We are to use [i2pd](https://i2pd.readthedocs.io/en/latest/) (I2P Daemon), a full-featured C++ implementation of the I2P client as a Tor network complement.
 
 ---
 
