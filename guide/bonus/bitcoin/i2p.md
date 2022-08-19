@@ -103,9 +103,9 @@ $ sudo apt install lsof
 
 ### Configure Bitcoin Core
 
-We need to set up settings in Bitcoin Core configuration file to enable I2P connections - add new lines if they are not present.
+We need to set up settings in Bitcoin Core configuration file to enable I2P connections - add new lines if they are not present
 
-* With user "admin" in `bitcoin.conf`, add the following lines (additional i2p logs are optional). Save and exit.
+* With user "admin" in `bitcoin.conf`, add the following lines (additional i2p logs are optional). Save and exit
 
 ```sh
 $ sudo nano /data/bitcoin/bitcoin.conf
@@ -127,7 +127,7 @@ i2psam=127.0.0.1:7656
 $ sudo systemctl restart bitcoind
 ```
 
-* Wait a few minutes until Bitcoin Core started again, and enter the next command to obtain your I2P address. There is usually some additional delay with the I2P local address appearing after Bitcoin Core already has connected to onion peers.
+* Wait a few minutes until Bitcoin Core started again, and enter the next command to obtain your I2P address. There is usually some additional delay with the I2P local address appearing after Bitcoin Core already has connected to onion peers
 
 ```sh
 $ bitcoin-cli getnetworkinfo | grep address.*i2p
@@ -169,10 +169,6 @@ $ sudo apt --purge autoremove i2pd
 ```
 
 * Delete or comment the next lines in `bitcoin.conf` file. Save and exit
-
-```sh
-$ sudo nano /data/bitcoin/bitcoin.conf
-```
 
 ```sh
 $ sudo nano /data/bitcoin/bitcoin.conf
