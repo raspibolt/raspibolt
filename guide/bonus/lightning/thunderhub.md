@@ -169,7 +169,7 @@ Test starting Thunderhub manually first to make sure it works.
 
   ```sh
   $ cd ~/thunderhub
-  $ npm run start
+  $ npm run start:prod
   ```
 
 * Now point your browser to `https://raspibolt.local:4002` (or whatever you chose as hostname) or the ip address (e.g. `https://192.168.0.20:4002`).
@@ -207,7 +207,7 @@ In order to do that we create a systemd unit that starts the service on boot dir
 
   [Service]
   WorkingDirectory=/home/thunderhub/thunderhub
-  ExecStart=/usr/bin/npm run start
+  ExecStart=/usr/bin/npm run start:prod
   User=thunderhub
   Restart=always
   TimeoutSec=120
@@ -255,7 +255,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 
   ```sh
   $ sudo systemctl reload tor
-  $ sudo cat /var/lib/tor/thunderhub/hostname
+  $ sudo cat /var/lib/tor/hidden_service_thunderhub/hostname
   > abcdefg..............xyz.onion
   ```
 
@@ -365,7 +365,7 @@ Updating to a [new release](https://github.com/apotdevin/thunderhub/releases) sh
 
 * In the "Home" screen - "Quick Actions" section, click on Amboss icon "Login", wait to the top right corner notification to show you "Logged in" and click again on the Amboss icon "Go to". This will open a secondary tab in your browser to access your Amboss account node.
 
-Advice: If you can't do "Login", maybe the cause is because you don't have a channel opened yet. Planning to open a small size channel to can be connected with the Lightning Network and to the Amboss node.
+Advice: If you can't do "Login", maybe the cause is because you don't have a channel opened yet. Planning to open a small size channel to be connected with the Lightning Network and to the Amboss node.
 
 * Making sure we are connected to the Amboss account, now back to Thunderhub for the next steps.
 
