@@ -518,7 +518,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
   $ lncli listchannels
   ```
 
-* **Make a Lightning payment**. TBy default, these work with invoices, so when you buy something or want to send money, you need to get an invoice first. However, you can also pay without requesting an invoice as long the receiving node supports the keysend or amp feature!
+* **Make a Lightning payment**. By default, these work with invoices, so when you buy something or want to send money, you need to get an invoice first. However, you can also pay without requesting an invoice as long the receiving node supports the keysend or amp feature!
   
   To try, why not send me a single satoshi! You simply need to input my node pukey [`Stadicus node`](https://amboss.space/node/02acd93e3352fd59066ca3f23e8865de1926301e8be03c6a52f0f7e43533fe9888){:target="_blank"}, the amount in satoshis and add the –keysend flag. 
 
