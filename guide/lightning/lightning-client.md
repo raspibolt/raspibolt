@@ -519,6 +519,9 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
   ```
 
 * **Make a Lightning payment**. These work with invoices, so everytime you buy something or want to send money, you need to get an invoice first.
+Or you can pay directly another node.
+LND not support LNURL so you can pay an invoice using a mobile wallet that support LNURL
+  
   To try, why not send me a single satoshi to view my Twitter profile?
 
   * Click on this Tippin.me link: <https://tippin.me/@Stadicus3000>
@@ -526,8 +529,14 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
   * Pay me 1 satoshi (~ $0.0001) 🤑
 
     ```sh
-    * lncli payinvoice lnbc10n1pw......................gsj59
+    * lncli payinvoice lnurl..........
     ```
+  Or you can do it using lncli , [`Stadicus node`](https://amboss.space/node/02acd93e3352fd59066ca3f23e8865de1926301e8be03c6a52f0f7e43533fe9888){:target="_blank"} 
+
+    ```sh
+    * lncli sendpayment --dest 02acd93e3352fd59066ca3f23e8865de1926301e8be03c6a52f0f7e43533fe9888 --amt 1 --keysend
+    ```
+
 
 ### Adding watchtowers
 
