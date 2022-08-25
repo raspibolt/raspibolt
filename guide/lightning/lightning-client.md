@@ -187,7 +187,6 @@ To improve the security of your wallet, check out these more advanced methods:
   gc-canceled-invoices-on-startup=true
   gc-canceled-invoices-on-the-fly=true
   ignore-historical-gossip-filters=1
-  sync-freelist=false
   stagger-initial-reconnect=true
   routing.strictgraphpruning=true
 
