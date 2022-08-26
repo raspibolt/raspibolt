@@ -97,7 +97,7 @@ Note: Punching into the washers can be quite difficult at time. Because of this,
 
 * Repeat step 1 and 2 above for all the remaining words
 
-* (Optional) Punch the name of the wallet on a washer (e.g. "MY COLDCARD" or "LND"). It might come handy in a few years to remember what wallet was associated with this backup and also because some wallets might use uncommon derivation paths. Check this [list of derivation paths](https://walletsrecovery.org/){:target="_blank"} supported by each wallet is maintained by @NVK and @J9Roem.
+* (Optional) Punch the name of the wallet on a washer (e.g. "WALLET XY"). It might come handy in a few years to remember what wallet was associated with this backup and also because some wallets might use uncommon derivation paths. Check this [list of derivation paths](https://walletsrecovery.org/){:target="_blank"} supported by each wallet is maintained by @NVK and @J9Roem.
 
 * (Optional) Punch the date of creation of your wallet, known as the "birth date". This could help you quicken the search for your UTXOs when reconstructing the wallet in a few years. The wallet software used for recovery will not need to scan the entire blockhain but will start at the birth date.
 
@@ -113,37 +113,9 @@ You're set! You now have a DIY steel metal backup that will be resistant to fire
 
 Below are a few pointers in case you need to use your backup to recover funds from one of your wallet.
 
-* Open Sparrow
+Best practice is to NEVER enter your 24 recovery words on an online software or website unless it's just a very small amount that you don't mind putting at risk. 
 
-* Create a new wallet (`Ctrl`+`n`)
-
-* Enter a wallet name (e.g., "Recovered Seedsigner")
-
-* Select the appropriate policy and script types. The default "Single signature" and "native segwit" should apply to most wallets created recently. If your wallet was using addresses starting with "3..." or "1..." then respectively select the "nested segwit" or "legacy" script type.
-
-* Click on "New or Imported Software Wallet"
-
-* In the "Mnemonic Words (BIP 39)" tab, use the dropdown menu to select the correct number of mnemonic words (e.g. 24).
-
-* A table with empty boxes will appear. Fill in the boxes with your mnemonic words written on the washers in the right order. Words are suggested based on the first letters you will type. Once you see your word appearing in the first position or on its own, simply press `Enter` and it will populate the box with your word and move to the next one sutomaticlly. Doing this rather than typing the word fully could prevent unwanted typos and a bit of stress!
-
-* Once you've typed all your mnemonic words, Sparrow will check the checksum of your mnemonic words. If it is valid, it will display a green tick with the words "Valid checksum".
-
-* If you used a passphrase, also known as "25th" word for this wallet, add it in the passphrase box. Otherwise, let it empty.
-
-* Click on "Create keystore" and then on the blue button "Import keystore"
-
-* Click on "Advanced...". If you know the date of creation of your wallet, and input this date in the "Birth date" section; otherwise, leave it empty. Then click on "Close".
-
-* Review the information on the screem and if all looks ok, click on "Apply"
-
-* A pop-up window will open asking for an optional password. Setting a password allows for encrypting the wallet file on your computer for better privacy. Unless you plan to send the recovered funds immediately to another wallet, it is recommended to set up a password and save it in your password manager. Otherwise, leave the boxes empty.
-
-* Click on "Set password" (or "No password" if you've left the boxes empty)
-
-* To see your balance and transaction history, click on "Transactions". It might take a few minutes for the wallet to scan the blockchain and identify all your transactions and UTXOs.
-
-You're set! You now have a hot wallet containing your recovered funds. Or more technically true, you now have a new wallet that have access to the master rivate key associated with your original wallet and therefore you can spend and receive bitcoin again.
+Instead, it is best to enter your mnemonic words into a dedicated and secure hardware wallet. Most hardware wallets have information on how to do just this on their website, make sure you have a look at these instructions BEFORE you have an emergency situation!
 
 <br /><br />
 
