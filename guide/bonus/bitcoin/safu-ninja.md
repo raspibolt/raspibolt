@@ -57,7 +57,8 @@ As far as I know, SafuNinja was the first one to come up with [this idea](https:
 
 
 This metal backup has been stress tested by Jameson Lopp. Check his full review [here](https://blog.lopp.net/metal-bitcoin-seed-storage-stress-test-iv/){:target="_blank"} and below is a summary:
-![Stress test](../../../images/safu-ninja-stress-test-results.png)
+
+![Stress test](../../../images/safu-ninja-stress-test-result.png)
 
 
 Let's get started!
