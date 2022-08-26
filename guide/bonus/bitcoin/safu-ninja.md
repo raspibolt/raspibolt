@@ -83,7 +83,7 @@ The key thing is to make sure that all the sizes are compatible with each other:
 
 Also, if you want to punch more than one backup, make sure you get a stamp set that is hard enough to punch repeatedly into metal.
 
-Note: Punching into the washers can be quite difficult at time. Because of this, some guides recommend using a [Blockmit washer jig](https://www.cryptocloaks.com/product/blockmitjig/){:target="_blank"}  to make it easier to hold the punch and create a tidier result. However, buying such an item make us go back to square one as it is not an off-the-shelf component! However, if you have a 3D printer, you could print it yourself (PIY?) by downloading the free [3D model](https://www.tinkercad.com/things/6LnKVMshm6o){:target="_blank"}.
+Note: Punching into the washers can be quite difficult at time. Because of this, some guides recommend using a [Blockmit washer jig](https://www.cryptocloaks.com/product/blockmitjig/){:target="_blank"}  to make it easier to hold the punch and create a tidier result. However, buying such an item make us go back to square one as it is not an off-the-shelf component! However, if you have a 3D printer, you could print it yourself by downloading the free [3D model](https://www.tinkercad.com/things/6LnKVMshm6o){:target="_blank"}.
 
 ---
 
