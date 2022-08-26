@@ -1,6 +1,6 @@
 ---
 layout: default
-title: DIY steel mnemonic backup
+title: Safu Ninja
 parent: + Bitcoin
 grand_parent: Bonus Section
 nav_exclude: true
@@ -8,15 +8,15 @@ has_children: false
 has_toc: false
 ---
 
-## Bonus guide: DIY steel mnemonic backup
+## Bonus guide: Safu Ninja, a DIY steel mnemonic backup
 {: .no_toc }
 
 ---
 
-Learn how to make resilient mnemonic word backups with off-the-sheld components for complete privacy.
+Learn how to make resilient mnemonic word backups with off-the-shelf components for complete privacy.
 
-Difficulty: Simple
-{: .label .label-yellow }
+Difficulty: Easy
+{: .label .label-green }
 
 Status: Tested v3
 {: .label .label-green }
@@ -43,19 +43,22 @@ Technically, these words are known as "mnemonic words" and are used together wit
 
 Now, because these words allow to reconstruct your wallet and recover your funds, they have to be kept very secure and never typed or saved in any computer or online device. That's why wallet provides usually advise users to write them down on a piece of paper, which is great from a security point of view.
 
-But paper is easily destroyed by water, fire or even a pet that loves chewing things. Hence it is much better to store them on a much more resilient physical medium: e.g., steel.
-
-Various steel backup solutions have been created the last few years. You can find a comprehensive list of them and how they performed under stress tests on [Jameson Lopp's website](https://jlopp.github.io/metal-bitcoin-storage-reviews/){:target="_blank"}.
+But paper is easily destroyed by water, fire or even a pet that loves chewing things. Hence it is much better to store them on a much more resilient physical medium: e.g., steel. Various steel backup solutions have been created the last few years. You can find a comprehensive list of them and how they performed under stress tests on [Jameson Lopp's website](https://jlopp.github.io/metal-bitcoin-storage-reviews/){:target="_blank"}.
 
 ![Mnemonics to private key illustration](../../../images/blockplate_crush.png)
 
 While great, most of these techniques have one major downside... they require you to buy from a company a ready-made item which sole use case is as a bitcoin mnemonics backup. Which means that the seller will know that you probably have some bitcoin... and worst, if their customer database get hacked, anyone could quickly know that you probably have some bitcoins.
 
-Instead, it is more private and ultinately secure to build this steel mnemonics backup from off-the-shelf components that have not be designed for Bitcoin usage. Like you did with the RaspiBolt node vs buying a plug-and-play node!
+Instead, it is more private and ultimately secure to build this steel mnemonics backup from off-the-shelf components that have not be designed for Bitcoin usage. Like you did with the RaspiBolt node vs buying a plug-and-play node!
 
-A technique to do just this was [first published](https://medium.com/l33t/safu-ninja-cheap-effective-bitcoin-seed-storage-65c80b068685){:target="_blank"} on Medium (all good things [start on Medium](https://medium.com/@stadicus/noobs-guide-to-%EF%B8%8F-lightning%EF%B8%8F-on-a-raspberry-pi-f0ab7525586e){:target="_blank"} ;) in Dec 2020 by L33T GUY. 
+For example, a popular DIY method relies on standard steel washers stacked and locked on a bolt. The mnemonic words and ordering numbers are punched on the washers using a metal stamp set. All the components can be found easily in a hardware shop or online and none are associated with Bitcoin usage. Simple and private.
 
-This DIY method relies on standard steel washers stacked and locked on a bolt. The mnemonic words and ordering numbers are punched on the washers using a metal stamp set. All the components can be found easily in a hardware shop or online and none are associated with Bitcoin usage. Simple and private.
+As far as I know, SafuNinja was the first one to come up with [this idea](https://www.reddit.com/r/Bitcoin/comments/h0j136/cheap_and_easy_diy_metal_bitcoin_seed_storage/){:target="_blank"} back in June 2020. You can check their [website](https://safu.ninja/){:target="_blank"}.
+
+
+This metal backup has been stress tested by Jameson Lopp. Check his full review [here](https://blog.lopp.net/metal-bitcoin-seed-storage-stress-test-iv/){:target="_blank"} and below is a summary:
+![Stress test](../../../images/safu-ninja-stress-test-results.png)
+
 
 Let's get started!
 
