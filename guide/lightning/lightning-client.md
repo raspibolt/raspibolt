@@ -281,7 +281,7 @@ For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` 
 
 * **Write these 24 words down manually on a piece of paper and store it in a safe place.**
 
-You can use a simple piece of paper, write them on the custom themed [Raspibolt backup card](https://github.com/raspibolt/raspibolt/blob/master/resources/raspibolt-backup-card.pdf){:target="_blank"}, or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
+You can use a simple piece of paper, write them on the custom themed [RaspiBolt backup card](https://github.com/raspibolt/raspibolt/blob/master/resources/raspibolt-backup-card.pdf){:target="_blank"}, or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
 This piece of paper is all an attacker needs to completely empty your on-chain wallet!
 Do not store it on a computer.
 Do not take a picture with your mobile phone.
