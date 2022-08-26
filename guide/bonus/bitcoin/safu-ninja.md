@@ -101,7 +101,7 @@ Note: Punching into the washers can be quite difficult at time. Because of this,
 
 * (Optional) Punch the date of creation of your wallet, known as the "birth date". This could help you quicken the search for your UTXOs when reconstructing the wallet in a few years. The wallet software used for recovery will not need to scan the entire blockhain but will start at the birth date.
 
-* Stack all the wasshers on the bolt
+* Stack all the washers on the bolt
 
 * Screw and tighten the wingnut
 
