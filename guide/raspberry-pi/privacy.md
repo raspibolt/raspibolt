@@ -78,6 +78,12 @@ We need to enable Tor to accept instructions through its control port, with the 
   $ sudo systemctl reload tor
   ```
 
+* Check the systemd journal to see Tor real time updates output logs.
+  
+  ```sh
+  $ sudo journalctl -f -u tor@default
+  ```
+
 Not all network traffic is routed over the Tor network.
 But we now have the base to configure sensitive applications to use it.
 
@@ -99,7 +105,7 @@ This makes "calling home" very easy, without the need to configure anything on y
 
   ```sh
   ############### This section is just for location-hidden services ###
-
+  # Hidden Service SSH server
   HiddenServiceDir /var/lib/tor/hidden_service_sshd/
   HiddenServiceVersion 3
   HiddenServicePort 22 127.0.0.1:22
@@ -126,14 +132,56 @@ A few examples:
 
   * **Note:** If you are using PuTTy and fail to connect to your Pi by setting port 9050 in the PuTTy proxy settings, try setting port 9150 instead. When Tor runs as an installed application instead of a background process it uses port 9150.
 
-* **MacOS and Linux**: use `torify` or `torsocks`.
+* **Linux**: use `torify` or `torsocks`.
   Both work similarly; just use whatever you have available:
 
   ```sh
   $ torify ssh admin@abcdefg..............xyz.onion
   ```
+
   ```sh
   $ torsocks ssh admin@abcdefg..............xyz.onion
+  ```
+
+* **macOS**: Using `torify` or `torsocks` may not work due to Apple's *System Integrity Protection (SIP)* which will deny access to `/usr/bin/ssh`.
+
+  To work around this, first make sure Tor is installed and running on your Mac:
+
+  ```sh
+  $ brew install tor && brew services start tor
+  ```
+
+  You can SSH to your Pi "out of the box" with the following proxy command:
+
+  ```sh
+  $ ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:9050 %h %p" admin@abcdefg..............xyz.onion
+  ```
+
+  For a more permanent solution, add these six lines below to your local SSH config file. Choose any HOSTNICKNAME you want, save and exit.
+
+  ```sh
+  $ sudo nano .ssh/config
+  ```
+
+  ```sh
+  Host HOSTNICKNAME
+    Hostname abcdefg..............xyz.onion
+    User admin
+    Port 22
+    CheckHostIP no
+    ProxyCommand /usr/bin/nc -x localhost:9050 %h %p
+  ```
+
+  Restart Tor
+
+  ```sh
+  $ brew services restart tor
+  ```
+
+  You should now be able to SSH to your Pi with
+
+  ```sh
+  $ ssh HOSTNICKNAME
   ```
 
 <br /><br />

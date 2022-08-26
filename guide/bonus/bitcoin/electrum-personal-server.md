@@ -119,6 +119,23 @@ Electrum Personal Server uses the Bitcoin Core wallet with "watch-only" addresse
   ```
 
   ![Install Electrum Personal Server with Python Pip](../../../images/60_eps_pip_install.png)
+  
+### Setup default wallet with `bitcoind` and set it to autoload on daemon start
+eps needs a "dummy" wallet configured in bitcoind to correctly scan for transactions.
+Create a basic wallet with
+```
+$ bitcoin-cli createwallet "default" "true" "true" "" "true"
+```
+and then add directive to autoload it into `bitcoin.conf`: 
+```
+$ nano ~/.bitcoin/bitcoin.conf
+```
+following can be placed after the `# Connections` stanza
+```
+# Default wallet
+wallet=/data/bitcoin/default
+```
+The default wallet will be automatically loaded after creation, and the autoload directive will take care of loading it at each restart.
 
 ### First start
 The Electrum Personal Server scripts are installed in the directory `/home/bitcoin/.local/bin/`. Unfortunately, in Raspberry Pi OS this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just [add this directory to your $PATH environment variable](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path){:target="_blank"}, but it's not necessary in this guide.
@@ -171,7 +188,9 @@ If everything works as expected, we will now automate the start of Electrum Pers
   `exit`
 
 * As "admin", set up the systemd unit for automatic start on boot, save and exit
-  `$ sudo nano /etc/systemd/system/eps.service`
+  ```
+  $ sudo nano /etc/systemd/system/eps.service
+  ```
 
 ```ini
 [Unit]

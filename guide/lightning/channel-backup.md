@@ -286,7 +286,7 @@ The `channel.backup` file is very small in size (<<1 MB) so even the smallest US
 
   ```sh
   $ sudo mount -a
-  $ df -h static-channel-backup-external
+  $ df -h /mnt/static-channel-backup-external
   > Filesystem      Size  Used Avail Use% Mounted on
   > /dev/sdb        1.9G  4.0K  1.9G   1% /mnt/static-channel-backup-external
   ```
@@ -343,7 +343,7 @@ Follow this section if you want a remote backup. If you already set up a local b
   ```
 
 * Go back to the GitHub repository webpage
-  * Click on "Settings", then "Deploy keys", then "Add deploy keys"
+  * Click on "Settings", then "Deploy keys", then "Add deploy key"
   * Type a title (e.g., "SCB")
   * In the "Key" box, copy/paste the string generated above starting (e.g. `ssh-rsa 5678efgh... lnd@raspibolt`)
   * Tick the box "Allow write access" to enable this key to push changes to the repository
@@ -442,7 +442,7 @@ Then we check if a copy gets stored at the intended backup location(s).
 * If you enabled the local backup, check the content of your local storage device. It should now contain a backup file with the date/time corresponding to the test made just above
 
   ```sh
-  $ ls -la /mnt/storage-device-scb
+  $ ls -la /mnt/static-channel-backup-external
   > -rwxr-xr-x 1 lnd  lnd  14011 Feb  5 10:59 channel-20220205-105949.backup
   ```
 

@@ -11,9 +11,23 @@ has_toc: false
 
 ---
 
-## Electrum Servers
+## Electrum servers
 
 * **[Electrum Personal Server](electrum-personal-server.md)** - an alternative to Electrs
+
+---
+
+## Desktop wallets
+
+* **[BitBoxApp](bitboxapp.md)** - a beginner-friendly desktop wallet that pionneered hardware wallets support 
+* **[Electrum](electrum.md)** - a feature-rich desktop wallet for power-users
+* **[Specter Desktop](specter-desktop.md)** - a convenient and user-friendly GUI around Bitcoin Core with a focus on multisignature setup with hardware wallets and airgapped devices
+
+---
+
+## Blockchain explorers
+
+* **[Mempool](mempool.md){:target="_blank"}** - a self-hosted Bitcoin blockchain and mempool visualizer/explorer to preserve your privacy when looking up your transactions or checking the mempool for fee estimation
 
 ---
 
@@ -21,19 +35,25 @@ has_toc: false
 
 * **[JoinMarket on RaspiBolt](https://github.com/kristapsk/raspibolt-extras/blob/master/joinmarket.md){:target="_blank"}** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
 
-* **[Mempool](mempool.md){:target="_blank"}** - a self-hosted Bitcoin blockchain and mempool visualizer/explorer to preserve your privacy when looking up your transactions or checking the mempool for fee estimation
+* **[I2P](i2p.md){:target="_blank"}** - The Invisible Internet Protocol
 
 ---
 
-## Security (multisig)
+## Decentralized exchange
 
-* **[Specter Wallet](specter-desktop.md)** - a convenient and user-friendly GUI around Bitcoin Core with a focus on multisignature setup with hardware wallets and airgapped devices
+* **[Bisq](bisq.md)** -  a decentralized exchange desktop app connected to your node to privately buy and sell non-KYC bitcoins
 
 ---
 
 ## Fun
 
 * **[Download the white paper](white-paper.md)** - download the Bitcoin white paper directly from your blockchain data
+
+---
+
+## Testnet
+
+* **[Running a Testnet RaspiBolt Node](testnet.md)** - configure your RaspiBolt for use on testnet
 
 ---
 

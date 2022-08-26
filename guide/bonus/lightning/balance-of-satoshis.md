@@ -102,13 +102,13 @@ Table of contents
 * Find the most recent tag and verify the signature. Add the `--tags` option to select even a lightweight/non-annotated tag. Add the `--abbrev=0` option to remove any long-format tag names.
 
   ```sh
-  $ git describe --tags --abbrev=0
-  > v11.14.0
-  $ git verify-tag v11.14.0
-  > gpg: Signature made Tue 07 Dec 2021 03:57:11 GMT
-  > gpg:                using RSA key DE23E73BFA8A0AD5587D2FCDE80D2F3F311FD87E
+  $ git tag | sort --version-sort | tail -n 1
+  > v12.4.1
+  $ git verify-tag v12.4.1
   > gpg: Good signature from "Alex Bosworth <alex.bosworth@gmail.com>" [unknown]
-  > [...]
+  > gpg: WARNING: This key is not certified with a trusted signature!
+  > gpg:          There is no indication that the signature belongs to the owner.
+  > Primary key fingerprint: DE23 E73B FA8A 0AD5 587D  2FCD E80D 2F3F 311F D87E
   ```
 
 * Install Balance of Satoshis locally
@@ -122,7 +122,7 @@ Table of contents
 
   ```sh
   $ bos -V
-  > v11.14.0
+  > v12.4.1
   ```
 
 ---
@@ -137,7 +137,7 @@ To use Balance of Satoshis, we will use the "bos" user.
 
   ```sh
   $ bos help
-  > bos 11.14.0
+  > bos 12.4.1
   >
   > USAGE
   >
@@ -153,7 +153,7 @@ To use Balance of Satoshis, we will use the "bos" user.
 
   ```sh
   $ bos help rebalance
-  > bos 11.14.0
+  > bos 12.4.1
   >
   > USAGE
   >
@@ -271,11 +271,11 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
   $ cd balanceofsatoshis
   ```
 
-* Check what version you are using currently (e.g. here v11.14.0)
+* Check what version you are using currently (e.g. here v12.4.1)
 
   ```sh
   $ bos -V
-  > 11.14.0
+  > 12.4.1
   ```
 
 * Update the local repository by downloading the new commits from the source repository and check if a new tag/version is available (e.g. here v99.99.9)
@@ -289,8 +289,8 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
 * Find the most recent tag. Add the `--tags` option to select even a lightweight/non-annotated tag. Add the `--abbrev=0` option to remove any long-format tag names.
 
   ```sh
-  $ git describe --tags --abbrev=0
-  > v11.14.0
+  $ git tag | sort --version-sort | tail -n 1
+  > v12.4.1
   ```
 
 * Remove any potential uncommited changes to your local branch to avoid issues when checking out the new tag
@@ -314,10 +314,11 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
 
   ```sh
   $ git verify-tag v99.99.9
-  > gpg: Signature made Tue 07 Dec 2021 03:57:11 GMT
-  > gpg:                using RSA key DE23E73BFA8A0AD5587D2FCDE80D2F3F311FD87E
-  > gpg: Good signature from "Alex Bosworth <alex.bosworth@gmail.com>" [unknown]
   > [...]
+  > gpg: Good signature from "Alex Bosworth <alex.bosworth@gmail.com>" [unknown]
+  > gpg: WARNING: This key is not certified with a trusted signature!
+  > gpg:          There is no indication that the signature belongs to the owner.
+  > Primary key fingerprint: DE23 E73B FA8A 0AD5 587D  2FCD E80D 2F3F 311F D8
   ```
 
 * Install the new version and check this it has been installed properly
@@ -441,6 +442,14 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
   [Install]
   WantedBy=multi-user.target
   ```
+  
+* Note: A new option was added to change the display of amounts (satoshis) from `0.00011111` to `11,111` or `11.111` (depending on your locale): `--use-small-units`. To enable this, add it to the command `bos telegram`:
+
+  ```ini
+  [...]
+  ExecStart=/home/bos/balanceofsatoshis/bos telegram --use-small-units --connect YourConnectionCode --use-proxy /home/bos/balanceofsatoshis/proxy_agent.json
+  [...]
+  ``` 
 
 * Enable the service, start it and check the status of the service. You should also receive a connection message from your TG bot ('Connect to ...').
 
@@ -468,7 +477,7 @@ Now we’ll make sure our Telegram Bot command starts as a systemd service on th
 
 ### Bos Telegram bot in action
 
-* The bot will notify you of the followibg events on your LN node:
+* The bot will notify you of the following events on your LN node:
   * 💵 - A payment being received (if it's a keysend with a message, the message will be decoded and displayed
   * 💰 - Routing/forward events
   * ☯️ - Sucessful rebalancing payment you initiated
