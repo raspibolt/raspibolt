@@ -194,7 +194,6 @@ In order to do that, we create a systemd unit that starts the service on boot di
 
 You can now access LNDg from within your local network by browsing to http://raspibolt.local:8889 (or your equivalent IP address).
 
-
 ### Enable Nginx and SSL for LNDg
 
 This will allow Nginx to serve the LNDg site securely over SSL.
@@ -403,11 +402,11 @@ If you recieve a '502 Bad Gateway' error when attempting to access the secure si
   ```
 After it has restarted, try accessing the secure site again.  Once all the services have started and initialized, you should have no trouble.
 
-If you recieve the 502 error after a node restart, you may want to increase the TimeoutStartSec value in the uwsgi.service file:
+If you receive the 502 error after a node restart, you may want to increase the TimeoutStartSec value in the uwsgi.service file:
+  
   ```sh
   $ sudo vi /etc/systemd/system/uwsgi.service
   ```
-
 
 ### Backend refreshes
 
