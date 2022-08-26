@@ -694,6 +694,7 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
         # [...]
   
   #}
+  ```
 
 * Test and reload nginx configuration
 
