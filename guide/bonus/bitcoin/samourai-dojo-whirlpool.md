@@ -322,7 +322,7 @@ Mix bitcoin on your raspibolt node.
 
 * Alternatively you can copy the pairing payload from your phone, pass this to your computer and paste into the payload box in Whirlpool.
 
-[whirlpool_payload.png](/images/whirlpool_payload.png)
+![whirlpool_payload.png](images/whirlpool_payload.png)
 
 * Turn on backend and authenticate using samourai wallet passphrase
 
