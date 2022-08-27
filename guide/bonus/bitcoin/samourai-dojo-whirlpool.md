@@ -24,7 +24,7 @@ Difficulty: Medium
 #Status: Tested v3
 #{: .label .label-red }
 
-![Dojo](Guide/images/dojo_profile.png)
+![dojo_profile](Guide/images/dojo_profile.png)
 ---
 
 ## Requirements
@@ -301,11 +301,11 @@ Connect samourai wallet to your own backend
 
 * Paste `Dojo API and Maintenance Tool` address into Tor browser and authenticate with `[I] NODE_ADMIN_KEY`.
 
-![Tor](Tor.png)
+![maintancetool_auth.png](Guide/images/maintancetool_auth.png)
 
 * You will find your QR code for samourai wallet under the "pairing section".
 
-![Auth](Auth.png)
+![dojo_pairing.png](Guide/images/dojo_pairing.png)
 
 💡 To connect, you need to delete and restore already existing samourai wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Double check your seed phrase and passphrase before you do that!
 
@@ -314,23 +314,23 @@ Mix bitcoin on your raspibolt node.
 
 * Install and run latest [whirlpool GUI](https://samouraiwallet.com/download)
 
-* With Tor browser running in the background, paste `Whirlpool client` address in the correct format. Set Tor proxy port for `9150`.
+* With Tor browser running in the background, paste `whirlpool client` address in the correct format. Set Tor proxy port for `9150` and click connect.
 
-![GUI](gui.png)
+![GUI](Guide/images/whirlpool_setup.png)
 
 * Within your Samourai Wallet go to `Settings > Transactions > Pair to Whirlpool GUI`. The wallet will now show a QR code and an option to copy the 'pairing payload'. Pressing the QR code icon in Whirlpool will open your computer's camera. Hold your phone up to scan the QR and complete the pairing.
 
 * Alternatively you can copy the pairing payload from your phone, pass this to your computer and paste into the payload box in Whirlpool.
 
-![setup](whirlsetup.png)
+[whirlpool_payload.png](Guide/images/whirlpool_payload.png)
 
 * Turn on backend and authenticate using samourai wallet passphrase
 
-![setup](Authwhirl.png)
+![whirlpool_passphrase_auth.png](Guide/images/whirlpool_passphrase_auth.png)
 
 * Setup complete and ready to start a mix! Now you run mixing client on your raspbibolt node!
 
-![startmix](startmix.png)
+![whirlpool_startmix.png](Guide/images/whirlpool_startmix.png)
 
 💡 You can use whirlpool GUI for mixing management, just make sure Tor Browser is running on the background when you want to connect to your client. Whirlpool GUI can be safely closed, as mixing client is now running on your node.
 
