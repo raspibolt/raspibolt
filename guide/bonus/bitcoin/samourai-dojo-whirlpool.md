@@ -56,7 +56,6 @@ You will need several new passwords, and it’s easiest to write them all down i
 [ J ] NODE_JWT_SECRET
 ```
 
-If you need inspiration for creating your passwords: the [xkcd: Password Strength](https://xkcd.com/936/){:target="_blank"} comic is funny and contains a lot of truth.
 Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}), or whaterver password manager you're already using, and keep your original notes out of sight once installation is complete.
 
 ### Install dependencies
