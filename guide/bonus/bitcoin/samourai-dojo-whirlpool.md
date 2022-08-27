@@ -38,7 +38,7 @@ Difficulty: Medium
 
 ### (optional) Print private IP address
 
-Private IP address of your device on local network will be necessary in the configuration section.
+Private IP address of your device will be necessary in the configuration section.
 
 * With user "admin", run following command.
 
