@@ -280,6 +280,10 @@ whirlpool    | 2022-08-18 00:13:56.220  WARN 1 --- [           main] c.s.whirlpo
 whirlpool    | 2022-08-18 00:13:56.226  WARN 1 --- [           main] c.s.whirlpool.cli.services.CliService    : ? Please start GUI to initialize
 ```
 
+## Connect to your Dojo
+
+### Print onion addresses
+
 * Print Onion addresses and write them down to a safe place (password manager etc.).
 
 ```sh
