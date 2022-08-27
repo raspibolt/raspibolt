@@ -24,7 +24,7 @@ Difficulty: Medium
 #Status: Tested v3
 #{: .label .label-red }
 
-![Dojo](profile_dojo.png)
+![Dojo](Guide/images/dojo_profile.png)
 ---
 
 ## Requirements
