@@ -21,9 +21,6 @@ Samourai Whirlpool is a free and open source (FOSS), non custodial, chaumian Coi
 Difficulty: Medium
 {: .label .label-yellow }
 
-#Status: Tested v3
-#{: .label .label-red }
-
 ![dojo_profile](/images/dojo_profile.png)
 ---
 
