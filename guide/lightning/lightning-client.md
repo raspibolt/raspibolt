@@ -32,15 +32,15 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/lnd-linux-arm64-v0.14.3-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/manifest-v0.14.3-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.14.3-beta/manifest-roasbeef-v0.14.3-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/lnd-linux-arm64-v0.15.0-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-v0.15.0-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-roasbeef-v0.15.0-beta.sig
   ```
 
 * Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
 
   ```sh
-  $ curl https://keybase.io/roasbeef/pgp_keys.asc | gpg --import
+  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/roasbeef.asc | gpg --import
   > ...
   > gpg: key 372CBD7633C61696: public key "Olaoluwa Osuntokun <laolu32@gmail.com>" imported
   > ...
@@ -49,8 +49,8 @@ We'll download, verify and install LND.
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.14.3-beta.sig manifest-v0.14.3-beta.txt
-  > gpg: Signature made Mon Apr 18 21:26:47 2022 BST
+  $ gpg --verify manifest-roasbeef-v0.15.0-beta.sig manifest-v0.15.0-beta.txt
+  > gpg: Signature made Fri Jun 24 00:50:22 2022 EEST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -62,17 +62,17 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.14.3-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.14.3-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.15.0-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.15.0-beta.tar.gz: OK
   ```
 
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.14.3-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.14.3-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.15.0-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.0-beta/*
   $ lnd --version
-  > lnd version 0.14.3-beta commit=v0.14.3-beta
+  > lnd version 0.15.0-beta commit=v0.15.0-beta
   ```
 
 ### Data directory
@@ -187,7 +187,6 @@ To improve the security of your wallet, check out these more advanced methods:
   gc-canceled-invoices-on-startup=true
   gc-canceled-invoices-on-the-fly=true
   ignore-historical-gossip-filters=1
-  sync-freelist=true
   stagger-initial-reconnect=true
   routing.strictgraphpruning=true
 
@@ -278,8 +277,10 @@ The current state of your channels, however, cannot be recreated from this seed.
 For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
 🚨 This information must be kept secret at all times.
+
 * **Write these 24 words down manually on a piece of paper and store it in a safe place.**
-You can use a simple piece of paper, write them on a proper [backup card](https://shiftcrypto.ch/backupcard/backupcard_print.pdf){:target="_blank"}), or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
+
+You can use a simple piece of paper, write them on the custom themed [RaspiBolt backup card](https://github.com/raspibolt/raspibolt/blob/master/resources/raspibolt-backup-card.pdf){:target="_blank"}, or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
 This piece of paper is all an attacker needs to completely empty your on-chain wallet!
 Do not store it on a computer.
 Do not take a picture with your mobile phone.
@@ -342,6 +343,7 @@ Now, let's set up LND to start automatically on system startup.
   # Service execution
   ###################
   ExecStart=/usr/local/bin/lnd
+  ExecStop=/usr/local/bin/lncli stop
 
   # Process management
   ####################
@@ -544,29 +546,41 @@ It's good practice to add a few watchtowers, just to be on the safe side.
 
   ```sh
   $ sudo su - lnd
-  $ lncli wtclient add 0301135932e89600b3582513c648d46213dc425c7666e3380faa7dbb51f7e6a3d6@tower4excc3jdaoxcqzbw7gzipoknzqn3dbnw2kfdfhpvvbxagrzmfad.onion:9911
+  $ lncli wtclient add 023bad37e5795654cecc69b43599da8bd5789ac633c098253f60494bde602b60bf@iiu4epqzm6cydqhezueenccjlyzrqeruntlzbx47mlmdgfwgtrll66qd.onion:9911
   ```
 
 * Check if the watchtower is active
 
-  ```json
+  ```sh
   $ lncli wtclient towers
   {
       "towers": [
           {
-              "pubkey": "0301135932e89600b3582513c648d46213dc425c7666e3380faa7dbb51f7e6a3d6",
+              "pubkey": "023bad37e5795654cecc69b43599da8bd5789ac633c098253f60494bde602b60bf",
               "addresses": [
-                  "tower4excc3jdaoxcqzbw7gzipoknzqn3dbnw2kfdfhpvvbxagrzmfad.onion:9911"
+                  "iiu4epqzm6cydqhezueenccjlyzrqeruntlzbx47mlmdgfwgtrll66qd.onion:9911"
               ],
               "active_session_candidate": true,
               "num_sessions": 0,
               "sessions": [
               ]
-          }
+          },
       ]
   }
   ```
 * Check out this [list of altruistic public watchtowers](https://github.com/openoms/lightning-node-management/issues/4){:target="_blank"} maintained by Openoms, and add a few more.
+
+* If you want to list your towers
+
+  ```sh
+  $ lncli wtclient towers
+  ```
+
+* If you want to deactivate an active tower
+
+  ```sh
+  $ lncli wtclient remove <pubkey>
+  ```
 
 ### More commands
 
