@@ -386,8 +386,8 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   ```sh
   $ sudo su - cln
   $ cd ~
-  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.7.2.tar.gz
-  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.7.2/v0.7.2.tar.gz.asc
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.9.0.tar.gz
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.9.0/v0.9.0.tar.gz.asc
   ```
 
 * Verify the release:
