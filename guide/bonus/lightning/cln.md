@@ -393,7 +393,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Verify the release:
 
   ```sh
-  $ gpg --verify v0.7.2.tar.gz.asc v0.7.2.tar.gz
+  $ gpg --verify v0.9.0.tar.gz.asc v0.9.0.tar.gz
   ```
   
 * Output should be like:
