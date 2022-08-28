@@ -19,8 +19,8 @@ Read more about it [here](https://zmnscpxj.github.io/clboss/index.html){:target=
 Difficulty: Easy
 {: .label .label-green }
 
-Status: Draft v3
-{: .label .label-red }
+Status: Tested v3
+{: .label .label-green }
 
 ---
 
