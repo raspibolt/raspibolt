@@ -111,7 +111,7 @@ We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is
 
 * It should output log entry infos like these:
 
-  ```ini
+  ```
   INFO    plugin-clboss: clboss 0.12
   INFO    plugin-clboss: ChannelFeeManager: zerobasefee: allow
   INFO    plugin-clboss: New block at xxxxxx
