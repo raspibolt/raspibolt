@@ -412,8 +412,8 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Extract and install with `npm`:
 
   ```sh
-  $ tar xvf v0.7.2.tar.gz 
-  $ cd c-lightning-REST-0.7.2
+  $ tar xvf v0.9.0.tar.gz 
+  $ cd c-lightning-REST-0.9.0
   $ npm install --only=prod
   ```
   
