@@ -619,3 +619,44 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   $ sudo systemctl start htlc-stream-lndg.service
   $ sudo systemctl status htlc-stream-lndg.service
   ```
+
+---
+
+## For the future: LNBits update
+
+* With user "admin", stop all the LNDg services and open a “lndg” user session.
+
+  ```sh
+  $ sudo systemctl stop htlc-stream-lndg.service
+  $ sudo systemctl stop rebalancer-lndg.timer
+  $ sudo systemctl stop jobs-lndg.timer
+  $ sudo systemctl stop lndg.service
+  $ sudo su - lndg
+  ```
+
+* Fetch the latest GitHub repository information, display the release tags (use the latest 1.3.0 in this example), and update:
+
+  ```sh
+  $ cd /home/lndg/lndg
+  $ git fetch
+  $ git reset --hard HEAD
+  $ git tag
+  $ git checkout 1.3.0
+  $ ./venv/bin/pip install -r requirements.txt
+  $ exit
+  ```
+  
+* Start the services again.
+
+  ```sh
+  $ sudo systemctl start lndg.service
+  $ sudo systemctl start jobs-lndg.timer
+  $ sudo systemctl start rebalancer-lndg.timer
+  $ sudo systemctl start htlc-stream-lndg.service
+  ```
+
+<br /><br />
+
+---
+
+<< Back: [+ Lightning](index.md)
