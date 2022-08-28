@@ -450,7 +450,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Copy `access.macaroon` to home directory of user `rtl`:  
   
   ```sh
-  $ sudo cp /data/cl-plugins-available/c-lightning-REST-0.7.2/certs/access.macaroon /home/rtl/
+  $ sudo cp /data/cl-plugins-available/c-lightning-REST-0.9.0/certs/access.macaroon /home/rtl/
   $ sudo chown rtl:rtl /home/rtl/access.macaroon
   ```
   
