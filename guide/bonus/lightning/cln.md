@@ -377,7 +377,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 * c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST).
 * In this chapter we are going to add c-lightning-Rest as CLN plugin and furthermore connect RTL for CLN node management. 
-* The installation of RTL is already described [here](https://raspibolt.org/guide/lightning/web-app.html), so we are focusing on the configuration.
+* The installation of RTL is already described [here](../../lightning/web-app.md), so we are focusing on the configuration.
 
 ### c-lightning-Rest plugin
 
