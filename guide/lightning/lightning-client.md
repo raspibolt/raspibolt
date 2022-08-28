@@ -187,7 +187,6 @@ To improve the security of your wallet, check out these more advanced methods:
   gc-canceled-invoices-on-startup=true
   gc-canceled-invoices-on-the-fly=true
   ignore-historical-gossip-filters=1
-  sync-freelist=true
   stagger-initial-reconnect=true
   routing.strictgraphpruning=true
 
@@ -278,8 +277,10 @@ The current state of your channels, however, cannot be recreated from this seed.
 For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
 🚨 This information must be kept secret at all times.
+
 * **Write these 24 words down manually on a piece of paper and store it in a safe place.**
-You can use a simple piece of paper, write them on a proper [backup card](https://shiftcrypto.ch/backupcard/backupcard_print.pdf){:target="_blank"}), or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
+
+You can use a simple piece of paper, write them on the custom themed [RaspiBolt backup card](https://github.com/raspibolt/raspibolt/blob/master/resources/raspibolt-backup-card.pdf){:target="_blank"}, or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
 This piece of paper is all an attacker needs to completely empty your on-chain wallet!
 Do not store it on a computer.
 Do not take a picture with your mobile phone.
