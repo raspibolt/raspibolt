@@ -433,7 +433,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
   ```ini
   # cln-rest-plugin
-  plugin=/data/cl-plugins-available/c-lightning-REST-0.7.2/plugin.js
+  plugin=/data/cl-plugins-available/c-lightning-REST-0.9.0/plugin.js
   rest-port=3092
   rest-docport=4091
   rest-protocol=http
