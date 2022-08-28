@@ -507,7 +507,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   }
   ```
 
-* As user admin, startup RTL and connect via browser`: 
+* As user admin, startup RTL and connect via browser: 
 
   ```sh
   $ exit
