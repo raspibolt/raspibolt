@@ -52,14 +52,20 @@ Configure the advanced options as follows:
 
   Note: if you're using a different platform, you can adjust the hostname later by replacing it in the file `/etc/hostname` and adding it at the end of the first line in `/etc/hosts`.
 
-* **Enable SSH**: activate the checkbox, select "Use password authentication", and set your `password [A]`
+* **Enable SSH**: activate the checkbox and select "Use password authentication"
 
-  This will allow you to connect to the Raspberry Pi remotely using "Secure SHell" without ever connecting it to a keyboard or screen.
+  This will allow you to connect to the Raspberry Pi remotely using "**S**ecure **SH**ell" without ever connecting it to a keyboard or screen.
+
+* **Set username and password**: activate the checkbox and enter `admin` together with your `password [A]`.
+
+  This will create the user `admin` which we will use primarily in this guide, making it more universal.
 
 * **Configure wifi**: if you'll run the RaspiBolt connected to your wireless network, simply enter the wifi name ("SSID") and password.
   Also change "Wifi country" to the two-letter [ISO2 code](https://www.iso.org/obp/ui/#search){:target="_blank"} of your country (e.g., `US`).
 
   If you'll connect your RaspiBolt with a network cable, simply skip this setting.
+
+* **Set locale settings**: activate the checkbox, select your timezone and keyboard layout.
 
 * **That's it.**
   You can ignore the other options.
