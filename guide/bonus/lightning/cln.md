@@ -420,7 +420,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Copy content to plugin datadir:
 
   ```sh
-  $ cp -r ~/c-lightning-REST-0.7.2/ /data/cl-plugins-available/
+  $ cp -r ~/c-lightning-REST-0.9.0/ /data/cl-plugins-available/
   ```
 
 * Setup c-lightning-Rest as plugin:
