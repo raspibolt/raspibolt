@@ -75,7 +75,8 @@ We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is
 ## Compilation
 
 * Compile it.
-  ```sh
+
+    ```sh
   $ ./configure
   $ make
   ```
