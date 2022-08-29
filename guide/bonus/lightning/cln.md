@@ -277,7 +277,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ## Allow user "admin" to work with CLN
 
-* Allow "admin" to access CLN commands. Create a symlink, adjust permissions and create aliases (switch to "admin" with `exit`).
+* Allow “admin” to access CLN commands. Switch to “admin” with exit, create a symlink, adjust permissions and create aliases.
 
   ```sh
   $ ln -s /data/cln /home/admin/.lightning
