@@ -113,7 +113,7 @@ $ sudo cat /proc/swaps
 Expected output:
 
 ```sh
-Filename                                Type                Size           Used    Priority
+Filename                               Type                 Size           Used    Priority
 /var/swap                              file                 102396         0       -2
 /dev/zram0                             partition            102396         0        5
 ```
@@ -231,6 +231,7 @@ $ sudo adduser fulcrum bitcoin
 $ sudo mkdir -p /data/fulcrum/fulcrum_db
 $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
 ```
+
 * Create a symlink to /home/fulcrum/.fulcrum
 
 ```sh
@@ -265,7 +266,7 @@ $ nano /data/fulcrum/fulcrum.conf
 
 # Bitcoin Core settings
 bitcoind = 127.0.0.1:8332
-rpccookie= /home/bitcoin/.bitcoin/.cookie
+rpccookie = /home/bitcoin/.bitcoin/.cookie
 
 # Fulcrum server settings
 datadir = /data/fulcrum/fulcrum_db
@@ -273,7 +274,6 @@ cert = /data/fulcrum/cert.pem
 key = /data/fulcrum/key.pem
 ssl = 0.0.0.0:50002
 peering = false
-announce = false
 
 # RPi optimizations
 bitcoind_timeout = 600
@@ -286,7 +286,7 @@ db_max_open_files = 200
 fast-sync = 1024
 
 # 8GB RAM (comment the last two lines and uncomment the next)
-#db_max_open_files= 400
+#db_max_open_files = 400
 #fast-sync = 2048
 ```
 
@@ -367,7 +367,7 @@ Fulcrum will now index the whole Bitcoin blockchain so that it can provide all n
 
 DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES - in case of that happening, start sync from scratch by deleting and recreating `fulcrum_db` folder.
 
-💡 Fulcrum must first fully index the blockchain and compact its database before you can connect to it with your wallets. This can take a few hours. Only proceed with the [Desktop Wallet Section](desktop-wallet.md) once Fulcrum is ready.
+💡 Fulcrum must first fully index the blockchain and compact its database before you can connect to it with your wallets. This can take a few hours. Only proceed with the [Desktop Wallet Section](../../bitcoin/desktop-wallet.md) once Fulcrum is ready.
 
 💡 After the initial sync of Fulcrum, if you want to still use zram, you can return to the default zram config.
 
