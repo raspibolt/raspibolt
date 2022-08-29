@@ -22,7 +22,7 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
-![Core Lightning](../../../images/core-lightning.png)
+![Core Lightning](../../../images/core_lightning.png)
 
 ---
 
