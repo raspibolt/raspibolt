@@ -467,7 +467,7 @@ $ sudo systemctl restart btcrpcexplorer
 
 ### Backup the database
 
-Because the sync can take up to 4 days and more, it is recommended to have at least any backup of the database. It doesn't need to be the latest one and you can backup only once, it is still better to sync for a few hours instead of week (from scratch). Should be done on external drive.
+Because the sync can take ~3.5 to 4 days, it is recommended to have at least any backup of the database. It doesn't need to be the latest one and you can backup only once. It is still better to sync for a few hours instead of a week (from scratch). Should be done on an external drive. Remember to stop Fulcrum before with `sudo systemctl stop fulcrum` command.
 
 ## For the future: Fulcrum upgrade
 
