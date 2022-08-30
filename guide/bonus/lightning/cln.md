@@ -385,7 +385,6 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
   ```sh
   $ sudo su - cln
-  $ cd ~
   $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.9.0.tar.gz
   $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.9.0/v0.9.0.tar.gz.asc
   ```
@@ -456,7 +455,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   
 * Restart `cln.service` and look for errors in cln's log: `tail -f /data/cln/cln.log`. Positive results look like this:
 
-  ```sh
+  ```
   UNUSUAL plugin-plugin.js: --- Starting the cl-rest server ---
   UNUSUAL plugin-plugin.js: --- cl-rest api server is ready and listening on port: 3092 ---
   UNUSUAL plugin-plugin.js: --- cl-rest doc server is ready and listening on port: 4091 ---
