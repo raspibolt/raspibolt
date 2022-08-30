@@ -18,7 +18,7 @@ alias showmainversion='echo The installed versions of the main services are as f
   echo BTC RPC Explorer: `sudo head -n 3 /home/btcrpcexplorer/btc-rpc-explorer/package.json | grep version` ; \
   echo Electrs: `electrs --version` ; \
   echo RTL: `sudo head -n 3 /home/rtl/RTL/package.json | grep version` ; \
-  tor --version ; \
+  tor --version | grep version | grep -v compiled ; \
   echo NPM: v`npm --version` ; \
   echo NodeJS: `node -v`; \
   htop --version ; \
