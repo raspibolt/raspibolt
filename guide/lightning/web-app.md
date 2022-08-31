@@ -245,6 +245,7 @@ You can easily add a Tor hidden service on the RaspiBolt and access the Ride the
 
   ```ini
   ############### This section is just for location-hidden services ###
+  # Hidden Service RTL
   HiddenServiceDir /var/lib/tor/hidden_service_rtl/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:3000
