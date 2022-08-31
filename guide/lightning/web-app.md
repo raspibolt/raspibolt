@@ -131,15 +131,15 @@ If anything's wrong, it will time out sooner or later.
 Also, there might be a lot of confusing output.
 If you something similar to the following at the end, installation was successful:
 
-```
-...
-added 362 packages, and audited 363 packages in 12m
-
-24 packages are looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
-```
+  ```
+  [...]
+  added 362 packages, and audited 363 packages in 12m
+  
+  24 packages are looking for funding
+    run `npm fund` for details
+  
+  found 0 vulnerabilities
+  ```
 
 ### Configuration
 
