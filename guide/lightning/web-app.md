@@ -103,11 +103,13 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ cd RTL
 
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > v0.12.3
+  > v0.13.1
 
-  $ git checkout v0.12.3
+  $ git checkout v0.13.1
 
-  $ git verify-tag v0.12.3
+  $ git verify-tag v0.13.1
+  > gpg: Signature made Thu 25 Aug 2022 20:09:30 BST
+  > gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
   > gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
   > gpg:                 aka "Suheb <39208279+saubyk@users.noreply.github.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -119,7 +121,7 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   Downloading all dependencies can sometimes be very slow, so be patient and let the process run its course.
 
   ```sh
-  $ npm install --only=prod
+  $ npm install --omit=dev
   ```
 
 The installation can take some time, and can hang on a single package for a long time.
@@ -131,13 +133,12 @@ If you something similar to the following at the end, installation was successfu
 
 ```
 ...
-added 307 packages from 224 contributors and audited 1648 packages in 2336.773s
+added 362 packages, and audited 363 packages in 12m
 
-7 packages are looking for funding
+24 packages are looking for funding
   run `npm fund` for details
 
-found 23 vulnerabilities (21 moderate, 2 high)
-  run `npm audit fix` to fix them, or `npm audit` for details
+found 0 vulnerabilities
 ```
 
 ### Configuration
@@ -282,16 +283,16 @@ Make sure to read the release notes first.
   $ sudo su - rtl
   ```
 
-* Fetch the latest GitHub repository information, display the latest release tag, ignoring release cadidates (`v0.12.3` in this example), and update:
+* Fetch the latest GitHub repository information, display the latest release tag, ignoring release cadidates (`v0.13.1` in this example), and update:
 
   ```sh
   $ cd /home/rtl/RTL
   $ git fetch
   $ git reset --hard
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  $ git checkout v0.12.3
-  $ git verify-tag v0.12.3
-  $ npm install --only=prod
+  $ git checkout v0.13.1
+  $ git verify-tag v0.13.1
+  $ npm install --omit=dev
   $ exit
   ```
 
