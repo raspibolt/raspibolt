@@ -128,7 +128,7 @@ The installation can take some time, and can hang on a single package for a long
 If that happens, just be patient and wait a bit longer.
 If anything's wrong, it will time out sooner or later.
 
-Also, there might be a lot of confusing output.
+* Also, there might be a lot of confusing output.
 If you something similar to the following at the end, installation was successful:
 
   ```
@@ -148,22 +148,23 @@ Now we take the sample configuration file and add change it to our needs.
 * Copy the sample config file, and open it in the text editor.
 
   ```sh
-  cp Sample-RTL-Config.json ./RTL-Config.json
-  nano RTL-Config.json
+  $ cp Sample-RTL-Config.json ./RTL-Config.json
+  $ nano RTL-Config.json
   ```
 
 * Set password [E] to access the RTL web interface. This should be a dedicated password not used anywhere else.
 
-  ```sh
+  ```ini
     "multiPass": "YourPassword[E]"
   ```
 
 * Specify the values where RTL can find the authentication macaroon file and the LND configuration
 
-  ```sh
+  ```ini
     "macaroonPath": "/home/rtl"
     "configPath": "/data/lnd/lnd.conf"
   ```
+
 * Save and exit
 
 
@@ -202,7 +203,7 @@ In order to do that, we create a systemd unit that starts the service on boot di
 
 * Paste the following configuration. Save and exit.
 
-  ```sh
+  ```ini
   # RaspiBolt: systemd unit for Ride the Lightning
   # /etc/systemd/system/rtl.service
 
@@ -242,7 +243,7 @@ You can easily add a Tor hidden service on the RaspiBolt and access the Ride the
   $ sudo nano /etc/tor/torrc
   ```
 
-  ```sh
+  ```ini
   ############### This section is just for location-hidden services ###
   HiddenServiceDir /var/lib/tor/hidden_service_rtl/
   HiddenServiceVersion 3
