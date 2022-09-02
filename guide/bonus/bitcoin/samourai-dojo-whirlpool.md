@@ -63,7 +63,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 * With user "admin", make sure that all necessary software packages are installed.
 
 ```sh
-$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+$ sudo apt-get install apt-transport-https ca-certificates gnupg-agent software-properties-common libffi-dev libssl-dev python3-dev python3 python3-pip
 ```
 
 ### Install Docker and Docker-compose
@@ -74,7 +74,7 @@ Dojo is offered as a set of pre configured Docker containers that can run on a x
 
 ```sh
 $ sudo apt install docker
-$ sudo apt install docker-compose
+$ ‍sudo pip3 install docker-compose
 ```
 
 * Make sure installation worked
@@ -157,6 +157,12 @@ $ sudo ln -s /data/dojo /home/dojo/.dojo
 $ sudo chown -R dojo:dojo /home/dojo/.dojo
 ```
 
+* Add user "dojo" to docker group. To execute docker commands and avoid typing the sudo each time, you can add non-root users to the docker group.
+
+```sh
+$ sudo usermod -aG docker dojo
+```
+
 ## Configuration
 
 Next, we have to set up our Dojo configurations.
@@ -222,19 +228,15 @@ WHIRLPOOL_INSTALL=on
 WHIRLPOOL_RESYNC=on
 ```
 
-* Exit "dojo" user session to return to "admin" user session.
-
-```sh
-$ exit
-```
+* Save and exit
 
 ## Run dojo
 
-* Run dojo installation as user admin. Installation can take up to 15 minutes.
+* Still logged as a user "dojo", run installation. Installation can take up to 15 minutes.
 
 ```sh
 $ cd /data/dojo/docker/my-dojo
-$ sudo ./dojo.sh install
+$ ./dojo.sh install
 
 Building tor       ... 
 Building db        ... 
@@ -294,6 +296,12 @@ WARNING: Do not share these onion addresses with anyone!
 Dojo API and Maintenance Tool = xyz.onion         # Use with Onion Browser
  
 Your private Whirlpool client (do not share) = xyz.onion   # Use with whirlpool GUI
+```
+
+* Exit "dojo" user sesstion
+
+```sh
+$ exit
 ```
 
 ### Connect samourai wallet
