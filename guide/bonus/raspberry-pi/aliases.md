@@ -40,11 +40,11 @@ The following list of aliases was derived from contributions by [RobClark56](htt
 
 ## Set up aliases
 
-* With user "admin", access to `home` folder and download the aliases list provided by Raspibolt community at Github. Put "yes" if the prompt ask you about overwrite.
+* With user "admin", access to `home` folder and download the aliases list provided by Raspibolt community at Github. ⚠️ This command will automatically overwrite the previous file you downloaded.
 
   ```sh
   $ cd /home/admin
-  $ wget https://raw.githubusercontent.com/raspibolt/raspibolt/master/resources/.bash_aliases
+  $ wget https://raw.githubusercontent.com/raspibolt/raspibolt/master/resources/.bash_aliases -O .bash_aliases
   ```
 
 * Inspect the list of aliases to make sure it does not do bad things and modify it with your personal aliases if you want. Exit with Ctrl-X
@@ -62,6 +62,19 @@ The following list of aliases was derived from contributions by [RobClark56](htt
 ---
 
 ## Aliases in action
+
+* Simply type "alias" to display all available aliases
+
+  ```sh
+  [...]
+  alias enableallmain='sudo systemctl enable bitcoind electrs btcrpcexplorer lnd rtl scb-backup'
+  alias enablebitcoind='sudo systemctl enable bitcoind'
+  alias enablebtcrpcexplorer='sudo systemctl enable btcrpcexplorer'
+  alias enablecircuitbreaker='sudo systemctl enable circuitbreaker'
+  alias enablecln='sudo systemctl enable cln'
+  alias enablefulcrum='sudo systemctl enable fulcrum'
+  [...]
+  ```
 
 * Test some of the aliases to see if it has been installed properly
 
@@ -98,7 +111,7 @@ The following list of aliases was derived from contributions by [RobClark56](htt
   $ rm ~/.bash_aliases
   ```
 
-  * Execute a source command to register changes to the .bashrc file:
+* Execute a source command to register changes to the .bashrc file:
 
   ```sh
   $ source /home/admin/.bashrc 

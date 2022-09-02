@@ -97,14 +97,14 @@ Homer allows for the use of icons and images. We'll import a few logos to make t
   $ cd /data/homer/tools
   ```
 
-* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from a [GitHub repository](https://github.com/VajraOfIndra/awesome-bitcoin-logos) containing a collection of Bitcoin and Lightning apps logos. 
+* Download the RaspiBolt, BTC RPC Explorer and Ride The Lightning logos from our [Awesome Bitcoin Logos repository](https://github.com/raspibolt/awesome-bitcoin-logos){:target="_blank"} containing a collection of Bitcoin and Lightning FOSS apps logos. 
 Then check that all the logos are in the folder.
 
   ```sh
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/awesome-bitcoin-logos/main/png/raspibolt3.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/awesome-bitcoin-logos/main/png/btcrpcexplorer.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/awesome-bitcoin-logos/main/png/rtl.png
-  $ wget https://raw.githubusercontent.com/VajraOfIndra/awesome-bitcoin-logos/main/png/old-bitcoin.png
+  $ wget https://raw.githubusercontent.com/raspibolt/awesome-bitcoin-logos/main/png/raspibolt3.png
+  $ wget https://raw.githubusercontent.com/raspibolt/awesome-bitcoin-logos/main/png/btcrpcexplorer.png
+  $ wget https://raw.githubusercontent.com/raspibolt/awesome-bitcoin-logos/main/png/ride-the-lightning.png
+  $ wget https://raw.githubusercontent.com/raspibolt/awesome-bitcoin-logos/main/png/old-bitcoin.png
   $ ls -la
   ```
 
@@ -495,7 +495,7 @@ Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s al
 
 * Wait a few minutes for the server to start and for the logs to show that the app is running. Then, point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
 
-You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bitcoin/mempool.md), [ThunderHub](../lightning/thunderhub.md), [LNBits](../lightning/lnbits.md), Bitfeed, LNDg, Lightning Terminal etc, you can add them to your dashboard.
+You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bitcoin/mempool.md), [ThunderHub](../lightning/thunderhub.md), [LNBits](../lightning/lnbits.md), [Lightning Terminal](../lightning/lightning-terminal.md), Bitfeed, LNDg etc, you can add them to your dashboard.
 
 ---
 
@@ -559,7 +559,7 @@ If you want to add a new web service button to one of your existing group, add s
 
 In general if you want to use logos in Homer, you simply need to use the `logo:` entry and paste the path of the PNG between double-quotes as value.
 
-You can find a collection of Bitcoin and Lightning logos in the following GitHub repository: [Awesome Bitcoin Logos](https://github.com/VajraOfIndra/awesome-bitcoin-logos/#awesome-bitcoin-logos=){:target="_blank"}
+You can find a collection of Bitcoin and Lightning logos in our [Awesome Bitcoin Logos repository](https://github.com/raspibolt/awesome-bitcoin-logos){:target="_blank"}
 
 ![Logos repository](../../../images/awesome-bitcoin-logos.png)
 
@@ -724,5 +724,3 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
 ------
 
 << Back: [+ Raspberry Pi](index.md)
-
-
