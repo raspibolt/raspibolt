@@ -60,15 +60,22 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 ### Install dependencies
 
-* With user "admin", make sure that all necessary software packages are installed.
+* As user "admin", make sure apps are up to date and that all necessary software packages are installed.
 
 ```sh
-$ sudo apt-get install apt-transport-https ca-certificates gnupg-agent software-properties-common libffi-dev libssl-dev python3-dev python3 python3-pip
+$ sudo apt update && sudo apt full-upgrade
+$ sudo apt-get install apt-transport-https ca-certificates gnupg-agent software-properties-common
 ```
 
 ### Install Docker and Docker-compose
 
 Dojo is offered as a set of pre configured Docker containers that can run on a x86-64 Linux environment and semi-automates the end-to-end process of installation and configuration. Docker is neccessary to install.
+
+* Install Docker dependencies
+
+```sh
+$ sudo apt-get install libffi-dev libssl-dev python3-dev python3 python3-pip
+```
 
 * Install Docker and Docker-compose
 
@@ -157,7 +164,7 @@ $ sudo ln -s /data/dojo /home/dojo/.dojo
 $ sudo chown -R dojo:dojo /home/dojo/.dojo
 ```
 
-* Add user "dojo" to docker group. To execute docker commands and avoid typing the sudo each time, you can add non-root users to the docker group.
+* Add user "dojo" to docker group to execute docker commands.
 
 ```sh
 $ sudo usermod -aG docker dojo
@@ -173,7 +180,7 @@ Next, we have to set up our Dojo configurations.
 $ sudo -su dojo
 ```
 
-* Move to `my-dojo` directory and list files that needs to be edited.
+* Move to configuration directory and list files that will be edited.
 
 ```sh
 $ cd /data/dojo/docker/my-dojo/conf
@@ -232,7 +239,9 @@ WHIRLPOOL_RESYNC=on
 
 ## Run dojo
 
-* Still logged as a user "dojo", run installation. Installation can take up to 15 minutes.
+* Still logged as a user "dojo" and in `my-dojo` directory, run installation. It can take up to 15 minutes.
+
+💡 To avoid errors during installation and upgrades, always execute dojo commands without sudo - therefore as a dojo user.
 
 ```sh
 $ cd /data/dojo/docker/my-dojo
