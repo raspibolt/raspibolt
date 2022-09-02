@@ -90,7 +90,7 @@ This is a precaution to make sure that this is an official release and not a mal
 * In the next box, drop or upload the SHA256SUMS file
 * If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the release date of the Bitcoin Core v23.0.
 
-![Bitcoin timestamp check](../../images/bitcoin-ots-check.png)
+![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
 
 * If you're satisfied with the checkum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
 
