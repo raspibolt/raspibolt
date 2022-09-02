@@ -387,9 +387,10 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.9.0/v0.9.0.tar.gz.asc
   ```
 
-* Verify the release:
+* Get the author's key and verify the release:
 
   ```sh
+  $ curl https://keybase.io/suheb/pgp_keys.asc | gpg --import
   $ gpg --verify v0.9.0.tar.gz.asc v0.9.0.tar.gz
   ```
   
