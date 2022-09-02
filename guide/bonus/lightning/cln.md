@@ -410,7 +410,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   ```sh
   $ tar xvf v0.9.0.tar.gz 
   $ cd c-lightning-REST-0.9.0
-  $ npm install --only=prod
+  $ npm install --omit=dev
   ```
   
 * Copy content to plugin datadir:
