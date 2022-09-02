@@ -82,7 +82,22 @@ This is a precaution to make sure that this is an official release and not a mal
   > Primary key fingerprint: ...
   ```
 
-* If you're satisfied with the signature check, extract the Bitcoin Core binaries, install them and check the version.
+* The binary checksum file is timestamped on the Bitcoin blockchain via OpenTimestamps, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
+  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
+  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.ots
+* In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
+* In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
+* In the next box, drop or upload the SHA256SUMS file
+* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the release date of the Bitcoin Core v23.0.
+  
+  ```
+  SUCCESS!
+  Bitcoin block 733494 attests existence as of 2022-04-25 IST
+  ```
+
+![Bitcoin timestamp check](../../images/bitcoin-ots-check.png)
+
+* If you're satisfied with the checkum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
   $ tar -xvf bitcoin-23.0-aarch64-linux-gnu.tar.gz
