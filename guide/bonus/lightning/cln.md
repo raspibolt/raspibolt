@@ -375,13 +375,11 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ## c-lightning-Rest & RTL
 
-* c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST).
-* In this chapter we are going to add c-lightning-Rest as CLN plugin and furthermore connect RTL for CLN node management. 
-* The installation of RTL is already described [here](../../lightning/web-app.md), so we are focusing on the configuration.
+c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST). In this chapter we are going to add c-lightning-Rest as CLN plugin and furthermore connect RTL for CLN node management. The installation of RTL is already described [here](../../lightning/web-app.md), so we are focusing on the configuration.
 
 ### c-lightning-Rest plugin
 
-* Setting up c-lightning-Rest as plugin for CLN. First we need to download and verify the c-lightning-Rest package:
+* Setting up c-lightning-Rest as plugin for CLN. First we download and verify the c-lightning-Rest package:
 
   ```sh
   $ sudo su - cln
@@ -397,8 +395,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   
 * Output should be like:
 
-  ```sh
-  gpg: Signature made Mon 09 May 2022 06:37:59 PM EDT
+  ```
   gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
   gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
   gpg:                 aka "Suheb (approves) <39208279+saubyk@users.noreply.github.com>" [unknown]
