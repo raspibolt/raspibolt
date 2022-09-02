@@ -89,11 +89,6 @@ This is a precaution to make sure that this is an official release and not a mal
 * In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
 * In the next box, drop or upload the SHA256SUMS file
 * If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the release date of the Bitcoin Core v23.0.
-  
-  ```
-  SUCCESS!
-  Bitcoin block 733494 attests existence as of 2022-04-25 IST
-  ```
 
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.png)
 
