@@ -30,8 +30,10 @@ It's great that the Raspberry Pi 4 can do it, even if it takes a few days, as th
 
 ## Installation
 
-We download the latest Bitcoin Core binary (the application) and compare this file with the signed checksum.
+We download the latest Bitcoin Core binary (the application) and compare this file with the signed and timestamped checksum.
 This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
+
+### Preparations
 
 * Login as "admin" and change to a temporary directory which is cleared on reboot.
 
@@ -52,12 +54,16 @@ This is a precaution to make sure that this is an official release and not a mal
   $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.asc
   ```
 
+### Checksum check
+
 * Check that the reference checksum in file `SHA256SUMS` matches the checksum calculated by you (ignore the "lines are improperly formatted" warning)
 
   ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
   > bitcoin-23.0-aarch64-linux-gnu.tar.gz: OK
   ```
+
+### Signature check
 
 * Bitcoin releases are signed by a number of individuals, each using their own key.
   In order to verify the validity of these signatures, you must first import the corresponding public keys.
@@ -82,7 +88,9 @@ This is a precaution to make sure that this is an official release and not a mal
   > Primary key fingerprint: ...
   ```
 
-* The binary checksum file is timestamped on the Bitcoin blockchain via OpenTimestamps, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
+### Timestamp check
+
+* The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"}, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
   *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
   *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.ots
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
@@ -91,6 +99,8 @@ This is a precaution to make sure that this is an official release and not a mal
 * If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v23.0){:target="_blank"} of Bitcoin Core v23.0.
 
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
+
+### Installation
 
 * If you're satisfied with the checkum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
 
