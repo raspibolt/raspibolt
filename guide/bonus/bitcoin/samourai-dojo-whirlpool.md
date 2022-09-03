@@ -357,7 +357,7 @@ After you initialized your client for the first time, dojo will generate unique 
 * Switch do `dojo` user and move to `my-dojo` folder.
 
 ```sh
-$ sudo -su dojo
+$ sudo su - dojo
 $ cd /data/dojo/docker/my-dojo
 ```
 
@@ -427,7 +427,7 @@ $ sudo nano /data/bitcoin/bitcoin.conf
 * Switch to user "dojo"
 
 ```sh
-$ sudo -su dojo
+$ sudo su - dojo
 ```
 
 * Uninstall Dojo
