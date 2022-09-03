@@ -60,7 +60,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 ### Install dependencies
 
-* As user "admin", make sure apps are up to date and that all necessary software packages are installed.
+* With user “admin”, make sure that all necessary software packages are installed
 
 ```sh
 $ sudo apt update && sudo apt full-upgrade
@@ -132,28 +132,34 @@ $ sudo systemctl restart bitcoind
 $ cd /tmp/
 ```
 
-* Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}
+* Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update.
 
 ```sh
 $ sudo wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v1.17.0/samourai-dojo-v1.17.0.tar.gz
 $ sudo tar -xvf samourai-dojo-v1.17.0.tar.gz
 ```
 
-### Data directory
+### Create the dojo user
 
-Now that Dojo is downloaded, create dojo user and data directory.
-
-* Create the user dojo and add him to "bitcoin" group
+* Create the user "dojo" and add him to the group “bitcoin” as well.
 
 ```sh
 $ sudo adduser --disabled-password --gecos "" dojo
 $ sudo adduser dojo bitcoin
 ```
 
-* Create the dojo data directory. Make sure you are still in `/tmp/` directory.
+* Add user "dojo" to the docker group to execute docker commands.
 
 ```sh
-$ sudo mv samourai-dojo-v1.17.0 /data/dojo/
+$ sudo usermod -aG docker dojo
+```
+
+### Data directory
+
+* Create the Dojo data folder.
+
+```sh
+$ sudo mv /tmp/samourai-dojo-v1.17.0 /data/dojo/
 $ sudo chown -R dojo:dojo /data/dojo/
 ```
 
@@ -164,23 +170,21 @@ $ sudo ln -s /data/dojo /home/dojo/.dojo
 $ sudo chown -R dojo:dojo /home/dojo/.dojo
 ```
 
-* Add user "dojo" to docker group to execute docker commands.
+* Switch to user "dojo"
 
 ```sh
-$ sudo usermod -aG docker dojo
+$ sudo su - dojo
+```
+
+* Display the link and check that it is not shown in red (this would indicate an error)
+
+```sh
+$ ls -la
 ```
 
 ## Configuration
 
-Next, we have to set up our Dojo configurations.
-
-* Open a "dojo" user session.
-
-```sh
-$ sudo -su dojo
-```
-
-* Move to configuration directory and list files that will be edited.
+* With user "dojo" move to configuration directory and list files that will be edited.
 
 ```sh
 $ cd /data/dojo/docker/my-dojo/conf
@@ -239,9 +243,9 @@ WHIRLPOOL_RESYNC=on
 
 ## Run dojo
 
-* Still logged as a user "dojo" and in `my-dojo` directory, run installation. It can take up to 15 minutes.
+* With user "dojo" run installation. It can take up to 15 minutes.
 
-💡 To avoid errors during installation and upgrades, always execute dojo commands without sudo - therefore as a dojo user.
+💡 To avoid errors, always execute "install" and "upgrade" commands without sudo prefix - therefore as a "dojo" user.
 
 ```sh
 $ cd /data/dojo/docker/my-dojo
@@ -267,10 +271,6 @@ nodejs       | 2022-08-18T00:14:04Z  INFO  Tracker : Tracker Startup (IBD mode)
 nodejs       | 2022-08-18T00:14:05Z  INFO  Tracker : Sync 749889 blocks
 nodejs       | 2022-08-18T00:14:05Z  INFO  Tracker : Beginning to process new block header.
 nodejs       | 2022-08-18T00:14:05Z  INFO  Tracker :  Added block header 1 (id=1)
-nodejs       | 2022-08-18T00:14:05Z  INFO  Tracker : Beginning to process new block header.
-nodejs       | 2022-08-18T00:14:05Z  INFO  Tracker :  Added block header 2 (id=2)
-nodejs       | 2022-08-18T00:14:05Z  INFO  Tracker : Beginning to process new block header.
-nodejs       | 2022-08-18T00:14:05Z  INFO  Tracker :  Added block header 3 (id=3)
 ```
 
 * Following outputs are expected once finished. If you closed the monitoring process, you can view them with the commands below, while still in the `my-dojo` directory.
@@ -280,7 +280,6 @@ $ ./dojo.sh logs node
 nodejs       | 2022-08-18T10:40:28Z  INFO  Importer : Electrum attempting reconnect...
 nodejs       | 2022-08-18T10:40:28Z  INFO  Importer : Successfully connected to indexer
 nodejs       | 2022-08-18T10:40:35Z  INFO  Tracker : Processing active Mempool (0 transactions)
-nodejs       | 2022-08-18T10:40:45Z  INFO  Tracker : Processing active Mempool (0 transactions)
 ```
 
 ```sh
@@ -288,6 +287,12 @@ $ ./dojo.sh logs whirlpool
 whirlpool    | 2022-08-18 00:13:56.216  WARN 1 --- [           main] c.s.whirlpool.cli.services.CliService    : ?????????????????????????
 whirlpool    | 2022-08-18 00:13:56.220  WARN 1 --- [           main] c.s.whirlpool.cli.services.CliService    : ? INITIALIZATION REQUIRED
 whirlpool    | 2022-08-18 00:13:56.226  WARN 1 --- [           main] c.s.whirlpool.cli.services.CliService    : ? Please start GUI to initialize
+```
+
+* Exit dojo user session
+
+```sh
+$ Exit
 ```
 
 ## Connect to your Dojo
