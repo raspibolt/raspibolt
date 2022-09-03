@@ -435,6 +435,7 @@ $ sudo -su dojo
 ```sh
 $ cd /data/dojo/docker/my-dojo
 $ ./dojo.sh uninstall
+```
 
 * Exit dojo user session
 
@@ -472,9 +473,22 @@ $ sudo ufw status numbered
 $ sudo ufw delete X
 ```
 
+### Uninstall Docker
+
+```sh
+$ sudo apt remove docker && sudo apt remove docker-compose
+```
+
 ### Uninstall dependencies (Optional)
+
+* Uninstall Dojo dependencies
 
 ```sh
 $ sudo apt remove apt-transport-https ca-certificates gnupg-agent software-properties-common
-$ sudo apt remove docker && sudo apt remove docker-compose
+```
+
+* Uninstall Docker dependencies
+
+```sh
+$ sudo apt remove libffi-dev libssl-dev python3-dev python3 python3-pip
 ```
