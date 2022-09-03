@@ -393,11 +393,19 @@ $ cd /data/dojo/docker/my-dojo
 $ ./dojo.sh upgrade
 ```
 
+* Exit dojo user session 
+
+```sh
+$ Exit
+```
+
 You have now successfully upgraded dojo on the latest version.
 
 ## Uninstall
 
 ### Remove bitcoin.conf settings
+
+* Move to Bitcoin configuration file
 
 ```sh
 $ sudo nano /data/bitcoin/bitcoin.conf
@@ -414,12 +422,23 @@ $ sudo nano /data/bitcoin/bitcoin.conf
 
 * Save and exit.
 
-### Uninstall dojo
+### Uninstall Dojo
+
+* Switch to user "dojo"
 
 ```sh
 $ sudo -su dojo
+```
+
+* Uninstall Dojo
+
+```sh
 $ cd /data/dojo/docker/my-dojo
 $ ./dojo.sh uninstall
+
+* Exit dojo user session
+
+```sh
 $ exit
 ```
 
@@ -442,9 +461,9 @@ $ sudo userdel -r dojo
 ```sh
 $ sudo ufw status numbered
 > [...]
-> [X] 8433                    ALLOW IN    Anywhere                  
+> [X] 8433                    ALLOW IN    Anywhere    'Allow block streaming'           
 > [...]
-> [Y] 8433 (v6)               ALLOW IN    Anywhere (v6)              
+> [Y] 8433 (v6)               ALLOW IN    Anywhere (v6)    'Allow block streaming'           
 ```
 
 * Delete the rule with the correct number and confirm with "yes"
