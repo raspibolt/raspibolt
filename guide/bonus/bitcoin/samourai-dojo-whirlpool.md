@@ -519,7 +519,7 @@ $ sudo ufw status numbered
 $ sudo ufw delete X
 ```
 
-### Uninstall Docker
+### Uninstall Docker (Optional)
 
 ```sh
 $ sudo apt remove docker && sudo apt remove docker-compose
