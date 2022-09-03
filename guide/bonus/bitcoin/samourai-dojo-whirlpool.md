@@ -196,6 +196,10 @@ $ ls
 
 ```sh
 $ nano docker-bitcoind.conf.tpl
+```
+
+```sh
+# Find and edit following lines
 BITCOIND_RPC_USER=raspibolt
 BITCOIND_RPC_PASSWORD=YourPasswordB
 BITCOIND_INSTALL=off
@@ -209,6 +213,10 @@ BITCOIND_ZMQ_BLK_HASH=8433
 
 ```sh
 $ nano docker-explorer.conf.tpl
+```
+
+```sh
+# Find and edit following lines
 EXPLORER_INSTALL=off
 ```
 
@@ -216,6 +224,10 @@ EXPLORER_INSTALL=off
 
 ```sh
 $ nano docker-indexer.conf.tpl
+```
+
+```sh
+# Find and edit following lines
 INDEXER_INSTALL=off
 INDEXER_IP=private_ip (ex. 10.x.x.x or 192.x.x.x)
 INDEXER_RPC_PORT=50002
@@ -227,6 +239,10 @@ INDEXER_PROTOCOL=tls
 
 ```sh
 $ nano docker-mysql.conf.tpl
+```
+
+```sh
+# Find and edit following lines
 MYSQL_ROOT_PASSWORD= [F] MYSQL_ROOT_PASSWORD
 MYSQL_USER=raspibolt
 MYSQL_PASSWORD= [G] MYSQL_PASSWORD
@@ -236,6 +252,10 @@ MYSQL_PASSWORD= [G] MYSQL_PASSWORD
 
 ```sh
 $ nano docker-node.conf.tpl
+```
+
+```sh
+# Find and edit following lines
 NODE_API_KEY= [H] NODE_API_KEY
 NODE_ADMIN_KEY= [I] NODE_ADMIN_KEY
 NODE_JWT_SECRET= [J] NODE_JWT_SECRET
@@ -246,13 +266,27 @@ NODE_ACTIVE_INDEXER=local_indexer
 
 ```sh
 $ nano docker-whirlpool.conf.tpl
+```
+
+```sh
+# Find and edit following lines
 WHIRLPOOL_INSTALL=on
 WHIRLPOOL_RESYNC=on
 ```
 
-💡 In first time install `.tpl` files are edited. However after first installation, if changes are neccessary it is important to edit non `.tpl` files.
+💡 For first time install `.tpl` files are edited. However after first installation is done, if changes are neccessary, it is important to edit newly    generated `non .tpl` files.
+Contents after installation is done:
+```sh
+user@raspibolt:/data/dojo/docker/my-dojo/conf $ ls
+docker-bitcoind.conf      docker-indexer.conf      docker-tor.conf
+docker-bitcoind.conf.tpl  docker-indexer.conf.tpl  docker-tor.conf.tpl
+docker-common.conf        docker-mysql.conf        docker-whirlpool.conf
+docker-common.conf.tpl    docker-mysql.conf.tpl    docker-whirlpool.conf.tpl
+docker-explorer.conf      docker-node.conf
+docker-explorer.conf.tpl  docker-node.conf.tpl
+```
 
-## Run dojo
+## Run Dojo
 
 * With user "dojo" run installation. It can take up to 15 minutes.
 
