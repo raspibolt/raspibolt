@@ -123,7 +123,7 @@ $ sudo systemctl restart bitcoind
 
 ## Installation
 
-### Download samourai dojo
+### Download Samourai Dojo
 
 * Login as “admin” and change to a temporary directory which is cleared on reboot.
 
@@ -396,7 +396,7 @@ $ ./dojo.sh upgrade
 * Exit dojo user session 
 
 ```sh
-$ Exit
+$ exit
 ```
 
 You have now successfully upgraded dojo on the latest version.
