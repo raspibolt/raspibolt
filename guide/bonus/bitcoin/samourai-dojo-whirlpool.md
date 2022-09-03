@@ -80,8 +80,7 @@ $ sudo apt-get install libffi-dev libssl-dev python3-dev python3 python3-pip
 * Install Docker and Docker-compose
 
 ```sh
-$ sudo apt install docker
-$ ‍sudo pip3 install docker-compose
+$ sudo apt install docker && sudo pip3 install docker-compose
 ```
 
 * Make sure installation worked
@@ -313,6 +312,7 @@ $ exit
 ```
 
 ### Connect samourai wallet
+
 Connect samourai wallet to your own backend
 
 * Paste `Dojo API and Maintenance Tool` address into Tor browser and authenticate with `[I] NODE_ADMIN_KEY`.
@@ -323,20 +323,22 @@ Connect samourai wallet to your own backend
 
 ![dojo_pairing.png](/images/dojo_pairing.png)
 
-💡 To connect, you need to delete and restore already existing samourai wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Double check your seed phrase and passphrase before you do that!
+💡 To connect, you need to delete and restore already existing samourai wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Double check your seedphrase and passphrase before you do that!
 
-### Set up whirlpool GUI 
-Mix bitcoin on your raspibolt node.
+### Connect the GUI to remote client
 
-* Install and run latest [whirlpool GUI](https://samouraiwallet.com/download)
+Join mixing rounds 24/7 using raspibolt node.
 
-* With Tor browser running in the background, paste `whirlpool client` address in the correct format. Set Tor proxy port for `9150` and click connect.
+* Install latest [whirlpool GUI](https://samouraiwallet.com/download) version.
+* Open GUI with Tor browser running in the background.
+
+* Paste `private Whirlpool client` address in the correct format
+* Set Tor proxy port for `9150` and click connect.
 
 ![GUI](/images/whirlpool_setup.png)
 
-* Within your Samourai Wallet go to `Settings > Transactions > Pair to Whirlpool GUI`. The wallet will now show a QR code and an option to copy the 'pairing payload'. Pressing the QR code icon in Whirlpool will open your computer's camera. Hold your phone up to scan the QR and complete the pairing.
-
-* Alternatively you can copy the pairing payload from your phone, pass this to your computer and paste into the payload box in Whirlpool.
+* Within your Samourai Wallet go to `Settings > Transactions > Pair to Whirlpool GUI`
+* Scan or copy the pairing payload from your phone, pass this to your computer and paste into the payload box in Whirlpool.
 
 ![whirlpool_payload.png](/images/whirlpool_payload.png)
 
@@ -348,7 +350,7 @@ Mix bitcoin on your raspibolt node.
 
 ![whirlpool_startmix.png](/images/whirlpool_startmix.png)
 
-💡 You can use whirlpool GUI for mixing management, just make sure Tor Browser is running on the background when you want to connect to your client. Whirlpool GUI can be safely closed, as mixing client is now running on your node.
+💡 Make sure Tor Browser is running on the background when you want to connect to your client. Whirlpool GUI can be safely closed as mixing client is now running remotely on your node.
 
 After you initialized your client for the first time, dojo will generate unique `APIkey`. You will be asked for it in case of resetting the configuration.
 
@@ -378,13 +380,16 @@ $ exit
 
 ```sh
 $ cd /data/dojo/docker/my-dojo
-$ ./dojo.sh stop
+$ sudo ./dojo.sh stop
 ```
-* Follow installation section - download latest version and move it to already existing dojo folder. You will overwrite several files.
 
-* Once done, make sure you are in `my-dojo` folder, upgrade dojo.
+* Follow installation section with user "admin" - download latest version and move it to already existing dojo folder. You will overwrite several files.
+
+* Once done, log as user "dojo" and upgrade dojo.
 
 ```sh
+$ sudo su - dojo
+$ cd /data/dojo/docker/my-dojo
 $ ./dojo.sh upgrade
 ```
 
