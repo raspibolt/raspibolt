@@ -192,6 +192,8 @@ $ ls
 
 * As user "dojo" edit configuration files.
 
+### Bitcoin configuration
+
 ```sh
 $ nano docker-bitcoind.conf.tpl
 BITCOIND_RPC_USER=raspibolt
@@ -203,10 +205,14 @@ BITCOIND_ZMQ_RAWTXS=28333
 BITCOIND_ZMQ_BLK_HASH=8433
 ```
 
+### Explorer configuration
+
 ```sh
 $ nano docker-explorer.conf.tpl
 EXPLORER_INSTALL=off
 ```
+
+### Indexer configuration
 
 ```sh
 $ nano docker-indexer.conf.tpl
@@ -217,12 +223,16 @@ INDEXER_BATCH_SUPPORT=active
 INDEXER_PROTOCOL=tls
 ```
 
+### Database configuration 
+
 ```sh
 $ nano docker-mysql.conf.tpl
 MYSQL_ROOT_PASSWORD= [F] MYSQL_ROOT_PASSWORD
 MYSQL_USER=raspibolt
 MYSQL_PASSWORD= [G] MYSQL_PASSWORD
 ```
+
+### NodeJS configuration
 
 ```sh
 $ nano docker-node.conf.tpl
@@ -232,19 +242,19 @@ NODE_JWT_SECRET= [J] NODE_JWT_SECRET
 NODE_ACTIVE_INDEXER=local_indexer
 ```
 
+### Whirlpool configuration
+
 ```sh
 $ nano docker-whirlpool.conf.tpl
 WHIRLPOOL_INSTALL=on
 WHIRLPOOL_RESYNC=on
 ```
 
-* Save and exit
+💡 In first time install `.tpl` files are edited. However after first installation, if changes are neccessary it is important to edit non `.tpl` files.
 
 ## Run dojo
 
 * With user "dojo" run installation. It can take up to 15 minutes.
-
-💡 To avoid errors, always execute "install" and "upgrade" commands without sudo prefix - therefore as a "dojo" user.
 
 ```sh
 $ cd /data/dojo/docker/my-dojo
@@ -287,6 +297,8 @@ whirlpool    | 2022-08-18 00:13:56.216  WARN 1 --- [           main] c.s.whirlpo
 whirlpool    | 2022-08-18 00:13:56.220  WARN 1 --- [           main] c.s.whirlpool.cli.services.CliService    : ? INITIALIZATION REQUIRED
 whirlpool    | 2022-08-18 00:13:56.226  WARN 1 --- [           main] c.s.whirlpool.cli.services.CliService    : ? Please start GUI to initialize
 ```
+
+💡 To avoid errors, always execute "install" and "upgrade" commands without sudo prefix - therefore as a "dojo" user.
 
 ## Connect to Dojo
 
