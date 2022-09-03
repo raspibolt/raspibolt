@@ -289,17 +289,11 @@ whirlpool    | 2022-08-18 00:13:56.220  WARN 1 --- [           main] c.s.whirlpo
 whirlpool    | 2022-08-18 00:13:56.226  WARN 1 --- [           main] c.s.whirlpool.cli.services.CliService    : ? Please start GUI to initialize
 ```
 
-* Exit dojo user session
-
-```sh
-$ Exit
-```
-
-## Connect to your Dojo
+## Connect to Dojo
 
 ### Print onion addresses
 
-* Print Onion addresses and write them down to a safe place (password manager etc.).
+* Still logged with user "dojo" and in `my-dojo` directory, print onion addresses and write them down to a safe place (password manager etc.).
 
 ```sh
 $ ./dojo.sh onion
