@@ -211,6 +211,8 @@ BITCOIND_ZMQ_BLK_HASH=8433
 
 ### Explorer configuration
 
+* [BTC Explorer)(https://raspibolt.org/guide/bitcoin/blockchain-explorer.html) is already a part of raspibolts guide. However it can be installed automatically as a part of a Dojo. By default is "on".
+
 ```sh
 $ nano docker-explorer.conf.tpl
 ```
@@ -274,17 +276,7 @@ WHIRLPOOL_INSTALL=on
 WHIRLPOOL_RESYNC=on
 ```
 
-💡 For first time install `.tpl` files are edited. However after first installation is done, if changes are neccessary, it is important to edit newly    generated `non .tpl` files.
-Contents after installation is done:
-```sh
-user@raspibolt:/data/dojo/docker/my-dojo/conf $ ls
-docker-bitcoind.conf      docker-indexer.conf      docker-tor.conf
-docker-bitcoind.conf.tpl  docker-indexer.conf.tpl  docker-tor.conf.tpl
-docker-common.conf        docker-mysql.conf        docker-whirlpool.conf
-docker-common.conf.tpl    docker-mysql.conf.tpl    docker-whirlpool.conf.tpl
-docker-explorer.conf      docker-node.conf
-docker-explorer.conf.tpl  docker-node.conf.tpl
-```
+💡 For first time install `.tpl` files are edited. However after first installation is done, if changes are neccessary, it is important to edit newly    generated files without the `.tpl` extension.
 
 ## Run Dojo
 
