@@ -211,7 +211,7 @@ BITCOIND_ZMQ_BLK_HASH=8433
 
 ### Explorer configuration
 
-* [BTC Explorer)(https://raspibolt.org/guide/bitcoin/blockchain-explorer.html) is already a part of raspibolts guide. However it can be installed automatically as a part of a Dojo. By default is "on".
+* [BTC Explorer](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html) is already a part of raspibolts guide. However it can be installed automatically as a part of a Dojo. By default is "on".
 
 ```sh
 $ nano docker-explorer.conf.tpl
