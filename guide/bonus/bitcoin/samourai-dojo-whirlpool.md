@@ -192,6 +192,8 @@ $ ls
 
 * As user "dojo" edit configuration files.
 
+💡 For first time install `.tpl` files are edited. However after first installation is done, if changes are neccessary, it is important to edit newly    generated files without the `.tpl` extension.
+
 ### Bitcoin configuration
 
 ```sh
@@ -276,11 +278,11 @@ WHIRLPOOL_INSTALL=on
 WHIRLPOOL_RESYNC=on
 ```
 
-💡 For first time install `.tpl` files are edited. However after first installation is done, if changes are neccessary, it is important to edit newly    generated files without the `.tpl` extension.
-
 ## Run Dojo
 
 * With user "dojo" run installation. It can take up to 15 minutes.
+
+💡 To avoid errors, always execute "install" and "upgrade" commands without sudo prefix - therefore as a "dojo" user.
 
 ```sh
 $ cd /data/dojo/docker/my-dojo
@@ -324,8 +326,6 @@ whirlpool    | 2022-08-18 00:13:56.220  WARN 1 --- [           main] c.s.whirlpo
 whirlpool    | 2022-08-18 00:13:56.226  WARN 1 --- [           main] c.s.whirlpool.cli.services.CliService    : ? Please start GUI to initialize
 ```
 
-💡 To avoid errors, always execute "install" and "upgrade" commands without sudo prefix - therefore as a "dojo" user.
-
 ## Connect to Dojo
 
 ### Print onion addresses
@@ -362,6 +362,23 @@ Connect samourai wallet to your own backend
 ![dojo_pairing.png](/images/dojo_pairing.png)
 
 💡 To connect, you need to delete and restore already existing samourai wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Double check your seedphrase and passphrase before you do that!
+
+### (optional) Rescan public keys using Dojo Maintenance Tool
+If no balance is shown in your samourai wallet, it is neccessary to rescan public keys as they are not tracked by Dojo yet.
+
+* Log into `Dojo API and Maintenance Tool` using Tor browser
+* Move to `xpubs tool`, under `Tools` section
+* In samourai wallet go to `Settings > Wallet`, here you can find your public keys
+* Copy and paste all "zpubs" into `xpub tool` and rescan each public key separately
+
+You can also use following chart to determine which type of public key you use:
+
+```sh
+Pre-mix and post-mix ZPUBS = accounts for funds yet to be mixed and after mixing
+ZPUB = deposit account for addresses starting with "bc" (default)
+XPUB= deposit addresses start with a "1"
+YPUB = deposit addresses start with a "3"
+```
 
 ### Connect the GUI to remote client
 
