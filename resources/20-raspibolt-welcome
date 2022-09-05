@@ -468,7 +468,7 @@ fi
 # ------------------------------------------------------------------------------
 
 echo -ne "\033[2K"
-printf '%b\n' "${color_grey}cpu temp: ${color_temp}%-2s°C${color_grey}  tx: %-10s storage:   ${color_storage}%-11s ${color_grey}  load: %s
+printf "${color_grey}cpu temp: ${color_temp}%-2s°C${color_grey}  tx: %-10s storage:   ${color_storage}%-11s ${color_grey}  load: %s
 ${color_grey}up: %-10s  rx: %-10s 2nd drive: ${color_storage2nd}%-11s${color_grey}   available mem: ${color_ram}%sM
 ${color_yellow}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${color_green}     .~~.   .~~.      ${color_yellow}%-22s${bitcoind_color}%-4s${color_grey}   ${color_yellow}%-20s${lnd_color}%-4s
