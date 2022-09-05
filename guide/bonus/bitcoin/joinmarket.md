@@ -123,8 +123,7 @@ $ gpg --verify joinmarket-clientserver-0.9.7.tar.gz.asc
 * If the signature checks out, unpack and install JoinMarket. The install script will take about 5 minutes to run.
 
 ```
-$ tar xvzf joinmarket-clientserver-0.9.7.tar.gz
-$ mv joinmarket-clientserver-0.9.7 /home/joinmarket/
+$ tar -xvzf joinmarket-clientserver-0.9.7.tar.gz -C /home/joinmarket/
 $ cd 
 $ ln -s joinmarket-clientserver-0.9.7 joinmarket
 $ ./joinmarket/install.sh --without-qt --disable-secp-check --disable-os-deps-check
