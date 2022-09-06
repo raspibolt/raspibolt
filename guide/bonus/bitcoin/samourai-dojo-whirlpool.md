@@ -371,14 +371,7 @@ If no balance is shown in your samourai wallet, it is neccessary to rescan publi
 * In samourai wallet go to `Settings > Wallet`, here you can find your public keys
 * Copy and paste all "zpubs" into `xpub tool` and rescan each public key separately
 
-You can also use following chart to determine which type of public key you use:
-
-```sh
-Pre-mix and post-mix ZPUBS = accounts for funds yet to be mixed and after mixing
-ZPUB = deposit account for addresses starting with "bc" (default)
-XPUB= deposit addresses start with a "1"
-YPUB = deposit addresses start with a "3"
-```
+Samourai wallet uses zpubs by default, however if you use other address format than "bc", it is neccessary to rescan other pubs as well
 
 ### Connect the GUI to remote client
 
