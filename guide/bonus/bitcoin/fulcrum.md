@@ -367,7 +367,7 @@ Fulcrum will now index the whole Bitcoin blockchain so that it can provide all n
 
 DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES - in case of that happening, start sync from scratch by deleting and recreating `fulcrum_db` folder.
 
-💡 Fulcrum must first fully index the blockchain and compact its database before you can connect to it with your wallets. This can take up until ~3.5 - 4 days. Only proceed with the [Desktop Wallet Section](../../bitcoin/desktop-wallet.md) once Fulcrum is ready.
+💡 Fulcrum must first fully index the blockchain and compact its database before you can connect to it with your wallets. This can take up to ~3.5 - 4 days. Only proceed with the [Desktop Wallet Section](../../bitcoin/desktop-wallet.md) once Fulcrum is ready.
 
 💡 After the initial sync of Fulcrum, if you want to still use zram, you can return to the default zram config.
 
@@ -467,7 +467,7 @@ $ sudo systemctl restart btcrpcexplorer
 
 ### Backup the database
 
-Because the sync can take ~3.5 to 4 days, it is recommended to have at least any backup of the database. It doesn't need to be the latest one and you can backup only once. It is still better to sync for a few hours instead of a week (from scratch). Should be done on an external drive. Remember to stop Fulcrum before with `sudo systemctl stop fulcrum` command.
+If the database gets corrupted and you don't have a backup, you will have to resync it from scratch, which takes several days. This is why we recommend to make backups of the database once in a while, on an external drive. Like this, if something happens, you'll only have to resync since the date of your latest backup. Before doing the backup, remember to stop Fulcrum with `sudo systemctl stop fulcrum`
 
 ## For the future: Fulcrum upgrade
 
