@@ -139,6 +139,9 @@ cd joinmarket
 source jmvenv/bin/activate
 cd scripts
 ```
+
+* Save the file and exit nano, then make the file executable.
+
 ```
 $ sudo chmod +x activate.sh
 ```
@@ -159,12 +162,6 @@ $ . activate.sh
 
   ```sh
   nano --linenumbers /data/joinmarket/joinmarket.cfg
-  ```
-
-* Specify `rpc-port = 8332` to run on mainnet.
-
-  ```sh
-  32 rpc-port = 8332
   ```
 
 * Instruct Joinmarket to verify with Bitcoin Core via cookie rather than login/pass.
@@ -189,7 +186,7 @@ JoinMarket uses its own wallet. You can create one with or without a "two-factor
 
 ```
 (jvmenv) $ python wallet-tool.py generate
-> User data will be stored and accessed in this location: /home/bitcoin/.joinmarket/
+> User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
 > Would you like to use a two-factor mnemonic recovery phrase? write 'n' if you don't know what this is (y/n): n
 > Not using mnemonic extension
 ```
@@ -224,7 +221,7 @@ JoinMarket wallet contains five separate sub-wallets (accounts) or pockets calle
 
 ```
 (jvmenv) $ python wallet-tool.py -m 0 wallet.jmdat
-> User data will be stored and accessed in this location: /home/bitcoin/.joinmarket/
+> User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
 > Enter wallet decryption passphrase: 
 > 2020-11-30 23:18:30,322 [INFO]  Detected new wallet, performing initial import
 > restart Bitcoin Core with -rescan or use `bitcoin-cli rescanblockchain` if you're recovering an existing wallet from backup seed
@@ -235,7 +232,7 @@ JoinMarket wallet contains five separate sub-wallets (accounts) or pockets calle
 
 ```
 (jvmenv) $ python wallet-tool.py -m 0 wallet.jmdat
-> User data will be stored and accessed in this location: /home/bitcoin/.joinmarket/
+> User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
 > Enter wallet decryption passphrase: 
 > 2020-11-30 23:19:05,030 [INFO]  Detected new wallet, performing initial import
 > JM wallet
@@ -338,11 +335,10 @@ Tumbler is a program that does series of CoinJoins with various amounts and timi
 
 ### Other notes
 
-Every time you disconnect from the RaspiBolt and connect again, if you are in a fresh session, before running any JoinMarket commands, you need to do the following from "joinmarket" user (or run the activate.sh script from the Install section above):
+Every time you disconnect from the RaspiBolt and connect again, if you are in a fresh session, before running any JoinMarket commands, you need to switch to the joinmarket user and run the activate.sh script created above:
 ```
-$ cd /home/bitcoin/joinmarket
-$ source jmvenv/bin/activate
-(jmvenv) $ cd scripts
+$ sudo su - joinmarket
+$ . activate.sh
 ```
 
 
