@@ -572,7 +572,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   $ cd lndg
   ```
 
-* As user “lndg”, create a bash file to call `rebalance.py` and paste the following lines. Save and exit.
+* As user “lndg”, create a bash file to call `htlc_stream.py` and paste the following lines. Save and exit.
 
   ```sh
   $ nano /home/lndg/lndg/htlc_stream.sh
@@ -583,6 +583,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 
   /home/lndg/lndg/.venv/bin/python /home/lndg/lndg/htlc_stream.py
   ```
+
 * Make the script executable by user “lndg” then exit the "lndg" user session
 
   ```sh
@@ -590,7 +591,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   $ exit
   ```
 
-* Create a service file for the `rebalancer.sh` script
+* Create a service file for the `htlc_stream.sh` script
 
   ```sh
   $ sudo nano /etc/systemd/system/htlc-stream-lndg.service
