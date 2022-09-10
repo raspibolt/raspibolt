@@ -622,7 +622,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 
 ---
 
-## For the future: LNBits update
+## For the future: LNDg update
 
 * With user "admin", stop all the LNDg services and open a “lndg” user session.
 
