@@ -277,7 +277,6 @@ This will allow Nginx to serve the LNDg site securely over SSL.
   ```
   [Unit]
   Description=Lndg uWSGI app
-  Wants=lnd.service
   After=lnd.service
 
   [Service]
