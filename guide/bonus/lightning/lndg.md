@@ -244,10 +244,10 @@ This will allow Nginx to serve the LNDg site securely over SSL.
   ```
   
   ```sh
-  uwsgi_param  QUERY_STRING       $query_string;
-  uwsgi_param  REQUEST_METHOD     $request_method;
-  uwsgi_param  CONTENT_TYPE       $content_type;
-  uwsgi_param  CONTENT_LENGTH     $content_length;
+  uwsgi_param  QUERY_STRING       "$query_string";
+  uwsgi_param  REQUEST_METHOD     "$request_method";
+  uwsgi_param  CONTENT_TYPE       "$content_type";
+  uwsgi_param  CONTENT_LENGTH     "$content_length";
   
   uwsgi_param  REQUEST_URI        "$request_uri";
   uwsgi_param  PATH_INFO          "$document_uri";
