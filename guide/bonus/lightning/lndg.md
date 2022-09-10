@@ -204,7 +204,7 @@ This will allow Nginx to serve the LNDg site securely over SSL.
   $ sudo su - lndg
   ```
 
-* Create lndg.ini file
+* Create `lndg.ini` file
 
   ```sh
   $ nano /home/lndg/lndg/lndg.ini
