@@ -436,10 +436,12 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   rest-protocol=http
   ```
   
-* Run the plugin once manually to create required `access.macaroon`
+* Add a sample config file and run the plugin once manually to create required `access.macaroon`
   
   ```sh
-  $ node /data/cl-plugins-available/c-lightning-REST-0.9.0/cl-rest.js
+  $ cd /data/cl-plugins-available/c-lightning-REST-0.9.0
+  $ cp sample-cl-rest-config.json cl-rest-config.json
+  $ node cl-rest.js
   ```
   
 * Now you should see a new folder being created in `/data/cl-plugins-available/c-lightning-REST-0.9.0/` called `certs` which contains the required `access.macaroon` for the next steps.
