@@ -442,6 +442,56 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   $ sudo systemctl start htlc-stream-lndg.service
   ```
 
+---
+
+## Uninstall
+
+* Stop all the LNDg services and timers
+
+  ```sh
+  $ sudo systemctl stop htlc-stream-lndg.service
+  $ sudo systemctl stop rebalancer-lndg.timer
+  $ sudo systemctl stop jobs-lndg.timer
+  $ sudo systemctl stop lndg.service
+  ``` 
+
+* Delete all the LNDg systemd files
+ 
+  ```sh
+  $ sudo rm /etc/systemd/system/htlc-stream-lndg.service
+  $ sudo rm /etc/systemd/system/rebalancer-lndg.timer
+  $ sudo rm /etc/systemd/system/rebalancer-lndg.service
+  $ sudo rm /etc/systemd/system/jobs-lndg.timer
+  $ sudo rm /etc/systemd/system/jobs-lndg.service
+  $ sudo rm /etc/systemd/system/lndg.service
+  ```
+
+* Display the UFW firewall rules and notes the numbers of the rules for Mempool (e.g., X and Y below)
+
+  ```sh
+  $ sudo ufw status numbered
+  > [...]
+  > [X] 8889/tcp                   ALLOW IN    Anywhere                   # allow LNDg
+  > [...]
+  > [Y] 8889/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow LNDg
+  ```
+
+* Delete the two LNDg rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
+ 
+  ```sh
+  $ sudo ufw delete Y
+  $ sudo ufw delete X
+  ```
+
+* Delete the “lndg” user. Do not worry about the userdel: mempool mail spool (/var/mail/lndg) not found.
+ 
+  ```sh
+  $ sudo su -
+  $ userdel -r mempool
+  > userdel: mempool mail spool (/var/mail/mempool) not found]
+  $ exit
+  ```
+
 <br /><br />
 
 ---
