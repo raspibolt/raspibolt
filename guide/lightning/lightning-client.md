@@ -20,6 +20,19 @@ We set up [LND](https://github.com/lightningnetwork/lnd/blob/master/README.md){:
 
 ---
 
+## Preparation
+
+Now that Bitcoin Core is running and synced, we can use the [OpenTimestamp client](https://github.com/opentimestamps/opentimestamps-client){:target="_blank"} to locally verify the timestamp of the binaries checksums file.
+
+* With user "admin", install the OpenTimestamp client
+
+
+  ```sh
+  $ pip3 install opentimestamps-client
+  ```
+
+---
+
 ## Installation
 
 The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [GitHub repository](https://github.com/lightningnetwork/lnd/){:target="_blank"} for a wealth of information about their open-source project and Lightning in general.
@@ -28,14 +41,17 @@ The installation of LND is straight-forward, but the application is quite powerf
 
 We'll download, verify and install LND.
 
-* As user "admin", download the application, checksums and signature
+* As user "admin", download the application; and then the checksums file together with its signature and timestamp.
 
   ```sh
   $ cd /tmp
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/lnd-linux-arm64-v0.15.0-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-v0.15.0-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-roasbeef-v0.15.0-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.1-beta/manifest-roasbeef-v0.15.1-beta.sig.ots
   ```
+
+### Signature check
 
 * Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
 
@@ -59,12 +75,32 @@ We'll download, verify and install LND.
   >     Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
   ```
 
+### Timestamp check
+
+* Let's verify the timestamp of the file matches the release date.
+
+  ```sh
+  $ ots verify README.md.ots
+  > [...]
+  > Success! Bitcoin block 751933 attests existence as of 2022-08-31 BST
+  ```
+  
+* Check that the date of the timestamp (here 2022-08-31) is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary (2022-08-30).
+
+### Checksum check
+
+Now that we've verified the authencity of the signed and timestamped checksum file, we can proceed to calculate the checksum of the downloaded binary and compare it to the one recorded in the file.
+
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
   $ sha256sum --check manifest-v0.15.0-beta.txt --ignore-missing
   > lnd-linux-arm64-v0.15.0-beta.tar.gz: OK
   ```
+
+### Installation
+
+Having verified the integrity and authenticity of the release binary, we can safely proceed to install it!
 
 * Install LND
 
