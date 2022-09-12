@@ -37,9 +37,9 @@ Now that Bitcoin Core is running and synced, we can use the [OpenTimestamp clien
 
 The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [GitHub repository](https://github.com/lightningnetwork/lnd/){:target="_blank"} for a wealth of information about their open-source project and Lightning in general.
 
-### Download
-
 We'll download, verify and install LND.
+
+### Download
 
 * As user "admin", download the application; and then the checksums file together with its signature and timestamp.
 
