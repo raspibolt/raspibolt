@@ -33,7 +33,7 @@ It's great that the Raspberry Pi 4 can do it, even if it takes a few days, as th
 We download the latest Bitcoin Core binary (the application) and compare this file with the signed and timestamped checksum.
 This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.
 
-### Preparations
+### Download
 
 * Login as "admin" and change to a temporary directory which is cleared on reboot.
 
@@ -52,15 +52,6 @@ This is a precaution to make sure that this is an official release and not a mal
 
   # download the signatures attesting to validity of the checksums
   $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.asc
-  ```
-
-### Checksum check
-
-* Check that the reference checksum in file `SHA256SUMS` matches the checksum calculated by you (ignore the "lines are improperly formatted" warning)
-
-  ```sh
-  $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-23.0-aarch64-linux-gnu.tar.gz: OK
   ```
 
 ### Signature check
@@ -99,6 +90,16 @@ This is a precaution to make sure that this is an official release and not a mal
 * If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v23.0){:target="_blank"} of Bitcoin Core v23.0.
 
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
+
+
+### Checksum check
+
+* Check that the reference checksum in file `SHA256SUMS` matches the checksum calculated by you (ignore the "lines are improperly formatted" warning)
+
+  ```sh
+  $ sha256sum --ignore-missing --check SHA256SUMS
+  > bitcoin-23.0-aarch64-linux-gnu.tar.gz: OK
+  ```
 
 ### Installation
 
