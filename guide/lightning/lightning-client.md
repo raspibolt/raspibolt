@@ -41,7 +41,7 @@ We'll download, verify and install LND.
 
 ### Download
 
-* As user "admin", download the application; and then the checksums file together with its signature and timestamp.
+* As user "admin", download the application and the checksums file (.txt) with its signature (.sig) and timestamp (.ots).
 
   ```sh
   $ cd /tmp
