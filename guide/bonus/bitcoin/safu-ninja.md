@@ -13,7 +13,7 @@ has_toc: false
 
 ---
 
-Learn how to make resilient mnemonic word backups with off-the-shelf components for complete privacy.
+[Safu Ninja](https://safu.ninja/){:target="_blank"} is a DIY way to make resilient mnemonic word backups with off-the-shelf components for complete privacy.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -53,7 +53,7 @@ Instead, it is more private and ultimately secure to build this steel mnemonics 
 
 For example, a popular DIY method relies on standard steel washers stacked and locked on a bolt. The mnemonic words and ordering numbers are punched on the washers using a metal stamp set. All the components can be found easily in a hardware shop or online and none are associated with Bitcoin usage. Simple and private.
 
-As far as I know, SafuNinja was the first one to come up with [this idea](https://www.reddit.com/r/Bitcoin/comments/h0j136/cheap_and_easy_diy_metal_bitcoin_seed_storage/){:target="_blank"} back in June 2020. You can check their [website](https://safu.ninja/){:target="_blank"}.
+As far as I know, Safu Ninja was the first one to come up with [this idea](https://www.reddit.com/r/Bitcoin/comments/h0j136/cheap_and_easy_diy_metal_bitcoin_seed_storage/){:target="_blank"} back in June 2020. You can check their [website](https://safu.ninja/){:target="_blank"}.
 
 
 This metal backup has been stress tested by Jameson Lopp. Check his full review [here](https://blog.lopp.net/metal-bitcoin-seed-storage-stress-test-iv/){:target="_blank"} and below is a summary:
