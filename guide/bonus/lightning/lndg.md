@@ -428,7 +428,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout 1.3.0
+  $ git checkout v1.3.1
   $ ./venv/bin/pip install -r requirements.txt
   $ exit
   ```
