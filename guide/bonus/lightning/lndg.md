@@ -446,24 +446,26 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 
 ## Uninstall
 
-* Stop all the LNDg services and timers
+* Stop and disable all the LNDg timers and background services
 
   ```sh
-  $ sudo systemctl stop htlc-stream-lndg.service
-  $ sudo systemctl stop rebalancer-lndg.timer
-  $ sudo systemctl stop jobs-lndg.timer
+  $ sudo systemctl stop htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service
+  $ sudo systemctl disable htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service
+  
+
+* Stop and disable LNDg
+
+  ```sh
   $ sudo systemctl stop lndg.service
+  $ sudo systemctl disable lndg.service
   ``` 
 
 * Delete all the LNDg systemd files
  
   ```sh
-  $ sudo rm /etc/systemd/system/htlc-stream-lndg.service
-  $ sudo rm /etc/systemd/system/rebalancer-lndg.timer
-  $ sudo rm /etc/systemd/system/rebalancer-lndg.service
-  $ sudo rm /etc/systemd/system/jobs-lndg.timer
-  $ sudo rm /etc/systemd/system/jobs-lndg.service
-  $ sudo rm /etc/systemd/system/lndg.service
+  $ cd /etc/systemd/system/
+  $ sudo rm htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service lndg.service
+  $ cd
   ```
 
 * Display the UFW firewall rules and notes the numbers of the rules for Mempool (e.g., X and Y below)
@@ -487,8 +489,8 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
  
   ```sh
   $ sudo su -
-  $ userdel -r mempool
-  > userdel: mempool mail spool (/var/mail/mempool) not found]
+  $ userdel -r lndg
+  > userdel: lndg mail spool (/var/mail/lndg) not found]
   $ exit
   ```
 
