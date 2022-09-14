@@ -20,19 +20,6 @@ We set up [LND](https://github.com/lightningnetwork/lnd/blob/master/README.md){:
 
 ---
 
-## Preparation
-
-Now that Bitcoin Core is running and synced, we can use the [OpenTimestamp client](https://github.com/opentimestamps/opentimestamps-client){:target="_blank"} to locally verify the timestamp of the binaries checksums file.
-
-* With user "admin", globally install the OpenTimestamp client
-
-
-  ```sh
-  $ sudo pip3 install opentimestamps-client
-  ```
-
----
-
 ## Installation
 
 The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [GitHub repository](https://github.com/lightningnetwork/lnd/){:target="_blank"} for a wealth of information about their open-source project and Lightning in general.
