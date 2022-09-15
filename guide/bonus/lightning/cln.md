@@ -215,7 +215,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   # /etc/systemd/system/lightningd.service
   
   [Unit]
-  Description=Core Lightningd daemon
+  Description=Core Lightning daemon
   Requires=bitcoind.service
   After=bitcoind.service
   Wants=network-online.target
