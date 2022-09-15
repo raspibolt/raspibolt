@@ -307,13 +307,13 @@ These instructions will clone the repo to fetch the latest version and then "pip
 - Move Specter data to disk
   ```sh
   # Move data folder to disk
-  $ sudo mkdir -p /mnt/ext/app-data/.specter
-  $ sudo mv -f /home/specter/.specter/* /mnt/ext/app-data/.specter/
-  $ sudo chown -R specter:specter /mnt/ext/app-data/.specter
+  $ sudo mkdir -p /data/app-data/.specter
+  $ sudo mv -f /home/specter/.specter/* /data/app-data/.specter/
+  $ sudo chown -R specter:specter /data/app-data/.specter
 
   # Symlink data folder back to 'specter' user
   $ sudo rm -rf /home/specter/.specter
-  $ sudo ln -s /mnt/ext/app-data/.specter /home/specter/
+  $ sudo ln -s /data/app-data/.specter /home/specter/
   $ sudo chown -R specter:specter /home/specter/.specter
   ```
 
