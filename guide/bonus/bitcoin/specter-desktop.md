@@ -14,8 +14,8 @@ has_toc: false
 Difficulty: Intermediate
 {: .label .label-yellow }
 
-Status: Not tested v3
-{: .label .label-yellow }
+Status: Tested v3
+{: .label .label-green }
 
 ---
 
