@@ -89,16 +89,11 @@ These instructions will clone the repo to fetch the latest version and then "pip
   $ python3 -m pip install virtualenv
   ```
 
-  - _(Optional) Add `$HOME/.local/bin` to `$PATH`_
-    _The `virtualenv` scripts are installed in the directory `$HOME/.local/bin`. Unfortunately, in Raspbian this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just add this directory to your `$PATH` environment variable, but it’s not necessary in this guide._
-
-    In the appropriate config file (e.g. `~/.bashrc`) add the following:
-    ```sh
-    # set PATH so it includes user's private bin if it exists
-    if [ -d "$HOME/.local/bin" ] ; then
-        PATH="$HOME/.local/bin:$PATH"
-    fi
-    ```
+- Add locally installed virtualenv localtion to `PATH`
+  ```sh
+  $ echo 'export PATH="$PATH:$HOME/.local/bin"' >> /home/specter/.bashrc
+  $ source /home/specter/.bashrc
+  ```
 
 - Download the source code directly from GitHub
   ```sh
@@ -115,7 +110,7 @@ These instructions will clone the repo to fetch the latest version and then "pip
   $ sed -i "s/vx.y.z-get-replaced-by-release-script/${VERSION}/g; " setup.py
 
   # Create virtualenv
-  $ $HOME/.local/bin/virtualenv --python=python3 /home/specter/.env
+  $ virtualenv --python=python3 /home/specter/.env
 
   # Preparation for versions > v1.5.0 (i18n)
   $ /home/specter/.env/bin/python3 -m pip install babel
