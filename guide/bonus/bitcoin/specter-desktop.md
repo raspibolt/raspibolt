@@ -78,9 +78,10 @@ The default setup guides you on how to allow for plugging in your hardware devic
 
 These instructions will clone the repo to fetch the latest version and then "pip install" the project directly to a python virtual environment.
 
-- Create a new user with your password [ A ] and open a new session
+- Create a new user, add it to the bitcoin group and open a new session
   ```sh
-  $ sudo adduser specter
+  $ sudo adduser --disabled-password --gecos "" specter
+  $ sudo adduser specter bitcoin
   $ sudo su - specter
   ```
 
@@ -124,6 +125,11 @@ These instructions will clone the repo to fetch the latest version and then "pip
 
 ### Configuration
 
+- Create symbolic link to bitcoin data directory
+  ```sh
+  $ ln -s /data/bitcoin /home/specter/.bitcoin
+  ```
+
 - Create the specter config file (or clear the default specter config file if it exists)
   ```sh
   $ mkdir -p /home/specter/.specter
@@ -136,27 +142,10 @@ These instructions will clone the repo to fetch the latest version and then "pip
   ```
 
 - Copy the following config to the file
-  _**Note:** Be sure to change to your bitcoin rpc password on the **2 lines** that contain `"password": "PASSWORD_[B]"`_
   ```sh
   {
     "rpc": {
-        "autodetect": false,
-        "datadir": "",
-        "user": "raspibolt",
-        "password": "PASSWORD_[B]",
-        "port": "8332",
-        "host": "localhost",
-        "protocol": "http",
-        "external_node": false
-    },
-    "internal_node": {
-        "autodetect": false,
-        "datadir": "",
-        "user": "raspibolt",
-        "password": "PASSWORD_[B]",
-        "host": "localhost",
-        "protocol": "http",
-        "port": "8332"
+        "autodetect": true
     },
     "auth": "none",
     "proxy_url": "socks5h://localhost:9050",
