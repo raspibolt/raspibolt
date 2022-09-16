@@ -174,7 +174,12 @@ $ . activate.sh
 * Set the bitcoin core watch-only wallet to the one created earlier.
   
   ```
-  43 rpc_wallet_file= jm_wallet
+  43 rpc_wallet_file = jm_wallet
+  ```
+* Change the onion_serving_port to avoid conflict with LND.
+  
+  ```
+  68 onion_serving_port = 8090
   ```
   
 * Save and exit.
