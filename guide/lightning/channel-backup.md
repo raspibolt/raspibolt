@@ -317,7 +317,7 @@ Follow this section if you want a remote backup. If you already set up a local b
 
 ### Create a GitHub repository
 
-* Go to [GitHub](https://github.com/){:target="_blank"}, sign up for a new user account, or log in with an existing one
+* Go to [GitHub](https://github.com/){:target="_blank"}, sign up for a new user account, or log in with an existing one. If you don't want for GitHub to know your identity and IP address in relation to your Lightning node, it is recommended to create new account even if you have existing one, and use [Tor Browser](https://www.torproject.org/download/){:target="_blank"} for this and following steps.
 
 * Create a new repository: [https://github.com/new](https://github.com/new){:target="_blank"}
   * Type the following repository name: `remote-lnd-backup`
@@ -354,6 +354,7 @@ Follow this section if you want a remote backup. If you already set up a local b
   ```sh
   $ git config --global user.name "RaspiBolt"
   $ git config --global user.email "raspibolt@dummyemail.com"
+  $ git config --global core.sshCommand "torsocks ssh"
   $ cd ~/.lnd
   $ git clone git@github.com:YourUserName/remote-lnd-backup.git
   > Cloning into 'remote-lnd-backup'...
