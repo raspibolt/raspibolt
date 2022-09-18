@@ -48,7 +48,9 @@ has_toc: false
 
 ## Resilience
 
-* **[Safu Ninja](safu-ninja.md)** - create DIY metal backups for your wallets' seed words
+* **[Safu Ninja](safu-ninja.md)** - create resilient DIY metal backups of your seed phrases
+
+---
 
 ## Fun
 

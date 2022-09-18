@@ -52,12 +52,12 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ### User Creation
 
-* As "admin", create a new user named "cln" and add it to groups "bitcoin" and "debian-tor". Also add "admin" to group "cln" for later use.
+* As "admin", create a new user named "lightningd" and add it to groups "bitcoin" and "debian-tor". Also add "admin" to group "lightningd" for later use.
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" cln
-  $ sudo usermod -a -G bitcoin,debian-tor cln
-  $ sudo adduser admin cln
+  $ sudo adduser --disabled-password --gecos "" lightningd
+  $ sudo usermod -a -G bitcoin,debian-tor lightningd
+  $ sudo adduser admin lightningd
   ```
 
 ### Data directories
@@ -65,10 +65,10 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Create data directories for CLN and future plugins. Adjust permissions afterwards.
 
   ```sh
-  $ sudo mkdir /data/cln
-  $ sudo mkdir /data/cl-plugins-available
-  $ sudo chown -R cln:cln /data/cln
-  $ sudo chown -R cln:cln /data/cl-plugins-available
+  $ sudo mkdir /data/lightningd
+  $ sudo mkdir /data/lightningd-plugins-available
+  $ sudo chown -R lightningd:lightningd /data/lightningd
+  $ sudo chown -R lightningd:lightningd /data/lightningd-plugins-available
   ```
 
 ### Dependencies & Symbolic Links
@@ -82,12 +82,12 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ pip3 install --user --upgrade pip
   ```
 
-* Open a "cln" user session and create symbolic links to bitcoin and cln data directories.
+* Open a "lightningd" user session and create symbolic links to `bitcoin` and `lightningd` data directories.
 
   ```sh
-  $ sudo su - cln
-  $ ln -s /data/cln /home/cln/.lightning
-  $ ln -s /data/bitcoin /home/cln/.bitcoin
+  $ sudo su - lightningd
+  $ ln -s /data/lightningd /home/lightningd/.lightning
+  $ ln -s /data/bitcoin /home/lightningd/.bitcoin
   ```
 
 * Display the links and check that they're not shown in red (indicating errors).
@@ -98,7 +98,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ### Download
 
-* As user "cln" download the git repository to the home folder of user "cln".
+* As user "lightningd" download the git repository to the home folder of user "lightningd".
 
   ```sh
   $ git clone https://github.com/ElementsProject/lightning.git
@@ -141,17 +141,17 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Create and edit the configuration file for CLN.
 
   ```sh
-  $ cd /home/cln/.lightning
+  $ cd /home/lightningd/.lightning
   $ nano config
   ```
 
-* Insert the following content, adjust parameters in brackets to your likings. At least remove the brackets else cln will not start up correctly! Choose if you want to replicate CLN's channel database file to separate storage. It's good practice to keep a synchronous state of the database somewhere else to be able to recover off-chain funds in case of emergency.
+* Insert the following content, adjust parameters in brackets to your likings. At least remove the brackets else lightningd will not start up correctly! Choose if you want to replicate CLN's channel database file to separate storage. It's good practice to keep a synchronous state of the database somewhere else to be able to recover off-chain funds in case of emergency.
 
   ```ini
   alias=<your fancy alias>
   rgb=<your hex color>
   network=bitcoin
-  log-file=/data/cln/cln.log
+  log-file=/data/lightningd/cln.log
   log-level=info
   # for admin to interact with lightning-cli
   rpc-file-mode=0660
@@ -171,10 +171,10 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   autocleaninvoice-expired-by=86400
   
   # wallet settings (replication recommended, adjust backup path)
-  wallet=sqlite3:///data/cln/bitcoin/lightningd.sqlite3:/home/cln/lightningd.sqlite3
+  wallet=sqlite3:///data/lightningd/bitcoin/lightningd.sqlite3:/home/lightningd/lightningd.sqlite3
   
   # no replication:
-  #wallet=sqlite3:///data/cln/bitcoin/lightning.sqlite3
+  #wallet=sqlite3:///data/lightningd/bitcoin/lightning.sqlite3
   
   # network
   proxy=127.0.0.1:9050
@@ -205,33 +205,33 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * As "admin", create a systemd service that is automatically run on system startup.
 
   ```sh
-  $ sudo nano /etc/systemd/system/cln.service
+  $ sudo nano /etc/systemd/system/lightningd.service
   ```
 
 * Insert the following content:
 
   ```ini
-  # RaspiBolt: systemd unit for cln
-  # /etc/systemd/system/cln.service
+  # RaspiBolt: systemd unit for lightningd
+  # /etc/systemd/system/lightningd.service
   
   [Unit]
-  Description=CLN daemon
+  Description=Core Lightning daemon
   Requires=bitcoind.service
   After=bitcoind.service
   Wants=network-online.target
   After=network-online.target
   
   [Service]
-  ExecStart=/bin/sh -c '/home/cln/lightning/lightningd/lightningd \
-                         --conf=/data/cln/config \
+  ExecStart=/bin/sh -c '/home/lightningd/lightning/lightningd/lightningd \
+                         --conf=/data/lightningd/config \
                          --daemon \
                          --pid-file=/run/lightningd/lightningd.pid'
   
-  ExecStop=/bin/sh -c '/home/cln/lightning/cli/lightning-cli stop'
+  ExecStop=/bin/sh -c '/home/lightningd/lightning/cli/lightning-cli stop'
 
   RuntimeDirectory=lightningd
   
-  User=cln
+  User=lightningd
   
   # process management
   Type=simple
@@ -254,22 +254,22 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
   ```sh
   $ sudo systemctl daemon-reload
-  $ sudo systemctl enable cln.service
-  $ sudo systemctl start cln.service
+  $ sudo systemctl enable lightningd.service
+  $ sudo systemctl start lightningd.service
   ```
 
 * Daemon information is now written into system journal. See the journal for CLN messages with the following command.
 
   ```sh
-  $ sudo journalctl -f -u cln
+  $ sudo journalctl -f -u lightningd
   ```
 
 ## CLN in action
 
-* If `cln.service` started without errors, we can check out and try CLN commands.
+* If `lightningd.service` started without errors, we can check out and try CLN commands.
 
   ```sh
-  $ sudo su - cln 
+  $ sudo su - lightningd 
   $ lightning-cli --version
   $ lightning-cli getinfo
   $ lightning-cli listfunds
@@ -277,23 +277,23 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ## Allow user "admin" to work with CLN
 
-* Allow “admin” to access CLN commands. Switch to “admin” with exit, create a symlink, adjust permissions and create aliases.
+* Allow "admin" to access lightningd commands. Create a symlink, adjust permissions and create aliases (switch to "admin" with `exit`).
 
   ```sh
-  $ ln -s /data/cln /home/admin/.lightning
-  $ sudo chmod -R g+x /data/cln/bitcoin/
+  $ ln -s /data/lightningd /home/admin/.lightning
+  $ sudo chmod -R g+x /data/lightningd/bitcoin/
   $ nano .bashrc
   ```
 
   ```ini
-  alias lightning-cli="/home/cln/lightning/cli/lightning-cli"
-  alias lightningd="/home/cln/lightning/lightningd/lightningd"
-  alias hsmtool="/home/cln/lightning/tools/hsmtool"
+  alias lightning-cli="/home/lightningd/lightning/cli/lightning-cli"
+  alias lightningd="/home/lightningd/lightning/lightningd/lightningd"
+  alias hsmtool="/home/lightningd/lightning/tools/hsmtool"
   ```
 
 ## Backup
 
-* It is at least recommended to backup the wallet file `hsm_secret` that you can find in CLN's data directory `home/cln/.lightning/bitcoin/`. 
+* It is at least recommended to backup the wallet file `hsm_secret` that you can find in CLN's data directory `home/lightningd/.lightning/bitcoin/`. 
 * For more detailed information, please have a look at the official [docs](https://lightning.readthedocs.io/FAQ.html#how-to-backup-my-wallet) and RaspiBlitz' incredible [FAQ](https://github.com/rootzoll/raspiblitz/blob/dev/FAQ.cl.md#backups).
 
 
@@ -305,14 +305,14 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Restart the systemd service for the update to take effect and reload configuration.
 
   ```sh
-  $ sudo systemctl restart cln.service
+  $ sudo systemctl restart lightningd.service
   ```
 
 ## Optional Steps
 
 ### Wallet Encryption
 
-* Encrypt `hsm_secret` with a password as user "cln". Choose a password and take a note!
+* Encrypt `hsm_secret` with a password as user "lightningd". Choose a password and take a note!
 
    ```sh
   $ hsmtool encrypt .lightning/bitcoin/hsm_secret
@@ -322,8 +322,8 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Adjust systemd service after encrypting. Edit `ExecStart` command and add parameter `--encrypted-hsm`, like so:
 
   ```ini
-  ExecStart=/bin/sh -c '/home/cln/lightning/lightningd/lightningd \
-                         --conf=/data/cln/config \
+  ExecStart=/bin/sh -c '/home/lightningd/lightning/lightningd/lightningd \
+                         --conf=/data/lightningd/config \
                          --daemon \
                          --encrypted-hsm \
                          --pid-file=/run/lightningd/lightningd.pid'
@@ -333,10 +333,10 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ### Auto-Unlocking on Startup
 
-* As user "cln", create a password file to auto-unlock on startup (equivalent to LND's wallet password) and enter the choosen encryption password from the step above.
+* As user "lightningd", create a password file to auto-unlock on startup (equivalent to LND's wallet password) and enter the choosen encryption password from the step above.
 
   ```sh
-  $ nano ~/.clnpw
+  $ nano ~/.lightningdpw
   ```
 
   ```ini
@@ -346,21 +346,21 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * As "admin", adjust permissions of the password file (read-only for the user).
 
   ```sh
-  $ sudo chmod 0600 /home/cln/.clnpw
+  $ sudo chmod 0600 /home/lightningd/.lightningdpw
   ```
 
 * Change systemd service accordingly. Open systemd file.
 
   ```sh
-  $ sudo nano /etc/systemd/system/cln.service
+  $ sudo nano /etc/systemd/system/lightningd.service
   ```
 
 * Edit `ExecStart` line like this:
 
   ```ini
-  ExecStart=/bin/sh -c ' (cat /home/cln/.clnpw;echo;cat /home/cln/.clnpw) | \
-                         /home/cln/lightning/lightningd/lightningd \
-                         --conf=/data/cln/config \
+  ExecStart=/bin/sh -c ' (cat /home/lightningd/.lightningdpw;echo;cat /home/lightningd/.lightningdpw) | \
+                         /home/lightningd/lightning/lightningd/lightningd \
+                         --conf=/data/lightningd/config \
                          --daemon \
                          --encrypted-hsm \
                          --pid-file=/run/lightningd/lightningd.pid'
@@ -370,7 +370,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
   ```sh
   $ sudo systemctl daemon-reload
-  $ sudo systemctl start cln.service
+  $ sudo systemctl start lightningd.service
   ```
 
 ## c-lightning-Rest & RTL
@@ -417,20 +417,20 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Copy content to plugin datadir:
 
   ```sh
-  $ cp -r ~/c-lightning-REST-0.9.0/ /data/cl-plugins-available/
+  $ cp -r ~/c-lightning-REST-0.9.0/ /data/lightningd-plugins-available/
   ```
 
 * Setup c-lightning-Rest as plugin:
 
   ```sh
-  $ sudo nano /data/cln/config
+  $ sudo nano /data/lightningd/config
   ```
   
 * Add at the end of the file:
 
   ```ini
   # cln-rest-plugin
-  plugin=/data/cl-plugins-available/c-lightning-REST-0.9.0/plugin.js
+  plugin=/data/lightningd-plugins-available/c-lightning-REST-0.9.0/plugin.js
   rest-port=3092
   rest-docport=4091
   rest-protocol=http
@@ -439,29 +439,29 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Add a sample config file and run the plugin once manually to create required `access.macaroon`
   
   ```sh
-  $ cd /data/cl-plugins-available/c-lightning-REST-0.9.0
+  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.9.0
   $ cp sample-cl-rest-config.json cl-rest-config.json
   $ node cl-rest.js
   ```
   
-* Now you should see a new folder being created in `/data/cl-plugins-available/c-lightning-REST-0.9.0/` called `certs` which contains the required `access.macaroon` for the next steps.
+* Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.9.0/` called `certs` which contains the required `access.macaroon` for the next steps.
   
 * As user admin, create and setup user `rtl`:
 
   ```sh
   $ exit
   $ sudo adduser --disabled-password --gecos "" rtl
-  $ sudo usermod -aG cln rtl
+  $ sudo usermod -aG lightningd rtl
   ``` 
 
 * Copy `access.macaroon` to home directory of user `rtl`:  
   
   ```sh
-  $ sudo cp /data/cl-plugins-available/c-lightning-REST-0.9.0/certs/access.macaroon /home/rtl/
+  $ sudo cp /data/lightningd-plugins-available/c-lightning-REST-0.9.0/certs/access.macaroon /home/rtl/
   $ sudo chown rtl:rtl /home/rtl/access.macaroon
   ```
   
-* Restart `cln.service` and look for errors in cln's log: `tail -f /data/cln/cln.log`. Positive results look like this:
+* Restart `lightningd.service` and look for errors in cln's log: `tail -f /data/lightningd/cln.log`. Positive results look like this:
 
   ```
   UNUSUAL plugin-plugin.js: --- Starting the cl-rest server ---
@@ -496,7 +496,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
         "lnImplementation": "CLT",
         "Authentication": {
           "macaroonPath": "/home/rtl",
-          "configPath": "/data/cln/config"
+          "configPath": "/data/lightningd/config"
         },
         "Settings": {
           "userPersona": "OPERATOR",
