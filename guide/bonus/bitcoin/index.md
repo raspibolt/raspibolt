@@ -46,6 +46,12 @@ has_toc: false
 
 ---
 
+## Resilience
+
+* **[Safu Ninja](safu-ninja.md)** - create resilient DIY metal backups of your seed phrases
+
+---
+
 ## Fun
 
 * **[Download the white paper](white-paper.md)** - download the Bitcoin white paper directly from your blockchain data
