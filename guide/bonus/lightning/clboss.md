@@ -46,7 +46,7 @@ CLBoss - an automated CLN node management tool. This guide shows how to install 
 
 ## Installation
 
-We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is a plugin that we will place into `/data/cl-plugins-available/` and load via CLN's configuration file.
+We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is a plugin that we will place into `/data/lightningd-plugins-available/` and load via CLN's configuration file.
 
 ## Dependencies
 
@@ -57,16 +57,16 @@ We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is
                       libcurl4-gnutls-dev libsqlite3-dev dnsutils
   ```
 
-* Switch back to user "cln".
+* Switch back to user "lightningd".
 
   ```sh
-  $ sudo su - cln
+  $ sudo su - lightningd
   ```
 
-* Download latest version and untar it to CLN's plugin folder `/data/cl-plugins-available`.
+* Download latest version and untar it to CLN's plugin folder `/data/lightningd-plugins-available`.
 
   ```sh
-  $ cd /data/cl-plugins-available
+  $ cd /data/lightningd-plugins-available
   $ wget https://github.com/ZmnSCPxj/clboss/releases/download/v0.12/clboss-0.12.tar.gz
   $ tar xfv clboss-0.12.tar.gz
   $ cd clboss-0.12
@@ -86,13 +86,13 @@ We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is
 * Add the plugin to CLN config.
 
   ```sh
-  $ nano /data/cln/config
+  $ nano /data/lightningd/config
   ```
 
 * Append this line to end of file:
 
   ```ini
-  plugin=/data/cl-plugins-available/clboss-0.12/clboss
+  plugin=/data/lightningd-plugins-available/clboss-0.12/clboss
   ```
 
 ## Restart Service
@@ -100,13 +100,13 @@ We will download, install and setup CLBoss on your RaspiBolt CLN node. CLBoss is
 * As "admin", reload CLN configuration by restarting the service:
 
   ```sh
-  $ sudo systemctl restart cln.service
+  $ sudo systemctl restart lightningd.service
   ```
 
 * Check if it's running.
 
   ```sh
-  $ sudo tail -f /data/cln/cl.log
+  $ sudo tail -f /data/lightningd/cl.log
   ```
 
 * It should output log entry infos like these:
