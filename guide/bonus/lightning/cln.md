@@ -82,7 +82,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ pip3 install --user --upgrade pip
   ```
 
-* Open a "lightningd" user session and create symbolic links to bitcoin and cln data directories.
+* Open a "lightningd" user session and create symbolic links to `bitcoin` and `lightningd` data directories.
 
   ```sh
   $ sudo su - lightningd
