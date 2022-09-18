@@ -209,8 +209,8 @@ $ sha256sum --check Fulcrum-1.8.1-arm64-linux.tar.gz.sha256sum
 $ tar -xvf Fulcrum-1.8.1-arm64-linux.tar.gz
 $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-1.8.1-arm64-linux/Fulcrum Fulcrum-1.8.1-arm64-linux/FulcrumAdmin 
 $ Fulcrum --version
-> Fulcrum 1.8.1 (Release 4ee413a)
-compiled: gcc 7.5.0
+> Fulcrum 1.8.1 (Release c80bf1b)
+compiled: gcc 8.4.0
 ...
 ```
 
@@ -351,7 +351,7 @@ Expected output:
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] simdjson: version 0.6.0
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] ssl: OpenSSL 1.1.1n  15 Mar 2022
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
-Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Fulcrum 1.8.1 (Release 4ee413a) - Thu Jul 28, 2022 12:20:13.064 CEST - starting up ...
+Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Fulcrum 1.8.1 (Release c80bf1b) - Thu Jul 28, 2022 12:20:13.064 CEST - starting up ...
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Max open files: 524288 (increased from default: 1024)
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.065] Loading database ...
 Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.489] DB memory: 512.00 MiB
