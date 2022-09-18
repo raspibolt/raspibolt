@@ -231,7 +231,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
   RuntimeDirectory=lightningd
   
-  User=cln
+  User=lightningd
   
   # process management
   Type=simple
@@ -266,7 +266,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ## CLN in action
 
-* If `cln.service` started without errors, we can check out and try CLN commands.
+* If `lightningd.service` started without errors, we can check out and try CLN commands.
 
   ```sh
   $ sudo su - lightningd 
@@ -277,7 +277,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ## Allow user "admin" to work with CLN
 
-* Allow "admin" to access CLN commands. Create a symlink, adjust permissions and create aliases (switch to "admin" with `exit`).
+* Allow "admin" to access lightningd commands. Create a symlink, adjust permissions and create aliases (switch to "admin" with `exit`).
 
   ```sh
   $ ln -s /data/lightningd /home/admin/.lightning
