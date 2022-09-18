@@ -175,9 +175,9 @@ We have our Bitcoin Core configuration file set up and now we can move to next p
 
 ```sh
 $ cd /tmp
-$ wget https://github.com/cculianu/Fulcrum/releases/download/v1.7.0/Fulcrum-1.7.0-arm64-linux.tar.gz
-$ wget https://github.com/cculianu/Fulcrum/releases/download/v1.7.0/Fulcrum-1.7.0-arm64-linux.tar.gz.asc
-$ wget https://github.com/cculianu/Fulcrum/releases/download/v1.7.0/Fulcrum-1.7.0-arm64-linux.tar.gz.sha256sum
+$ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.1/Fulcrum-1.8.1-arm64-linux.tar.gz
+$ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.1/Fulcrum-1.8.1-arm64-linux.tar.gz.asc
+$ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.1/Fulcrum-1.8.1-arm64-linux.tar.gz.sha256sum
 ```
 
 * Get the public key from the Fulcrum developer
@@ -189,7 +189,7 @@ $ curl https://raw.githubusercontent.com/Electron-Cash/keys-n-hashes/master/pubk
 * Verify the signature of the text file containing the checksums for the application
 
 ```sh
-$ gpg --verify Fulcrum-1.7.0-arm64-linux.tar.gz.asc
+$ gpg --verify Fulcrum-1.8.1-arm64-linux.tar.gz.asc
 > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
 > gpg: WARNING: This key is not certified with a trusted signature!
 > gpg: There is no indication that the signature belongs to the owner.
@@ -199,17 +199,17 @@ $ gpg --verify Fulcrum-1.7.0-arm64-linux.tar.gz.asc
 * Verify the signed checksum against the actual checksum of your download:
 
 ```sh
-$ sha256sum --check Fulcrum-1.7.0-arm64-linux.tar.gz.sha256sum
-> Fulcrum-1.7.0-arm64-linux.tar.gz: OK
+$ sha256sum --check Fulcrum-1.8.1-arm64-linux.tar.gz.sha256sum
+> Fulcrum-1.8.1-arm64-linux.tar.gz: OK
 ```
 
 * Install Fulcrum and check the correct installation requesting the version
 
 ```sh
-$ tar -xvf Fulcrum-1.7.0-arm64-linux.tar.gz
-$ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-1.7.0-arm64-linux/Fulcrum Fulcrum-1.7.0-arm64-linux/FulcrumAdmin 
+$ tar -xvf Fulcrum-1.8.1-arm64-linux.tar.gz
+$ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-1.8.1-arm64-linux/Fulcrum Fulcrum-1.8.1-arm64-linux/FulcrumAdmin 
 $ Fulcrum --version
-> Fulcrum 1.7.0 (Release 4ee413a)
+> Fulcrum 1.8.1 (Release 4ee413a)
 compiled: gcc 7.5.0
 ...
 ```
@@ -351,7 +351,7 @@ Expected output:
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] simdjson: version 0.6.0
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] ssl: OpenSSL 1.1.1n  15 Mar 2022
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
-Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Fulcrum 1.7.0 (Release 4ee413a) - Thu Jul 28, 2022 12:20:13.064 CEST - starting up ...
+Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Fulcrum 1.8.1 (Release 4ee413a) - Thu Jul 28, 2022 12:20:13.064 CEST - starting up ...
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Max open files: 524288 (increased from default: 1024)
 Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.065] Loading database ...
 Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.489] DB memory: 512.00 MiB
