@@ -64,15 +64,15 @@ The guide will show you how to:
 
 ### Configure Firewall
 
-* Configure the firewall to allow incoming requests to BTC Core from the local network.
+* Configure the firewall to allow incoming requests to Bitcoin Core from the local network.
 
   ```sh
-  $ sudo ufw allow 8333 comment 'allow BTC Core' 
+  $ sudo ufw allow 8333 comment 'allow Bitcoin Core' 
   ```
 
 ### Configure Bitcoin Core
 
-For Bisq to connect to your Bitcoin Core node, the bloom filters have to be activated and whitelisted the P2P connection.
+For Bisq to connect to your Bitcoin Core node, the bloom filters have to be activated and the P2P connection has to be whitelisted.
 
 * Open `bitcoin.conf` to add `peerbloomfilters=1` under `"# Bitcoin daemon"` to activate bloom filters
 
@@ -91,7 +91,7 @@ For Bisq to connect to your Bitcoin Core node, the bloom filters have to be acti
   whitelist=bloomfilter@0.0.0.0   # for Bisq
   ```
 
-* By default `bind` configuration of BTC Core is `"0.0.0.0"`. If you decide to connect Bisq from another personal computer in your local network, comment or delete `"bincoind=127.0.0.1"`. Save and exit.
+* By default `bind` configuration of Bitcoin Core is `0.0.0.0`. To connect Bisq from your personal computer in your local network, comment or delete `bind=127.0.0.1`. Save and exit.
 
   ```sh
   #bind=127.0.0.1
@@ -140,13 +140,13 @@ From remote connection, replace `123...abc.onion:8333` with your own Bitcoin Cor
 
 * Open a command line terminal, we will start Bisq with two flags that will force it to connect to our own node only.
 
-From local network connection, replace `192.168.X.X:8333` with your own node IP address.
+* From local network connection, replace `192.168.X.X:8333` with your own node IP address.
   
   ```sh
   $ Bisq -btcNodes=192.168.X.X:8333 -useTorForBtc=false
   ```
 
-From remote connection, replace `123...abc.onion:8333` with your own Bitcoin Core .onion address that you obtained above.
+* From remote connection, replace `123...abc.onion:8333` with your own Bitcoin Core .onion address that you obtained above.
   
   ```sh
   $ Bisq -btcNodes=123...abc.onion:8333 -useTorForBtc=true
