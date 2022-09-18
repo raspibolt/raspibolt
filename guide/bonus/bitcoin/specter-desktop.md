@@ -90,7 +90,7 @@ These instructions will clone the repo to fetch the latest version and then "pip
   $ python3 -m pip install virtualenv
   ```
 
-- Add locally installed virtualenv localtion to `PATH`
+- Add locally installed virtualenv location to `PATH`
   ```sh
   $ echo 'export PATH="$PATH:$HOME/.local/bin"' >> /home/specter/.bashrc
   $ source /home/specter/.bashrc
