@@ -302,7 +302,7 @@ These instructions will clone the repo to fetch the latest version and then "pip
 
   # Symlink data folder back to 'specter' user
   $ sudo rm -rf /home/specter/.specter
-  $ sudo ln -s /data/app-data/.specter /home/specter/
+  $ sudo ln -s /data/specter /home/specter/.specter
   $ sudo chown -R specter:specter /home/specter/.specter
   ```
 
