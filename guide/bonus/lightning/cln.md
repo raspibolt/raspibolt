@@ -120,8 +120,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   ```sh
   $ pip3 install --user mrkd==0.2.0
   $ pip3 install --user mistune==0.8.4
-  $ pip3 install --user poetry
-  $ export PATH="$HOME/.local/bin:$PATH"
+  $ pip3 install --user mako
   ```
 
 ### Building CLN
@@ -129,9 +128,8 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Configure and build the source code. Experimental features will be activated. Read more about them [here](https://lightning.readthedocs.io/lightningd-config.5.html#experimental-options).
 
   ```sh
-  $ poetry install
   $ ./configure --enable-experimental-features
-  $ poetry run make
+  $ make
   ```
 
 ## Configuration
