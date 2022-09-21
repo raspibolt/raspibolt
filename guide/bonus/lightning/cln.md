@@ -373,14 +373,14 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 
 ## c-lightning-Rest & RTL
 
-c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST). In this chapter we are going to add c-lightning-Rest as CLN plugin and furthermore connect RTL for CLN node management. The installation of RTL is already described [here](../../lightning/web-app.md), so we are focusing on the configuration.
+c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST). In this chapter we are going to add c-lightning-Rest as CLN plugin and furthermore connect RTL for CLN node management. The installation of RTL is already described [here](../../lightning/web-app.md), so we are focusing on its configuration.
 
 ### c-lightning-Rest plugin
 
 * Setting up c-lightning-Rest as plugin for CLN. First we download and verify the c-lightning-Rest package:
 
   ```sh
-  $ sudo su - cln
+  $ sudo su - lightningd
   $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.9.0.tar.gz
   $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.9.0/v0.9.0.tar.gz.asc
   ```
@@ -409,7 +409,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   ```sh
   $ tar xvf v0.9.0.tar.gz 
   $ cd c-lightning-REST-0.9.0
-  $ npm install --only=prod
+  $ npm install
   ```
   
 * Copy content to plugin datadir:
@@ -442,14 +442,13 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   $ node cl-rest.js
   ```
   
-* Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.9.0/` called `certs` which contains the required `access.macaroon` for the next steps.
+* Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.9.0/` called `certs` which contains the required `access.macaroon` for the next steps. Stop `cl-rest.js` by hitting CTRL+C.
   
-* As user admin, create and setup user `rtl`:
+* As user `rtl`:
 
   ```sh
   $ exit
-  $ sudo adduser --disabled-password --gecos "" rtl
-  $ sudo usermod -aG lightningd rtl
+  $ sudo su - rtl
   ``` 
 
 * Copy `access.macaroon` to home directory of user `rtl`:  
