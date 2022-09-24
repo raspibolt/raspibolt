@@ -245,7 +245,7 @@ $ sudo chown -R fulcrum:fulcrum /home/fulcrum/.fulcrum
 $ sudo su - fulcrum
 ```
 
-* Change to fulcrum data folder and generate cert and key files for SSL
+* Change to fulcrum data folder and generate cert and key files for SSL. When it asks you to put some info, press `Enter` until the prompt is shown again, is not necessary to put any info
 
 ```sh
 $ cd /data/fulcrum
