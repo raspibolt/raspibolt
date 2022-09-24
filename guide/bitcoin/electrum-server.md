@@ -43,7 +43,7 @@ Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-cli
 * Install build tools needed to compile Electrs from the source code
 
   ```sh
-  $ sudo apt install cargo clang cmake
+  $ sudo apt install cargo clang cmake build-essential librocksdb-dev
   ```
 
 ### Firewall & reverse proxy
@@ -119,7 +119,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   The compilation process can take up to one hour.
 
   ```sh
-  $ CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --locked --release
+  $ ROCKSDB_INCLUDE_DIR=/usr/include ROCKSDB_LIB_DIR=/usr/lib CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --locked --release
   $ sudo cp ./target/release/electrs /usr/local/bin/
   ```
 
@@ -348,7 +348,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
   # Compile the source code
   $ cargo clean
-  $ CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --locked --release
+  $ ROCKSDB_INCLUDE_DIR=/usr/include ROCKSDB_LIB_DIR=/usr/lib CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --locked --release
 
   # Back up the old version and update
   $ sudo cp /usr/local/bin/electrs /usr/local/bin/electrs-old
