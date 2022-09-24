@@ -328,6 +328,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   $ cd /home/admin/rust/electrs
 
   # update the local source code and show the latest release tag (example: v0.9.9)
+  $ git clean -x -f d
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
   > v0.9.9
