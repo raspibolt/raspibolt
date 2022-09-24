@@ -152,7 +152,8 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   # Bitcoin Core settings
   network = "bitcoin"
-  daemon_dir= "/home/bitcoin/.bitcoin"
+  daemon_dir= "/data/bitcoin"
+  cookie_file= "/data/bitcoin/.cookie"
   daemon_rpc_addr = "127.0.0.1:8332"
   daemon_p2p_addr = "127.0.0.1:8333"
 
@@ -215,7 +216,7 @@ Electrs needs to start automatically on system boot.
 
   # Service execution
   ###################
-  ExecStart=/usr/local/bin/electrs --conf /data/electrs/electrs.conf
+  ExecStart=/usr/local/bin/electrs --conf /data/electrs/electrs.conf --skip-default-conf-files
 
   # Process management
   ####################
@@ -240,6 +241,9 @@ Electrs needs to start automatically on system boot.
   
   # Mount /usr, /boot/ and /etc read-only for the process.
   ProtectSystem=full
+  
+  # Deny access to /home, /root and /run/user
+  ProtectHome=true
 
   # Use a new /dev namespace only populated with API pseudo devices
   # such as /dev/null, /dev/zero and /dev/random.
