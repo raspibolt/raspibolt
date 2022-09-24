@@ -332,6 +332,9 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   $ git tag | sort --version-sort | tail -n 1
   > v0.9.9
 
+  # Verify the release
+  $ git verify-tag v0.9.9
+
   # check out the most recent release (replace v0.9.9 with the actual version)
   $ git checkout v0.9.9
 
