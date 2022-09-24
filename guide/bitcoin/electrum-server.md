@@ -119,7 +119,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   The compilation process can take up to one hour.
 
   ```sh
-  $ cargo build --locked --release
+  $ CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --locked --release
   $ sudo cp ./target/release/electrs /usr/local/bin/
   ```
 
@@ -237,6 +237,9 @@ Electrs needs to start automatically on system boot.
   ####################
   # Provide a private /tmp and /var/tmp.
   PrivateTmp=true
+  
+  # Mount /usr, /boot/ and /etc read-only for the process.
+  ProtectSystem=full
 
   # Use a new /dev namespace only populated with API pseudo devices
   # such as /dev/null, /dev/zero and /dev/random.
@@ -341,7 +344,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
   # Compile the source code
   $ cargo clean
-  $ cargo build --locked --release
+  $ CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --locked --release
 
   # Back up the old version and update
   $ sudo cp /usr/local/bin/electrs /usr/local/bin/electrs-old
