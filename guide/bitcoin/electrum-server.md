@@ -146,7 +146,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   $ nano /data/electrs/electrs.conf
   ```
 
-  ```sh
+  ```toml
   # RaspiBolt: electrs configuration
   # /data/electrs/electrs.conf
 
