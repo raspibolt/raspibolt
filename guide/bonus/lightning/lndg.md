@@ -733,8 +733,8 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo ufw delete X
   ```
 
-*  Delete the nginx LNDg configuration file and symlink
-  
+* Delete the nginx LNDg configuration file and symlink
+
   ```sh
   $ sudo rm /etc/nginx/sites-available/lndg-ssl.conf
   $ sudo rm /etc/nginx/sites-enabled/lndg-ssl.conf
