@@ -628,6 +628,35 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 
 ---
 
+## Remote access over Tor (optional) 
+
+Do you want to access LNDg remotely? You can easily do so by adding a Tor hidden service on the RaspiBolt and accessing LNDg with the Tor browser from any device.
+
+* Add the following three lines in the “location-hidden services” section in the `torrc file`. Save and exit.
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```ini
+  # Hidden service LNDg
+  HiddenServiceDir /var/lib/tor/hidden_service_lndg/
+  HiddenServiceVersion 3
+  HiddenServicePort 8889 127.0.0.1:8889
+  ```
+
+* Reload Tor configuration and get your connection address.
+
+  ```sh
+  $ sudo systemctl reload tor
+  $ sudo cat /var/lib/tor/hidden_service_lndg/hostname
+  > abcdefg..............xyz.onion
+  ```
+
+With the Tor browser, you can access this onion address from any device.
+
+---
+
 ## For the future: LNDg update
 
 * With user "admin", stop all the LNDg services and open a “lndg” user session.
