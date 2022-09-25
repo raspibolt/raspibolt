@@ -36,6 +36,7 @@ Table of contents
 
 * LND
 * virtualenv
+* uwsgi
 
 ---
 
@@ -53,12 +54,19 @@ Table of contents
   $ sudo apt install virtualenv
   ```
 
+### Install required packages
+
+  ```sh
+  $ sudo apt update
+  $ sudo apt install uwsgi
+  ```
+
 ### Firewall
 
 * Configure firewall to allow incoming HTTP requests:
 
   ```sh
-  $ sudo ufw allow 8889/tcp comment 'allow LNDg'
+  $ sudo ufw allow 8889/tcp comment 'allow LNDg SSL'
   $ sudo ufw status
   ```
 
@@ -76,6 +84,7 @@ For that we will create a separate user and we will be running the code as the n
   ```sh
   $ sudo adduser --disabled-password --gecos "" lndg
   $ sudo adduser lndg lnd
+  $ sudo adduser lndg www-data
   ```
   
 * Log in with the lndg user and create a symbolic link to the LND data directory
@@ -125,8 +134,8 @@ A first time password will be output, save it somewhere safe (e.g., your passwor
   > Quit the server with CONTROL-C.
   ```
 
-* Now point your browser to the LNDg Python server, for example http://raspibolt.local:8889 
-(or your nodes ip address, e.g. http://192.168.0.20:8889). 
+* Now point your browser to the LNDg Python server, for example https://raspibolt.local:8889 
+(or your node's IP address, e.g. https://192.168.0.20:8889). 
 
 * The initial login user is "lndg-admin" and the password is the one generated just above. 
 If you didn't save the password, you can get it again with: `nano /home/lndg/lndg/data/lndg-admin.txt`
@@ -139,60 +148,270 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
   $ rm /home/lndg/lndg/data/lndg-admin.txt
   ```
 
+### Web server configuration
+
+* Install uwsgi within the LNDg Python virtual environment
+
+  ```sh
+  $ .venv/bin/python -m pip install uwsgi
+  ```
+
+* Create the initialization file and paste the following lines. Save and exit.
+
+  ```sh
+  $ nano lndg.ini
+  ```
+
+  ```ini
+  # lndg.ini file
+  [uwsgi]
+  
+  ###########################
+  # Django-related settings #
+  ###########################
+  # the base directory (full path)
+  chdir           = /home/lndg/lndg
+  # Django's wsgi file
+  module          = lndg.wsgi
+  # the virtualenv (full path)
+  home            = /home/lndg/lndg/.venv
+  #location of log files
+  logto           = /var/log/uwsgi/%n.log
+
+  ############################
+  # process-related settings #
+  ############################
+  # master
+  master          = true
+  # maximum number of worker processes
+  processes       = 1
+  # the socket (use the full path to be safe
+  socket          = /home/lndg/lndg/lndg.sock
+  # ... with appropriate permissions - may be needed
+  chmod-socket    = 660
+  # clear environment on exit
+  vacuum          = true
+  ```
+
+* Create the uwsgi parameter file and paste the following lines. Save and exit.
+
+  ```sh
+  $ nano uwsgi_params
+  ```
+
+  ```ini
+  uwsgi_param  QUERY_STRING       $query_string;
+  uwsgi_param  REQUEST_METHOD     $request_method;
+  uwsgi_param  CONTENT_TYPE       $content_type;
+  uwsgi_param  CONTENT_LENGTH     $content_length;
+  
+  uwsgi_param  REQUEST_URI        "$request_uri";
+  uwsgi_param  PATH_INFO          "$document_uri";
+  uwsgi_param  DOCUMENT_ROOT      "$document_root";
+  uwsgi_param  SERVER_PROTOCOL    "$server_protocol";
+  uwsgi_param  REQUEST_SCHEME     "$scheme";
+  uwsgi_param  HTTPS              "$https if_not_empty";
+  
+  uwsgi_param  REMOTE_ADDR        "$remote_addr";
+  uwsgi_param  REMOTE_PORT        "$remote_port";
+  uwsgi_param  SERVER_PORT        "$server_port";
+  uwsgi_param  SERVER_NAME        "$server_name";
+  ```
+
 * Exit the "lndg" user session
 
   ```sh
   $ exit
   ```
 
-### Autostart on boot  
-
-Now we’ll make sure LNDg starts as a service on the Raspberry Pi so it’s always running. 
-In order to do that, we create a systemd unit that starts the service on boot directly after LND.
-
-* As user “admin”, create the service file.
+* Create the uwsgi service file
 
   ```sh
-  $ sudo nano /etc/systemd/system/lndg.service
+  $ sudo nano /etc/systemd/system/uwsgi.service
   ```
+  
+  ```ini
+  [Unit]
+  Description=LNDg uWSGI app
+  After=lnd.service
+  PartsOf=lndg.service
+  
+  [Service]
+  ExecStart=/home/lndg/lndg/.venv/bin/uwsgi --ini /home/lndg/lndg/lndg.ini
+  User=lndg
+  Group=www-data
+  Restart=on-failure
+  # Wait 4 minutes before starting to give LND time to fully start.  Increase if needed.
+  TimeoutStartSec=240
+  RestartSec=30
+  KillSignal=SIGQUIT
+  Type=notify
+  StandardError=syslog
+  NotifyAccess=all
+  
+  [Install]
+  WantedBy=sockets.target
+  ```
+
+* Create a nginx configuration file for the LNDg website with a server listening on port 4890
+
+  ```sh
+  $ sudo nano /etc/nginx/sites-available/lndg-ssl.conf
+  ```
+
+* Paste the following configuration lines. Save and exit.
 
   ```ini
-  # RaspiBolt: systemd unit for LNDg
-  # /etc/systemd/system/lndg.service
+  upstream django {
+    server unix:///home/lndg/lndg/lndg.sock; # for a file socket
+  }
   
-  [Unit]
-  Description=LNDg
-  After=lnd.service
-
-  [Service]
-  WorkingDirectory=/home/lndg/lndg
-  ExecStart=/home/lndg/lndg/.venv/bin/python manage.py runserver 0.0.0.0:8889
-  User=lndg
+  server {
+    # the port your site will be served on
+    listen 8889 ssl;
+    listen [::]:8889 ssl;
+    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+    ssl_session_timeout 4h;
+    ssl_protocols TLSv1.3;
+    ssl_prefer_server_ciphers on;
   
-  StandardError=append:/var/log/lnd_jobs_error.log
+    # the domain name it will serve for
+    server_name _;
+    charset     utf-8;
   
-  Restart=always
-  RestartSec=30
-
-  [Install]
-  WantedBy=multi-user.target
+    # max upload size
+    client_max_body_size 75M;
+  
+    # max wait for django time
+    proxy_read_timeout 180;
+  
+    # Django media
+    location /static {
+        alias /home/lndg/lndg/gui/static; # your Django project's static files - amend as required
+    }
+  
+    # Finally, send all non-media requests to the Django server.
+    location / {
+        uwsgi_pass  django;
+        include     /home/lndg/lndg/uwsgi_params; # the uwsgi_params file
+    }
+  }
   ```
 
-* Enable, start and then check the status of the service. Exit with `Ctrl`+`c`.
+* Create a symlink in the `sites-enabled` directory
 
   ```sh
-  $ sudo systemctl enable lndg.service
-  $ sudo systemctl start lndg.service
-  $ sudo systemctl status lndg.service
+  $ sudo ln -sf /etc/nginx/sites-available/mempool-ssl.conf /etc/nginx/sites-enabled/
   ```
 
-* Check LNDg logs
- 
+* Open the nginx configuration file
+
   ```sh
-  $ sudo journalctl -f -u lndg.service
+  $ sudo nano /etc/nginx/nginx.conf
   ```
 
-You can now access LNDg from within your local network by browsing to http://raspibolt.local:8889 (or your equivalent IP address).
+* Paste the following configuration lines between the existing `event` and `stream` blocks . Save and exit.
+
+  ```ini
+  http {
+  
+          ##
+          # Basic Settings
+          ##
+  
+          sendfile on;
+          tcp_nopush on;
+          types_hash_max_size 2048;
+          # server_tokens off;
+  
+          # server_names_hash_bucket_size 64;
+          # server_name_in_redirect off;
+  
+          include /etc/nginx/mime.types;
+          default_type application/octet-stream;
+  
+          ##
+          # SSL Settings
+          ##
+  
+          ssl_protocols TLSv1.3;
+          ssl_prefer_server_ciphers on;
+  
+          ##
+          # Logging Settings
+          ##
+  
+          access_log /var/log/nginx/access.log;
+          error_log /var/log/nginx/error.log;
+  
+          ##
+          # Gzip Settings
+          ##
+  
+          gzip on;
+  
+          # gzip_vary on;
+          # gzip_proxied any;
+          # gzip_comp_level 6;
+          # gzip_buffers 16 8k;
+          # gzip_http_version 1.1;
+          # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+  
+          ##
+          # Virtual Host Configs
+          ##
+  
+          include /etc/nginx/conf.d/*.conf;
+          include /etc/nginx/sites-enabled/*;
+  }
+
+* Create the log and sock files
+
+  ```sh
+  # Log file
+  $ sudo touch /var/log/uwsgi/lndg.log
+  $ sudo chgrp www-data /var/log/uwsgi/lndg.log
+  $ sudo chmod 660 /var/log/uwsgi/lndg.log
+  
+  # Sock file
+  $ sudo touch /home/lndg/lndg/lndg.sock
+  $ sudo chown lndg:www-data /home/lndg/lndg/lndg.sock
+  $ sudo chmod 660 /home/lndg/lndg/lndg.sock
+
+* Test the nginx configuration
+
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  ```
+
+* Enable and start the uwsgi service
+
+  ```sh
+  $ sudo systemctl enable uwsgi
+  $ sudo systemctl start uwsgi
+  $ sudo systemctl status uwsgi
+  > [...]
+  > Sep 25 22:47:21 raspibolt systemd[1]: Starting LNDg uWSGI app...
+  > Sep 25 22:47:21 raspibolt uwsgi[1371109]: [uWSGI] getting INI configuration from /home/lndg/lndg/lndg.ini
+  > Sep 25 22:47:22 raspibolt systemd[1]: Started LNDg uWSGI app.
+  ```
+
+* To check the uwsgi logs
+
+  ```sh
+  $ sudo journalctl -f -u uwsgi
+  ```
+
+* Restart nginx
+
+  ```sh
+  $ sudo systemctl restart nginx
+  ```
+
+You can now access LNDg from within your local network by browsing to https://raspibolt.local:8889 (or your equivalent IP address).
 
 ### Backend refreshes
 
@@ -417,7 +636,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   $ sudo systemctl stop htlc-stream-lndg.service
   $ sudo systemctl stop rebalancer-lndg.timer
   $ sudo systemctl stop jobs-lndg.timer
-  $ sudo systemctl stop lndg.service
+  $ sudo systemctl stop uwsgi.service
   $ sudo su - lndg
   ```
 
@@ -436,7 +655,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 * Start the services again.
 
   ```sh
-  $ sudo systemctl start lndg.service
+  $ sudo systemctl start uwsgi.service
   $ sudo systemctl start jobs-lndg.timer
   $ sudo systemctl start rebalancer-lndg.timer
   $ sudo systemctl start htlc-stream-lndg.service
@@ -453,18 +672,18 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   $ sudo systemctl disable htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service
   
 
-* Stop and disable LNDg
+* Stop and disable uwsgi
 
   ```sh
-  $ sudo systemctl stop lndg.service
-  $ sudo systemctl disable lndg.service
+  $ sudo systemctl stop uwsgi.service
+  $ sudo systemctl disable uwsgi.service
   ``` 
 
 * Delete all the LNDg systemd files
  
   ```sh
   $ cd /etc/systemd/system/
-  $ sudo rm htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service lndg.service
+  $ sudo rm htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service uwsgi.service
   $ cd
   ```
 
@@ -473,9 +692,9 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   ```sh
   $ sudo ufw status numbered
   > [...]
-  > [X] 8889/tcp                   ALLOW IN    Anywhere                   # allow LNDg
+  > [X] 8889/tcp                   ALLOW IN    Anywhere                   # allow LNDg SSL
   > [...]
-  > [Y] 8889/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow LNDg
+  > [Y] 8889/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow LNDg SSL
   ```
 
 * Delete the two LNDg rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
@@ -483,6 +702,46 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   ```sh
   $ sudo ufw delete Y
   $ sudo ufw delete X
+  ```
+
+*  Delete the nginx LNDg configuration file and symlink
+
+  ```sh
+  $ sudo rm /etc/nginx/sites-available/lndg-ssl.conf
+  $ sudo rm /etc/nginx/sites-enabled/lndg-ssl.conf
+  ```
+
+* Delete or comment out the HTTP server block from the `nginx.conf` file (unless you use it for another service, e.g. [Mempool](../bitcoin/mempool.md))
+
+  ```sh
+  $ sudo nano /etc/nginx/nginx.conf
+  ```
+  
+  ```ini
+  
+  ```
+
+* Paste the following configuration lines between the existing `event` and `stream` blocks . Save and exit.
+
+  ```ini
+  #http {
+  # [...]
+  #}
+  ```
+
+* Test the nginx configuration & restart nginx
+
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  $ sudo systemctl restart nginx
+  ```
+
+* Delete the uwsgi log file
+
+  ```sh
+  $ sudo rm /var/log/uwsgi/lndg.log
   ```
 
 * Delete the “lndg” user. Do not worry about the userdel: mempool mail spool (/var/mail/lndg) not found.
