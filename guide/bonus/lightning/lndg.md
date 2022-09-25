@@ -717,7 +717,7 @@ With the Tor browser, you can access this onion address from any device.
   ```
 
 * Display the UFW firewall rules and notes the numbers of the rules for Mempool (e.g., X and Y below)
-
+  
   ```sh
   $ sudo ufw status numbered
   > [...]
@@ -727,14 +727,14 @@ With the Tor browser, you can access this onion address from any device.
   ```
 
 * Delete the two LNDg rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
- 
+  
   ```sh
   $ sudo ufw delete Y
   $ sudo ufw delete X
   ```
 
 *  Delete the nginx LNDg configuration file and symlink
-
+  
   ```sh
   $ sudo rm /etc/nginx/sites-available/lndg-ssl.conf
   $ sudo rm /etc/nginx/sites-enabled/lndg-ssl.conf
@@ -745,12 +745,6 @@ With the Tor browser, you can access this onion address from any device.
   ```sh
   $ sudo nano /etc/nginx/nginx.conf
   ```
-  
-  ```ini
-  
-  ```
-
-* Paste the following configuration lines between the existing `event` and `stream` blocks . Save and exit.
 
   ```ini
   #http {
