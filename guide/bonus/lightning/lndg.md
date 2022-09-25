@@ -642,7 +642,7 @@ Do you want to access LNDg remotely? You can easily do so by adding a Tor hidden
   # Hidden service LNDg
   HiddenServiceDir /var/lib/tor/hidden_service_lndg/
   HiddenServiceVersion 3
-  HiddenServicePort 8889 127.0.0.1:8889
+  HiddenServicePort 443 127.0.0.1:8889
   ```
 
 * Reload Tor configuration and get your connection address.
