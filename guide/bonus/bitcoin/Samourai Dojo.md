@@ -470,6 +470,25 @@ $ sudo rm -R /data/dojo
 $ sudo userdel -r dojo
 ```
 
+* Remove Tor configuration. Comment or delete following lines
+
+```sh
+$ sudo nano /etc/tor/torrc
+```
+
+```sh
+# Dojo hidden service
+#SocksPort 9050
+#SocksPolicy accept 127.0.0.1
+#SocksPolicy reject *
+
+#HiddenServiceDir /var/lib/tor/hsv3/
+#HiddenServiceVersion 3
+#HiddenServicePort 80 127.0.0.1:8080
+```
+
+* Save and exit
+
 ### Remove MySQL (Optional)
 
 ```sh
