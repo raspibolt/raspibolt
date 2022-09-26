@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Bonus guide: Samourai Dojo/Whirlpool
+## Bonus guide: Samourai Dojo
 
 {: .no_toc }
 
