@@ -127,7 +127,7 @@ MariaDB [(none)]>
 
 ```sh
 > FLUSH PRIVILEGES;
-> Exit
+> exit
 ```
 
 ## Installation
