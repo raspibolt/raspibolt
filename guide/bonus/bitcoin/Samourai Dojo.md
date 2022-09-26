@@ -16,8 +16,6 @@ has_toc: false
 Samourai Dojo is the backing server for Samourai Wallet. Provides HD account & loose addresses (BIP47) balances & transactions lists. 
 Provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node.
 
-Samourai Whirlpool is a free and open source (FOSS), non custodial, chaumian CoinJoin platform. Its goal is to mathematically disassociate the ownership of inputs to outputs in a given bitcoin transaction.
-
 Difficulty: Medium
 {: .label .label-yellow }
 
