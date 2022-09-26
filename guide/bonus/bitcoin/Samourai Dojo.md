@@ -336,10 +336,17 @@ $ pm2 logs mainnet
 7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T16:26:10Z  INFO  Tracker : Beginning to process new block header.
 ```
 
+* Run Dojo automatically on a reboot
+
+```sh
+$ pm2 save  #will save lists of processes
+$ pm2 startup #will start Dojo at a startup
+```
+
 * You can exit dojo user session
 
 ```sh
-$ Exit
+$ exit
 ```
 
 ### Set up Tor hidden service
