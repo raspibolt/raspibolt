@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Samourai Dojo/Whirlpool
+title: Samourai Dojo
 parent: + Bitcoin
 grand_parent: Bonus Section
 nav_exclude: true
@@ -27,6 +27,7 @@ Difficulty: Medium
 * Bitcoin Core
 * Tor
 * Fulcrum
+* NGINX
 * NodeJS
 * MySQL 
 
@@ -41,7 +42,7 @@ You will need several new passwords, and it’s easiest to write them all down i
 ```sh
 [ F ] MYSQL_ROOT_PASSWORD
 [ G ] MYSQL_PASSWORD
-[ H ] NODE_API_KEY1, NODE_API_KEY2
+[ H ] NODE_API_KEY_1, NODE_API_KEY_2
 [ I ] NODE_ADMIN_KEY
 [ J ] NODE_JWT_SECRET
 ```
@@ -50,7 +51,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 ### Update packages
 
-* With user “admin”, make sure that all software packages are up to date.
+* With user “admin”, make sure that all software packages are up to date
 
 ```sh
 $ sudo apt update
@@ -59,7 +60,7 @@ $ sudo apt full-upgrade
 
 ### Install NodeJS
 
-By following [this](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs) section, install NodeJS as suggested and return back for the guide.
+By following [this](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs) section, install NodeJS as suggested.
 
 ### Install PM2
 
@@ -70,7 +71,7 @@ $ sudo apt install npm
 $ sudo npm i -g pm2
 ```
 
-* Update npm to a latest functioning version
+* Update npm to a latest functioning version with Dojo
 
 ```sh
 $ sudo npm install -g npm@8.19.2
@@ -78,15 +79,19 @@ $ sudo npm install -g npm@8.19.2
 
 ### Install MySQL
 
+* Install MySQL for a future Dojo database - we will use mariadb
+
 ```sh
 sudo apt install mariadb-server
 ```
 
-* Run the installation using following command and use following values
+* Run the secure installation
 
 ```sh
 $ sudo mysql_secure_installation
 ```
+
+* Paste following values, when prompted
 
 ```sh
 Enter current password for root (enter for none): [ F ] MYSQL_ROOT_PASSWORD
@@ -98,27 +103,27 @@ Remove test database and access to it? [Y/n]: Y
 Reload privilege tables now? [Y/n] Y
 ```
 
-* Move to mysql interfacem, inside the interface, paste following values.
+* Move into MySQL interface. Paste values inside a MySQL command line interface
 
 ```sh
 $ sudo mysql
+MariaDB [(none)]>
 ```
 
-* Create a database `dojo_db` and user `dojo`. Change only `[ G ] MYSQL_PASSWORD`. Password must be inside the single quotes as it is correct syntax. All
-commands must end with `;` letter.
+* Create a database `dojo_db` and user `dojo`. Password must be inside the single quotes `'` and all commands must end with `;` letter, as it is correct syntax. Change only `[ G ] MYSQL_PASSWORD`
 
 ```sh
 $ CREATE DATABASE dojo_db;
 $ CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
 ```
 
-* Grant following privileges to a user `dojo`. No changes neccesary.
+* Grant following privileges to a user `dojo`. No changes neccesary
 
 ```sh
 $ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON dojo_db.* TO 'dojo'@'localhost';
 ```
 
-* Flush the privilege table. Without flushing the privilege table, the new user won’t be able to access the database.
+* Flush the privilege table. Without flushing the privilege table, the new user won’t be able to access the database
 
 ```sh
 $ FLUSH PRIVILEGES;
@@ -129,7 +134,7 @@ $ Exit
 
 ### Download Samourai Dojo
 
-* Login as “admin” and change to a temporary directory which is cleared on reboot.
+* As a user “admin” move to a temporary directory which is cleared on reboot
 
 ```sh
 $ cd /tmp/
@@ -144,7 +149,7 @@ $ sudo tar -xvf samourai-dojo-v1.17.0.tar.gz
 
 ### Create the dojo user
 
-* Create the user "dojo" and add him to the group “bitcoin” as well.
+* Create the user "dojo" and add him to the group “bitcoin” as well
 
 ```sh
 $ sudo adduser --disabled-password --gecos "" dojo
@@ -153,7 +158,7 @@ $ sudo adduser dojo bitcoin
 
 ### Data directory
 
-* Create the Dojo data folder.
+* Create the Dojo data folder
 
 ```sh
 $ sudo mv /tmp/samourai-dojo-v1.17.0 /data/dojo/
@@ -173,7 +178,7 @@ $ sudo chown -R dojo:dojo /home/dojo/.dojo
 $ sudo su - dojo
 ```
 
-* Display the link and check that it is not shown in red (this would indicate an error).
+* Display the link and check that it is not shown in red (this would indicate an error)
 
 ```sh
 $ ls -la
@@ -181,22 +186,25 @@ $ ls -la
 
 ## Configuration
 
-* With user "dojo" move to `keys` directory. Rename index-example.js to index.js.
+* With user `dojo` move to "keys" directory. Rename index-example.js to index.js
 
 ```sh
 $ cd /data/dojo/keys
 $ mv index-example.js index.js
 ```
 
-* As user "dojo" edit following values inside index.js file
+* As user `dojo` edit following values inside index.js file
 
 ```sh
 $ nano index.js
 ```
 
-* Find and edit these lines inside bitcoind configuration
+* Find and edit these lines inside "bitcoind" configuration
 
 ```sh
+* Bitcoind
+...
+
 // Login
 user: 'raspibolt',
 // Password
@@ -207,9 +215,12 @@ zmqTx: 'tcp://127.0.0.1:28333',
 zmqBlk: 'tcp://127.0.0.1:28332',
 ```
 
-* Find and edit these lines inside MySQL configuration
+* Find and edit these lines inside "MySQL" configuration
 
 ```sh
+* MySQL database
+...
+
 // User
 user: 'dojo',
 // Password
@@ -218,26 +229,28 @@ pass: '[ G ] MYSQL_PASSWORD',
 database: 'dojo_db',
 ```
 
-* Find and edit these lines inside auth configuration
+* Find and edit these lines inside "auth" configuration
 
 ```sh
+* Authenticated access to the APIs (account & pushtx)
+...
+
 // List of API keys (alphanumeric characters)
-apiKeys: ['[ H ] NODE_API_KEY1', '[ H ] NODE_API_KEY2'],
+apiKeys: ['[ H ] NODE_API_KEY_1', '[ H ] NODE_API_KEY_2'],
 // Admin key (alphanumeric characters)
 adminKey: '[ I ] NODE_ADMIN_KEY',
-```
 
-* Find and edit these lines inside jwt configuration
-
-```sh
 // Secret passphrase used by the server to sign the jwt
 // (alphanumeric characters)
 secret: '[ J ] NODE_JWT_SECRET',
 ```
 
-* Find and edit these lines inside indexer configuration. Save and exit
+* Find and edit these lines inside "indexer" configuration
 
 ```sh
+* Indexer or third party service
+...
+
 // Values: local_bitcoind | local_indexer | third_party_explorer
 active: 'local_indexer',
 // Port
@@ -246,33 +259,35 @@ port: 50002,
 protocol: 'tls'
 ```
 
+* Save and exit
+
 * Exit "dojo" user session
 
 ```sh
-$ Exit
+$ exit
 ```
 
-* While being inside the Dojo folder, install dependencies.
+* As a user "admin", install neccessary dependencies inside the Dojo folder
 
 ```sh
 $ cd /data/dojo/
 $ sudo npm install --only=prod
 ```
 
-* Create Dojo charts with following command. Edit `[ F ] MYSQL_ROOT_PASSWORD`.
+* Create Dojo database charts with following command. Edit `[ F ] MYSQL_ROOT_PASSWORD`
 
 ```sh
 $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl
 ```
 
-* Change back to dojo user and move to dojo file
+* Change back to "dojo" user and move to a Dojo file
 
 ```sh
 $ sudo su - dojo
 $ cd /data/dojo
 ```
 
-* Rename pm2 config file
+* Rename pm2 config file.
 
 ```sh
 $ mv pm2.config.cjs.example pm2.config.cjs
@@ -288,11 +303,11 @@ $ nano pm2.config.cjs
 const INTERPRETER = 'node' // OR binary name like `node`
 ```
 
-* Save and Exit.
+* Save and Exit
 
 ## Run Dojo
 
-* With user "dojo" run Dojo
+* With user "dojo", run Dojo
 
 ```sh
 $ pm2 start pm2.config.cjs
@@ -354,7 +369,7 @@ HiddenServicePort 80 127.0.0.1:8080
 $ sudo systemctl reload tor
 ```
 
-* Print onion address and save it on a safe place.
+* Print onion address and save it in a safe place.
 
 ```sh
 $ sudo cat /var/lib/tor/hsv3/hostname
@@ -389,6 +404,20 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 ## For the future: Dojo upgrade 
 
+* Switch to "dojo" user
+
+```sh
+$ sudo su - dojo
+```
+
+* Stop Dojo
+
+```sh
+$ pm2 stop all
+```
+
+* Following the installation section, download and install latest Dojo version. You will overwrite several files.
+
 ## Uninstall
 
 ### Uninstall Dojo
@@ -405,8 +434,22 @@ $ sudo pm2 stop all
 $ sudo rm -R /data/dojo
 ```
 
-### Remove dojo user
+* Remove dojo user
 
 ```sh
 $ sudo userdel -r dojo
+```
+
+### Remove MySQL (Optional)
+
+```sh
+$ sudo apt remove mariadb-server
+```
+
+### Remove NodeJS and dependencies (Optional)
+
+```sh
+$ npm remove pm2 -g
+$ sudo apt remove npm
+$ sudo apt remove nodejs
 ```
