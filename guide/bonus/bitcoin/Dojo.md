@@ -19,8 +19,8 @@ Provides unspent output lists to the wallet. PushTX endpoint broadcasts transact
 Difficulty: Medium
 {: .label .label-yellow }
 
-#Status: Tested v3
-#{: .label .label-green }
+Status: Not tested v3
+{: .label .label-yellow }
 
 ![dojo_profile](/images/dojo_profile.png)
 
@@ -37,10 +37,8 @@ Table of contents
 ## Requirements
 
 * Bitcoin Core
-* Fulcrum/Electrs
-* Tor
+* Fulcrum
 * Node.js v16+
-* MySQL
 * nginx
 
 ---
@@ -134,8 +132,6 @@ MariaDB [(none)]>
 ```
 
 * Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell with start with "MDB$" 
-
-* We will create Dojo database and user. Change only password in second command, must be inside the single quotes `'`
 
 ```sh
 MDB$ CREATE DATABASE dojo_db;
@@ -356,8 +352,6 @@ $ pm2 logs mainnet
 7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T19:13:17Z  INFO  Tracker : Processing active Mempool (2 transactions)
 7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T19:13:19Z  INFO  Tracker : Processing active Mempool (8 transactions)
 ```
-
----
 
 ### Autostart on boot
 
