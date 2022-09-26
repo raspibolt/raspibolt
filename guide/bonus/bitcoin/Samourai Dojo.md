@@ -344,17 +344,32 @@ $ pm2 logs mainnet
 7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T19:13:19Z  INFO  Tracker : Processing active Mempool (8 transactions)
 ```
 
-* Run Dojo automatically on a reboot
+* Save list of processes
 
 ```sh
-$ pm2 save  #will save lists of processes
-$ pm2 startup #will start Dojo at a startup
+$ pm2 save
 ```
 
-* You can exit dojo user session
+* Run saved processes at reboot automatically. Copy output command
+
+```sh
+$ pm2 startup
+
+[PM2] Init System found: systemd
+[PM2] To setup the Startup Script, copy/paste the following command:
+sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
+```
+
+* Exit "dojo" user session
 
 ```sh
 $ exit
+```
+
+* Paste your own output into the CLI as user "admin"
+
+```sh
+$ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
 ```
 
 ### Set up Tor hidden service
