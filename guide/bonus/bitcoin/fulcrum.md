@@ -110,7 +110,7 @@ zram-swap is a compressed swap in memory and on disk and is necessary for the pr
   $ sudo cat /proc/swaps
   ```
 
-Expected output:
+* Expected output:
 
   ```sh
   Filename                               Type                 Size           Used    Priority
@@ -118,11 +118,13 @@ Expected output:
   /dev/zram0                             partition            102396         0        5
   ```
 
+* Check the status of zram-swap service
+
   ```sh
   $ sudo systemctl status zram-swap
   ```
 
-Expected output, find *enabled* label:
+* Expected output, find *enabled* label:
 
   ```sh
   zram-swap.service - zram swap service
@@ -131,7 +133,7 @@ Expected output, find *enabled* label:
   Process: 287452 ExecStart=/usr/local/sbin/zram-swap.sh start (code=exited, status=0/SUCCESS)
   Main PID: 287452 (code=exited, status=0/SUCCESS)
   CPU: 191ms
-
+  
   Aug 08 00:51:51 node systemd[1]: Starting zram swap service...
   Aug 08 00:51:51 node zram-swap.sh[287471]: Setting up swapspace version 1, size = 4.6 GiB (4972199936 bytes)
   ...
@@ -263,28 +265,28 @@ Now that Fulcrum is installed, we need to configure it to run automatically on s
   ```sh
   # RaspiBolt: fulcrum configuration 
   # /data/fulcrum/fulcrum.conf
-
+  
   # Bitcoin Core settings
   bitcoind = 127.0.0.1:8332
   rpccookie = /home/bitcoin/.bitcoin/.cookie
-
+  
   # Fulcrum server settings
   datadir = /data/fulcrum/fulcrum_db
   cert = /data/fulcrum/cert.pem
   key = /data/fulcrum/key.pem
   ssl = 0.0.0.0:50002
   peering = false
-
+  
   # RPi optimizations
   bitcoind_timeout = 600
   bitcoind_clients = 1
   worker_threads = 1
   deb_mem = 1024.0
-
+  
   # 4GB RAM (default)
   db_max_open_files = 200
   fast-sync = 1024
-
+  
   # 8GB RAM (comment the last two lines and uncomment the next)
   #db_max_open_files = 400
   #fast-sync = 2048
@@ -309,14 +311,14 @@ Fulcrum needs to start automatically on system boot.
   ```sh
   # RaspiBolt: systemd unit for Fulcrum
   # /etc/systemd/system/fulcrum.service
-
+  
   [Unit]
   Description=Fulcrum
   Wants=bitcoind.service
   After=bitcoind.service
   StartLimitBurst=2
   StartLimitIntervalSec=20
-
+  
   [Service]
   ExecStart=/usr/local/bin/Fulcrum /data/fulcrum/fulcrum.conf
   KillSignal=SIGINT
@@ -325,12 +327,14 @@ Fulcrum needs to start automatically on system boot.
   TimeoutStopSec=300
   RestartSec=30
   Restart=on-failure
-
+  
   [Install]
   WantedBy=multi-user.target
   ```
 
 ### Run Fulcrum
+
+* Enable fulcrum service and start
 
   ```sh
   $ sudo systemctl enable fulcrum.service
@@ -344,7 +348,7 @@ Fulcrum needs to start automatically on system boot.
   $ sudo journalctl -fu fulcrum.service
   ```
 
-Expected output:
+* Expected output:
 
   ```sh
   -- Journal begins at Mon 2022-04-04 16:41:41 CEST. --
@@ -400,7 +404,7 @@ DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT TH
   $ sudo cat /proc/swaps
   ```
 
-Expected output:
+* Expected output:
 
   ```sh
   Filename                                Type                Size           Used    Priority
@@ -498,7 +502,7 @@ If the database gets corrupted and you don't have a backup, you will have to res
 
 Ensure you are logged with user "admin"
 
-* Stop, disable and delete service
+* Stop, disable and delete the service
 
   ```sh
   $ sudo systemctl stop fulcrum
@@ -560,6 +564,8 @@ Ensure you are logged with user "admin"
 
 ### Uninstall the Zram (optional)
 
+* Navigate to zram-swap folder and uninstall
+
   ```sh
   $ cd /home/admin/zram-swap
   $ sudo ./install.sh --uninstall 
@@ -573,7 +579,7 @@ Ensure you are logged with user "admin"
   $ sudo cat /proc/swaps
   ```
 
-Expected output:
+* Expected output:
 
   ```sh
   Filename                                Type                Size           Used    Priority
