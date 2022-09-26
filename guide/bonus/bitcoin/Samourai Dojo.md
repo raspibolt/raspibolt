@@ -29,7 +29,7 @@ Difficulty: Medium
 * Fulcrum
 * NGINX
 * NodeJS
-* MySQL 
+* MySQL
 
 ---
 
@@ -113,21 +113,21 @@ MariaDB [(none)]>
 * Create a database `dojo_db` and user `dojo`. Password must be inside the single quotes `'` and all commands must end with `;` letter, as it is correct syntax. Change only `[ G ] MYSQL_PASSWORD`
 
 ```sh
-$ CREATE DATABASE dojo_db;
-$ CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
+> CREATE DATABASE dojo_db;
+> CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
 ```
 
 * Grant following privileges to a user `dojo`. No changes neccesary
 
 ```sh
-$ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON dojo_db.* TO 'dojo'@'localhost';
+> GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON dojo_db.* TO 'dojo'@'localhost';
 ```
 
 * Flush the privilege table. Without flushing the privilege table, the new user won’t be able to access the database
 
 ```sh
-$ FLUSH PRIVILEGES;
-$ Exit
+> FLUSH PRIVILEGES;
+> Exit
 ```
 
 ## Installation
