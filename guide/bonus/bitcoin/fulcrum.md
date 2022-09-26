@@ -463,7 +463,7 @@ To get address balances, either an Electrum server or an external service is nec
   BTCEXP_ELECTRUM_SERVERS=tls://127.0.0.1:50002
   ```
 
-* Return to `admin` user exiting and open `btcrpcexplorer` service
+* Return to `admin` user by exiting and open `btcrpcexplorer` service
 
   ```sh
   $ exit
