@@ -428,6 +428,8 @@ $ sudo cat /var/lib/tor/hsv3/hostname
 
 ### nginx
 
+---
+
 ## Connect to Dojo
 
 ### Connect samourai wallet
