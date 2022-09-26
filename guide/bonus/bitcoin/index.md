@@ -38,7 +38,7 @@ has_toc: false
 
 * **[I2P](i2p.md){:target="_blank"}** - The Invisible Internet Protocol
 
-* **[Samourai Dojo](Samourai Dojo.md){:target="_blank"}** - Personal backend for your Samourai Wallet
+* **[Samourai Dojo](Dojo.md){:target="_blank"}** - Personal backend for your Samourai Wallet
 
 ---
 
