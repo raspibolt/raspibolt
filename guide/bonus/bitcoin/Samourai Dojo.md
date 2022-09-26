@@ -48,7 +48,7 @@ You will need several new passwords, and it’s easiest to write them all down i
 
 Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}), or whaterver password manager you're already using, and keep your original notes out of sight once installation is complete.
 
-### Install dependencies
+### Update packages
 
 * With user “admin”, make sure that all software packages are up to date.
 
