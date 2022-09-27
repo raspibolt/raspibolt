@@ -223,7 +223,7 @@ JoinMarket wallet contains five separate sub-wallets (accounts) or pockets calle
 * Run `wallet-tool.py` specifying mixdepth 0 and enter your wallet password [F] to initialize the wallet. 
 
 ```
-(jvmenv) $ python wallet-tool.py -m 0 wallet.jmdat
+(jvmenv) $ ./wallet-tool.py -m 0 wallet.jmdat
 > User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
 > Enter wallet decryption passphrase: 
 > 2020-11-30 23:18:30,322 [INFO]  Detected new wallet, performing initial import
