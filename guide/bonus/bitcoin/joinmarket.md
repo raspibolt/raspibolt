@@ -224,7 +224,7 @@ JoinMarket wallet contains five separate sub-wallets (accounts) or pockets calle
 
 ```
 (jvmenv) $ ./wallet-tool.py -m 0 wallet.jmdat
-> User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
+> User data location: /home/joinmarket/.joinmarket/
 > Enter wallet decryption passphrase: 
 > 2020-11-30 23:18:30,322 [INFO]  Detected new wallet, performing initial import
 > restart Bitcoin Core with -rescan or use `bitcoin-cli rescanblockchain` if you're recovering an existing wallet from backup seed
