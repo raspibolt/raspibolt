@@ -89,8 +89,8 @@ $ ln -s /data/joinmarket /home/joinmarket/.joinmarket
 
 ``` 
 $ cd /tmp
-$ wget -O joinmarket-clientserver-0.9.7.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v0.9.7.tar.gz
-$ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v0.9.7/joinmarket-clientserver-0.9.7.tar.gz.asc
+$ wget -O joinmarket-clientserver-0.9.8.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v0.9.8.tar.gz
+$ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v0.9.8/joinmarket-clientserver-0.9.8.tar.gz.asc
 ```
 
 * Get the PGP key of JoinMarket developer Adam Gibson.
