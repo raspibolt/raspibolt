@@ -121,7 +121,8 @@ $ gpg --verify joinmarket-clientserver-0.9.8.tar.gz.asc
 $ tar -xvzf joinmarket-clientserver-0.9.8.tar.gz -C /home/joinmarket/
 $ cd 
 $ ln -s joinmarket-clientserver-0.9.8 joinmarket
-$ ./joinmarket/install.sh --without-qt --disable-secp-check --disable-os-deps-check
+$ cd joinmarket
+$ ./install.sh --without-qt --disable-secp-check --disable-os-deps-check
 ```
 
 * Create the following jmvenv activation script to save yourself some time in the long run.
