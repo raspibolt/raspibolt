@@ -30,7 +30,9 @@ Table of contents
 You can prettify your command prompt for each user by enabling color output and setting a custom prompt.
 
 * Open and edit `.bashrc`  as shown below, save and exit
-  `$ nano /home/admin/.bashrc`
+```
+$ nano /home/admin/.bashrc
+```
 
 ```bash
 # enable color prompt (uncomment, if commented out)
