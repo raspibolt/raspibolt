@@ -231,7 +231,7 @@ JoinMarket wallet contains five separate sub-wallets (accounts) or pockets calle
 * As instructed by joinmarket, unless recovering an existing wallet from backup seed, just run the previous command again.
 
 ```
-(jvmenv) $ python wallet-tool.py -m 0 wallet.jmdat
+(jvmenv) $ ./wallet-tool.py -m 0 wallet.jmdat
 > User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
 > Enter wallet decryption passphrase: 
 > 2020-11-30 23:19:05,030 [INFO]  Detected new wallet, performing initial import
