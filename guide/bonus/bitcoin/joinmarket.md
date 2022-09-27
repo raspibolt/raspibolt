@@ -105,9 +105,9 @@ $ curl https://raw.githubusercontent.com/JoinMarket-Org/joinmarket-clientserver/
 * Verify that the application is signed by Adam Gibson.
 
 ```
-$ gpg --verify joinmarket-clientserver-0.9.7.tar.gz.asc
-> gpg: assuming signed data in 'joinmarket-clientserver-0.9.7.tar.gz'
-> gpg: Signature made Fri 18 Feb 2022 15:37:12 GMT
+$ gpg --verify joinmarket-clientserver-0.9.8.tar.gz.asc
+> gpg: assuming signed data in 'joinmarket-clientserver-0.9.8.tar.gz'
+> gpg: Signature made Thu Sep 15 15:46:38 2022 EEST
 > gpg:                using RSA key 2B6FC204D9BF332D062B461A141001A1AF77F20B
 > gpg: Good signature from "Adam Gibson (CODE SIGNING KEY) <ekaggata@gmail.com>" [unknown]
 > gpg: WARNING: This key is not certified with a trusted signature!
