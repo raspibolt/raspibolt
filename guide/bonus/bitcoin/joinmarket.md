@@ -188,7 +188,7 @@ $ . activate.sh
 JoinMarket uses its own wallet. You can create one with or without a "two-factor mnemonic recovery phrase", which refers to a BIP39 passphrase. This is not required and adds complexity, though it may be desired for various security or backup reasons. A good article on the BIP39 passphrase can be found [here](https://www.blockplate.com/blogs/blockplate/what-is-a-bip39-passphrase).
 
 ```
-(jvmenv) $ python wallet-tool.py generate
+(jvmenv) $ ./wallet-tool.py generate
 > User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
 > Would you like to use a two-factor mnemonic recovery phrase? write 'n' if you don't know what this is (y/n): n
 > Not using mnemonic extension
