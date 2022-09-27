@@ -271,7 +271,7 @@ For the purposes of running the yield generator, you can simply fund the primary
 
 * Run the yield generator
 ```
-(jmvenv) $ python yg-privacyenhanced.py wallet.jmdat
+(jmvenv) $ ./yg-privacyenhanced.py wallet.jmdat
 ```
 
 Since version 0.9.0 JoinMarket has added support for fidelity bonds, which are bitcoins locked into certain address(es) for some time. This is protection against [sybil attacks](https://en.wikipedia.org/wiki/Sybil_attack). Fidelity bonds are not currently required for the makers, but they will increase probability of your yield generator bot to participate in coinjoins. See [JoinMarket fidelity bond documentation](https://github.com/JoinMarket-Org/joinmarket-clientserver/blob/master/docs/fidelity-bonds.md) for more information. Before you fund a fidelity bond, however, you want to be sure you are doing so with anonymous coins and a sweep transaction due to the public nature of the fidelity bond announcement. Perhaps mix with JoinMarket first. :)
