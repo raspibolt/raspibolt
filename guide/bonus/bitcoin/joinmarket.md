@@ -189,7 +189,7 @@ JoinMarket uses its own wallet. You can create one with or without a "two-factor
 
 ```
 (jvmenv) $ ./wallet-tool.py generate
-> User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
+> User data location: /home/joinmarket/.joinmarket/
 > Would you like to use a two-factor mnemonic recovery phrase? write 'n' if you don't know what this is (y/n): n
 > Not using mnemonic extension
 ```
