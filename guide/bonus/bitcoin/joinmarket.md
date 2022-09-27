@@ -323,9 +323,9 @@ Mixing maker and taker roles in a single wallet is actually good for your privac
 
 ### Checking wallet balance and history
 
-* Summary of wallet balances: `python wallet-tool.py wallet.jmdat summary`
+* Summary of wallet balances: `./wallet-tool.py wallet.jmdat summary`
 
-* Wallet transaction history: `python wallet-tool.py wallet.jmdat history -v 4`
+* Wallet transaction history: `./wallet-tool.py wallet.jmdat history -v 4`
 
 
 ### Running the tumbler
