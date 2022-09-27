@@ -62,11 +62,6 @@ $ sudo adduser --disabled-password --gecos "" joinmarket
 $ sudo usermod -a -G bitcoin,debian-tor joinmarket
 ```
 
-* Give group read access to /data/bitcoin/.cookie
-
-```
-$ sudo chmod g+r /data/bitcoin/.cookie 
-```
 
 * Create a JoinMarket data directory
 
