@@ -152,7 +152,7 @@ $ sudo chmod +x activate.sh
 ```
 $ . activate.sh
 (jvmenv) $ ./wallet-tool.py 
-> User data will be stored and accessed in this location: /home/bitcoin/.joinmarket/
+> User data location: /home/joinmarket/.joinmarket/
 > Created a new `joinmarket.cfg`. Please review and adopt the settings and restart joinmarket.
 ```
 
