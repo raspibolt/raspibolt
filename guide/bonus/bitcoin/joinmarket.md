@@ -298,7 +298,7 @@ $ tmux
 
 ```
 $ . activate.sh
-(jvmenv) $ python yg-privacyenhanced.py wallet.jmdat
+(jvmenv) $ ./yg-privacyenhanced.py wallet.jmdat
 ```
 
 * Press Ctrl+B and then D to detach from tmux session (it will keep running in a background)
