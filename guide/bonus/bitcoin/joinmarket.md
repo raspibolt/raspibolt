@@ -128,6 +128,7 @@ $ ./install.sh --without-qt --disable-secp-check --disable-os-deps-check
 * Create the following jmvenv activation script to save yourself some time in the long run.
 ```
 $ cd
+$ cd
 $ nano activate.sh
 ```
 ```
