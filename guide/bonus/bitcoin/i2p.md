@@ -22,8 +22,6 @@ I2P client is a software used for building and using anonymous I2P networks. Suc
 
 We are to use [i2pd](https://i2pd.readthedocs.io/en/latest/) (I2P Daemon), a full-featured C++ implementation of the I2P client as a Tor network complement.
 
----
-
 Difficulty: Easy
 {: .label .label-green }
 
@@ -31,6 +29,16 @@ Status: Tested v3
 {: .label .label-green }
 
 ![I2P](../../../images/i2pd.png)
+
+---
+
+Table of contents
+{: .text-delta }
+
+1. TOC
+{:toc}
+
+---
 
 ## Preparations
 
@@ -55,26 +63,29 @@ $ sudo apt update
 $ sudo apt install i2pd
 ```
 
-* Enable and start the service
+* Configure i2pd to not to relay any public I2P traffic and only permit I2P traffic from Bitcoin Core, uncomment `"notransit=true"`
+
+```sh
+$ sudo nano /var/lib/i2pd/i2pd.conf
+```
+
+```sh
+notransit = true
+```
+
+* Enable autoboot on start
 
 ```sh
 $ sudo systemctl enable i2pd
-$ sudo systemctl start i2pd
 ```
 
-* See “i2p” in action by monitoring its log file. Exit with Ctrl-C
-
-```sh
-$ sudo tail -f /var/log/i2pd/i2pd.log
-```
-
-* Check service status and the correct autoboot enabled
+* Check the service started and the correct autoboot enabled
 
 ```sh
 $ sudo systemctl status i2pd
 ```
 
-* Expected output, find *enabled* label:
+* Expected output, find *"enabled"* and *"Started"* labels:
 
 ```sh
 * i2pd.service - I2P Router written in C++
@@ -86,13 +97,24 @@ $ sudo systemctl status i2pd
       Tasks: 14 (limit: 9274)
      Memory: 56.1M
         CPU: 33min 28.265s
-...
+     CGroup: /system.slice/i2pd.service
+             -175224 /usr/sbin/i2pd --conf=/etc/i2pd/i2pd.conf --tunconf=/etc/i2pd/tunnels.conf --tunnel...
+
+Sep 27 18:54:57 minibolt systemd[1]: Starting I2P Router written in C++...
+Sep 27 18:54:57 minibolt systemd[1]: Started I2P Router written in C++.
+[...]
 ```
 
 * Ensure that i2pd service is working and listening at the default ports
 
 ```sh
 $ sudo lsof -i -P -n | grep i2pd | grep LISTEN
+```
+
+* See “i2p” in action by monitoring its log file. Exit with Ctrl-C
+
+```sh
+$ sudo tail -f /var/log/i2pd/i2pd.log
 ```
 
 💡 If the prompt show you "sudo: lsof: command not found", it means that you don't have "lsof" installed yet, install it with next command and try again
