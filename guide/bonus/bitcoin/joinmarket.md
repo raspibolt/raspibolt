@@ -232,7 +232,7 @@ JoinMarket wallet contains five separate sub-wallets (accounts) or pockets calle
 
 ```
 (jvmenv) $ ./wallet-tool.py -m 0 wallet.jmdat
-> User data will be stored and accessed in this location: /home/joinmarket/.joinmarket/
+> User data location: /home/joinmarket/.joinmarket/
 > Enter wallet decryption passphrase: 
 > 2020-11-30 23:19:05,030 [INFO]  Detected new wallet, performing initial import
 > JM wallet
