@@ -59,9 +59,7 @@ Samourai Dojo requires several new passwords, and it’s easiest to write them a
 
 Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}), or whaterver password manager you're already using, and keep your original notes out of sight once installation is complete.
 
-### Node.js
-
-To run Dojo, we need to run Node.js v16 or above.
+### Update packages
 
 * With user “admin”, make sure that all software packages are up to date
 
@@ -69,6 +67,10 @@ To run Dojo, we need to run Node.js v16 or above.
 $ sudo apt update
 $ sudo apt full-upgrade
 ```
+
+### Node.js
+
+To run Dojo, we need to run Node.js v16 or above.
 
 * With user "admin", let's check our version of Node.js running on the node
 
