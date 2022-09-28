@@ -114,21 +114,24 @@ $ sudo mysql
 MariaDB [(none)]>
 ```
 
-* Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell with start with "MDB$" 
+* The instructions to enter in the MariaDB shell with start with "MDB$". We will create a database, user and set up necessary privileges
 
 ```sh
 MDB$ CREATE DATABASE dojo_db;
 > Query OK, 1 row affected (0.001 sec)
+
 MDB$ CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
 > Query OK, 1 row affected (0.001 sec)
-```
 
-* Grant all privileges to user "dojo" and flush the privilege table. Without flushing the privilege table, the new user won’t be able to access the database
-
-```sh
 MDB$ GRANT ALL PRIVILEGES ON dojo_db.* TO 'dojo'@'localhost';
 > Query OK, 1 row affected (0.001 sec)
+
 MDB$ FLUSH PRIVILEGES;
+```
+
+* Exit MySQL shell
+
+```sh
 MDB$ exit
 ```
 
@@ -281,15 +284,11 @@ const INTERPRETER = 'node' // OR binary name like `node`
 $ exit
 ```
 
-* As a user "admin", install neccessary dependencies inside the Dojo folder
+* As user "admin", install necessary dependencies while inside the Dojo folder. Import Dojo charts to the MySQL database.
 
 ```sh
-$ cd /data/dojo/ && sudo npm install --only=prod
-```
-
-* Create Dojo database charts with following command. Change `[ F ] MYSQL_ROOT_PASSWORD`
-
-```sh
+$ cd /data/dojo/
+$ sudo npm install --only=prod
 $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl
 ```
 
@@ -317,9 +316,7 @@ $ pm2 start pm2.config.cjs
 
 ```sh
 $ pm2 logs mainnet
-```
 
-```sh
 7|Samourai | 2022-09-26T16:26:08Z  INFO  Tracker :  Added block header 409 (id=409)
 7|Samourai | 2022-09-26T16:26:08Z  INFO  Tracker : Beginning to process new block header.
 7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T16:26:10Z  INFO  Tracker :  Added block header 410 (id=410)
@@ -344,7 +341,7 @@ Now we’ll make sure Dojo starts as a service on the Raspberry Pi so it’s alw
 $ pm2 save
 ```
 
-* Run these processes at reboot automatically. Copy output command starting with "sudo"
+* Run these processes at reboot automatically. Copy generated output starting with "sudo"
 
 ```sh
 $ pm2 startup
@@ -367,7 +364,7 @@ $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 sta
 
 ### Tor hidden service
 
-Tor is necessary to install. Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in anonymous way.
+Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an anonymous way.
 
 * Edit `torrc` file
 
@@ -375,7 +372,7 @@ Tor is necessary to install. Tor is used to access "Dojo API and Maintanence too
 $ sudo nano /etc/tor/torrc
 ```
 
-* Paste following values inside torrc. Save and exit.
+* Paste following values inside torrc. Save and exit
 
 ```sh
 # Dojo hidden service
@@ -394,7 +391,7 @@ HiddenServicePort 80 127.0.0.1:8080
 $ sudo systemctl reload tor
 ```
 
-* Print onion address and save it in a safe place.
+* Print onion address and write it down in a safe place
 
 ```sh
 $ sudo cat /var/lib/tor/hsv3/hostname
