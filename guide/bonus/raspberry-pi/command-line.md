@@ -49,7 +49,9 @@ alias ls='ls -la --color=always'
 ![Pimp prompt](../../../images/60_pimp_prompt.png)
 
 * Reload configuration
-  `source /home/admin/.bashrc`
+```
+$ source /home/admin/.bashrc
+```
 
 ![Pimped prompt](../../../images/60_pimp_prompt_result.png)
 
