@@ -344,8 +344,8 @@ Fulcrum needs to start automatically on system boot.
 * We can check if everything goes right using these commands
 
   ```sh
-  $ sudo systemctl status fulcrum.service
-  $ sudo journalctl -fu fulcrum.service
+  $ sudo systemctl status fulcrum
+  $ sudo journalctl -f -u fulcrum
   ```
 
 * Expected output:
