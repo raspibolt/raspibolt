@@ -59,7 +59,9 @@ Samourai Dojo requires several new passwords, and it’s easiest to write them a
 
 Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}), or whaterver password manager you're already using, and keep your original notes out of sight once installation is complete.
 
-### Update packages
+### Node.js
+
+To run Dojo, we need to run Node.js v16 or above.
 
 * With user “admin”, make sure that all software packages are up to date
 
@@ -68,16 +70,12 @@ $ sudo apt update
 $ sudo apt full-upgrade
 ```
 
-### Node.js
-
-To run Dojo, we need to run Node.js v16 or above.
-
 * With user "admin", let's check our version of Node.js running on the node
 
-  ```sh
-  $ node -v
-  > v16.13.1
-  ```
+```sh
+$ node -v
+> v16.13.1
+```
 
 * If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
@@ -138,16 +136,16 @@ MDB$ CREATE DATABASE dojo_db;
 MDB$ CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
 ```
 
-* Grant following privileges to user `dojo`. No changes neccesary
+* Grant all privileges to user "dojo" and flush the privilege table. Without flushing the privilege table, the new user won’t be able to access the database
 
 ```sh
-MDB$ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON dojo_db.* TO 'dojo'@'localhost';
+MDB$ GRANT ALL PRIVILEGES ON dojo_db.* TO 'dojo'@'localhost';
+MDB$ FLUSH PRIVILEGES;
 ```
 
-* Flush the privilege table. Without flushing the privilege table, the new user won’t be able to access the database
+* Exit
 
 ```sh
-MDB$ FLUSH PRIVILEGES;
 MDB$ exit
 ```
 
