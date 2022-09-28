@@ -59,15 +59,6 @@ Samourai Dojo requires several new passwords, and it’s easiest to write them a
 
 Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}), or whaterver password manager you're already using, and keep your original notes out of sight once installation is complete.
 
-### Update packages
-
-* With user “admin”, make sure that all software packages are up to date
-
-```sh
-$ sudo apt update
-$ sudo apt full-upgrade
-```
-
 ### Node.js
 
 To run Dojo, we need to run Node.js v16 or above.
@@ -81,38 +72,30 @@ $ node -v
 
 * If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
-* Install npm and pm2 for Dojo management
+* Install npm and update it to the latest version. Install pm2 for Dojo management
 
 ```sh
 $ sudo apt install npm
+$ npm install latest-version
 $ sudo npm i -g pm2
-```
-
-* Update npm to the latest version
-
-```sh
-$ sudo npm install -g npm@8.19.2
 ```
 
 ### MySQL (MariaDB)
 
 [MariaDB](https://mariadb.org/){:target="_blank"} is an open source relational database.
 
-* Using apt, install MySQL (MariaDB) for Dojo database
+* With user “admin”, we update the apt packages index and install MariaDB on the node
 
 ```sh
-sudo apt install mariadb-server
+$ sudo apt update && sudo apt full-upgrade
+$ sudo apt install mariadb-server
 ```
 
-* Run the secure installation
+* Run the secure installation and when asked, enter following values
 
 ```sh
 $ sudo mysql_secure_installation
-```
 
-* When asked, paste following values
-
-```sh
 Enter current password for root (enter for none): [ F ] MYSQL_ROOT_PASSWORD
 Switch to unix_socket authentication [Y/n]: n
 Change the root password? [Y/n]: n
@@ -135,19 +118,17 @@ MariaDB [(none)]>
 
 ```sh
 MDB$ CREATE DATABASE dojo_db;
+> Query OK, 1 row affected (0.001 sec)
 MDB$ CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
+> Query OK, 1 row affected (0.001 sec)
 ```
 
 * Grant all privileges to user "dojo" and flush the privilege table. Without flushing the privilege table, the new user won’t be able to access the database
 
 ```sh
 MDB$ GRANT ALL PRIVILEGES ON dojo_db.* TO 'dojo'@'localhost';
+> Query OK, 1 row affected (0.001 sec)
 MDB$ FLUSH PRIVILEGES;
-```
-
-* Exit
-
-```sh
 MDB$ exit
 ```
 
