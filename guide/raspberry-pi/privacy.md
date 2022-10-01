@@ -47,9 +47,59 @@ Each node decrypts only the layer of information addressed to it, learning only 
 
 Log in to your RaspiBolt via SSH as user "admin" and install Tor.
 
+* Install apt-transport-https
+
   ```sh
-  $ sudo apt install tor
+  $ sudo apt install apt-transport-https
   ```
+
+* Create a new file called `tor.list`
+  
+  ```sh
+  $ sudo nano /etc/apt/sources.list.d/tor.list
+  ```
+
+* Add the following entries. Save and exit
+
+  ```sh
+  deb     [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bulleye main
+  deb-src [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bulleye main
+  ```
+
+* Then up to `"root"` user temporaly to add the gpg key used to sign the packages by running the following command at your command prompt. Return to `admin` using `exit` command
+
+  ```sh
+  $ sudo su
+  $ wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor | tee /usr/share/keyrings/tor-archive-keyring.gpg >/dev/null
+  $ exit
+  ```
+
+* Install tor and tor debian keyring
+
+   ```sh
+   $ sudo apt update
+   $ sudo apt install tor deb.torproject.org-keyring
+   ```
+
+* Check Tor has been correctly installed
+
+  ```sh
+  $ tor --version
+  > Tor version 0.4.7.10.
+  [...]
+  ```
+
+* Ensure that the Tor service is working and listening at the default ``9050` and `9051` ports
+
+```sh
+$ sudo lsof -i -P -n | grep tor | grep LISTEN
+```
+
+💡 If the prompt show you "sudo: lsof: command not found", it means that you don't have "lsof" installed yet, install it with next command and try again
+
+```sh
+$ sudo apt install lsof
+```
 
 ## Configuration
 
@@ -57,7 +107,7 @@ Bitcoin Core will communicate directly with the Tor daemon to route all traffic 
 We need to enable Tor to accept instructions through its control port, with the proper authentication.
 
 * Modify the Tor configuration by uncommenting (removing the `#`) or adding the following lines.
-  Save and exit
+Save and exit
 
   ```sh
   $ sudo nano /etc/tor/torrc
@@ -96,8 +146,8 @@ This makes "calling home" very easy, without the need to configure anything on y
 
 ### SSH server
 
-* Add the following three lines in the "location-hidden services" section of the `torrc` file.
-  Save and exit
+* Add the following three lines in the "location-hidden services" section of the `torrc` file. 
+Save and exit
 
   ```sh
   $ sudo nano /etc/tor/torrc
