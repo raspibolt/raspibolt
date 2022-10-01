@@ -80,6 +80,14 @@ $ npm install latest-version
 $ sudo npm i -g pm2
 ```
 
+### Firewall
+
+* Configure the UFW firewall to allow Dojo connection 
+
+```sh
+$ sudo ufw allow 28332 comment 'Allow Dojo connection'
+```
+
 ### MySQL (MariaDB)
 
 [MariaDB](https://mariadb.org/){:target="_blank"} is an open source relational database.
@@ -188,6 +196,13 @@ $ ls -la
 ```
 
 ## Configuration
+
+* With user `dojo` move to "conf" directory. Rename mainnet.js to index.js
+
+```sh
+$ cd /data/dojo/static/admin/conf
+$ mv mainnet.js index.js
+```
 
 * With user `dojo` move to "keys" directory. Rename index-example.js to index.js
 
@@ -382,7 +397,7 @@ SocksPolicy reject *
 
 HiddenServiceDir /var/lib/tor/hsv3/
 HiddenServiceVersion 3
-HiddenServicePort 80 127.0.0.1:8080
+HiddenServicePort 80 127.0.0.1:80
 ```
 
 * Restart Tor 
@@ -398,7 +413,121 @@ $ sudo cat /var/lib/tor/hsv3/hostname
 > xyz.onion
 ```
 
-### nginx
+### Reverse Proxy
+
+Configure nginx.conf for Dojo Maintanence Tool.
+
+* Add following block at the end of your nginx.conf file
+
+```sh
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    # Disable activity logging for privacy.
+    access_log  off;
+
+    # Do not reveal the version of server
+    server_tokens  off;
+
+    sendfile  on;
+
+    keepalive_timeout  95;
+
+    # Enable response compression
+    gzip  on;
+    # Compression level: 1-9
+    gzip_comp_level  1;
+    # Disable gzip compression for older IE
+    gzip_disable  msie6;
+    # Minimum length of response before gzip kicks in
+    gzip_min_length  128;
+    # Compress these MIME types in addition to text/html
+    gzip_types  application/json;
+    # Help with proxying by adding the Vary: Accept-Encoding response
+    gzip_vary  on;
+
+    include  /etc/nginx/sites-enabled/*.conf;
+}
+```
+
+* Create new file and add following values inside dojo configuration
+
+```sh
+$ sudo nano /etc/nginx/sites-enabled/dojo.conf
+```
+
+* Paste following values and change `xyz.onion` in 'server_name' to your string generated step before
+
+```sh
+# Proxy WebSockets
+# https://www.nginx.com/blog/websocket-nginx/
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    '' close;
+}
+
+# WebSocket server listening here
+upstream websocket {
+    server localhost:8080;
+}
+
+# Tor Site Configuration
+server {
+    listen 80;
+    server_name xyz.onion;
+    server_tokens off;
+
+    # Set proxy timeouts for the application
+    proxy_connect_timeout 600;
+    proxy_read_timeout 600;
+    proxy_send_timeout 600;
+    send_timeout 600;
+
+    # Proxy WebSocket connections first
+    location /v2/inv {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+    }
+
+    # PushTX server is separate, so proxy first
+    location /v2/pushtx/ {
+        proxy_pass http://localhost:8081/;
+    }
+
+    # Tracker server is separate, so proxy first
+    location /v2/tracker/ {
+        proxy_pass http://localhost:8082/;
+    }
+
+    # Proxy requests to maintenance tool
+    location /admin/ {
+        proxy_pass http://localhost:8080/static/admin/;
+    }
+
+    # Proxy all other v2 requests to the accounts server
+    location /v2/ {
+        proxy_pass http://localhost:8080/;
+    }
+
+    # Redirect onion address to maintenance tool
+    location = / {
+        return 301 /admin;
+    }
+}
+```
+
+* Check if everything is fine and restart nginx
+
+```sh
+$ sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+$ sudo systemctl reload nginx
+```
 
 ---
 
