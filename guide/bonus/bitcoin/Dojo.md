@@ -420,6 +420,10 @@ Configure nginx.conf for Dojo Maintanence Tool.
 * Add following block at the end of your nginx.conf file
 
 ```sh
+$ sudo nano /etc/nginx/nginx.conf
+```
+
+```sh
 http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
