@@ -250,6 +250,14 @@ One of the most important things to keep your relay secure is to install securit
   $ sudo apt install nyx
   ````
 
+* Execute with
+
+  ```sh
+  $ sudo nyx
+  ```
+
+* Press `q` key two times to exit
+
 ## Uninstall
 
 ### Uninstall Tor configuration
