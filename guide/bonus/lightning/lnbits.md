@@ -132,7 +132,8 @@ Table of contents
   ```
   
 * Choose the colour theme for the webpage, _e.g._ "bitcoin". You can choose among the following options:
-![LNBits themes](../../../images/lnbits-themes.png)
+
+![LNBits themes](../../../images/lnbits-themes.PNG)
 
   ```ini
   LNBITS_THEME_OPTIONS="bitcoin"
