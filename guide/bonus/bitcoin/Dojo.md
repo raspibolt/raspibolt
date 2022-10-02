@@ -204,6 +204,8 @@ $ sudo su - dojo
 $ ls -la
 ```
 
+---
+
 ## Configuration
 
 ### index.js
