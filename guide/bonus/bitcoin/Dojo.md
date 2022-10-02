@@ -13,7 +13,7 @@ has_toc: false
 
 ---
 
-Samourai Dojo is the backing server for Samourai Wallet. Provides HD account & loose addresses (BIP47) balances & transactions lists. 
+[Samourai Dojo](https://code.samourai.io/dojo/samourai-dojo){:target="_blank"} is the backing server for Samourai Wallet. Provides HD account & loose addresses (BIP47) balances & transactions lists. 
 Provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node.
 
 Difficulty: Medium
@@ -22,7 +22,7 @@ Difficulty: Medium
 Status: Not tested v3
 {: .label .label-yellow }
 
-![dojo_profile](/images/dojo_profile.png)
+![dojo_profile](../../../images/dojo_profile.png)
 
 ---
 
@@ -40,7 +40,7 @@ Table of contents
 * Bitcoin Core
 * Fulcrum
 * Node.js v16+
-* nginx
+* Nginx
 
 ---
 
@@ -58,7 +58,7 @@ Samourai Dojo requires several new passwords. They should be unique and very sec
 [ J ] NODE_JWT_SECRET
 ```
 
-Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}), or whaterver password manager you're already using, and keep your original notes out of sight once installation is complete.
+Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}) or whatever password manager you're already using
 
 ### Node.js
 
@@ -71,7 +71,7 @@ $ node -v
 > v16.13.1
 ```
 
-If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
+* If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
 ### npm & PM2
 
@@ -81,7 +81,7 @@ npm is the default package manager for the JavaScript runtime environment and PM
 
 ```sh
 $ sudo apt install npm
-$ npm install latest-version
+$ sudo npm install latest-version
 ```
 
 * Install PM2 process manager
@@ -89,6 +89,8 @@ $ npm install latest-version
 ```sh
 $ sudo npm i -g pm2
 ```
+
+---
 
 ## Installation
 
@@ -111,10 +113,10 @@ $ sudo tar -xvf samourai-dojo-v1.17.0.tar.gz
 
 [MariaDB](https://mariadb.org/){:target="_blank"} is an open source relational database.
 
-* With user “admin”, update the apt packages index and install MariaDB
+* With user “admin”, update the `apt` packages index and install MariaDB
 
 ```sh
-$ sudo apt update && sudo apt full-upgrade
+$ sudo apt update; sudo apt full-upgrade
 $ sudo apt install mariadb-server
 ```
 
@@ -124,7 +126,7 @@ $ sudo apt install mariadb-server
 $ sudo mysql_secure_installation
 ```
 
-* Enter following values
+* Enter the following answers in the shell and exit
 
 ```sh
 Enter current password for root (enter for none): [ F ] MYSQL_ROOT_PASSWORD
@@ -145,19 +147,20 @@ $ sudo mysql
 MariaDB [(none)]>
 ```
 
-* The instructions to enter in the MariaDB shell with start with "MDB$". We will create a MariaDB database and user, set up necessary privileges. Enter each command one by one
+* The instructions to enter in the MariaDB shell with start with "MDB$". Enter each command one by one including ";". Make sure to change "[ G ] MYSQL_PASSWORD" in the second command
 
 ```sh
 MDB$ CREATE DATABASE dojo_db;
 > Query OK, 1 row affected (0.001 sec)
 
 MDB$ CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
-> Query OK, 1 row affected (0.001 sec)
+> Query OK, 0 rows affected (0.005 sec)
 
 MDB$ GRANT ALL PRIVILEGES ON dojo_db.* TO 'dojo'@'localhost';
-> Query OK, 1 row affected (0.001 sec)
+> Query OK, 0 rows affected (0.006 sec)
 
 MDB$ FLUSH PRIVILEGES;
+> Query OK, 0 rows affected (0.001 sec)
 ```
 
 * Exit MySQL shell
@@ -209,7 +212,7 @@ $ ls -la
 
 ```sh
 $ cd /data/dojo/static/admin/conf
-$ mv mainnet.js index.js
+$ mv index-mainnet.js index.js
 ```
 
 * With user "dojo" move to "keys" directory. Rename index-example.js to index.js
@@ -219,13 +222,13 @@ $ cd /data/dojo/keys
 $ mv index-example.js index.js
 ```
 
-* As user "dojo" edit following values inside index.js file
+* As user "dojo" open "index.js"
 
 ```sh
 $ nano index.js
 ```
 
-* Find and edit these lines inside "bitcoind" part to following values
+* Find and edit these lines inside "bitcoind" part to following values, they have to be inside single quotes ''
 
 ```sh
 bitcoind: {
@@ -278,7 +281,7 @@ jwt: {
 secret: '[ J ] NODE_JWT_SECRET',
 ```
 
-* Find and edit these lines inside "indexer" configuration
+* Find and edit these lines inside "indexer" configuration to following values
 
 ```sh
 * Indexer or third party service
@@ -292,9 +295,11 @@ port: 50002,
 protocol: 'tls'
 ```
 
+* Save and exit
+
 ### pm2.config
 
-* As user "dojo", move to the dojo directory and rename pm2 config file
+* Still as user "dojo", move to the dojo directory and rename pm2 config file
 
 ```sh
 $ cd /data/dojo
@@ -318,15 +323,20 @@ $ exit
 
 ### Dependencies
 
-* With user "admin", install necessary dependencies while inside the Dojo folder. Import Dojo scripts to the MariaDB database.
+* With user "admin", install necessary dependencies while inside the Dojo folder
 
 ```sh
 $ cd /data/dojo/
 $ sudo npm install --only=prod
+```
+
+* Import Dojo scripts to the MariaDB database
+
+```sh
 $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl
 ```
 
-### Tor
+### Tor Hidden Service
 
 Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an anonymous way.
 
@@ -336,7 +346,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 $ sudo nano /etc/tor/torrc
 ```
 
-* Paste following values
+* Paste following values at the end of your `torrc` file
 
 ```sh
 # Dojo hidden service
@@ -362,7 +372,7 @@ $ sudo cat /var/lib/tor/hsv3/hostname
 > xyz.onion
 ```
 
-### nginx
+### Nginx Reverse Proxy
 
 Configure nginx.conf for Dojo Maintanence Tool.
 
@@ -375,6 +385,10 @@ $ sudo nano /etc/nginx/nginx.conf
 * Add following block at the end of your configuration file
 
 ```sh
+# RaspiBolt: Dojo configuration 
+# /etc/nginx/nginx.conf
+# https://code.samourai.io/dojo/samourai-dojo/-/blob/develop/docker/my-dojo/nginx/nginx.conf
+
 http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
@@ -406,15 +420,19 @@ http {
 }
 ```
 
-* Create a new file called "dojo.conf"
+* Create a new file called "dojo.conf" inside `sites-enabled` directory
 
 ```sh
 $ sudo nano /etc/nginx/sites-enabled/dojo.conf
 ```
 
-* Paste following values and change `xyz.onion` next to "server_name" to your hostname address
+* Paste following values and change "xyz.onion" under "Tor Site Configuration" to your hostname address
 
 ```sh
+# RaspiBolt: Dojo configuration 
+# /etc/nginx/sites-enabled/dojo.conf
+# https://code.samourai.io/dojo/samourai-dojo/-/blob/develop/docker/my-dojo/nginx/mainnet.conf
+
 # Proxy WebSockets
 # https://www.nginx.com/blog/websocket-nginx/
 map $http_upgrade $connection_upgrade {
@@ -474,14 +492,16 @@ server {
 }
 ```
 
-* Test and reload nginx configuration
+* Test and restart nginx configuration
 
 ```sh
 $ sudo nginx -t
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
-$ sudo systemctl reload nginx
+$ sudo systemctl restart nginx
 ```
+
+---
 
 ## Run Dojo
 
@@ -532,7 +552,7 @@ Now we’ll make sure Dojo starts as a service on the Raspberry Pi so it’s alw
 $ pm2 save
 ```
 
-* Run these processes at reboot automatically. Copy generated output starting with "sudo"
+* Run these processes at reboot automatically. Copy entire generated output starting with "sudo"
 
 ```sh
 $ pm2 startup
@@ -561,7 +581,9 @@ $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 sta
 
 Connect samourai wallet to your own backend
 
-* Paste `hostname/admin` address into Tor browser and authenticate with `[I] NODE_ADMIN_KEY`.
+* Paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: "xyz.onion/admin". You can bookmark this page for easier future access
+
+* Authenticate with "[I] NODE_ADMIN_KEY".
 
 ![maintancetool_auth.png](/images/maintancetool_auth.png)
 
