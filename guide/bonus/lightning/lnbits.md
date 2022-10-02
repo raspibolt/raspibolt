@@ -131,7 +131,7 @@ Table of contents
   LNBITS_DATA_FOLDER="/home/lnbits/.lnbits"
   ```
   
-* Choose the colour theme for the webpage, _e.g._ "bitcoin". You can choose among the following options:
+* Choose the colour theme for the webpage, _e.g._ "bitcoin". You can choose among the following options: `autumn`, `bitcoin`, `classic`, `flamingo`, `freedom`, `mint`, `monochrome` and  `salvador`.
 
 ![LNBits themes](../../../images/lnbits-themes.PNG)
 
@@ -314,6 +314,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ git fetch
   $ git reset --hard HEAD
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
+  > 0.9.4
   $ git checkout 0.9.4
   $ ./venv/bin/pip install -r requirements.txt
   $ ./venv/bin/python build.py
