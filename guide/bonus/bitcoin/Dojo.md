@@ -238,7 +238,7 @@ pass: '[ B ] Bitcoin RPC password',
 // ZMQ Tx notifications
 zmqTx: 'tcp://127.0.0.1:28333',
 // ZMQ Block notifications
-zmqBlk: 'tcp://127.0.0.1:28332',
+zmqBlk: 'tcp://127.0.0.1:8433',
 ```
 
 * Find and edit these lines inside "db" part to following values
@@ -561,7 +561,7 @@ $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 sta
 
 Connect samourai wallet to your own backend
 
-* Paste `hostname` address into Tor browser and authenticate with `[I] NODE_ADMIN_KEY`.
+* Paste `hostname/admin` address into Tor browser and authenticate with `[I] NODE_ADMIN_KEY`.
 
 ![maintancetool_auth.png](/images/maintancetool_auth.png)
 
