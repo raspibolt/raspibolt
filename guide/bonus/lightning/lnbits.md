@@ -267,6 +267,22 @@ Your browser will display a warning because we use a self-signed SSL certificate
 
 * You can now access LNBits from within your local network by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address).
 
+---
+
+### LNBits in action
+
+* Access the LNBits homepage in your browser by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address)
+* Type a wallet name, _e.g._ "My LNBits wallet #1"
+* Click on "ADD NEW WALLET" button. You will land on the wallet homepage:
+
+![LNBits wallet homepage](../../../images/lnbits-wallet-homepage.PNG)
+
+You can fund your wallet and then send or receive lightning payments. You can also enable one or more extensions built by the community.
+Below is a list of resources to learn how to use LNBits and the extensions:
+* [Awesome LNBits](https://github.com/cryptoteun/awesome-lnbits){:target="_blank"}: a list of resources for the extensions and projects built on LNBits
+* [the LNBits Youtube channel](https://www.youtube.com/channel/UCGXU2Ae5x5K-5aKdmKqoLYg){:target="_blank"}
+* [the LNBits GitHub channel](https://github.com/lnbits/lnbits)
+
 ### Remote access over Tor (optional)
 
 * Add the following three lines in the "location-hidden services" section in the `torrc` file.
