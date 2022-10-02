@@ -36,6 +36,7 @@ Table of contents
 
 ## Requirements
 
+* Minimum RAM: 4 GB
 * Bitcoin Core
 * Fulcrum
 * Node.js v16+
@@ -47,7 +48,7 @@ Table of contents
 
 ### Write down your passwords 
 
-Samourai Dojo requires several new passwords, and it’s easiest to write them all down in the beginning, instead of bumping into them throughout the guide. They should be unique and very secure, at least 12 characters in length. Do not use uncommon special characters, spaces, or quotes (‘ or “).
+Samourai Dojo requires several new passwords. They should be unique and very secure, at least 12 characters in length. Do not use uncommon special characters, spaces, or quotes (‘ or “).
 
 ```sh
 [ F ] MYSQL_ROOT_PASSWORD
@@ -70,40 +71,62 @@ $ node -v
 > v16.13.1
 ```
 
-* If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
+If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
-* Install npm and update it to the latest version. Install pm2 for Dojo management
+### npm & PM2
+
+npm is the default package manager for the JavaScript runtime environment and PM2 is a process manager for the JavaScript runtime Node.js
+
+* Install npm package manager and update it to the latest version
 
 ```sh
 $ sudo apt install npm
 $ npm install latest-version
+```
+
+* Install PM2 process manager
+
+```sh
 $ sudo npm i -g pm2
 ```
 
-### Firewall
+## Installation
 
-* Configure the UFW firewall to allow Dojo connection 
+### Download Samourai Dojo
+
+* As a user “admin” move to a temporary directory which is cleared on reboot
 
 ```sh
-$ sudo ufw allow 28332 comment 'Allow Dojo connection'
+$ cd /tmp/
 ```
 
-### MySQL (MariaDB)
+* Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update
+
+```sh
+$ sudo wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v1.17.0/samourai-dojo-v1.17.0.tar.gz
+$ sudo tar -xvf samourai-dojo-v1.17.0.tar.gz
+```
+
+### MariaDB
 
 [MariaDB](https://mariadb.org/){:target="_blank"} is an open source relational database.
 
-* With user “admin”, we update the apt packages index and install MariaDB on the node
+* With user “admin”, update the apt packages index and install MariaDB
 
 ```sh
 $ sudo apt update && sudo apt full-upgrade
 $ sudo apt install mariadb-server
 ```
 
-* Run the secure installation and when asked, enter following values
+* Run the secure installation
 
 ```sh
 $ sudo mysql_secure_installation
+```
 
+* Enter following values
+
+```sh
 Enter current password for root (enter for none): [ F ] MYSQL_ROOT_PASSWORD
 Switch to unix_socket authentication [Y/n]: n
 Change the root password? [Y/n]: n
@@ -122,7 +145,7 @@ $ sudo mysql
 MariaDB [(none)]>
 ```
 
-* The instructions to enter in the MariaDB shell with start with "MDB$". We will create a database, user and set up necessary privileges
+* The instructions to enter in the MariaDB shell with start with "MDB$". We will create a MariaDB database and user, set up necessary privileges. Enter each command one by one
 
 ```sh
 MDB$ CREATE DATABASE dojo_db;
@@ -141,23 +164,6 @@ MDB$ FLUSH PRIVILEGES;
 
 ```sh
 MDB$ exit
-```
-
-## Installation
-
-### Download Samourai Dojo
-
-* As a user “admin” move to a temporary directory which is cleared on reboot
-
-```sh
-$ cd /tmp/
-```
-
-* Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update
-
-```sh
-$ sudo wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v1.17.0/samourai-dojo-v1.17.0.tar.gz
-$ sudo tar -xvf samourai-dojo-v1.17.0.tar.gz
 ```
 
 ### Create the dojo user and data directory
@@ -197,30 +203,32 @@ $ ls -la
 
 ## Configuration
 
-* With user `dojo` move to "conf" directory. Rename mainnet.js to index.js
+### index.js
+
+* With user "dojo" move to "conf" directory. Rename mainnet.js to index.js
 
 ```sh
 $ cd /data/dojo/static/admin/conf
 $ mv mainnet.js index.js
 ```
 
-* With user `dojo` move to "keys" directory. Rename index-example.js to index.js
+* With user "dojo" move to "keys" directory. Rename index-example.js to index.js
 
 ```sh
 $ cd /data/dojo/keys
 $ mv index-example.js index.js
 ```
 
-* As user `dojo` edit following values inside index.js file
+* As user "dojo" edit following values inside index.js file
 
 ```sh
 $ nano index.js
 ```
 
-* Find and edit these lines inside "bitcoind" configuration
+* Find and edit these lines inside "bitcoind" part to following values
 
 ```sh
-* Bitcoind
+bitcoind: {
 [...]
 
 // Login
@@ -233,10 +241,10 @@ zmqTx: 'tcp://127.0.0.1:28333',
 zmqBlk: 'tcp://127.0.0.1:28332',
 ```
 
-* Find and edit these lines inside "MySQL" configuration
+* Find and edit these lines inside "db" part to following values
 
 ```sh
-* MySQL database
+db: {
 [...]
 
 // User
@@ -247,16 +255,23 @@ pass: '[ G ] MYSQL_PASSWORD',
 database: 'dojo_db',
 ```
 
-* Find and edit these lines inside "auth" configuration
+* Find and edit these lines inside "auth" configuration to following values
 
 ```sh
-* Authenticated access to the APIs (account & pushtx)
+auth: {
 [...]
 
 // List of API keys (alphanumeric characters)
 apiKeys: ['[ H ] NODE_API_KEY_1', '[ H ] NODE_API_KEY_2'],
 // Admin key (alphanumeric characters)
 adminKey: '[ I ] NODE_ADMIN_KEY',
+```
+
+Find and edit these lines inside "jwt" configuration to following values
+
+```sh
+jwt: {
+[...]
 
 // Secret passphrase used by the server to sign the jwt
 // (alphanumeric characters)
@@ -277,7 +292,9 @@ port: 50002,
 protocol: 'tls'
 ```
 
-* Move to the Dojo file and rename pm2 config file
+### pm2.config
+
+* As user "dojo", move to the dojo directory and rename pm2 config file
 
 ```sh
 $ cd /data/dojo
@@ -299,12 +316,171 @@ const INTERPRETER = 'node' // OR binary name like `node`
 $ exit
 ```
 
-* As user "admin", install necessary dependencies while inside the Dojo folder. Import Dojo charts to the MySQL database.
+### Dependencies
+
+* With user "admin", install necessary dependencies while inside the Dojo folder. Import Dojo scripts to the MariaDB database.
 
 ```sh
 $ cd /data/dojo/
 $ sudo npm install --only=prod
 $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl
+```
+
+### Tor
+
+Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an anonymous way.
+
+* Edit "torrc" file
+
+```sh
+$ sudo nano /etc/tor/torrc
+```
+
+* Paste following values
+
+```sh
+# Dojo hidden service
+SocksPort 9050
+SocksPolicy accept 127.0.0.1
+SocksPolicy reject *
+
+HiddenServiceDir /var/lib/tor/hsv3/
+HiddenServiceVersion 3
+HiddenServicePort 80 127.0.0.1:80
+```
+
+* Restart Tor 
+
+```sh
+$ sudo systemctl reload tor
+```
+
+* Print hostname and write it down to a safe place
+
+```sh
+$ sudo cat /var/lib/tor/hsv3/hostname
+> xyz.onion
+```
+
+### nginx
+
+Configure nginx.conf for Dojo Maintanence Tool.
+
+* Open "nginx.conf" file
+
+```sh
+$ sudo nano /etc/nginx/nginx.conf
+```
+
+* Add following block at the end of your configuration file
+
+```sh
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    # Disable activity logging for privacy.
+    access_log  off;
+
+    # Do not reveal the version of server
+    server_tokens  off;
+
+    sendfile  on;
+
+    keepalive_timeout  95;
+
+    # Enable response compression
+    gzip  on;
+    # Compression level: 1-9
+    gzip_comp_level  1;
+    # Disable gzip compression for older IE
+    gzip_disable  msie6;
+    # Minimum length of response before gzip kicks in
+    gzip_min_length  128;
+    # Compress these MIME types in addition to text/html
+    gzip_types  application/json;
+    # Help with proxying by adding the Vary: Accept-Encoding response
+    gzip_vary  on;
+
+    include  /etc/nginx/sites-enabled/*.conf;
+}
+```
+
+* Create a new file called "dojo.conf"
+
+```sh
+$ sudo nano /etc/nginx/sites-enabled/dojo.conf
+```
+
+* Paste following values and change `xyz.onion` next to "server_name" to your hostname address
+
+```sh
+# Proxy WebSockets
+# https://www.nginx.com/blog/websocket-nginx/
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    '' close;
+}
+
+# WebSocket server listening here
+upstream websocket {
+    server localhost:8080;
+}
+
+# Tor Site Configuration
+server {
+    listen 80;
+    server_name xyz.onion;
+    server_tokens off;
+
+    # Set proxy timeouts for the application
+    proxy_connect_timeout 600;
+    proxy_read_timeout 600;
+    proxy_send_timeout 600;
+    send_timeout 600;
+
+    # Proxy WebSocket connections first
+    location /v2/inv {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+    }
+
+    # PushTX server is separate, so proxy first
+    location /v2/pushtx/ {
+        proxy_pass http://localhost:8081/;
+    }
+
+    # Tracker server is separate, so proxy first
+    location /v2/tracker/ {
+        proxy_pass http://localhost:8082/;
+    }
+
+    # Proxy requests to maintenance tool
+    location /admin/ {
+        proxy_pass http://localhost:8080/static/admin/;
+    }
+
+    # Proxy all other v2 requests to the accounts server
+    location /v2/ {
+        proxy_pass http://localhost:8080/;
+    }
+
+    # Redirect onion address to maintenance tool
+    location = / {
+        return 301 /admin;
+    }
+}
+```
+
+* Test and reload nginx configuration
+
+```sh
+$ sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+$ sudo systemctl reload nginx
 ```
 
 ## Run Dojo
@@ -375,162 +551,6 @@ $ exit
 
 ```sh
 $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
-```
-
-### Tor hidden service
-
-Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an anonymous way.
-
-* Edit `torrc` file
-
-```sh
-$ sudo nano /etc/tor/torrc
-```
-
-* Paste following values inside torrc. Save and exit
-
-```sh
-# Dojo hidden service
-SocksPort 9050
-SocksPolicy accept 127.0.0.1
-SocksPolicy reject *
-
-HiddenServiceDir /var/lib/tor/hsv3/
-HiddenServiceVersion 3
-HiddenServicePort 80 127.0.0.1:80
-```
-
-* Restart Tor 
-
-```sh
-$ sudo systemctl reload tor
-```
-
-* Print onion address and write it down in a safe place
-
-```sh
-$ sudo cat /var/lib/tor/hsv3/hostname
-> xyz.onion
-```
-
-### Reverse Proxy
-
-Configure nginx.conf for Dojo Maintanence Tool.
-
-* Add following block at the end of your nginx.conf file
-
-```sh
-$ sudo nano /etc/nginx/nginx.conf
-```
-
-```sh
-http {
-    include       /etc/nginx/mime.types;
-    default_type  application/octet-stream;
-
-    # Disable activity logging for privacy.
-    access_log  off;
-
-    # Do not reveal the version of server
-    server_tokens  off;
-
-    sendfile  on;
-
-    keepalive_timeout  95;
-
-    # Enable response compression
-    gzip  on;
-    # Compression level: 1-9
-    gzip_comp_level  1;
-    # Disable gzip compression for older IE
-    gzip_disable  msie6;
-    # Minimum length of response before gzip kicks in
-    gzip_min_length  128;
-    # Compress these MIME types in addition to text/html
-    gzip_types  application/json;
-    # Help with proxying by adding the Vary: Accept-Encoding response
-    gzip_vary  on;
-
-    include  /etc/nginx/sites-enabled/*.conf;
-}
-```
-
-* Create new file and add following values inside dojo configuration
-
-```sh
-$ sudo nano /etc/nginx/sites-enabled/dojo.conf
-```
-
-* Paste following values and change `xyz.onion` in 'server_name' to your string generated step before
-
-```sh
-# Proxy WebSockets
-# https://www.nginx.com/blog/websocket-nginx/
-map $http_upgrade $connection_upgrade {
-    default upgrade;
-    '' close;
-}
-
-# WebSocket server listening here
-upstream websocket {
-    server localhost:8080;
-}
-
-# Tor Site Configuration
-server {
-    listen 80;
-    server_name xyz.onion;
-    server_tokens off;
-
-    # Set proxy timeouts for the application
-    proxy_connect_timeout 600;
-    proxy_read_timeout 600;
-    proxy_send_timeout 600;
-    send_timeout 600;
-
-    # Proxy WebSocket connections first
-    location /v2/inv {
-        proxy_pass http://websocket;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $connection_upgrade;
-    }
-
-    # PushTX server is separate, so proxy first
-    location /v2/pushtx/ {
-        proxy_pass http://localhost:8081/;
-    }
-
-    # Tracker server is separate, so proxy first
-    location /v2/tracker/ {
-        proxy_pass http://localhost:8082/;
-    }
-
-    # Proxy requests to maintenance tool
-    location /admin/ {
-        proxy_pass http://localhost:8080/static/admin/;
-    }
-
-    # Proxy all other v2 requests to the accounts server
-    location /v2/ {
-        proxy_pass http://localhost:8080/;
-    }
-
-    # Redirect onion address to maintenance tool
-    location = / {
-        return 301 /admin;
-    }
-}
-```
-
-* Check if everything is fine and restart nginx
-
-```sh
-$ sudo nginx -t
-nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-nginx: configuration file /etc/nginx/nginx.conf test is successful
-
-$ sudo systemctl reload nginx
 ```
 
 ---
