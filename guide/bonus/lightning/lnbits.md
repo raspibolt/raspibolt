@@ -8,6 +8,7 @@ has_toc: false
 ---
 
 # Bonus guide: LNBits, a lightning wallet/accounts system
+
 {: .no_toc }
 
 ---
@@ -37,6 +38,7 @@ Table of contents
 ## Preparations
 
 ### Install dependencies
+
 * Install necessary dependencies using the apt package manager.
 
   ```sh
@@ -106,7 +108,7 @@ Table of contents
 * Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
 
   ```sh
-  $ git clone --branch 0.8.0 https://github.com/lnbits/lnbits-legend lnbits
+  $ git clone --branch 0.9.4 https://github.com/lnbits/lnbits-legend lnbits
   $ cd lnbits
   $ python3 -m venv venv
   $ ./venv/bin/pip install setuptools wheel --upgrade
@@ -223,9 +225,10 @@ Your browser will display a warning because we use a self-signed SSL certificate
 
   ```sh
   ############### This section is just for location-hidden services ###
+  # Hidden service LNBits
   HiddenServiceDir /var/lib/tor/hidden_service_lnbits/
   HiddenServiceVersion 3
-  HiddenServicePort 443 127.0.0.1:4003
+  HiddenServicePort 80 127.0.0.1:5000
   ```
 
 * Reload Tor configuration and get your connection address.
@@ -270,8 +273,6 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   ```
 
 <br /><br />
-
-
 
 ---
 
