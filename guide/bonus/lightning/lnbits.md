@@ -93,8 +93,8 @@ Table of contents
 * Create a data directory for LNBits and give ownership to the new user.
 
   ```sh
-  $ sudo mkdir /data/LNBits
-  $ sudo chown -R lnbits:lnbits /data/LNBits
+  $ sudo mkdir /data/lnbits
+  $ sudo chown -R lnbits:lnbits /data/lnbits
   ```
 
 * Open a new "lnbits" user session and create symlinks to the LND and LNBits data directories.
@@ -102,7 +102,7 @@ Table of contents
   ```sh
   $ sudo su - lnbits
   $ ln -s /data/lnd /home/lnbits/.lnd
-  $ ln -s /data/LNBits /home/lnbits/.LNBits
+  $ ln -s /data/lnbits /home/lnbits/.lnbits
   ```
 
 * Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
@@ -113,38 +113,89 @@ Table of contents
   $ python3 -m venv venv
   $ ./venv/bin/pip install setuptools wheel --upgrade
   $ ./venv/bin/pip install -r requirements.txt
-  $ ./venv/bin/pip install pylightning
   ```
 
 ### Configuration
 
-* Create a new configuration file for LNBits and paste the following content. Save and exit.
+* Copy the example configuration file and open it.
 
   ```sh
+  $ cp .env.example .env
   $ nano .env
   ```
 
-  ```sh
-  # RaspiBolt: LNBits configuration
-  # /home/lnbits/lnbits/.env
+* Change the default path of the LNBits data folder
 
-  LNBITS_FORCE_HTTPS=true
-  LNBITS_DATA_FOLDER=/home/lnbits/.LNBits
+  ```ini
+  #LNBITS_DATA_FOLDER="./data"
+  LNBITS_DATA_FOLDER="/home/lnbits/.lnbits"
+  ```
+  
+* Choose the colour theme for the webpage, _e.g._ "bitcoin". You can choose among the following options:
+![LNBits themes](../../../images/lnbits-themes.png)
 
-  LNBITS_BACKEND_WALLET_CLASS=LndRestWallet
-  LND_REST_ENDPOINT=127.0.0.1:8080
-  LND_REST_CERT=/home/lnbits/.lnd/tls.cert
-  LND_REST_ADMIN_MACAROON=/home/lnbits/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
-  LND_REST_INVOICE_MACAROON=/home/lnbits/.lnd/data/chain/bitcoin/mainnet/invoice.macaroon
-  LND_REST_READ_MACAROON=/home/lnbits/.lnd/data/chain/bitcoin/mainnet/readonly.macaroon
+  ```ini
+  LNBITS_THEME_OPTIONS="bitcoin"
   ```
 
-* Restrict read/write permission.
+* Select the wallet that you want to use as backend, _e.g._ the LND REST API
+
+  ```ini
+  LNBITS_BACKEND_WALLET_CLASS=LndRestWallet
+  ```
+
+* Comment out all wallet parameters blocks execpt the one you selected just above, e.g. `LndRestWallet`
+
+  ```ini
+  # ClicheWallet
+  #CLICHE_ENDPOINT=ws://127.0.0.1:12000
+  
+  # SparkWallet
+  #SPARK_URL=http://localhost:9737/rpc
+  #SPARK_TOKEN=myaccesstoken
+  
+  # CoreLightningWallet
+  #CORELIGHTNING_RPC="/home/bob/.lightning/bitcoin/lightning-rpc"
+  
+  # LnbitsWallet
+  #LNBITS_ENDPOINT=https://legend.lnbits.com
+  #LNBITS_KEY=LNBITS_ADMIN_KEY
+  
+  # LndRestWallet
+  LND_REST_ENDPOINT=https://127.0.0.1:8080/
+  LND_REST_CERT="/home/bob/.config/Zap/lnd/bitcoin/mainnet/wallet-1/data/chain/bi>
+  LND_REST_MACAROON="/home/bob/.config/Zap/lnd/bitcoin/mainnet/wallet-1/data/chai>
+  # To use an AES-encrypted macaroon, set
+  # LND_REST_MACAROON_ENCRYPTED="eNcRyPtEdMaCaRoOn"
+  
+  [...]
+  
+  # EclairWallet
+  #ECLAIR_URL=http://127.0.0.1:8283
+  #ECLAIR_PASS=eclairpw
+  ```
+
+* Edit the LND REST wallet parameters with the following lines
+  
+  ```ini
+  LND_REST_ENDPOINT=https://127.0.0.1:8080
+  LND_REST_CERT=/home/lnbits/.lnd/tls.cert
+  LND_REST_MACAROON=/home/lnbits/.lnd/data/chain/bitcoin/mainnet/admin.maca>
+  ```
+
+* Save (Ctrl+o) and close (Ctrl+x).
+
+* Restrict read/write permission to the "lnbits" user only.
 
   ```sh
   $ chmod 600 /home/lnbits/lnbits/.env
   ```
 
+* Build the static files
+
+  ```sh
+  $ ./venv/bin/python build.py
+  ```
 
 ### First start
 
@@ -155,7 +206,7 @@ Table of contents
   $ ./venv/bin/uvicorn lnbits.__main__:app --port 5000
   ```
 
-Now point your browser to the secure access point provided by the NGINX web proxy, for example <https://raspibolt.local:4003> (or your node's IP address like <https://192.168.0.20:4003>).
+Now point your browser to the secure access point provided by the nginx web proxy, for example <https://raspibolt.local:4003> (or your node's IP address like <https://192.168.0.20:4003>).
 
 Your browser will display a warning because we use a self-signed SSL certificate. Click on "Advanced" and proceed to the LNBits web interface.
 
@@ -180,8 +231,8 @@ Your browser will display a warning because we use a self-signed SSL certificate
   # /etc/systemd/system/lnbits.service
 
   Description=lnbits
-  Wants=lnd.service
   After=lnd.service
+  PartsOf=lnd.service
 
   [Service]
   WorkingDirectory=/home/lnbits/lnbits
@@ -204,11 +255,12 @@ Your browser will display a warning because we use a self-signed SSL certificate
   WantedBy=multi-user.target
   ```
 
-* Enable the service, start it, and check the log output.
+* Enable the service, start it, and check the status and log output.
 
   ```sh
   $ sudo systemctl enable lnbits.service
   $ sudo systemctl start lnbits.service
+  $ sudo systemctl status lnbits.service
   $ sudo journalctl -f -u lnbits
   ```
 
@@ -260,9 +312,10 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ cd /home/lnbits/lnbits
   $ git fetch
   $ git reset --hard HEAD
-  $ git tag
-  $ git checkout 0.8.0
+  $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
+  $ git checkout 0.9.4
   $ ./venv/bin/pip install -r requirements.txt
+  $ ./venv/bin/python build.py
   $ exit
   ```
 
