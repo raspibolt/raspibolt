@@ -108,8 +108,8 @@ Table of contents
 * Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
 
   ```sh
-  $ git clone --branch 0.9.4 https://github.com/lnbits/lnbits-legend lnbits
-  $ cd lnbits
+  $ git clone --branch 0.9.4 https://github.com/lnbits/lnbits-legend
+  $ cd lnbits-legend
   $ python3 -m venv venv
   $ ./venv/bin/pip install setuptools wheel --upgrade
   $ ./venv/bin/pip install -r requirements.txt
@@ -189,7 +189,7 @@ Table of contents
 * Restrict read/write permission to the "lnbits" user only.
 
   ```sh
-  $ chmod 600 /home/lnbits/lnbits/.env
+  $ chmod 600 /home/lnbits/lnbits-legend/.env
   ```
 
 * Build the static files
@@ -203,7 +203,7 @@ Table of contents
 * Make sure we are in the LNBits app directory and start the application.
 
   ```sh
-  $ cd ~/lnbits
+  $ cd ~/lnbits-legend
   $ ./venv/bin/uvicorn lnbits.__main__:app --port 5000
   ```
 
@@ -236,9 +236,9 @@ Your browser will display a warning because we use a self-signed SSL certificate
   PartsOf=lnd.service
 
   [Service]
-  WorkingDirectory=/home/lnbits/lnbits
+  WorkingDirectory=/home/lnbits/lnbits-legend
 
-  ExecStart=/bin/sh -c 'cd /home/lnbits/lnbits && ./venv/bin/uvicorn lnbits.__main__:app --port 5000'
+  ExecStart=/bin/sh -c 'cd /home/lnbits/lnbits-legend && ./venv/bin/uvicorn lnbits.__main__:app --port 5000'
   User=lnbits
   Restart=always
   TimeoutSec=120
@@ -326,7 +326,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
 * Fetch the latest GitHub repository information, display the release tags (use the latest `0.8.0` in this example), and update:
 
   ```sh
-  $ cd /home/lnbits/lnbits
+  $ cd /home/lnbits/lnbits-legend
   $ git fetch
   $ git reset --hard HEAD
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
