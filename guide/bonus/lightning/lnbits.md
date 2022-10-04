@@ -326,7 +326,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
 * Fetch the latest GitHub repository information, display the release tags (use the latest `0.8.0` in this example), and update:
 
   ```sh
-  $ cd /home/lnbits/lnbits-legend
+  $ cd /home/lnbits/lnbits
   $ git fetch
   $ git reset --hard HEAD
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
