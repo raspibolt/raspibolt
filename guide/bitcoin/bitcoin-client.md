@@ -484,6 +484,12 @@ Now that Bitcoin Core is running and synced, we can install the [OpenTimestamp c
   $ sudo pip3 install opentimestamps-client
   ```
 
+* Display the OpenTimestamps client version to check that it is properly installed 
+
+  ```sh
+  $ ots --version
+  ```
+
 ---
 
 ## For the future: upgrade Bitcoin Core
