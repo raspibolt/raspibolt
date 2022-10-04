@@ -203,7 +203,7 @@ Table of contents
 * Make sure we are in the LNBits app directory and start the application.
 
   ```sh
-  $ cd ~/lnbits-legend
+  $ cd ~/lnbits
   $ ./venv/bin/uvicorn lnbits.__main__:app --port 5000
   ```
 
