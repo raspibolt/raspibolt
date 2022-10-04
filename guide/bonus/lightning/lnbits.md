@@ -189,7 +189,7 @@ Table of contents
 * Restrict read/write permission to the "lnbits" user only.
 
   ```sh
-  $ chmod 600 /home/lnbits/lnbits-legend/.env
+  $ chmod 600 /home/lnbits/lnbits/.env
   ```
 
 * Build the static files
