@@ -579,7 +579,33 @@ $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 sta
 
 ## Connect to Dojo
 
-### Connect samourai wallet
+### Erase Samourai Wallet
+To connect, you need to delete and restore already existing samourai wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Following steps are recommended!
+
+* Check Mnemonic Phrase
+
+```sh
+* Navigate to the settings by tapping "⋮" on the top right of the Samourai toolbar and then tapping "Settings"
+* Once in the settings screen tap on "Wallet" and then "Show Mnemonic"
+* Check if Mnemonic phrase is correct
+```
+
+* Check Passphrase
+
+```sh
+* Move back to "Settings" and then tap "Troubleshoot"
+* Tap "Passphrase test" to begin the test
+* You will be asked to enter your passphrase. Upon success you will be notified
+```
+
+* Erase Wallet
+
+```sh
+* In "Settings" tap "Wallet"
+* At the bottom of this screen, tap "Secure erase wallet"
+```
+
+### Connect to Dojo
 
 Connect samourai wallet to your own backend
 
@@ -593,7 +619,11 @@ Connect samourai wallet to your own backend
 
 ![dojo_pairing.png](/images/dojo_pairing.png)
 
-💡 To connect, you need to delete and restore already existing samourai wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Double check your seedphrase and passphrase before you do that!
+* From the Samourai Wallet start screen, select mainnet and activate Tor
+* Toggle the Dojo button on to connect to your own Dojo server
+* Scan the pairing QR code displayed by your chosen Dojo implementation
+* Tap Restore an existing wallet then I have a Samourai backup file 
+* Carefully enter your passphrase then tap Finish 
 
 ### (optional) Rescan public keys using Dojo Maintenance Tool
 If no balance is shown in your samourai wallet, it is neccessary to rescan public keys as they are not tracked by Dojo yet.
