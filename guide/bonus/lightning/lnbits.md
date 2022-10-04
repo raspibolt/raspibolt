@@ -180,7 +180,7 @@ Table of contents
   
   ```ini
   LND_REST_ENDPOINT=https://127.0.0.1:8080
-  LND_REST_CERT=/home/lnbits/.lnd/tls.cert
+  LND_REST_CERT="/home/lnbits/.lnd/tls.cert"
   LND_REST_MACAROON="/home/lnbits/.lnd/data/chain/bitcoin/mainnet/admin.macaroon"
   ```
 
