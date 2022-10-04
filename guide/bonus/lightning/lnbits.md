@@ -108,8 +108,8 @@ Table of contents
 * Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
 
   ```sh
-  $ git clone --branch 0.9.4 https://github.com/lnbits/lnbits-legend
-  $ cd lnbits-legend
+  $ git clone --branch 0.9.4 https://github.com/lnbits/lnbits
+  $ cd lnbits
   $ python3 -m venv venv
   $ ./venv/bin/pip install setuptools wheel --upgrade
   $ ./venv/bin/pip install -r requirements.txt
