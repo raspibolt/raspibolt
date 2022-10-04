@@ -618,7 +618,7 @@ $ sudo su - dojo
 * Stop Dojo
 
 ```sh
-$ pm2 stop all
+$ pm2 stop mainnet
 ```
 
 * Following the installation section, download and install latest Dojo version. You will overwrite several files.
@@ -632,7 +632,7 @@ $ pm2 stop all
 * Stop Dojo
 
 ```sh
-$ sudo pm2 stop all
+$ sudo pm2 stop mainnet
 ```
 
 * Remove Dojo directory
