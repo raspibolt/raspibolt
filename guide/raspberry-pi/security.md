@@ -182,16 +182,18 @@ The initial configuration is fine, as it protects SSH by default.
 If your RaspiBolt is swamped with internet requests (honest or malicious due to a DoS attack), you will quickly encounter the "can't accept connection: too many open files" error.
 This is due to the limit of open files (representing individual TCP connections) set too low.
 
-Edit each of the following three files, add the additional line(s) right before the end comment, save and exit.
+Create the file `/etc/security/limits.d/90-limits.conf`, copy these lines into it, save and exit.
 
 ```sh
-$ sudo nano /etc/security/limits.conf
+$ sudo nano /etc/security/limits.d/90-limits.conf
 
 *    soft nofile 128000
 *    hard nofile 128000
 root soft nofile 128000
 root hard nofile 128000
 ```
+
+Edit both of the following two files, add the additional line(s) right before the end comment, save and exit.
 
 ```sh
 $ sudo nano /etc/pam.d/common-session
