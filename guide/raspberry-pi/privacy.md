@@ -62,11 +62,11 @@ Log in to your RaspiBolt via SSH as user "admin" and install Tor.
 * Add the following entries. Save and exit
 
   ```sh
-  deb     [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bulleye main
-  deb-src [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bulleye main
+  deb     [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main
+  deb-src [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main
   ```
 
-* Then up to `"root"` user temporaly to add the gpg key used to sign the packages by running the following command at your command prompt. Return to `admin` using `exit` command
+* Then up to `"root"` user temporarily to add the gpg key used to sign the packages by running the following command at your command prompt. Return to `admin` using `exit` command
 
   ```sh
   $ sudo su
@@ -89,7 +89,7 @@ Log in to your RaspiBolt via SSH as user "admin" and install Tor.
   [...]
   ```
 
-* Ensure that the Tor service is working and listening at the default ``9050` and `9051` ports
+* Ensure that the Tor service is working and listening at the default port `9050`.
 
 ```sh
 $ sudo lsof -i -P -n | grep tor | grep LISTEN
@@ -146,7 +146,7 @@ This makes "calling home" very easy, without the need to configure anything on y
 
 ### SSH server
 
-* Add the following three lines in the "location-hidden services" section of the `torrc` file. 
+* Add the following three lines in the "location-hidden services" section of the `torrc` file.
 Save and exit
 
   ```sh
