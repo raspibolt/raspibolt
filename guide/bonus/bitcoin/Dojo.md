@@ -601,7 +601,7 @@ Erase Wallet
 * In "Settings" tap "Wallet"
 * At the bottom of this screen, tap "Secure erase wallet"
 
-### Connect to Dojo
+### Find Pairing Code
 
 Connect samourai wallet to your own backend
 
@@ -614,6 +614,8 @@ Connect samourai wallet to your own backend
 * You will find your QR code for samourai wallet under the "pairing section".
 
 ![dojo_pairing.png](/images/dojo_pairing.png)
+
+### Connect Samourai Wallet
 
 * From the Samourai Wallet start screen, select mainnet and activate Tor
 * Toggle the Dojo button on to connect to your own Dojo server
