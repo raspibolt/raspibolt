@@ -238,7 +238,7 @@ Your browser will display a warning because we use a self-signed SSL certificate
   [Service]
   WorkingDirectory=/home/lnbits/lnbits
 
-  ExecStart=/bin/sh -c 'cd /home/lnbits/lnbits-legend && ./venv/bin/uvicorn lnbits.__main__:app --port 5000'
+  ExecStart=/home/lnbits/lnbits/venv/bin/uvicorn lnbits.__main__:app --port 5000
   User=lnbits
   Restart=always
   TimeoutSec=120
