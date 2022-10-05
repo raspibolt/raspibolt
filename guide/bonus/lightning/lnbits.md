@@ -164,8 +164,8 @@ Table of contents
   
   # LndRestWallet
   LND_REST_ENDPOINT=https://127.0.0.1:8080/
-  LND_REST_CERT="/home/bob/.config/Zap/lnd/bitcoin/mainnet/wallet-1/data/chain/bi>
-  LND_REST_MACAROON="/home/bob/.config/Zap/lnd/bitcoin/mainnet/wallet-1/data/chai>
+  LND_REST_CERT="/home/bob/.config/Zap/lnd/bitcoin/mainnet/wallet-1/data/chain/bitcoin/mainnet/tls.cert"
+  LND_REST_MACAROON="/home/bob/.config/Zap/lnd/bitcoin/mainnet/wallet-1/data/chain/bitcoin/mainnet/admin.macaroon or HEXSTRING"
   # To use an AES-encrypted macaroon, set
   # LND_REST_MACAROON_ENCRYPTED="eNcRyPtEdMaCaRoOn"
   
