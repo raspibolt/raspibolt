@@ -91,15 +91,15 @@ Log in to your RaspiBolt via SSH as user "admin" and install Tor.
 
 * Ensure that the Tor service is working and listening at the default port `9050`.
 
-```sh
-$ sudo lsof -i -P -n | grep tor | grep LISTEN
-```
+  ```sh
+  $ sudo lsof -i -P -n | grep tor | grep LISTEN
+  ```
 
 💡 If the prompt show you "sudo: lsof: command not found", it means that you don't have "lsof" installed yet, install it with next command and try again
 
-```sh
-$ sudo apt install lsof
-```
+  ```sh
+  $ sudo apt install lsof
+  ```
 
 ## Configuration
 
