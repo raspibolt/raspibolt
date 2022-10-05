@@ -77,10 +77,15 @@ $ node -v
 
 npm is the default package manager for the JavaScript runtime environment and PM2 is a process manager for the JavaScript runtime Node.js
 
-* Install npm package manager and update it to the latest version
+* If not already installed, install npm package manager
 
 ```sh
 $ sudo apt install npm
+```
+
+* update npm to the latest version
+
+```sh
 $ sudo npm install latest-version
 ```
 
