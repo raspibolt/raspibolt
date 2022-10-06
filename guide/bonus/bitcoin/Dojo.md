@@ -116,7 +116,7 @@ $ sudo tar -xvf samourai-dojo-v1.17.0.tar.gz
 
 ### MariaDB
 
-[MariaDB](https://mariadb.org/){:target="_blank"} is an open source relational database.
+[MariaDB](https://mariadb.org/){:target="_blank"} is an open source relational database. If MariaDB is already installed, skip the installation section.
 
 * With user “admin”, update the `apt` packages index and install MariaDB
 
