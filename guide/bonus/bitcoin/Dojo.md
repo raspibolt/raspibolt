@@ -588,30 +588,30 @@ $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 sta
 To connect, you need to delete and restore already existing samourai wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Following steps are recommended!
 
 Check Mnemonic Phrase
-* Navigate to the settings by tapping "⋮" on the top right of the Samourai toolbar and then tapping "Settings"
-* Once in the settings screen tap on "Wallet" and then "Show Mnemonic"
+* Navigate to the settings by tapping `⋮` on the top right of the Samourai toolbar and then tapping `Settings`
+* Once in the settings screen tap on `Wallet` and then `Show Mnemonic`
 * Check if Mnemonic phrase is correct
 
 Check Passphrase
-* Move back to "Settings" and then tap "Troubleshoot"
-* Tap "Passphrase test" to begin the test
+* Move back to `Settings` and then tap `Troubleshoot`
+* Tap `Passphrase test` to begin the test
 * You will be asked to enter your passphrase. Upon success you will be notified
 
 Erase Wallet
-* In "Settings" tap "Wallet"
-* At the bottom of this screen, tap "Secure erase wallet"
+* In `Settings` tap `Wallet`
+* At the bottom of this screen, tap `Secure erase wallet`
 
 ### Find Pairing Code
 
 Connect samourai wallet to your own backend
 
-* Paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: "xyz.onion/admin". You can bookmark this page for easier future access
+* Paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
 
-* Authenticate with "[I] NODE_ADMIN_KEY".
+* Authenticate with `[I] NODE_ADMIN_KEY`.
 
 ![maintancetool_auth.png](/images/maintancetool_auth.png)
 
-* You will find your QR code for samourai wallet under the "pairing section".
+* You will find your QR code for samourai wallet under the `pairing section`.
 
 ![dojo_pairing.png](/images/dojo_pairing.png)
 
@@ -619,8 +619,14 @@ Connect samourai wallet to your own backend
 
 * From the Samourai Wallet start screen, select mainnet and activate Tor
 * Toggle the Dojo button on to connect to your own Dojo server
+
+<img src="/images/Samourai_Wallet_Setup.png" width="280" height="550">
+
 * Scan the pairing QR code displayed by your chosen Dojo implementation
 * Tap Restore an existing wallet
+
+<img src="/images/Samourai_Wallet_Setup_2.png" width="280" height="550">
+
 * Restore your wallet
 
 ### (optional) Rescan public keys using Dojo Maintenance Tool
