@@ -663,10 +663,34 @@ $ pm2 stop mainnet
 
 ### Uninstall Dojo
 
-* Stop Dojo
+* As user "admin", stop and remove Dojo service
 
 ```sh
-$ sudo pm2 stop mainnet
+$ sudo systemctl stop <dojo service name>
+$ sudo systemctl disable <dojo service name>
+$ sudo rm /etc/systemd/system/<dojo service name>
+```
+
+* Remove Nginx configurations for Dojo
+
+```sh
+$ sudo rm /etc/nginx/sites-enabled/dojo.conf
+```
+
+* Test and reload nginx configuration
+
+```sh
+$ sudo nginx -t
+> nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+> nginx: configuration file /etc/nginx/nginx.conf test is successful
+$ sudo systemctl reload nginx
+```
+
+* Remove MariaDB
+
+```sh
+$ sudo service mysql stop
+$ sudo apt-get --purge remove "mysql*"
 ```
 
 * Remove Dojo directory
@@ -699,21 +723,6 @@ $ sudo nano /etc/tor/torrc
 ```
 
 * Save and exit
-
-### Remove MySQL (Optional)
-
-```sh
-$ sudo service mysql stop
-$ sudo apt-get --purge remove "mysql*"
-```
-
-### Remove NodeJS and dependencies (Optional)
-
-```sh
-$ npm remove pm2 -g
-$ sudo apt remove npm
-$ sudo apt remove nodejs
-```
 
 <br /><br />
 
