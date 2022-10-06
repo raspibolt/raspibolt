@@ -77,6 +77,13 @@ $ node -v
 
 npm is the default package manager for the JavaScript runtime environment and PM2 is a process manager for the JavaScript runtime Node.js
 
+* With user "admin", let's check our version of npm running on the node
+
+```sh
+$ npm -v
+> 8.19.2
+```
+
 * If not already installed, install npm package manager
 
 ```sh
@@ -655,7 +662,7 @@ $ sudo su - dojo
 $ pm2 stop mainnet
 ```
 
-* Following the installation section, download and install latest Dojo version. You will overwrite several files.
+* Following the installation section, download and install latest Dojo version. You will overwrite several files
 
 ---
 
@@ -666,9 +673,9 @@ $ pm2 stop mainnet
 * As user "admin", stop and remove Dojo service
 
 ```sh
-$ sudo systemctl stop <dojo service name>
-$ sudo systemctl disable <dojo service name>
-$ sudo rm /etc/systemd/system/<dojo service name>
+$ sudo systemctl stop pm2-dojo.service 
+$ sudo systemctl disable pm2-dojo.service 
+$ sudo rm /etc/systemd/system/pm2-dojo.service
 ```
 
 * Remove Nginx configurations for Dojo
@@ -693,15 +700,10 @@ $ sudo service mysql stop
 $ sudo apt-get --purge remove "mysql*"
 ```
 
-* Remove Dojo directory
+* Remove Dojo directory and Dojo user
 
 ```sh
 $ sudo rm -R /data/dojo
-```
-
-* Remove dojo user
-
-```sh
 $ sudo userdel -r dojo
 ```
 
