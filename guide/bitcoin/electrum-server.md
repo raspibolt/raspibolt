@@ -207,7 +207,7 @@ Electrs needs to start automatically on system boot.
   # /etc/systemd/system/electrs.service
 
   [Unit]
-  Description=Electrs daemon (Electrum server)
+  Description=Electrs daemon
   After=bitcoind.service
   PartOf=bitcoind.service
 
