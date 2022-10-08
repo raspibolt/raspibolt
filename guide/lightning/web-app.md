@@ -208,8 +208,9 @@ In order to do that, we create a systemd unit that starts the service on boot di
   # /etc/systemd/system/rtl.service
 
   [Unit]
-  Description=Ride the Lightning
+  Description=Ride The Lightning (lightning node web app)
   After=lnd.service
+  PartOf=lnd.service
 
   [Service]
   WorkingDirectory=/home/rtl/RTL
