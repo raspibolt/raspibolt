@@ -159,7 +159,7 @@ $ sudo mysql
 MariaDB [(none)]>
 ```
 
-* The instructions to enter in the MariaDB shell with start with "MDB$". Enter each command one by one including ";". Make sure to change "[ G ] MYSQL_PASSWORD" in the second command
+* The instructions to enter in the MariaDB shell with start with "MDB$". Enter each command one by one including ";". Remember to change "[ G ] MYSQL_PASSWORD" in the second command
 
 ```sh
 MDB$ CREATE DATABASE dojo_db;
@@ -242,7 +242,7 @@ $ mv index-example.js index.js
 $ nano index.js
 ```
 
-* Find and edit these lines inside "bitcoind" part to following values, they have to be inside single quotes ''
+* Find and edit these lines inside "bitcoind" part to following values, they have to be inside single quotes `'abc'`
 
 ```sh
 bitcoind: {
@@ -320,11 +320,13 @@ $ cd /data/dojo
 $ mv pm2.config.cjs.example pm2.config.cjs
 ```
 
-* Open the renamed config file and change following value in the third line.
+* Open config file and change "INTERPRETER" value (at the beginning)
 
 ```sh
 $ nano pm2.config.cjs
+```
 
+```sh
 [...]
 const INTERPRETER = 'node' // OR binary name like `node`
 ```
@@ -636,7 +638,7 @@ Connect samourai wallet to your own backend
 
 * Restore your wallet
 
-### (optional) Rescan public keys using Dojo Maintenance Tool
+### Rescan public keys using Dojo Maintenance Tool (optional)
 If no balance is shown in your samourai wallet, it is neccessary to rescan public keys as they are not tracked by Dojo yet.
 
 * Log into `Dojo API and Maintenance Tool` using Tor browser
@@ -662,7 +664,11 @@ $ sudo su - dojo
 $ pm2 stop mainnet
 ```
 
-* Following the installation section, download and install latest Dojo version. You will overwrite several files
+* Following the installation section, download and install latest Dojo version, start Dojo 
+
+```sh
+$ pm2 start mainnet
+```
 
 ---
 
@@ -678,34 +684,14 @@ $ sudo systemctl disable pm2-dojo.service
 $ sudo rm /etc/systemd/system/pm2-dojo.service
 ```
 
-* Remove Nginx configurations for Dojo
-
-```sh
-$ sudo rm /etc/nginx/sites-enabled/dojo.conf
-```
-
-* Test and reload nginx configuration
-
-```sh
-$ sudo nginx -t
-> nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-> nginx: configuration file /etc/nginx/nginx.conf test is successful
-$ sudo systemctl reload nginx
-```
-
-* Remove MariaDB
-
-```sh
-$ sudo service mysql stop
-$ sudo apt-get --purge remove "mysql*"
-```
-
 * Remove Dojo directory and Dojo user
 
 ```sh
 $ sudo rm -R /data/dojo
 $ sudo userdel -r dojo
 ```
+
+### Remove Tor Hidden Service
 
 * Remove Tor configuration. Comment or delete following lines
 
@@ -724,7 +710,25 @@ $ sudo nano /etc/tor/torrc
 #HiddenServicePort 80 127.0.0.1:8080
 ```
 
-* Save and exit
+```sh
+$ sudo systemctl restart tor
+```
+
+### Uninstall Nginx
+
+* Remove Nginx configuration for Dojo
+
+```sh
+$ sudo rm /etc/nginx/sites-enabled/dojo.conf
+$ sudo systemctl reload nginx
+```
+
+### Remove MariaDB
+
+```sh
+$ sudo service mysql stop
+$ sudo apt-get --purge remove "mysql*"
+```
 
 <br /><br />
 
