@@ -251,7 +251,7 @@ In order to do that, we create a systemd unit that starts the service on boot di
   # /etc/systemd/system/btcrpcexplorer.service
 
   [Unit]
-  Description=BTC RPC Explorer (blockchain explorer)
+  Description=BTC RPC Explorer
   After=bitcoind.service
   PartOf=bitcoind.service
 
