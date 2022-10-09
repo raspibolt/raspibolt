@@ -709,7 +709,7 @@ $ sudo nano /etc/tor/torrc
 $ sudo systemctl restart tor
 ```
 
-### Uninstall Nginx
+### Remove Nginx configuration
 
 * Remove Nginx configuration for Dojo
 
