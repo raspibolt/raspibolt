@@ -42,6 +42,7 @@ Table of contents
 * Install necessary dependencies using the apt package manager.
 
   ```sh
+  $ sudo apt update
   $ sudo apt install libffi-dev libpq-dev python3-venv
   ```
 
