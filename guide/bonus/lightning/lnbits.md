@@ -396,6 +396,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ sudo su -
   $ userdel -r lnbits
   > userdel: lnbits mail spool (/var/mail/lnbits) not found
+  $ exit
   ```
 
 <br /><br />
