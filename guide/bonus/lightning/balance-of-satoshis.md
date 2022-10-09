@@ -186,10 +186,10 @@ A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network
 
 ![circular-rebalancing](../../../images/circular-rebalancing-lnbook.png)
 
-* To rebalance a channel (to node B) with high outbound and a channel with high inbound (to node C), use the `rebalance` command.
+* To rebalance a channel with high outbound (e.g., your channel with node B) and a channel with high inbound (e.g., your channel with node C), use the `rebalance` command.
 
   ```sh
-  $ bos rebalance --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
+  $ bos rebalance --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_B_PUBKEY]
   ```
 
 * E.g. using the example above:
@@ -205,13 +205,13 @@ A good illustration is provided in Chapter 5 of 'Mastering the Lighnting Network
 * Some rebalancing can take a very long time. A timeout can be specified for the command to terminate gracefully by adding the `--minutes` option.
 
   ```sh
-  $ bos rebalance --minutes [NUMBER_OF_MINUTES] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
+  $ bos rebalance --minutes [NUMBER_OF_MINUTES] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --in [NODE_C_PUBKEY] --out [NODE_B_PUBKEY]
   ```
 
 * If you notice that a node in the tried paths is repeatedly the cause of failures, you can ask BoS to ignore this node during path finding by adding the `--avoid` option
 
   ```sh
-  $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid [NODE_PUBKEY] --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
+  $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid [NODE_PUBKEY] --in [NODE_C_PUBKEY] --out [NODE_B_PUBKEY]
   ```
 
 ### Tags
@@ -247,7 +247,7 @@ BoS allows to create user-defined tags to classify nodes and then be used in the
 * Use the tag in commands, e.g. with `bos rebalance`
 
   ```sh
-  $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid avoid-nodes --in [NODE_C_PUBKEY] --out [NODE_A_PUBKEY]
+  $ bos rebalance --minutes [number_of_minutes] --amount [AMOUNT_IN_SATS] --max-fee-rate [TOTAL_MAX_FEE_RATE_OF_REBALANCING] --avoid avoid-nodes --in [NODE_C_PUBKEY] --out [NODE_B_PUBKEY]
   ```
 
 ### Other commands
