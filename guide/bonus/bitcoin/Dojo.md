@@ -631,8 +631,6 @@ Connect samourai wallet to your own backend
 
 <img src="/images/Samourai_Wallet_Setup_2.png" width="280" height="550">
 
-* Restore your wallet
-
 ### Rescan public keys using Dojo Maintenance Tool (optional)
 If no balance is shown in your samourai wallet, it is neccessary to rescan public keys as they are not tracked by Dojo yet.
 
