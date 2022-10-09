@@ -375,14 +375,10 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ sudo ufw delete X
   ```
 
-* Delete (or disable) the nginx reverse proxy configuration file
+* Delete the nginx reverse proxy configuration file
 
   ```sh 
-  # to delete
   $ sudo rm /etc/nginx/streams-enabled/lnbits-reverse-proxy.conf
-  
-  #to disable but preserve the configuration file
-  $ sudo mv /etc/nginx/streams-enabled/lnbits-reverse-proxy.conf /etc/nginx/streams-enabled/lnbits-reverse-proxy.conf.bak
   ```
 
 * Test and reload nginx configuration
