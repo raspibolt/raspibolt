@@ -84,15 +84,10 @@ $ npm -v
 > 8.19.2
 ```
 
-* If not already installed, install npm package manager
+* If not already installed, install npm package manager and update it to latest version
 
 ```sh
 $ sudo apt install npm
-```
-
-* update npm to the latest version
-
-```sh
 $ sudo npm install latest-version
 ```
 
