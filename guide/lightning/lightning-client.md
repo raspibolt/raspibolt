@@ -32,9 +32,9 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/lnd-linux-arm64-v0.15.0-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-v0.15.0-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-roasbeef-v0.15.0-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.2-beta/lnd-linux-arm64-v0.15.2-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.2-beta/manifest-v0.15.2-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.2-beta/manifest-roasbeef-v0.15.2-beta.sig
   ```
 
 * Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
@@ -49,30 +49,27 @@ We'll download, verify and install LND.
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.15.0-beta.sig manifest-v0.15.0-beta.txt
-  > gpg: Signature made Fri Jun 24 00:50:22 2022 EEST
+  $ gpg --verify manifest-roasbeef-v0.15.2-beta.sig manifest-v0.15.2-beta.txt
+  > gpg: Signature made Sun Oct  9 20:36:23 2022 PDT
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
-  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
-  > gpg: WARNING: This key is not certified with a trusted signature!
-  > gpg:          There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
-  >     Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
+  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [ultimate]
+  > [...]
   ```
 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.15.0-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.15.0-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.15.2-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.15.2-beta.tar.gz: OK
   ```
 
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.15.0-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.0-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.15.2-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.2-beta/*
   $ lnd --version
-  > lnd version 0.15.0-beta commit=v0.15.0-beta
+  > lnd version 0.15.2-beta commit=v0.15.2-beta
   ```
 
 ### Data directory
@@ -697,7 +694,10 @@ Upgrading LND can lead to a number of issues.
   ```
 
 * As "admin" user, stop the LND service
-  `$ sudo systemctl stop lnd`
+
+  ```sh
+  $ sudo systemctl stop lnd
+  ```
 
 * Download, verify and install the latest LND binaries as described in the [LND section](lightning-client.md#installation) of this guide.
 
