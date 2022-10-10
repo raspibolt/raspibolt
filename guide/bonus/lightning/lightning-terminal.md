@@ -65,38 +65,44 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.5-alpha/lightning-terminal-linux-arm64-v0.6.5-alpha.tar.gz
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.5-alpha/manifest-v0.6.5-alpha.txt
-  $ sha256sum --check manifest-v0.6.5-alpha.txt --ignore-missing
-  > lightning-terminal-linux-arm64-v0.6.5-alpha.tar.gz: OK
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.8.1-alpha/lightning-terminal-linux-arm64-v0.8.1-alpha.tar.gz
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.8.1-alpha/manifest-v0.8.1-alpha.txt
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.8.1-alpha/manifest-roasbeef-v0.8.1-alpha.sig
   ```
 
-* Import the project's lead maintainer (Oliver Gugger) PGP key from Keybase 
+* Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ curl https://keybase.io/guggero/pgp_keys.asc | gpg --import
-  > [...]
-  > gpg: key 8E4256593F177720: "Oliver Gugger <gugger@gmail.com>" 1 new signature
-  > [...]
+  $ sha256sum --check manifest-v0.8.1-alpha.txt --ignore-missing
+  > lightning-terminal-linux-arm64-v0.8.1-alpha.tar.gz: OK
   ```
-  
-* Using the key, verify the authenticity of the checksums file
-  
+
+* You should already have Olaoluwa Osuntokun GPG public key from when you installed LND. If not, get the key to verify the manifest file; and add it to your GPG keyring.
+
   ```sh
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.6.5-alpha/manifest-v0.6.5-alpha.sig
-  $ gpg --verify manifest-v0.6.5-alpha.sig manifest-v0.6.5-alpha.txt
-  > [...]
-  > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
+  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/roasbeef.asc | gpg --import
+  > ...
+  > gpg: key 372CBD7633C61696: public key "Olaoluwa Osuntokun <laolu32@gmail.com>" imported
+  > ...
+  ```
+
+* Verify the signature of the text file containing the checksums for the application
+
+  ```sh
+  $ gpg --verify manifest-roasbeef-v0.8.1-alpha.sig manifest-v0.8.1-alpha.txt
+  > gpg: Signature made Sun Oct  9 22:06:52 2022 PDT
+  > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
+  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [ultimate]
   > [...]
   ```
 
 * Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
 
   ```sh
-  $ tar -xzf lightning-terminal-linux-arm64-v0.6.5-alpha.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.6.5-alpha/*
+  $ tar -xzf lightning-terminal-linux-arm64-v0.8.1-alpha.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.8.1-alpha/*
   $ litd --lnd.version
-  > litd version 0.14.2-beta commit=lightning-terminal-v0.6.5-alpha
+  > litd version 0.15.2-beta commit=lightning-terminal-v0.8.1-alpha
   ```
 
 ### User and data directories
@@ -468,7 +474,7 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
 
   ```sh
   $ litd --lnd.version
-  > litd version 0.14.1-beta commit=lightning-terminal-v0.6.1-alpha
+  > litd version 0.15.2-beta commit=lightning-terminal-v0.8.1-alpha
   ```
 
 * Read the [release notes](https://github.com/lightninglabs/lightning-terminal/releases){:target="_blank"} in case there is any breaking change to be aware of.
