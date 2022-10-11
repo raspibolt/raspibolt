@@ -208,6 +208,7 @@ We set up the backup script as a systemd service to run in the background and st
   [Unit]
   Description=SCB Backup daemon
   After=lnd.service
+  PartOf=lnd.service
 
   [Service]
   ExecStart=/usr/local/bin/scb-backup
