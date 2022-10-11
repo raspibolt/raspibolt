@@ -114,19 +114,24 @@ Table of contents
 * Ensure that i2pd service is working and listening at the default ports
 
   ```sh
-  $ sudo lsof -i -P -n | grep i2pd | grep LISTEN
+  $ sudo ss -tulpn | grep i2pd | grep LISTEN
+  ```
+
+Output expected:
+
+  ```sh
+  tcp   LISTEN 0      4096            0.0.0.0:23570       0.0.0.0:*    users:(("i2pd",pid=827,fd=17))
+  tcp   LISTEN 0      4096           127.0.0.1:4444       0.0.0.0:*    users:(("i2pd",pid=827,fd=29))
+  tcp   LISTEN 0      4096           127.0.0.1:7070       0.0.0.0:*    users:(("i2pd",pid=827,fd=22))
+  tcp   LISTEN 0      4096           127.0.0.1:4447       0.0.0.0:*    users:(("i2pd",pid=827,fd=30))
+  tcp   LISTEN 0      4096           127.0.0.1:7656       0.0.0.0:*    users:(("i2pd",pid=827,fd=38))
+  tcp   LISTEN 0      4096           127.0.0.1:6668       0.0.0.0:*    users:(("i2pd",pid=827,fd=34))
   ```
 
 * See “i2p” in action by monitoring its log file. Exit with Ctrl-C
 
   ```sh
   $ sudo tail -f /var/log/i2pd/i2pd.log
-  ```
-
-💡 If the prompt show you "sudo: lsof: command not found", it means that you don't have "lsof" installed yet, install it with next command and try again
-
-  ```sh
-  $ sudo apt install lsof
   ```
 
 ### Configure Bitcoin Core
