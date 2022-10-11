@@ -34,7 +34,7 @@ has_toc: false
 
 ## Privacy
 
-* **[JoinMarket on RaspiBolt](https://github.com/kristapsk/raspibolt-extras/blob/master/joinmarket.md){:target="_blank"}** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
+* **[JoinMarket](joinmarket.md){:target="_blank"}** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
 
 * **[I2P](i2p.md){:target="_blank"}** - The Invisible Internet Protocol
 
