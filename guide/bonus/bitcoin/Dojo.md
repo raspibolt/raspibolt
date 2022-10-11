@@ -279,7 +279,7 @@ apiKeys: ['[ H ] NODE_API_KEY_1', '[ H ] NODE_API_KEY_2'],
 adminKey: '[ I ] NODE_ADMIN_KEY',
 ```
 
-Find and edit these lines inside "jwt" configuration to following values
+* Find and edit these lines inside "jwt" configuration to following values
 
 ```sh
 jwt: {
