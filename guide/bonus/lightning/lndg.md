@@ -234,7 +234,7 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
   [Unit]
   Description=LNDg uWSGI app
   After=lnd.service
-  PartsOf=lndg.service
+  PartOf=lnd.service
   
   [Service]
   ExecStart=/home/lndg/lndg/.venv/bin/uwsgi --ini /home/lndg/lndg/lndg.ini
