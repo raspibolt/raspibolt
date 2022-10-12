@@ -166,7 +166,7 @@ $ nano --linenumbers /data/joinmarket/joinmarket.cfg
 
 * Instruct Joinmarket to verify with Bitcoin Core via cookie rather than login/pass.
 
-  ```
+  ```ini
   35 # rpc_user = bitcoin
   36 # rpc_password = password
   37 rpc_cookie_file = /data/bitcoin/.cookie
