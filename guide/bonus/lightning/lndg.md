@@ -240,7 +240,6 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
   RestartSec=30
   KillSignal=SIGQUIT
   Type=notify
-  StandardError=syslog
   NotifyAccess=all
   
   [Install]
@@ -296,7 +295,7 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
 * Create a symlink in the `sites-enabled` directory
 
   ```sh
-  $ sudo ln -sf /etc/nginx/sites-available/mempool-ssl.conf /etc/nginx/sites-enabled/
+  $ sudo ln -sf /etc/nginx/sites-available/lndg-ssl.conf /etc/nginx/sites-enabled/
   ```
 
 * Open the nginx configuration file
@@ -364,8 +363,9 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
 
   ```sh
   # Log file
+  $ sudo mkdir /var/log/uwsgi
   $ sudo touch /var/log/uwsgi/lndg.log
-  $ sudo chgrp www-data /var/log/uwsgi/lndg.log
+  $ sudo chgrp -R www-data /var/log/uwsgi
   $ sudo chmod 660 /var/log/uwsgi/lndg.log
   
   # Sock file
