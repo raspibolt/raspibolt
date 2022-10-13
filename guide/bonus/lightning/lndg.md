@@ -393,7 +393,7 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
   > Sep 25 22:47:22 raspibolt systemd[1]: Started LNDg uWSGI app.
   ```
 
-* To check the uwsgi logs
+* To check the uwsgi log (Ctrl+c to exit the log)
 
   ```sh
   $ sudo journalctl -f -u uwsgi
