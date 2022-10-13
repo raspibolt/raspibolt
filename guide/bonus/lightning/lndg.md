@@ -446,6 +446,7 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   [Unit]
   Description=LNDg jobs
   After=lnd.service
+  PartOf=lnd.service
 
   [Service]
   WorkingDirectory=/home/lndg/lndg
@@ -469,7 +470,9 @@ To have updated information in the GUI, it is necessary to regularly run the scr
 
   ```ini
   [Unit]
-  Description=Run Lndg Jobs Every 60 Seconds
+  Description=Run LNDg Jobs Every 60 Seconds
+  After=lnd.service
+  PartOf=lnd.service
 
   [Timer]
   OnBootSec=300
@@ -525,7 +528,9 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 
   ```ini
   [Unit]
-  Description=Run Rebalancer For Lndg
+  Description=Run Rebalancer For LNDg
+  After=lnd.service
+  PartOf=lnd.service
 
   [Service]
   User=lndg
@@ -535,7 +540,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   RuntimeMaxSec=3600
   ```
 
-* Create a timer file to run `jobs.sh` every 60 seconds. Save and exit.
+* Create a timer file to run `rebalancer.sh` every 60 seconds. Save and exit.
 
   ```sh
   $ sudo nano /etc/systemd/system/rebalancer-lndg.timer
@@ -543,7 +548,9 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 
   ```ini
   [Unit]
-  Description=Run Lndg Jobs Every 60 Seconds
+  Description=Run LNDg Jobs Every 60 Seconds
+  After=lnd.service
+  PartOf=lnd.service
 
   [Timer]
   OnBootSec=300
@@ -598,7 +605,9 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 
   ```ini
   [Unit]
-  Description=Run HTLC Stream For Lndg
+  Description=Run HTLC Stream For LNDg
+  After=lnd.service
+  PartOf=lnd.service
 
   [Service]
   User=lndg
