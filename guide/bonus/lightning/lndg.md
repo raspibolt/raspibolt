@@ -51,14 +51,8 @@ Table of contents
   ```sh
   $ virtualenv --version
   > -bash: virtualenv: command not found
-  $ sudo apt install virtualenv
-  ```
-
-### Install required packages
-
-  ```sh
   $ sudo apt update
-  $ sudo apt install uwsgi
+  $ sudo apt install virtualenv
   ```
 
 ### Firewall
@@ -134,8 +128,8 @@ A first time password will be output, save it somewhere safe (e.g., your passwor
   > Quit the server with CONTROL-C.
   ```
 
-* Now point your browser to the LNDg Python server, for example https://raspibolt.local:8889 
-(or your node's IP address, e.g. https://192.168.0.20:8889). 
+* Now point your browser to the LNDg Python server, for example http://raspibolt.local:8889 
+(or your node's IP address, e.g. http://192.168.0.20:8889). 
 
 * The initial login user is "lndg-admin" and the password is the one generated just above. 
 If you didn't save the password, you can get it again with: `nano /home/lndg/lndg/data/lndg-admin.txt`
