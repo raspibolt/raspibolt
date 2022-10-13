@@ -89,7 +89,7 @@ Log in to your RaspiBolt via SSH as user "admin" and install Tor.
   [...]
   ```
 
-* Ensure that the Tor service is working and listening at the default port `9050`.
+* Ensure that the Tor service is working and listening at the default ports `9050` and `9150`
 
   ```sh
   $ sudo ss -tulpn | grep tor | grep LISTEN
