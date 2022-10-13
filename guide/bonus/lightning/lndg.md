@@ -94,10 +94,10 @@ For that we will create a separate user and we will be running the code as the n
   $ ln -s /data/lnd /home/lndg/.lnd
   ```
 
-* Clone the project GitHub repository and enter it
+* Clone the latest release of the project GitHub repository and enter it
 
   ```sh
-  $ git clone https://github.com/cryptosharks131/lndg.git
+  $ git clone --branch v1.3.1 https://github.com/cryptosharks131/lndg.git
   $ cd lndg
 
 * Setup a Python virtual environment
@@ -113,7 +113,7 @@ A first time password will be output, save it somewhere safe (e.g., your passwor
   $ .venv/bin/pip install -r requirements.txt
   $ .venv/bin/python initialize.py
   [...]
-  > FIRST TIME LOGIN PASSWORD:abc...123
+  > FIRST TIME LOGIN PASSWORD:abc...123\
   ```
 
 * Generate some initial node data for your dashboard.
