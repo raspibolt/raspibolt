@@ -99,7 +99,7 @@ Now we can add the BTC RPC Explorer configuration.
 * Configure the firewall to allow incoming HTTPS requests
 
   ```sh
-  $ sudo ufw allow 4000/tcp comment 'allow BTC RPC Explorer SSL'
+  $ sudo ufw allow 4000 comment 'allow BTC RPC Explorer SSL'
   $ sudo ufw status
   ```
 
@@ -153,6 +153,12 @@ found 12 vulnerabilities (8 moderate, 4 high)
   $ nano .env
   ```
 
+* If you don't use Nginx reverse proxy configuration to receive and send the request to the browser, you will need to open BTC RPC Explorer to connect from the local network
+
+  ```sh
+  BTCEXP_HOST=0.0.0.0
+  ```
+
 * Instruct BTC RPC Explorer to connect to local Bitcoin Core
 
   ```sh
@@ -175,6 +181,8 @@ found 12 vulnerabilities (8 moderate, 4 high)
   BTCEXP_ELECTRUM_SERVERS=tcp://127.0.0.1:50001
   ```
 
+#### Optional
+
 * You can decide whether you want to optimize for more information or for more privacy.
 
   * More information mode, including Bitcoin exchange rates:
@@ -191,7 +199,13 @@ found 12 vulnerabilities (8 moderate, 4 high)
     BTCEXP_NO_RATES=true
     ```
 
-* Optionally, you can add password protection to the web interface.
+* You may want to share your onion address with people safe with your BTC RPC Explorer with limited Bitcoin Core RPC access requests (sensitive data requests will be kept disabled), then you need to enable this. Remember to provide them with the password [D] if you add password protection in the next step.
+
+  ```sh
+  BTCEXP_DEMO=true
+  ```
+
+* You can add password protection to the web interface.
   Simply add password [D] for the following option, for which the browser will then prompt you.
   You can enter any user name; only the password is checked.
 
@@ -291,6 +305,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 
   ```sh
   ############### This section is just for location-hidden services ###
+  # Hidden Service BTC RPC Explorer
   HiddenServiceDir /var/lib/tor/hidden_service_btcrpcexplorer/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:3002
@@ -345,4 +360,3 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
 ---
 
 Next: [Lightning >>](../lightning/index.md)
-
