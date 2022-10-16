@@ -108,19 +108,19 @@ obfs4 makes Tor traffic look random, and also prevents censors from finding brid
 
 * Configure the firewall to allow incoming requests replacing `<TODO1>` and `<TODO2>` previously configured in the section before
 
-```sh
-$ sudo ufw allow <TODO1> comment 'allow OR port Tor bridge'
-```
+  ```sh
+  $ sudo ufw allow <TODO1> comment 'allow OR port Tor bridge'
+  ```
 
-```sh
-$ sudo ufw allow <TODO2> comment 'allow obsf4 port Tor bridge'
-```
+  ```sh
+  $ sudo ufw allow <TODO2> comment 'allow obsf4 port Tor bridge'
+  ```
 
 * Check the correct application of the rules
 
-```sh
-$ sudo ufw status
-```
+  ```sh
+  $ sudo ufw status
+  ```
 
 🚨 Note that both Tor's OR port and its obfs4 port must be reachable. If your bridge is behind a NAT, make sure to open both ports. See [portforward.com](https://portforward.com/) for directions on how to port forward with your NAT/router device. You can use our reachability [test](https://bridges.torproject.org/scan/) to see if your obfs4 port `"<TODO2>"` is reachable from the Internet. Enter in the website your public <IP ADDRESS> obtained with `"$ curl icanhazip.com"` or navigate directly with your regular browser to [icanhazip.com] in your personal computer in the same local network, and put your `"<TODO2>"` port.
 
@@ -298,15 +298,15 @@ One of the most important things to keep your relay secure is to install securit
 
 * Delete the rule with the correct number and confirm with "yes"
 
-```sh
-$ sudo ufw delete X
-```
+  ```sh
+  $ sudo ufw delete X
+  ```
 
 * Check the correct application of the rules
 
-```sh
-$ sudo ufw status
-```
+  ```sh
+  $ sudo ufw status
+  ```
 
 🚨 Reverts router NAT configuration following same "[Configure Firewall and NAT](https://raspibolt.org/guide/bonus/raspberry-pi/tor-bridge.html#configure-firewall-and-router-nat)" previous step but this time deleting the configuration setting.
 
