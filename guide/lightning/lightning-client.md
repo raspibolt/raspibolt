@@ -32,9 +32,9 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.2-beta/lnd-linux-arm64-v0.15.2-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.2-beta/manifest-v0.15.2-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.2-beta/manifest-roasbeef-v0.15.2-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/lnd-linux-arm64-v0.15.3-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-v0.15.3-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-roasbeef-v0.15.3-beta.sig
   ```
 
 * Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
@@ -49,7 +49,7 @@ We'll download, verify and install LND.
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.15.2-beta.sig manifest-v0.15.2-beta.txt
+  $ gpg --verify manifest-roasbeef-v0.15.3-beta.sig manifest-v0.15.3-beta.txt
   > gpg: Signature made Sun Oct  9 20:36:23 2022 PDT
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [ultimate]
@@ -59,17 +59,17 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.15.2-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.15.2-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.15.3-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.15.3-beta.tar.gz: OK
   ```
 
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.15.2-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.2-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.15.3-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.3-beta/*
   $ lnd --version
-  > lnd version 0.15.2-beta commit=v0.15.2-beta
+  > lnd version 0.15.3-beta commit=v0.15.3-beta
   ```
 
 ### Data directory
