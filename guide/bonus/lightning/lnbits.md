@@ -358,7 +358,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ sudo rm /etc/systemd/system/lnbits.service
   ```
 
-* Display the UFW firewall rules and notes the numbers of the rules for Thunderhub (e.g., X and Y below)
+* Display the UFW firewall rules and notes the numbers of the rules for LNBits (e.g., X and Y below)
 
   ```sh  
   $ sudo ufw status numbered
