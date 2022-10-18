@@ -48,10 +48,11 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 
 
 ### Create a JoinMarket dedicated bitcoin wallet with bitcoin-cli. 
-This wallet will be used by JoinMarket to store addresses as watch-only. It will use this wallet when it communicates with bitcoin core via rpc calls.
+
+* This wallet will be used by JoinMarket to store addresses as watch-only. It will use this wallet when it communicates with bitcoin core via rpc calls.
 
 ```
-bitcoin-cli -named createwallet wallet_name=jm_wallet descriptors=false
+$ bitcoin-cli -named createwallet wallet_name=jm_wallet descriptors=false
 ```
 
 
@@ -63,7 +64,6 @@ bitcoin-cli -named createwallet wallet_name=jm_wallet descriptors=false
 $ sudo adduser --disabled-password --gecos "" joinmarket
 $ sudo usermod -a -G bitcoin,debian-tor joinmarket
 ```
-
 
 * Create a JoinMarket data directory
 
@@ -85,7 +85,7 @@ $ ln -s /data/joinmarket /home/joinmarket/.joinmarket
 ```
 
 
-## Install JoinMarket
+## Installation
 
 * As user "joinmarket", download the latest release, checksums and signature. First check for the latest release on the [Releases page](https://github.com/JoinMarket-Org/joinmarket-clientserver/releases) and update version numbers as you go if needed.
 
@@ -128,11 +128,12 @@ $ ./install.sh --without-qt --disable-secp-check --disable-os-deps-check
 ```
 
 * Create the following jmvenv activation script to save yourself some time in the long run.
+
 ```
 $ cd
 $ nano activate.sh
 ```
-```
+```sh
 #!/usr/bin/env bash
 cd /home/joinmarket/joinmarket && \
 source jmvenv/bin/activate && \
@@ -146,7 +147,7 @@ $ sudo chmod +x activate.sh
 ```
 
 
-## Configuration 
+## Configuration
 
 * Activate jmvenv and run wallet-tool.py to create the configuration file.
 
@@ -159,13 +160,13 @@ $ . activate.sh
 
 * Open the new configuration file.
 
-  ```sh
-  nano --linenumbers /data/joinmarket/joinmarket.cfg
-  ```
+```
+$ nano --linenumbers /data/joinmarket/joinmarket.cfg
+```
 
 * Instruct Joinmarket to verify with Bitcoin Core via cookie rather than login/pass.
 
-  ```sh
+  ```ini
   35 # rpc_user = bitcoin
   36 # rpc_password = password
   37 rpc_cookie_file = /data/bitcoin/.cookie
@@ -183,6 +184,7 @@ $ . activate.sh
   
 * Save and exit.
 
+## Using JoinMarket
 
 ### Generate JoinMarket wallet 
 
@@ -214,8 +216,6 @@ JoinMarket uses its own wallet. You can create one with or without a "two-factor
 
 Write down the words and save them; they will allow to recover wallet later on different machine in case of hardware failure or other problem. As with any other mnemonic recovery phrase, keep it secure and secret.
 
-
-## Using JoinMarket
 
 ### View the JoinMarket wallet
 
@@ -274,6 +274,7 @@ For the purposes of running the yield generator, you can simply fund the primary
 * Look at the settings at the bottom of (`nano /data/joinmarket/joinmarket.cfg`) and change them if you want to. Defaults should be ok, but you could, for example, lower the CoinJoin maker fee (`cjfee_r`) from 0.002% to 0.001% to capture more taker requests (as some takers opt to lower their fee cap). Or you might even want to reduce your fees to 0 by specifying `ordertype = absoffer` and `cjfee_a = 0`. Note that your fee specs are approximations, as yg-privacyenhanced will randomize them a little bit, for privacy reasons (unless you set fees to 0), in which case it will still randomize your offer size by `size_factor`.
 
 * Run the yield generator
+
 ```
 (jmvenv) $ ./yg-privacyenhanced.py wallet.jmdat
 ```
@@ -281,7 +282,7 @@ For the purposes of running the yield generator, you can simply fund the primary
 Since version 0.9.0 JoinMarket has added support for fidelity bonds, which are bitcoins locked into certain address(es) for some time. This is protection against [sybil attacks](https://en.wikipedia.org/wiki/Sybil_attack). Fidelity bonds are not currently required for the makers, but they will increase probability of your yield generator bot to participate in coinjoins. See [JoinMarket fidelity bond documentation](https://github.com/JoinMarket-Org/joinmarket-clientserver/blob/master/docs/fidelity-bonds.md) for more information. Before you fund a fidelity bond, however, you want to be sure you are doing so with anonymous coins and a sweep transaction due to the public nature of the fidelity bond announcement. Perhaps mix with JoinMarket first. :)
 
 
-#### Running the yield generator in background (after you close ssh connection to the RaspiBolt)
+### Run yield generator in background (even after ssh to RaspiBolt is closed)
 
 * Exit yield generator and install tmux from the "admin" user. (screen would be another viable option)
 
