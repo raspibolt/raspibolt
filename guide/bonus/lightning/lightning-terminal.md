@@ -229,7 +229,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   ###################
   
   # The Bitcoin node IP is the IP address of the Raspibolt, i.e. an address like 192.168.0.20
-  faraday.bitcoin.host=192.168.0.171
+  faraday.bitcoin.host=192.168.0.20
   # bitcoin.user provides to Faraday the bicoind RPC username, as specified in our bitcoin.conf
   faraday.bitcoin.user=raspibolt
   # bitcoin.password provides to Faraday the bitcoind RPC password, as specified in our bitcoin.conf
