@@ -136,6 +136,12 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
 
 * Shut down the server with `Ctrl+c` 
 
+* To make use of the lite GUI, we need to install whitenoise
+
+  ```sh
+  $ .venv/bin/pip install whitenoise && rm lndg/settings.py && .venv/bin/python initialize.py -wn
+  ```
+
 * For extra security, delete the text file that contains the password
 
   ```sh
