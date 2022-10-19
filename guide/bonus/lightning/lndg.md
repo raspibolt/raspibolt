@@ -468,7 +468,7 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   WantedBy=multi-user.target
   ```
 
-* Create a timer file to run `jobs.sh` every 60 seconds. Save and exit.
+* Create a timer file to run `jobs.sh` every 20 seconds. Save and exit.
 
   ```sh
   $ sudo nano /etc/systemd/system/jobs-lndg.timer
@@ -476,13 +476,13 @@ To have updated information in the GUI, it is necessary to regularly run the scr
 
   ```ini
   [Unit]
-  Description=Run LNDg Jobs Every 60 Seconds
+  Description=Run LNDg Jobs Every 20 Seconds
   After=lnd.service
   PartOf=lnd.service
 
   [Timer]
   OnBootSec=300
-  OnUnitActiveSec=60
+  OnUnitActiveSec=20
   AccuracySec=1
   
   [Install]
@@ -546,7 +546,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   RuntimeMaxSec=3600
   ```
 
-* Create a timer file to run `rebalancer.sh` every 60 seconds. Save and exit.
+* Create a timer file to run `rebalancer.sh` every 20 seconds. Save and exit.
 
   ```sh
   $ sudo nano /etc/systemd/system/rebalancer-lndg.timer
@@ -554,13 +554,13 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
 
   ```ini
   [Unit]
-  Description=Run LNDg Jobs Every 60 Seconds
+  Description=Run LNDg Jobs Every 20 Seconds
   After=lnd.service
   PartOf=lnd.service
 
   [Timer]
   OnBootSec=300
-  OnUnitActiveSec=60
+  OnUnitActiveSec=20
   AccuracySec=1
   
   [Install]
