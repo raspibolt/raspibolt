@@ -100,6 +100,8 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 
   ```sh
   $ curl https://raw.githubusercontent.com/JoinMarket-Org/joinmarket-clientserver/master/pubkeys/AdamGibson.asc | gpg --import 
+  ```
+  ```
   > ...
   > gpg: key 141001A1AF77F20B: public key "Adam Gibson (CODE SIGNING KEY) <ekaggata@gmail.com>" imported
   > ...
@@ -109,6 +111,8 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 
   ```sh
   $ gpg --verify joinmarket-clientserver-0.9.8.tar.gz.asc
+  ```
+  ```
   > gpg: assuming signed data in 'joinmarket-clientserver-0.9.8.tar.gz'
   > gpg: Signature made Thu Sep 15 15:46:38 2022 EEST
   > gpg:                using RSA key 2B6FC204D9BF332D062B461A141001A1AF77F20B
@@ -157,6 +161,8 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   ```sh
   $ . activate.sh
   (jvmenv) $ ./wallet-tool.py 
+  ```
+  ```
   > User data location: /home/joinmarket/.joinmarket/
   > Created a new `joinmarket.cfg`. Please review and adopt the settings and restart joinmarket.
   ```
@@ -197,6 +203,8 @@ JoinMarket uses its own wallet. You can create one with or without a "two-factor
 
   ```sh
   (jvmenv) $ ./wallet-tool.py generate
+  ```
+  ```
   > User data location: /home/joinmarket/.joinmarket/
   > Would you like to use a two-factor mnemonic recovery phrase? write 'n' if you don't know what this is (y/n): n
   > Not using mnemonic extension
@@ -204,7 +212,7 @@ JoinMarket uses its own wallet. You can create one with or without a "two-factor
 
 * Specify a secure passphrase. Wallet file name can be left blank.
 
-  ```sh
+  ```
   > Enter new passphrase to encrypt wallet: 
   > Reenter new passphrase to encrypt wallet: 
   > Input wallet file name (default: wallet.jmdat): 
@@ -212,7 +220,7 @@ JoinMarket uses its own wallet. You can create one with or without a "two-factor
 
 * Specify `y` to suport fidelity bonds if you plan to provide JoinMarket liquidity and want higher yields given for time-locked funds. More explanation available [here](https://github.com/JoinMarket-Org/joinmarket-clientserver/blob/master/docs/fidelity-bonds.md) and [here](https://github.com/JoinMarket-Org/joinmarket-clientserver/blob/master/docs/fidelity-bonds.md) but 'y' is a good default.
 
-  ```sh
+  ```
   > Would you like this wallet to support fidelity bonds? write 'n' if you don't know what this is (y/n): y
   > Write down this wallet recovery mnemonic
 
@@ -229,6 +237,8 @@ JoinMarket wallet contains five separate sub-wallets (accounts) or pockets calle
 
   ```sh
   (jvmenv) $ ./wallet-tool.py -m 0 wallet.jmdat
+  ```
+  ```
   > User data location: /home/joinmarket/.joinmarket/
   > Enter wallet decryption passphrase: 
   > 2020-11-30 23:18:30,322 [INFO]  Detected new wallet, performing initial import
@@ -240,6 +250,8 @@ JoinMarket wallet contains five separate sub-wallets (accounts) or pockets calle
 
   ```sh
   (jvmenv) $ ./wallet-tool.py -m 0 wallet.jmdat
+  ```
+  ```
   > User data location: /home/joinmarket/.joinmarket/
   > Enter wallet decryption passphrase: 
   > 2020-11-30 23:19:05,030 [INFO]  Detected new wallet, performing initial import
@@ -287,8 +299,10 @@ Since version 0.9.0 JoinMarket has added support for fidelity bonds, which are b
 
 * Exit yield generator and install tmux from the "admin" user. (screen would be another viable option)
 
-  ```sh
+  ```
   Ctrl+C
+  ```
+  ```sh
   $ exit
   $ sudo apt install tmux
   ```
@@ -327,9 +341,17 @@ Mixing maker and taker roles in a single wallet is actually good for your privac
 
 ### Checking wallet balance and history
 
-* Summary of wallet balances: `./wallet-tool.py wallet.jmdat summary`
+* Summary of wallet balances: 
+  
+  ```sh
+  (jvmenv) $ ./wallet-tool.py wallet.jmdat summary
+  ```
 
-* Wallet transaction history: `./wallet-tool.py wallet.jmdat history -v 4`
+* Wallet transaction history:
+
+  ```sh
+  (jvmenv) $ ./wallet-tool.py wallet.jmdat history -v 4
+  ```
 
 ### Running the tumbler
 
