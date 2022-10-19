@@ -70,7 +70,7 @@ Table of contents
 
 ### Installation
 
-We do not want to run LNDg alongside bitcoind and lnd because of security reasons. 
+We do not want to run LNDg alongside `bitcoind` and `lnd` because of security reasons. 
 For that we will create a separate user and we will be running the code as the new user. 
 
 * Create a new user and make it a member of the "lnd" group to give it read access to the LND macaroons and data
@@ -100,17 +100,18 @@ For that we will create a separate user and we will be running the code as the n
   $ virtualenv -p python .venv
   ```
 
-* Install required dependencies and initialize some settings for your django site. 
-A first time password will be output, save it somewhere safe (e.g., your password manager).
+* Install required dependencies and initialize some settings for your Django site. 
+A first time password will be output, save it somewhere safe (_e.g._, your password manager).
 
   ```sh
+  $ .venv/bin/pip install whitenoise
   $ .venv/bin/pip install -r requirements.txt
-  $ .venv/bin/python initialize.py
+  $ .venv/bin/python initialize.py -wn
   [...]
   > FIRST TIME LOGIN PASSWORD:abc...123\
   ```
 
-* Generate some initial node data for your dashboard.
+* Generate some initial node data for your dashboard. If you get an error message, try running it again.
 
   ```sh
   $ .venv/bin/python jobs.py
@@ -134,13 +135,7 @@ A first time password will be output, save it somewhere safe (e.g., your passwor
 * The initial login user is "lndg-admin" and the password is the one generated just above. 
 If you didn't save the password, you can get it again with: `nano /home/lndg/lndg/data/lndg-admin.txt`
 
-* Shut down the server with `Ctrl+c` 
-
-* To make use of the lite GUI, we need to install whitenoise
-
-  ```sh
-  $ .venv/bin/pip install whitenoise && rm lndg/settings.py && .venv/bin/python initialize.py -wn
-  ```
+* Shut down the server with `Ctrl+c`
 
 * For extra security, delete the text file that contains the password
 
@@ -451,8 +446,6 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   
   [Unit]
   Description=LNDg jobs
-  After=lnd.service
-  PartOf=lnd.service
 
   [Service]
   WorkingDirectory=/home/lndg/lndg
@@ -477,8 +470,8 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   ```ini
   [Unit]
   Description=Run LNDg Jobs Every 20 Seconds
-  After=lnd.service
-  PartOf=lnd.service
+  After=uwsgi.service
+  PartOf=uwsgi.service
 
   [Timer]
   OnBootSec=300
@@ -535,8 +528,6 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   ```ini
   [Unit]
   Description=Run Rebalancer For LNDg
-  After=lnd.service
-  PartOf=lnd.service
 
   [Service]
   User=lndg
@@ -555,8 +546,8 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   ```ini
   [Unit]
   Description=Run LNDg Jobs Every 20 Seconds
-  After=lnd.service
-  PartOf=lnd.service
+  After=uwsgi.service
+  PartOf=uwsgi.service
 
   [Timer]
   OnBootSec=300
@@ -612,8 +603,8 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   ```ini
   [Unit]
   Description=Run HTLC Stream For LNDg
-  After=lnd.service
-  PartOf=lnd.service
+  After=uwsgi.service
+  PartOf=uwsgi.service
 
   [Service]
   User=lndg
@@ -668,12 +659,9 @@ With the Tor browser, you can access this onion address from any device.
 
 ## For the future: LNDg update
 
-* With user "admin", stop all the LNDg services and open a “lndg” user session.
+* With user "admin", stop the `uwsgi` systemd service. The other LNDg systemd timers and services will stop automatically.
 
   ```sh
-  $ sudo systemctl stop htlc-stream-lndg.service
-  $ sudo systemctl stop rebalancer-lndg.timer
-  $ sudo systemctl stop jobs-lndg.timer
   $ sudo systemctl stop uwsgi.service
   $ sudo su - lndg
   ```
@@ -690,38 +678,29 @@ With the Tor browser, you can access this onion address from any device.
   $ exit
   ```
   
-* Start the services again.
+* Start the `uwsgi` systemd service again. The other LNDg timers and services will start automatically.
 
   ```sh
   $ sudo systemctl start uwsgi.service
-  $ sudo systemctl start jobs-lndg.timer
-  $ sudo systemctl start rebalancer-lndg.timer
-  $ sudo systemctl start htlc-stream-lndg.service
   ```
 
 ---
 
 ## Uninstall
 
-* Stop and disable all the LNDg timers and background services
-
-  ```sh
-  $ sudo systemctl stop htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service
-  $ sudo systemctl disable htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service
-  
-
-* Stop and disable uwsgi
+* Stop and disable the `uwsgi` systemd service
 
   ```sh
   $ sudo systemctl stop uwsgi.service
   $ sudo systemctl disable uwsgi.service
-  ``` 
+  ```
 
-* Delete all the LNDg systemd files
+* Delete all the LNDg systemd services and timers
  
   ```sh
   $ cd /etc/systemd/system/
-  $ sudo rm htlc-stream-lndg.service rebalancer-lndg.timer rebalancer-lndg.service jobs-lndg.timer jobs-lndg.service uwsgi.service
+  $ sudo rm uwsgi.service jobs-lndg.service rebalancer-lndg.service htlc-stream-lndg.service  
+  $ sudo rm jobs-lndg.timer rebalancer-lndg.timer
   $ cd
   ```
 
@@ -742,14 +721,14 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo ufw delete X
   ```
 
-* Delete the nginx LNDg configuration file and symlink
+* Delete the LNDg nginx configuration file and symlink
 
   ```sh
   $ sudo rm /etc/nginx/sites-available/lndg-ssl.conf
   $ sudo rm /etc/nginx/sites-enabled/lndg-ssl.conf
   ```
 
-* Delete or comment out the HTTP server block from the `nginx.conf` file (unless you use it for another service, e.g. [Mempool](../bitcoin/mempool.md))
+* Delete or comment out the HTTP server block from the `nginx.conf` file (unless you use it for another service, _e.g._ [Mempool](../bitcoin/mempool.md), [Homer](../raspberry-pi/homer.md) etc)
 
   ```sh
   $ sudo nano /etc/nginx/nginx.conf
@@ -767,7 +746,7 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo nginx -t
   > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
   > nginx: configuration file /etc/nginx/nginx.conf test is successful
-  $ sudo systemctl restart nginx
+  $ sudo systemctl reload nginx
   ```
 
 * Delete the uwsgi log file
@@ -776,7 +755,7 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo rm /var/log/uwsgi/lndg.log
   ```
 
-* Delete the “lndg” user. Do not worry about the userdel: mempool mail spool (/var/mail/lndg) not found.
+* Delete the “lndg” user. Do not worry about the `userdel: mempool mail spool (/var/mail/lndg) not found`.
  
   ```sh
   $ sudo su -
