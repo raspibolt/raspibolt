@@ -50,7 +50,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ gpg --verify manifest-roasbeef-v0.15.3-beta.sig manifest-v0.15.3-beta.txt
-  > gpg: Signature made Sun Oct  9 20:36:23 2022 PDT
+  > gpg: Signature made Mon Oct 17 23:18:02 2022 BST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [ultimate]
   > [...]
