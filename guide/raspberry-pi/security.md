@@ -127,7 +127,7 @@ We'll open the port for Electrs and web applications later if needed.
   $ sudo apt install ufw
   $ sudo ufw default deny incoming
   $ sudo ufw default allow outgoing
-  $ sudo ufw allow SSH
+  $ sudo ufw allow ssh
   $ sudo ufw logging off
   $ sudo ufw enable
   ```
