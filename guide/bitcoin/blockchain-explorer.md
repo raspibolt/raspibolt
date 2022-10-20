@@ -99,7 +99,7 @@ Now we can add the BTC RPC Explorer configuration.
 * Configure the firewall to allow incoming HTTPS requests
 
   ```sh
-  $ sudo ufw allow 4000 comment 'allow BTC RPC Explorer SSL'
+  $ sudo ufw allow 4000/tcp comment 'allow BTC RPC Explorer SSL'
   $ sudo ufw status
   ```
 
@@ -151,12 +151,6 @@ found 12 vulnerabilities (8 moderate, 4 high)
   ```sh
   $ cp .env-sample .env
   $ nano .env
-  ```
-
-* If you don't use Nginx reverse proxy configuration to receive and send the request to the browser, you will need to open BTC RPC Explorer to connect from the local network
-
-  ```sh
-  BTCEXP_HOST=0.0.0.0
   ```
 
 * Instruct BTC RPC Explorer to connect to local Bitcoin Core
