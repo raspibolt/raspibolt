@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[Tunnel⚡️Sats](https://github.com/blckbx/tunnelsats){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch.
+[Tunnel⚡️Sats](https://tunnelsats.com){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch. Alternatively an automated setup script can be found at the official Tunnel⚡️Sats [guide](https://blckbx.github.io/tunnelsats/){:target="_blank"}.
 
 Difficulty: Advanced
 {: .label .label-red }
@@ -20,7 +20,7 @@ Difficulty: Advanced
 Status: Tested v3
 {: .label .label-green }
 
-![tunnelsats](../../../images/tunnelsats.png)
+![TunnelSats](../../../images/tunnelsats.png)
 
 ---
 
@@ -41,9 +41,15 @@ Table of contents
 
 ---
 
+## Technical Overview
+
 ## Installation
 
-### Check Node.js
+## Configuration
+
+## Test & Verification
+
+## Activation
 
 
 
