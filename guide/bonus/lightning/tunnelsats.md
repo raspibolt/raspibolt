@@ -301,8 +301,34 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   ExecStart=/usr/bin/cgexec -g net_cls:splitted_processes /usr/local/bin/lnd
   ```
 
+- Save and exit. Reload the daemon:
+
+  ```sh
+  $ sudo systemctl daemon-reload
+  ```
   
+- Alright. We set the lightning process to start within the cgroup to enable traffic splitting. The following part enables and starts the wireguard service:
+
+  ```sh
+  $ sudo systemctl enable wg-quick@tunnelsatsv2
+  $ sudo systemctl start wg-quick@tunnelsatsv2
+  ```
   
+- If the wireguard connection has successfully been established. We now verify if it's working as intended. Therefore we call our own IP through the tunnel and outside:
+
+  ```sh
+  $ curl --silent https://api.ipify.org
+  ```
+  
+- This should return the real clearnet IP.
+
+  ```sh
+  $ cgexec -g net_cls:splitted_processes curl --silent https://api.ipify.org
+  ```
+  
+- And this should return the VPN IP. If it does, everything is set up correctly and we can proceed with the configuration of our lightning implementation.
+
+ 
 
 
 ## Configuration
