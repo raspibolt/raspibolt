@@ -56,7 +56,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 
 ## Installation
 
-⚠️ This guide can be applied to both LND and CLN implementation! Although most commands refer to LND commands, they can be exchanged for CLN likewise. When intending to run CLN, make sure to only run CLN (only one implementation at a time is supported) AND set CLN to port 9735!
+⚠️ This guide can be applied to both LND and CLN implementations! Although most commands refer to LND commands, they can be exchanged for CLN likewise. When intending to run CLN, make sure to only run CLN (only one implementation at a time is supported) AND set CLN to port 9735!
 
 - In this step we prepare the wireguard configuration file that we got from tunnelsats.com website and install requirements for the setup. We need to have `sudo` rights throughout the whole process, so we will do this as user `admin`:
 
@@ -535,3 +535,6 @@ Please review the [FAQ](https://github.com/blckbx/tunnelsats/blob/main/FAQ.md){:
 ---
 
 << Back: [+ Lightning](index.md)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTIwMTM0ODE1NjhdfQ==
+-->
