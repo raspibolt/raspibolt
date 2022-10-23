@@ -229,7 +229,7 @@ JoinMarket uses its own wallet. You can create one with or without a "two-factor
   >       < 12 word recovery mnemonic >
   ```
 
-Write down the words and save them; they will allow to recover wallet later on different machine in case of hardware failure or other problem. As with any other mnemonic recovery phrase, keep it secure and secret.
+Write down the words and save them; they will allow wallet recovery on a different machine in case of hardware failure or other problem. As with any other mnemonic recovery phrase, keep it secure and secret.
 
 ### View the JoinMarket wallet
 
