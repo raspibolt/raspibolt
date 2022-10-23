@@ -20,7 +20,7 @@ Difficulty: Advanced
 Status: Tested v3
 {: .label .label-green }
 
-![tunnelsats](../../../images/tunnelsats_banner_640_320.png)
+![tunnelsats](../../../images/tunnelsats.png)
 
 ---
 
