@@ -201,6 +201,8 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 
 JoinMarket uses its own wallet. You can create one with or without a "two-factor mnemonic recovery phrase", which refers to a BIP39 passphrase. This is not required and adds complexity, though it may be desired for various security or backup reasons. A good article on the BIP39 passphrase can be found [here](https://www.blockplate.com/blogs/blockplate/what-is-a-bip39-passphrase).
 
+* Generate a new JoinMarket wallet:
+ 
   ```sh
   (jvmenv) $ ./wallet-tool.py generate
   ```
