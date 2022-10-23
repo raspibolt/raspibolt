@@ -34,7 +34,7 @@ Table of contents
 
 ## Requirements
 
-* LND / CLN
+* LND / CLN latest
 * OS: Debian-/Ubuntu-based (`apt` required)
 * Linux kernel version: 5.10.102+ (`uname -r`)
 * nftables version: 0.9.6+ (`nft -v` or `apt search nftables | grep "^nftables"`)
@@ -62,6 +62,9 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 
 ## Activation
 
+## Uninstallation
+
+## Troubleshooting
 
 
 <br /><br />
