@@ -56,6 +56,8 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 
 ## Installation
 
+⚠️ This guide can be applied to both LND and CLN implementation! Although most commands refer to LND commands, they can be exchanged for CLN likewise. When intending to run CLN, make sure to only run CLN (only one implementation at a time is supported) AND set CLN to port 9735!
+
 - In this step we prepare the wireguard configuration file that we got from tunnelsats.com website and install requirements for the setup. We need to have `sudo` rights throughout the whole process, so we will do this as user `admin`:
 
   ```sh
@@ -427,8 +429,101 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 
 ## Uninstallation
 
+Easy way: 
+
+  ```sh
+  $ wget -O uninstallv2.sh https://github.com/blckbx/tunnelsats/raw/main/scripts/uninstallv2.sh
+  $ sudo bash uninstallv2.sh
+  ```
+  
+Manual way: 
 - Restore your configuration from with the backup file (`lnd.backup`) you created on setting up hybrid mode.
-- ...
+
+  ```sh
+  $ sudo mv /data/lnd/lnd.backup /data/lnd/lnd.conf
+  ```
+
+- Stop lightning implementation:
+
+  ```sh
+  $ sudo systemctl stop lnd.service
+  ```
+  
+- Remove systemd dependencies and services:
+
+  ```sh
+  $ sudo rm /etc/systemd/system/lnd.service.d/tunnelsats-cgroup.conf
+  
+  $ sudo systemctl stop tunnelsats-splitting-processes.timer
+  $ sudo systemctl disable tunnelsats-splitting-processes.timer
+  $ sudo rm /etc/systemd/system/tunnelsats-splitting-processes.timer
+  
+  $ sudo systemctl stop tunnelsats-splitting-processes.service
+  $ sudo systemctl disable tunnelsats-splitting-processes.service
+  $ sudo rm /etc/systemd/system/tunnelsats-splitting-processes.service
+  
+  $ sudo systemctl stop tunnelsats-create-cgroup.service
+  $ sudo systemctl disable tunnelsats-create-cgroup.service
+  $ sudo rm /etc/systemd/system/tunnelsats-create-cgroup.service
+  ```
+  
+- Restore `lnd.service`:
+
+  ```sh
+  $ sudo nano /etc/systemd/system/lnd.service
+  ```
+  
+  Replace
+  ```ini
+  ExecStart=/usr/bin/cgexec -g net_cls:splitted_processes /usr/local/bin/lnd
+  ```
+  with
+  ```ini
+  ExecStart=/usr/local/bin/lnd
+  ```
+  
+- Reload daemon:
+
+  ```sh
+  $ sudo systemctl daemon-reload
+  ```
+
+- Remove cgroup details:
+
+  ```sh
+  $ sudo cgdelete net_cls:/splitted_processes
+  ```
+
+- Remove Wireguard service:
+
+  ```sh
+  $ sudo systemctl stop wg-quick@tunnelsatsv2
+  $ sudo systemctl disable wg-quick@tunnelsatsv2
+  ```
+  
+- Uninstall packages:
+
+  ```sh
+  $ sudo apt-get remove -yqq cgroup-tools nftables wireguard-tools
+  ```
+  
+- ⚠️ Before firing up the lightning implementation again, make sure that we don't leak the real IP, so any hybrid setting should either be set to false or not present anymore. So we look for:
+
+  LND:
+  ```ini
+  tor.skip-proxy-for-clearnet-targets=false
+  ```
+  
+  CLN:
+  ```ini
+  always-use-proxy=true
+  ```
+  
+  Then restart:
+  ```sh
+  $ sudo systemctl start lnd.service
+  ```
+  
 
 ## Troubleshooting
 
