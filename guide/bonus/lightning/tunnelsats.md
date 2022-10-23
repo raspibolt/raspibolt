@@ -327,17 +327,108 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   ```
   
 - And this should return the VPN IP. If it does, everything is set up correctly and we can proceed with the configuration of our lightning implementation.
-
- 
-
+- ⚠️ Notice: To this step nothing has changed on your RaspiBolt setup. Lightning is still running in background, no changes have been made. You can revert these steps without restarting the lightning implementation.
 
 ## Configuration
 
+ **Important notice: Tunnel⚡️Sats currently supports only one running lightning implementation at a time. The running lightning implementation HAS to use lightning P2P port 9735!**
+  
+- After successful installation, we continue to configure the current lightning implementation. But before any changes happen, we create a backup:
+
+  ```sh
+  $ sudo cp /data/lnd/lnd.conf /data/lnd/lnd.backup
+  ```
+
+- Then we need to gather information from the tunnelsatsv2.conf file manually:
+  - Retrieve the DNS address of the VPN. We gonna call it `vpnExternalDNS`:
+
+    ``` sh
+    $ sudo grep "Endpoint" /etc/wireguard/tunnelsatsv2.conf | awk '{ print $3 }' | cut -d ":" -f1
+    ```
+  
+  - Retrieve the personal VPN port as `vpnExternalPort`:
+
+    ```sh
+    $ sudo grep "#VPNPort" /etc/wireguard/tunnelsatsv2.conf | awk '{ print $3 }'
+    ```
+  
+- This is what we need to edit the lightning implementation plus some additional hybrid parameters described in the following part:
+
+  Configuration for LND (`/data/lnd/lnd.conf`):
+  
+  ⚠️ Replace existing entry `listen=localhost` with `listen=0.0.0.0:9735`!
+  
+  ```ini
+  [Application Options]
+  externalhosts=${vpnExternalDNS}:${vpnExternalPort}
+  listen=0.0.0.0:9735
+                                               
+  [Tor]                                            
+  tor.streamisolation=false
+  tor.skip-proxy-for-clearnet-targets=true
+  ```
+  
+  Configuration for CLN (`/data/lightningd/config`):
+  ```ini
+  # Tor
+  addr=statictor:127.0.0.1:9051/torport=9735
+  proxy=127.0.0.1:9050
+  always-use-proxy=false
+  
+  # VPN
+  bind-addr=0.0.0.0:9735
+  announce-addr=${vpnExternalDNS}:${vpnExternalPort}
+  ```
+
+- Afterwards restart LND / CLN for these changes to take effect:
+
+  ```sh
+  $ sudo systemctl restart lnd.service
+  ```
+
 ## Test & Verification
 
-## Activation
+- If everything went well so far and the lightning implementation started up successfully, we verify that the changes have been accepted:
+
+  ```sh
+  $ lncli getinfo
+  ```
+
+- The output shows two URIs. One Tor onion address and the VPN ipv4 address that has been resolved by LND at startup. CLN keeps displaying the DNS as entered in the config file.
+
+  ```
+  "uris": [
+    "{pubkey}@{onion-address}.onion:9735",
+    "{pubkey}@{vpnExternalIP}:{vpnExternalPort}"
+  }
+  ```
+
+- The VPN connection can be verified by running:
+
+  ```sh
+  $ sudo wg show
+  ```
+  
+- The output: 
+
+  ```ini
+  interface: tunnelsatsv2
+  public key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
+  private key: (hidden)
+  listening port: 11111
+  fwmark: 0x3333
+
+  peer: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
+  endpoint: {VPNIP}:51820
+  allowed ips: 0.0.0.0/0
+  latest handshake: 9 seconds ago
+  transfer: x.x MiB received, x.x MiB sent
+  ```
 
 ## Uninstallation
+
+- Restore your configuration from with the backup file (`lnd.backup`) you created on setting up hybrid mode.
+- ...
 
 ## Troubleshooting
 
