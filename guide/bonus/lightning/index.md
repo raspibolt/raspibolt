@@ -59,6 +59,11 @@ has_toc: false
 
 ---
 
+## Hybrid Mode - Clearnet over VPN
+* **[Tunnel⚡️Sats](tunnelsats.md)** - enable hybrid mode: Tor and clearnet over VPN (**paid service**)
+
+---
+
 ## Even more Extras 
 
 ### [RaspiBolt Extras by Rob Clark](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md){:target="_blank"}
