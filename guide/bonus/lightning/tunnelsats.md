@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[Tunnel⚡️Sats](https://tunnelsats.com){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch. Alternatively an automated setup script can be found at the official Tunnel⚡️Sats [guide](https://blckbx.github.io/tunnelsats/){:target="_blank"}.
+[Tunnel⚡️Sats](https://tunnelsats.com){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch. Alternatively an automated setup script can be found at the official [Tunnel⚡️Sats guide](https://blckbx.github.io/tunnelsats/){:target="_blank"}.
 
 Difficulty: Advanced
 {: .label .label-red }
@@ -42,6 +42,17 @@ Table of contents
 ---
 
 ## Technical Overview
+
+In order to understand the whole process, this is a short technical overview of how the parts play together:
+
+  1. Get a WireGuard config file (`tunnelsatsv2.conf`) from tunnelsats.com by choosing continent and fixed timeframe and paying the LN invoice,
+
+  2. installing required software and components to make VPN connection and Tor splitting work and
+
+  3. setting up the node for hybrid mode by editing the lightning configuration file as described below.
+
+This RaspiBolt bonus guide explicitly covers parts #2 and #3.
+
 
 ## Installation
 
