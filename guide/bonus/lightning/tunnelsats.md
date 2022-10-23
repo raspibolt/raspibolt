@@ -333,7 +333,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 
 ## Configuration
 
- **Important notice: Tunnel⚡️Sats currently supports only one running lightning implementation at a time. The running lightning implementation HAS to use lightning P2P port 9735!**
+ **Important notice: Tunnel⚡️Sats currently supports only one running lightning implementation at a time. The running lightning implementation MUST use lightning P2P port 9735!**
   
 - After successful installation, we continue to configure the current lightning implementation. But before any changes happen, we create a backup:
 
@@ -526,6 +526,8 @@ Manual way:
   
 
 ## Troubleshooting
+
+Please review the [FAQ](https://github.com/blckbx/tunnelsats/blob/main/FAQ.md){:target="_blank"} for further help. If you need help setting up hybrid mode / clearnet over VPN, join the Tunnel⚡️Sats [Telegram group](https://t.me/+NJylaUom-rxjYjU6){:target="_blank"}.
 
 
 <br /><br />
