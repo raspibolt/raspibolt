@@ -82,7 +82,7 @@ If you plan to use Electrum from only within your own secured local area network
   * After using this command for the first run, close Electrum, and open the Electrum config file with the following customized command:
 
   ```sh
-  nano /Users/<YOUR_PERSONAL_COMPUTER_USERNAME>/.electrum config
+  nano /Users/<YOUR_PERSONAL_COMPUTER_USERNAME>/.electrum/config
   ```
 
   * and modify the file to include the following lines:
@@ -93,7 +93,7 @@ If you plan to use Electrum from only within your own secured local area network
   "server": "raspibolt.local:50002:s",
   ```
 
-After creating opening a wallet or creating a new one, Electrum will indicate an active connection to a local server with a green dot in the bottom right corner of the screen.
+After opening a wallet or creating a new one, Electrum will indicate an active connection to a local server with a green dot in the bottom right corner of the screen.
 
 ![Electrum Wallet local](../../../images/electrum-wallet-local.PNG)
 
@@ -171,7 +171,7 @@ Now, execute Electrum Wallet choosing the correct way depending on your OS
   /Applications/Electrum.app/Contents/MacOS/run_electrum -1 -s ab...yz.onion:50002:s -p socks5:localhost:9050
   ```
 
-After creating opening a wallet or creating a new one, Electrum will indicate an active connection to a Tor server with a blue dot in the bottom right corner of the screen.
+After opening a wallet or creating a new one, Electrum will indicate an active connection to a Tor server with a blue dot in the bottom right corner of the screen.
 
 ![Electrum Wallet Tor](../../../images/electrum-wallet-tor.PNG)
 
