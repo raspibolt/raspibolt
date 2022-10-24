@@ -47,7 +47,7 @@ On your local computer, download, verify and install Electrum Wallet.
 
 ### Force single server Electrum connection to only your node
 
-To preserve privacy, we will constrain Electrum to only connect to a single server (RaspiBolt). How to do this depends on whether you are connecting via Local Area Network or via Tor and the operating system that you use on your regular computer.
+To preserve privacy, we will constrain Electrum to only connect to a single server (your RaspiBolt). How to do this depends on whether you are connecting via Local Area Network or via Tor and the operating system that you use on your regular computer.
 
 ### Local connection
 
@@ -63,11 +63,13 @@ If you plan to use Electrum from only within your own secured local area network
 
 * **Windows**
 
-  * Find the new Electrum desktop shortcut, right-click it and go to "Properties", click shortcut tab at the top bar, in the box named target, put "-1 -s raspibolt.local:50002:s" after "electrum.exe", apply, accept and execute by double-clicking on the new shortcut
+  * Find the new Electrum desktop shortcut, right-click it and go to "Properties", click shortcut tab at the top bar, in the box named target, put "-1 -s raspibolt.local:50002:s" after "electrum.exe" (replace raspibolt.local with your node IP if necessary)
 
   ```sh
-  C:\Program Files (x86)\Electrum\electrum.exe -1 -s raspibolt.local:50002:s
+  "C:\Program Files (x86)\Electrum\electrum.exe" -1 -s raspibolt.local:50002:s
   ```
+
+* Apply, accept and execute by double-clicking on the new shortcut.
 
 ![One server Windows local shortcut](../../../images/electrum-win-shortcut-local.PNG)
 
@@ -79,7 +81,7 @@ If you plan to use Electrum from only within your own secured local area network
   /Applications/Electrum.app/Contents/MacOS/run_electrum -1 -s raspibolt.local:50002:s
   ```
 
-  * After using this command for the first run, close Electrum, and open the Electrum config file with the following customized command:
+* After using this command for the first run, close Electrum, and open the Electrum config file with the following customized command:
 
   ```sh
   nano /Users/<YOUR_PERSONAL_COMPUTER_USERNAME>/.electrum/config
@@ -99,7 +101,8 @@ After opening a wallet or creating a new one, Electrum will indicate an active c
 
 ### Remote connection over Tor
 
-To connect over Tor, you will need to have Tor installed on the client computer running Electrum. 
+To connect over Tor, you will need to have Tor installed on the client computer running Electrum.
+
 By OS:
 
 * **Windows**: download, install and run [Tor Browser](https://www.torproject.org){:target="_blank"}
@@ -142,7 +145,7 @@ First, get the onion address of your Electrum server directly on the RaspiBolt, 
   > ab...yz.onion.onion
   ```
 
-Now, execute Electrum Wallet choosing the correct way depending on your OS
+Now, execute Electrum Wallet choosing the correct way depending on your OS (replace "9050" by "9150" if you choose to run the Tor Browser)
 
 * **Linux**
 
@@ -175,7 +178,7 @@ After opening a wallet or creating a new one, Electrum will indicate an active c
 
 ![Electrum Wallet Tor](../../../images/electrum-wallet-tor.PNG)
 
-🚨 Ensure you have put check `"Use Tor proxy at port 9050"` or `"Use Tor proxy at port 9150"` in `"Proxy"` settings tab
+🚨 Try to put check `"Use Tor proxy at port 9050"` or `"Use Tor proxy at port 9150"` in `"Proxy"` settings tab if not connected for you
 
 ![Electrum Wallet tor check](../../../images/electrum-wallet-tor-check.PNG)
 
