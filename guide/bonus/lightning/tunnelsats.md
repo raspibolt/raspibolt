@@ -136,21 +136,21 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   ```bash
   #!/bin/sh
   set -e
-  dir_netcls=\"/sys/fs/cgroup/net_cls\"
-  splitted_processes=\"/sys/fs/cgroup/net_cls/splitted_processes\"
+  dir_netcls="/sys/fs/cgroup/net_cls"
+  splitted_processes="/sys/fs/cgroup/net_cls/splitted_processes"
   modprobe cls_cgroup
-  if [ ! -d \"\$dir_netcls\" ]; then
-    mkdir \$dir_netcls
-    mount -t cgroup -o net_cls none \$dir_netcls
-    echo \"> Successfully added cgroup net_cls subsystem\"
+  if [ ! -d "$dir_netcls" ]; then
+    mkdir $dir_netcls
+    mount -t cgroup -o net_cls none $dir_netcls
+    echo "> Successfully added cgroup net_cls subsystem"
   fi
-  if [ ! -d \"\$splitted_processes\" ]; then
+  if [ ! -d "$splitted_processes" ]; then
     mkdir /sys/fs/cgroup/net_cls/splitted_processes
     echo 1118498  > /sys/fs/cgroup/net_cls/splitted_processes/net_cls.classid
     chmod 666  /sys/fs/cgroup/net_cls/splitted_processes/tasks
-    echo \"> Successfully added Mark for net_cls subsystem\"
+    echo "> Successfully added Mark for net_cls subsystem"
   else
-    echo \"> Mark for net_cls subsystem already present\"
+    echo "> Mark for net_cls subsystem already present"
   fi
   ```
   
@@ -228,11 +228,11 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   # add Lightning pid(s) to cgroup
   pgrep -x lnd | xargs -I % sh -c 'echo % >> /sys/fs/cgroup/net_cls/splitted_processes/tasks' &> /dev/null
   pgrep -x lightningd | xargs -I % sh -c 'echo % >> /sys/fs/cgroup/net_cls/splitted_processes/tasks' &> /dev/null
-  count=\$(cat /sys/fs/cgroup/net_cls/splitted_processes/tasks | wc -l)
-  if [ \$count -eq 0 ];then
-    echo \"> no available lightning processes available for tunneling\"
+  count=$(cat /sys/fs/cgroup/net_cls/splitted_processes/tasks | wc -l)
+  if [ $count -eq 0 ];then
+    echo "> no lightning processes available for tunneling"
   else
-    echo \"> \${count} Process(es) successfully excluded\"
+    echo "> ${count} Process(es) successfully excluded"
   fi
   ```
 
