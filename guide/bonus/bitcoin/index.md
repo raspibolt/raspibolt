@@ -20,23 +20,22 @@ has_toc: false
 
 ## Desktop wallets
 
-* **[BitBoxApp](bitboxapp.md)** - a beginner-friendly desktop wallet that pionneered hardware wallets support 
-* **[Electrum](electrum.md)** - a feature-rich desktop wallet for power-users
+* **[BitBoxApp](bitboxapp.md)** - a beginner-friendly desktop wallet that pionneered hardware wallets support
+* **[Electrum Wallet Desktop](electrum-wallet-desktop.md)** - a feature-rich desktop wallet for power-users
 * **[Specter Desktop](specter-desktop.md)** - a convenient and user-friendly GUI around Bitcoin Core with a focus on multisignature setup with hardware wallets and airgapped devices
 
 ---
 
 ## Blockchain explorers
 
-* **[Mempool](mempool.md){:target="_blank"}** - a self-hosted Bitcoin blockchain and mempool visualizer/explorer to preserve your privacy when looking up your transactions or checking the mempool for fee estimation
+* **[Mempool](mempool.md)** - a self-hosted Bitcoin blockchain and mempool visualizer/explorer to preserve your privacy when looking up your transactions or checking the mempool for fee estimation
 
 ---
 
 ## Privacy
 
-* **[JoinMarket](joinmarket.md){:target="_blank"}** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
-
-* **[I2P](i2p.md){:target="_blank"}** - The Invisible Internet Protocol
+* **[JoinMarket](joinmarket.md)** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
+* **[I2P](i2p.md)** - The Invisible Internet Protocol
 
 ---
 
