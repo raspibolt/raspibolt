@@ -14,8 +14,8 @@ has_toc: false
 
 [Tunnel⚡️Sats](https://tunnelsats.com){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch. Alternatively an automated setup script can be found at the official [Tunnel⚡️Sats guide](https://blckbx.github.io/tunnelsats/){:target="_blank"}.
 
-Difficulty: Advanced
-{: .label .label-red }
+Difficulty: Intermediate
+{: .label .label-yellow }
 
 Status: Tested v3
 {: .label .label-green }
@@ -45,7 +45,7 @@ Table of contents
 
 In order to understand the whole process, this is a short technical overview of how the parts play together:
 
-  1. Get a WireGuard config file (`tunnelsatsv2.conf`) from tunnelsats.com by choosing continent and fixed timeframe and paying the LN invoice,
+  1. Get a WireGuard config file (`tunnelsatsv2.conf`) from [tunnelsats.com](https://tunnelsats.com){:target="_blank"} by choosing continent and fixed timeframe and paying the LN invoice,
 
   2. installing required software and components to make VPN connection and Tor splitting work and
 
@@ -56,9 +56,9 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 
 ## Installation
 
-⚠️ This guide can be applied to both LND and CLN implementations! Although most commands refer to LND commands, they can be exchanged for CLN likewise. When intending to run CLN, make sure to only run CLN (only one implementation at a time is supported) AND set CLN to port 9735!
+⚠️ This guide can be applied to both LND and CLN implementations! Although most commands refer to LND commands, they can be exchanged for CLN likewise. If you are intending to run CLN, make sure to only run CLN (one implementation at a time is supported) AND set CLN's lightning port number to 9735!
 
-- In this step we prepare the wireguard configuration file that we got from tunnelsats.com website and install requirements for the setup. We need to have `sudo` rights throughout the whole process, so we will do this as user `admin`:
+- In this step we prepare the wireguard configuration file that we got from [tunnelsats.com](https://tunnelsats.com){:target="_blank"} website and install requirements for the setup. We need to have `sudo` rights throughout the whole process, so we will do this as user `admin`:
 
   ```sh
   $ sudo su - admin
