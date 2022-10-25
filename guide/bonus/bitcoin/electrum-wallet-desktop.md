@@ -176,7 +176,7 @@ Now, execute Electrum Wallet choosing the correct way depending on your OS (repl
 
 After opening a wallet or creating a new one, Electrum will indicate an active connection to a Tor server with a blue dot in the bottom right corner of the screen.
 
-![Electrum Wallet Tor](../../../images/electrum-wallet-tor.PNG)
+![Electrum Wallet Tor](../../../images/electrum-wallet-tor.png)
 
 🚨 Try to put check `"Use Tor proxy at port 9050"` or `"Use Tor proxy at port 9150"` in `"Proxy"` settings tab if not connected for you
 
