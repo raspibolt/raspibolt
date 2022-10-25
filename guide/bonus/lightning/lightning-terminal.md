@@ -50,7 +50,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 
 We will configure Lightning Terminal to use our own LND node. However, when installing Lightning Terminal, it replaces the existing `lncli` binary (the CLI tool that allows us to interact with our LND daemon) with its own version of the `lncli` binary. The Lightining Terminal `lncli` binary is generally an older version and therefore might not have all the functionalities of the `lncli` associated with the version of LND that you're running. 
 
-Just don't be surpised if you want to use a brand new `lncli` command and it does not seem to be recognized! :)
+Just don't be surprised if you want to use a brand new `lncli` command and it does not seem to be recognized! :)
 
 ### Firewall
 
