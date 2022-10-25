@@ -49,7 +49,7 @@ $ wget https://go.dev/dl/go1.19.2.linux-arm64.tar.gz
 ```
 
 * Check on the download page what is the SHA256 checksum of the file, e.g. for the above:
-acc512fbab4f716a8f97a8b3fbaa9ddd39606a28be6c2515ef7c6c6311acffde. Calculate the SHA256 hash of the downloaded file. It should be the same number as the one on the website
+b62a8d9654436c67c14a0c91e931d50440541f09eb991a987536cb982903126d. Calculate the SHA256 hash of the downloaded file. It should be the same number as the one on the website
 
 ```sh
 $ sha256sum go1.19.2.linux-arm64.tar.gz
