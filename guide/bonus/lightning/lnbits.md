@@ -42,6 +42,7 @@ Table of contents
 * Install necessary dependencies using the apt package manager.
 
   ```sh
+  $ sudo apt update
   $ sudo apt install libffi-dev libpq-dev python3-venv
   ```
 
@@ -341,6 +342,61 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
 
   ```sh
   $ sudo systemctl start lnbits
+  ```
+
+---
+
+## Uninstall
+
+🚨 Warning: Before uninstalling LNBits, you might want to empty all your LNBits wallets.
+
+* Stop and disable the systemd service and then delete the service file
+ 
+  ```sh
+  $ sudo systemctl disable lnbits.service
+  $ sudo systemctl stop lnbits.service
+  $ sudo rm /etc/systemd/system/lnbits.service
+  ```
+
+* Display the UFW firewall rules and notes the numbers of the rules for LNBits (e.g., X and Y below)
+
+  ```sh  
+  $ sudo ufw status numbered
+  > [...]
+  > [X] 4003                   ALLOW IN    Anywhere                   # allow LNBits SSL
+  > [...]
+  > [Y] 4003 (v6)              ALLOW IN    Anywhere (v6)              # allow LNBits SSL
+  ```
+
+* Delete the two LNBits rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
+
+  ```sh 
+  $ sudo ufw delete Y
+  $ sudo ufw delete X
+  ```
+
+* Delete the nginx reverse proxy configuration file
+
+  ```sh 
+  $ sudo rm /etc/nginx/streams-enabled/lnbits-reverse-proxy.conf
+  ```
+
+* Test and reload nginx configuration
+
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  $ sudo systemctl reload nginx
+  ```
+
+* Delete the "lnbits" user. Do not worry about the `userdel: mempool mail spool (/var/mail/mempool) not found`.
+
+  ```sh
+  $ sudo su -
+  $ userdel -r lnbits
+  > userdel: lnbits mail spool (/var/mail/lnbits) not found
+  $ exit
   ```
 
 <br /><br />
