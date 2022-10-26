@@ -153,7 +153,7 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * Save the file and exit nano, then make the file executable.
 
   ```sh
-  $ sudo chmod +x activate.sh
+  $ chmod +x activate.sh
   ```
 
 * Activate jmvenv and run wallet-tool.py to create the configuration file.
