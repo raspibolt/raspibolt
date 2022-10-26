@@ -120,7 +120,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   ```sh
   $ ROCKSDB_INCLUDE_DIR=/usr/include ROCKSDB_LIB_DIR=/usr/lib CARGO_NET_GIT_FETCH_WITH_CLI=true cargo build --locked --release
-  $ sudo cp ./target/release/electrs /usr/local/bin/
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
   ```
 
 ### Configuration
