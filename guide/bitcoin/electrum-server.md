@@ -287,6 +287,7 @@ Note that the remote device needs to have Tor installed as well.
   ```
 
   ```sh
+  ############### This section is just for location-hidden services ###
   # Hidden Service Electrs SSL
   HiddenServiceDir /var/lib/tor/hidden_service_electrs/
   HiddenServiceVersion 3
