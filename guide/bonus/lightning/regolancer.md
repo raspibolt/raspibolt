@@ -106,20 +106,14 @@ b62a8d9654436c67c14a0c91e931d50440541f09eb991a987536cb982903126d. Calculate the 
 
   $ ln -s /data/lnd /home/regolancer/.lnd
 
-  $ go install github.com/rkfg/regolancer@v.1.5.1
+  $ go install github.com/rkfg/regolancer@v1.5.2
   ```
 Note: Adjust the "regolancer@v1.5.1" part from the commands below to the actual version you have installed.
-
-* Adjust the folder permissions for the user
-
-  ```sh
-  $ chmod 755 /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.5.1/
-  ```
 
 * Create a working copy of the sample config file. You can use either .json or .toml configs, up to your preference.  
 
   ```sh
-  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.5.1/config.json.sample /home/regolancer/config.json
+  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.5.2/config.json.sample /home/regolancer/config.json
   ```
 
 * Make the newly created config.json file writable.
@@ -139,7 +133,7 @@ Note: Adjust the "regolancer@v1.5.1" part from the commands below to the actual 
   ```
 
   ```ini
-      "macaroon_dir": "/home/regolancer/.lnd/data/chain/bitcoin/mainnet/",
+    "macaroon_dir": "/home/regolancer/.lnd/data/chain/bitcoin/mainnet/",
 	  "macaroon_filename": "admin.macaroon",
  	  "network": "mainnet",
  	  "tlscert": "/home/regolancer/.lnd/tls.cert",
