@@ -107,7 +107,7 @@ You should see something like this in terminal.
 
 ## Schedule the ping
 
-* From user “admin”, open a “ambossping” user session and open the crontab to create a new job.
+* While in an “ambossping” user session and open the crontab to create a new job.
 
   ```sh
   $ crontab -e
@@ -150,5 +150,7 @@ You should see something like this in terminal.
 * If you want to remove the ambossping and stop reporting health status with this script, delete the “ambossping” user with the “root” user.
 
   ```sh
+  $ sudo su - root
+
   $ userdel -r ambossping
   ```
