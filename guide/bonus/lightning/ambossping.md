@@ -134,7 +134,16 @@ You should see something like this in terminal.
 
 ## Error logs
 
-* Ths script has an error reporting capability that will allow you to troubleshoot better if there are issues reported by amboss. Here we use the curl exit statuses registered after the execution. The most common that can be observed are:
+* Ths script has an error reporting capability that will allow you to troubleshoot better if there are issues reported by the amboss health check.
+
+You can check for errors in the log file with:
+
+  ```sh
+  $ cat ping.log | grep  Error
+  ```
+
+  This will show you a list with all collected errors along with the respective time stamp. 
+  Here we use the curl exit statuses registered after the execution. The most common that can be observed are:
 
   - **Error: 6** - Couldn't resolve host. The given remote host's address was not resolved.
   - **Error: 22** - HTTP page not retrieved.
