@@ -116,7 +116,7 @@ Note: Adjust the "regolancer@v1.5.1" part from the commands below to the actual 
   $ chmod 755 /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.5.1/
   ```
 
-* Create a working copy of the sample config file
+* Create a working copy of the sample config file. You can use either .json or .toml configs, up to your preference.  
 
   ```sh
   $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.5.1/config.json.sample /home/regolancer/config.json
