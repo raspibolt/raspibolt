@@ -28,7 +28,7 @@ has_toc: false
 ---
 
 ## Monitoring
-* **[AmbossPing](ambossping.md)** - easy to use script to sent heartbeat pings to the amboss.space monitoring service
+* **[AmbossPing](ambossping.md)** - easy to use script to send heartbeat pings to the amboss.space monitoring service
 
 ---
 
