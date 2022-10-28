@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![regolancer](https://github.com/rkfg/regolancer/blob/master/screenshot.png)
+![regolancer](../../../images/regolancer.png)
 
 ---
 
@@ -134,10 +134,10 @@ Note: Adjust the "regolancer@v1.5.1" part from the commands below to the actual 
   ```
 
   ```ini
-    "macaroon_dir": "/home/regolancer/.lnd/data/chain/bitcoin/mainnet/",
-	  "macaroon_filename": "admin.macaroon",
- 	  "network": "mainnet",
- 	  "tlscert": "/home/regolancer/.lnd/tls.cert",
+  "macaroon_dir": "/home/regolancer/.lnd/data/chain/bitcoin/mainnet/",
+  "macaroon_filename": "admin.macaroon",
+  "network": "mainnet",
+  "tlscert": "/home/regolancer/.lnd/tls.cert",
   ```
 
 Adjust the rest of the file as you wish with the options [regolancer config sample](https://github.com/rkfg/regolancer/blob/master/config.json.sample){:target="_blank"} provides, save, and exit.
