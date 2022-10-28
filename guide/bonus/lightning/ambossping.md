@@ -71,7 +71,7 @@ Table of contents
   echo "Timestamp: ${NOW}"
   SIGNATURE=$(/usr/local/bin/lncli signmessage "$NOW" | jq -r .signature)
   echo "Signature: ${SIGNATURE}"
-  JSON="{\"query\": \"mutation HealthCheck(\$signature: String!, \$timestamp: String!) { healthCheck(signature: \$signature, timestamp: \$timestamp) }\", \"variables\": {\"signature\": \"$SIGNATURE\", \"ti>
+  JSON="{\"query\": \"mutation HealthCheck(\$signature: String!, \$timestamp: String!) { healthCheck(signature: \$signature, timestamp: \$timestamp) }\", \"variables\": {\"signature\": \"$SIGNATURE\", \"timestamp\": \"$NOW\"}}"
   echo "Sending ping..."
   echo "$JSON" | curl -s -f --data-binary @- -H "Content-Type: application/json" -X POST --output /dev/null $URL
   exitstatus=$?
@@ -143,6 +143,7 @@ You can check for errors in the log file with:
   ```
 
   This will show you a list with all collected errors along with the respective time stamp. 
+  
   Here we use the curl exit statuses registered after the execution. The most common that can be observed are:
 
   - **Error: 6** - Couldn't resolve host. The given remote host's address was not resolved.
