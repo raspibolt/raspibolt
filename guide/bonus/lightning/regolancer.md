@@ -20,6 +20,8 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
+![regolancer](https://github.com/rkfg/regolancer/blob/master/screenshot.png)
+
 ---
 
 Table of contents
@@ -28,7 +30,6 @@ Table of contents
 1. TOC
 {:toc}
 
-![regolancer](https://github.com/rkfg/regolancer/blob/master/screenshot.png)
 
 ---
 
