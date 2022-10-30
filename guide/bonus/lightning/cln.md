@@ -22,7 +22,7 @@ Difficulty: Medium
 Status: Tested v3
 {: .label .label-green }
 
-![Core Lightning](../../../images/core-lightning.png)
+![Core Lightning](../../../images/core_lightning.png)
 
 ---
 
@@ -370,6 +370,154 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ sudo systemctl daemon-reload
   $ sudo systemctl start lightningd.service
   ```
+
+## c-lightning-Rest & RTL
+
+c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST). In this chapter we are going to add c-lightning-Rest as CLN plugin and furthermore connect RTL for CLN node management. The installation of RTL is already described [here](../../lightning/web-app.md), so we are focusing on its configuration.
+
+### c-lightning-Rest plugin
+
+* Setting up c-lightning-Rest as plugin for CLN. First we download and verify the c-lightning-Rest package:
+
+  ```sh
+  $ sudo su - lightningd
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.9.0.tar.gz
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.9.0/v0.9.0.tar.gz.asc
+  ```
+
+* Get the author's key and verify the release:
+
+  ```sh
+  $ curl https://keybase.io/suheb/pgp_keys.asc | gpg --import
+  $ gpg --verify v0.9.0.tar.gz.asc v0.9.0.tar.gz
+  ```
+  
+* Output should be like:
+
+  ```
+  gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
+  gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
+  gpg:                 aka "Suheb (approves) <39208279+saubyk@users.noreply.github.com>" [unknown]
+  gpg:                 aka "Suheb <39208279+saubyk@users.noreply.github.com>" [unknown]
+  gpg: WARNING: This key is not certified with a trusted signature!
+  gpg:          There is no indication that the signature belongs to the owner.
+  Primary key fingerprint: 3E9B D443 6C28 8039 CA82  7A92 00C9 E2BC 2E45 666F
+  ```
+  
+* Extract and install with `npm`:
+
+  ```sh
+  $ tar xvf v0.9.0.tar.gz 
+  $ cd c-lightning-REST-0.9.0
+  $ npm install
+  ```
+  
+* Copy content to plugin datadir:
+
+  ```sh
+  $ cp -r ~/c-lightning-REST-0.9.0/ /data/lightningd-plugins-available/
+  ```
+
+* Setup c-lightning-Rest as plugin:
+
+  ```sh
+  $ nano /data/lightningd/config
+  ```
+  
+* Add at the end of the file:
+
+  ```ini
+  # cln-rest-plugin
+  plugin=/data/lightningd-plugins-available/c-lightning-REST-0.9.0/plugin.js
+  rest-port=3092
+  rest-docport=4091
+  rest-protocol=http
+  ```
+  
+* Add a sample config file and run the plugin once manually to create required `access.macaroon`
+  
+  ```sh
+  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.9.0
+  $ cp sample-cl-rest-config.json cl-rest-config.json
+  $ node cl-rest.js
+  ```
+  
+* Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.9.0/` called `certs` which contains the required `access.macaroon` for the next steps. Stop `cl-rest.js` by hitting CTRL+C.
+  
+* Go back to the "admin" user:
+
+  ```sh
+  $ exit
+  ``` 
+
+* Copy `access.macaroon` to home directory of user `rtl`:  
+  
+  ```sh
+  $ sudo cp /data/lightningd-plugins-available/c-lightning-REST-0.9.0/certs/access.macaroon /home/rtl/
+  $ sudo chown rtl:rtl /home/rtl/access.macaroon
+  ```
+  
+* Restart `lightningd.service` and look for errors in cln's log: `tail -f /data/lightningd/cln.log`. Positive results look like this:
+
+  ```
+  UNUSUAL plugin-plugin.js: --- Starting the cl-rest server ---
+  UNUSUAL plugin-plugin.js: --- cl-rest api server is ready and listening on port: 3092 ---
+  UNUSUAL plugin-plugin.js: --- cl-rest doc server is ready and listening on port: 4091 ---
+  ```
+
+### Configuring RTL
+
+* By the following configuration we tell RTL to connect to our CLN node. Change to user `rtl`:
+
+  ```sh
+  $ sudo su - rtl
+  $ nano /home/rtl/RTL/RTL-Config.json
+  ```
+
+* Edit or add the following content. Adjust `multiPass` to your desired login password, if not already set.
+
+  ```ini
+  {
+    "multiPass": "<yourfancypassword>",
+    "port": "3000",
+    "SSO": {
+      "rtlSSO": 0,
+      "rtlCookiePath": "",
+      "logoutRedirectLink": ""
+    },
+    "nodes": [
+      {
+        "index": 1,
+        "lnNode": "CLN Node",
+        "lnImplementation": "CLN",
+        "Authentication": {
+          "macaroonPath": "/home/rtl",
+          "configPath": "/data/lightningd/config"
+        },
+        "Settings": {
+          "userPersona": "OPERATOR",
+          "themeMode": "DAY",
+          "themeColor": "INDIGO",
+          "fiatConversion": true,
+          "currencyUnit": "EUR",
+          "logLevel": "ERROR",
+          "lnServerUrl": "http://127.0.0.1:3092",
+          "enableOffers": true
+        }
+      }
+    ],
+    "defaultNodeIndex": 1
+  }
+  ```
+
+* As user admin, startup RTL and connect via browser: 
+
+  ```sh
+  $ exit
+  $ sudo systemctl start rtl
+  ```
+* Access RTL via your local IP: `https://<your-local-ip>:4001`
+
 
 <br /><br />
 
