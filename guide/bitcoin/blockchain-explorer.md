@@ -291,6 +291,7 @@ You can easily do so by adding a Tor hidden service on the RaspiBolt and accessi
 
   ```sh
   ############### This section is just for location-hidden services ###
+  # Hidden Service BTC RPC Explorer
   HiddenServiceDir /var/lib/tor/hidden_service_btcrpcexplorer/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:3002
