@@ -115,7 +115,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ git verify-tag v0.11.2
   ```
 
-* Download user specific python packages and set path for `poetry`.
+* Download user specific python packages.
 
   ```sh
   $ pip3 install --user mrkd==0.2.0
