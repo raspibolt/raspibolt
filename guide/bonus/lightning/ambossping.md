@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-AmbossPing is a simple bash script that sends node health check pings to amboss.space. You don't need to have Thunderhub installed.
+AmbossPing is a simple bash script that sends node health check pings to amboss.space. Additionally, if you have your telegram account linked to your profile in amboss.space, you will receive notifications every time the health check status of your node has been changed. For all of that, you don't need to have Thunderhub installed.
 The script is based on Carsten Otto's [bash](https://gist.github.com/C-Otto/cd5d7b0e67fc2e3e212cf13a558b101f) with added reporting for better troubleshooting of the reported statuses if needed.
 
 Difficulty: Easy
