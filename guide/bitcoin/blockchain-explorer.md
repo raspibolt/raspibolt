@@ -175,8 +175,6 @@ found 12 vulnerabilities (8 moderate, 4 high)
   BTCEXP_ELECTRUM_SERVERS=tcp://127.0.0.1:50001
   ```
 
-#### Optional
-
 * You can decide whether you want to optimize for more information or for more privacy.
 
   * More information mode, including Bitcoin exchange rates:
@@ -193,13 +191,7 @@ found 12 vulnerabilities (8 moderate, 4 high)
     BTCEXP_NO_RATES=true
     ```
 
-* You may want to share your onion address with people safe with your BTC RPC Explorer with limited Bitcoin Core RPC access requests (sensitive data requests will be kept disabled), then you need to enable this. Remember to provide them with the password [D] if you add password protection in the next step.
-
-  ```sh
-  BTCEXP_DEMO=true
-  ```
-
-* You can add password protection to the web interface.
+* Optionally, you can add password protection to the web interface.
   Simply add password [D] for the following option, for which the browser will then prompt you.
   You can enter any user name; only the password is checked.
 
@@ -267,10 +259,10 @@ In order to do that, we create a systemd unit that starts the service on boot di
   WorkingDirectory=/home/btcrpcexplorer/btc-rpc-explorer
   ExecStart=/usr/bin/npm start
   User=btcrpcexplorer
-
+  
   Restart=always
   RestartSec=30
-
+  
   [Install]
   WantedBy=multi-user.target
   ```
