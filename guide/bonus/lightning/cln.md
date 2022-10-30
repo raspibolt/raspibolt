@@ -489,7 +489,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
       {
         "index": 1,
         "lnNode": "CLN Node",
-        "lnImplementation": "CLT",
+        "lnImplementation": "CLN",
         "Authentication": {
           "macaroonPath": "/home/rtl",
           "configPath": "/data/lightningd/config"
