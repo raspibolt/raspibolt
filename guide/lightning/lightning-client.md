@@ -35,7 +35,7 @@ We'll download, verify and install LND.
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/lnd-linux-arm64-v0.15.3-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-v0.15.3-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-roasbeef-v0.15.3-beta.sig
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-roasbeef-v0.15.3-beta.sig.ots  
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-roasbeef-v0.15.3-beta.sig.ots  
   ```
 
 ### Checksum check
@@ -77,12 +77,12 @@ We can also check that the manifest file was in existence around the time of the
 * Let's verify that the timestamp of the file matches the release date.
 
   ```sh
-  $ ots verify manifest-roasbeef-v0.15.0-beta.sig.ots -f manifest-roasbeef-v0.15.0-beta.sig
+  $ ots verify manifest-roasbeef-v0.15.3-beta.sig.ots -f manifest-roasbeef-v0.15.3-beta.sig
   > [...]
-  > Success! Bitcoin block 742091 attests existence as of 2022-06-24 EEST
+  > Success! Bitcoin block 759141 attests existence as of 2022-10-17 BST
   ```
   
-* Check that the date of the timestamp (here 2022-08-31) is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary (2022-08-30).
+* Check that the date of the timestamp (here 2022-08-31) is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary (2022-10-17).
 
 ### Installation
 
