@@ -64,7 +64,7 @@ Table of contents
   $ nano /home/ambossping/ping.sh
   ```
 
-  ```ini
+  ```sh
   #!/bin/bash
   URL="https://api.amboss.space/graphql"
   NOW=$(date -u +%Y-%m-%dT%H:%M:%S%z)
