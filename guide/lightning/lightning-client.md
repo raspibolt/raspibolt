@@ -24,32 +24,18 @@ We set up [LND](https://github.com/lightningnetwork/lnd/blob/master/README.md){:
 
 The installation of LND is straight-forward, but the application is quite powerful and capable of things not explained here. Check out their [GitHub repository](https://github.com/lightningnetwork/lnd/){:target="_blank"} for a wealth of information about their open-source project and Lightning in general.
 
-We'll download, verify and install LND.
-
 ### Download
 
-* As user "admin", download the application and the checksums file (.txt) with its signature (.sig) and timestamp (.ots)
+We'll download, verify and install LND.
+
+* As user "admin", download the application, checksums and signature
 
   ```sh
   $ cd /tmp
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/lnd-linux-arm64-v0.15.3-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-v0.15.3-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-roasbeef-v0.15.3-beta.sig
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-roasbeef-v0.15.3-beta.sig.ots  
   ```
-
-### Checksum check
-
-* Verify the signed checksum against the actual checksum of your download
-
-  ```sh
-  $ sha256sum --check manifest-v0.15.3-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.15.3-beta.tar.gz: OK
-  ```
-
-### Signature check
-
-Now that we've verified the integrity of the downloaded binary, we need to check the authenticity of the manifest file we just used, starting with its signature.
 
 * Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
 
@@ -70,21 +56,12 @@ Now that we've verified the integrity of the downloaded binary, we need to check
   > [...]
   ```
 
-### Timestamp check
-
-We can also check that the manifest file was in existence around the time of the release using its timestamp.
-
-* Let's verify that the timestamp of the file matches the release date.
+* Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ ots verify manifest-roasbeef-v0.15.3-beta.sig.ots -f manifest-roasbeef-v0.15.3-beta.sig
-  > [...]
-  > Success! Bitcoin block 759141 attests existence as of 2022-10-17 BST
+  $ sha256sum --check manifest-v0.15.3-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.15.3-beta.tar.gz: OK
   ```
-  
-* Check that the date of the timestamp (here 2022-08-31) is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary (2022-10-17).
-
-### Installation
 
 * Install LND
 
