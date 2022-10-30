@@ -421,7 +421,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Setup c-lightning-Rest as plugin:
 
   ```sh
-  $ sudo nano /data/lightningd/config
+  $ nano /data/lightningd/config
   ```
   
 * Add at the end of the file:
