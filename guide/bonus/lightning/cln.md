@@ -444,7 +444,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   
 * Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.9.0/` called `certs` which contains the required `access.macaroon` for the next steps. Stop `cl-rest.js` by hitting CTRL+C.
   
-* As user `rtl`:
+* Go back to the "admin" user:
 
   ```sh
   $ exit
