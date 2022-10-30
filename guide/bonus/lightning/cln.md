@@ -448,7 +448,6 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 
   ```sh
   $ exit
-  $ sudo su - rtl
   ``` 
 
 * Copy `access.macaroon` to home directory of user `rtl`:  
