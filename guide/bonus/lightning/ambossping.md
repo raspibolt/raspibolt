@@ -84,6 +84,12 @@ Table of contents
   echo " "
   ```
 
+* Make the script executable (check by displaying the file name, it should have become green)
+
+  ```sh
+  chmod chmod +x /home/ambossping/ping.sh
+  ```
+  
 ---
 
 ## Test run
