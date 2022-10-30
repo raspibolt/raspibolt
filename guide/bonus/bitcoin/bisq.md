@@ -268,7 +268,7 @@ If you stop using Bisq for an extended period of time, it is worth deactivating 
 
 ### Uninstall FW configuration
 
-* Delete firewall rule with the comment 'allow Fulcrum SSL' identifying the number of the rule
+* Delete firewall rule with the comment 'allow Bitcoin Core' identifying the number of the rule
 
   ```sh
   $ sudo ufw status numbered
@@ -278,7 +278,7 @@ If you stop using Bisq for an extended period of time, it is worth deactivating 
   Status: active
      To                         Action      From
      --                         ------      ----
-  [X] 8333                       ALLOW IN    Anywhere            # allow BTC Core
+  [X] 8333                      ALLOW IN    Anywhere            # allow Bitcoin Core
   ```
 
 * Delete the rule with the correct number and confir with "yes"
