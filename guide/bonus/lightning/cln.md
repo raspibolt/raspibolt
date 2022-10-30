@@ -439,6 +439,30 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   ```sh
   $ cd /data/lightningd-plugins-available/c-lightning-REST-0.9.0
   $ cp sample-cl-rest-config.json cl-rest-config.json
+  ```
+
+* Edit the config file:
+
+  ```sh
+  $ nano cl-rest-config.json
+  ```
+
+* Insert / Modify:
+
+  ```ini
+  {
+    "PORT": 3092,
+    "DOCPORT": 4091,
+    "PROTOCOL": "https",
+    "EXECMODE": "production",
+    "RPCCOMMANDS": ["*"],
+    "DOMAIN": "localhost"
+  }
+  ```
+
+* Run cl-rest.js manually: 
+
+  ```sh  
   $ node cl-rest.js
   ```
   
