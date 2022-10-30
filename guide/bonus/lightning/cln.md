@@ -516,7 +516,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   $ exit
   $ sudo systemctl start rtl
   ```
-* Access RTL via your local IP: `https://<your-local-ip>:4002`
+* Access RTL via your local IP: `https://<your-local-ip>:4001`
 
 
 <br /><br />
