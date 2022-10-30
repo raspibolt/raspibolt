@@ -67,7 +67,7 @@ The guide will show you how to:
 * Configure the firewall to allow incoming requests to Bitcoin Core from the local network.
 
   ```sh
-  $ sudo ufw allow 8333 comment 'allow Bitcoin Core' 
+  $ sudo ufw allow 8333/tcp comment 'allow Bitcoin Core' 
   ```
 
 ### Configure Bitcoin Core
