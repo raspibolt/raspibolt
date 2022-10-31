@@ -54,14 +54,14 @@ Install and start the SSH client for your operating system:
 
 * Windows: PuTTY ([Website](https://www.putty.org){:target="_blank"})
 * MacOS and Linux: from the Terminal, use the native command:
-  * `ssh pi@raspibolt.local` or
-  * `ssh pi@192.168.0.20`
+  * `ssh admin@raspibolt.local` or
+  * `ssh admin@192.168.0.20`
 
 If you need to provide connection details, use the following settings:
 
 * host name: `raspibolt.local` or the ip address like `192.168.0.20`
 * port: `22`
-* username: `pi`
+* username: `admin`
 * password:  `password [A]`
 
 🔍 *more: [using SSH with Raspberry Pi](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md){:target="_blank"}*

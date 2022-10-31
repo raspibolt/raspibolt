@@ -50,6 +50,8 @@ has_toc: false
 * **[Balance of Satoshis](balance-of-satoshis.md)** - a tool to rebalance your channels and set up a LN node monitoring Telegram bot
 * **[Lightning Terminal](lightning-terminal.md)** - a browser-based GUI for managing channel liquidity with Loop and Pool
 * **[rebalance-lnd](rebalance-lnd.md)** - a simple script to manage your channel liquidity by doing circular rebalancing
+* **[CLBoss](clboss.md)** - an automated node management tool for CLN
+* **[regolancer](regolancer.md)** - light, quick and efficient LND rebalancer written in Go
 
 ---
 

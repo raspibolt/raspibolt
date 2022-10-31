@@ -13,7 +13,6 @@ parent: Raspberry Pi
 You are now on the command line of your own Bitcoin node.
 Let's start with the configuration.
 
-
 ---
 
 ## Table of contents
@@ -24,35 +23,20 @@ Let's start with the configuration.
 
 ---
 
-## Add the admin user (and log in with it)
+## Create a new connection
 
-We will use the primary user "admin" instead of "pi" to make this guide more universal.
+We will use the primary user "admin" which we already configured in the Raspberry Pi Imager (see [Configure boot options](operating-system.md#configure-boot-options) section).
 
-* Create a new user called "admin" with your `password [A]`
-
-  ```sh
-  $ sudo adduser --gecos "" admin
-  ```
-
-* Make this new user a superuser by adding it to the "sudo" group
-
-  ```sh
-  $ sudo adduser admin sudo
-  ```
-
-
-* Exit your current "pi" user session and exit SSH
-
-  ```sh
-  $ exit
-  ```
-
-* Create a new connection with the `admin` user
-
-* Log in again using SSH (see [Access with Secure Shell](remote-access.md#access-with-secure-shell) section), but now with the user "admin" and your `password [A]`
+* Log in again using SSH (see [Access with Secure Shell](remote-access.md#access-with-secure-shell) section), with user "admin" and your `password [A]`
 
   ```sh
   $ ssh admin@raspibolt.local
+  ```
+
+* You can exit your session any time with
+
+  ```sh
+  $ exit
   ```
 
 To change the system configuration and files that don't belong to user "admin", you have to prefix commands with `sudo`.
@@ -152,6 +136,7 @@ The standard size of 100M is way too small.
   ```sh
   $ sudo nano /etc/dphys-swapfile
   ```
+
   ```
   # comment or delete the CONF_SWAPSIZE line. It will then be created dynamically
   #CONF_SWAPSIZE=100

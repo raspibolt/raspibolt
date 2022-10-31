@@ -32,9 +32,9 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/lnd-linux-arm64-v0.15.0-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-v0.15.0-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.0-beta/manifest-roasbeef-v0.15.0-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/lnd-linux-arm64-v0.15.3-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-v0.15.3-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-roasbeef-v0.15.3-beta.sig
   ```
 
 * Get the public key from the LND developer, [Olaoluwa Osuntokun](https://keybase.io/roasbeef){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
@@ -49,30 +49,27 @@ We'll download, verify and install LND.
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.15.0-beta.sig manifest-v0.15.0-beta.txt
-  > gpg: Signature made Fri Jun 24 00:50:22 2022 EEST
+  $ gpg --verify manifest-roasbeef-v0.15.3-beta.sig manifest-v0.15.3-beta.txt
+  > gpg: Signature made Mon Oct 17 23:18:02 2022 BST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
-  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
-  > gpg: WARNING: This key is not certified with a trusted signature!
-  > gpg:          There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
-  >     Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
+  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [ultimate]
+  > [...]
   ```
 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.15.0-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.15.0-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.15.3-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.15.3-beta.tar.gz: OK
   ```
 
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.15.0-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.0-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.15.3-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.3-beta/*
   $ lnd --version
-  > lnd version 0.15.0-beta commit=v0.15.0-beta
+  > lnd version 0.15.3-beta commit=v0.15.3-beta
   ```
 
 ### Data directory
@@ -187,7 +184,6 @@ To improve the security of your wallet, check out these more advanced methods:
   gc-canceled-invoices-on-startup=true
   gc-canceled-invoices-on-the-fly=true
   ignore-historical-gossip-filters=1
-  sync-freelist=true
   stagger-initial-reconnect=true
   routing.strictgraphpruning=true
 
@@ -278,8 +274,10 @@ The current state of your channels, however, cannot be recreated from this seed.
 For this, the Static Channel Backup stored at `/data/lnd-backup/channel.backup` is updated continuously.
 
 🚨 This information must be kept secret at all times.
+
 * **Write these 24 words down manually on a piece of paper and store it in a safe place.**
-You can use a simple piece of paper, write them on a proper [backup card](https://shiftcrypto.ch/backupcard/backupcard_print.pdf){:target="_blank"}), or even stamp the seed words into metal (see this [DIY guide](https://www.econoalchemist.com/post/backup){:target="_blank"}).
+
+You can use a simple piece of paper, write them on the custom themed [RaspiBolt backup card](https://github.com/raspibolt/raspibolt/blob/master/resources/raspibolt-backup-card.pdf){:target="_blank"}, or even [stamp the seed words into metal](../bonus/bitcoin/safu-ninja.md).
 This piece of paper is all an attacker needs to completely empty your on-chain wallet!
 Do not store it on a computer.
 Do not take a picture with your mobile phone.
@@ -495,7 +493,8 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
   One Bitcoin equals 100 million satoshis, so at $10'000/BTC, $10 amount to 0.001 BTC or 100'000 satoshis.
   To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/to-usd/){:target="_blank"}.
 
-  The command as a built-in fee estimator, but to avoid overpaying fees, you can manually control the fees for the funding transaction by using the `sat_per_byte` argument as follows (to select the appropriate fee, in sats/vB, check [mempool.space](https://mempool.space/){:target="_blank"})
+  The command has a built-in fee estimator, but to avoid overpaying fees, you can manually control the fees for the funding transaction by using the `sat_per_vbyte` argument as follows (to select the appropriate fee, in sats/vB, check [mempool.space](https://mempool.space/){:target="_blank"})
+
   ```sh
   $ lncli openchannel --sat_per_vbyte 8 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f 100000 0
   ```
@@ -518,16 +517,14 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
   $ lncli listchannels
   ```
 
-* **Make a Lightning payment**. These work with invoices, so everytime you buy something or want to send money, you need to get an invoice first.
-  To try, why not send me a single satoshi to view my Twitter profile?
-
-  * Click on this Tippin.me link: <https://tippin.me/@Stadicus3000>
-  * Click on "Copy request" to copy the invoice data
-  * Pay me 1 satoshi (~ $0.0001) 🤑
+* **Make a Lightning payment**. By default, these work with invoices, so when you buy something or want to send money, you need to get an invoice first. However, you can also pay without requesting an invoice as long the receiving node supports the keysend or amp feature!
+  
+  To try, why not send me a single satoshi! You simply need to input my node pukey [`Stadicus node`](https://amboss.space/node/02acd93e3352fd59066ca3f23e8865de1926301e8be03c6a52f0f7e43533fe9888){:target="_blank"}, the amount in satoshis and add the –keysend flag. 
 
     ```sh
-    * lncli payinvoice lnbc10n1pw......................gsj59
+    * lncli sendpayment --dest 02acd93e3352fd59066ca3f23e8865de1926301e8be03c6a52f0f7e43533fe9888 --amt 1 --keysend
     ```
+
 
 ### Adding watchtowers
 
@@ -697,7 +694,10 @@ Upgrading LND can lead to a number of issues.
   ```
 
 * As "admin" user, stop the LND service
-  `$ sudo systemctl stop lnd`
+
+  ```sh
+  $ sudo systemctl stop lnd
+  ```
 
 * Download, verify and install the latest LND binaries as described in the [LND section](lightning-client.md#installation) of this guide.
 
