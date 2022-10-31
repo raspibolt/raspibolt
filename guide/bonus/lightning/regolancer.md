@@ -107,14 +107,22 @@ b62a8d9654436c67c14a0c91e931d50440541f09eb991a987536cb982903126d. Calculate the 
 
   $ ln -s /data/lnd /home/regolancer/.lnd
 
-  $ go install github.com/rkfg/regolancer@v1.5.2
+  $ go install github.com/rkfg/regolancer@v1.6.3
   ```
-Note: Adjust the "regolancer@v1.5.1" part from the commands below to the actual version you have installed.
+Note: Adjust the "regolancer@v1.6.3" part from the commands below to the actual version you have installed.
+
+* Confirm installed version
+
+  ```sh
+  $ go/bin/regolancer -v
+  Regolancer v1.6.3, built with go1.19.2
+  Source: https://github.com/rkfg/regolancer
+  ```
 
 * Create a working copy of the sample config file. You can use either .json or .toml configs, up to your preference.  
 
   ```sh
-  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.5.2/config.json.sample /home/regolancer/config.json
+  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.6.3/config.json.sample /home/regolancer/config.json
   ```
 
 * Make the newly created config.json file writable.
@@ -152,7 +160,8 @@ Adjust the rest of the file as you wish with the options [regolancer config samp
   $ go/bin/regolancer -f /home/regolancer/config.json
   ```
 
-The regolancer will run until it finds a hit and will stop after that. To run it continuously, you will need to run it in a loop or a cron.
+The regolancer will run until it finds a hit and will stop after that unless you have utilized the "--allow-rapid-rebalance" parameter, which will retry the same rebalance instantly until a fail. 
+To run it continuously, you will need to run it in a loop or a cron.
 
 ---
 
@@ -162,10 +171,18 @@ The regolancer will run until it finds a hit and will stop after that. To run it
 
   ```sh
   $ sudo su - regolancer
-  $ go install github.com/rkfg/regolancer@v1.5.x 
+  $ go install github.com/rkfg/regolancer@v1.6.x 
   ```
 
-Please replace the v.1.5.x part with the version you would like to install.
+Please replace the v.1.6.x part with the version you would like to install.
+
+* Confirm if the upgrade was successfull
+
+  ```sh
+  $ go/bin/regolancer -v
+  Regolancer v1.6.3, built with go1.19.2
+  Source: https://github.com/rkfg/regolancer
+  ```
 
 ---
 
