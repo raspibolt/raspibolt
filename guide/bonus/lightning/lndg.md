@@ -640,8 +640,8 @@ To preserve privacy it is better that you use your own self-hosted blockhain exp
 * Click on the "Advanced settings" link
 * Scroll down to the "Update Local Settings" section
 * Find the "GUI-NetLinks" option and paste the following value:
-  *  if you use the BTC RPC Explorer: `https://raspibolt.local:4000` 
-  *  if you prefer Mempool: `https://raspibolt.local:4081`
+  *  if you use the [BTC RPC Explorer](../../bitcoin/btcrpcexplorer.md): `https://raspibolt.local:4000` 
+  *  if you prefer [Mempool](../bitcoin/mempool.md): `https://raspibolt.local:4081`
 
 ### Lightning explorer
 
