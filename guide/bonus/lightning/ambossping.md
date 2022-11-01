@@ -126,6 +126,12 @@ You should see something like this in terminal.
   ```
   This will execute the bash script every minute.
 
+  🚨 Setting up the cronjob like this will send the pings via clearnet - meaning amboss.space will know where the ping comes from. You can prevent revealing this information by either tunneling all traffic of your node via VPN or setup your cronjob to use TOR.
+
+  ```ini
+  * * * * * torsocks /home/ambossping/ping.sh >> /home/ambossping/ping.log
+  ```
+
   Currently ambos.space gives the option to report every 1, 3, 5, 15, 30 minutes, and 1 hour. If you want to report on different than 1 min intervals, set the beginning of the line in your cron tab as follows:
 
   ```ini
@@ -156,6 +162,8 @@ You can check for errors in the log file with:
   - **Error: 22** - HTTP page not retrieved.
   - **Error: 35** - A TLS/SSL connect error. The SSL handshake failed.
   - **Error: 56** - Failure in receiving network data.
+
+  You can find additional information about the Exit Statuses on the [curl documentation](https://everything.curl.dev/usingcurl/returns) site.
 
   Please remember that the error messages of curl are not explicit and are not always 100% correct. From the error messages, you could make some assumptions about the issues you may experience are caused. From the errors mentioned above, only **Error: 35** leads to remote side issues, though.
 
