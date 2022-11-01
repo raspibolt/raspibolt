@@ -56,6 +56,7 @@ has_toc: false
 * **[Lightning Terminal](lightning-terminal.md)** - a browser-based GUI for managing channel liquidity with Loop and Pool
 * **[rebalance-lnd](rebalance-lnd.md)** - a simple script to manage your channel liquidity by doing circular rebalancing
 * **[CLBoss](clboss.md)** - an automated node management tool for CLN
+* **[regolancer](regolancer.md)** - light, quick and efficient LND rebalancer written in Go
 
 ---
 
