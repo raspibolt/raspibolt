@@ -126,7 +126,7 @@ You should see something like this in terminal.
   ```
   This will execute the bash script every minute.
 
-  🚨 Setting up the cronjob like this will send the pings via clearnet - meaning amboss.space will know where the ping comes from. You can prevent revealing this information by either tunneling all traffic of your node via VPN or setup your cronjob to use TOR.
+  🚨 Setting up the cronjob like this will send the pings via clearnet - meaning amboss.space will know where the ping comes from. You can prevent revealing this information by either tunneling all traffic of your node via VPN or setup your cronjob to use TOR. Be aware that running the ping via TOR will cause some false-positives depending on the health of the TOR network status and availability, which will not represent the availability of your node.
 
   ```ini
   * * * * * torsocks /home/ambossping/ping.sh >> /home/ambossping/ping.log
