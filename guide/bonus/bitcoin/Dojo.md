@@ -58,7 +58,7 @@ Samourai Dojo requires several new passwords. They should be unique and very sec
 [ J ] NODE_JWT_SECRET
 ```
 
-Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}) or whatever password manager you're already using
+Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}) or whatever password manager you're already using)
 
 ### Node.js
 
@@ -87,6 +87,7 @@ $ npm -v
 * If not already installed, install npm package manager and update it to latest version
 
 ```sh
+$ sudo apt update
 $ sudo apt install npm
 $ sudo npm install latest-version
 ```
@@ -112,8 +113,34 @@ $ cd /tmp/
 * Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update
 
 ```sh
-$ sudo wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v1.17.0/samourai-dojo-v1.17.0.tar.gz
-$ sudo tar -xvf samourai-dojo-v1.17.0.tar.gz
+$ wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v1.17.0/samourai-dojo-v1.17.0.tar.gz
+$ wget https://code.samourai.io/dojo/samourai-dojo/uploads/0c9f3d5d07396019f3bfb6449fe11e48/samourai-dojo-v1.17.0-fingerprints.txt
+$ wget https://code.samourai.io/dojo/samourai-dojo/uploads/4ad2b6e5c8a64f4a44bfd1ef12a5b1c8/samourai-dojo-v1.17.0-fingerprints.txt.sig
+```
+
+* Calculate the checksum of the binary you've downloaded and compare it to the one provided in the fingerprints text file
+
+```sh
+$ sha256sum --ignore-missing --check samourai-dojo-v1.17.0-fingerprints.txt
+> samourai-dojo-v1.17.0.tar.gz: OK
+```
+
+* Import the GPG public key of the developper that signed the fingerprints file
+
+```sh
+$ curl https://keys.openpgp.org/vks/v1/by-fingerprint/377DE507FDC47F020099E342CFA54E4C0CD58DF0 | gpg --import
+```
+
+* Verify that the fingerprints file has actually been signed by that developper
+
+```sh
+$ gpg --verify samourai-dojo-v1.17.0-fingerprints.txt.sig > gpg: assuming signed data in 'samourai-dojo-v1.17.0-fingerprints.txt' > gpg: Signature made Fri Aug 5 13:59:09 2022 BST > gpg: using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0 > gpg: Good signature from "pavel.sevcik@protonmail.com <pavel.sevcik@protonmail.com>" [unknown] > [...]
+```
+
+* If the signature checks out, unpack the binary
+
+```sh
+$ tar -xvf samourai-dojo-v1.17.0.tar.gz
 ```
 
 ### MariaDB
