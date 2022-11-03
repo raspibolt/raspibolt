@@ -44,7 +44,7 @@ Fulcrum is a replacement for an Electrs, these two services cannot be run at the
 
 ## Preparations
 
-Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-client.md#reduce-dbcache-after-full-sync)
+Make sure that you have [reduced the database cache of Bitcoin Core](../../bitcoin/bitcoin-client.md#reduce-dbcache-after-full-sync)
 
 ### Install dependencies
 
