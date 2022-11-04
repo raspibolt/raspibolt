@@ -23,6 +23,11 @@ has_toc: false
 
 ---
 
+## Install / Update / Uninstall common languages
+* **[Golang](golang.md)** - Install / Update / Uninstall [Golang](https://go.dev)
+
+---
+
 ## Security
 * **[Hardware-based (Trezor) SSH authentification](trezor-agent.md)** - a safer way to SSH to your device using your hardware wallet
 
