@@ -113,7 +113,11 @@ $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
 zmqpubhashblock=tcp://0.0.0.0:8433
 ```
 
-* Save and exit
+* Restart Bitcoind
+
+```sh
+$ sudo systemctl restart bitcoind
+```
 
 ---
 
