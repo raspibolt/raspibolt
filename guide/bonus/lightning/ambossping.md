@@ -97,7 +97,7 @@ Table of contents
 * Run the script (while in "ambossping" user session)
 
   ```sh
-  $ /usr/bin/torsocks /home/ambossping/ping.sh
+  $ /usr/bin/torsocks ./ping.sh
   ```
 
 You should see something like this in terminal.
