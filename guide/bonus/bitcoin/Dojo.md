@@ -113,6 +113,8 @@ $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
 zmqpubhashblock=tcp://0.0.0.0:8433
 ```
 
+* Save and exit
+
 ---
 
 ## Installation
