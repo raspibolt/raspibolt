@@ -21,6 +21,8 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
+![ambossping](../../../images/ambossping.jpg)
+
 ---
 
 Table of contents
