@@ -275,6 +275,25 @@ In order to do that, we create a systemd unit that starts the service on boot di
   $ sudo journalctl -f -u btcrpcexplorer
   ```
 
+* Edit the Bitcoin Core service file to automatically starts the Explorer when Bitcoin Core starts
+
+  ```sh
+  $ sudo nano /etc/systemd/system/bitcoind.service
+  ```
+  
+  ```ini
+  [Unit]
+  Description=Bitcoin daemon
+  After=network.target
+  Wants=btcrpcexplorer.service
+  ```
+  
+* Reload the systemd manager configuration to recreate the entire dependency tree
+
+  ```sh
+  $ sudo systemctl daemon-reload
+  ```
+
 * You can now access your own BTC RPC Explorer from within your local network by browsing to <https://raspibolt.local:4000>{:target="_blank"} (or your equivalent IP address).
 
 ### Remote access over Tor (optional)
