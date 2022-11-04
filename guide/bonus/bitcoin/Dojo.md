@@ -38,7 +38,7 @@ Table of contents
 
 * Minimum RAM: 4 GB
 * Bitcoin Core
-* Fulcrum
+* Fulcrum (recommended) / Electrs
 * Node.js v16+
 * Nginx
 
@@ -73,9 +73,9 @@ $ node -v
 
 * If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
-### npm & PM2
+### Node Package Manager & PM2 
 
-npm is the default package manager for the JavaScript runtime environment and PM2 is a process manager for the JavaScript runtime Node.js
+Node Package Manager (npm) is the default package manager for the JavaScript runtime environment and PM2 is a process manager for the JavaScript runtime Node.js
 
 * With user "admin", let's check our version of npm running on the node
 
@@ -96,6 +96,21 @@ $ sudo npm install latest-version
 
 ```sh
 $ sudo npm i -g pm2
+```
+
+### For Electrs
+
+* If you are using Electrum server instead of Fulcrum, it is necessary to add following line into `bitcoin.conf`. Fulcrum users can skip this step as it is already added.
+
+```sh
+$ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+```
+
+* Add following line
+
+```sh
+# For Dojo/Fulcrum
+zmqpubhashblock=tcp://0.0.0.0:8433
 ```
 
 ---
