@@ -129,7 +129,7 @@ You should see something like this in terminal.
   🚨 Setting up the cronjob like this will send the pings via clearnet - meaning amboss.space will know where the ping comes from. You can prevent revealing this information by either tunneling all traffic of your node via VPN or setup your cronjob to use Tor. Be aware that running the ping via Tor will cause some false-positives depending on the health of the Tor network status and availability, which will not represent the availability of your node.
 
   ```ini
-  * * * * * torsocks /home/ambossping/ping.sh >> /home/ambossping/ping.log
+  * * * * * /usr/bin/torsocks /home/ambossping/ping.sh >> /home/ambossping/ping.log
   ```
 
   Currently ambos.space gives the option to report every 1, 3, 5, 15, 30 minutes, and 1 hour. If you want to report on different than 1 min intervals, set the beginning of the line in your cron tab as follows:
