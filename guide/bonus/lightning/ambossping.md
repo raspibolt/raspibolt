@@ -100,7 +100,7 @@ Table of contents
   $ /usr/bin/torsocks ./ping.sh
   ```
 
-You should see something like this in terminal.
+* You should see something like this in terminal.
 
   ```ini
   Timestamp: 2022-10-27T15:53:33+0000
@@ -148,7 +148,7 @@ You should see something like this in terminal.
 
 * Ths script has an error reporting capability that will allow you to troubleshoot better if there are issues reported by the amboss health check.
 
-You can check for errors in the log file with:
+  You can check for errors in the log file with:
 
   ```sh
   $ cat ping.log | grep  Error
