@@ -62,7 +62,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 ### Node.js
 
-To run Dojo, we need to run Node.js v16 or above.
+To run Dojo, we need to run Node.js
 
 * With user "admin", let's check our version of Node.js running on the node
 
@@ -71,7 +71,7 @@ $ node -v
 > v16.13.1
 ```
 
-* If Node.js is not installed, follow [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
+* If Node.js is not installed, follow (only) the Node.js step in [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
 ### Node Package Manager & PM2 
 
@@ -84,11 +84,16 @@ $ npm -v
 > 8.19.2
 ```
 
-* If not already installed, install npm package manager and update it to latest version
+* If not already installed, install npm package manager
 
 ```sh
 $ sudo apt update
 $ sudo apt install npm
+```
+
+* Update npm to the latest version
+
+```sh
 $ sudo npm install latest-version
 ```
 
@@ -100,7 +105,7 @@ $ sudo npm i -g pm2
 
 ### For Electrs
 
-* If you are using Electrum server instead of Fulcrum, it is necessary to add following line into `bitcoin.conf`. Fulcrum users can skip this step as it is already added.
+* If you are using Electrum server instead of Fulcrum, it is necessary to add following line into `bitcoin.conf`. Fulcrum users can skip this step as it is already done.
 
 ```sh
 $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
@@ -202,26 +207,26 @@ $ sudo mysql
 MariaDB [(none)]>
 ```
 
-* The instructions to enter in the MariaDB shell with start with "MDB$". Enter each command one by one including ";". Remember to change "[ G ] MYSQL_PASSWORD" in the second command
+* The instructions to enter in the MariaDB shell start after "MariaDB [(none)]>". Enter each command one by one including ";". Remember to change "[ G ] MYSQL_PASSWORD" in the second command
 
 ```sh
-MDB$ CREATE DATABASE dojo_db;
+MariaDB [(none)]> CREATE DATABASE dojo_db;
 > Query OK, 1 row affected (0.001 sec)
 
-MDB$ CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
+MariaDB [(none)]> CREATE USER 'dojo'@'localhost' IDENTIFIED BY '[ G ] MYSQL_PASSWORD';
 > Query OK, 0 rows affected (0.005 sec)
 
-MDB$ GRANT ALL PRIVILEGES ON dojo_db.* TO 'dojo'@'localhost';
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON dojo_db.* TO 'dojo'@'localhost';
 > Query OK, 0 rows affected (0.006 sec)
 
-MDB$ FLUSH PRIVILEGES;
+MariaDB [(none)]> FLUSH PRIVILEGES;
 > Query OK, 0 rows affected (0.001 sec)
 ```
 
 * Exit MySQL shell
 
 ```sh
-MDB$ exit
+MariaDB [(none)]> exit
 ```
 
 ### Create the dojo user and data directory
