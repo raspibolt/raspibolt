@@ -64,14 +64,24 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 To run Dojo, we need to run Node.js
 
-* With user "admin", let's check our version of Node.js running on the node
+* With user "admin", let's check our version of Node.js running on the node. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
 ```sh
 $ node -v
 > v16.13.1
 ```
 
-* If Node.js is not installed, follow (only) the Node.js step in [this guide](../../bitcoin/blockchain-explorer.md#install-nodejs) to install it. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
+* If Node.js is not installed, add the Node.js package repository from user “admin”
+
+```sh
+$ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+```
+
+* Install Node.js using the apt package manager
+
+```sh
+$ sudo apt install nodejs
+```
 
 ### Node Package Manager & PM2 
 
