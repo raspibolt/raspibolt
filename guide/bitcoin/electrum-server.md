@@ -327,13 +327,13 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   ```sh
   $ cd /home/admin/rust/electrs
 
-  # update the local source code and show the latest release tag (example: v0.9.10)
+  # Update the local source code and show the latest release tag (example: v0.9.10)
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
   > v0.9.10
 
-  # check out the most recent release (replace v0.9.10 with the actual version)
-  # should you encounter an error about files that would be overwritten use the -f argument to force the checkout
+  # Check out the most recent release (replace v0.9.10 with the actual version)
+  # Should you encounter an error about files that would be overwritten use the -f argument to force the checkout
   $ git checkout v0.9.10
 
   # Compile the source code
