@@ -119,7 +119,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
   > MariaDB [(none)]>
   ```
 
-* Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell with start with "MDB$". Change "Password[M]" to the random password generated above.
+* Enter the following commands in the shell and exit. The instructions to enter in the MariaDB shell start with "MDB$". Change "Password[M]" to the random password generated above.
 
   ```sql
   MDB$ create database mempool;
@@ -189,6 +189,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
     },
     "SOCKS5PROXY": {
       "ENABLED": true,
+      "USE_ONION": true,
       "HOST": "127.0.0.1",
       "PORT": 9050
     },

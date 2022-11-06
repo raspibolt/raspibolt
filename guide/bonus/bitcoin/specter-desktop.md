@@ -14,8 +14,8 @@ has_toc: false
 Difficulty: Intermediate
 {: .label .label-yellow }
 
-Status: Not tested v3
-{: .label .label-yellow }
+Status: Tested v3
+{: .label .label-green }
 
 ---
 
@@ -78,9 +78,10 @@ The default setup guides you on how to allow for plugging in your hardware devic
 
 These instructions will clone the repo to fetch the latest version and then "pip install" the project directly to a python virtual environment.
 
-- Create a new user with your password [ A ] and open a new session
+- Create a new user, add it to the bitcoin group and open a new session
   ```sh
-  $ sudo adduser specter
+  $ sudo adduser --disabled-password --gecos "" specter
+  $ sudo adduser specter bitcoin
   $ sudo su - specter
   ```
 
@@ -89,16 +90,11 @@ These instructions will clone the repo to fetch the latest version and then "pip
   $ python3 -m pip install virtualenv
   ```
 
-  - _(Optional) Add `$HOME/.local/bin` to `$PATH`_
-    _The `virtualenv` scripts are installed in the directory `$HOME/.local/bin`. Unfortunately, in Raspbian this directory is not in the system path, so the full path needs to be specified when calling these scripts. Alternatively, just add this directory to your `$PATH` environment variable, but it’s not necessary in this guide._
-
-    In the appropriate config file (e.g. `~/.bashrc`) add the following:
-    ```sh
-    # set PATH so it includes user's private bin if it exists
-    if [ -d "$HOME/.local/bin" ] ; then
-        PATH="$HOME/.local/bin:$PATH"
-    fi
-    ```
+- Add locally installed virtualenv location to `PATH`
+  ```sh
+  $ echo 'export PATH="$PATH:$HOME/.local/bin"' >> /home/specter/.bashrc
+  $ source /home/specter/.bashrc
+  ```
 
 - Download the source code directly from GitHub
   ```sh
@@ -108,14 +104,14 @@ These instructions will clone the repo to fetch the latest version and then "pip
 
 - Install to Python virtual environment
   ```sh
-  $ VERSION=v1.3.0
+  $ VERSION=v1.12.0
 
   # Change to selected version
   $ git checkout $VERSION
   $ sed -i "s/vx.y.z-get-replaced-by-release-script/${VERSION}/g; " setup.py
 
   # Create virtualenv
-  $ $HOME/.local/bin/virtualenv --python=python3 /home/specter/.env
+  $ virtualenv --python=python3 /home/specter/.env
 
   # Preparation for versions > v1.5.0 (i18n)
   $ /home/specter/.env/bin/python3 -m pip install babel
@@ -129,6 +125,11 @@ These instructions will clone the repo to fetch the latest version and then "pip
 
 ### Configuration
 
+- Create symbolic link to bitcoin data directory
+  ```sh
+  $ ln -s /data/bitcoin /home/specter/.bitcoin
+  ```
+
 - Create the specter config file (or clear the default specter config file if it exists)
   ```sh
   $ mkdir -p /home/specter/.specter
@@ -141,27 +142,10 @@ These instructions will clone the repo to fetch the latest version and then "pip
   ```
 
 - Copy the following config to the file
-  _**Note:** Be sure to change to your bitcoin rpc password on the **2 lines** that contain `"password": "PASSWORD_[B]"`_
   ```sh
   {
     "rpc": {
-        "autodetect": false,
-        "datadir": "",
-        "user": "raspibolt",
-        "password": "PASSWORD_[B]",
-        "port": "8332",
-        "host": "localhost",
-        "protocol": "http",
-        "external_node": false
-    },
-    "internal_node": {
-        "autodetect": false,
-        "datadir": "",
-        "user": "raspibolt",
-        "password": "PASSWORD_[B]",
-        "host": "localhost",
-        "protocol": "http",
-        "port": "8332"
+        "autodetect": true
     },
     "auth": "none",
     "proxy_url": "socks5h://localhost:9050",
@@ -312,13 +296,13 @@ These instructions will clone the repo to fetch the latest version and then "pip
 - Move Specter data to disk
   ```sh
   # Move data folder to disk
-  $ sudo mkdir -p /mnt/ext/app-data/.specter
-  $ sudo mv -f /home/specter/.specter/* /mnt/ext/app-data/.specter/
-  $ sudo chown -R specter:specter /mnt/ext/app-data/.specter
+  $ sudo mkdir -p /data/specter
+  $ sudo mv -f /home/specter/.specter/* /data/specter/
+  $ sudo chown -R specter:specter /data/specter
 
   # Symlink data folder back to 'specter' user
   $ sudo rm -rf /home/specter/.specter
-  $ sudo ln -s /mnt/ext/app-data/.specter /home/specter/
+  $ sudo ln -s /data/specter /home/specter/.specter
   $ sudo chown -R specter:specter /home/specter/.specter
   ```
 
@@ -395,7 +379,7 @@ If you would like to connect your hardware wallets to your laptop/computer inste
 
 With this, Specter is also downloaded and installed on the laptop/computer and then connected to the instance running on the Raspberry Pi. The two instances then communicate with the local laptop/computer instance handling the direct USB connection and the remote instance handling the connection to `bitcoind` via its RPC interface.
 
-** Instructions for configuring this setup can be found at [hwibridge.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/hwibridge.md){:target="_blank"}.**
+** Instructions for configuring this setup can be found at [hwibridge.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.12.0/docs/hwibridge.md){:target="_blank"}.**
 
 **Advantages**
   - The Bitcoin RPC ports remains locked down and local only to the Raspberry Pi
@@ -409,7 +393,7 @@ With this, Specter is also downloaded and installed on the laptop/computer and t
 
 With this option, Specter is installed ***only*** on the user's laptop/computer and then made to talk directly to the Bitcoin RPC to get its blockchain data and access to the Bitcoin network.
 
-** Instructions for configuring this setup can be found at [connect-your-node.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/connect-your-node.md){:target="_blank"}.**
+** Instructions for configuring this setup can be found at [connect-your-node.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.12.0/docs/connect-your-node.md){:target="_blank"}.**
 
 **Advantages**
   - Specter only needs to be setup and maintained in one place
@@ -425,7 +409,7 @@ This is similar to **Option 1** in that two running instances of Specter Desktop
 
 This 3rd option is more involved though since the user must also install/configure Tor, setup Tor hidden services for each instance on it's machine, and then configure both instances to communicate with each other through a Tor proxy.
 
-**\> Instructions for configuring this setup can be found at [tor.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/tor.md){:target="_blank"}.**
+**\> Instructions for configuring this setup can be found at [tor.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.12.0/docs/tor.md){:target="_blank"}.**
 
 **Advantages**
   - The Bitcoin RPC ports remains locked down and local only to the Raspberry Pi
@@ -441,7 +425,7 @@ This 3rd option is more involved though since the user must also install/configu
 
 For certain hardware wallets that are air-gapped and communicate via QR code only, an SSL certificate must be configure for the Specter Desktop service running inside the browser.
 
-**\> Instructions for setting this up can be found at [self-signed-certificates.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.3.0/docs/self-signed-certificates.md){:target="_blank"}.**
+**\> Instructions for setting this up can be found at [self-signed-certificates.md](https://github.com/cryptoadvance/specter-desktop/blob/v1.12.0/docs/self-signed-certificates.md){:target="_blank"}.**
 
 ---
 
@@ -457,7 +441,7 @@ Updating to a [new release](https://github.com/cryptoadvance/specter-desktop/rel
 
 - Fetch the latest GitHub repository information and check out the new release
   ```sh
-  $ VERSION=v1.3.0
+  $ VERSION=v1.12.0
 
   $ cd ~/specter-desktop
   $ git fetch
