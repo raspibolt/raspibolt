@@ -447,7 +447,7 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
 
 ### Add banner to Fulcrum server (For fun!)
 
-You can get creative when making your server banner, for example creating your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum). In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf#:~:text=%23%20server%20banner%20text%20file%20-%20'banner') you can find additional info about making a banner. 
+You can get creative when making your server banner, for example creating your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum). In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf) you can find additional info about making a banner in the "# Server banner text file - 'banner'" section.
 
 * Create and open "banner.txt" file inside Fulcrum directory
 
