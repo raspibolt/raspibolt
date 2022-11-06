@@ -83,7 +83,7 @@ Table of contents
 
   ```sh
   $ go version
-  go version go1.19.3 linux/arm64
+  > go version go1.19.3 linux/arm64
   ```
 
 * Check for the most recent version of Go on their site [Downloads](https://go.dev/dl/) section
