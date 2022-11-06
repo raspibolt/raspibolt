@@ -487,7 +487,7 @@ banner = /data/fulcrum/banner.txt
 $ sudo systemctl restart fulcrum.service
 ```
 
-Now you can connect to your own server for ex. with Sparrow to see the banner
+Now you can see your banner when connecting to Fulcrum with supported wallet (ex. Sparrow)
 
 <img src="../../../images/Fulcrum_Banner.png" width=50% height=50%>
 
