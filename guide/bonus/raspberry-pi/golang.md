@@ -7,7 +7,7 @@ nav_exclude: true
 has_toc: false
 ---
 
-## Install / Update / Uninstall Golang
+## Install / Update / Uninstall Go
 {: .no_toc }
 
 Difficulty: Easy
