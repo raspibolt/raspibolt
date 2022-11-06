@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Install / Update / Uninstall Golang
+title: Install / Update / Uninstall Go
 parent: + Raspberry Pi
 grand_parent: Bonus Section
 nav_exclude: true
