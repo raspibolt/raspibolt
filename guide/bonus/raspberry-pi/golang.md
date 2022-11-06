@@ -42,7 +42,7 @@ Table of contents
 
   ```sh
   $ sha256sum go1.19.3.linux-arm64.tar.gz
-  99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab  go1.19.3.linux-arm64.tar.gz
+  > 99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab  go1.19.3.linux-arm64.tar.gz
   ```
 
 * Install Go in the `/usr/local` directory
