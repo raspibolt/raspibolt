@@ -28,7 +28,7 @@ Table of contents
 
 ---
 
-## Install GO
+## Install Go
 
 * Check the latest stable version of the arm64 binary at https://golang.org/dl/ and download it
 
