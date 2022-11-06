@@ -493,7 +493,7 @@ $ sudo systemctl restart fulcrum.service
 
 Now you can connect to your own server for ex. with Sparrow to see the banner
 
-![Fulcrum](../../../images/Fulcrum_Banner.png)
+<img src="../../../images/Fulcrum_Banner.png" width=50% height=50%>
 
 ### Configure BTC RPC Explorer to Fulcrum API connection and modify the service
 
