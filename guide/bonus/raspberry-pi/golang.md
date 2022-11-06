@@ -91,7 +91,7 @@ Table of contents
 * Remove the current installation
 
   ```sh
-  rm -rvf /usr/local/go/
+  sudo rm -rvf /usr/local/go/
   ```
 
 * Download, verify and install the latest Go binaries as described in the [Install Go](golang.md#install-go) section of this guide.
