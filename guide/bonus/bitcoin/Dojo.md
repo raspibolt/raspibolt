@@ -48,7 +48,8 @@ Table of contents
 
 ### Write down your passwords 
 
-Samourai Dojo requires you to generate several new passwords. They should be unique and very secure, at least 12 characters in length. Do not use uncommon special characters, spaces, or quotes (‘ or “).
+Samourai Dojo requires you to generate several new passwords. They should be unique and very secure, at least 12 characters in length. Do not use uncommon special characters, spaces, or quotes (‘ or “). 
+Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}) or whatever password manager you're already using)
 
 ```sh
 [ F ] MYSQL_ROOT_PASSWORD
@@ -57,8 +58,6 @@ Samourai Dojo requires you to generate several new passwords. They should be uni
 [ I ] NODE_ADMIN_KEY
 [ J ] NODE_JWT_SECRET
 ```
-
-Store a copy of your passwords somewhere safe (preferably in an open-source password manager like [KeePassXC](https://keepassxc.org/){:target="_blank"}) or whatever password manager you're already using)
 
 ### Node.js
 
@@ -71,15 +70,10 @@ $ node -v
 > v16.13.1
 ```
 
-* If Node.js is not installed, add the Node.js package repository from user “admin”
+* If Node.js is not installed, add the Node.js package repository from user “admin” and install Node.js using the apt package manager
 
 ```sh
 $ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-```
-
-* Install Node.js using the apt package manager
-
-```sh
 $ sudo apt install nodejs
 ```
 
@@ -115,16 +109,18 @@ $ sudo npm i -g pm2
 
 ### For Electrs
 
-* If you are using Electrum server instead of Fulcrum, it is necessary to add following line into `bitcoin.conf`. Fulcrum users can skip this step as it is already done.
+If you are using Electrum server instead of Fulcrum, it is necessary to make following change inside Bitcoind configuration file. Fulcrum users can skip this step as it is already done.
+
+* Open `bitcoin.conf`
 
 ```sh
 $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
 ```
 
-* Add following line
+* Add following line at the end of the file
 
 ```sh
-# For Dojo/Fulcrum
+# For Fulcrum/Dojo
 zmqpubhashblock=tcp://0.0.0.0:8433
 ```
 
@@ -375,25 +371,22 @@ protocol: 'tls'
 
 ### pm2.config
 
-* Still as user "dojo", move to the dojo directory and rename pm2 config file
+* Still as user "dojo", move to the dojo directory, rename pm2 config file and open it
 
 ```sh
 $ cd /data/dojo
 $ mv pm2.config.cjs.example pm2.config.cjs
-```
-
-* Open config file and change "INTERPRETER" value to "node" (at the beginning)
-
-```sh
 $ nano pm2.config.cjs
 ```
+
+* Change "INTERPRETER" value to "node" (at the beginning). Save and exit
 
 ```sh
 [...]
 const INTERPRETER = 'node' // OR binary name like `node`
 ```
 
-* Save and exit "dojo" user session
+* Exit "dojo" user session
 
 ```sh
 $ exit
@@ -401,14 +394,14 @@ $ exit
 
 ### Dependencies
 
-* With user "admin", install necessary dependencies while inside the Dojo folder
+* With user "admin", install necessary dependencies while inside the Dojo folder. 
 
 ```sh
 $ cd /data/dojo/
 $ sudo npm install --only=prod
 ```
 
-* Import Dojo scripts to the MariaDB database
+* Import Dojo scripts to the MariaDB database. Change "[ F ] MYSQL_ROOT_PASSWORD" to your password (must stay inside quotes: "password")
 
 ```sh
 $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl
@@ -504,7 +497,7 @@ http {
 $ sudo nano /etc/nginx/sites-enabled/dojo.conf
 ```
 
-* Paste following values and change "xyz.onion" under "# Tor Site Configuration" to your hostname address in the same format
+* Paste following values and change "xyz.onion" under "# Tor Site Configuration" to your newly generated hostname address
 
 ```sh
 # RaspiBolt: Dojo configuration 
