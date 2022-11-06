@@ -493,6 +493,8 @@ $ sudo systemctl restart fulcrum.service
 
 Now you can connect to your own server for ex. with Sparrow to see the banner
 
+![Fulcrum](../../../images/Fulcrum_Banner.png)
+
 ### Configure BTC RPC Explorer to Fulcrum API connection and modify the service
 
 To get address balances, either an Electrum server or an external service is necessary. Your local Fulcrum server can provide address transaction lists, balances, and more.
