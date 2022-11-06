@@ -76,7 +76,7 @@ $ sudo curl --insecure  --header "Grpc-Metadata-macaroon: $(xxd -ps -u -c 1000  
 
 {"r_hash":"IFpuzzCgqTeshc/qTo5Mgo/+R/xdHKgao0QIexKoIR8=",....,"payment_addr":"6C.....s="}
 ```
-Note that simply lifting out the content of the quoted string (beginning "ln...") immediately proceeding "payment_request" and dropping this string into an online [QR code generator](https://www.the-qrcode-generator.com/) will allow you scan and make a payment to your node with a lightning wallet like Muun or Wallet of Satoshi. Go on and give it a try, afterall you're only sending funds to yourself!
+Note that simply lifting out the content of the quoted string (beginning "ln...") immediately following "payment_request" and dropping this string into an online [QR code generator](https://www.the-qrcode-generator.com/) will allow you scan and make a payment to your node with a lightning wallet like Muun or Wallet of Satoshi. Go on and give it a try, afterall you're only sending funds to yourself!
 
 * If we wish to decode the invoice into its component parts then we can do the following. This is analogous to `lncli decodepayreq "lntb.....rfez"`. Where `lntb.....rfez` should be replaced with the full payment_request obtained previously.
 ```
