@@ -101,5 +101,5 @@ Table of contents
 * Remove the current installation
 
   ```sh
-  rm -rvf /usr/local/go/
+  sudo rm -rvf /usr/local/go/
   ```
