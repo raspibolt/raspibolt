@@ -40,7 +40,7 @@ Table of contents
 
 ---
 
-## Install GO
+## Install Go
 
 * To [install Go](https://raspibolt.org/guide/bonus/raspberry-pi/golang.html#install-go) follow the instructions provided in the bonus guide.
 
