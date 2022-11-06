@@ -628,6 +628,8 @@ $ pm2 save
 
 ```sh
 $ pm2 startup
+```
+```sh
 [PM2] Init System found: systemd
 [PM2] To setup the Startup Script, copy/paste the following command:
 sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
