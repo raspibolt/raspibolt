@@ -60,6 +60,7 @@ As user “admin”, install bash completion scripts for Bitcoin Core and all Li
 
 ```sh
 $ cd /tmp/
+$ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/bitcoind.bash-completion
 $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/bitcoin-cli.bash-completion
 $ wget https://raw.githubusercontent.com/lightningnetwork/lnd/master/contrib/lncli.bash-completion
 $ sudo cp *.bash-completion /etc/bash_completion.d/
