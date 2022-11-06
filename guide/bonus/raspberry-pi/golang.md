@@ -48,7 +48,7 @@ Table of contents
 * Install Go in the `/usr/local` directory
 
   ```sh
-  $ sudo tar -xvf go1.19.3.linux-arm64.tar.gz  -C /usr/local
+  $ sudo tar -xvf go1.19.3.linux-arm64.tar.gz -C /usr/local
   $ rm go1.19.2.linux-arm64.tar.gz
   ```
 
