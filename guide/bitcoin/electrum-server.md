@@ -36,7 +36,7 @@ Desktop wallets like [Sparrow](https://sparrowwallet.com/){:target="_blank"}, th
 
 ## Preparations
 
-Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-client.md#reduce-dbcache-after-full-sync)#prepare-nginx-reverse-proxy after full sync.
+Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-client.md#reduce-dbcache-after-full-sync) after full sync.
 
 ### Install dependencies
 
