@@ -297,8 +297,8 @@ $ nano index.js
 ```
 
 We will edit 5 parts of this file - bitcoind, database (db), API auth, jwt and indexer. 
-Change following values for each part of the file. Values have to be inside single quotes `'abc'` and you use your corresponding password 
-instead of "[ X ] PASSWORD"
+Change following values for each part of the file. Values have to be inside single quotes `'abc'` and use your corresponding password 
+instead of [ X ] PASSWORD
 
 * Find and edit these lines inside "bitcoind" part to following values
 
@@ -401,7 +401,7 @@ $ cd /data/dojo/
 $ sudo npm install --only=prod
 ```
 
-* Import Dojo scripts to the MariaDB database. Change "[ F ] MYSQL_ROOT_PASSWORD" to your password (must stay inside quotes: "password")
+* Import Dojo scripts to the MariaDB database. Change [ F ] MYSQL_ROOT_PASSWORD to your password (must stay inside quotes: "password")
 
 ```sh
 $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl
@@ -576,13 +576,19 @@ $ sudo systemctl restart nginx
 
 ## Run Dojo
 
-* With user "dojo", run Dojo
+* Switch to user "dojo" and move to Dojo directory
 
 ```sh
 $ sudo su - dojo
 $ cd /data/dojo
+```
+
+* Start Dojo
+
+```sh
 $ pm2 start pm2.config.cjs
 ```
+
 ```sh
 ┌─────┬─────────────────────────────────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
 │ id  │ name                                            │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
