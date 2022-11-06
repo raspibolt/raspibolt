@@ -445,9 +445,9 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
 
 * You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50002
 
-### (For fun!) Add banner to your Fulcrum server
+### Add banner to Fulcrum server (For fun!)
 
-You can get creative when making your server banner, for example create your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum) for your Fulcrum banner
+You can get creative when making your server banner, for example creating your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum)
 
 * Create and open "banner.txt" file inside Fulcrum directory
 
@@ -455,7 +455,9 @@ You can get creative when making your server banner, for example create your own
 $ sudo nano /data/fulcrum/banner/banner.txt
 ```
 
-* In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf#:~:text=%23%20server%20banner%20text%20file%20-%20'banner') you can find additional info/commands to making a banner. Paste your own creation into "banner.txt"
+In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf#:~:text=%23%20server%20banner%20text%20file%20-%20'banner') you can find additional info about making a banner. 
+
+* Paste your own creation into "banner.txt". Save and exit
 
 ```sh
     ____      __
@@ -470,15 +472,13 @@ bitcoind version: $DAEMON_VERSION
 
 ```
 
-* Save and exit
-
-* Open `fulcrum.conf` file and specify path to your banner
+* Open `fulcrum.conf`
 
 ```sh
 $ sudo nano /data/fulcrum/fulcrum.conf
 ```
 
-* Add the path at the end of your configuration file. Save it and exit
+* Specify path to banner at the end of your configuration file. Save and exit
 
 ```sh
 # Banner path
