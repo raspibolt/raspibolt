@@ -445,6 +445,54 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
 
 * You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50002
 
+### (For fun!) Add banner to your Fulcrum server
+
+You can get creative when making your server banner, for example create your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum) for your Fulcrum banner
+
+* Create and open "banner.txt" file inside Fulcrum directory
+
+```sh
+$ sudo nano /data/fulcrum/banner/banner.txt
+```
+
+* In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf#:~:text=%23%20server%20banner%20text%20file%20-%20'banner') you can find additional info/commands to making a banner. Paste your own creation into "banner.txt"
+
+```sh
+    ____      __
+   / __/_  __/ /___________  ______ ___
+  / /_/ / / / / ___/ ___/ / / / __ `__ \
+ / __/ /_/ / / /__/ /  / /_/ / / / / / /
+/_/  \__,_/_/\___/_/   \__,_/_/ /_/ /_/
+
+
+server version: $SERVER_VERSION
+bitcoind version: $DAEMON_VERSION
+
+```
+
+* Save and exit
+
+* Open `fulcrum.conf` file and specify path to your banner
+
+```sh
+$ sudo nano /data/fulcrum/fulcrum.conf
+```
+
+* Add the path at the end of your configuration file. Save it and exit
+
+```sh
+# Banner path
+banner = /data/fulcrum/banner/banner.txt
+```
+
+* Restart Fulcrum
+
+```sh
+$ sudo systemctl restart fulcrum.service
+```
+
+Now you can connect to your own server for ex. with Sparrow to see the banner
+
 ### Configure BTC RPC Explorer to Fulcrum API connection and modify the service
 
 To get address balances, either an Electrum server or an external service is necessary. Your local Fulcrum server can provide address transaction lists, balances, and more.
