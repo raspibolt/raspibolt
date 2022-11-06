@@ -48,7 +48,7 @@ Table of contents
 
 ### Write down your passwords 
 
-Samourai Dojo requires several new passwords. They should be unique and very secure, at least 12 characters in length. Do not use uncommon special characters, spaces, or quotes (‘ or “).
+Samourai Dojo requires you to generate several new passwords. They should be unique and very secure, at least 12 characters in length. Do not use uncommon special characters, spaces, or quotes (‘ or “).
 
 ```sh
 [ F ] MYSQL_ROOT_PASSWORD
@@ -186,7 +186,6 @@ $ tar -xvf samourai-dojo-v1.17.0.tar.gz
 * With user “admin”, update the `apt` packages index and install MariaDB
 
 ```sh
-$ sudo apt update; sudo apt full-upgrade
 $ sudo apt install mariadb-server
 ```
 
@@ -196,7 +195,7 @@ $ sudo apt install mariadb-server
 $ sudo mysql_secure_installation
 ```
 
-* Enter the following answers in the shell and exit
+* Enter the following answers in the shell and exit. Change "[ F ] MYSQL_ROOT_PASSWORD" to your password.
 
 ```sh
 Enter current password for root (enter for none): [ F ] MYSQL_ROOT_PASSWORD
@@ -248,9 +247,10 @@ $ sudo adduser --disabled-password --gecos "" dojo
 $ sudo adduser dojo bitcoin
 ```
 
-* Create the Dojo data folder
+* Create the Dojo data directory and move Dojo
 
 ```sh
+$ sudo mkdir -p /data/dojo/
 $ sudo mv /tmp/samourai-dojo-v1.17.0 /data/dojo/
 $ sudo chown -R dojo:dojo /data/dojo/
 ```
@@ -300,7 +300,11 @@ $ mv index-example.js index.js
 $ nano index.js
 ```
 
-* Find and edit these lines inside "bitcoind" part to following values, they have to be inside single quotes `'abc'`
+We will edit 5 parts of this file - bitcoind, database (db), API auth, jwt and indexer. 
+Change following values for each part of the file. Values have to be inside single quotes `'abc'` and you use your corresponding password 
+instead of "[ X ] PASSWORD"
+
+* Find and edit these lines inside "bitcoind" part to following values
 
 ```sh
 bitcoind: {
@@ -378,7 +382,7 @@ $ cd /data/dojo
 $ mv pm2.config.cjs.example pm2.config.cjs
 ```
 
-* Open config file and change "INTERPRETER" value (at the beginning)
+* Open config file and change "INTERPRETER" value to "node" (at the beginning)
 
 ```sh
 $ nano pm2.config.cjs
@@ -500,7 +504,7 @@ http {
 $ sudo nano /etc/nginx/sites-enabled/dojo.conf
 ```
 
-* Paste following values and change "xyz.onion" under "Tor Site Configuration" to your hostname address
+* Paste following values and change "xyz.onion" under "# Tor Site Configuration" to your hostname address in the same format
 
 ```sh
 # RaspiBolt: Dojo configuration 
@@ -601,7 +605,8 @@ $ pm2 start pm2.config.cjs
 
 ```sh
 $ pm2 logs mainnet
-
+```
+```sh
 7|Samourai | 2022-09-26T16:26:08Z  INFO  Tracker :  Added block header 409 (id=409)
 7|Samourai | 2022-09-26T16:26:08Z  INFO  Tracker : Beginning to process new block header.
 7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T16:26:10Z  INFO  Tracker :  Added block header 410 (id=410)
