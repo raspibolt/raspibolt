@@ -49,7 +49,7 @@ Table of contents
 
   ```sh
   $ sudo tar -xvf go1.19.3.linux-arm64.tar.gz -C /usr/local
-  $ rm go1.19.2.linux-arm64.tar.gz
+  $ rm go1.19.3.linux-arm64.tar.gz
   ```
 
 * Add the binary to `PATH` to not have to type the full path each time you use it. For a global installation of Go (that users other than “admin” can use), open /etc/profile
