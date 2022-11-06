@@ -452,7 +452,7 @@ You can get creative when making your server banner, for example creating your o
 * Create and open "banner.txt" file inside Fulcrum directory
 
 ```sh
-$ sudo nano /data/fulcrum/banner/banner.txt
+$ sudo nano /data/fulcrum/banner.txt
 ```
 
 In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf#:~:text=%23%20server%20banner%20text%20file%20-%20'banner') you can find additional info about making a banner. 
@@ -466,10 +466,8 @@ In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-ex
  / __/ /_/ / / /__/ /  / /_/ / / / / / /
 /_/  \__,_/_/\___/_/   \__,_/_/ /_/ /_/
 
-
 server version: $SERVER_VERSION
 bitcoind version: $DAEMON_VERSION
-
 ```
 
 * Open `fulcrum.conf`
@@ -482,7 +480,7 @@ $ sudo nano /data/fulcrum/fulcrum.conf
 
 ```sh
 # Banner path
-banner = /data/fulcrum/banner/banner.txt
+banner = /data/fulcrum/banner.txt
 ```
 
 * Restart Fulcrum
