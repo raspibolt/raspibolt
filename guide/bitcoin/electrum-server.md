@@ -120,7 +120,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   ```sh
   $ cargo build --locked --release
-  $ sudo cp ./target/release/electrs /usr/local/bin/
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
   ```
 
 ### Configuration
