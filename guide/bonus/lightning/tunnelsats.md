@@ -326,7 +326,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   $ curl --silent https://api.ipify.org
   ```
   
-- This should return the real clearnet IP. Compare with [whatismyip.com](https://whatismyip.com){:target="_blank"}.
+- This should return the real clearnet IP.
 - And now we return the VPN IP:
 
   ```sh
