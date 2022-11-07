@@ -449,13 +449,13 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
 
 You can get creative when making your server banner, for example creating your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum). In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf) you can find additional info about making a banner in the "# Server banner text file - 'banner'" section.
 
-* Create and open "banner.txt" file inside Fulcrum directory
+* Create and open `banner.txt` file inside Fulcrum directory
 
 ```sh
 $ sudo nano /data/fulcrum/banner.txt
 ```
 
-* Paste your own creation into "banner.txt". Save and exit
+* Paste your own creation into `banner.txt`. Save and exit
 
 ```sh
     ____      __
@@ -487,7 +487,7 @@ banner = /data/fulcrum/banner.txt
 $ sudo systemctl restart fulcrum.service
 ```
 
-Now you can see your banner when connecting to Fulcrum with supported wallet (ex. Sparrow)
+Now you should see your banner when connecting to Fulcrum with supported wallet (ex. Sparrow)
 
 ![Banner](../../../images/Fulcrum_Banner.png)
 
