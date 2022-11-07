@@ -65,6 +65,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 
   ```sh
   $ sudo su - admin
+  $ sudo apt update
   $ sudo apt install -y cgroup-tools wireguard nftables
   ```
   
