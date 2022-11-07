@@ -332,6 +332,11 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
   > v0.9.10
+  
+  # Verify the release
+  $ git verify-tag v0.9.10
+  > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
+  > [...]
 
   # Check out the most recent release (replace v0.9.10 with the actual version)
   # Should you encounter an error about files that would be overwritten use the -f argument to force the checkout
