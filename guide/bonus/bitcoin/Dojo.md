@@ -801,6 +801,8 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 ### Remove MariaDB
 
+* Remove MariaDB
+
   ```sh
   $ sudo service mysql stop
   $ sudo apt-get --purge remove "mysql*"
