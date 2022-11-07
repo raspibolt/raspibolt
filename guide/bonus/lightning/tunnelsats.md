@@ -316,24 +316,25 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 - Alright. We set the lightning process to start within the cgroup to enable traffic splitting. The following part enables and starts the wireguard service:
 
   ```sh
-  $ sudo systemctl enable wg-quick@tunnelsatsv2
-  $ sudo systemctl start wg-quick@tunnelsatsv2
+  $ sudo systemctl enable wg-quick@tunnelsatsv2.service
+  $ sudo systemctl start wg-quick@tunnelsatsv2.service
   ```
   
-- If the wireguard connection has successfully been established. We now verify if it's working as intended. Therefore we call our own IP through the tunnel and outside of it:
+- If the wireguard connection has successfully been established, we now check if it's working as intended. Therefore we verify the VPN-IP and our own clearnet IP. First, we call the real clearnet IP:
 
   ```sh
   $ curl --silent https://api.ipify.org
   ```
   
-- This should return the real clearnet IP.
+- This should return the real clearnet IP. Compare with [whatismyip.com](https://whatismyip.com){:target="_blank"}.
+- And now we return the VPN IP:
 
   ```sh
   $ cgexec -g net_cls:splitted_processes curl --silent https://api.ipify.org
   ```
   
-- And this should return the VPN IP. If it does, everything is set up correctly and we can proceed with the configuration of our lightning implementation.
-- ⚠️ Notice: Up to this step nothing has changed on your RaspiBolt setup. Lightning is still running in background, no changes have been made. You can revert these steps without restarting the lightning implementation.
+- If you get the chosen VPN's IP (verify by resolving the given VPN domain with a ping e.g.: `ping us1.tunnelsats.com`), everything is set up correctly and we can proceed with the configuration of our lightning implementation.
+- ⚠️ Notice: Up to this point nothing has changed on your RaspiBolt setup. Lightning is still running in background, no changes have been made. You can revert these steps without stopping the lightning implementation.
 
 ## Configuration
 
@@ -366,7 +367,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   
   ```ini
   [Application Options]
-  externalhosts=${vpnExternalDNS}:${vpnExternalPort}
+  externalhosts={vpnExternalDNS}:{vpnExternalPort}
   listen=0.0.0.0:9735
                                                
   [Tor]                                            
@@ -375,6 +376,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   ```
   
   Configuration for CLN (`/data/lightningd/config`):
+  
   ```ini
   # Tor
   addr=statictor:127.0.0.1:9051/torport=9735
@@ -502,8 +504,8 @@ Manual way:
 - Remove Wireguard service:
 
   ```sh
-  $ sudo systemctl stop wg-quick@tunnelsatsv2
-  $ sudo systemctl disable wg-quick@tunnelsatsv2
+  $ sudo systemctl stop wg-quick@tunnelsatsv2.service
+  $ sudo systemctl disable wg-quick@tunnelsatsv2.service
   ```
   
 - Uninstall packages:
