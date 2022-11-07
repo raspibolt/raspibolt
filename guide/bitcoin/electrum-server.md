@@ -342,7 +342,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
   # Back up the old version and update
   $ sudo cp /usr/local/bin/electrs /usr/local/bin/electrs-old
-  $ sudo mv ./target/release/electrs /usr/local/bin/
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
 
   # Update the Electrs configuration if necessary (see release notes)
   $ nano /data/electrs/electrs.conf
