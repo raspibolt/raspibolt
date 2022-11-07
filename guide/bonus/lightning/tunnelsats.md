@@ -69,7 +69,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   $ sudo apt install -y cgroup-tools wireguard nftables
   ```
   
-- After installing required components we create a tunnelsatsv2.conf file and add some additional configuration and a nftables ruleset for the traffic splitting setup. Copy the content from the obtained `tunnelsatsv2.conf` file into the newly created `tunnelsatsv2.conf` file in the home directory on your node.
+- After installing required components we create a `tunnelsatsv2.conf` file and add some additional configuration and a nftables ruleset for the traffic splitting setup. Copy the content from the obtained `tunnelsatsv2.conf` file into the newly created `tunnelsatsv2.conf` file in the home directory on your node.
 
   ```sh
   $ nano tunnelsatsv2.conf
