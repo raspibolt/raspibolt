@@ -41,7 +41,7 @@ Table of contents
 99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab. Calculate the SHA256 hash of the downloaded file. It should give an "OK" as an output.
 
   ```sh
-  $ $ echo "99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab go1.19.3.linux-arm64.tar.gz" | sha256sum --check
+  $ echo "99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab go1.19.3.linux-arm64.tar.gz" | sha256sum --check
   > go1.19.3.linux-arm64.tar.gz: OK
   ```
 
