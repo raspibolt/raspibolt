@@ -353,7 +353,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   # Update the Electrs configuration if necessary (see release notes)
   $ nano /data/electrs/electrs.conf
 
-  # Start Electrs
+  # Restart Electrs
   $ sudo systemctl restart electrs
   ```
 
