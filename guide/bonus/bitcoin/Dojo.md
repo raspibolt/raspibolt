@@ -165,7 +165,9 @@ If you are using Electrum server instead of Fulcrum, it is necessary to make fol
 * Verify that the fingerprints file has actually been signed by that developper
 
   ```sh
-  $ gpg --verify samourai-dojo-v1.17.0-fingerprints.txt.sig > gpg: assuming signed data in 'samourai-dojo-v1.17.0-fingerprints.txt' > gpg: Signature made Fri   Aug 5 13:59:09 2022 BST > gpg: using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0 > gpg: Good signature from "pavel.sevcik@protonmail.com <pavel.sevcik@protonmail.com>" [unknown] > [...]
+  $ gpg --verify samourai-dojo-v1.17.0-fingerprints.txt.sig > gpg: assuming signed data in 'samourai-dojo-v1.17.0-fingerprints.txt' > gpg: Signature made
+  Fri   Aug 5 13:59:09 2022 BST > gpg: using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0 > gpg: Good signature from "pavel.sevcik@protonmail.com
+  <pavel.sevcik@protonmail.com>" [unknown] > [...]
   ```
 
 * If the signature checks out, unpack the binary
@@ -441,7 +443,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 
   HiddenServiceDir /var/lib/tor/hsv3/
   HiddenServiceVersion 3
-  HiddenServicePort 80 127.0.0.1:80
+  HiddenServicePort 9989 127.0.0.1:9989
   ```
 
 * Restart Tor 
@@ -532,7 +534,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
 
   # Tor Site Configuration
   server {
-      listen 80;
+      listen 9989;
       server_name xyz.onion;
       server_tokens off;
 
@@ -783,7 +785,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
   #HiddenServiceDir /var/lib/tor/hsv3/
   #HiddenServiceVersion 3
-  #HiddenServicePort 80 127.0.0.1:80
+  #HiddenServicePort 9989 127.0.0.1:9989
   ```
 
   ```sh
