@@ -30,7 +30,7 @@ Table of contents
 
 ## Install Go
 
-* Check the latest stable version of the arm64 binary at https://golang.org/dl/ and download it
+* Check the latest stable version of the arm64 binary at https://golang.org/dl/ and download it.
 
   ```sh
   $ cd /tmp
@@ -38,21 +38,21 @@ Table of contents
   ```
 
 * Check on the download page what is the SHA256 checksum of the file, e.g. for the above:
-99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab. Calculate the SHA256 hash of the downloaded file. It should be the same number as the one on the website
+99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab. Calculate the SHA256 hash of the downloaded file. It should give an "OK" as an output.
 
   ```sh
-  $ sha256sum go1.19.3.linux-arm64.tar.gz
-  > 99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab  go1.19.3.linux-arm64.tar.gz
+  $ $ echo "99de2fe112a52ab748fb175edea64b313a0c8d51d6157dba683a6be163fd5eab go1.19.3.linux-arm64.tar.gz" | sha256sum --check
+  > go1.19.3.linux-arm64.tar.gz: OK
   ```
 
-* Install Go in the `/usr/local` directory
+* Install Go in the `/usr/local` directory.
 
   ```sh
   $ sudo tar -xvf go1.19.3.linux-arm64.tar.gz -C /usr/local
   $ rm go1.19.3.linux-arm64.tar.gz
   ```
 
-* Add the binary to `PATH` to not have to type the full path each time you use it. For a global installation of Go (that users other than “admin” can use), open /etc/profile
+* Add the binary to `PATH` to not have to type the full path each time you use it. For a global installation of Go (that users other than “admin” can use), open /etc/profile.
 
   ```sh
   $ sudo nano /etc/profile
@@ -70,7 +70,7 @@ Table of contents
   $ source /etc/profile
   ```
 
-* Test that Go has been properly installed by checking its version
+* Test that Go has been properly installed by checking its version.
 
   ```sh
   $ go version
@@ -79,16 +79,16 @@ Table of contents
 
 ## Update Go
 
-* Check the currently installed version of GO
+* Check the currently installed version of GO.
 
   ```sh
   $ go version
   > go version go1.19.3 linux/arm64
   ```
 
-* Check for the most recent version of Go on their site [Downloads](https://go.dev/dl/) section
+* Check for the most recent version of Go on their site [Downloads](https://go.dev/dl/) section.
 
-* Remove the current installation
+* Remove the current installation.
 
   ```sh
   sudo rm -rvf /usr/local/go/
@@ -98,7 +98,7 @@ Table of contents
 
 ## Remove Go
 
-* Remove the current installation
+* Remove the current installation.
 
   ```sh
   sudo rm -rvf /usr/local/go/
