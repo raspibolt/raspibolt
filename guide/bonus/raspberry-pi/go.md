@@ -16,7 +16,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![golang](../../../images/golang.png)
+![go](../../../images/go.png)
 
 ---
 

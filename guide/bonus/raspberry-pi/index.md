@@ -24,7 +24,7 @@ has_toc: false
 ---
 
 ## Install / Update / Uninstall common languages
-* **[Golang](golang.md)** - Install / Update / Uninstall [Golang](https://go.dev)
+* **[Go](go.md)** - Install / Update / Uninstall [Go](https://go.dev)
 
 ---
 

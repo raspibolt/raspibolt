@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[regolancer](https://github.com/rkfg/regolancer){:target="_blank"} simple LND rebalancer written in GO.
+[regolancer](https://github.com/rkfg/regolancer){:target="_blank"} simple LND rebalancer written in Go.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -36,13 +36,13 @@ Table of contents
 ## Requirements
 
 * LND
-* GO
+* Go
 
 ---
 
 ## Install Go
 
-* To install Go follow the instructions provided in the [bonus guide](../raspberry-pi/golang.md#install-go).
+* To install Go follow the instructions provided in the [bonus guide](../raspberry-pi/go.md#install-go).
 
 ---
 
