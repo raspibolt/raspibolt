@@ -164,7 +164,15 @@ Now we take the sample configuration file and add change it to our needs.
     "macaroonPath": "/home/rtl"
     "configPath": "/data/lnd/lnd.conf"
   ```
+  
+* Change `localhost` to `127.0.0.1` on the following lines to avoid errors
 
+  ```ini
+    "lnServerUrl": "https://127.0.0.1:8080"
+    "swapServerUrl": "https://127.0.0.1:8081"
+    "boltzServerUrl": "https://127.0.0.1:9003"
+  ```
+  
 * Save and exit
 
 
