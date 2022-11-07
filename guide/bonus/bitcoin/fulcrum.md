@@ -451,41 +451,41 @@ You can get creative when making your server banner, for example creating your o
 
 * Create and open `banner.txt` file inside Fulcrum directory
 
-```sh
-$ sudo nano /data/fulcrum/banner.txt
-```
+  ```sh
+  $ sudo nano /data/fulcrum/banner.txt
+  ```
 
 * Paste your own creation into `banner.txt`. Save and exit
 
-```sh
-    ____      __
-   / __/_  __/ /___________  ______ ___
-  / /_/ / / / / ___/ ___/ / / / __ `__ \
- / __/ /_/ / / /__/ /  / /_/ / / / / / /
-/_/  \__,_/_/\___/_/   \__,_/_/ /_/ /_/
-
-server version: $SERVER_VERSION
-bitcoind version: $DAEMON_VERSION
-```
+  ```sh
+      ____      __
+     / __/_  __/ /___________  ______ ___
+    / /_/ / / / / ___/ ___/ / / / __ `__ \
+   / __/ /_/ / / /__/ /  / /_/ / / / / / /
+  /_/  \__,_/_/\___/_/   \__,_/_/ /_/ /_/
+  
+  server version: $SERVER_VERSION
+  bitcoind version: $DAEMON_VERSION
+  ```
 
 * Open `fulcrum.conf`
 
-```sh
-$ sudo nano /data/fulcrum/fulcrum.conf
-```
+  ```sh
+  $ sudo nano /data/fulcrum/fulcrum.conf
+  ```
 
 * Specify path to banner at the end of your configuration file. Save and exit
 
-```sh
-# Banner path
-banner = /data/fulcrum/banner.txt
-```
+  ```sh
+  # Banner path
+  banner = /data/fulcrum/banner.txt
+  ```
 
 * Restart Fulcrum
 
-```sh
-$ sudo systemctl restart fulcrum.service
-```
+  ```sh
+  $ sudo systemctl restart fulcrum.service
+  ```
 
 Now you should see your banner when connecting to Fulcrum with supported wallet (ex. Sparrow)
 
