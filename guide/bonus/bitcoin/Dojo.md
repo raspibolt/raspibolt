@@ -295,8 +295,8 @@ $ mv index-example.js index.js
 $ nano index.js
 ```
 
-We will edit 6 parts of this file - bitcoind, database (db), ports, API auth, jwt and indexer. 
-Change following values for each part of the file. Values have to be inside single quotes `'abc'` and use your corresponding password 
+We will edit 6 parts of this file - bitcoind, database (db), ports, API auth, jwt and indexer.
+Change following values for each part of the file. Values have to be inside single quotes `'abc'` when shown, use your corresponding password 
 instead of "[ X ] PASSWORD"
 
 * Find and edit these lines inside "bitcoind" part to following values
