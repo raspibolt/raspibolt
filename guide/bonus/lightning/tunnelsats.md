@@ -125,7 +125,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 - Copy the file to the wireguard directory:
 
   ```sh
-  $ cp tunnelsatsv2.conf /etc/wireguard/tunnelsatsv2.conf
+  $ sudo cp tunnelsatsv2.conf /etc/wireguard/tunnelsatsv2.conf
   ```
 
 - Set and done! Now we are setting up the technical requirements for traffic-splitting (Tor and clearnet). To achieve this, we need to set up some systemd services and scripts to catch and mark the lightning P2P traffic. Therefore we create a cgroup. 
