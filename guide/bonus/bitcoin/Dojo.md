@@ -117,11 +117,10 @@ If you are using Electrum server instead of Fulcrum, it is necessary to make fol
 $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
 ```
 
-* Add following line at the end of the file
+* Add following line preferably under "# Connections" or at the end of the file 
 
 ```sh
-# For Fulcrum/Dojo
-zmqpubhashblock=tcp://0.0.0.0:8433
+zmqpubhashblock=tcp://0.0.0.0:8433  # For Fulcrum/Dojo
 ```
 
 * Restart Bitcoind
@@ -212,7 +211,7 @@ $ sudo mysql
 MariaDB [(none)]>
 ```
 
-* The instructions to enter in the MariaDB shell start after "MariaDB [(none)]>". Enter each command one by one including ";". Remember to change "[ G ] MYSQL_PASSWORD" in the second command
+* The instructions to enter in the MariaDB shell start after "MariaDB [(none)]>". Enter each command one by one including ";". You only change "[ G ] MYSQL_PASSWORD" to your corresponding password (must stay inside single quotes 'password')
 
 ```sh
 MariaDB [(none)]> CREATE DATABASE dojo_db;
@@ -296,9 +295,9 @@ $ mv index-example.js index.js
 $ nano index.js
 ```
 
-We will edit 5 parts of this file - bitcoind, database (db), API auth, jwt and indexer. 
+We will edit 6 parts of this file - bitcoind, database (db), ports, API auth, jwt and indexer. 
 Change following values for each part of the file. Values have to be inside single quotes `'abc'` and use your corresponding password 
-instead of [ X ] PASSWORD
+instead of "[ X ] PASSWORD"
 
 * Find and edit these lines inside "bitcoind" part to following values
 
@@ -330,6 +329,21 @@ pass: '[ G ] MYSQL_PASSWORD',
 database: 'dojo_db',
 ```
 
+* Find and edit these lines inside "ports" configuration to following values
+
+```sh
+ports: {
+
+// Port used by the API
+account: 9990,
+// Port used by pushtx API
+pushtx: 9991,
+// Port used by the tracker API
+trackerApi: 9992,
+
+[...]
+```
+
 * Find and edit these lines inside "auth" configuration to following values
 
 ```sh
@@ -353,7 +367,7 @@ jwt: {
 secret: '[ J ] NODE_JWT_SECRET',
 ```
 
-* Find and edit these lines inside "indexer" configuration to following values
+* Find and edit these lines inside "indexer" configuration to following values. Use port "50001" and "tcp" for Electrs
 
 ```sh
 * Indexer or third party service
@@ -362,9 +376,9 @@ secret: '[ J ] NODE_JWT_SECRET',
 // Values: local_bitcoind | local_indexer | third_party_explorer
 active: 'local_indexer',
 // Port
-port: 50002,
+port: 50002,  # Use 50001 for Electrs
 // Protocol for communication (TCP or TLS)
-protocol: 'tls'
+protocol: 'tls'  # Use tcp for Electrs
 ```
 
 * Save and exit
@@ -491,7 +505,7 @@ http {
 }
 ```
 
-* Create a new file called "dojo.conf" inside `sites-enabled` directory
+* Create a new file called `dojo.conf` inside "sites-enabled" directory
 
 ```sh
 $ sudo nano /etc/nginx/sites-enabled/dojo.conf
@@ -513,7 +527,7 @@ map $http_upgrade $connection_upgrade {
 
 # WebSocket server listening here
 upstream websocket {
-    server localhost:8080;
+    server localhost:9990;
 }
 
 # Tor Site Configuration
@@ -538,22 +552,22 @@ server {
 
     # PushTX server is separate, so proxy first
     location /v2/pushtx/ {
-        proxy_pass http://localhost:8081/;
+        proxy_pass http://localhost:9991/;
     }
 
     # Tracker server is separate, so proxy first
     location /v2/tracker/ {
-        proxy_pass http://localhost:8082/;
+        proxy_pass http://localhost:9992/;
     }
 
     # Proxy requests to maintenance tool
     location /admin/ {
-        proxy_pass http://localhost:8080/static/admin/;
+        proxy_pass http://localhost:9990/static/admin/;
     }
 
     # Proxy all other v2 requests to the accounts server
     location /v2/ {
-        proxy_pass http://localhost:8080/;
+        proxy_pass http://localhost:9990/;
     }
 
     # Redirect onion address to maintenance tool
