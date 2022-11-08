@@ -802,7 +802,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
   #HiddenServiceDir /var/lib/tor/hsv3/
   #HiddenServiceVersion 3
-  #HiddenServicePort 9989 127.0.0.1:9989
+  #HiddenServicePort 80 127.0.0.1:80
   ```
 
   ```sh
