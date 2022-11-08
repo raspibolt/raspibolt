@@ -453,7 +453,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 
   HiddenServiceDir /var/lib/tor/hsv3/
   HiddenServiceVersion 3
-  HiddenServicePort 9989 127.0.0.1:9989
+  HiddenServicePort 80 127.0.0.1:80
   ```
 
 * Restart Tor 
@@ -544,7 +544,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
 
   # Tor Site Configuration
   server {
-      listen 9989;
+      listen 80;
       server_name xyz.onion;
       server_tokens off;
 
