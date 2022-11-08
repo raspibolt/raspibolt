@@ -249,15 +249,15 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Create the Dojo data directory and move Dojo
 
   ```sh
-  $ sudo mkdir -p /data/dojo/
-  $ sudo mv /tmp/samourai-dojo-v1.17.0 /data/dojo/
-  $ sudo chown -R dojo:dojo /data/dojo/
+  $ sudo mkdir -p /opt/dojo/
+  $ sudo mv /tmp/samourai-dojo-v1.17.0/* /opt/dojo/
+  $ sudo chown -R dojo:dojo /opt/dojo/
   ```
 
 * Create a symlink to /home/dojo/.dojo
 
   ```sh
-  $ sudo ln -s /data/dojo /home/dojo/.dojo
+  $ sudo ln -s /opt/dojo /home/dojo/.dojo
   $ sudo chown -R dojo:dojo /home/dojo/.dojo
   ```
 
@@ -282,14 +282,14 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * With user "dojo" move to "conf" directory. Rename mainnet.js to index.js
 
   ```sh
-  $ cd /data/dojo/static/admin/conf
+  $ cd /opt/dojo/static/admin/conf
   $ mv index-mainnet.js index.js
   ```
 
 * With user "dojo" move to "keys" directory. Rename index-example.js to index.js
 
   ```sh
-  $ cd /data/dojo/keys
+  $ cd /opt/dojo/keys
   $ mv index-example.js index.js
   ```
 
@@ -392,7 +392,7 @@ instead of "[ X ] PASSWORD"
 * Still as user "dojo", move to the dojo directory, rename pm2 config file and open it
 
   ```sh
-  $ cd /data/dojo
+  $ cd /opt/dojo
   $ mv pm2.config.cjs.example pm2.config.cjs
   $ nano pm2.config.cjs
   ```
@@ -415,14 +415,22 @@ instead of "[ X ] PASSWORD"
 * With user "admin", install necessary dependencies while inside the Dojo folder. 
 
   ```sh
-  $ cd /data/dojo/
+  $ cd /opt/dojo/
   $ sudo npm install --only=prod
+  > npm WARN config only Use `--omit=dev` to omit dev dependencies from the install.
+    debug2: channel 0: window 999342 sent adjust 49234 Completed in 1131ms
+    [...]
   ```
 
 * Import Dojo scripts to the MariaDB database. Change [ F ] MYSQL_ROOT_PASSWORD to your password (must stay inside quotes: "password")
 
   ```sh
-  $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl
+  $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl -v
+  
+    --------------
+  > /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
+    --------------
+    [...]
   ```
 
 ### Tor Hidden Service
@@ -598,7 +606,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
 
   ```sh
   $ sudo su - dojo
-  $ cd /data/dojo
+  $ cd /opt/dojo
   ```
 
 * Start Dojo
