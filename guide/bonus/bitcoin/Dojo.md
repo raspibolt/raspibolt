@@ -632,6 +632,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
   $ pm2 logs mainnet
   ```
   ```sh
+  3|Samourai | Ignoring invalid configuration option passed to Connection: acquireTimeout. This is currently a warning, but in future versions of MySQL2,     an error will be thrown if you pass an invalid configuration option to a Connection
   7|Samourai | 2022-09-26T16:26:08Z  INFO  Tracker :  Added block header 409 (id=409)
   7|Samourai | 2022-09-26T16:26:08Z  INFO  Tracker : Beginning to process new block header.
   7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T16:26:10Z  INFO  Tracker :  Added block header 410 (id=410)
