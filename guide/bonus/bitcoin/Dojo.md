@@ -678,6 +678,12 @@ Now we’ll make sure Dojo starts as a service on the Raspberry Pi so it’s alw
 
   ```sh
   $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
+  > [ 'systemctl enable pm2-dojo' ]
+    [PM2] Writing init configuration in /etc/systemd/system/pm2-dojo.service
+    [PM2] Making script booting at startup...
+    [PM2] [-] Executing: systemctl enable pm2-dojo...
+    Created symlink /etc/systemd/system/multi-user.target.wants/pm2-dojo.service -> /etc/systemd/system/pm2-dojo.service.
+    [PM2] [v] Command successfully executed.
   ```
 
 ---
