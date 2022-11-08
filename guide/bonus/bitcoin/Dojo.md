@@ -109,7 +109,7 @@ Node Package Manager (npm) is the default package manager for the JavaScript run
 
 ### For Electrs
 
-If you are using Electrum server instead of Fulcrum, it is necessary to make following change inside Bitcoind configuration file. Fulcrum users can skip this step as it is already done.
+If you are using Electrs instead of Fulcrum, it is necessary to make following change inside Bitcoind configuration file. Fulcrum users can skip this step as it is already done.
 
 * Open `bitcoin.conf`
 
@@ -120,7 +120,7 @@ If you are using Electrum server instead of Fulcrum, it is necessary to make fol
 * Add following line preferably under "# Connections" or at the end of the file 
 
   ```sh
-  zmqpubhashblock=tcp://0.0.0.0:8433  # For Fulcrum/Dojo
+  zmqpubhashblock=tcp://0.0.0.0:8433  # For Dojo
   ```
 
 * Restart Bitcoind
@@ -165,9 +165,11 @@ If you are using Electrum server instead of Fulcrum, it is necessary to make fol
 * Verify that the fingerprints file has actually been signed by that developper
 
   ```sh
-  $ gpg --verify samourai-dojo-v1.17.0-fingerprints.txt.sig > gpg: assuming signed data in 'samourai-dojo-v1.17.0-fingerprints.txt' > gpg: Signature made
-  Fri   Aug 5 13:59:09 2022 BST > gpg: using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0 > gpg: Good signature from "pavel.sevcik@protonmail.com
-  <pavel.sevcik@protonmail.com>" [unknown] > [...]
+  $ gpg --verify samourai-dojo-v1.17.0-fingerprints.txt.sig 
+  > gpg: assuming signed data in 'samourai-dojo-v1.17.0-fingerprints.txt' 
+  > gpg: Signature made Fri   Aug 5 13:59:09 2022 BST 
+  > gpg: using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0 
+  > gpg: Good signature from "pavel.sevcik@protonmail.com <pavel.sevcik@protonmail.com>" [unknown] > [...]
   ```
 
 * If the signature checks out, unpack the binary
