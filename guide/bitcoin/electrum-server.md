@@ -36,7 +36,7 @@ Desktop wallets like [Sparrow](https://sparrowwallet.com/){:target="_blank"}, th
 
 ## Preparations
 
-Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-client.md#reduce-dbcache-after-full-sync)#prepare-nginx-reverse-proxy after full sync.
+Make sure that you have [reduced the database cache of Bitcoin Core](bitcoin-client.md#reduce-dbcache-after-full-sync) after full sync.
 
 ### Install dependencies
 
@@ -100,7 +100,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   ```sh
   $ mkdir /home/admin/rust
   $ cd /home/admin/rust
-  $ git clone --branch v0.9.9 https://github.com/romanz/electrs.git
+  $ git clone --branch v0.9.10 https://github.com/romanz/electrs.git
   $ cd electrs
   ```
 
@@ -108,7 +108,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   ```sh
   $ curl https://romanzey.de/pgp.txt | gpg --import
-  $ git verify-tag v0.9.9
+  $ git verify-tag v0.9.10
   > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
@@ -120,7 +120,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   ```sh
   $ cargo build --locked --release
-  $ sudo cp ./target/release/electrs /usr/local/bin/
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
   ```
 
 ### Configuration
@@ -173,7 +173,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   ```
 
   ```sh
-  Starting electrs 0.9.9 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.9 (Electrum Rust Server)!", args: [] }
+  Starting electrs 0.9.10 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.10 (Electrum Rust Server)!", args: [] }
   [2021-11-09T07:09:42.744Z INFO  electrs::metrics::metrics_impl] serving Prometheus metrics on 127.0.0.1:4224
   [2021-11-09T07:09:42.744Z INFO  electrs::server] serving Electrum RPC on 127.0.0.1:50001
   [2021-11-09T07:09:42.812Z INFO  electrs::db] "/data/electrs/db/bitcoin": 0 SST files, 0 GB, 0 Grows
@@ -327,13 +327,14 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   ```sh
   $ cd /home/admin/rust/electrs
 
-  # update the local source code and show the latest release tag (example: v0.9.9)
+  # Update the local source code and show the latest release tag (example: v0.9.10)
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
-  > v0.9.9
+  > v0.9.10
 
-  # check out the most recent release (replace v0.9.9 with the actual version)
-  $ git checkout v0.9.9
+  # Check out the most recent release (replace v0.9.10 with the actual version)
+  # Should you encounter an error about files that would be overwritten use the -f argument to force the checkout
+  $ git checkout v0.9.10
 
   # Compile the source code
   $ cargo clean
@@ -341,7 +342,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
   # Back up the old version and update
   $ sudo cp /usr/local/bin/electrs /usr/local/bin/electrs-old
-  $ sudo mv ./target/release/electrs /usr/local/bin/
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
 
   # Update the Electrs configuration if necessary (see release notes)
   $ nano /data/electrs/electrs.conf
