@@ -126,16 +126,14 @@ To run it continuously, you will need to run it in a loop or a cron.
 
   ```sh
   $ sudo su - regolancer
-  $ go install github.com/rkfg/regolancer@v1.6.x 
+  $ go install github.com/rkfg/regolancer@latest
   ```
-
-Please replace the v.1.6.x part with the version you would like to install.
 
 * Confirm if the upgrade was successfull
 
   ```sh
   $ go/bin/regolancer -v
-  Regolancer v1.6.3, built with go1.19.2
+  Regolancer v1.8.0, built with go1.19.2
   Source: https://github.com/rkfg/regolancer
   ```
 
