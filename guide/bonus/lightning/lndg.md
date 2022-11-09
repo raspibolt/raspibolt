@@ -247,7 +247,7 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
   WantedBy=sockets.target
   ```
 
-* Create a nginx configuration file for the LNDg website with a server listening on port 4890
+* Create a nginx configuration file for the LNDg website with a server listening on port 8889
 
   ```sh
   $ sudo nano /etc/nginx/sites-available/lndg-ssl.conf
