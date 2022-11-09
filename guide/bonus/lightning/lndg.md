@@ -636,7 +636,7 @@ LNDg offers the possibility to create links to blockchain and lightning explorer
 
 To preserve privacy it is better that you use your own self-hosted blockhain explorer (e.g. the BTC RPC Explorer).
 
-* Open your LNDg website at https://raspibolt.local:8889 (replace raspibolt.local by your nod's IP address if necessary)
+* Open your LNDg website at https://raspibolt.local:8889 (replace raspibolt.local by your node's IP address if necessary)
 * Click on the "Advanced settings" link
 * Scroll down to the "Update Local Settings" section
 * Find the "GUI-NetLinks" option and paste the following value:
