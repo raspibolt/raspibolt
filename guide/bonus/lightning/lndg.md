@@ -168,7 +168,7 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
 * Delete the old database from the LNDg runtime directory and instead create a symbolic link 
 
   ```sh
-  $ sudo rm /home/lndg/lndg/data/db.sqlite
+  $ sudo rm /home/lndg/lndg/data/db.sqlite3
   $ sudo ln -s /data/lndg/db.sqlite3 /home/lndg/lndg/data/db.sqlite3
   $ sudo chown -h lndg:lndg /home/lndg/lndg/data/db.sqlite3
   $ ls -la /home/lndg/lndg/data/
