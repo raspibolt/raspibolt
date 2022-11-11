@@ -79,6 +79,7 @@ For that we will create a separate user and we will be running the code as the n
   $ sudo adduser --disabled-password --gecos "" lndg
   $ sudo adduser lndg lnd
   $ sudo adduser lndg www-data
+  $ sudo adduser www-data lndg
   ```
   
 * Log in with the lndg user and create a symbolic link to the LND data directory
