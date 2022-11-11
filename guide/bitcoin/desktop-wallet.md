@@ -237,7 +237,7 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
   ```
 
 *  Verify the manifest file 
-
+  
   ```
   $ sha256sum --check sparrow-1.7.0-manifest.txt --ignore-missing
   > sparrow-server-1.7.0-aarch64.tar.gz: OK
