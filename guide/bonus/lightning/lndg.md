@@ -392,6 +392,7 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
           include /etc/nginx/conf.d/*.conf;
           include /etc/nginx/sites-enabled/*;
   }
+  ```
 
 * Create the log and sock files
 
@@ -406,6 +407,7 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
   $ sudo touch /home/lndg/lndg/lndg.sock
   $ sudo chown lndg:www-data /home/lndg/lndg/lndg.sock
   $ sudo chmod 660 /home/lndg/lndg/lndg.sock
+  ```
 
 * Test the nginx configuration
 
