@@ -144,6 +144,37 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
   $ rm /home/lndg/lndg/data/lndg-admin.txt
   ```
 
+### Make the LNDg database easy to backup
+
+LNDg stores the LN node routing statistics and settings in a SQL database. We'll move this database to our data folder to make it easier to archive or backup if desired.
+
+* Create the LNDg data directory and copy the database over
+ 
+  ```sh
+  $ sudo mkdir /data/lndg
+  $ sudo chown lndg:lndg /data/lndg
+  $ sudo rsync -rhvPog --append-verify /home/lndg/lndg/data/db.sqlite3 /data/lndg
+  ```
+
+* Check that the database is now in /data/lndg and owned by the "lndg" user
+
+  ```sh
+  $ ls -la /data/lndg
+  > drwxr-xr-x  2 lndg    lndg        4096 Nov 11 11:24 .
+  > drwxr-xr-x 14 admin   admin       4096 Nov 11 11:19 ..
+  > -rw-r--r--  1 lndg    lndg    19468288 Nov 11 11:23 db.sqlite3
+  ```
+
+* Delete the old database from the LNDg runtime directory and instead create a symbolic link 
+
+  ```sh
+  $ sudo rm /home/lndg/lndg/data/db.sqlite
+  $ sudo ln -s /data/lndg/db.sqlite3 /home/lndg/lndg/data/db.sqlite3
+  $ sudo chown -h lndg:lndg /home/lndg/lndg/data/db.sqlite3
+  $ ls -la /home/lndg/lndg/data/
+  > lrwxrwxrwx 1 lndg lndg   21 Nov 11 11:28 db.sqlite3 -> /data/lndg/db.sqlite3
+  ```
+
 ### Web server configuration
 
 * Install uwsgi within the LNDg Python virtual environment
