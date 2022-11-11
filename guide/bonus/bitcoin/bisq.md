@@ -88,7 +88,7 @@ For Bisq to connect to your Bitcoin Core node, the bloom filters have to be acti
 * Add the following line under `"whitelist=download@127.0.0.1       # for Electrs"` line to whitelist our own P2P connection.
 
   ```sh
-  whitelist=bloomfilter@0.0.0.0   # for Bisq
+  whitelist=bloomfilter@192.168.0.0/16   # for Bisq
   ```
 
 * By default `bind` configuration of Bitcoin Core is `0.0.0.0`. To connect Bisq from your personal computer in your local network, comment or delete `bind=127.0.0.1`. Save and exit.
