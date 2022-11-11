@@ -426,7 +426,8 @@ instead of "[ X ] PASSWORD"
 
   ```sh
   $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl -v
-  
+  ```
+  ```sh
     --------------
   > /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
     --------------
@@ -593,8 +594,8 @@ Configure nginx.conf for Dojo Maintanence Tool.
 
   ```sh
   $ sudo nginx -t
-  nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-  nginx: configuration file /etc/nginx/nginx.conf test is successful
+  >nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  >nginx: configuration file /etc/nginx/nginx.conf test is successful
   $ sudo systemctl restart nginx
   ```
 
@@ -663,9 +664,9 @@ Now we’ll make sure Dojo starts as a service on the Raspberry Pi so it’s alw
   $ pm2 startup
   ```
   ```sh
-  [PM2] Init System found: systemd
-  [PM2] To setup the Startup Script, copy/paste the following command:
-  sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
+  >[PM2] Init System found: systemd
+  >[PM2] To setup the Startup Script, copy/paste the following command:
+  >sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
   ```
 
 * Exit "dojo" user session
@@ -678,12 +679,14 @@ Now we’ll make sure Dojo starts as a service on the Raspberry Pi so it’s alw
 
   ```sh
   $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
-  > [ 'systemctl enable pm2-dojo' ]
-    [PM2] Writing init configuration in /etc/systemd/system/pm2-dojo.service
-    [PM2] Making script booting at startup...
-    [PM2] [-] Executing: systemctl enable pm2-dojo...
-    Created symlink /etc/systemd/system/multi-user.target.wants/pm2-dojo.service -> /etc/systemd/system/pm2-dojo.service.
-    [PM2] [v] Command successfully executed.
+  ```
+  ```sh
+  >[ 'systemctl enable pm2-dojo' ]
+  >[PM2] Writing init configuration in /etc/systemd/system/pm2-dojo.service
+  >[PM2] Making script booting at startup...
+  >[PM2] [-] Executing: systemctl enable pm2-dojo...
+  >Created symlink /etc/systemd/system/multi-user.target.wants/pm2-dojo.service -> /etc/systemd/system/pm2-dojo.service.
+  >[PM2] [v] Command successfully executed.
   ```
 
 ---
