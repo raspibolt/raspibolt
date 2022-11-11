@@ -448,28 +448,7 @@ You can now access LNDg from within your local network by browsing to https://ra
 LNDg uses a Python script (`~/lndg/jobs.py`), to gather data about your node that is then displayed in the GUI dashboard. 
 To have updated information in the GUI, it is necessary to regularly run the script to collect new data.
 
-* As user “lndg”, create a bash file to call `jobs.py` and paste the following lines. Save and exit.
-
-  ```sh
-  $ sudo su - lndg
-  $ cd lndg
-  $ nano ~/lndg/jobs.sh
-  ```
-
-  ```ini
-  #!/bin/bash
-  
-  /home/lndg/lndg/.venv/bin/python /home/lndg/lndg/jobs.py
-  ```
-
-* Make the script executable by user “lndg” then exit the "lndg" user session
-
-  ```sh
-  $ chmod u+x jobs.sh
-  $ exit
-  ```
-
-* Create a service file for the `jobs.sh` script
+* Create a systemd service file to run the LNDg `jobs.py` Python script. Save (Ctrl+o) and exit (Ctrl+x).
 
   ```sh
   $ sudo nano /etc/systemd/system/jobs-lndg.service
@@ -480,31 +459,28 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   # /etc/systemd/system/jobs-lndg.service
   
   [Unit]
-  Description=LNDg jobs
-
+  Description=LNDg backend refreshes Python script
+  
   [Service]
-  WorkingDirectory=/home/lndg/lndg
-  ExecStart=/usr/bin/bash /home/lndg/lndg/jobs.sh
+  ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/jobs.py
   User=lndg
   
   StandardError=append:/var/log/lnd_jobs_error.log
-  
-  Restart=always
-  RestartSec=30
-
-  [Install]
-  WantedBy=multi-user.target
+  RuntimeMaxSec=3600
   ```
 
-* Create a timer file to run `jobs.sh` every 20 seconds. Save and exit.
+* Create a systemd timer to activate the service every 20 seconds. Save (Ctrl+o) and exit (Ctrl+x).
 
   ```sh
   $ sudo nano /etc/systemd/system/jobs-lndg.timer
   ```
 
   ```ini
+  # RaspiBolt: systemd unit for LNDg
+  # /etc/systemd/system/jobs-lndg.timer  
+  
   [Unit]
-  Description=Run LNDg Jobs Every 20 Seconds
+  Description=Timer to activate jobs-lndg.service every 20 seconds
   After=uwsgi.service
   PartOf=uwsgi.service
 
@@ -517,70 +493,68 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   WantedBy=timers.target
   ```
 
-* Enable the timer to run the jobs service file at the specified interval. Check the status of the timer and exit with `Ctrl`+`c`.
+* Enable the timer to start at boot. Start the timer and check its status. Exit with `Ctrl`+`c`.
 
   ```sh
   $ sudo systemctl enable jobs-lndg.timer
   $ sudo systemctl start jobs-lndg.timer
   $ sudo systemctl status jobs-lndg.timer
+  > [...]
+  >   Loaded: loaded (/etc/systemd/system/jobs-lndg.timer; enabled; vendor preset: enabled)
+  >   Active: active (running) since Fri 2022-11-11 14:09:08 GMT; 56min ago
+  > [...]
+  ```
+
+* Check that the backend refreshes Python script is run every 20 seconds or so
+
+  ```sh
+  $ sudo journalctl -f -u jobs-lndg.service
+  > [...]
+  > Nov 11 14:25:24 raspibolt systemd[1]: Started LNDg backend refreshes Python script.
+  > Nov 11 14:25:27 raspibolt systemd[1]: jobs-lndg.service: Succeeded.
+  > Nov 11 14:25:27 raspibolt systemd[1]: jobs-lndg.service: Consumed 3.063s CPU time.
+  > Nov 11 14:25:44 raspibolt systemd[1]: Started LNDg backend refreshes Python script.
+  > Nov 11 14:25:47 raspibolt systemd[1]: jobs-lndg.service: Succeeded.
+  > Nov 11 14:25:47 raspibolt systemd[1]: jobs-lndg.service: Consumed 3.107s CPU time.
   ```
 
 ### Rebalancer runs
 
-LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circular rebalancing payments based on user-defined parameters.
+LNDg uses a Python script (`~/lndg/rebalancer.py`) to automatically create circular rebalancing payments based on user-defined parameters.
 
-* Log in with user "lndg" and enter the LNDg repository
-
-  ```sh
-  $ sudo su - lndg
-  $ cd lndg
-  ```
-
-* As user “lndg”, create a bash file to call `rebalance.py` and paste the following lines. Save and exit.
-
-  ```sh
-  $ nano /home/lndg/lndg/rebalancer.sh
-  ```
-  
-  ```ini
-  #!/bin/bash
-
-  /home/lndg/lndg/.venv/bin/python /home/lndg/lndg/rebalancer.py
-  ```
-* Make the script executable by user “lndg” then exit the "lndg" user session
-
-  ```sh
-  $ chmod u+x rebalancer.sh
-  $ exit
-  ```
-
-* Create a service file for the `rebalancer.sh` script
+* Create a systemd service file to run the LNDg `rebalancer.py` Python script. Save (Ctrl+o) and exit (Ctrl+x).
 
   ```sh
   $ sudo nano /etc/systemd/system/rebalancer-lndg.service
   ```
 
   ```ini
+  # RaspiBolt: systemd unit for LNDg
+  # /etc/systemd/system/rebalancer-lndg.service
+  
   [Unit]
-  Description=Run Rebalancer For LNDg
-
+  Description=LNDg rebalancer Python script
+  
   [Service]
+  ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/rebalancer.py
   User=lndg
-  Group=lndg
-  ExecStart=/usr/bin/bash /home/lndg/lndg/rebalancer.sh
-  StandardError=append:/var/log/lnd_rebalancer_error.log
+  
+  StandardError=append:/var/log/lnd_jobs_error.log
   RuntimeMaxSec=3600
   ```
 
-* Create a timer file to run `rebalancer.sh` every 20 seconds. Save and exit.
+* Create a systemd timer to activate the service every 20 seconds. Save (Ctrl+o) and exit (Ctrl+x).
 
   ```sh
   $ sudo nano /etc/systemd/system/rebalancer-lndg.timer
   ```
 
   ```ini
+  # RaspiBolt: systemd unit for LNDg
+  # /etc/systemd/system/rebalancer-lndg.timer  
+  
   [Unit]
-  Description=Run LNDg Jobs Every 20 Seconds
+  Description=Timer to activate rebalancer-lndg.service every 20 seconds
   After=uwsgi.service
   PartOf=uwsgi.service
 
@@ -593,58 +567,54 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   WantedBy=timers.target
   ```
 
-* Enable and start the timer to run the rebalancer service file at the specified interval. Check the status of the timer and exit with `Ctrl`+`c`.
+* Enable the timer to start at boot. Start the timer and check its status. Exit with `Ctrl`+`c`.
 
   ```sh
   $ sudo systemctl enable rebalancer-lndg.timer
   $ sudo systemctl start rebalancer-lndg.timer
   $ sudo systemctl status rebalancer-lndg.timer
+  > [...]
+  >   Loaded: loaded (/etc/systemd/system/rebalancer-lndg.timer; enabled; vendor preset: enabled)
+  >   Active: active (running) since Fri 2022-11-11 11:49:59 GMT; 3h 12min ago
+  > [...]
+  ```
+
+* Check that the rebalancer Python script is runnning regularly.  
+  Note: It might take a few minutes for the rebalancing script to complete its tasks.
+
+  ```sh
+  $ sudo journalctl -f -u rebalancer-lndg.service
+  > [...]
+  > Nov 11 14:52:30 raspibolt systemd[1]: rebalancer-lndg.service: Consumed 1.674s CPU time. 
+  > Nov 11 14:52:48 raspibolt systemd[1]: Started LNDg rebalancer Python script.
+  > Nov 11 14:58:50 raspibolt systemd[1]: rebalancer-lndg.service: Succeeded.
+  > Nov 11 14:58:50 raspibolt systemd[1]: rebalancer-lndg.service: Consumed 15.770s CPU time.
+  > Nov 11 14:58:50 raspibolt systemd[1]: Started LNDg rebalancer Python script.
   ```
 
 ### HTLC failure stream data
 
-* Log in with user "lndg" and enter the LNDg repository
+LNDg uses a Python script (`~/lndg/htlc_stream.py`) to keep a log of failed HTLCs on your node. The list of failed HTLCs together with some information can be seen in the GUI at https://raspibolt.local:8889/failed_htlcs. The last 10 failed HTLCs are also displayed at the bottom of the home webpage.
 
-  ```sh
-  $ sudo su - lndg
-  $ cd lndg
-  ```
-
-* As user “lndg”, create a bash file to call `htlc_stream.py` and paste the following lines. Save and exit.
-
-  ```sh
-  $ nano /home/lndg/lndg/htlc_stream.sh
-  ```
-  
-  ```ini
-  #!/bin/bash
-
-  /home/lndg/lndg/.venv/bin/python /home/lndg/lndg/htlc_stream.py
-  ```
-
-* Make the script executable by user “lndg” then exit the "lndg" user session
-
-  ```sh
-  $ chmod u+x htlc_stream.sh
-  $ exit
-  ```
-
-* Create a service file for the `htlc_stream.sh` script
+* Create a systemd service file to run the LNDg `htlc_stream.py` Python script. Save (Ctrl+o) and exit (Ctrl+x).
 
   ```sh
   $ sudo nano /etc/systemd/system/htlc-stream-lndg.service
   ```
 
   ```ini
+  # RaspiBolt: systemd unit for LNDg
+  # /etc/systemd/system/htlc-stream-lndg.service   
+    
   [Unit]
-  Description=Run HTLC Stream For LNDg
+  Description=LNDg HTLC stream Python script
   After=uwsgi.service
   PartOf=uwsgi.service
-
+  
   [Service]
+  ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/htlc_stream.py
   User=lndg
-  Group=lndg
-  ExecStart=/usr/bin/bash /home/lndg/lndg/htlc_stream.sh
+  
   StandardError=append:/var/log/lnd_htlc_stream_error.log
   Restart=on-failure
   RestartSec=60s
@@ -653,12 +623,16 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`), to automatically create circ
   WantedBy=multi-user.target
   ```
 
-* Enable, start and then check the status of the service. Exit with `Ctrl`+`c`.
+* Enable the service to start at boot. Start the service and check its status. Exit with `Ctrl`+`c`.
 
   ```sh
   $ sudo systemctl enable htlc-stream-lndg.service
   $ sudo systemctl start htlc-stream-lndg.service
   $ sudo systemctl status htlc-stream-lndg.service
+  > [...]
+  >   Loaded: loaded (/etc/systemd/system/htlc-stream-lndg.service; enabled; vendor preset: enabled)
+  >   Active: active (running) since Fri 2022-11-11 15:20:59 GMT; 1s ago
+  > [...]
   ```
 
 ---
