@@ -327,10 +327,16 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   ```sh
   $ cd /home/admin/rust/electrs
 
-  # Update the local source code and show the latest release tag (example: v0.9.10)
+  # Clean and update the local source code and show the latest release tag (example: v0.9.10)
+  $ git clean -xfd
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
   > v0.9.10
+  
+  # Verify the release
+  $ git verify-tag v0.9.10
+  > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
+  > [...]
 
   # Check out the most recent release (replace v0.9.10 with the actual version)
   # Should you encounter an error about files that would be overwritten use the -f argument to force the checkout
@@ -347,7 +353,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   # Update the Electrs configuration if necessary (see release notes)
   $ nano /data/electrs/electrs.conf
 
-  # Start Electrs
+  # Restart Electrs
   $ sudo systemctl restart electrs
   ```
 
