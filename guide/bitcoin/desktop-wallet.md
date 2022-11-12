@@ -208,13 +208,13 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
 
 ### Download Sparrow Server
 
-* Download Sparrow Server and signatures
+* Download Sparrow Server and signatures into "/tmp" directory, which is cleared on the reboot.
 
   ```
   $ cd /tmp
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-server-1.7.0-aarch64.tar.gz
-  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-1.7.0-manifest.txt
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-1.7.0-manifest.txt.asc
+  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-1.7.0-manifest.txt
   ```
   
 * Import keys that signed the release 
@@ -260,18 +260,20 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
  
 * Create a symlink in a home directory
  
-  ```
-  $ cd ~ 
-  $ sudo ln -s /usr/local/bin/sparrow/bin/Sparrow Sparrow
+  ``` 
+  $ sudo ln -s /usr/local/bin/Sparrow/bin/Sparrow /home/admin/Sparrow
   ```
  
 ### Run Sparrow 
 
-* You can run Sparrow from your home directory 
+* You can run Sparrow from your home directory
 
   ```
+  $ cd ~
   $ ./Sparrow
   ```
+  
+![Sparrow_Terminal](../../images/sparrow-terminal.png)
   
 * In "wallet" tab you can create or restore your wallet
 
@@ -283,8 +285,23 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
   $ ./Sparrow
   ```
 
-* Go to "preferences > private electrum > continue"
-* Fill in values and test your connection
+* Go to "preferences > server > private electrum > continue"
+* Set values according to your electrum server implementation and test connection
+
+  ```
+  # Use for Fulcrum
+  URL: 127.0.0.1
+  Port: 50002
+  Use SSL? Yes
+  
+  # Use for Electrs
+  URL: 127.0.0.1
+  Port: 50001
+  ```
+  
+* Test connection
+
+![Sparrow_Test](../../images/sparrow-server-test.png)
  
 ---
 
