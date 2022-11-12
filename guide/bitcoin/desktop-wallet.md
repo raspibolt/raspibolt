@@ -301,7 +301,7 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
   
 * Test connection
 
-![Sparrow_Test](../../images/sparrow-server-test.png)
+![Sparrow_Test](../../images/sparrow-test.png)
  
 ---
 
