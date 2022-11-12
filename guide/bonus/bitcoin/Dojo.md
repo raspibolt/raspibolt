@@ -688,7 +688,7 @@ Now we’ll make sure Dojo starts as a service on the Raspberry Pi so it’s alw
 ## Connect to Dojo
 
 ### Erase Samourai Wallet
-To connect, you need to delete and restore already existing samourai wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Following steps are recommended!
+To connect, you need to delete and restore already existing Samourai Wallet. Backend configuration can only be modified at the start of wallet creation/restore process. Following steps are recommended!
 
 Check Mnemonic Phrase
 * Navigate to the settings by tapping `⋮` on the top right of the Samourai toolbar and then tapping `Settings`
