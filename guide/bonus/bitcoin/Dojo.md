@@ -279,7 +279,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 ### index.js
 
-* With user "dojo" move to "conf" directory. Rename mainnet.js to index.js
+* With user "dojo" move to "conf" directory. Rename `index-mainnet.js` to `index.js`
 
   ```sh
   $ cd /opt/dojo/static/admin/conf
