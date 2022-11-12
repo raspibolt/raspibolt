@@ -416,10 +416,7 @@ instead of "[ X ] PASSWORD"
 
   ```sh
   $ cd /opt/dojo/
-  $ sudo npm install --only=prod
-  > npm WARN config only Use `--omit=dev` to omit dev dependencies from the install.
-    debug2: channel 0: window 999342 sent adjust 49234 Completed in 1131ms
-    [...]
+  $ sudo npm install --omit=dev
   ```
 
 * Import Dojo scripts to the MariaDB database. Change [ F ] MYSQL_ROOT_PASSWORD to your password (must stay inside quotes: "password")
