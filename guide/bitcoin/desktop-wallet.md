@@ -203,8 +203,10 @@ You're set! Sparrow Wallet is now configured to use the Tor proxy when fetching 
 
 ---
 
-## (Optional) Sparrow headless
+# Sparrow headless
 Sparrow server is a stripped down version of Sparrow that can be run on systems without displays. It's primarily intended as a configuration utility for running Sparrow as a server daemon
+
+## Installation
 
 ### Download Sparrow Server
 
@@ -264,7 +266,7 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
   $ sudo ln -s /usr/local/bin/Sparrow/bin/Sparrow /home/admin/Sparrow
   ```
  
-### Run Sparrow 
+## Run Sparrow 
 
 * You can run Sparrow from your home directory
 
@@ -297,6 +299,7 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
   # Use for Electrs
   URL: 127.0.0.1
   Port: 50001
+  Use SSL? No
   ```
   
 * Test connection
