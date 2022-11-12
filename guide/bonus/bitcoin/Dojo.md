@@ -473,7 +473,8 @@ Configure nginx.conf for Dojo Maintanence Tool.
   $ sudo nano /etc/nginx/nginx.conf
   ```
 
-* Add following block at the end of your configuration file
+* Add following block at the end of your configuration file.  
+_Note:_ If you're running an app that also uses the nginx web server (_e.g._ Homer, Mempool etc), the http context is already present in `nginx.conf`. Simply edit it to match the options below.
 
   ```sh
   # RaspiBolt: Dojo configuration 
