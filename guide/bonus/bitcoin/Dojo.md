@@ -779,7 +779,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 * Remove Dojo directory and Dojo user
 
   ```sh
-  $ sudo rm -R /data/dojo
+  $ sudo rm -R /opt/dojo
   $ sudo userdel -r dojo
   ```
 
