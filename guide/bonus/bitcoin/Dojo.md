@@ -445,10 +445,6 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 
   ```sh
   # Dojo hidden service
-  SocksPort 9050
-  SocksPolicy accept 127.0.0.1
-  SocksPolicy reject *
-
   HiddenServiceDir /var/lib/tor/hsv3/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:80
