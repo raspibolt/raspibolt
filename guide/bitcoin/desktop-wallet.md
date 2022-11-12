@@ -203,7 +203,7 @@ You're set! Sparrow Wallet is now configured to use the Tor proxy when fetching 
 
 ---
 
-# Sparrow headless
+# Sparrow terminal
 Sparrow server is a stripped down version of Sparrow that can be run on systems without displays. It's primarily intended as a configuration utility for running Sparrow as a server daemon
 
 ## Installation
