@@ -237,8 +237,6 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
     gpg:          There is no indication that the signature belongs to the owner.
     Primary key fingerprint: D4D0 D320 2FC0 6849 A257  B38D E946 1833 4C67 4B40
   ```
-
-*  Verify the manifest file 
   
   ```
   $ sha256sum --check sparrow-1.7.0-manifest.txt --ignore-missing
@@ -253,14 +251,14 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
 
 ### Configuration 
 
-* Move Sparrow 
+* Create a new directory for Sparrow and move data files there
 
   ```
   $ sudo mkdir -p /usr/local/bin/sparrow
   $ sudo mv /tmp/Sparrow/* /usr/local/bin/sparrow
   ```
  
-* Create a symlink in a home directory
+* Create a symlink in the home directory for a shortcut to open wallet
  
   ``` 
   $ sudo ln -s /usr/local/bin/Sparrow/bin/Sparrow /home/admin/Sparrow
