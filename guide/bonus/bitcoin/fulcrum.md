@@ -443,7 +443,7 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
   > abcdefg..............xyz.onion
   ```
 
-* You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50002
+* You should now be able to connect to your Fulcrum server remotely via Tor using your SSL hostname and port 50002
 
 ### Add TCP (optional)
 
@@ -496,7 +496,7 @@ We will generate new Tor address for TCP
   > abcdefg..............xyz.onion
   ```
   
-* You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50001
+* You should now be able to connect to your Fulcrum server remotely via Tor using your TCP hostname and port 50001
 
 ### Add banner to Fulcrum server (For fun!)
 
