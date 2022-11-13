@@ -445,6 +445,61 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
 
 * You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50002
 
+### Add TCP (optional)
+
+RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](https://bluewallet.io/) do not support SSL over Tor. You may as well need to use TCP for other reasons.
+
+* Open `fulcrum.conf` file
+
+  ```
+  $ sudo nano /data/fulcrum/fulcrum.conf
+  ```
+
+* Add following line to the configuration file. Save and exit.
+
+  ```
+  tcp = 0.0.0.0:50001
+  ```
+  
+* Restart Fulcrum
+ 
+  ```
+  $ sudo systemctl restart fulcrum.service
+  ```
+  
+* Allow TCP port in UFW
+
+  ```
+  $ sudo ufw allow 50001/tcp comment 'allow Fulcrum TCP'
+  ```
+
+### Add Tor for TCP (optional)
+
+We will generate new Tor address for TCP
+
+* Open `torrc` file and add following lines. Save and exit
+
+  ```
+  $ sudo nano /etc/tor/torrc
+  ```
+  ```
+  ############### This section is just for location-hidden services ###
+  # Hidden Service Fulcrum TCP
+  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_tcp/
+  HiddenServiceVersion 3
+  HiddenServicePort 50001 127.0.0.1:50001
+  ```
+  
+* Reload Tor configuration and get your connection address
+
+  ```sh
+  $ sudo systemctl reload tor
+  $ sudo cat /var/lib/tor/hidden_service_fulcrum_tcp/hostname
+  > abcdefg..............xyz.onion
+  ```
+  
+* You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50001
+
 ### Add banner to Fulcrum server (For fun!)
 
 You can get creative when making your server banner, for example creating your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum). In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf) you can find additional info about making a banner in the "# Server banner text file - 'banner'" section.
