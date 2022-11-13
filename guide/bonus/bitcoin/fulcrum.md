@@ -430,7 +430,7 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
   ```sh
   ############### This section is just for location-hidden services ###
   # Hidden Service Fulcrum SSL
-  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
+  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_ssl/
   HiddenServiceVersion 3
   HiddenServicePort 50002 127.0.0.1:50002
   ```
@@ -439,7 +439,7 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
 
   ```sh
   $ sudo systemctl reload tor
-  $ sudo cat /var/lib/tor/hidden_service_fulcrum/hostname
+  $ sudo cat /var/lib/tor/hidden_service_fulcrum_ssl/hostname
   > abcdefg..............xyz.onion
   ```
 
@@ -455,14 +455,12 @@ RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](ht
   $ sudo nano /data/fulcrum/fulcrum.conf
   ```
 
-* Add following line to the configuration file. Save and exit.
+* Add following line to the configuration file, save and exit. Restart Fulcrum
 
   ```
+  # Add in config
   tcp = 0.0.0.0:50001
   ```
-  
-* Restart Fulcrum
- 
   ```
   $ sudo systemctl restart fulcrum.service
   ```
@@ -473,7 +471,7 @@ RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](ht
   $ sudo ufw allow 50001/tcp comment 'allow Fulcrum TCP'
   ```
 
-### Add Tor for TCP (optional)
+### Remote access over Tor for TCP (optional)
 
 We will generate new Tor address for TCP
 
