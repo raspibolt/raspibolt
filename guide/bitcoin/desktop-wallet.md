@@ -28,8 +28,9 @@ We install [Sparrow Wallet](https://github.com/sparrowwallet/sparrow){:target="_
 Sparrow Wallet is an excellent software wallet to use with your RaspiBolt: it's reliable and transparently shows what it's doing under the hood.
 
 You can also use the following alternatives instead of Sparrow Wallet, according to your preferences and needs:
+
 * [BitBoxApp](../bonus/bitcoin/bitboxapp.md): wallet for users of BitBox hardware wallets
-* [Electrum](../bonus/bitcoin/electrum.md): a well-established poweruser wallet
+* [Electrum Wallet Desktop](../bonus/bitcoin/electrum-wallet-desktop.md): a well-established poweruser wallet
 * [Ledger Live](https://support.ledger.com/hc/en-us/articles/360017551659-Setting-up-your-Bitcoin-full-node?docs=true){:target="_blank"}: wallet for users of Ledger hardware wallets (this wallet connects directly to Bitcoin Core)
 * [Specter Desktop](../bonus/bitcoin/specter-desktop.md): a multisig-focused wallet (this wallet connects directly to Bitcoin Core)
 * [Trezor Suite](https://blog.trezor.io/connecting-your-wallet-to-a-full-node-edf56693b545?gi=d1e285f3d3c5){:target="_blank"}: wallet for users of Trezor hardware wallets
@@ -81,6 +82,7 @@ We now configure Sparrow to connect to your node within your local network.
 ![Sparrow connect to Electrs](../../images/sparrow-electrum-no-proxy.png)
 
 If there is a connection error message, try the following troubleshooting:
+
 * Make sure that your computer is not connected to any "guest" WiFi network at home. A "guest" WiFi network prevents the computer to connect to any other devices on the local network, such as your node.
 * If you have used Sparrow Wallet before on this computer, try to connect again after deleting the existing certificates that are stored within the `certs` folder:
   * On Windows: `C:\Users\<username>\AppData\Roaming\Sparrow\certs`
@@ -210,4 +212,3 @@ Sparrow will automatically notify you when an update is available. Simply instal
 ---
 
 Next: [Blockchain explorer >>](blockchain-explorer.md)
-

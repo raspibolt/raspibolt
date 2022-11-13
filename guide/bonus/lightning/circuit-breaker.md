@@ -41,52 +41,7 @@ Table of contents
 
 ## Install Go
 
-* Check the latest stable version of the arm64 binary at [https://golang.org/dl/](https://golang.org/dl/){:target="_blank"} and download it
-
-  ```sh
-  $ cd /tmp
-  $ wget https://go.dev/dl/go1.17.8.linux-arm64.tar.gz
-  ```
-  
-* Check on the download page what is the SHA256 checksum of the file, e.g. for above: 57a9171682e297df1a5bd287be056ed0280195ad079af90af16dcad4f64710cb.
-Calculate the SHA256 hash of the downloaded file, it should be the same number as the one on the website
-  
-  ```sh 
-  $ sha256sum go1.17.8.linux-arm64.tar.gz
-  > 57a9171682e297df1a5bd287be056ed0280195ad079af90af16dcad4f64710cb  go1.17.8.linux-arm64.tar.gz
-  ```
-  
-* Install Go in the `/usr/local` directory
-  
-  ```sh 
-  $ sudo tar -xvf go1.17.8.linux-arm64.tar.gz -C /usr/local
-  $ rm go1.17.8.linux-arm64.tar.gz
-  ```
-
-* Add the binary to `PATH` to not have to type the full path each time you are using it. For a global installation of Go (that users other than "admin" can use), open `/etc/profile`
-  
-  ```sh
-  $ sudo nano /etc/profile
-  ```
-
-* Add the following line at the end of the file, save and exit
-  
-  ```ini
-  export PATH=$PATH:/usr/local/go/bin
-  ```
-  
-* To make the changes effective immediately (and not wait for the next login), execute them from the profile using the following command
-  
-  ```sh
-  $ source /etc/profile
-  ```
-
-* Test that Go has been properly installed by checking its version
-
-  ```sh
-  $ go version
-  > go version go1.17.8 linux/arm64
-  ```
+* To [install Go](../raspberry-pi/go.md#install-go) follow the instructions provided in the bonus guide.
 
 ---
   
@@ -161,26 +116,6 @@ By default, Circuit Breaker reads its configuration file located at `~/.circuitb
        #peers:
        #- 035cb74e3232e98ba6a866c485f1076dca5e42147dc1e3fbf9ea7241d359988e4d
    ```
-  
-* If you don't want to use the hold fees simulation, uncomment the entire section
-
-  ```ini
-  #holdFee:
-    # Set the base hold fee to 500 sat per hour to compensate for the usage of an
-    # htlc slot. If an imaginary channel of 1 BTC would have all of its 483 slots
-    # occupied for a full year, the total hold fee would be 24 * 365 * 483 =
-    # 4231080 sats. This translates to a yearly return on the staked bitcoin of
-    # ~4.2%.
-  #  baseSatPerHr: 1
-    # Set the hold fee rate to 5 parts per million. If an imaginary channel of 1
-    # BTC would have all of its funds time-locked for a full year, the total hold
-    # fee would be 24 * 365 * 100000000 * 5 / 1000000 = 4380000. This translates
-    # to a yearly return on the staked bitcoin of ~4.4%.
-  #  ratePpmPerHr: 5
-
-    # Report (virtually) collected hold fees once per hour.
-  #  reportingInterval: 1h*
-  ```
 
 * Once edited, save and exit.
 

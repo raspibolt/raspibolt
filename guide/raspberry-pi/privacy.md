@@ -47,8 +47,46 @@ Each node decrypts only the layer of information addressed to it, learning only 
 
 Log in to your RaspiBolt via SSH as user "admin" and install Tor.
 
+* Install apt-transport-https
+
   ```sh
-  $ sudo apt install tor
+  $ sudo apt install apt-transport-https
+  ```
+
+* Create a new file called `tor.list`
+  
+  ```sh
+  $ sudo nano /etc/apt/sources.list.d/tor.list
+  ```
+
+* Add the following entries. Save and exit
+
+  ```sh
+  deb     [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main
+  deb-src [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main
+  ```
+
+* Then up to `"root"` user temporarily to add the gpg key used to sign the packages by running the following command at your command prompt. Return to `admin` using `exit` command
+
+  ```sh
+  $ sudo su
+  $ wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --dearmor | tee /usr/share/keyrings/tor-archive-keyring.gpg >/dev/null
+  $ exit
+  ```
+
+* Install tor and tor debian keyring
+
+   ```sh
+   $ sudo apt update
+   $ sudo apt install tor deb.torproject.org-keyring
+   ```
+
+* Check Tor has been correctly installed
+
+  ```sh
+  $ tor --version
+  > Tor version 0.4.7.10.
+  [...]
   ```
 
 ## Configuration
@@ -57,7 +95,7 @@ Bitcoin Core will communicate directly with the Tor daemon to route all traffic 
 We need to enable Tor to accept instructions through its control port, with the proper authentication.
 
 * Modify the Tor configuration by uncommenting (removing the `#`) or adding the following lines.
-  Save and exit
+Save and exit
 
   ```sh
   $ sudo nano /etc/tor/torrc
@@ -76,6 +114,19 @@ We need to enable Tor to accept instructions through its control port, with the 
 
   ```sh
   $ sudo systemctl reload tor
+  ```
+
+* Ensure that the Tor service is working and listening at the default ports `9050` and `9051`
+
+  ```sh
+  $ sudo ss -tulpn | grep tor | grep LISTEN
+  ```
+
+Expected output:
+
+  ```sh
+  tcp   LISTEN 0      4096           127.0.0.1:9050       0.0.0.0:*    users:(("tor",pid=1847,fd=6))
+  tcp   LISTEN 0      4096           127.0.0.1:9051       0.0.0.0:*    users:(("tor",pid=1847,fd=7))
   ```
 
 * Check the systemd journal to see Tor real time updates output logs.
@@ -97,7 +148,7 @@ This makes "calling home" very easy, without the need to configure anything on y
 ### SSH server
 
 * Add the following three lines in the "location-hidden services" section of the `torrc` file.
-  Save and exit
+Save and exit
 
   ```sh
   $ sudo nano /etc/tor/torrc
