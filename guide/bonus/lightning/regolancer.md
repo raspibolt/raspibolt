@@ -62,7 +62,7 @@ Table of contents
 
   $ ln -s /data/lnd /home/regolancer/.lnd
 
-  $ go install github.com/rkfg/regolancer@v1.6.3
+  $ go install github.com/rkfg/regolancer@latest
   ```
 Note: Adjust the "regolancer@v1.6.3" part from the commands below to the actual version you have installed.
 
@@ -70,7 +70,7 @@ Note: Adjust the "regolancer@v1.6.3" part from the commands below to the actual 
 
   ```sh
   $ go/bin/regolancer -v
-  Regolancer v1.6.3, built with go1.19.2
+  Regolancer v1.9.0, built with go1.19.2
   Source: https://github.com/rkfg/regolancer
   ```
 
@@ -133,7 +133,7 @@ To run it continuously, you will need to run it in a loop or a cron.
 
   ```sh
   $ go/bin/regolancer -v
-  Regolancer v1.8.0, built with go1.19.2
+  Regolancer v1.9.0, built with go1.19.2
   Source: https://github.com/rkfg/regolancer
   ```
 
