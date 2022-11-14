@@ -16,11 +16,11 @@ has_toc: false
 [Samourai Dojo](https://code.samourai.io/dojo/samourai-dojo){:target="_blank"} is the backing server for Samourai Wallet. Provides HD account & loose addresses (BIP47) balances & transactions lists. 
 Provides unspent output lists to the wallet. PushTX endpoint broadcasts transactions through the backing bitcoind node.
 
-Difficulty: Medium
+Difficulty: Medium 
 {: .label .label-yellow }
 
-Status: Not tested v3
-{: .label .label-yellow }
+Status: Tested v3 
+{: .label .label-green }
 
 ![dojo_profile](../../../images/dojo_profile.png)
 
