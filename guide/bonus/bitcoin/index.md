@@ -39,8 +39,6 @@ has_toc: false
 
 * **[Samourai Dojo](Dojo.md){:target="_blank"}** - Personal backend for your Samourai Wallet
 
-* **[Samourai Dojo](Dojo.md){:target="_blank"}** - Personal backend for your Samourai Wallet
-
 ---
 
 ## Decentralized exchange
