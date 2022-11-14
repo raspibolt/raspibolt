@@ -89,9 +89,10 @@ Follow this guide [Configure “No Password SSH Keys Authentication” with PuTT
   ```sh
   $ sudo nano /etc/ssh/sshd_config
   ```
+
   ```sh
   PasswordAuthentication no
-  ChallengeResponseAuthentication no
+  KbdInteractiveAuthentication no
   ```
 
 * Restart the SSH daemon, then exit your session
@@ -204,6 +205,7 @@ session required                        pam_limits.so
 $ sudo nano /etc/pam.d/common-session-noninteractive
 session required                        pam_limits.so
 ```
+
 ---
 
 ## Prepare NGINX reverse proxy
