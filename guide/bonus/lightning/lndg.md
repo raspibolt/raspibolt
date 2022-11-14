@@ -616,7 +616,7 @@ LNDg uses a Python script (`~/lndg/htlc_stream.py`) to keep a log of failed HTLC
   User=lndg
   
   StandardError=append:/var/log/lnd_htlc_stream_error.log
-  Restart=on-failure
+  Restart=always
   RestartSec=60s
   
   [Install]
