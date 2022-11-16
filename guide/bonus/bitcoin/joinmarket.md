@@ -88,12 +88,13 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 
 ## Installation
 
-* As user "joinmarket", download the latest release, checksums and signature. First check for the latest release on the [Releases page](https://github.com/JoinMarket-Org/joinmarket-clientserver/releases) and update version numbers as you go if needed.
+* As user "joinmarket", download the latest release, signature and timestamp. First check for the latest release on the [Releases page](https://github.com/JoinMarket-Org/joinmarket-clientserver/releases) and update version numbers as you go if needed.
 
   ```sh
   $ cd /tmp
   $ wget -O joinmarket-clientserver-0.9.8.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v0.9.8.tar.gz
   $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v0.9.8/joinmarket-clientserver-0.9.8.tar.gz.asc
+  $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v0.9.8/joinmarket-clientserver-0.9.8.tar.gz.asc.ots
   ```
 
 * Get the PGP key of JoinMarket developer Adam Gibson.
@@ -120,7 +121,15 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   > Primary key fingerprint: 2B6F C204 D9BF 332D 062B  461A 1410 01A1 AF77 F20B
   ```
 
-* If the signature checks out, unpack and install JoinMarket. The install script will take about 5 minutes to run.
+* Check the timestamp of the signature
+
+  ```sh
+  $ ots verify joinmarket-clientserver-0.9.8.tar.gz.asc.ots -f joinmarket-clientserver-0.9.8.tar.gz.asc
+  > [...]
+  > Success! Bitcoin block 754200 attests existence as of 2022-09-15 CET
+  ```
+
+* If the signature and timestamp check out, unpack and install JoinMarket. The install script will take about 5 minutes to run.
 
   ```sh
   $ tar -xvzf joinmarket-clientserver-0.9.8.tar.gz -C /home/joinmarket/
