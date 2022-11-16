@@ -79,7 +79,7 @@ We can also check that the manifest file was in existence around the time of the
   ```sh
   $ ots verify manifest-guggero-v0.15.4-beta.sig.ots -f manifest-guggero-v0.15.4-beta.sig
   > [...]
-  > Success! Bitcoin block 759141 attests existence as of 2022-11-01 BST
+  > Success! Bitcoin block 761269 attests existence as of 2022-11-01 CET
   ```
 
 * Check that the date of the timestamp (here 2022-11-01) is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary (2022-11-01).
