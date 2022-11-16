@@ -28,13 +28,14 @@ The installation of LND is straight-forward, but the application is quite powerf
 
 We'll download, verify and install LND.
 
-* As user "admin", download the application, checksums and signature
+* As user "admin", download the application and the checksums file (.txt) with its signature (.sig) and timestamp (.ots)
 
   ```sh
   $ cd /tmp
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/lnd-linux-arm64-v0.15.4-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/manifest-v0.15.4-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/manifest-guggero-v0.15.4-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.3-beta/manifest-roasbeef-v0.15.4-beta.sig.ots
   ```
 
 * Get the public key from the LND developer, [Oliver Gugger](https://keybase.io/guggero){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
