@@ -21,8 +21,6 @@ Difficulty: Medium
 Status: Tested v3 
 {: .label .label-green }
 
-![Whirlpool](../../../images/whirlpool_logo.png)
-
 ---
 
 Table of contents
@@ -42,7 +40,7 @@ Table of contents
 # Sparrow terminal
 Sparrow server is a stripped down version of Sparrow that can be run on systems without displays. It's primarily intended as a configuration utility for running Sparrow as a server daemon
 
-![Sparrow_Terminal-logo](../../images/sparrow-terminal-logo.jpg)
+![Sparrow_Terminal-logo](../../../images/sparrow-terminal-logo.jpg)
 
 ## Installation
 
@@ -111,7 +109,7 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
   $ ./Sparrow
   ```
   
-![Sparrow_Terminal](../../images/sparrow-terminal.png)
+![Sparrow_Terminal](../../../images/sparrow-terminal.png)
   
 * In "wallet" tab you can create or restore your wallet
 
@@ -138,6 +136,6 @@ Sparrow server is a stripped down version of Sparrow that can be run on systems 
   Use SSL? No
   ```
   
-![Sparrow_Test](../../images/sparrow-test.png)
+![Sparrow_Test](../../../images/sparrow-test.png)
  
 ---
