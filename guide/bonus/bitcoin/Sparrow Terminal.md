@@ -33,12 +33,6 @@ Table of contents
 
 ---
 
-## Requirements
-
-* 
-
----
-
 ## Installation
 
 ### Download Sparrow Server
@@ -87,14 +81,20 @@ Table of contents
 * Create a new directory for Sparrow and move data files there
 
   ```
-  $ sudo mkdir -p /usr/local/bin/sparrow
-  $ sudo mv /tmp/Sparrow/* /usr/local/bin/sparrow
+  $ sudo mkdir -p /opt/sparrow-terminal
+  $ sudo mv /tmp/Sparrow/* /opt/sparrow-terminal
   ```
  
-* Create a symlink in the home directory for a shortcut to open wallet
+* Create a symlink to RaspiBolts default launcher folder
  
   ``` 
-  $ sudo ln -s /usr/local/bin/Sparrow/bin/Sparrow /home/admin/Sparrow
+  $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /usr/local/bin/Sparrow
+  ```
+
+* Create a symlink to your home folder for easier access 
+
+  ``` 
+  $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /home/admin/Sparrow
   ```
  
 ## Run Sparrow 
@@ -110,7 +110,7 @@ Table of contents
   
 * In "wallet" tab you can create or restore your wallet
 
-### (optional) Connect Sparrow to your backend
+### Connect Sparrow to your backend (optional)
 
 * While in a home directory, open Sparrow Wallet
 
@@ -120,18 +120,7 @@ Table of contents
 
 * Go to "preferences > server > private electrum > continue"
 * Set values according to your electrum server implementation and test connection
-
-  ```
-  # Use for Fulcrum
-  URL: 127.0.0.1
-  Port: 50002
-  Use SSL? Yes
-  
-  # Use for Electrs
-  URL: 127.0.0.1
-  Port: 50001
-  Use SSL? No
-  ```
+* Because you are running electrum server on the same machine as wallet, connect using `127.0.0.1:port`
   
 ![Sparrow_Test](../../../images/sparrow-test.png)
  
