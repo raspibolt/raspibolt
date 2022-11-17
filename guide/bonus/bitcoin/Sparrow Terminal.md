@@ -21,6 +21,8 @@ Difficulty: Medium
 Status: Tested v3 
 {: .label .label-green }
 
+![Sparrow_Terminal-logo](../../../images/sparrow-terminal-logo.jpg)
+
 ---
 
 Table of contents
@@ -36,11 +38,6 @@ Table of contents
 * 
 
 ---
-
-# Sparrow terminal
-Sparrow server is a stripped down version of Sparrow that can be run on systems without displays. It's primarily intended as a configuration utility for running Sparrow as a server daemon
-
-![Sparrow_Terminal-logo](../../../images/sparrow-terminal-logo.jpg)
 
 ## Installation
 
