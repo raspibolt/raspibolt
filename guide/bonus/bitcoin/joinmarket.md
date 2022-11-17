@@ -84,7 +84,7 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   $ ln -s /data/joinmarket /home/joinmarket/.joinmarket
   ```
   
-* Create a symbolic link pointingto the Bitcoin data directory for the OTS client to verify the timestamp
+* Create a symbolic link pointing to the Bitcoin data directory for the OTS client to verify the timestamp
 
   ```sh
   $ ln -s /data/bitcoin /home/joinmarket/.bitcoin
