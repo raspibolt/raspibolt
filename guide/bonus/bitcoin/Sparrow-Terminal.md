@@ -125,6 +125,18 @@ Table of contents
 * Go to "preferences > server > private electrum > continue"
 * Set values according to your electrum server implementation and test connection
 * Because you are running electrum server on the same machine as wallet, connect using `127.0.0.1:port`
+
+  ```
+  # For Electrs (default)
+  URL: 127.0.0.1
+  Port: 50001
+  Use SSL: No
+  
+  # For Fulcrum
+  URL: 127.0.0.1
+  Port: 50002
+  Use SSL: Yes
+  ```
   
 ![Sparrow_Test](../../../images/sparrow-test.png)
 
