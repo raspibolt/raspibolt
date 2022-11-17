@@ -41,52 +41,7 @@ Table of contents
 
 ## Install Go
 
-* Check the latest stable version of the arm64 binary at [https://golang.org/dl/](https://golang.org/dl/){:target="_blank"} and download it
-
-  ```sh
-  $ cd /tmp
-  $ wget https://go.dev/dl/go1.17.8.linux-arm64.tar.gz
-  ```
-  
-* Check on the download page what is the SHA256 checksum of the file, e.g. for above: 57a9171682e297df1a5bd287be056ed0280195ad079af90af16dcad4f64710cb.
-Calculate the SHA256 hash of the downloaded file, it should be the same number as the one on the website
-  
-  ```sh 
-  $ sha256sum go1.17.8.linux-arm64.tar.gz
-  > 57a9171682e297df1a5bd287be056ed0280195ad079af90af16dcad4f64710cb  go1.17.8.linux-arm64.tar.gz
-  ```
-  
-* Install Go in the `/usr/local` directory
-  
-  ```sh 
-  $ sudo tar -xvf go1.17.8.linux-arm64.tar.gz -C /usr/local
-  $ rm go1.17.8.linux-arm64.tar.gz
-  ```
-
-* Add the binary to `PATH` to not have to type the full path each time you are using it. For a global installation of Go (that users other than "admin" can use), open `/etc/profile`
-  
-  ```sh
-  $ sudo nano /etc/profile
-  ```
-
-* Add the following line at the end of the file, save and exit
-  
-  ```ini
-  export PATH=$PATH:/usr/local/go/bin
-  ```
-  
-* To make the changes effective immediately (and not wait for the next login), execute them from the profile using the following command
-  
-  ```sh
-  $ source /etc/profile
-  ```
-
-* Test that Go has been properly installed by checking its version
-
-  ```sh
-  $ go version
-  > go version go1.17.8 linux/arm64
-  ```
+* To [install Go](../raspberry-pi/go.md#install-go) follow the instructions provided in the bonus guide.
 
 ---
   
