@@ -75,6 +75,8 @@ Table of contents
   ```
   $ tar -xvf sparrow-server-1.7.0-aarch64.tar.gz
   ```
+  
+---
 
 ### Configuration 
 
@@ -96,6 +98,8 @@ Table of contents
   ``` 
   $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /home/admin/Sparrow
   ```
+  
+---
  
 ## Run Sparrow 
 
@@ -123,7 +127,27 @@ Table of contents
 * Because you are running electrum server on the same machine as wallet, connect using `127.0.0.1:port`
   
 ![Sparrow_Test](../../../images/sparrow-test.png)
- 
+
+---
+
+## For the Future: Sparrow Terminal update
+
+* Download and install Sparrow Terminal by following installation section, you will overwrite several files
+
+---
+
+## Uninstall 
+
+### Delete Sparrow
+
+* Delete Sparrow symlinks & directory
+
+  ```
+  $ sudo rm /usr/local/bin/Sparrow
+  $ sudo rm /home/admin/Sparrow
+  $ sudo rm -r /opt/sparrow-terminal
+  ```
+  
 <br /><br />
 
 ---
