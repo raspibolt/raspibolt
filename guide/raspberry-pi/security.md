@@ -95,7 +95,7 @@ Follow this guide [Configure “No Password SSH Keys Authentication” with PuTT
   PasswordAuthentication no
   ```
 
-* Below the the commented out `ChallengeResponseAuthentication` option, add the following line to disable s/key, a one-time password authentification
+* Below the the commented out `ChallengeResponseAuthentication` option, add the following line to disable s/key, a one-time password authentification. Save and exit.
 
   ```sh
   #ChallengeResponseAuthentication no
