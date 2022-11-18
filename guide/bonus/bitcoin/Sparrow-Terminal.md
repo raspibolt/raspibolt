@@ -87,7 +87,7 @@ Table of contents
   $ sudo mv /tmp/Sparrow/* /opt/sparrow-terminal
   ```
  
-* Create a symlink to RaspiBolts default launcher folder
+* Add the Sparrow executable to your PATH by creating a symlink to it wihtin `/usr/local/bin`, which is already part of PATH.
  
   ``` 
   $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /usr/local/bin/Sparrow
