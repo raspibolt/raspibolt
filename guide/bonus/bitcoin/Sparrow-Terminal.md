@@ -107,7 +107,7 @@ Table of contents
 
   ```
   $ cd ~
-  $ ./Sparrow
+  $ Sparrow
   ```
   
 ![Sparrow_Terminal](../../../images/sparrow-terminal.png)
