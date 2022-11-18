@@ -110,7 +110,7 @@ Table of contents
   $ Sparrow
   ```
   
-![Sparrow_Terminal](../../../images/sparrow-terminal.png)
+  ![Sparrow_Terminal](../../../images/sparrow-terminal.png)
   
 * In "wallet" tab you can create or restore your wallet
 
@@ -138,7 +138,7 @@ Table of contents
   Use SSL: Yes
   ```
   
-![Sparrow_Test](../../../images/sparrow-test.png)
+  ![Sparrow_Test](../../../images/sparrow-test.png)
 
 ---
 
