@@ -119,7 +119,7 @@ Table of contents
 * While in a home directory, open Sparrow Wallet
 
   ```
-  $ ./Sparrow
+  $ Sparrow
   ```
 
 * Go to "preferences > server > private electrum > continue"
