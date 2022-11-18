@@ -766,7 +766,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 * Move files to Dojo folder. We need to overwrite several files, so we will use "rsync -a" command instead of "mv".
 
   ```
-  $ sudo rsync -a samourai-dojo-vx.xx.x/* /opt/dojo/
+  $ sudo rsync -a /tmp/samourai-dojo-vx.xx.x/* /opt/dojo/
   ```
   
 * Go to `keys` directory, open `index.js`
