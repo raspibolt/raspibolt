@@ -727,12 +727,12 @@ Connect samourai wallet to your own backend
 * From the Samourai Wallet start screen, select mainnet and activate Tor
 * Toggle the Dojo button on to connect to your own Dojo server
 
-<img src="/images/Samourai_Wallet_Setup.png" width="280" height="550">
+  <img src="/images/Samourai_Wallet_Setup.png" width="280" height="550">
 
 * Scan the pairing QR code displayed by your chosen Dojo implementation
 * Tap Restore an existing wallet
 
-<img src="/images/Samourai_Wallet_Setup_2.png" width="280" height="550">
+  <img src="/images/Samourai_Wallet_Setup_2.png" width="280" height="550">
 
 ### Rescan public keys using Dojo Maintenance Tool (optional)
 If no balance is shown in your samourai wallet, it is neccessary to rescan public keys as they are not tracked by Dojo yet.
