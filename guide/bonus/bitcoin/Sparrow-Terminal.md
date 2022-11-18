@@ -144,7 +144,7 @@ Table of contents
 
 ## For the Future: Sparrow Terminal update
 
-* Download and install Sparrow Terminal by following installation section, you will overwrite several files
+* Download and install Sparrow Terminal by following the [installation section](#installation), you will overwrite several files.
 
 ---
 
