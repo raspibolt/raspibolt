@@ -759,11 +759,12 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 * Stop Samourai Dojo
 
   ```
-  $ sudo systemctl stop pm2-dojo
+  $ sudo systemctl stop pm2-dojo.service
   ```
 
-* Following the installation section, download latest Dojo version inside `/tmp` directory, verify release and unpack Dojo file
-* Move files to Dojo folder. We need to overwrite several files, so we will use "rsync -a" command instead of "mv".
+* Following the installation section, download latest Dojo version inside `/tmp` directory, verify release and unpack Dojo file. Then return back to Upgrade Section to continue
+* Once done, we need to move and overwrite several files, so we will use "rsync -a" command instead of "mv". Make sure to replace several "x" in "samourai-dojo-vx.xx.x" command with current version
+
 
   ```
   $ sudo rsync -a /tmp/samourai-dojo-vx.xx.x/* /opt/dojo/
@@ -776,14 +777,14 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   $ sudo nano index.js
   ```
 
-* Edit Dojo version to the latest one installed. Save and exit.
+* Edit Dojo version to the latest one installed by replacing several "x" with current version. Save and exit.
 
   ```
   bitcoin: {
     /*
     * Dojo version
     */
-    dojoVersion: 'x.xx.x', # Edit Dojo version
+    dojoVersion: 'x.xx.x', # Edit to Dojo version
   ```
   
 * While in `/opt/dojo`, install latest dependencies
