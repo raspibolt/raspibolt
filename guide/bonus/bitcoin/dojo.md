@@ -748,11 +748,12 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 ## For the future: Dojo upgrade 
 
-* Upgrade packages
+* Upgrade packages & node package manager
 
   ```
   $ sudo apt update
   $ sudo apt full-upgrade
+  $ sudo npm install latest-version
   ```
   
 * Stop Samourai Dojo
@@ -784,7 +785,14 @@ Samourai wallet uses zpubs by default, however if you use other address format t
     */
     dojoVersion: 'x.xx.x', # Edit Dojo version
   ```
+  
+* While in `/opt/dojo`, install latest dependencies
 
+  ```
+  $ cd /opt/dojo
+  $ sudo npm install --omit=dev
+  ```
+  
 * Run Dojo and check Dojo Maintanence Tool if you run correct version
 
   ```
