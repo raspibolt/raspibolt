@@ -762,7 +762,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   $ sudo systemctl stop pm2-dojo
   ```
 
-* Following the installation section, download latest Dojo version inside `tmp` directory, verify release and unpack Dojo file
+* Following the installation section, download latest Dojo version inside `/tmp` directory, verify release and unpack Dojo file
 * Move files to Dojo folder. We need to overwrite several files, so we will use "rsync -a" command instead of "mv".
 
   ```
