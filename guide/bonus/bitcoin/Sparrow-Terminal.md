@@ -41,9 +41,9 @@ Table of contents
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-server-1.7.0-aarch64.tar.gz
-  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-1.7.0-manifest.txt.asc
-  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-1.7.0-manifest.txt
+  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.1/sparrow-server-1.7.1-aarch64.tar.gz
+  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.1/sparrow-1.7.1-manifest.txt.asc
+  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.1/sparrow-1.7.1-manifest.txt
   ```
   
 * Import keys that signed the release 
