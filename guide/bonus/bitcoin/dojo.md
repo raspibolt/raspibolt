@@ -65,14 +65,14 @@ To run Dojo, we need to run Node.js
 
 * With user "admin", let's check our version of Node.js running on the node. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
-  ```
+  ```sh
   $ node -v
   > v16.13.1
   ```
 
 * If Node.js is not installed, add the Node.js package repository from user “admin” and install Node.js using the apt package manager
 
-  ```
+  ```sh
   $ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
   $ sudo apt install nodejs
   ```
@@ -83,27 +83,27 @@ Node Package Manager (npm) is the default package manager for the JavaScript run
 
 * With user "admin", let's check our version of npm running on the node
  
-  ```
+  ```sh
   $ npm -v
   > 8.19.2
   ```
 
 * If not already installed, install npm package manager
 
-  ```
+  ```sh
   $ sudo apt update
   $ sudo apt install npm
   ```
 
 * Update npm to the latest version
 
-  ```
+  ```sh
   $ sudo npm install latest-version
   ```
 
 * Install PM2 process manager
 
-  ```
+  ```sh
   $ sudo npm i -g pm2
   ```
 
@@ -113,7 +113,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * Open `bitcoin.conf`
 
-  ```
+  ```sh
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
   ```
 
@@ -125,7 +125,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * Restart Bitcoind
 
-  ```
+  ```sh
   $ sudo systemctl restart bitcoind
   ```
 
@@ -137,13 +137,13 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * As a user “admin” move to a temporary directory which is cleared on reboot
 
-  ```
+  ```sh
   $ cd /tmp/
   ```
 
 * Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update
 
-  ```
+  ```sh
   $ wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v1.18.0/samourai-dojo-v1.18.0.tar.gz
   $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/e4c2858d9e67d8910c3bddc59950e03b/samourai-dojo-v1.18.0-fingerprints.txt
   $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/0a9e7e791d0db994532106ab006e4e7d/samourai-dojo-v1.18.0-fingerprints.txt.sig
@@ -151,21 +151,23 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * Calculate the checksum of the binary you've downloaded and compare it to the one provided in the fingerprints text file
 
-  ```
+  ```sh
   $ sha256sum --ignore-missing --check samourai-dojo-v1.18.0-fingerprints.txt
   > samourai-dojo-v1.18.0.tar.gz: OK
   ```
 
 * Import the GPG public key of the developper that signed the fingerprints file
 
-  ```
+  ```sh
   $ curl https://keys.openpgp.org/vks/v1/by-fingerprint/377DE507FDC47F020099E342CFA54E4C0CD58DF0 | gpg --import
   ```
 
 * Verify that the fingerprints file has actually been signed by that developper
 
+  ```sh
+  $ gpg --verify samourai-dojo-v1.18.0-fingerprints.txt.sig
   ```
-  $ gpg --verify samourai-dojo-v1.18.0-fingerprints.txt.sig 
+  ```
   > gpg: assuming signed data in 'samourai-dojo-v1.18.0-fingerprints.txt'
   > gpg: Signature made Thu Nov 17 17:05:49 2022 CET
   > gpg:                using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0
@@ -177,7 +179,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * If the signature checks out, unpack the binary
 
-  ```
+  ```sh
   $ tar -xvf samourai-dojo-v1.18.0.tar.gz
   ```
 
@@ -187,13 +189,13 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * With user “admin”, update the `apt` packages index and install MariaDB
 
-  ```
+  ```sh
   $ sudo apt install mariadb-server
   ```
 
 * Run the secure installation
 
-  ```
+  ```sh
   $ sudo mysql_secure_installation
   ```
 
@@ -211,8 +213,10 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * Now, open the MariaDB shell 
 
-  ```
+  ```sh
   $ sudo mysql
+  ```
+  ```
   > Welcome to the MariaDB monitor.  Commands end with ; or \g.
   > [...]
   MariaDB [(none)]>
@@ -244,14 +248,14 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * Create the user "dojo" and add him to the group “bitcoin” as well
 
-  ```
+  ```sh
   $ sudo adduser --disabled-password --gecos "" dojo
   $ sudo adduser dojo bitcoin
   ```
 
 * Create the Dojo data directory and move Dojo
 
-  ```
+  ```sh
   $ sudo mkdir -p /opt/dojo/
   $ sudo mv /tmp/samourai-dojo-v1.18.0/* /opt/dojo/
   $ sudo chown -R dojo:dojo /opt/dojo/
@@ -259,20 +263,20 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * Create a symlink to /home/dojo/.dojo
 
-  ```
+  ```sh
   $ sudo ln -s /opt/dojo /home/dojo/.dojo
   $ sudo chown -R dojo:dojo /home/dojo/.dojo
   ```
 
 * Switch to user "dojo"
 
-  ```
+  ```sh
   $ sudo su - dojo
   ```
 
 * Display the link and check that it is not shown in red (this would indicate an error)
 
-  ```
+  ```sh
   $ ls -la
   ```
 
@@ -284,21 +288,21 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
 * With user "dojo" move to "conf" directory. Rename `index-mainnet.js` to `index.js`
 
-  ```
+  ```sh
   $ cd /opt/dojo/static/admin/conf
   $ mv index-mainnet.js index.js
   ```
 
 * With user "dojo" move to "keys" directory. Rename index-example.js to index.js
 
-  ```
+  ```sh
   $ cd /opt/dojo/keys
   $ mv index-example.js index.js
   ```
 
 * As user "dojo" open "index.js"
 
-  ```
+  ```sh
   $ nano index.js
   ```
 
@@ -394,7 +398,7 @@ instead of "[ X ] PASSWORD"
 
 * Still as user "dojo", move to the dojo directory, rename pm2 config file and open it
 
-  ```
+  ```sh
   $ cd /opt/dojo
   $ mv pm2.config.cjs.example pm2.config.cjs
   $ nano pm2.config.cjs
@@ -409,7 +413,7 @@ instead of "[ X ] PASSWORD"
 
 * Exit "dojo" user session
 
-  ```
+  ```sh
   $ exit
   ```
 
@@ -417,14 +421,14 @@ instead of "[ X ] PASSWORD"
 
 * With user "admin", install necessary dependencies while inside the Dojo folder. 
 
-  ```
+  ```sh
   $ cd /opt/dojo/
   $ sudo npm install --omit=dev
   ```
 
 * Import Dojo scripts to the MariaDB database. Change [ F ] MYSQL_ROOT_PASSWORD to your password (must stay inside quotes: "password")
 
-  ```
+  ```sh
   $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl -v
   ```
   ```
@@ -441,7 +445,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 
 * Edit "torrc" file
 
-  ```
+  ```sh
   $ sudo nano /etc/tor/torrc
   ```
 
@@ -456,13 +460,13 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 
 * Restart Tor 
 
-  ```
+  ```sh
   $ sudo systemctl reload tor
   ```
 
 * Print hostname and write it down to a safe place
 
-  ```
+  ```sh
   $ sudo cat /var/lib/tor/hsv3/hostname
   > xyz.onion
   ```
@@ -473,7 +477,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
 
 * Open "nginx.conf" file
 
-  ```
+  ```sh
   $ sudo nano /etc/nginx/nginx.conf
   ```
 
@@ -518,7 +522,7 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
 
 * Create a new file called `dojo.conf` inside "sites-enabled" directory
 
-  ```
+  ```sh
   $ sudo nano /etc/nginx/sites-enabled/dojo.conf
   ```
 
@@ -590,10 +594,14 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
 
 * Test and restart nginx configuration
 
-  ```
+  ```sh
   $ sudo nginx -t
+  ```
+  ```
   >nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
   >nginx: configuration file /etc/nginx/nginx.conf test is successful
+  ```
+  ```sh
   $ sudo systemctl restart nginx
   ```
 
@@ -603,14 +611,14 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
 
 * Switch to user "dojo" and move to Dojo directory
 
-  ```
+  ```sh
   $ sudo su - dojo
   $ cd /opt/dojo
   ```
 
 * Start Dojo
 
-  ```
+  ```sh
   $ pm2 start pm2.config.cjs
   ```
 
@@ -627,7 +635,7 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
 
 * Check the logs, you should expect following output (it will take a while for blocks to synchronise):
 
-  ```
+  ```sh
   $ pm2 logs mainnet
   ```
   ```
@@ -652,13 +660,13 @@ Now we’ll make sure Dojo starts as a service on the Raspberry Pi so it’s alw
 
 * Still logged as a "dojo" user, save running processes with following command
 
-  ```
+  ```sh
   $ pm2 save
   ```
 
 * Run these processes at reboot automatically. Copy entire generated output starting with "sudo"
 
-  ```
+  ```sh
   $ pm2 startup
   ```
   ```
@@ -669,13 +677,13 @@ Now we’ll make sure Dojo starts as a service on the Raspberry Pi so it’s alw
 
 * Exit "dojo" user session
 
-  ```
+  ```sh
   $ exit
   ```
 
 * Paste your own output into the CLI as user "admin", who has sudo privileges
 
-  ```
+  ```sh
   $ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u dojo --hp /home/dojo
   ```
   ```
@@ -750,7 +758,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 * Upgrade packages & node package manager
 
-  ```
+  ```sh
   $ sudo apt update
   $ sudo apt full-upgrade
   $ sudo npm install latest-version
@@ -758,7 +766,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   
 * Stop Samourai Dojo
 
-  ```
+  ```sh
   $ sudo systemctl stop pm2-dojo.service
   ```
 
@@ -766,13 +774,13 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 * Once done, we need to move and overwrite several files, so we will use "rsync -a" command instead of "mv". Make sure to replace several "x" in "samourai-dojo-vx.xx.x" command with current version
 
 
-  ```
+  ```sh
   $ sudo rsync -a /tmp/samourai-dojo-vx.xx.x/* /opt/dojo/
   ```
   
 * Go to `keys` directory, open `index.js`
 
-  ```
+  ```sh
   $ cd /opt/dojo/keys
   $ sudo nano index.js
   ```
@@ -789,14 +797,14 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   
 * While in `/opt/dojo`, install latest dependencies
 
-  ```
+  ```sh
   $ cd /opt/dojo
   $ sudo npm install --omit=dev
   ```
   
 * Run Dojo and check Dojo Maintanence Tool if you run correct version
 
-  ```
+  ```sh
   $ sudo systemctl restart pm2-dojo
   ```
   
@@ -808,7 +816,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 * As user "admin", stop and remove Dojo service
 
-  ```
+  ```sh
   $ sudo systemctl stop pm2-dojo.service 
   $ sudo systemctl disable pm2-dojo.service 
   $ sudo rm /etc/systemd/system/pm2-dojo.service
@@ -816,7 +824,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 * Remove Dojo directory and Dojo user
 
-  ```
+  ```sh
   $ sudo rm -R /opt/dojo
   $ sudo userdel -r dojo
   ```
@@ -825,7 +833,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 * Remove Tor configuration. Comment or delete following lines
 
-  ```
+  ```sh
   $ sudo nano /etc/tor/torrc
   ```
 
@@ -836,7 +844,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   #HiddenServicePort 80 127.0.0.1:80
   ```
 
-  ```
+  ```sh
   $ sudo systemctl restart tor
   ```
 
@@ -844,7 +852,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 * Remove Nginx configuration for Dojo
 
-  ```
+  ```sh
   $ sudo rm /etc/nginx/sites-enabled/dojo.conf
   $ sudo systemctl reload nginx
   ```
@@ -853,7 +861,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 * Remove MariaDB
 
-  ```
+  ```sh
   $ sudo service mysql stop
   $ sudo apt-get --purge remove "mysql*"
   ```
