@@ -139,7 +139,6 @@ Table of contents
 
   ```sh
   $ sudo rm /usr/local/bin/Sparrow
-  $ sudo rm /home/admin/Sparrow
   $ sudo rm -r /opt/sparrow-terminal
   ```
   
