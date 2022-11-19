@@ -20,7 +20,7 @@ has_toc: false
 
 ## Wallets
 
-### Desktop
+### GUI - Desktop wallet
 * **[BitBoxApp](bitboxapp.md)** - a beginner-friendly desktop wallet that pionneered hardware wallets support
 * **[Electrum Wallet Desktop](electrum-wallet-desktop.md)** - a feature-rich desktop wallet for power-users
 * **[Specter Desktop](specter-desktop.md)** - a convenient and user-friendly GUI around Bitcoin Core with a focus on multisignature setup with hardware wallets and airgapped devices
