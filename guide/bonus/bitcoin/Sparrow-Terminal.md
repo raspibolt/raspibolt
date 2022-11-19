@@ -75,7 +75,7 @@ Table of contents
 * If everything is correct, unpack Sparrow 
 
   ```sh
-  $ tar -xvf sparrow-server-1.7.0-aarch64.tar.gz
+  $ tar -xvf sparrow-server-1.7.1-aarch64.tar.gz
   ```
   
 ---
