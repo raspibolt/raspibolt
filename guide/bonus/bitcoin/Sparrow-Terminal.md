@@ -55,7 +55,7 @@ Table of contents
 * Verify the release
   
   ```sh
-  $ gpg --verify sparrow-1.7.0-manifest.txt.asc
+  $ gpg --verify sparrow-1.7.1-manifest.txt.asc
   ```
   ```
   > gpg: assuming signed data in 'sparrow-1.7.0-manifest.txt'
