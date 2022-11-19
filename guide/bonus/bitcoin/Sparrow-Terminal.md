@@ -117,7 +117,7 @@ Table of contents
   $ Sparrow
   ```
 
-* Go to "preferences > server > private electrum > continue"
+* Go to "Preferences > Server > Private Electrum > Continue"
 * Set values according to your electrum server implementation and test connection
 * Because you are running electrum server on the same machine as wallet, connect using `127.0.0.1:port`
 
