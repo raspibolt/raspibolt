@@ -68,8 +68,8 @@ Table of contents
   ```
   
   ```sh
-  $ sha256sum --check sparrow-1.7.0-manifest.txt --ignore-missing
-  > sparrow-server-1.7.0-aarch64.tar.gz: OK
+  $ sha256sum --check sparrow-1.7.1-manifest.txt --ignore-missing
+  > sparrow-server-1.7.1-aarch64.tar.gz: OK
   ```
 
 * If everything is correct, unpack Sparrow 
