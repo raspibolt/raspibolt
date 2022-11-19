@@ -598,8 +598,8 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   $ sudo nginx -t
   ```
   ```
-  >nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-  >nginx: configuration file /etc/nginx/nginx.conf test is successful
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
   ```
   ```sh
   $ sudo systemctl restart nginx
