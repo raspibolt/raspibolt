@@ -616,10 +616,11 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   $ cd /opt/dojo
   ```
 
-* Start Dojo
+* Start Dojo using one of the two commands
 
   ```sh
-  $ pm2 start pm2.config.cjs
+  $ pm2 start pm2.config.cjs  #Need to be in "/opt/dojo"
+  $ pm2 start mainnet  #Can be started from any directory
   ```
 
   ```
@@ -652,6 +653,18 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T19:13:15Z  INFO  Tracker : Processing active Mempool (7 transactions)
   7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T19:13:17Z  INFO  Tracker : Processing active Mempool (2 transactions)
   7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T19:13:19Z  INFO  Tracker : Processing active Mempool (8 transactions)
+  ```
+
+* To view specific process, view their "id" 
+
+  ```sh
+  $ pm2 status mainnet
+  ```
+
+* See specific logs using following command
+
+  ```sh
+  $ pm2 logs <id>
   ```
 
 ### Autostart on boot
