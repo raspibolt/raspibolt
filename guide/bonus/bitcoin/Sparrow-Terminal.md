@@ -58,8 +58,8 @@ Table of contents
   $ gpg --verify sparrow-1.7.1-manifest.txt.asc
   ```
   ```
-  > gpg: assuming signed data in 'sparrow-1.7.0-manifest.txt'
-  > gpg: Signature made Thu Oct 27 12:32:37 2022 CEST
+  > gpg: assuming signed data in 'sparrow-1.7.1-manifest.txt'
+  > gpg: Signature made Thu Nov 17 14:08:59 2022 GMT
   > gpg:                using RSA key D4D0D3202FC06849A257B38DE94618334C674B40
   > gpg: Good signature from "Craig Raw <craigraw@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
