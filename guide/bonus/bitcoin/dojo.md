@@ -818,7 +818,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 * Run Dojo and check Dojo Maintanence Tool if you run correct version
 
   ```sh
-  $ sudo systemctl restart pm2-dojo
+  $ sudo systemctl restart pm2-dojo.service
   ```
   
 ---
