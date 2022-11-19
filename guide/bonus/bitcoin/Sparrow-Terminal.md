@@ -39,7 +39,7 @@ Table of contents
 
 * Download Sparrow Server and signatures into "/tmp" directory, which is cleared on the reboot.
 
-  ```
+  ```sh
   $ cd /tmp
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-server-1.7.0-aarch64.tar.gz
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.0/sparrow-1.7.0-manifest.txt.asc
@@ -48,31 +48,33 @@ Table of contents
   
 * Import keys that signed the release 
 
-  ```
+  ```sh
   $ curl https://keybase.io/craigraw/pgp_keys.asc | gpg --import
   ```
   
 * Verify the release
   
-  ```
+  ```sh
   $ gpg --verify sparrow-1.7.0-manifest.txt.asc
+  ```
+  ```
   > gpg: assuming signed data in 'sparrow-1.7.0-manifest.txt'
-    gpg: Signature made Thu Oct 27 12:32:37 2022 CEST
-    gpg:                using RSA key D4D0D3202FC06849A257B38DE94618334C674B40
-    gpg: Good signature from "Craig Raw <craigraw@gmail.com>" [unknown]
-    gpg: WARNING: This key is not certified with a trusted signature!
-    gpg:          There is no indication that the signature belongs to the owner.
-    Primary key fingerprint: D4D0 D320 2FC0 6849 A257  B38D E946 1833 4C67 4B40
+  > gpg: Signature made Thu Oct 27 12:32:37 2022 CEST
+  > gpg:                using RSA key D4D0D3202FC06849A257B38DE94618334C674B40
+  > gpg: Good signature from "Craig Raw <craigraw@gmail.com>" [unknown]
+  > gpg: WARNING: This key is not certified with a trusted signature!
+  > gpg:          There is no indication that the signature belongs to the owner.
+  > Primary key fingerprint: D4D0 D320 2FC0 6849 A257  B38D E946 1833 4C67 4B40
   ```
   
-  ```
+  ```sh
   $ sha256sum --check sparrow-1.7.0-manifest.txt --ignore-missing
   > sparrow-server-1.7.0-aarch64.tar.gz: OK
   ```
 
 * If everything is correct, unpack Sparrow 
 
-  ```
+  ```sh
   $ tar -xvf sparrow-server-1.7.0-aarch64.tar.gz
   ```
   
@@ -82,31 +84,24 @@ Table of contents
 
 * Create a new directory for Sparrow and move data files there
 
-  ```
+  ```sh
   $ sudo mkdir -p /opt/sparrow-terminal
   $ sudo mv /tmp/Sparrow/* /opt/sparrow-terminal
   ```
  
 * Add the Sparrow executable to your PATH by creating a symlink to it wihtin `/usr/local/bin`, which is already part of PATH.
  
-  ``` 
+  ```sh
   $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /usr/local/bin/Sparrow
-  ```
-
-* Create a symlink to your home folder for easier access 
-
-  ``` 
-  $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /home/admin/Sparrow
   ```
   
 ---
  
 ## Run Sparrow 
 
-* You can run Sparrow from your home directory
+* You can run Sparrow with following command
 
-  ```
-  $ cd ~
+  ```sh
   $ Sparrow
   ```
   
@@ -116,9 +111,9 @@ Table of contents
 
 ### Connect Sparrow to your backend (optional)
 
-* While in a home directory, open Sparrow Wallet
+* Open Sparrow Wallet
 
-  ```
+  ```sh
   $ Sparrow
   ```
 
@@ -126,18 +121,6 @@ Table of contents
 * Set values according to your electrum server implementation and test connection
 * Because you are running electrum server on the same machine as wallet, connect using `127.0.0.1:port`
 
-  ```
-  # For Electrs (default)
-  URL: 127.0.0.1
-  Port: 50001
-  Use SSL: No
-  
-  # For Fulcrum
-  URL: 127.0.0.1
-  Port: 50002
-  Use SSL: Yes
-  ```
-  
   ![Sparrow_Test](../../../images/sparrow-test.png)
 
 ---
@@ -154,7 +137,7 @@ Table of contents
 
 * Delete Sparrow symlinks & directory
 
-  ```
+  ```sh
   $ sudo rm /usr/local/bin/Sparrow
   $ sudo rm /home/admin/Sparrow
   $ sudo rm -r /opt/sparrow-terminal
