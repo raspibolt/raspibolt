@@ -609,18 +609,21 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
 
 ## Run Dojo
 
-* Switch to user "dojo" and move to Dojo directory
+* Switch to user "dojo"
 
   ```sh
   $ sudo su - dojo
-  $ cd /opt/dojo
   ```
 
-* Start Dojo using one of the two commands
+* Start Dojo using one of the commands
 
   ```sh
-  $ pm2 start pm2.config.cjs  #Need to be in "/opt/dojo"
   $ pm2 start mainnet  #Can be started from any directory
+  
+  # or 
+  
+  $ cd /opt/dojo
+  $ pm2 start pm2.config.cjs  #Need to be in "/opt/dojo"
   ```
 
   ```
@@ -659,6 +662,16 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
 
   ```sh
   $ pm2 status mainnet
+  ```
+  ```
+  ┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+  │ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+  ├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+  │ 0  │ Samourai Dojo - A… │ fork     │ 1    │ online    │ 0%       │ 115.5mb  │
+  │ 1  │ Samourai Dojo - P… │ fork     │ 1    │ online    │ 0%       │ 71.9mb   │
+  │ 2  │ Samourai Dojo - P… │ fork     │ 1    │ online    │ 0%       │ 74.1mb   │
+  │ 3  │ Samourai Dojo - T… │ fork     │ 1    │ online    │ 0%       │ 184.8mb  │
+  └────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
   ```
 
 * See specific logs using following command
