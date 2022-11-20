@@ -129,7 +129,9 @@ Table of contents
   URL: 127.0.0.1:50002
   Use SSL?: Yes 
   ```
-  
+
+* You should now be connected to your own Electrum Server 
+
   ![Sparrow_Test](../../../images/sparrow-test.png)
 
 ---
