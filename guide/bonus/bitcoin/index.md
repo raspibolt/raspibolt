@@ -26,7 +26,7 @@ has_toc: false
 * **[Specter Desktop](specter-desktop.md)** - a convenient and user-friendly GUI around Bitcoin Core with a focus on multisignature setup with hardware wallets and airgapped devices
 
 ### CLI
-* **[Sparrow Terminal](Sparrow-Terminal.md)** - a stripped down version of Sparrow that can be run on systems without displays
+* **[Sparrow Terminal](sparrow-terminal.md)** - a stripped down version of Sparrow that can be run on systems without displays
 
 ---
 
