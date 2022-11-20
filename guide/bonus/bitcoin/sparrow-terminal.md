@@ -117,8 +117,8 @@ Table of contents
   $ Sparrow
   ```
 
-* Go to "Preferences > Server > Private Electrum > Continue"
-* Set values according to your electrum server implementation and test connection
+* Go to `Preferences > Server > Private Electrum > Continue`
+* Set values according to your Electrum Server implementation and test connection
 
   ```
   # For Electrs (default)
@@ -130,7 +130,7 @@ Table of contents
   Use SSL?: Yes 
   ```
 
-* You should now be connected to your own Electrum Server 
+* You are now connected to your own Electrum Server 
 
   ![Sparrow_Test](../../../images/sparrow-test.png)
 
