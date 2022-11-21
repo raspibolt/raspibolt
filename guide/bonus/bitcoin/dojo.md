@@ -807,6 +807,9 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   ```sh
   $ sudo systemctl restart pm2-dojo.service
   ```
+  
+* Open the Dojo Maintenance Tool in a Tor browser and sign in with your `[ I ] NODE ADMIN KEY`
+* Launch Samourai Wallet > Scan the second QRCode displayed in the "Pairing" tab of the Maintenance Tool.
 
 ---
 
