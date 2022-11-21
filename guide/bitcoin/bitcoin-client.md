@@ -91,8 +91,8 @@ This is a precaution to make sure that this is an official release and not a mal
 ### Timestamp check
 
 * The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"}, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
-  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
   *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.ots
+  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
 * In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
 * In the next box, drop or upload the SHA256SUMS file
