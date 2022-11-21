@@ -782,6 +782,34 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 ---
 
+## Extras
+
+### Connect BTC Explorer to Dojo
+
+* Open index.js in `keys` subdirectory and edit "explorer" part to following values. Values have to be inside single quotes `'abc'`
+
+  ```sh
+  $ sudo nano /opt/dojo/keys/index.js
+  ```
+  ```
+  explorer: {
+            // Active explorer
+            // Values: oxt | btc_rpc_explorer
+            active: 'btc_rpc_explorer',
+            // URI of the explorer
+            uri: 'https://raspibolt.local:4000',  # or your nodes IP address like https://192.168.0.20:4000
+            // Password (value required for btc_rpc_explorer)
+            password: '[ D ] BTC-RPC-Explorer password'
+  ```
+
+* Restart Dojo
+
+  ```sh
+  $ sudo systemctl restart pm2-dojo.service
+  ```
+
+---
+
 ## For the future: Dojo upgrade 
 
 * Upgrade packages & node package manager
