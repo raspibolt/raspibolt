@@ -120,7 +120,8 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Add following line preferably under "# Connections" or at the end of the file 
 
   ```
-  zmqpubhashblock=tcp://0.0.0.0:8433  # For Dojo
+  # Connections
+  zmqpubhashblock=tcp://0.0.0.0:8433
   ```
 
 * Restart Bitcoind
