@@ -452,8 +452,9 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 * Paste following values at the end of your `torrc` file
 
   ```
-  # Dojo hidden service
-  HiddenServiceDir /var/lib/tor/hsv3/
+  ############### This section is just for location-hidden services ###
+  # Hidden Service Dojo
+  HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:80
   ```
@@ -467,7 +468,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 * Print hostname and write it down to a safe place
 
   ```sh
-  $ sudo cat /var/lib/tor/hsv3/hostname
+  $ sudo cat /var/lib/tor/hidden_service_dojo/hostname
   > xyz.onion
   ```
 
