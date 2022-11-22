@@ -899,8 +899,9 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   ```
 
   ```
-  # Dojo hidden service
-  #HiddenServiceDir /var/lib/tor/hsv3/
+  ############### This section is just for location-hidden services ###
+  # Hidden Service Dojo
+  #HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   #HiddenServiceVersion 3
   #HiddenServicePort 80 127.0.0.1:80
   ```
