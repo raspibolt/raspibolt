@@ -103,11 +103,11 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ cd RTL
 
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > v0.13.1
+  > v0.13.2
 
-  $ git checkout v0.13.1
+  $ git checkout v0.13.2
 
-  $ git verify-tag v0.13.1
+  $ git verify-tag v0.13.2
   > gpg: Signature made Thu 25 Aug 2022 20:09:30 BST
   > gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
   > gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
@@ -293,15 +293,15 @@ Make sure to read the release notes first.
   $ sudo su - rtl
   ```
 
-* Fetch the latest GitHub repository information, display the latest release tag, ignoring release cadidates (`v0.13.1` in this example), and update:
+* Fetch the latest GitHub repository information, display the latest release tag, ignoring release cadidates (`v0.13.2` in this example), and update:
 
   ```sh
   $ cd /home/rtl/RTL
   $ git fetch
   $ git reset --hard
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  $ git checkout v0.13.1
-  $ git verify-tag v0.13.1
+  $ git checkout v0.13.2
+  $ git verify-tag v0.13.2
   $ npm install --omit=dev
   $ exit
   ```
