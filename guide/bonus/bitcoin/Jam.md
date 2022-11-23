@@ -423,6 +423,6 @@ $ sudo systemctl restart tor
 * Remove Nginx configuration for Jam
 
 ```sh
-$ sudo rm /etc/nginx/sites-enabled/jam-reverse-proxy.conf
+$ sudo rm /etc/nginx/streams-enabled/jam-reverse-proxy.conf
 $ sudo systemctl reload nginx
 ```
