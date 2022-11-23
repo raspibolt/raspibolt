@@ -418,5 +418,5 @@ If upgrading from pre-0.8.1 to a newer versions, note that yield generator confi
   
   ```sh
   $ cd
-  $ rm -rf joinmarket-clientserver-0.9.7
+  $ rm -rf joinmarket-clientserver-0.9.8
   ```
