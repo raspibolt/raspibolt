@@ -76,8 +76,9 @@ Table of contents
 * Create a working copy of the sample config file. You can use either .json or .toml configs, up to your preference.  
 
   ```sh
-  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.6.3/config.json.sample /home/regolancer/config.json
+  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.9.0/config.json.sample /home/regolancer/config.json
   ```
+Note: Adjust the "regolancer@v1.9.0" part from this commands to the actual version you have installed.
 
 * Make the newly created config.json file writable.
 
