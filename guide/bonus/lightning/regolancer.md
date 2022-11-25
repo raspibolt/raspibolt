@@ -64,7 +64,6 @@ Table of contents
 
   $ GOARCH=arm64 go install github.com/rkfg/regolancer@latest
   ```
-Note: Adjust the "regolancer@v1.6.3" part from the commands below to the actual version you have installed.
 
 * Confirm installed version
 
