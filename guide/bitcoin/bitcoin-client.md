@@ -528,10 +528,11 @@ When upgrading, there might be breaking changes, or changes in the data structur
   > bitcoin-24.0-aarch64-linux-gnu.tar.gz: OK
   ```
 
-* Refresh gpg keys and verify checksums signatures
+* Update gpg keys and verify checksums signatures
   
   ```sh
-  $ gpg --keyserver hkps://keys.openpgp.org --refresh-keys
+  $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/builder-keys/keys.txt -O keys.txt
+  $ while read fingerprint keyholder_name; do gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys ${fingerprint}; done < ./keys.txt
   $ gpg --verify SHA256SUMS.asc
   ```
 
