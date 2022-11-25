@@ -489,6 +489,33 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   UNUSUAL plugin-plugin.js: --- cl-rest doc server is ready and listening on port: 4091 ---
   ```
 
+### Access over Tor
+
+The Zeus mobile app will access the node via Tor.
+
+* Add the following three lines in the section for “location-hidden services” in the `torrc` file. Save and exit.
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```ini
+  ############### This section is just for location-hidden services ###
+  HiddenServiceDir /var/lib/tor/hidden_service_cln_rest/
+  HiddenServiceVersion 3
+  HiddenServicePort 8080 127.0.0.1:3092
+  ```
+
+* Reload Tor configuration and get your connection address.
+
+   ```sh
+   $ sudo systemctl reload tor
+   $ sudo cat /var/lib/tor/hidden_service_cln_rest/hostname
+   > abcdefg..............xyz.onion
+   ```
+
+* Save the onion address in a safe place (e.g., password manager)
+
 ### Configuring RTL
 
 * By the following configuration we tell RTL to connect to our CLN node. Change to user `rtl`:
@@ -541,6 +568,48 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   $ sudo systemctl start rtl
   ```
 * Access RTL via your local IP: `https://<your-local-ip>:4001`
+
+## Connect Zeus
+
+* As user admin, install dependencies:
+
+  ```sh
+  $ sudo apt install qrencode
+  ```
+
+* Prepare QR data by finding the:
+
+  ```sh
+  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.9.0/certs
+  $ xxd -ps -u -c 1000 access.macaroon
+  ```
+
+* The output of the `xxd` command is the hexidecimal value of your macaroon access credential. Copy this value and substitute it, along with the contents of the Tor `hidden_service_cln_rest` hostname value, into the following file:
+
+  ```sh
+  $ nano cln-qr-code-template.txt
+  ```
+
+  ```
+  c-lightning-rest://<tor-address>:8080?&macaroon=<macaroon-in-hexadecimal>&protocol=http
+  ```
+
+* Generate a QR code:
+
+  ```sh
+  $ qrencode -t utf8 -r cln-qr-code-template.txt
+  $ chmod 644 cln-qr-code-template.txt
+  ```
+* A QR code should be generated in the terminal.
+
+* Open the Zeus mobile application, click on the `+` sign to add a new node. Select `c-lightning-REST` from the "Node interface" dropdown and tap the "Scan C-Lightning-REST QR" button. Scan the QR code from the terminal. Zeus should read the configuration data.
+
+* Save the QR code as an image:
+
+  ```sh
+  $ qrencode -t utf8 -r cln-qr-code-template.txt -o cln-qr-code.png
+  $ chmod 644 cln-qr-code.png
+  ```
 
 
 <br /><br />
