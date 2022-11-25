@@ -591,7 +591,7 @@ The Zeus mobile app will access the node via Tor.
   ```
 
   ```
-  c-lightning-rest://<tor-address>:8080?&macaroon=<macaroon-in-hexadecimal>&protocol=http
+  c-lightning-rest://http://<tor-address>:8080?&macaroon=<macaroon-in-hexadecimal>&protocol=http
   ```
 
 * Generate a QR code:
