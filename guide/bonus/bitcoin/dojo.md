@@ -19,8 +19,8 @@ Provides unspent output lists to the wallet. PushTX endpoint broadcasts transact
 Difficulty: Medium 
 {: .label .label-yellow }
 
-Status: Tested v3 
-{: .label .label-green }
+Status: Not tested v3 
+{: .label .label-yellow }
 
 ![dojo_profile](../../../images/dojo_profile.png)
 
