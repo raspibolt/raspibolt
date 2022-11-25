@@ -417,7 +417,17 @@ instead of "[ X ] PASSWORD"
   ```sh
   $ exit
   ```
+  
+### Restrict access to configuration file
 
+The Dojo configuration file contains the Bitcoin Core RPC username and password which are sensitive information. We’ll restrict reading access to this file by user “dojo” only.
+
+* With user “admin”, change the ownership of the configuration file
+
+  ```sh
+  $ sudo chmod 600 /opt/dojo/keys/index.js
+  ```
+  
 ### Dependencies
 
 * With user "admin", install necessary dependencies while inside the Dojo folder. 
@@ -607,16 +617,6 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   $ sudo systemctl restart nginx
   ```
   
-### Restrict access to configuration file
-
-The Dojo configuration file contains the Bitcoin Core RPC username and password which are sensitive information. We’ll restrict reading access to this file by user “dojo” only.
-
-* Still with user “admin”, change the ownership of the configuration file
-
-  ```sh
-  $ sudo chmod 600 /opt/dojo/keys/index.js
-  ```
-
 ---
 
 ## Run Dojo
@@ -791,37 +791,6 @@ If no balance is shown in your samourai wallet, it is neccessary to rescan publi
 * Copy and paste all "zpubs" into `xpub tool` and rescan each public key separately
 
 Samourai wallet uses zpubs by default, however if you use other address format than "bc", it is neccessary to rescan other pubs as well
-
----
-
-## Extras
-
-### Connect BTC Explorer to Dojo
-
-* Open index.js in `keys` subdirectory and edit "explorer" part to following values. Values have to be inside single quotes `'abc'`
-
-  ```sh
-  $ sudo nano /opt/dojo/keys/index.js
-  ```
-  ```
-  explorer: {
-            // Active explorer
-            // Values: oxt | btc_rpc_explorer
-            active: 'btc_rpc_explorer',
-            // URI of the explorer
-            uri: 'https://raspibolt.local:4000',  # or your nodes IP address like https://192.168.0.20:4000
-            // Password (value required for btc_rpc_explorer)
-            password: '[ D ] BTC-RPC-Explorer password'
-  ```
-
-* Restart Dojo
-
-  ```sh
-  $ sudo systemctl restart pm2-dojo.service
-  ```
-  
-* Open the Dojo Maintenance Tool in a Tor browser and sign in with your `[ I ] NODE ADMIN KEY`
-* Launch Samourai Wallet > Scan the second QRCode displayed in the "Pairing" tab of the Maintenance Tool.
 
 ---
 
