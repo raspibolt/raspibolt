@@ -606,6 +606,16 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   ```sh
   $ sudo systemctl restart nginx
   ```
+  
+### Restrict access to configuration file
+
+The Dojo configuration file contains the Bitcoin Core RPC username and password which are sensitive information. We’ll restrict reading access to this file by user “dojo” only.
+
+* Still with user “admin”, change the ownership of the configuration file
+
+  ```sh
+  $ sudo chmod 600 /opt/dojo/keys/index.js
+  ```
 
 ---
 
