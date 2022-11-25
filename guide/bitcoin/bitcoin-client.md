@@ -552,8 +552,8 @@ When upgrading, there might be breaking changes, or changes in the data structur
 * If you're satisfied with the checkum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf bitcoin-23.0-aarch64-linux-gnu.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-23.0/bin/*
+  $ tar -xvf bitcoin-24.0-aarch64-linux-gnu.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-24.0/bin/*
   $ bitcoind --version
   > Bitcoin Core version v24.0.0
   > [...]
