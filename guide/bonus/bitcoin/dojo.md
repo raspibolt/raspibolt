@@ -173,9 +173,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
   > gpg: Signature made Thu Nov 17 17:05:49 2022 CET
   > gpg:                using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0
   > gpg: Good signature from "pavel.sevcik@protonmail.com <pavel.sevcik@protonmail.com>" [unknown]
-  > gpg: WARNING: This key is not certified with a trusted signature!
-  > gpg:          There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: 377D E507 FDC4 7F02 0099  E342 CFA5 4E4C 0CD5 8DF0
+  [...]
   ```
 
 * If the signature checks out, unpack the binary
