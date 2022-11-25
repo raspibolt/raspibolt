@@ -543,7 +543,7 @@ When upgrading, there might be breaking changes, or changes in the data structur
 
 * Check that the timestamp correlates with the approximate release date
 
-  ```
+  ```sh
   $ ots verify SHA256SUMS.ots -f SHA256SUMS 
   > ...
   > Success! Bitcoin block 764525 attests existence as of 2022-11-24 GMT
