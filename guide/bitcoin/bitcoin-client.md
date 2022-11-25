@@ -96,7 +96,8 @@ This is a precaution to make sure that this is an official release and not a mal
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
 * In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
 * In the next box, drop or upload the SHA256SUMS file
-* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v23.0){:target="_blank"} of Bitcoin Core v23.0.
+* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v
+){:target="_blank"} of Bitcoin Core v24.0.
 
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
 
@@ -106,7 +107,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   $ tar -xvf bitcoin-24.0-aarch64-linux-gnu.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-23.0/bin/*
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-24.0/bin/*
   $ bitcoind --version
   > Bitcoin Core version v24.0.0
   > [...]
