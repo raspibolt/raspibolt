@@ -577,7 +577,7 @@ The Zeus mobile app will access the node via Tor.
   $ sudo apt install qrencode
   ```
 
-* Prepare QR data by finding the:
+* Prepare QR data:
 
   ```sh
   $ cd /data/lightningd-plugins-available/c-lightning-REST-0.9.0/certs
