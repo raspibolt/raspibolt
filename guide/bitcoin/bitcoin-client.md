@@ -480,7 +480,7 @@ Now that Bitcoin Core is running and synced, we can install the [OpenTimestamp c
 
 * With user "admin", globally install the Python package manager Pip3
 
-```sh
+  ```sh
   $ sudo apt install python3-pip
   ```
 
