@@ -52,6 +52,9 @@ This is a precaution to make sure that this is an official release and not a mal
 
   # download the signatures attesting to validity of the checksums
   $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.asc
+
+  # download the OpenTimestamp proof
+  $ wget https://bitcoincore.org/bin/bitcoin-core-24.0/SHA256SUMS.ots
   ```
 
 ### Checksum check
@@ -90,7 +93,11 @@ This is a precaution to make sure that this is an official release and not a mal
 
 ### Timestamp check
 
-* The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"}, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
+* The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"} (OTS from now on), proving that the file existed prior to some point in time.
+
+#### First installation check
+* Since the OTS protocol needs a running Bitcoin node to independently perform the timestamp verification, for this time only, we are going to verify it through the OTS website.
+On your local computer, download the checksums file and its timestamp proof:
   *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.ots
   *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
@@ -99,6 +106,16 @@ This is a precaution to make sure that this is an official release and not a mal
 * If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v23.0){:target="_blank"} of Bitcoin Core v23.0.
 
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
+
+#### Future upgrades
+* For future upgrades performed after the OTS installation you can independently verify the OpenTimestamp proof.
+
+```sh
+$ ots verify SHA256SUMS.ots
+> Assuming target filename is 'SHA256SUMS'
+> Got 3 attestation(s) from cache
+> Success! Bitcoin block 764525 attests existence as of 2022-11-24 GMT
+```
 
 ### Installation
 
