@@ -108,7 +108,7 @@ On your local computer, download the checksums file and its timestamp proof:
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
 
 #### Future upgrades
-* For future upgrades performed after the OTS installation you can independently verify the OpenTimestamp proof.
+* For future upgrades, performed after the OTS installation, you can independently verify the OpenTimestamp proof from your RaspiBolt.
 
 ```sh
 $ ots verify SHA256SUMS.ots
