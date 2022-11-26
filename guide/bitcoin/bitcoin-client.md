@@ -113,7 +113,10 @@ On your local computer, download the checksums file and its timestamp proof:
 ```sh
 $ ots verify SHA256SUMS.ots
 > Assuming target filename is 'SHA256SUMS'
-> Got 3 attestation(s) from cache
+> Got 1 attestation(s) from https://btc.calendar.catallaxy.com
+> Got 1 attestation(s) from https://finney.calendar.eternitywall.com
+> Got 1 attestation(s) from https://bob.btc.calendar.opentimestamps.org
+> Got 1 attestation(s) from https://alice.btc.calendar.opentimestamps.org
 > Success! Bitcoin block 764525 attests existence as of 2022-11-24 GMT
 ```
 
