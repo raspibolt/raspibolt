@@ -536,7 +536,7 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   $ sudo nano /etc/nginx/sites-enabled/dojo.conf
   ```
 
-* Paste following values and change "xyz.onion" under "# Tor Site Configuration" to your newly generated hostname address
+* Paste following values and change "xyz.onion" under the "Tor Site Configuration" to your Tor hostname address
 
   ```
   # RaspiBolt: Dojo configuration 
