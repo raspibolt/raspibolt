@@ -92,8 +92,20 @@ For that we will create a separate user and we will be running the code as the n
 * Clone the latest release of the project GitHub repository and enter it
 
   ```sh
-  $ git clone --branch v1.3.1 https://github.com/cryptosharks131/lndg.git
+  $ git clone --branch v1.5.0 https://github.com/cryptosharks131/lndg.git
   $ cd lndg
+  
+* Verify the tag
+  
+  ```sh
+  $ curl https://keybase.io/cryptosharks131/pgp_keys.asc | gpg --import
+  gpg: key 0A50748567ADEB28: public key "cryptosharks131 <cryptosharks131@gmail.com>" imported
+  
+  $ git verify-tag v1.5.0
+  gpg: Signature made Sun Nov 27 2022 02:45:17 CET
+  gpg:                using RSA key 1957FD54782C190096F4166F0A50748567ADEB28
+  gpg: Good Signature from "cryptosharks131 <cryptosharks131@gmail.com>"
+  ```
 
 * Setup a Python virtual environment
 
@@ -700,14 +712,14 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo su - lndg
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest 1.3.0 in this example), and update:
+* Fetch the latest GitHub repository information, display the release tags (use the latest 1.5.0 in this example), and update:
 
   ```sh
   $ cd /home/lndg/lndg
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v1.3.1
+  $ git checkout v1.5.0
   $ ./.venv/bin/pip install -r requirements.txt
   $ exit
   ```
