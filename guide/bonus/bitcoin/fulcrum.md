@@ -40,7 +40,7 @@ Table of contents
 
 ---
 
-Fulcrum is a replacement for an Electrs, these two services cannot be run at the same time (due to the same standard ports used)
+Fulcrum is a replacement for an Electrs, these two services cannot be run at the same time (due to the same standard ports used). Performance issues have been found on Raspberry Pi 4GB, it is recommended to install Fulcrum on 8GB version.
 
 ## Preparations
 
@@ -54,7 +54,324 @@ Make sure that you have [reduced the database cache of Bitcoin Core](../../bitco
   $ sudo apt install libssl-dev
   ```
 
-### Install zram-swap
+### Configure Firewall
+
+* Configure the firewall to allow incoming requests
+
+  ```sh
+  $ sudo ufw allow from 192.168.0.0/16 to any port 50002 proto tcp comment 'allow Fulcrum SSL from local network'
+  ```
+
+  ```sh
+  $ sudo ufw allow from 192.168.0.0/16 to any port 50001 proto tcp comment 'allow Fulcrum TCP from local network'
+  ```
+
+### Configure Bitcoin Core
+
+We need to set up settings in Bitcoin Core configuration file - add new lines if they are not present
+
+* In `bitcoin.conf`, add the following line in "# Connections" section. Save and exit
+
+  ```sh
+  $ sudo nano /data/bitcoin/bitcoin.conf
+  ```
+
+  ```sh
+  zmqpubhashblock=tcp://0.0.0.0:8433
+  ```
+
+* Restart Bitcoin Core
+
+  ```sh
+  $ sudo systemctl restart bitcoind
+  ```
+
+## Installation
+
+### Download and set up Fulcrum
+
+We have our Bitcoin Core configuration file set up and now we can move to next part - installation of Fulcrum
+
+* Download the application, checksums and signature
+
+  ```sh
+  $ cd /tmp
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-x86_64-linux.tar.gz
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-x86_64-linux.tar.gz.asc
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-x86_64-linux.tar.gz.sha256sum
+  ```
+
+* Get the public key from the Fulcrum developer
+
+  ```sh
+  $ curl https://raw.githubusercontent.com/Electron-Cash/keys-n-hashes/master/pubkeys/calinkey.txt | gpg --import
+  ```
+
+* Verify the signature of the text file containing the checksums for the application
+
+  ```sh
+  $ gpg --verify Fulcrum-1.8.2-x86_64-linux.tar.gz.asc
+  > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
+  > gpg: WARNING: This key is not certified with a trusted signature!
+  > gpg: There is no indication that the signature belongs to the owner.
+  > Primary key fingerprint: D465 135F 97D0 047E 18E9  9DC3 2181 0A54 2031 C02C
+  ```
+
+* Verify the signed checksum against the actual checksum of your download
+
+  ```sh
+  $ sha256sum --check Fulcrum-1.8.2-x86_64-linux.tar.gz.sha256sum
+  > Fulcrum-1.8.2-x86_64-linux.tar.gz: OK
+  ```
+
+* Install Fulcrum and check the correct installation requesting the version
+
+  ```sh
+  $ tar -xvf Fulcrum-1.8.2-x86_64-linux.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-1.8.2-x86_64-linux/Fulcrum Fulcrum-1.8.2-x86_64-linux/FulcrumAdmin 
+  $ Fulcrum --version
+  > Fulcrum 1.8.2 (Release d330248)
+  compiled: gcc 8.4.0
+  ...
+  ```
+
+### Data directory
+
+Now that Fulcrum is installed, we need to configure it to run automatically on startup.
+
+* Create the "fulcrum" service user, and add it to "bitcoin" group
+
+  ```sh
+  $ sudo adduser --disabled-password --gecos "" fulcrum
+  $ sudo adduser fulcrum bitcoin
+  ```
+
+* Create the fulcrum data directory
+
+  ```sh
+  $ sudo mkdir -p /data/fulcrum/fulcrum_db
+  $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
+  ```
+
+* Create a symlink to /home/fulcrum/.fulcrum
+
+  ```sh
+  $ sudo ln -s /data/fulcrum /home/fulcrum/.fulcrum
+  $ sudo chown -R fulcrum:fulcrum /home/fulcrum/.fulcrum
+  ```
+
+* Open a "fulcrum" user session
+
+  ```sh
+  $ sudo su fulcrum
+  ```
+
+* Change to fulcrum data folder and generate cert and key files for SSL. When it asks you to put some info, press `Enter` until the prompt is shown again, is not necessary to put any info
+
+  ```sh
+  $ cd /data/fulcrum
+  $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+  ```
+
+* Download custom Fulcrum banner based on MiniBolt
+
+  ```sh
+  $ wget https://raw.githubusercontent.com/twofaktor/minibolt/main/resources/fulcrum-banner.txt
+  ```
+
+### Configuration
+
+* Next, we have to set up our Fulcrum configurations. Troubles could be found without optimizations for slow devices. Choose either one for 4GB or 8GB of RAM depending on your hardware. Create the config file with the following content. Save and exit
+
+  ```sh
+  $ nano /data/fulcrum/fulcrum.conf
+  ```
+
+  ```sh
+  # MiniBolt: fulcrum configuration 
+  # /data/fulcrum/fulcrum.conf
+  
+  ## Bitcoin Core settings
+  bitcoind = 127.0.0.1:8332
+  rpccookie = /home/bitcoin/.bitcoin/.cookie
+  
+  ## Fulcrum server general settings
+  datadir = /data/fulcrum/fulcrum_db
+  cert = /data/fulcrum/cert.pem
+  key = /data/fulcrum/key.pem
+  ssl = 0.0.0.0:50002
+  tcp = 0.0.0.0:50001
+  peering = false
+  # Set fast-sync accorling with your device, 
+  # recommended: fast-sync=1/2 x RAM available e.g: 4GB RAM -> dbcache=2048)
+  fast-sync = 2048
+  # Banner
+  banner = /data/fulcrum/fulcrum-banner.txt
+  ```
+
+* Exit "fulcrum" user session to return to "admin" user session
+
+  ```sh
+  $ exit
+  ```
+
+### Autostart on boot
+
+Fulcrum needs to start automatically on system boot.
+
+* As user "admin", create the Fulcrum systemd unit and copy/paste the following configuration. Save and exit
+
+  ```sh
+  $ sudo nano /etc/systemd/system/fulcrum.service
+  ```
+
+  ```sh
+  # MiniBolt: systemd unit for Fulcrum
+  # /etc/systemd/system/fulcrum.service
+  
+  [Unit]
+  Description=Fulcrum
+  After=bitcoind.service
+  PartOf=bitcoind.service
+  
+  StartLimitBurst=2
+  StartLimitIntervalSec=20
+  
+  [Service]
+  ExecStart=/usr/local/bin/Fulcrum /data/fulcrum/fulcrum.conf
+  KillSignal=SIGINT
+  User=fulcrum
+  Type=exec
+  TimeoutStopSec=300
+  RestartSec=30
+  Restart=on-failure
+  
+  [Install]
+  WantedBy=multi-user.target
+  ```
+
+* Enable the service
+
+  ```sh
+  $ sudo systemctl enable fulcrum.service
+  ```
+
+* Prepare "fulcrum" monitoring by the systemd journal and check log logging output. You can exit monitoring at any time by with `Ctrl-C`
+
+  ```sh
+  $ sudo journalctl -f -u fulcrum
+  ```
+
+## Run Fulcrum
+
+[Start your SSH program](../system/remote-access.md#access-with-secure-shell) (eg. PuTTY) a second time, connect to the PC and log in as "admin".
+Commands for the **second session** start with the prompt `$2` (which must not be entered).
+
+```sh
+$2 sudo systemctl start fulcrum
+```
+
+Monitor the systemd journal at the first session created to check if everything works fine:
+
+  ```sh
+  -- Journal begins at Mon 2022-04-04 16:41:41 CEST. --
+  Jul 28 12:20:13 minibolt Fulcrum[181811]: [2022-07-28 12:20:13.063] simdjson: version 0.6.0
+  Jul 28 12:20:13 minibolt Fulcrum[181811]: [2022-07-28 12:20:13.063] ssl: OpenSSL 1.1.1n  15 Mar 2022
+  Jul 28 12:20:13 minibolt Fulcrum[181811]: [2022-07-28 12:20:13.063] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
+  Jul 28 12:20:13 minibolt Fulcrum[181811]: [2022-07-28 12:20:13.064] Fulcrum 1.8.2 (Release d330248) - Thu Jul 28, 2022 12:20:13.064 CEST - starting up ...
+  Jul 28 12:20:13 minibolt Fulcrum[181811]: [2022-07-28 12:20:13.064] Max open files: 524288 (increased from default: 1024)
+  Jul 28 12:20:13 minibolt Fulcrum[181811]: [2022-07-28 12:20:13.065] Loading database ...
+  Jul 28 12:20:14 minibolt Fulcrum[181811]: [2022-07-28 12:20:14.489] DB memory: 512.00 MiB
+  Jul 28 12:20:14 minibolt Fulcrum[181811]: [2022-07-28 12:20:14.491] Coin: BTC
+  Jul 28 12:20:14 minibolt Fulcrum[181811]: [2022-07-28 12:20:14.492] Chain: main
+  Jul 28 12:20:14 minibolt Fulcrum[181811]: [2022-07-28 12:20:14.494] Verifying headers ...
+  Jul 28 12:20:19 minibolt Fulcrum[181811]: [2022-07-28 12:20:19.780] Initializing header merkle cache ...
+  Jul 28 12:20:21 minibolt Fulcrum[181811]: [2022-07-28 12:20:21.643] Checking tx counts ...
+  ...
+  ```
+
+Fulcrum will now index the whole Bitcoin blockchain so that it can provide all necessary information to wallets. With this, the wallets you use no longer need to connect to any third-party server to communicate with the Bitcoin peer-to-peer network.
+
+DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES - in case of that happening, start sync from scratch by deleting and recreating `fulcrum_db` folder.
+
+💡 Fulcrum must first fully index the blockchain and compact its database before you can connect to it with your wallets. This can take up to ~3.5 - 4 days. Only proceed with the [Desktop Wallet Section](../../bitcoin/desktop-wallet.md) once Fulcrum is ready.
+
+* Ensure that Fulcrum service is working and listening at the default `50002` & `50001` ports
+
+  ```sh
+  $2 sudo ss -tulpn | grep LISTEN | grep Fulcrum 
+  ```
+
+## Extras (optional)
+
+### Remote access over Tor
+
+To use your Fulcrum server when you're on the go, you can easily create a Tor hidden service.
+This way, you can connect the BitBoxApp or Electrum wallet also remotely, or even share the connection details with friends and family. Note that the remote device needs to have Tor installed as well.
+
+* Ensure that you are logged with user "admin" and add the following three lines in the section for "location-hidden services" in the torrc file. Save and exit
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+* Edit torrc
+
+  ```sh
+  ############### This section is just for location-hidden services ###
+  # Hidden Service Fulcrum SSL
+  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_ssl/
+  HiddenServiceVersion 3
+  HiddenServicePort 50002 127.0.0.1:50002
+  # Hidden Service Fulcrum TCP
+  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_tcp/
+  HiddenServiceVersion 3
+  HiddenServicePort 50001 127.0.0.1:50001
+  ```
+
+* Reload Tor configuration and get your connection addresses
+
+  ```sh
+  $ sudo systemctl reload tor
+  ```
+
+  ```sh
+  $ sudo cat /var/lib/tor/hidden_service_fulcrum_ssl/hostname
+  > abcdefg..............xyz.onion
+  ```
+
+  ```sh
+  $ sudo cat /var/lib/tor/hidden_service_fulcrum_tcp/hostname
+  > abcdefg..............xyz.onion
+  ```
+
+* You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50002 (ssl) or 50001 (tcp)
+
+### Slow device mode
+
+#### Fulcrum configuration
+
+* As the `admin` user, add these lines to the end of the existing `fulcrum.conf` file. Uncomment the `db_max_open_files` parameter choosing the appropriate one for 4 GB or 8 GB of RAM depending on your hardware.
+
+ ```sh
+  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  ```
+
+  ```sh
+  ## Slow device first-time start optimizations
+  #bitcoind_timeout = 600
+  #bitcoind_clients = 1
+  #worker_threads = 1
+  #db_mem = 1024.0
+  
+  # 4GB RAM 
+  #db_max_open_files = 200
+  
+  # 8GB RAM
+  #db_max_open_files = 400
+  ```
+
+#### Install zram-swap
 
 zram-swap is a compressed swap in memory and on disk and is necessary for the proper functioning of Fulcrum during the sync process using compressed swap in memory (increase performance when memory usage is high)
 
@@ -139,240 +456,6 @@ zram-swap is a compressed swap in memory and on disk and is necessary for the pr
   ...
   ```
 
-### Configure Firewall
-
-* Configure the firewall to allow incoming requests
-
-  ```sh
-  $ sudo ufw allow 50002/tcp comment 'allow Fulcrum SSL'
-  ```
-
-### Configure Bitcoin Core
-
-We need to set up settings in Bitcoin Core configuration file - add new lines if they are not present
-
-* In `bitcoin.conf`, add the following line in "# Connections" section. Save and exit
-
-  ```sh
-  $ sudo nano /data/bitcoin/bitcoin.conf
-  ```
-
-  ```sh
-  zmqpubhashblock=tcp://0.0.0.0:8433
-  ```
-
-* Restart Bitcoin Core
-
-  ```sh
-  $ sudo systemctl restart bitcoind
-  ```
-
-## Installation
-
-### Download and set up Fulcrum
-
-We have our Bitcoin Core configuration file set up and now we can move to next part - installation of Fulcrum
-
-* Download the application, checksums and signature
-
-  ```sh
-  $ cd /tmp
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-arm64-linux.tar.gz
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-arm64-linux.tar.gz.asc
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-arm64-linux.tar.gz.sha256sum
-  ```
-
-* Get the public key from the Fulcrum developer
-
-  ```sh
-  $ curl https://raw.githubusercontent.com/Electron-Cash/keys-n-hashes/master/pubkeys/calinkey.txt | gpg --import
-  ```
-
-* Verify the signature of the text file containing the checksums for the application
-
-  ```sh
-  $ gpg --verify Fulcrum-1.8.2-arm64-linux.tar.gz.asc
-  > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
-  > gpg: WARNING: This key is not certified with a trusted signature!
-  > gpg: There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: D465 135F 97D0 047E 18E9  9DC3 2181 0A54 2031 C02C
-  ```
-
-* Verify the signed checksum against the actual checksum of your download
-
-  ```sh
-  $ sha256sum --check Fulcrum-1.8.2-arm64-linux.tar.gz.sha256sum
-  > Fulcrum-1.8.2-arm64-linux.tar.gz: OK
-  ```
-
-* Install Fulcrum and check the correct installation requesting the version
-
-  ```sh
-  $ tar -xvf Fulcrum-1.8.2-arm64-linux.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-1.8.2-arm64-linux/Fulcrum Fulcrum-1.8.2-arm64-linux/FulcrumAdmin 
-  $ Fulcrum --version
-  > Fulcrum 1.8.2 (Release d330248)
-  compiled: gcc 8.4.0
-  ...
-  ```
-
-### Data directory
-
-Now that Fulcrum is installed, we need to configure it to run automatically on startup.
-
-* Create the "fulcrum" service user, and add it to "bitcoin" group
-
-  ```sh
-  $ sudo adduser --disabled-password --gecos "" fulcrum
-  $ sudo adduser fulcrum bitcoin
-  ```
-
-* Create the fulcrum data directory
-
-  ```sh
-  $ sudo mkdir -p /data/fulcrum/fulcrum_db
-  $ sudo chown -R fulcrum:fulcrum /data/fulcrum/
-  ```
-
-* Create a symlink to /home/fulcrum/.fulcrum
-
-  ```sh
-  $ sudo ln -s /data/fulcrum /home/fulcrum/.fulcrum
-  $ sudo chown -R fulcrum:fulcrum /home/fulcrum/.fulcrum
-  ```
-
-* Open a "fulcrum" user session
-
-  ```sh
-  $ sudo su - fulcrum
-  ```
-
-* Change to fulcrum data folder and generate cert and key files for SSL. When it asks you to put some info, press `Enter` until the prompt is shown again, is not necessary to put any info
-
-  ```sh
-  $ cd /data/fulcrum
-  $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
-  ```
-
-### Configuration
-
-* Next, we have to set up our Fulcrum configurations. Troubles could be found without optimizations for Raspberry Pi. Choose either one for Raspberry 4GB or 8GB depending on your hardware. Create the config file with the following content. Save and exit
-
-  ```sh
-  $ nano /data/fulcrum/fulcrum.conf
-  ```
-
-  ```sh
-  # RaspiBolt: fulcrum configuration 
-  # /data/fulcrum/fulcrum.conf
-  
-  # Bitcoin Core settings
-  bitcoind = 127.0.0.1:8332
-  rpccookie = /home/bitcoin/.bitcoin/.cookie
-  
-  # Fulcrum server settings
-  datadir = /data/fulcrum/fulcrum_db
-  cert = /data/fulcrum/cert.pem
-  key = /data/fulcrum/key.pem
-  ssl = 0.0.0.0:50002
-  peering = false
-  
-  # RPi optimizations
-  bitcoind_timeout = 600
-  bitcoind_clients = 1
-  worker_threads = 1
-  deb_mem = 1024.0
-  
-  # 4GB RAM (default)
-  db_max_open_files = 200
-  fast-sync = 1024
-  
-  # 8GB RAM (comment the last two lines and uncomment the next)
-  #db_max_open_files = 400
-  #fast-sync = 2048
-  ```
-
-* Exit "fulcrum" user session to return to "admin" user session
-
-  ```sh
-  $ exit
-  ```
-
-### Autostart on boot
-
-Fulcrum needs to start automatically on system boot.
-
-* As user "admin", create the Fulcrum systemd unit and copy/paste the following configuration. Save and exit
-
-  ```sh
-  $ sudo nano /etc/systemd/system/fulcrum.service
-  ```
-
-  ```sh
-  # RaspiBolt: systemd unit for Fulcrum
-  # /etc/systemd/system/fulcrum.service
-  
-  [Unit]
-  Description=Fulcrum
-  PartOf=bitcoind.service
-  After=bitcoind.service
-  StartLimitBurst=2
-  StartLimitIntervalSec=20
-  
-  [Service]
-  ExecStart=/usr/local/bin/Fulcrum /data/fulcrum/fulcrum.conf
-  KillSignal=SIGINT
-  User=fulcrum
-  Type=exec
-  TimeoutStopSec=300
-  RestartSec=30
-  Restart=on-failure
-  
-  [Install]
-  WantedBy=multi-user.target
-  ```
-
-### Run Fulcrum
-
-* Enable fulcrum service and start
-
-  ```sh
-  $ sudo systemctl enable fulcrum.service
-  $ sudo systemctl start fulcrum.service
-  ```
-
-* We can check if everything goes right using these commands
-
-  ```sh
-  $ sudo systemctl status fulcrum
-  $ sudo journalctl -f -u fulcrum
-  ```
-
-* Expected output:
-
-  ```sh
-  -- Journal begins at Mon 2022-04-04 16:41:41 CEST. --
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] simdjson: version 0.6.0
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] ssl: OpenSSL 1.1.1n  15 Mar 2022
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Fulcrum 1.8.2 (Release d330248) - Thu Jul 28, 2022 12:20:13.064 CEST - starting up ...
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Max open files: 524288 (increased from default: 1024)
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.065] Loading database ...
-  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.489] DB memory: 512.00 MiB
-  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.491] Coin: BTC
-  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.492] Chain: main
-  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.494] Verifying headers ...
-  Jul 28 12:20:19 rasp Fulcrum[181811]: [2022-07-28 12:20:19.780] Initializing header merkle cache ...
-  Jul 28 12:20:21 rasp Fulcrum[181811]: [2022-07-28 12:20:21.643] Checking tx counts ...
-  ...
-  ```
-
-Fulcrum will now index the whole Bitcoin blockchain so that it can provide all necessary information to wallets. With this, the wallets you use no longer need to connect to any third-party server to communicate with the Bitcoin peer-to-peer network.
-
-DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT THE FILES - in case of that happening, start sync from scratch by deleting and recreating `fulcrum_db` folder.
-
-💡 Fulcrum must first fully index the blockchain and compact its database before you can connect to it with your wallets. This can take up to ~3.5 - 4 days. Only proceed with the [Desktop Wallet Section](../../bitcoin/desktop-wallet.md) once Fulcrum is ready.
-
 💡 After the initial sync of Fulcrum, if you want to still use zram, you can return to the default zram config following the next instructions
 
 * As user "admin", access to zram config again and return to default config. Save and exit
@@ -410,175 +493,6 @@ DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT TH
   Filename                                Type                Size           Used    Priority
   /var/swap                              file                 102396         0       -2
   /dev/zram0                             partition            20479          0        5
-  ```
-
-## Extras
-
-### Remote access over Tor (optional)
-
-To use your Fulcrum server when you're on the go, you can easily create a Tor hidden service.
-This way, you can connect the BitBoxApp or Electrum wallet also remotely, or even share the connection details with friends and family. Note that the remote device needs to have Tor installed as well.
-
-* Ensure that you are logged with user "admin" and add the following three lines in the section for "location-hidden services" in the torrc file. Save and exit
-
-  ```sh
-  $ sudo nano /etc/tor/torrc
-  ```
-
-* Edit torrc
-
-  ```sh
-  ############### This section is just for location-hidden services ###
-  # Hidden Service Fulcrum SSL
-  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_ssl/
-  HiddenServiceVersion 3
-  HiddenServicePort 50002 127.0.0.1:50002
-  ```
-
-* Reload Tor configuration and get your connection address
-
-  ```sh
-  $ sudo systemctl reload tor
-  $ sudo cat /var/lib/tor/hidden_service_fulcrum_ssl/hostname
-  > abcdefg..............xyz.onion
-  ```
-
-* You should now be able to connect to your Fulcrum server remotely via Tor using your SSL hostname and port 50002
-
-### Add TCP (optional)
-
-RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](https://bluewallet.io/) do not support SSL over Tor. You may as well need to use TCP for other reasons.
-
-* Open `fulcrum.conf` file
-
-  ```
-  $ sudo nano /data/fulcrum/fulcrum.conf
-  ```
-
-* Add following line to the configuration file, save and exit. Restart Fulcrum
-
-  ```
-  # Add in config
-  tcp = 0.0.0.0:50001
-  ```
-  ```
-  $ sudo systemctl restart fulcrum.service
-  ```
-  
-* Allow TCP port in UFW
-
-  ```
-  $ sudo ufw allow 50001/tcp comment 'allow Fulcrum TCP'
-  ```
-
-### Remote access over Tor for TCP (optional)
-
-We will generate new Tor address for TCP
-
-* Open `torrc` file and add following lines. Save and exit
-
-  ```
-  $ sudo nano /etc/tor/torrc
-  ```
-  ```
-  ############### This section is just for location-hidden services ###
-  # Hidden Service Fulcrum TCP
-  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_tcp/
-  HiddenServiceVersion 3
-  HiddenServicePort 50001 127.0.0.1:50001
-  ```
-  
-* Reload Tor configuration and get your connection address
-
-  ```sh
-  $ sudo systemctl reload tor
-  $ sudo cat /var/lib/tor/hidden_service_fulcrum_tcp/hostname
-  > abcdefg..............xyz.onion
-  ```
-  
-* You should now be able to connect to your Fulcrum server remotely via Tor using your TCP hostname and port 50001
-
-### Add banner to Fulcrum server (For fun!)
-
-You can get creative when making your server banner, for example creating your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum). In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf) you can find additional info about making a banner in the "# Server banner text file - 'banner'" section.
-
-* Create and open `banner.txt` file inside Fulcrum directory
-
-  ```sh
-  $ sudo nano /data/fulcrum/banner.txt
-  ```
-
-* Paste your own creation into `banner.txt`. Save and exit
-
-  ```sh
-      ____      __
-     / __/_  __/ /___________  ______ ___
-    / /_/ / / / / ___/ ___/ / / / __ `__ \
-   / __/ /_/ / / /__/ /  / /_/ / / / / / /
-  /_/  \__,_/_/\___/_/   \__,_/_/ /_/ /_/
-  
-  server version: $SERVER_VERSION
-  bitcoind version: $DAEMON_VERSION
-  ```
-
-* Open `fulcrum.conf`
-
-  ```sh
-  $ sudo nano /data/fulcrum/fulcrum.conf
-  ```
-
-* Specify path to banner at the end of your configuration file. Save and exit
-
-  ```sh
-  # Banner path
-  banner = /data/fulcrum/banner.txt
-  ```
-
-* Restart Fulcrum
-
-  ```sh
-  $ sudo systemctl restart fulcrum.service
-  ```
-
-Now you should see your banner when connecting to Fulcrum with supported wallet (ex. Sparrow)
-
-![Banner](../../../images/Fulcrum_Banner.png)
-
-### Configure BTC RPC Explorer to Fulcrum API connection and modify the service
-
-To get address balances, either an Electrum server or an external service is necessary. Your local Fulcrum server can provide address transaction lists, balances, and more.
-
-* Change to `btcrpcexplorer` user, enter to `btc-rpc-explorer` folder and open `.env` file
-
-  ```sh
-  $ sudo su - btcrpcexplorer
-  $ cd btc-rpc-explorer
-  $ nano .env
-  ```
-
-* Add or modify the following line. Save and exit
-
-  ```sh
-  BTCEXP_ELECTRUM_SERVERS=tls://127.0.0.1:50002
-  ```
-
-* Return to `admin` user by exiting and open `btcrpcexplorer` service
-
-  ```sh
-  $ exit
-  $ sudo nano /etc/systemd/system/btcrpcexplorer.service
-  ```
-
-* Replace `"After=electrs.service"` to `"After=fulcrum.service"` parameter. Save and exit
-
-  ```sh
-  After=fulcrum.service
-  ```
-
-* Restart BTC RPC Explorer service to apply the changes
-
-  ```sh
-  $ sudo systemctl restart btcrpcexplorer
   ```
 
 ### Backup the database
@@ -632,9 +546,13 @@ Ensure you are logged with user "admin"
   ```sh
   ############### This section is just for location-hidden services ###
   # Hidden Service Fulcrum SSL
-  #HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
+  #HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_ssl/
   #HiddenServiceVersion 3
   #HiddenServicePort 50002 127.0.0.1:50002
+  # Hidden Service Fulcrum TCP
+  #HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_tcp/
+  #HiddenServiceVersion 3
+  #HiddenServicePort 50001 127.0.0.1:50001
   ```
 
 * Reload torrc config
@@ -649,10 +567,8 @@ Ensure you are logged with user "admin"
 
   ```sh
   $ sudo ufw status numbered
-  > [...]
-  > [X] 50002                   ALLOW IN    Anywhere                   # allow Fulcrum SSL
-  > [...]
-  > [Y] 50002 (v6)              ALLOW IN    Anywhere (v6)              # allow Fulcrum SSL
+  > [X] 50002                   ALLOW IN    192.168.0.0/16                   # allow Fulcrum SSL from local network
+  > [Y] 50001                   ALLOW IN    192.168.0.0/16                   # allow Fulcrum TCP from local network
   ```
 
 * Delete the rule with the correct number and confirm with "yes"
