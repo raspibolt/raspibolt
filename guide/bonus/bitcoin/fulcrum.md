@@ -617,7 +617,11 @@ Ensure you are logged with user "admin"
   > [...]
   > [X] 50002                   ALLOW IN    Anywhere                   # allow Fulcrum SSL
   > [...]
-  > [Y] 50002 (v6)              ALLOW IN    Anywhere (v6)              # allow Fulcrum SSL
+  > [X] 50002 (v6)              ALLOW IN    Anywhere (v6)              # allow Fulcrum SSL
+  > [...]
+  > [Y] 50001                   ALLOW IN    Anywhere                   # allow Fulcrum TCP
+  > [...]
+  > [Y] 50001 (v6)              ALLOW IN    Anywhere (v6)              # allow Fulcrum TCP
   ```
 
 * Delete the rule with the correct number and confirm with "yes"
