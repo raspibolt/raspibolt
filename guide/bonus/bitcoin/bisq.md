@@ -9,11 +9,12 @@ has_toc: false
 ---
 
 # Bonus guide: Bisq
+
 {: .no_toc }
 
 ---
 
-[Bisq](https://bisq.network/){:target="_blank"} is a decentralized bitcoin exchange. 
+[Bisq](https://bisq.network/){:target="_blank"} is a decentralized bitcoin exchange.
 It is a desktop application that aims at providing a secure, private and censorship-resistant way of exchanging bitcoin for national currencies and other cryptocurrencies over the internet.
 
 Difficulty: Easy
@@ -34,100 +35,158 @@ Table of contents
 
 ---
 
+## Requirements
+
+* Bitcoin Core
+
+---
+
 ## Introduction
 
 The guide will show you how to:
 
-1. Install Bisq on your local computer
-1. Connect Bisq to your Bitcoin node via Tor to preserve maximum privacy
+1. Configure BTC Core allowing Bisq to run its SPV wallet and whitelisting the P2P connection
+1. Install Bisq on your personal computer
+1. Connect Bisq to your Bitcoin Core own node in your local network or via remote Tor and depending on your OS personal computer
 1. Securely set up Bisq
 
 ---
 
 ## Installation
 
-* Download Bisq on your local computer using the appropriate binary for your OS: [https://bisq.network/downloads/](https://bisq.network/downloads/){:target="_blank"}
+* Download Bisq on your personal computer using the appropriate binary for your OS: [https://bisq.network/downloads/](https://bisq.network/downloads/){:target="_blank"}
 
 * Verify the downloaded binary following [Bisq guidelines](https://bisq.wiki/Downloading_and_installing){:target="_blank"}
 
-* Once you've verified the integrity of the downloaded Bisq binary, install it on your local computer but do NOT launch Bisq yet!
+* Once you've verified the integrity of the downloaded Bisq binary, install it on your personal computer but do NOT launch Bisq yet!
 
 ---
 
-## Connect Bisq to your node
+### Configure Firewall
+
+* Configure the firewall to allow incoming requests to Bitcoin Core from the local network.
+
+  ```sh
+  $ sudo ufw allow 8333/tcp comment 'allow Bitcoin Core' 
+  ```
 
 ### Configure Bitcoin Core
 
-For Bisq to connect to your Bitcoin Core node, the bloom filters have to be activated.
+For Bisq to connect to your Bitcoin Core node, the bloom filters have to be activated and the P2P connection has to be whitelisted.
 
-* In `bitcoin.conf`, add the following line under `whitelist=download@127.0.0.1          # for Electrs`. Save and exit.
+* Open `bitcoin.conf` to add `peerbloomfilters=1` under `"# Bitcoin daemon"` to activate bloom filters
 
   ```sh
   $ sudo nano /data/bitcoin/bitcoin.conf
   ```
 
-  ```ini
-  whitelist=bloomfilter@127.0.0.1/32    # for Bisq
+  ```sh
+  # Filters
+  peerbloomfilters=1   # for Bisq
   ```
 
-* Restart Bitcoin Core (if you didn't set up automatic LND wallet unlock, remember to unlock it after `bitcoind` restarted)
+* Add the following line under `"whitelist=download@127.0.0.1       # for Electrs"` line to whitelist our own P2P connection.
+
+  ```sh
+  whitelist=bloomfilter@192.168.0.0/16   # for Bisq
+  ```
+
+* By default `bind` configuration of Bitcoin Core is `0.0.0.0`. To connect Bisq from your personal computer in your local network, comment or delete `bind=127.0.0.1`. Save and exit.
+
+  ```sh
+  #bind=127.0.0.1
+  ```
+
+* Restart Bitcoin Core (if you didn't set up automatic LND wallet unlock, remember to unlock it after `bitcoind` restarted).
 
   ```sh
   $ sudo systemctl restart bitcoind
   ```
 
-* Still with user admin, run the following command and make a copy of the .onion address and port (e.g. here, `123...abc.onion:8333`)
+* Still with user admin, wait a few minutes until Bitcoin Core starts completely and run the following command and make a copy of the .onion address and port (e.g. here, `123...abc.onion:8333`).
 
   ```sh
-  $ sudo tail -n 500 -f /data/bitcoin/debug.log | grep "tor: Got service ID"
-  > 022-01-01T22:18:17Z tor: Got service ID 123...abc, advertising service 123...abc.onion:8333
+  $ bitcoin-cli getnetworkinfo | grep address.*onion
+  > "address": "123...abc.onion:8333"
   ```
 
-### First run & configuration
+## Connect Bisq to your own node
 
-#### Start Bisq from the command line
+For Linux and MacOS, we will start Bisq the first time using the command line to force it to connect to your Bitcoin node only.
 
-The first time Bisq is opened using the GUI, it will connect to several remote Bitcoin nodes via Tor. 
-To avoid this, we will start Bisq the first time using the command line to force it to connect to your Bitcoin node only.
+On your personal computer where you installed Bisq, depending on your OS
 
-* On your personal computer where you installed Bisq, open a command line terminal
+**For Linux:**
 
-* We will start Bisq with two flags that will force it to connect to Tor only and using our own Bitcoin Core onion address. 
-Replace `123...abc.onion:8333` with your own Bitcoin Core .onion address that you obtained above.
+* Open a command line terminal, we will start Bisq with two flags that will force it to connect to our own node only. Bisq should connect to your node on startup.
+
+From local network connection, replace `192.168.X.X:8333` with your own node IP address.
+  
+  ```sh
+  $ /opt/bisq/bin/Bisq -btcNodes=192.168.X.X:8333 -useTorForBtc=false
+  ```
+
+From remote connection, replace `123...abc.onion:8333` with your own Bitcoin Core .onion address that you obtained above.
   
   ```sh
   $ /opt/bisq/bin/Bisq -btcNodes=123...abc.onion:8333 -useTorForBtc=true
   ```
 
-#### Network configuration
-
-* Click on the "Settings" tab
-
-* Click on the "Network info" tab
-
-* In the "Bitcoin Network" section, click on "Use custom Bitcoin Core nodes"
-
-* In the box just below, paste your Bitcoin Core node .onion address (`123...abc.onion:8333`)
-
-* Click on any other tab at the top. Bisq will ask you to shut down the program to make your change effective.
-
-* Click "Shut down"
-
-* Start Bisq again, but now using the GUI icon.
-
-* Go back to "Settings" > "Network info", check that only your onion address is listed in the first table 
+* Wait a few minutes until Bisq is up to date with the current state of the blockchain and go back to "Settings" > "Network info" to check that only your own node local IP address or onion address is listed in the first table.
 
 * Check that the "Bitcoin network peers" counter at the bottom right of the window is equal to 1.
 
-Congrats! Bisq is now connected to your node.
+**For MacOS:**
 
---- 
+* Open a command line terminal, we will start Bisq with two flags that will force it to connect to our own node only.
 
-## Configuration
+* From local network connection, replace `192.168.X.X:8333` with your own node IP address.
+  
+  ```sh
+  $ Bisq -btcNodes=192.168.X.X:8333 -useTorForBtc=false
+  ```
+
+* From remote connection, replace `123...abc.onion:8333` with your own Bitcoin Core .onion address that you obtained above.
+  
+  ```sh
+  $ Bisq -btcNodes=123...abc.onion:8333 -useTorForBtc=true
+  ```
+
+* Wait a few minutes until Bisq is up to date with the current state of the blockchain and go back to "Settings" > "Network info" to check that only your own node local IP address or onion address is listed in the first table.
+
+* Check that the "Bitcoin network peers" counter at the bottom right of the window is equal to 1.
+
+**For Windows**, Bisq is automatically opened using the GUI, we can't start Bisq the first time using the command line to force it to connect to your Bitcoin node only, so it will connect to several remote Bitcoin nodes via Tor, don't worry, we are going to change fastly this configuration:
+
+* Start Bisq using the GUI icon.
+
+* Click on the "Settings" > "Network info" tab.
+
+* In the "Bitcoin Network" section, click on "Use custom Bitcoin Core nodes".
+
+* In the box just below, paste your node IP address (`192.168.X.X`) or Bitcoin Core node `.onion` address `(e.g: 123...abc.onion:8333)` that you obtained above, depending if you are connecting locally or remotely via Tor.
+
+* Check/uncheck "Use Tor for Bitcoin network" under Settings > Network, depending if you are connecting locally or remotely via Tor.
+
+* Click on any other tab at the top. Bisq will ask you to shutdown the program to make your change effective.
+
+* Click "Shutdown"
+
+* Start Bisq again using the GUI icon.
+
+* Wait a few minutes until Bisq is up to date with the current state of the blockchain and go back to "Settings" > "Network info" to check that only your own node local IP address or onion address is listed in the first table.
+
+* Check that the "Bitcoin network peers" counter at the bottom right of the window is equal to 1.
+
+🥳 Congrats! Bisq is now connected to your node.
+
+---
+
+## Bisq configuration
 
 This section will highlight key configuration options focusing on privacy and security only.  
 
-For the national currency account and trading configuration options, please refer to the Bisq [website](https://bisq.network/getting-started/){:target="_blank"} and [wiki](https://bisq.wiki/Main_Page){:target="_blank"}. 
+For the national currency account and trading configuration options, please refer to the Bisq [website](https://bisq.network/getting-started/){:target="_blank"} and [wiki](https://bisq.wiki/Main_Page){:target="_blank"}
 
 ### Bitcoin Explorer
 
@@ -164,7 +223,6 @@ For the national currency account and trading configuration options, please refe
 
 * Click on "Backup now (backup is not encrypted)"
 
-
 ### Wallet password
 
 * Still in the "Account" tab, click on "Wallet password"
@@ -187,6 +245,8 @@ Bisq will let you know when a new update is available. Simply follow the instruc
 
 ## Uninstall
 
+### Uninstall BTC Core configuration
+
 If you stop using Bisq for an extended period of time, it is worth deactivating the bloom filter feature in Bitcoin Core.
 
 * In `bitcoin.conf`, comment out the following line. Save and exit.
@@ -195,14 +255,36 @@ If you stop using Bisq for an extended period of time, it is worth deactivating 
   $ sudo nano /data/bitcoin/bitcoin.conf
   ```
 
-  ```ini
-  #whitelist=bloomfilter@127.0.0.1/32    # for Bisq
+  ```sh
+  #peerbloomfilters=1  # for Bisq
+  #whitelist=bloomfilter@0.0.0.0   # for Bisq
   ```
 
 * Restart Bitcoin Core (if you didn't set up automatic LND wallet unlock, remember to unlock it after `bitcoind` restarted)
 
   ```sh
   $ sudo systemctl restart bitcoind
+  ```
+
+### Uninstall FW configuration
+
+* Delete firewall rule with the comment 'allow Bitcoin Core' identifying the number of the rule
+
+  ```sh
+  $ sudo ufw status numbered
+  ```
+
+  ```sh
+  Status: active
+     To                         Action      From
+     --                         ------      ----
+  [X] 8333                      ALLOW IN    Anywhere            # allow Bitcoin Core
+  ```
+
+* Delete the rule with the correct number and confir with "yes"
+
+  ```sh
+  $ sudo ufw delete X
   ```
 
 <br /><br />
