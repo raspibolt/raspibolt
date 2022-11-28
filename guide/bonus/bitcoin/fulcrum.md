@@ -40,7 +40,7 @@ Table of contents
 
 ---
 
-Fulcrum is a replacement for an Electrs, these two services cannot be run at the same time (due to the same standard ports used)
+Fulcrum is a replacement for an Electrs, these two services cannot be run at the same time (due to the same standard ports used). Performance issues have been found on Raspberry Pi 4GB, it is recommended to install Fulcrum on 8GB version.
 
 ## Preparations
 
