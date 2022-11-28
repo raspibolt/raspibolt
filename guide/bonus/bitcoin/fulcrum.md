@@ -281,7 +281,7 @@ Now that Fulcrum is installed, we need to configure it to run automatically on s
   bitcoind_timeout = 600
   bitcoind_clients = 1
   worker_threads = 1
-  deb_mem = 1024.0
+  db_mem = 1024.0
   
   # 4GB RAM (default)
   db_max_open_files = 200

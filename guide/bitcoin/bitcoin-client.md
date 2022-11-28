@@ -91,8 +91,8 @@ This is a precaution to make sure that this is an official release and not a mal
 ### Timestamp check
 
 * The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"}, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
-  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
   *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.ots
+  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
 * In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
 * In the next box, drop or upload the SHA256SUMS file
@@ -466,6 +466,28 @@ We also now want to enable the node to listen to and relay transactions.
 
   ```sh
   $ sudo systemctl restart bitcoind
+  ```
+
+---
+
+## OpenTimestamps client
+
+When we installed Bitcoin Core, we verified the timestamp of the checksum file using the OpenTimestamp website. 
+
+In the future, you will likely need to verify more timestamps, when installing additional programs (_e.g._ LND) and when updating existing programs to a newer version. Rather than relying on a third-party, it would be preferable (and more fun!) to verify the timestamps using your own blockchain data.
+
+Now that Bitcoin Core is running and synced, we can install the [OpenTimestamp client](https://github.com/opentimestamps/opentimestamps-client){:target="_blank"} to locally verify the timestamp of the checksums file.
+
+* With user "admin", globally install the OpenTimestamp client
+
+  ```sh
+  $ sudo pip3 install opentimestamps-client
+  ```
+
+* Display the OpenTimestamps client version to check that it is properly installed 
+
+  ```sh
+  $ ots --version
   ```
 
 ---

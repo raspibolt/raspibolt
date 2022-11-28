@@ -28,14 +28,28 @@ The installation of LND is straight-forward, but the application is quite powerf
 
 We'll download, verify and install LND.
 
-* As user "admin", download the application, checksums and signature
+* As user "admin", download the application and the checksums file (.txt) with its signature (.sig) and timestamp (.ots)
 
   ```sh
   $ cd /tmp
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/lnd-linux-arm64-v0.15.4-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/manifest-v0.15.4-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/manifest-guggero-v0.15.4-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/manifest-guggero-v0.15.4-beta.sig.ots
   ```
+
+### Checksum check
+
+* Verify the signed checksum against the actual checksum of your download
+
+  ```sh
+  $ sha256sum --check manifest-v0.15.4-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.15.4-beta.tar.gz: OK
+  ```
+
+### Signature check
+
+Now that we've verified the integrity of the downloaded binary, we need to check the authenticity of the manifest file we just used, starting with its signature.
 
 * Get the public key from the LND developer, [Oliver Gugger](https://keybase.io/guggero){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
 
@@ -56,12 +70,23 @@ We'll download, verify and install LND.
   > [...]
   ```
 
-* Verify the signed checksum against the actual checksum of your download
+### Timestamp check
+
+We can also check that the manifest file was in existence around the time of the release using its timestamp.
+
+* Let's verify the timestamp of the file matches the release date.
 
   ```sh
-  $ sha256sum --check manifest-v0.15.4-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.15.4-beta.tar.gz: OK
+  $ ots verify manifest-guggero-v0.15.4-beta.sig.ots -f manifest-guggero-v0.15.4-beta.sig
+  > [...]
+  > Success! Bitcoin block 761269 attests existence as of 2022-11-01 CET
   ```
+
+* Check that the date of the timestamp (here 2022-11-01) is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary (2022-11-01).
+
+### Installation
+
+Having verified the integrity and authenticity of the release binary, we can safely proceed to install it!
 
 * Install LND
 
