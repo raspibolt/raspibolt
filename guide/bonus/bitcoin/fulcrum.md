@@ -42,6 +42,8 @@ Table of contents
 
 Fulcrum is a replacement for an Electrs, these two services cannot be run at the same time (due to the same standard ports used), remember to stop Electrs doing "sudo systemctl stop electrs". Performance issues have been found on Raspberry Pi 4GB, it is recommended to install Fulcrum on 8GB RAM version.
 
+RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](https://bluewallet.io/) do not support SSL over Tor. You may as well need to use TCP for other reasons.
+
 ## Preparations
 
 Make sure that you have [reduced the database cache of Bitcoin Core](../../bitcoin/bitcoin-client.md#reduce-dbcache-after-full-sync)
