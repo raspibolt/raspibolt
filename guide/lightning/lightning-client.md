@@ -45,8 +45,8 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.15.5-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.15.5-beta.tar.gz: OK
+  $ sha256sum --check manifest-$VERSION.txt --ignore-missing
+  > lnd-linux-arm64-$VERSION.tar.gz: OK
   ```
 
 ### Signature check
@@ -65,7 +65,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.15.5-beta.sig manifest-v0.15.5-beta.txt
+  $ gpg --verify manifest-roasbeef-$VERSION.sig manifest-v0.15.5-beta.txt
   > gpg: Signature made Thu Dec  1 11:20:10 2022 PST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
@@ -79,7 +79,7 @@ We can also check that the manifest file was in existence around the time of the
 * Let's verify the timestamp of the file matches the release date.
 
   ```sh
-  $ ots verify manifest-roasbeef-v0.15.5-beta.sig.ots -f manifest-roasbeef-v0.15.5-beta.sig
+  $ ots verify manifest-roasbeef-$VERSION.sig.ots -f manifest-roasbeef-$VERSION.sig
   > [...]
   > Success! Bitcoin block 765521 attests existence as of 2022-12-01 CET
   ```
@@ -93,8 +93,8 @@ Having verified the integrity and authenticity of the release binary, we can saf
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.15.5-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.5-beta/*
+  $ tar -xzf $DISTRO-$VERSION.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin $DISTRO-$VERSION/*
   $ lnd --version
   > lnd version 0.15.5-beta commit=v0.15.5-beta
   ```
