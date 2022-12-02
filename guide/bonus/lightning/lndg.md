@@ -94,6 +94,7 @@ For that we will create a separate user and we will be running the code as the n
   ```sh
   $ git clone --branch v1.3.1 https://github.com/cryptosharks131/lndg.git
   $ cd lndg
+  ```
 
 * Setup a Python virtual environment
 
