@@ -32,10 +32,12 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/lnd-linux-arm64-v0.15.5-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-v0.15.5-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-roasbeef-v0.15.5-beta.sig
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-roasbeef-v0.15.5-beta.sig.ots
+  $ VERSION="v0.15.5-beta"
+  $ DISTRO="lnd-linux-arm64"
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/$DISTRO-$VERSION.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-$VERSION.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-roasbeef-$VERSION.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-roasbeef-$VERSION.sig.ots
   ```
 
 ### Checksum check
