@@ -330,10 +330,10 @@ If you need to check the log files:
 
 If you want to uninstall `charge-lnd`:
 
-* Log in with the "admin" user and delete the "charge-lnd" user
+* Log in with the "admin" user and delete the "chargelnd" user
 
   ```sh
-  $ sudo userdel -r charge-lnd
+  $ sudo userdel -r chargelnd
   $ exit
   ```
 

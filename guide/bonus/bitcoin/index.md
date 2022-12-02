@@ -18,11 +18,15 @@ has_toc: false
 
 ---
 
-## Desktop wallets
+## Wallets
 
+### GUI - Desktop wallet
 * **[BitBoxApp](bitboxapp.md)** - a beginner-friendly desktop wallet that pionneered hardware wallets support
 * **[Electrum Wallet Desktop](electrum-wallet-desktop.md)** - a feature-rich desktop wallet for power-users
 * **[Specter Desktop](specter-desktop.md)** - a convenient and user-friendly GUI around Bitcoin Core with a focus on multisignature setup with hardware wallets and airgapped devices
+
+### CLI
+* **[Sparrow Terminal](sparrow-terminal.md)** - a stripped down version of Sparrow that can be run on systems without displays
 
 ---
 
@@ -36,6 +40,8 @@ has_toc: false
 
 * **[JoinMarket](joinmarket.md)** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
 * **[I2P](i2p.md)** - The Invisible Internet Protocol
+
+* **[Samourai Dojo](Dojo.md){:target="_blank"}** - Personal backend for your Samourai Wallet
 
 ---
 

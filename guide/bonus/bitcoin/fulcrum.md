@@ -281,7 +281,7 @@ Now that Fulcrum is installed, we need to configure it to run automatically on s
   bitcoind_timeout = 600
   bitcoind_clients = 1
   worker_threads = 1
-  deb_mem = 1024.0
+  db_mem = 1024.0
   
   # 4GB RAM (default)
   db_max_open_files = 200
@@ -444,6 +444,52 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
   ```
 
 * You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50002
+
+### Add banner to Fulcrum server (For fun!)
+
+You can get creative when making your server banner, for example creating your own [ASCII art](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum). In [Fulcrum docs](https://github.com/cculianu/Fulcrum/blob/master/doc/fulcrum-example-config.conf) you can find additional info about making a banner in the "# Server banner text file - 'banner'" section.
+
+* Create and open `banner.txt` file inside Fulcrum directory
+
+  ```sh
+  $ sudo nano /data/fulcrum/banner.txt
+  ```
+
+* Paste your own creation into `banner.txt`. Save and exit
+
+  ```sh
+      ____      __
+     / __/_  __/ /___________  ______ ___
+    / /_/ / / / / ___/ ___/ / / / __ `__ \
+   / __/ /_/ / / /__/ /  / /_/ / / / / / /
+  /_/  \__,_/_/\___/_/   \__,_/_/ /_/ /_/
+  
+  server version: $SERVER_VERSION
+  bitcoind version: $DAEMON_VERSION
+  ```
+
+* Open `fulcrum.conf`
+
+  ```sh
+  $ sudo nano /data/fulcrum/fulcrum.conf
+  ```
+
+* Specify path to banner at the end of your configuration file. Save and exit
+
+  ```sh
+  # Banner path
+  banner = /data/fulcrum/banner.txt
+  ```
+
+* Restart Fulcrum
+
+  ```sh
+  $ sudo systemctl restart fulcrum.service
+  ```
+
+Now you should see your banner when connecting to Fulcrum with supported wallet (ex. Sparrow)
+
+![Banner](../../../images/Fulcrum_Banner.png)
 
 ### Configure BTC RPC Explorer to Fulcrum API connection and modify the service
 
