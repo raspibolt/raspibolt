@@ -71,6 +71,12 @@ has_toc: false
 
 ---
 
+## Payment processor
+
+* **[BTCPay Server](btcpayserver.md)** - a self-hosted, open-source cryptocurrency payment processor
+
+---
+
 ## Even more Extras 
 
 ### [RaspiBolt Extras by Rob Clark](https://github.com/robclark56/RaspiBolt-Extras/blob/master/README.md){:target="_blank"}
