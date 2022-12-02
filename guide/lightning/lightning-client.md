@@ -32,10 +32,10 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/lnd-linux-arm64-v0.15.4-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/manifest-v0.15.4-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/manifest-guggero-v0.15.4-beta.sig
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.4-beta/manifest-guggero-v0.15.4-beta.sig.ots
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/lnd-linux-arm64-v0.15.5-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-v0.15.5-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-roasbeef-v0.15.5-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-roasbeef-v0.15.5-beta.sig.ots
   ```
 
 ### Checksum check
@@ -43,30 +43,30 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.15.4-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.15.4-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.15.5-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.15.5-beta.tar.gz: OK
   ```
 
 ### Signature check
 
 Now that we've verified the integrity of the downloaded binary, we need to check the authenticity of the manifest file we just used, starting with its signature.
 
-* Get the public key from the LND developer, [Oliver Gugger](https://keybase.io/guggero){:target="_blank"}, who signed the manifest file; and add it to your GPG keyring
+* Get the public key from the LND developer who signed the manifest file; and add it to your GPG keyring
 
   ```sh
-  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/guggero.asc | gpg --import
+  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/roasbeef.asc | gpg --import
   > ...
-  > gpg: key 8E4256593F177720: "Oliver Gugger <gugger@gmail.com>" 1 new signature
+  > gpg: key 372CBD7633C61696: "Olaoluwa Osuntokun <laolu32@gmail.com>" 1 new signature
   > ...
   ```
 
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-guggero-v0.15.4-beta.sig manifest-v0.15.4-beta.txt
-  > gpg: Signature made Tue Nov  1 13:00:20 2022 GMT
-  > gpg:                using RSA key F4FC70F07310028424EFC20A8E4256593F177720
-  > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
+  $ gpg --verify manifest-roasbeef-v0.15.5-beta.sig manifest-v0.15.5-beta.txt
+  gpg: Signature made Thu Dec  1 11:20:10 2022 PST
+  gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
+  gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > [...]
   ```
 
@@ -77,12 +77,12 @@ We can also check that the manifest file was in existence around the time of the
 * Let's verify the timestamp of the file matches the release date.
 
   ```sh
-  $ ots verify manifest-guggero-v0.15.4-beta.sig.ots -f manifest-guggero-v0.15.4-beta.sig
+  $ ots verify manifest-roasbeef-v0.15.5-beta.sig.ots -f manifest-roasbeef-v0.15.5-beta.sig
   > [...]
-  > Success! Bitcoin block 761269 attests existence as of 2022-11-01 CET
+  > Success! Bitcoin block 765521 attests existence as of 2022-12-01 CET
   ```
 
-* Check that the date of the timestamp (here 2022-11-01) is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary (2022-11-01).
+* Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
 
 ### Installation
 
@@ -91,10 +91,10 @@ Having verified the integrity and authenticity of the release binary, we can saf
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.15.4-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.4-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.15.5-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.5-beta/*
   $ lnd --version
-  > lnd version 0.15.4-beta commit=v0.15.4-beta
+  > lnd version 0.15.5-beta commit=v0.15.5-beta
   ```
 
 ### Data directory
@@ -243,7 +243,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.15.4-beta commit=v0.15.4-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.15.5-beta commit=v0.15.5-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
