@@ -192,6 +192,9 @@ To improve the security of your wallet, check out these more advanced methods:
   wallet-unlock-password-file=/data/lnd/password.txt
   wallet-unlock-allow-create=true
 
+  # Automatically regenerate certificate when near expiration
+  tlsautorefresh=1
+
   # Channel settings
   bitcoin.basefee=1000
   bitcoin.feerate=1
