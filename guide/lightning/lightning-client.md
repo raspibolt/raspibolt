@@ -193,8 +193,8 @@ To improve the security of your wallet, check out these more advanced methods:
   wallet-unlock-allow-create=true
 
   # Channel settings
-  bitcoin.basefee=1000
-  bitcoin.feerate=1
+  bitcoin.basefee=0
+  bitcoin.feerate=2500
   minchansize=100000
   accept-keysend=true
   accept-amp=true
