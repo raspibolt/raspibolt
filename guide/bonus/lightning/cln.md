@@ -118,8 +118,6 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Download user specific python packages.
 
   ```sh
-  $ pip3 install --user mrkd==0.2.0
-  $ pip3 install --user mistune==0.8.4
   $ pip3 install --user mako
   ```
 
