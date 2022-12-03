@@ -18,6 +18,8 @@ Difficulty: Intermediate
 Status: Tested v3
 {: .label .label-green }
 
+![btcpay](../../../images/btcpay.jpeg)
+
 ## Table of contents
 {: .no_toc .text-delta }
 
