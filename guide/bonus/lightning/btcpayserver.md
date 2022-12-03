@@ -85,10 +85,16 @@ The executable file is installed in `/home/btcpay/.dotnet/dotnet`.
 
 Still with user "btcpay", we execute the following commands:
 
+* Make src directory
+
+  ```sh
+  $ mkdir src
+  $ cd src
+  ```
+
 * Build NBXplorer
 
   ```sh
-  $ cd
   $ git clone https://github.com/dgarage/NBXplorer
   $ cd NBXplorer
   $ ./build.sh
@@ -97,7 +103,7 @@ Still with user "btcpay", we execute the following commands:
 * Modify NBXplorer run script
 
   ```sh
-  $ nano /home/btcpay/NBxplorer/run.sh
+  $ nano /home/btcpay/src/NBxplorer/run.sh
   ```
 
   Change `dotnet` to `/home/btcpay/.dotnet/dotnet`, save and exit.
@@ -157,8 +163,8 @@ Then, we use systemd to execute NBXplorer on boot:
   After=bitcoind.service
 
   [Service]
-  WorkingDirectory=/home/btcpay/NBXplorer
-  ExecStart=/home/btcpay/NBXplorer/run.sh
+  WorkingDirectory=/home/btcpay/src/NBXplorer
+  ExecStart=/home/btcpay/src/NBXplorer/run.sh
 
   User=btcpay
 
@@ -187,7 +193,7 @@ With user "btcpay", we execute the following commands:
 * Build BTCPay
 
   ```sh
-  $ cd
+  $ cd src
   $ git clone https://github.com/btcpayserver/btcpayserver
   $ cd btcpayserver
   $ ./build.sh
@@ -196,7 +202,7 @@ With user "btcpay", we execute the following commands:
 * Modify BTCPay run script
 
   ```sh
-  $ nano /home/btcpay/btcpayserver/run.sh
+  $ nano /home/btcpay/src/btcpayserver/run.sh
   ```
 
   Change `dotnet` to `/home/btcpay/.dotnet/dotnet`, save and exit.
@@ -255,8 +261,8 @@ Then, we use systemd to execute NBXplorer on boot:
   After=nbxplorer.service
 
   [Service]
-  WorkingDirectory=/home/btcpay/btcpayserver
-  ExecStart=/home/btcpay/btcpayserver/run.sh
+  WorkingDirectory=/home/btcpay/src/btcpayserver
+  ExecStart=/home/btcpay/src/btcpayserver/run.sh
   User=btcpay
 
   Type=simple
