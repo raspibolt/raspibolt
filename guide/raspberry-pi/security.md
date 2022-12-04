@@ -83,15 +83,23 @@ Follow this guide [Configure “No Password SSH Keys Authentication” with PuTT
 * Log in to the Raspberry Pi as "admin" using SSH with your SSH key.
   You shouldn't be prompted for the admin's password anymore.
 
-* Edit the ssh configuration file `/etc/ssh/sshd_config` by uncommenting the following two options and setting their value to `no`.
-  Save and exit.
-
+* Edit the ssh configuration file `/etc/ssh/sshd_config` to harden our security.
+  
   ```sh
   $ sudo nano /etc/ssh/sshd_config
   ```
+
+* Uncomment the following option to disable password authentification
+
   ```sh
   PasswordAuthentication no
-  ChallengeResponseAuthentication no
+  ```
+
+* Below the commented out `ChallengeResponseAuthentication` option, add the following line to disable s/key, a one-time password authentification. Save and exit.
+
+  ```sh
+  #ChallengeResponseAuthentication no
+  KbdInteractiveAuthentication no
   ```
 
 * Restart the SSH daemon, then exit your session
@@ -204,6 +212,7 @@ session required                        pam_limits.so
 $ sudo nano /etc/pam.d/common-session-noninteractive
 session required                        pam_limits.so
 ```
+
 ---
 
 ## Prepare NGINX reverse proxy

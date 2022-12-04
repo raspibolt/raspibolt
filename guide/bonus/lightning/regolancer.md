@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[regolancer](https://github.com/rkfg/regolancer){:target="_blank"} simple LND rebalancer written in GO.
+[regolancer](https://github.com/rkfg/regolancer){:target="_blank"} simple LND rebalancer written in Go.
 
 Difficulty: Easy
 {: .label .label-green }
@@ -36,58 +36,13 @@ Table of contents
 ## Requirements
 
 * LND
-* GO
+* Go
 
 ---
 
-## Install GO
+## Install Go
 
-* Check the latest stable version of the arm64 binary at https://golang.org/dl/ and download it
-
-  ```sh
-  $ cd /tmp
-  $ wget https://go.dev/dl/go1.19.2.linux-arm64.tar.gz
-  ```
-
-* Check on the download page what is the SHA256 checksum of the file, e.g. for the above:
-b62a8d9654436c67c14a0c91e931d50440541f09eb991a987536cb982903126d. Calculate the SHA256 hash of the downloaded file. It should be the same number as the one on the website
-
-  ```sh
-  $ sha256sum go1.19.2.linux-arm64.tar.gz
-  b62a8d9654436c67c14a0c91e931d50440541f09eb991a987536cb982903126d  go1.19.2.linux-arm64.tar.gz
-  ```
-
-* Install Go in the /usr/local directory
-
-  ```sh
-  $ sudo tar -xvf go1.19.2.linux-arm64.tar.gz  -C /usr/local
-  $ rm go1.19.2.linux-arm64.tar.gz
-  ```
-
-* Add the binary to PATH to not have to type the full path each time you use it. For a global installation of Go (that users other than “admin” can use), open /etc/profile
-
-  ```sh
-  $ sudo nano /etc/profile
-  ```
-
-* Add the following line at the end of the file, save and exit.
-
-  ```ini
-  export PATH=$PATH:/usr/local/go/bin
-  ```
-
-* To make the changes effective immediately (and not wait for the next login), execute them from the profile using the following command.
-
-  ```sh
-  $ source /etc/profile
-  ```
-
-* Test that Go has been properly installed by checking its version
-
-  ```sh
-  $ go version
-  go version go1.19.2 linux/arm64
-  ```
+* To install Go follow the instructions provided in the [bonus guide](../raspberry-pi/go.md#install-go).
 
 ---
 
@@ -107,23 +62,23 @@ b62a8d9654436c67c14a0c91e931d50440541f09eb991a987536cb982903126d. Calculate the 
 
   $ ln -s /data/lnd /home/regolancer/.lnd
 
-  $ go install github.com/rkfg/regolancer@v1.6.3
+  $ GOARCH=arm64 go install github.com/rkfg/regolancer@latest
   ```
-Note: Adjust the "regolancer@v1.6.3" part from the commands below to the actual version you have installed.
 
 * Confirm installed version
 
   ```sh
   $ go/bin/regolancer -v
-  Regolancer v1.6.3, built with go1.19.2
+  Regolancer v1.9.0, built with go1.19.2
   Source: https://github.com/rkfg/regolancer
   ```
 
 * Create a working copy of the sample config file. You can use either .json or .toml configs, up to your preference.  
 
   ```sh
-  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.6.3/config.json.sample /home/regolancer/config.json
+  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.9.0/config.json.sample /home/regolancer/config.json
   ```
+Note: Adjust the "regolancer@v1.9.0" part from this commands to the actual version you have installed.
 
 * Make the newly created config.json file writable.
 
@@ -171,16 +126,14 @@ To run it continuously, you will need to run it in a loop or a cron.
 
   ```sh
   $ sudo su - regolancer
-  $ go install github.com/rkfg/regolancer@v1.6.x 
+  $ go install github.com/rkfg/regolancer@latest
   ```
-
-Please replace the v.1.6.x part with the version you would like to install.
 
 * Confirm if the upgrade was successfull
 
   ```sh
   $ go/bin/regolancer -v
-  Regolancer v1.6.3, built with go1.19.2
+  Regolancer v1.9.0, built with go1.19.2
   Source: https://github.com/rkfg/regolancer
   ```
 
