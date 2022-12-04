@@ -94,6 +94,7 @@ For that we will create a separate user and we will be running the code as the n
   ```sh
   $ git clone --branch v1.5.0 https://github.com/cryptosharks131/lndg.git
   $ cd lndg
+  ```
   
 * Verify the tag
   
