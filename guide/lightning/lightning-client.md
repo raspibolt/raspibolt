@@ -193,7 +193,13 @@ To improve the security of your wallet, check out these more advanced methods:
   wallet-unlock-allow-create=true
 
   # Automatically regenerate certificate when near expiration
-  tlsautorefresh=1
+  tlsautorefresh=true
+  # Do not include the interface IPs or the system hostname in TLS certificate.
+  tlsdisableautofill=true
+  # Explicitly define any additional domain names for the certificate that will be created.
+  # tlsextradomain=raspibolt.local
+  # tlsextradomain=raspibolt.public.domainname.com
+  
 
   # Channel settings
   bitcoin.basefee=1000
