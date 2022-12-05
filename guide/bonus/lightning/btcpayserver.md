@@ -57,7 +57,7 @@ With user "btcpay", we install .NET 6.0 SDK. This software is used to build and 
 * Install .NET SDK 6.0
 
   ```sh
-  $ curl https://dot.net/v1/dotnet-install.sh
+  $ wget https://dot.net/v1/dotnet-install.sh
   $ chmod +x ./dotnet-install.sh
   $ ./dotnet-install.sh --channel 6.0
   ```
