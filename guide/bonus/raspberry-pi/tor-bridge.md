@@ -15,6 +15,8 @@ has_toc: false
 
 The design of the Tor network means that the IP address of Tor relays is public. However, one of the ways Tor can be blocked by governments or ISPs is by blocklisting the IP addresses of these public Tor nodes. [Tor Bridges](https://tb-manual.torproject.org/bridges/){:target="_blank"} are nodes in the network that are not listed in the public Tor directory, which makes it harder for ISPs and governments to block them. We are going to use a kind of [pluggable transports](https://tb-manual.torproject.org/circumvention/){:target="_blank"} called obfs4, a special kind of bridge, address this by adding an additional layer of obfuscation.
 
+⚠️ _USE WITH CAUTION - For this guide to work properly, you will need to open ports too are reachable from outside_
+
 Difficulty: Medium
 {: .label .label-yellow }
 
