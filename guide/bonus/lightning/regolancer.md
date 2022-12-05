@@ -62,23 +62,23 @@ Table of contents
 
   $ ln -s /data/lnd /home/regolancer/.lnd
 
-  $ go install github.com/rkfg/regolancer@v1.6.3
+  $ GOARCH=arm64 go install github.com/rkfg/regolancer@latest
   ```
-Note: Adjust the "regolancer@v1.6.3" part from the commands below to the actual version you have installed.
 
 * Confirm installed version
 
   ```sh
   $ go/bin/regolancer -v
-  Regolancer v1.6.3, built with go1.19.2
+  Regolancer v1.9.0, built with go1.19.2
   Source: https://github.com/rkfg/regolancer
   ```
 
 * Create a working copy of the sample config file. You can use either .json or .toml configs, up to your preference.  
 
   ```sh
-  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.6.3/config.json.sample /home/regolancer/config.json
+  $ cp /home/regolancer/go/pkg/mod/github.com/rkfg/regolancer@v1.9.0/config.json.sample /home/regolancer/config.json
   ```
+Note: Adjust the "regolancer@v1.9.0" part from this commands to the actual version you have installed.
 
 * Make the newly created config.json file writable.
 
@@ -126,16 +126,14 @@ To run it continuously, you will need to run it in a loop or a cron.
 
   ```sh
   $ sudo su - regolancer
-  $ go install github.com/rkfg/regolancer@v1.6.x 
+  $ go install github.com/rkfg/regolancer@latest
   ```
-
-Please replace the v.1.6.x part with the version you would like to install.
 
 * Confirm if the upgrade was successfull
 
   ```sh
   $ go/bin/regolancer -v
-  Regolancer v1.6.3, built with go1.19.2
+  Regolancer v1.9.0, built with go1.19.2
   Source: https://github.com/rkfg/regolancer
   ```
 
