@@ -134,6 +134,74 @@ Table of contents
 
   ![Sparrow_Test](../../../images/sparrow-test.png)
 
+### Mix Bitcoin with Sparrow Terminal
+
+* Install tmux
+
+  ```sh
+  $ sudo apt update
+  $ sudo apt full-upgrade
+  $ sudo apt install tmux
+  ```
+
+* Start a new tmux session called "Sparrow"
+
+  ```sh
+  $ tmux new -sSparrow
+  ```
+
+* Launch Sparrow Terminal
+
+  ```sh
+  $ Sparrow
+  ```
+
+* Connect Sparrow Terminal to your own Electrs implementation according to steps above 
+
+* Go to `Wallets > Create Wallet`
+
+* Paste seed words of the hot wallet you will mix bitcoin with. If you use for example Samourai Wallet - do not forget to paste SW passphrase as well
+
+* Create a strong password for Sparrow Terminal wallet to prevent loss of funds in case of someone getting access to your node/wallet
+
+* Open your Wallet
+
+* Send Bitcoin to your hot wallet if not already done
+
+* Go to "UTXOs" and select UTXOs you want to mix. Set Premix priority or fee rate
+
+* Choose the pool you desire. If not sure, you can calculate which pool to use based on fees you will pay using [whirlpoolfees](https://www.whirlpoolfees.com/). It is recommended to use the most economical solution. 
+
+* Enter SCODE if available, you will get discount on pool fee. You can monitor SCODEs by following Samourai Wallets twitter account, Whirlpool or SW Telegram group etc.
+
+* Mix selected funds 
+
+* Once confirmed, go to `Accounts > Postmix > UTXOs > Mix To`.
+
+* You can mix to cold storage if desired. Select value for minimum mixes before sending to cold storage
+
+* If you use Whirlpool with Dojo as well - set Postmix index range to "odd". This way you improve chances of getting into a mix by running two separate mixing clients at the same time, using different index ranges to prevent mix failures
+
+* Detach tmux session to run ST on the background: 
+1. press `ctrl + b` once 
+2. press `d` once
+
+Closing or logging out from your node without detaching would cause mixing to stop. ST now runs as a separate process regardless of you disconnecting from node
+
+* You can view tmux sessions using following command
+
+  ```sh
+  $ tmux ls
+  ```
+
+* You can get back in sessions using
+
+  ```sh
+  $ tmux attach
+  ```
+
+Learn more about [tmux basics](https://github.com/tmux/tmux/wiki/Getting-Started)
+
 ---
 
 ## For the Future: Sparrow Terminal update
