@@ -231,12 +231,13 @@ Updating to a new release should be straight-forward, but make sure to check out
   $ sudo su - circuitbreaker
   ```
   
-* Fetch the latest GitHub repository information and check out the new release
+* Fetch the latest GitHub repository information and check out the new release, switch back to master if you have been using another branch
  
   ```sh
   $ cd ~/circuitbreaker
   $ git fetch
   $ git checkout master
+  $ git pull
   $ go install
   $ exit
   ```
