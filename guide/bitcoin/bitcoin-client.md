@@ -478,9 +478,10 @@ In the future, you will likely need to verify more timestamps, when installing a
 
 Now that Bitcoin Core is running and synced, we can install the [OpenTimestamp client](https://github.com/opentimestamps/opentimestamps-client){:target="_blank"} to locally verify the timestamp of the checksums file.
 
-* With user "admin", globally install the OpenTimestamp client
+* With user "admin", globally install the OpenTimestamp dependencies followed by the client
 
   ```sh
+  $ sudo apt-get install python3 python3-dev python3-pip python3-setuptools python3-wheel
   $ sudo pip3 install opentimestamps-client
   ```
 
