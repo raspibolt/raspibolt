@@ -45,13 +45,13 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/bitcoin-23.0-aarch64-linux-gnu.tar.gz
+  $ wget https://bitcoincore.org/bin/bitcoin-core-24.0.1/bitcoin-24.0.1-aarch64-linux-gnu.tar.gz
 
   # download the list of cryptographic checksum
-  $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
+  $ wget https://bitcoincore.org/bin/bitcoin-core-24.0.1/SHA256SUMS
 
   # download the signatures attesting to validity of the checksums
-  $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.asc
+  $ wget https://bitcoincore.org/bin/bitcoin-core-24.0.1/SHA256SUMS.asc
   ```
 
 ### Checksum check
@@ -60,7 +60,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-23.0-aarch64-linux-gnu.tar.gz: OK
+  > bitcoin-24.0.1-aarch64-linux-gnu.tar.gz: OK
   ```
 
 ### Signature check
@@ -91,12 +91,12 @@ This is a precaution to make sure that this is an official release and not a mal
 ### Timestamp check
 
 * The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"}, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
-  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.ots
-  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
+  *  https://bitcoincore.org/bin/bitcoin-core-24.0.1/SHA256SUMS.ots
+  *  https://bitcoincore.org/bin/bitcoin-core-24.0.1/SHA256SUMS
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
 * In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
 * In the next box, drop or upload the SHA256SUMS file
-* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v23.0){:target="_blank"} of Bitcoin Core v23.0.
+* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v24.0.1){:target="_blank"} of Bitcoin Core v24.0.1.
 
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
 
@@ -105,10 +105,10 @@ This is a precaution to make sure that this is an official release and not a mal
 * If you're satisfied with the checkum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf bitcoin-23.0-aarch64-linux-gnu.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-23.0/bin/*
+  $ tar -xvf bitcoin-24.0.1-aarch64-linux-gnu.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-24.0.1/bin/*
   $ bitcoind --version
-  > Bitcoin Core version v23.0.0
+  > Bitcoin Core version v24.0.1
   > [...]
   ```
 
@@ -478,9 +478,10 @@ In the future, you will likely need to verify more timestamps, when installing a
 
 Now that Bitcoin Core is running and synced, we can install the [OpenTimestamp client](https://github.com/opentimestamps/opentimestamps-client){:target="_blank"} to locally verify the timestamp of the checksums file.
 
-* With user "admin", globally install the OpenTimestamp client
+* With user "admin", globally install the OpenTimestamp dependencies followed by the client
 
   ```sh
+  $ sudo apt-get install python3 python3-dev python3-pip python3-setuptools python3-wheel
   $ sudo pip3 install opentimestamps-client
   ```
 
@@ -504,7 +505,61 @@ When upgrading, there might be breaking changes, or changes in the data structur
 * There's no need to stop the application.
   Simply install the new version and restart the service.
 
-* Download, verify, extract and install the Bitcoin Core binaries as described in the [Bitcoin section](bitcoin-client.md#installation) of this guide.
+* Login as "admin" and change to the temporary directory.
+
+  ```sh
+  $ cd /tmp
+  ```
+
+* Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download){:target="_blank"} (ARM Linux 64 bit), they change with each update. This page tends to lag the Github releases page linked above.
+
+  ```sh
+  # download Bitcoin Core binary, checksums, signature file, and timestamp file
+  $ wget https://bitcoincore.org/bin/bitcoin-core-24.0.1/bitcoin-24.0.1-aarch64-linux-gnu.tar.gz
+  $ wget https://bitcoincore.org/bin/bitcoin-core-24.0.1/SHA256SUMS
+  $ wget https://bitcoincore.org/bin/bitcoin-core-24.0.1/SHA256SUMS.asc
+  $ wget https://bitcoincore.org/bin/bitcoin-core-24.0.1/SHA256SUMS.ots
+  ```
+
+* Verify new version against its checksums
+
+  ```sh
+  $ sha256sum --ignore-missing --check SHA256SUMS
+  > bitcoin-24.0.1-aarch64-linux-gnu.tar.gz: OK
+  ```
+
+* Update gpg keys and verify checksums signatures
+  
+  ```sh
+  $ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/builder-keys/keys.txt -O keys.txt
+  $ while read fingerprint keyholder_name; do gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys ${fingerprint}; done < ./keys.txt
+  $ gpg --verify SHA256SUMS.asc
+  ```
+
+  At least a few signatures should show the following text
+
+  ```
+  > gpg: Good signature from ...
+  > Primary key fingerprint: ...
+  ```
+
+* Check that the timestamp correlates with the approximate release date
+
+  ```sh
+  $ ots verify SHA256SUMS.ots -f SHA256SUMS 
+  > ...
+  > Success! Bitcoin block 766964 attests existence as of 2022-12-11 GMT
+  ```
+
+* If you're satisfied with the checkum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
+
+  ```sh
+  $ tar -xvf bitcoin-24.0.1-aarch64-linux-gnu.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-24.0.1/bin/*
+  $ bitcoind --version
+  > Bitcoin Core version v24.0.1
+  > [...]
+  ```
 
 * Restart the Bitcoin Core systemd unit
 
