@@ -86,7 +86,7 @@ $ sudo npm install latest-version
 ```sh
 $ sudo su - joinmarket
 $ cd .joinmarket
-$ nano joinmarket.config
+$ nano joinmarket.cfg
 ```
 
 * Uncomment these two separate lines, set desired values, then save
