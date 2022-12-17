@@ -40,7 +40,7 @@ Table of contents
 
 ---
 
-Fulcrum is a replacement for an Electrs, these two services cannot be run at the same time (due to the same standard ports used)
+Fulcrum is a replacement for an Electrs, these two services cannot be run at the same time (due to the same standard ports used), remember to stop Electrs doing "sudo systemctl stop electrs". Performance issues have been found on Raspberry Pi 4GB, it is recommended to install Fulcrum on 8GB RAM version.
 
 ## Preparations
 
@@ -144,7 +144,8 @@ zram-swap is a compressed swap in memory and on disk and is necessary for the pr
 * Configure the firewall to allow incoming requests
 
   ```sh
-  $ sudo ufw allow 50002 comment 'allow Fulcrum SSL'
+  $ sudo ufw allow 50002/tcp comment 'allow Fulcrum SSL'
+  $ sudo ufw allow 50001/tcp comment 'allow Fulcrum TCP'
   ```
 
 ### Configure Bitcoin Core
@@ -256,6 +257,8 @@ Now that Fulcrum is installed, we need to configure it to run automatically on s
 
 ### Configuration
 
+RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](https://bluewallet.io/) do not support SSL over Tor. Thats why we use TCP in configurations as well to let user choose what he needs. You may as well need to use TCP for other reasons.
+
 * Next, we have to set up our Fulcrum configurations. Troubles could be found without optimizations for Raspberry Pi. Choose either one for Raspberry 4GB or 8GB depending on your hardware. Create the config file with the following content. Save and exit
 
   ```sh
@@ -275,6 +278,7 @@ Now that Fulcrum is installed, we need to configure it to run automatically on s
   cert = /data/fulcrum/cert.pem
   key = /data/fulcrum/key.pem
   ssl = 0.0.0.0:50002
+  tcp = 0.0.0.0:50001
   peering = false
   
   # RPi optimizations
@@ -430,20 +434,31 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
   ```sh
   ############### This section is just for location-hidden services ###
   # Hidden Service Fulcrum SSL
-  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
+  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_ssl/
   HiddenServiceVersion 3
   HiddenServicePort 50002 127.0.0.1:50002
+  
+  # Hidden Service Fulcrum TCP
+  HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_tcp/
+  HiddenServiceVersion 3
+  HiddenServicePort 50001 127.0.0.1:50001
   ```
 
 * Reload Tor configuration and get your connection address
 
   ```sh
   $ sudo systemctl reload tor
-  $ sudo cat /var/lib/tor/hidden_service_fulcrum/hostname
+  ```
+  ```sh
+  $ sudo cat /var/lib/tor/hidden_service_fulcrum_ssl/hostname
+  > abcdefg..............xyz.onion
+  ```
+  ```sh
+  $ sudo cat /var/lib/tor/hidden_service_fulcrum_tcp/hostname
   > abcdefg..............xyz.onion
   ```
 
-* You should now be able to connect to your Fulcrum server remotely via Tor using your hostname and port 50002
+* You should now be able to connect to your Fulcrum server remotely via Tor using SSL or TCP.
 
 ### Add banner to Fulcrum server (For fun!)
 
@@ -582,6 +597,11 @@ Ensure you are logged with user "admin"
   #HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
   #HiddenServiceVersion 3
   #HiddenServicePort 50002 127.0.0.1:50002
+  
+  # Hidden Service Fulcrum TCP
+  #HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_tcp/
+  #HiddenServiceVersion 3
+  #HiddenServicePort 50001 127.0.0.1:50001
   ```
 
 * Reload torrc config
@@ -599,7 +619,11 @@ Ensure you are logged with user "admin"
   > [...]
   > [X] 50002                   ALLOW IN    Anywhere                   # allow Fulcrum SSL
   > [...]
-  > [Y] 50002 (v6)              ALLOW IN    Anywhere (v6)              # allow Fulcrum SSL
+  > [X] 50002 (v6)              ALLOW IN    Anywhere (v6)              # allow Fulcrum SSL
+  > [...]
+  > [Y] 50001                   ALLOW IN    Anywhere                   # allow Fulcrum TCP
+  > [...]
+  > [Y] 50001 (v6)              ALLOW IN    Anywhere (v6)              # allow Fulcrum TCP
   ```
 
 * Delete the rule with the correct number and confirm with "yes"
