@@ -67,15 +67,24 @@ obfs4 makes Tor traffic look random, and also prevents censors from finding brid
 
 ### Configuration
 
-* Edit your Tor config file adding the next lines at the end of file
+* Edit your Tor config file adding the next lines **at the end of file**. We are to use 2 ports: TODO1 and TODO2, replace it with ports of your preference > 1024.
 
   ```sh
   $ sudo nano /etc/tor/torrc
   ```
 
   ```sh
-  BridgeRelay 1
-    
+  # Replace <TODO1> with a Tor port of your choice >1024.
+  # Avoid port 9001 because it's commonly associated with Tor and censors may be scanning the Internet for this port.
+  ORPort <TODO1> IPv4Only
+  ExtORPort auto
+  
+  # Replace <TODO2> with an obfs4 port of your choice.
+  # This port must be externally reachable and must be different from the one specified for ORPort (<TODO1>).
+  # Avoid port 9001 because it's commonly associated with Tor and censors may be scanning the Internet for this port.
+  ServerTransportListenAddr obfs4 0.0.0.0:<TODO2>
+  ServerTransportPlugin obfs4 exec /usr/bin/obfs4proxy
+  
   # Replace "<address@email.com>" with your email address so we can contact you 
   # if there are problems with your bridge. This line
   # can be used to contact you if your relay or bridge is misconfigured or
@@ -90,41 +99,32 @@ obfs4 makes Tor traffic look random, and also prevents censors from finding brid
 
   # Pick a nickname that you like for your bridge. Nicknames must be between 1 and 19 characters inclusive, 
   # and must contain only the characters [a-zA-Z0-9]. This is optional.
-  Nickname PickANickname
+  Nickname <PickANickname>
 
-  # Replace "TODO1" with a Tor port of your choice >1024.
-  # Avoid port 9001 because it's commonly associated with Tor and censors may be scanning the Internet for this port.
-  ORPort TODO1 IPv4Only
-  ExtORPort auto
-  
-  # Replace "TODO2" with an obfs4 port of your choice.
-  # This port must be externally reachable and must be different from the one specified for ORPort.
-  # Avoid port 9001 because it's commonly associated with Tor and censors may be scanning the Internet for this port.
-  ServerTransportListenAddr obfs4 0.0.0.0:TODO2
-  ServerTransportPlugin obfs4 exec /usr/bin/obfs4proxy
+  BridgeRelay 1
   ```
 
-🚨 Don't forget to change the ORPort, ServerTransportListenAddr, ContactInfo, and Nickname options.
+🚨 Don't forget to change the ORPort (<TODO1>), ServerTransportListenAddr (<TODO2>), ContactInfo (<address@email.com>), and Nickname (<PickANickname>) options.
 
 ### Configure Firewall and router NAT
 
 * Configure the firewall to allow incoming requests replacing `<TODO1>` and `<TODO2>` previously configured in the section before
 
-  ```sh
-  $ sudo ufw allow <TODO1> comment 'allow OR port Tor bridge'
-  ```
+```sh
+$ sudo ufw allow <TODO1>/tcp comment 'allow OR port Tor bridge'
+```
 
-  ```sh
-  $ sudo ufw allow <TODO2> comment 'allow obsf4 port Tor bridge'
-  ```
+```sh
+$ sudo ufw allow <TODO2>/tcp comment 'allow obsf4 port Tor bridge'
+```
 
 * Check the correct application of the rules
 
-  ```sh
-  $ sudo ufw status
-  ```
+```sh
+$ sudo ufw status
+```
 
-🚨 Note that both Tor's OR port and its obfs4 port must be reachable. If your bridge is behind a NAT, make sure to open both ports. See [portforward.com](https://portforward.com/) for directions on how to port forward with your NAT/router device. You can use our reachability [test](https://bridges.torproject.org/scan/) to see if your obfs4 port `"<TODO2>"` is reachable from the Internet. Enter in the website your public <IP ADDRESS> obtained with `"$ curl icanhazip.com"` or navigate directly with your regular browser to [icanhazip.com] in your personal computer in the same local network, and put your `"<TODO2>"` port.
+🚨 Note that both Tor's OR port and its obfs4 port must be reachable. If your bridge is behind a NAT, make sure to open both ports. See [portforward.com](https://portforward.com/) for directions on how to port forward with your NAT/router device. You can use our reachability [test](https://bridges.torproject.org/scan/) to see if your obfs4 port `"<TODO2>"` is reachable from the Internet. Enter in the website your public <IP ADDRESS> obtained with `"$ curl icanhazip.com"` or navigate directly with your regular browser to [icanhazip.com] in your personal computer inside of the same local network, and put your `"<TODO2>"` port.
 
 ### Systemd hardering
 
@@ -134,14 +134,14 @@ obfs4 makes Tor traffic look random, and also prevents censors from finding brid
   $ sudo nano /lib/systemd/system/tor@default.service
   ```
 
-* Change `"NoNewPrivileges=no"` to `"NoNewPrivileges=yes"`. Save and exit
+* Change `"NoNewPrivileges=yes"` to `"NoNewPrivileges=no"`. Save and exit
 
   ```sh
   # Hardening
-  NoNewPrivileges=yes
+  NoNewPrivileges=no
   ```
 
-* Same for `"tor@.service"` file, change `"NoNewPrivileges=no"` to `"NoNewPrivileges=yes"`. Save and exit
+* Same for `"tor@.service"` file, change `"NoNewPrivileges=yes"` to `"NoNewPrivileges=no"`. Save and exit
 
   ```sh
   $ sudo nano /lib/systemd/system/tor@.service
@@ -149,21 +149,33 @@ obfs4 makes Tor traffic look random, and also prevents censors from finding brid
 
   ```sh
   # Hardening
-  NoNewPrivileges=yes
+  NoNewPrivileges=no
   ```
 
 * Reload systemd manager configuration to apply changes
 
   ```sh
-  $ systemctl daemon-reload
+  $ sudo systemctl daemon-reload
+  ```
+
+* Enable and start tor
+
+  ```sh
+  $ sudo systemctl enable --now tor.service
+  ```
+
+* Or restart it if it was running already, so configurations take effect
+
+  ```sh
+  $ sudo systemctl restart tor.service
   ```
 
 ### Testing
 
-* Check the systemd journal to see Tor logs since the last updates output logs. Press the `"space"` key to advance, press the `"q"` key to exit
+* Check the systemd journal to see Tor logs since the last updates output logs. Press Ctrl-C to exit.
 
   ```sh
-  $ sudo journalctl -u tor@default --since '1 hour ago'
+  $ sudo journalctl -f -u tor@default --since '1 hour ago'
   ```
 
 * Verify that your relay works, if your logfile (syslog) contains the following entry after starting your tor daemon your relay should be up and running as expected
@@ -187,10 +199,10 @@ obfs4 makes Tor traffic look random, and also prevents censors from finding brid
 
 🔍 About 3 hours after you start your relay, it should appear on [Relay Search](https://metrics.torproject.org/rs.html) on the Metrics portal. You can search for your relay using your nickname or IP address and can monitor your obfs4 bridge's usage on Relay Search. Just enter your bridge's <HASHED FINGERPRINT> in the form and click "Search".
 
-* If you want to connect to your bridge manually, you will need to know the bridge's obfs4 certificate. See the file obfs4_bridgeline.txt.
+* If you want to connect to your bridge manually, you will need to know the bridge's obfs4 certificate. Open file "obfs4_bridgeline.txt"
 
   ```sh
-  $ sudo cat /var/lib/tor/pt_state/obfs4_bridgeline.txt
+  $ sudo cat /var/lib/tor/pt_state/obfs4_bridgeline.txt | grep Bridge
   ```
 
 * Paste the entire bridge line into Tor Browser
@@ -199,7 +211,7 @@ obfs4 makes Tor traffic look random, and also prevents censors from finding brid
   Bridge obfs4 <IP ADDRESS>:<PORT> <FINGERPRINT> cert=<CERTIFICATE> iat-mode=0
   ```
 
-💡 You'll need to replace <IP ADDRESS>, <PORT>, and <FINGERPRINT> with the actual values, which you can find in the tor log. Make sure to use <FINGERPRINT>, not <HASHED FINGERPRINT>; and that <PORT> is the obfs4 port `"<TODO2>"` you chose.
+💡 You'll need to replace <IP ADDRESS>, <PORT>, and <FINGERPRINT> with the actual values, which you can find in the tor log. Make sure that you use <PORT> as the obfs4 port `"<TODO2>"` that you chose and <FINGERPRINT> not <HASHED FINGERPRINT>.
 
 🔍 More info to connect Tor browser to your own Tor bridge in this [website](https://tb-manual.torproject.org/bridges/) in the `"ENTERING BRIDGE ADDRESSES"` section.
 
