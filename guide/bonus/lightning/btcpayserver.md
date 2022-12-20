@@ -123,6 +123,11 @@ Still with user "btcpay", we execute the following commands:
   ```sh
   postgres=# \q
   ```
+* Run NBXplorer in order to generate default config files
+
+  ```sh
+  /home/btcpay/src/NBxplorer/run.sh
+  ```
 
 ### NBXplorer configuration
 
@@ -221,6 +226,12 @@ With user "btcpay", we execute the following commands:
 
   ```sh
   postgres=# \q
+  ```
+
+* Run BTCPay Server in order to generate default config files
+
+  ```sh
+  /home/btcpay/src/btcpayserver/run.sh
   ```
 
 ### BTCPay Server configuration
