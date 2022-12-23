@@ -463,7 +463,7 @@ Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
 
 * Generate a new Bitcoin address (p2wkh = native SegWit/Bech32) to receive funds on-chain and send a small amount of Bitcoin to it from any wallet of your choice.
 
-  [`newaddress`](https://api.lightning.community/#newaddress){:target="_blank"}
+  [`newaddress`](https://api.lightning.community/api/lnd/lightning/new-address){:target="_blank"}
 
   ```sh
   $ lncli newaddress p2wkh
@@ -472,7 +472,7 @@ Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
 
 * Check your LND wallet balance
 
-  [`walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"}
+  [`walletbalance`](https://api.lightning.community/api/lnd/lightning/wallet-balance){:target="_blank"}
 
   ```sh
   $ lncli walletbalance
@@ -505,7 +505,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 
 * **Connect** to the remote node, with the full URI.
 
-  [`connect`](https://api.lightning.community/#connectpeer){:target="_blank"}
+  [`connect`](https://api.lightning.community/api/lnd/lightning/connect-peer){:target="_blank"}
 
   ```sh
   $ lncli connect 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f@34.239.230.56:9735
@@ -513,7 +513,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 
 * **Open a channel** using the `<pubkey>` only (*i.e.*, the part of the URI before the `@`) and the channel capacity in satoshis.
 
-  [`openchannel`](https://api.lightning.community/#openchannel){:target="_blank"}
+  [`openchannel`](https://api.lightning.community/api/lnd/lightning/open-channel){:target="_blank"}
 
   One Bitcoin equals 100 million satoshis, so at $10'000/BTC, $10 amount to 0.001 BTC or 100'000 satoshis.
   To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/to-usd/){:target="_blank"}.
@@ -526,7 +526,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 
 * **Check your funds**, both in the on-chain wallet and the channel balances.
 
-  [`walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"} or [`channelbalance`](https://api.lightning.community/#channelbalance){:target="_blank"}
+  [`walletbalance`](https://api.lightning.community/api/lnd/lightning/wallet-balance){:target="_blank"} or [`channelbalance`](https://api.lightning.community/api/lnd/lightning/channel-balance){:target="_blank"}
 
   ```sh
   $ lncli walletbalance
@@ -536,7 +536,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 * **List active channels**. Once the channel funding transaction has been mined and gained enough confirmations, your channel is fully operational.
   That can take an hour or more.
 
-  [`listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
+  [`listchannels`](https://api.lightning.community/api/lnd/lightning/list-channels){:target="_blank"}
 
   ```sh
   $ lncli listchannels
@@ -620,35 +620,35 @@ A quick reference with common commands to play around with:
   ```
 
 * Find out some general stats about your node:
-  [`getinfo`](https://api.lightning.community/#getinfo){:target="_blank"}
+  [`getinfo`](https://api.lightning.community/api/lnd/lightning/get-info){:target="_blank"}
 
   ```sh
   $ lncli getinfo
   ```
 
 * Check the peers you are currently connected to:
-  [`listpeers`](https://api.lightning.community/#listpeers){:target="_blank"}
+  [`listpeers`](https://api.lightning.community/api/lnd/lightning/list-peers){:target="_blank"}
 
   ```sh
   $ lncli listpeers
   ```
 
 * Check the status of your pending channels:
-  [`pendingchannels`](https://api.lightning.community/#pendingchannels){:target="_blank"}
+  [`pendingchannels`](https://api.lightning.community/api/lnd/lightning/pending-channels){:target="_blank"}
 
   ```sh
   $ lncli pendingchannels
   ```
 
 * Check the status of your active channels:
-  [`listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
+  [`listchannels`](https://api.lightning.community/api/lnd/lightning/list-channels){:target="_blank"}
 
   ```sh
   $ lncli listchannels
   ```
 
 * Before paying an invoice, you should decode it to check if the amount and other infos are correct:
-  [`decodepayreq`](https://api.lightning.community/#decodepayreq){:target="_blank"}
+  [`decodepayreq`](https://api.lightning.community/api/lnd/lightning/decode-pay-req){:target="_blank"}
 
   ```sh
   $ lncli decodepayreq [INVOICE]
@@ -661,28 +661,28 @@ A quick reference with common commands to play around with:
   ```
 
 * Send a payment to a node without invoice using AMP (both sender and receiver nodes have to have AMP enabled):
-  [`sendpayment`](https://api.lightning.community/#sendpayment){:target="_blank"}
+  [`sendpayment`](https://api.lightning.community/api/lnd/lightning/send-payment){:target="_blank"}
 
   ```sh
   $ lncli sendpayment --amp --fee_limit 1 --dest=<node_pubkey> --final_cltv_delta=144 --amt=<amount_in_sats>
   ```
 
 * Check the payments that you sent:
-  [`listpayments`](https://api.lightning.community/#listpayments){:target="_blank"}
+  [`listpayments`](https://api.lightning.community/api/lnd/lightning/list-payments){:target="_blank"}
 
   ```sh
   $ lncli listpayments
   ```
 
 * Create an invoice:
-  [`addinvoice`](https://api.lightning.community/#addinvoice){:target="_blank"}
+  [`addinvoice`](https://api.lightning.community/api/lnd/lightning/add-invoice){:target="_blank"}
 
   ```sh
   $ lncli addinvoice [AMOUNT_IN_SATOSHIS]
   ```
 
 * List all invoices:
-  [`listinvoices`](https://api.lightning.community/#listinvoices){:target="_blank"}
+  [`listinvoices`](https://api.lightning.community/api/lnd/lightning/list-invoices){:target="_blank"}
 
   ```sh
   $ lncli listinvoices
@@ -690,7 +690,7 @@ A quick reference with common commands to play around with:
 
 * to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID`:`OUTPUT_INDEX`
 
-  [`closechannel`](https://api.lightning.community/#closechannel){:target="_blank"}
+  [`closechannel`](https://api.lightning.community/api/lnd/lightning/close-channel){:target="_blank"}
 
   ```sh
   $ lncli listchannels
