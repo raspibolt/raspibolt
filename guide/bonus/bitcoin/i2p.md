@@ -63,22 +63,6 @@ Table of contents
   $ sudo apt install i2pd
   ```
 
-* Configure i2pd to not to relay any public I2P traffic and only permit I2P traffic from Bitcoin Core, uncomment `"notransit=true"`
-
-  ```sh
-  $ sudo nano /var/lib/i2pd/i2pd.conf
-  ```
-
-  ```sh
-  notransit = true
-  ```
-
-* Restart the service to apply changes
-
-  ```sh
-  $ sudo systemctl restart i2pd
-  ```
-  
 * Enable autoboot on start
 
   ```sh
