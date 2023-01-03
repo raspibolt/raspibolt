@@ -27,7 +27,6 @@ We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL#readme
 ### Install Node.js
 
 Starting with user “admin”, we add the Node.js package repository.
-We’ll use version 16 which is the latest stable version.
 If you installed BTC RPC Explorer, then you've already accomplished this step.
 
 * Add the Node.js (LTS version) software repository
