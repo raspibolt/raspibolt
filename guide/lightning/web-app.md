@@ -292,7 +292,7 @@ Make sure to read the release notes first.
   $ sudo su - rtl
   ```
 
-* Fetch the latest GitHub repository information, display the latest release tag, ignoring release cadidates and update:
+* Fetch the latest GitHub repository information, display the latest release tag, ignoring release candidates and update:
 
   ```sh
   $ cd /home/rtl/RTL
