@@ -301,7 +301,7 @@ Make sure to read the release notes first.
   $ latest=$(git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1)
   $ git checkout $latest
   $ git verify-tag $latest
-  $ npm install --omit=dev
+  $ npm install --omit=dev --legacy-peer-deps
   $ exit
   ```
 
