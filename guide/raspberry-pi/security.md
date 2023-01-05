@@ -131,6 +131,8 @@ We'll open the port for Electrs and web applications later if needed.
 
 * With user "admin", configure and enable the firewall rules
 
+  ℹ️ *Note:* if you are seeing: `ERROR: Couldn't determine iptables version` you may need to reboot after installing `ufw` 
+
   ```sh
   $ sudo apt install ufw
   $ sudo ufw default deny incoming
