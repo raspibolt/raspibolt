@@ -43,7 +43,7 @@ Table of contents
 
 Restart the BitBoxApp to make sure all changes take effect and you're all set!
 
-![Successfully established connection](../../images/bitboxapp_success.png)
+![Successfully established connection](../../../images/bitboxapp_success.png)
 
 ## Connecting to your RaspiBolt with Tor
 
@@ -73,8 +73,7 @@ $ sudo cat /var/lib/tor/hidden_service_electrs/hostname
 
 Restart the BitBoxApp to make sure all changes take effect and you're all set!
 
-![Successfully established connection with Tor](../../images/bitboxapp_tor_success.png)
-
+![Successfully established connection with Tor](../../../images/bitboxapp_tor_success.png)
 
 <br /><br />
 
