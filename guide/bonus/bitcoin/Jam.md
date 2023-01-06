@@ -91,9 +91,9 @@ $ nano joinmarket.cfg
 
 * Uncomment these two separate lines, set desired values, then save
 ```sh
-max_cj_fee_rel = 0.00002
+max_cj_fee_rel = 0.00003
 
-max_cj_fee_abs = 500
+max_cj_fee_abs = 600
 ```
 
 * Generate self-signed certificate in JoinMarket's working directory
@@ -104,6 +104,8 @@ $ mkdir ssl/ && cd "$_"
 $ openssl req -newkey rsa:4096 -x509 -sha256 -days 3650 -nodes \
   -out cert.pem -keyout key.pem \
   -subj "/C=US/ST=Utah/L=Lehi/O=Your Company, Inc./OU=IT/CN=example.com"
+
+$ exit
 ```
 
 ### Nginx preparations
@@ -170,7 +172,7 @@ $ curl https://dergigi.com/PGP.txt | gpg --import
 * Retrieve source code
 
 ```sh
-$ git clone https://github.com/joinmarket-webui/jam.git --branch v0.1.3 --depth=1
+$ git clone https://github.com/joinmarket-webui/jam.git --branch v0.1.4 --depth=1
 ```
 
 * Verify release by looking for `Good signature` response
@@ -178,8 +180,12 @@ $ git clone https://github.com/joinmarket-webui/jam.git --branch v0.1.3 --depth=
 ```sh
 $ cd jam
 
-$ git verify-tag v0.1.3
-> Good signature...
+$ git verify-tag v0.1.4
+...
+> gpg: Good signature from "Gigi <dergigi@pm.me>" [unknown]
+> gpg: WARNING: This key is not certified with a trusted signature!
+> gpg:          There is no indication that the signature belongs to the owner.
+> Primary key fingerprint: 8198 A185 30A5 22A0 9561  2439 89C4 A25E 69A5 DE7F
 ```
 
 * Install Jam using `npm`
