@@ -39,6 +39,7 @@ has_toc: false
 ## Privacy
 
 * **[JoinMarket](joinmarket.md)** - a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions and also get a little passive income from your bitcoins
+* **[JoinMarket webui (Jam)](Jam.md)** - a web interface for JoinMarket focusing on user-friendliness and ease-of-use
 * **[I2P](i2p.md)** - The Invisible Internet Protocol
 
 * **[Samourai Dojo](Dojo.md){:target="_blank"}** - Personal backend for your Samourai Wallet
