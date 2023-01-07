@@ -10,7 +10,7 @@ has_toc: false
 # Bonus guide: System overview
 {: .no_toc }
 
-To get a quick overview of the system status, you can use [a shell script](https://github.com/raspibolt/raspibolt/blob/master/resources/20-raspibolt-welcome){:target="_blank"} that gathers the most relevant data.
+To get a quick overview of the system status, you can use [a shell script](https://github.com/raspibolt/raspibolt-pulse){:target="_blank"} that gathers the most relevant data.
 You can configure it to be shown on each login.
 
 Difficulty: Easy
@@ -33,39 +33,35 @@ This script can be run by user "admin" without root privileges, but you should s
   $ sudo apt install jq net-tools netcat
   ```
 
-* Download the script.
-  Make sure to get the right script for the RaspiBolt version you run.
+* Download the script. 
 
   ```sh
   $ cd /tmp/
-
-  # RaspiBolt version 3 (current)
-  $ wget https://raw.githubusercontent.com/raspibolt/raspibolt/master/resources/20-raspibolt-welcome
-
-  # RaspiBolt v2 (deprecated) -- DON'T RUN THIS unless you run an old RaspiBolt version!
-  $ wget https://raw.githubusercontent.com/raspibolt/raspibolt/master/resources/20-raspibolt-welcome-v2 -O 20-raspibolt-welcome
+  $ git clone https://github.com/raspibolt/raspibolt-pulse
   ```
 
-* Inspect the script to make sure it does not do bad things.
+* Inspect the scripts to make sure it does not do bad things.
   Exit with `Ctrl`-`X`
 
   ```sh
-  $ nano 20-raspibolt-welcome --linenumbers
+  $ cd /tmp/raspibolt-pulse
+  $ nano *.sh --linenumbers
   ```
 
-* If you use a network cable instead of a wifi connection, go to line 19 and change `wlan0` to `eth0`.
+* If you use wifi instead of a network cable, go to line 28 and change `eth0` to `wlan0` for the raspibolt-pulse-switch.sh script.
   Save with `Ctrl`-`O`and exit `nano` with `Ctrl`-`X`.
 
   ```sh
   # set to network device name (usually "eth0" for ethernet, and "wlan0" for wifi)
   network_name="eth0"
   ```
-
+  
 * Install the script and make it executable
 
   ```sh
-  $ sudo mv 20-raspibolt-welcome /usr/local/bin/raspibolt
-  $ sudo chmod +x /usr/local/bin/raspibolt
+  $ sudo chmod +x *.sh
+  $ sudo cp *.sh /usr/local/bin
+  $ sudo mv /usr/local/bin/raspibolt-pulse-switch.sh /usr/local/bin/raspibolt
   ```
 
 * You can now run the script with user "admin"
