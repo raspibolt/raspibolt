@@ -30,6 +30,7 @@ We set up [Joinmarket-webui](https://github.com/joinmarket-webui/jam){:target="b
 
 ### Introduction
 [Jam](https://github.com/joinmarket-webui/jam) a web interface for JoinMarket focusing on user-friendliness and ease-of-use. It aims to provide sensible defaults and be easy to use for beginners while still having the features advanced users expect.
+
 ---
 
 ## Prerequisites
@@ -90,7 +91,8 @@ $ nano joinmarket.cfg
 ```
 
 * Uncomment these two separate lines, set desired values, then save
-```sh
+
+```
 max_cj_fee_rel = 0.00003
 
 max_cj_fee_abs = 600
