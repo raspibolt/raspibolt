@@ -20,6 +20,7 @@ has_toc: false
 
 ## System administration
 * **[Aliases](aliases.md)** - set up CLI command shortcuts to simplify your node management experience
+* **[Tailscale](tailscale.md)** - easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world
 
 ---
 
