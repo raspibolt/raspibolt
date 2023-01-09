@@ -96,18 +96,6 @@ For that we will create a separate user and we will be running the code as the n
   $ cd lndg
   ```
   
-* Verify the tag
-  
-  ```sh
-  $ curl https://keybase.io/cryptosharks131/pgp_keys.asc | gpg --import
-  gpg: key 0A50748567ADEB28: public key "cryptosharks131 <cryptosharks131@gmail.com>" imported
-  
-  $ git verify-tag v1.5.0
-  gpg: Signature made Sun Nov 27 2022 02:45:17 CET
-  gpg:                using RSA key 1957FD54782C190096F4166F0A50748567ADEB28
-  gpg: Good Signature from "cryptosharks131 <cryptosharks131@gmail.com>"
-  ```
-
 * Setup a Python virtual environment
 
   ```sh
