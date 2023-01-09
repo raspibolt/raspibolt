@@ -147,7 +147,7 @@ We need to set up settings in Bitcoin Core configuration file to enable I2P conn
 * Run the next command to obtain your I2P local address. There is usually some additional delay after the onion local address appears before the I2P local address appears.
 
   ```sh
-  $ bitcoin-cli getnetworkinfo | grep address.*i2p
+  $ bitcoin-cli getnetworkinfo | grep "address.*i2p"
   ```
 
 * Check the correct enablement of the I2P network
