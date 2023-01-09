@@ -70,7 +70,7 @@ Table of contents
   $ sudo systemctl enable i2pd
   ```
 
-* Check the service is started and the correct autoboot enabled
+* Check the service is running and the correct autoboot is enabled
 
   ```sh
   $ sudo systemctl status i2pd
