@@ -19,7 +19,7 @@ has_toc: false
 
 [I2P](https://geti2p.net/en/){:target="_blank"} is a universal anonymous network layer. All communications over I2P are anonymous and end-to-end encrypted, participants don't reveal their real IP addresses. I2P allows people from all around the world to communicate and share information without restrictions.
 
-I2P client is a software used for building and using anonymous I2P networks. Such networks are commonly used for anonymous peer-to-peer applications (filesharing, cryptocurrencies) and anonymous client-server applications (websites, instant messengers, chat-servers).
+I2P client is software used for building and using anonymous I2P networks. Such networks are commonly used for anonymous peer-to-peer applications (filesharing, cryptocurrencies) and anonymous client-server applications (websites, instant messengers, chat servers).
 
 We are to use [i2pd](https://i2pd.readthedocs.io/en/latest/) (I2P Daemon), a full-featured C++ implementation of the I2P client as a Tor network complement.
 
@@ -45,7 +45,7 @@ Table of contents
 
 ### Installation
 
-* Ensure that you are logged with user "admin" and install apt-transport-https package
+* Ensure that you are logged with user "admin" and install "apt-transport-https" package
 
   ```sh
   $ sudo apt install apt-transport-https
@@ -64,13 +64,13 @@ Table of contents
   $ sudo apt install i2pd
   ```
 
-* Enable autoboot on start
+* Enable autoboot on the start
 
   ```sh
   $ sudo systemctl enable i2pd
   ```
 
-* Check the service started and the correct autoboot enabled
+* Check the service is started and the correct autoboot enabled
 
   ```sh
   $ sudo systemctl status i2pd
@@ -147,13 +147,13 @@ We need to set up settings in Bitcoin Core configuration file to enable I2P conn
 * Run the next command to obtain your I2P local address. There is usually some additional delay after the onion local address appears before the I2P local address appears.
 
   ```sh
-  $ bitcoin-cli getnetworkinfo | grep "address.*i2p"
+  $ bitcoin-cli -rpcwait getnetworkinfo | grep "address.*i2p"
   ```
 
 * Check the correct enablement of the I2P network
 
   ```sh
-  $ bitcoin-cli -netinfo
+  $ bitcoin-cli -rpcwait -netinfo
   ```
 
 Example output expected, ensure of the presence of "i2p" network:
@@ -167,7 +167,7 @@ Example output expected, ensure of the presence of "i2p" network:
   total       7       0      27     3      37
   ```
 
-💡 If you do not obtain I2P connections in a lot of time, you can add some peers manually adding these lines at the end of the `bitcoin.conf` file:
+💡 If you do not obtain I2P connections in a lot of time, you can add some peers manually by adding these lines at the end of the `bitcoin.conf` file:
 
 * With user "admin", edit `bitcoin.conf` file
 
@@ -215,7 +215,7 @@ Ensure you are logged with user "admin"
   $ sudo apt --purge autoremove i2pd
   ```
 
-* Delete or comment the next lines in `bitcoin.conf` file. Save and exit
+* Delete or comment on the next lines in `bitcoin.conf` file. Save and exit
 
   ```sh
   $ sudo nano /data/bitcoin/bitcoin.conf
@@ -223,8 +223,7 @@ Ensure you are logged with user "admin"
 
   ```sh
   # Network
-  # Enable I2P
-  #i2pacceptincoming=1
+  # I2P SAM proxy to reach I2P peers and accept I2P connections
   #i2psam=127.0.0.1:7656
   ```
 
