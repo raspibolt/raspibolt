@@ -7,6 +7,7 @@ nav_exclude: true
 has_children: false
 has_toc: false
 ---
+<!-- markdownlint-disable MD014 MD022 MD025 MD033 MD040 -->
 
 ## Bonus guide: I2P - The Invisible Internet Protocol
 
@@ -75,7 +76,7 @@ Table of contents
   $ sudo systemctl status i2pd
   ```
 
-* Expected output, find *"enabled"* and *"Started"* labels:
+Expected output, find *"enabled"* and *"Started"* labels:
 
   ```sh
   * i2pd.service - I2P Router written in C++
@@ -133,8 +134,7 @@ We need to set up settings in Bitcoin Core configuration file to enable I2P conn
   debug=i2p
 
   # Network
-  # Enable I2P
-  i2pacceptincoming=1
+  # I2P SAM proxy to reach I2P peers and accept I2P connections
   i2psam=127.0.0.1:7656
   ```
 
@@ -150,13 +150,13 @@ We need to set up settings in Bitcoin Core configuration file to enable I2P conn
   $ bitcoin-cli getnetworkinfo | grep address.*i2p
   ```
 
-* Check the correct enablement of the I2P network, maybe you don't have I2P peer connections yet, don't worry, the inclusion of the I2P network in Bitcoin Core is recent and it might take a while to find peers available, be patient
+* Check the correct enablement of the I2P network
 
   ```sh
   $ bitcoin-cli -netinfo
   ```
 
-* Example output expected
+Example output expected, ensure of the presence of "i2p" network:
 
   ```sh
   Bitcoin Core client v24.0.1 - server 70016/Satoshi:24.0.1/
@@ -165,6 +165,36 @@ We need to set up settings in Bitcoin Core configuration file to enable I2P conn
   in          0       0      25     2      27
   out         7       0       2     1      10       2
   total       7       0      27     3      37
+  ```
+
+💡 If you do not obtain I2P connections in a lot of time, you can add some peers manually adding these lines at the end of the `bitcoin.conf` file:
+
+* With user "admin", edit `bitcoin.conf` file
+
+  ```sh
+  $ sudo nano /data/bitcoin/bitcoin.conf
+  ```
+
+* Add the following lines. Save and exit
+
+  ```sh
+  addnode=255fhcp6ajvftnyo7bwz3an3t4a4brhopm3bamyh2iu5r3gnr2rq.b32.i2p:0
+  addnode=27yrtht5b5bzom2w5ajb27najuqvuydtzb7bavlak25wkufec5mq.b32.i2p:0
+  addnode=2el6enckmfyiwbfcwsygkwksovtynzsigmyv3bzyk7j7qqahooua.b32.i2p:0
+  addnode=3gocb7wc4zvbmmebktet7gujccuux4ifk3kqilnxnj5wpdpqx2hq.b32.i2p:0
+  addnode=3tns2oov4tnllntotazy6umzkq4fhkco3iu5rnkxtu3pbfzxda7q.b32.i2p:0
+  addnode=4fcc23wt3hyjk3csfzcdyjz5pcwg5dzhdqgma6bch2qyiakcbboa.b32.i2p:0
+  addnode=4osyqeknhx5qf3a73jeimexwclmt42cju6xdp7icja4ixxguu2hq.b32.i2p:0
+  addnode=4umsi4nlmgyp4rckosg4vegd2ysljvid47zu7pqsollkaszcbpqq.b32.i2p:0
+  addnode=52v6uo6crlrlhzphslyiqblirux6olgsaa45ixih7sq5np4jujaa.b32.i2p:0
+  addnode=6j2ezegd3e2e2x3o3pox335f5vxfthrrigkdrbgfbdjchm5h4awa.b32.i2p:0
+  addnode=6n36ljyr55szci5ygidmxqer64qr24f4qmnymnbvgehz7qinxnla.b32.i2p:0
+  ```
+
+* Restart Bitcoin Core
+
+  ```sh
+  $ sudo systemctl restart bitcoind
   ```
 
 ## Uninstall
