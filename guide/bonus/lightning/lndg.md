@@ -709,7 +709,8 @@ With the Tor browser, you can access this onion address from any device.
   $ git reset --hard HEAD
   $ git tag
   $ git checkout v1.5.0
-  $ ./.venv/bin/pip install -r requirements.txt
+  $ .venv/bin/pip install -r requirements.txt
+  $ .venv/bin/python manage.py migrate
   $ exit
   ```
   
