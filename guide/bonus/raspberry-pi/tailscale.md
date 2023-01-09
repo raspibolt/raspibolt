@@ -39,7 +39,7 @@ We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target
 
 To run tailscale, we need to install apt-transport-https
 
-* With user "admin", let's install apt-transport-https {:target="_blank"}.
+* With user "admin", let's install apt-transport-https.
 
 ```sh
   $ sudo apt-get update
@@ -75,7 +75,7 @@ To run tailscale, we need to install apt-transport-https
 
 ## Configure dns and certificate
 
-* Go to the dns settings in the tailscale admin [panel] (https://login.tailscale.com/admin/dns)
+* Go to the dns settings in the tailscale admin [panel](https://login.tailscale.com/admin/dns) {:target="_blank"}
 
 * Enable Magic DNS and HTTPS Certificates
   
