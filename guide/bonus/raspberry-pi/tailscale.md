@@ -13,8 +13,8 @@ has_toc: false
 Difficulty: Intermediate
 {: .label .label-yellow }
 
-Status: Not tested v3 
-{: .label .label-yellow }
+Status: Tested v3 
+{: .label .label-green }
 
 We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target="blank"}, tailscale lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.
 
