@@ -75,7 +75,7 @@ To run tailscale, we need to install apt-transport-https
 
 ## Configure dns and certificate
 
-* Go to the dns settings in the tailscale admin [panel](https://login.tailscale.com/admin/dns)
+* Go to the dns settings in the tailscale admin [panel](https://login.tailscale.com/admin/dns){:target="_blank"}
 
 * Enable Magic DNS and HTTPS Certificates
   
