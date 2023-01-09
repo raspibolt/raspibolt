@@ -215,7 +215,7 @@ Ensure you are logged with user "admin"
   $ sudo apt --purge autoremove i2pd
   ```
 
-* Delete or comment on the next lines in `bitcoin.conf` file. Save and exit
+* Delete or comment out the following lines in `bitcoin.conf` file. Save and exit.
 
   ```sh
   $ sudo nano /data/bitcoin/bitcoin.conf
