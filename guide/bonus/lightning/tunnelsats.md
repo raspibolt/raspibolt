@@ -161,7 +161,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 - Save and exit. Run the script once initially: 
 
   ```sh
-  $ bash /etc/wireguard/tunnelsats-create-cgroup.sh
+  $ sudo bash /etc/wireguard/tunnelsats-create-cgroup.sh
   ```
   
 - Create a systemd service to run it automatically:
@@ -301,6 +301,12 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   $ sudo cp /etc/systemd/system/lnd.service /etc/systemd/system/lnd.service.bak
   ```
   
+- Now open `lnd.service` file.
+  
+  ```sh
+  $ sudo nano /etc/systemd/system/lnd.service
+  ```
+  
 - Edit `ExecStart` in `lnd.service` and add `/usr/bin/cgexec -g net_cls:splitted_processes` to the command:
 
   ```ini
@@ -347,21 +353,21 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   ```
 
 - Then we need to gather information from the tunnelsatsv2.conf file manually:
-  - Retrieve the DNS address of the VPN. We gonna call it `vpnExternalDNS`:
+  - Retrieve the DNS address of the VPN. We gonna call it `{vpnExternalDNS}`:
 
     ``` sh
     $ sudo grep "Endpoint" /etc/wireguard/tunnelsatsv2.conf | awk '{ print $3 }' | cut -d ":" -f1
     ```
   
-  - Retrieve the personal VPN port as `vpnExternalPort`:
+  - Retrieve the personal VPN port as `{vpnExternalPort}`:
 
     ```sh
     $ sudo grep "#VPNPort" /etc/wireguard/tunnelsatsv2.conf | awk '{ print $3 }'
     ```
   
-- This is what we need to edit the lightning implementation plus some additional hybrid parameters described in the following part:
+- This is what we need to edit the lightning implementation plus some additional hybrid parameters described in the following part. Please replace `{vpnExternalDNS}` and `{vpnExternalPort}` with values from the last commands:
 
-  Configuration for LND (`/data/lnd/lnd.conf`):
+  Configuration for LND (`/data/lnd/lnd.conf`) should look like this (mind the specific sections in brackets):
   
   ⚠️ Replace existing entry `listen=localhost` with `listen=0.0.0.0:9735`!
   
@@ -375,7 +381,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   tor.skip-proxy-for-clearnet-targets=true
   ```
   
-  Configuration for CLN (`/data/lightningd/config`):
+  OR configuration for CLN (`/data/lightningd/config`):
   
   ```ini
   # Tor
