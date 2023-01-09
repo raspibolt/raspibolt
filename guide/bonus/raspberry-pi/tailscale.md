@@ -109,6 +109,22 @@ To run tailscale, we need to install apt-transport-https
   ssl_certificate_key /etc/ssl/private/machine-name.your-tailscale-domain.ts.net.key;
 ```
 
+### Access your node
+
+* Instead of using https://raspibolt.local or your local ip address you can use https://machine-name.your-tailscale-domain.ts.net or the external ip from the tailscale vpn
+
+```sh
+  $ tailscale ip -4
+```
+
+* to access RTL for example you would use https://machine-name.your-tailscale-domain.ts.net:4001
+
+* to access zeus with tailscale you need to change from onion address to the tailscale address
+
+```sh
+  $ lndconnect --host=machine-name.your-tailscale-domain.ts.net --port=8080
+``` 
+
 ### Uninstall Tailscale
 
 * Uninstall tailscale package
