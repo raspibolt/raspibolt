@@ -340,6 +340,7 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
 * Verify updated version by typing `/version` in TG bot chat. 
 
   🤖 Running version: 13.15.0
+  
   🤖 Latest version: 13.15.0
 
 ---
