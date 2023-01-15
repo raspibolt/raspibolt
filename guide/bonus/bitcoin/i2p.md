@@ -129,7 +129,7 @@ We need to set up settings in Bitcoin Core configuration file to enable I2P conn
   $ sudo nano /data/bitcoin/bitcoin.conf
   ```
 
-  ```sh
+  ```ini
   # Additional logs (optional)
   debug=i2p
 
