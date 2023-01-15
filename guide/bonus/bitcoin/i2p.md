@@ -177,7 +177,7 @@ Example output expected, ensure of the presence of "i2p" network:
 
 * Add the following lines. Save and exit
 
-  ```sh
+  ```ini
   addnode=255fhcp6ajvftnyo7bwz3an3t4a4brhopm3bamyh2iu5r3gnr2rq.b32.i2p:0
   addnode=27yrtht5b5bzom2w5ajb27najuqvuydtzb7bavlak25wkufec5mq.b32.i2p:0
   addnode=2el6enckmfyiwbfcwsygkwksovtynzsigmyv3bzyk7j7qqahooua.b32.i2p:0
