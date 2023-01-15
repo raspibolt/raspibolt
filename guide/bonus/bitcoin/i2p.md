@@ -158,7 +158,6 @@ We need to set up settings in Bitcoin Core configuration file to enable I2P conn
 
 Example output expected, ensure of the presence of "i2p" network:
 
-  ```sh
   Bitcoin Core client v24.0.1 - server 70016/Satoshi:24.0.1/
 
             ipv4    ipv6   onion   i2p   total   block
