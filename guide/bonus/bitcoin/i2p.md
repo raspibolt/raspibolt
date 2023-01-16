@@ -104,7 +104,7 @@ Expected output, find *"enabled"* and *"Started"* labels:
 
 Output expected:
 
-  ```sh
+  ```
   tcp   LISTEN 0      4096            0.0.0.0:23570       0.0.0.0:*    users:(("i2pd",pid=827,fd=17))
   tcp   LISTEN 0      4096           127.0.0.1:4444       0.0.0.0:*    users:(("i2pd",pid=827,fd=29))
   tcp   LISTEN 0      4096           127.0.0.1:7070       0.0.0.0:*    users:(("i2pd",pid=827,fd=22))
@@ -158,7 +158,7 @@ We need to set up settings in Bitcoin Core configuration file to enable I2P conn
 
 Example output expected, ensure of the presence of "i2p" network:
 
-  ```sh
+  ```
   Bitcoin Core client v24.0.1 - server 70016/Satoshi:24.0.1/
 
             ipv4    ipv6   onion   i2p   total   block
