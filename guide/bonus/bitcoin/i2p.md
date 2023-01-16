@@ -78,7 +78,7 @@ Table of contents
 
 Expected output, find *"enabled"* and *"Started"* labels:
 
-  ```sh
+  ```
   * i2pd.service - I2P Router written in C++
       Loaded: loaded (/lib/systemd/system/i2pd.service; enabled; vendor preset: enabled)
       Active: active (running) since Thu 2022-08-11 15:35:54 UTC; 3 days ago
