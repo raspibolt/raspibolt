@@ -147,7 +147,7 @@ Table of contents
 * Start a new tmux session called "Sparrow"
 
   ```sh
-  $ tmux new -sSparrow
+  $ tmux new -s sparrow_server
   ```
 
 * Launch Sparrow Terminal
