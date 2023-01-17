@@ -156,7 +156,7 @@ Table of contents
   $ Sparrow
   ```
 
-* Connect Sparrow Terminal to your own Electrs implementation according to steps above 
+* Connect Sparrow Terminal to your own Electrum Server implementation according to the steps above 
 
 * Go to `Wallets > Create Wallet`
 
