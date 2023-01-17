@@ -140,7 +140,6 @@ Table of contents
 
   ```sh
   $ sudo apt update
-  $ sudo apt full-upgrade
   $ sudo apt install tmux
   ```
 
