@@ -125,6 +125,15 @@ To run tailscale, we need to install apt-transport-https
   $ lndconnect --host=machine-name.your-tailscale-domain.ts.net --port=8080
 ``` 
 
+### For the future: Tailscale upgrade
+
+* As “admin” user, run:
+
+```sh
+ $ sudo apt-get update
+ $ sudo apt-get install tailscale
+```
+
 ### Uninstall Tailscale
 
 * Uninstall tailscale package
