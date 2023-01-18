@@ -33,6 +33,20 @@ Table of contents
 
 ---
 
+## Preparation
+
+### Install tmux
+tmux is an open-source terminal multiplexer for Unix-like operating systems. It allows multiple terminal sessions to be accessed simultaneously in a single window. It is useful for running more than one command-line program at the same time
+
+* Install tmux
+
+  ```sh
+  $ sudo apt update
+  $ sudo apt install tmux
+  ```
+
+---
+
 ## Installation
 
 ### Install Sparrow Server
@@ -90,16 +104,7 @@ Table of contents
   ```sh
   $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /usr/local/bin/Sparrow
   ```
-
-### Install tmux
-
-* Install tmux
-
-  ```sh
-  $ sudo apt update
-  $ sudo apt install tmux
-  ```
-
+  
 ---
  
 ## Run Sparrow 
