@@ -133,8 +133,12 @@ Table of contents
 * You are now connected to your own Electrum Server 
 
   ![Sparrow_Test](../../../images/sparrow-test.png)
+  
+---
 
-### Mix Bitcoin with Sparrow Terminal
+## Mix Bitcoin with Sparrow Terminal
+
+### Install tmux and launch Sparrow
 
 * Install tmux
 
@@ -155,7 +159,9 @@ Table of contents
   $ Sparrow
   ```
 
-* Connect Sparrow Terminal to your own Electrum Server implementation according to the steps above 
+* Connect Sparrow Terminal to your own Electrum Server implementation according to the steps above
+
+### Create/import wallet
 
 * Go to `Wallets > Create Wallet`
 
@@ -164,6 +170,8 @@ Table of contents
 * Create a strong password for Sparrow Terminal wallet to prevent loss of funds in case of someone getting access to your node/wallet
 
 * Open your Wallet
+
+### Start mixing
 
 * Send Bitcoin to your hot wallet if not already done
 
@@ -180,6 +188,8 @@ Table of contents
 * You can mix to cold storage if desired. Select value for minimum mixes before sending to cold storage
 
 * If you use Whirlpool with Dojo as well - set Postmix index range to "odd". This way you improve chances of getting into a mix by running two separate mixing clients at the same time, using different index ranges to prevent mix failures
+
+### Detaching a session
 
 * Detach tmux session to run ST on the background: 
 1. press `ctrl + b` once 
