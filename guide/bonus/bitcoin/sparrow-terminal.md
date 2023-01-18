@@ -208,8 +208,13 @@ Closing or logging out from your node without detaching would cause mixing to st
   ```sh
   $ tmux attach
   ```
-or use this if you have other sessions opened
+  
+* Or use this if you have other sessions opened
+
+  ```sh
   $ tmux a -t sparrow_server
+  ```
+  
 Learn more about [tmux basics](https://github.com/tmux/tmux/wiki/Getting-Started)
 
 ---
