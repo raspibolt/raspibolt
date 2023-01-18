@@ -35,7 +35,7 @@ Table of contents
 
 ## Installation
 
-### Download Sparrow Server
+### Install Sparrow Server
 
 * Download Sparrow Server and signatures into "/tmp" directory, which is cleared on the reboot.
 
@@ -77,10 +77,6 @@ Table of contents
   ```sh
   $ tar -xvf sparrow-server-1.7.1-aarch64.tar.gz
   ```
-  
----
-
-### Configuration 
 
 * Create a new directory for Sparrow and move data files there
 
@@ -94,7 +90,16 @@ Table of contents
   ```sh
   $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /usr/local/bin/Sparrow
   ```
-  
+
+### Install tmux
+
+* Install tmux
+
+  ```sh
+  $ sudo apt update
+  $ sudo apt install tmux
+  ```
+
 ---
  
 ## Run Sparrow 
@@ -138,14 +143,7 @@ Table of contents
 
 ## Mix Bitcoin with Sparrow Terminal
 
-### Install tmux and launch Sparrow
-
-* Install tmux
-
-  ```sh
-  $ sudo apt update
-  $ sudo apt install tmux
-  ```
+### Launch Sparrow using tmux
 
 * Start a new tmux session called "Sparrow"
 
@@ -159,7 +157,7 @@ Table of contents
   $ Sparrow
   ```
 
-* Connect Sparrow Terminal to your own Electrum Server implementation according to the steps above
+* Connect Sparrow Terminal to your own Electrum Server implementation according to the steps above if not already done
 
 ### Create/import wallet
 
