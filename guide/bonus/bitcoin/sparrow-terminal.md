@@ -92,17 +92,16 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
   $ tar -xvf sparrow-server-1.7.1-aarch64.tar.gz
   ```
 
-* Create a new directory for Sparrow and move data files there
+* Move data files to the home “admin” user
 
   ```sh
-  $ sudo mkdir -p /opt/sparrow-terminal
-  $ sudo mv /tmp/Sparrow/* /opt/sparrow-terminal
+  $ sudo mv Sparrow /home/admin/
   ```
  
-* Add the Sparrow executable to your PATH by creating a symlink to it wihtin `/usr/local/bin`, which is already part of PATH.
+* Add the Sparrow executable to your PATH by creating a symlink to it within /usr/local/bin, which is already part of PATH.
  
   ```sh
-  $ sudo ln -s /opt/sparrow-terminal/bin/Sparrow /usr/local/bin/Sparrow
+  $ sudo ln -s /home/admin/Sparrow/bin/Sparrow /usr/local/bin/Sparrow
   ```
   
 ---
