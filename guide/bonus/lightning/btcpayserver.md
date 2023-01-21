@@ -317,7 +317,7 @@ You can easily add a Tor hidden service on the RaspiBolt and access the BTCPay S
 
   ```sh
   $ sudo systemctl reload tor
-  $ sudo cat /var/lib/tor/hidden_service_rtl/hostname
+  $ sudo cat /var/lib/tor/hidden_service_btcpay/hostname
   > abcefg...................zyz.onion
   ```
 
