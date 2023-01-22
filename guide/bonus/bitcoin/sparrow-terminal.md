@@ -235,7 +235,7 @@ Learn more about [tmux basics](https://github.com/tmux/tmux/wiki/Getting-Started
 
   ```sh
   $ sudo rm /usr/local/bin/Sparrow
-  $ sudo rm -r /opt/sparrow-terminal
+  $ sudo rm -r /home/admin/Sparrow
   ```
   
 <br /><br />
