@@ -268,12 +268,6 @@ Still logged in as user "bitcoin", let's start "bitcoind" manually.
 
 * Once everything looks ok, stop "bitcoind" with `Ctrl-C`
 
-* Grant the "bitcoin" group read-permission for the debug log file:
-
-  ```sh
-  $ chmod g+r /data/bitcoin/debug.log
-  ```
-
 * Exit the “bitcoin” user session back to user “admin”
 
   ```sh
@@ -312,7 +306,7 @@ We use “systemd“, a daemon that controls the startup process using configura
   # Service execution
   ###################
 
-  ExecStart=/usr/local/bin/bitcoind -daemon \
+  ExecStart=/usr/local/bin/bitcoind -nodebuglogfile \
                                     -pid=/run/bitcoind/bitcoind.pid \
                                     -conf=/home/bitcoin/.bitcoin/bitcoin.conf \
                                     -datadir=/home/bitcoin/.bitcoin \
@@ -320,7 +314,7 @@ We use “systemd“, a daemon that controls the startup process using configura
 
   # Process management
   ####################
-  Type=forking
+  Type=exec
   PIDFile=/run/bitcoind/bitcoind.pid
   Restart=on-failure
   TimeoutSec=300
@@ -401,11 +395,11 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   > -rw-r----- 1 bitcoin bitcoin 75 Dec 17 13:48 /home/bitcoin/.bitcoin/.cookie
   ```
 
-* See "bitcoind" in action by monitoring its log file.
+* See "bitcoind" in action by viewing its logged output.
   Exit with `Ctrl-C`
 
   ```sh
-  $ tail -f /home/bitcoin/.bitcoin/debug.log
+  $ journalctl -f -u bitcoind
   ```
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain

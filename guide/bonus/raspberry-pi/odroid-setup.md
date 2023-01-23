@@ -232,7 +232,7 @@ After=network.target
 # Service execution
 ###################
 
-ExecStart=/usr/local/bin/bitcoind -daemon \
+ExecStart=/usr/local/bin/bitcoind -nodebuglogfile \
                                   -pid=/run/bitcoind/bitcoind.pid \
                                   -conf=/mnt/ext/bitcoin/bitcoin.conf \
                                   -datadir=/mnt/ext/bitcoin
@@ -241,7 +241,7 @@ ExecStart=/usr/local/bin/bitcoind -daemon \
 # Process management
 ####################
 
-Type=forking
+Type=exec
 PIDFile=/run/bitcoind/bitcoind.pid
 Restart=on-failure
 TimeoutSec=300
@@ -300,7 +300,7 @@ Give it a few minutes to reboot, log in again via SSH with user root.
 #### Explore bitcoind and bitcoind-cli
 
 Now that bitcoind is running, you have various ways to check download progress and look into the blockchain data.
-* Look at the tail end of the log file: `tail -f /mnt/ext/bitcoin/debug.log `. Ctrl-C to get out of this logging view. This will tell you also the progress of the blockchain download. When you reach near 0.99 or 1.0 you have downloaded 100% of the blockchain and are 'caught up'
+* Look at the latest log output: `journalctl -f -u bitcoind`. Ctrl-C to get out of this logging view. This will tell you also the progress of the blockchain download. When you reach near 0.99 or 1.0 you have downloaded 100% of the blockchain and are 'caught up'
 * As the bitcoin user, you can also use the bitcoin-cli to check: `bitcoin-cli getblockchaininfo`. bitcoin-cli is very powerful tool, have fun exploring it.
 
 🚨 **Please let Bitcoin Core sync fully before proceeding.**

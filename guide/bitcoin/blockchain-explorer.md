@@ -51,7 +51,7 @@ For the BTC RPC Explorer to work, you need your full node to index all transacti
   ```
 
 Please note that reindexing can take more than a day.
-You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
+You can follow the progress using `journalctl -f -u bitcoind`.
 
 ### Install Node.js
 

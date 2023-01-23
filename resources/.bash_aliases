@@ -125,7 +125,7 @@ alias disableallmain='sudo systemctl disable bitcoind electrs btcrpcexplorer lnd
 # MAIN SERVICES LOGS #
 ######################
 
-alias bitcoindlogs='sudo tail -f /home/bitcoin/.bitcoin/debug.log'
+alias bitcoindlogs='sudo journalctl -f -u bitcoind'
 alias electrslogs='sudo journalctl -f -u electrs'
 alias btcrpcexplorerlogs='sudo journalctl -f -u btcrpcexplorer'
 alias lndlogs='sudo journalctl -f -u lnd'
