@@ -413,7 +413,7 @@ If upgrading from pre-0.8.1 to a newer versions, note that yield generator confi
   $ unlink joinmarket
   ```
 
-* Download, verify, extract and install the JoinMarket as described in the [Install JoinMarket](#install-joinmarket) section of this guide.
+* Download, verify, extract and install the JoinMarket as described in the [Install JoinMarket](joinmarket.md#installation) section of this guide.
 
 * Optionally delete old JoinMarket version directory to free up about 200 megabytes.
   
