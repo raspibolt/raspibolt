@@ -100,7 +100,7 @@ Expected output:
   [...]
   ```
 
-💡 If appears to you `Command 'jq' not found` you will need to install `jq` with `$ sudo apt install jq`. When it finishes, repeat the step before.
+💡 If, instead of the expected output above, you see `Command 'jq' not found` you will need to install `jq` by executing the following command `$ sudo apt install jq`. After which, repeat previous cURL command and verify the results.
 
 * Return to the `tmp` folder and follow the signature check process
 
