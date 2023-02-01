@@ -577,7 +577,7 @@ Expected output:
   > Primary key fingerprint: ...
   ```
 
-* Verify the timestamp. If the prompt shows you `-bash: ots: command not found`, ensure that you are installing correctly OTS client in the [proper section](#opentimestamps-client)
+* Verify the timestamp. If the prompt shows you `-bash: ots: command not found`, ensure that you are installing correctly OTS client in the [proper section](bitcoin-client.md#opentimestamps-client)
 
   ```sh
   $ ots --no-cache verify SHA256SUMS.ots -f SHA256SUMS
