@@ -67,18 +67,6 @@ This is a precaution to make sure that this is an official release and not a mal
 
 Bitcoin releases are signed by several individuals, each using their own key. To verify the validity of these signatures, you must first import the corresponding public keys into your GPG key database.
 
-* Create ".gnupg" folder by typing the next command
-
-  ```sh
-  $ gpg --list-keys
-  ```
-
-* Enter on the ".gnupg" folder, create a persistent folder for the signatures called "sigs" and enter on it
-
-  ```sh
-  $ cd /home/admin/.gnupg/ && mkdir sigs && cd sigs
-  ```
-
 * The next command download and imports automatically all signatures from the [Bitcoin Core release attestations (Guix)](https://github.com/bitcoin-core/guix.sigs) repository
 
   ```sh
@@ -98,14 +86,6 @@ Expected output:
   > gpg:               imported: 1
   > gpg: no ultimately trusted keys found
   [...]
-  ```
-
-💡 If, instead of the expected output above, you see `Command 'jq' not found` you will need to install `jq` by executing the following command `$ sudo apt install jq`. After which, repeat previous cURL command and verify the results.
-
-* Return to the `tmp` folder and complete the signature check process
-
-  ```sh
-  $ cd /tmp
   ```
 
 * Verify that the checksums file is cryptographically signed by the release signing keys.
@@ -562,22 +542,25 @@ When upgrading, there might be breaking changes, or changes in the data structur
   > bitcoin-24.0.1-aarch64-linux-gnu.tar.gz: OK
   ```
 
-* Enter the `sigs` folder
+* The next command download and imports automatically all signatures from the [Bitcoin Core release attestations (Guix)](https://github.com/bitcoin-core/guix.sigs) repository
 
   ```sh
-  $ cd /home/admin/.gnupg/sigs
+  $ curl -s "https://api.github.com/repositories/355107265/contents/builder-keys" | grep download_url | grep -oE "https://[a-zA-Z0-9./-]+" | while read url; do curl -s "$url" | gpg --import; done
   ```
 
-* The next command download and imports automatically all signatures from the Bitcoin Core Guix repository and update our database if necessary
+Expected output:
 
   ```sh
-  $ curl 'https://api.github.com/repositories/355107265/contents/builder-keys' | jq '.[] .download_url' | xargs -L1 wget -N && curl 'https://api.github.com/repositories/355107265/contents/builder-keys' | jq '.[] .name' | xargs -L1 gpg --import
-  ```
-
-* Return to the `tmp` folder
-
-  ```sh
-  $ cd /tmp
+  >   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+  >                                 Dload  Upload   Total   Spent    Left  Speed
+  > 100 30520  100 30520    0     0   200k      0 --:--:-- --:--:-- --:--:--  198k
+  > gpg: key 17565732E08E5E41: 29 signatures not checked due to missing keys
+  > gpg: /home/admin/.gnupg/trustdb.gpg: trustdb created
+  > gpg: key 17565732E08E5E41: public key "Andrew Chow <andrew@achow101.com>" imported
+  > gpg: Total number processed: 1
+  > gpg:               imported: 1
+  > gpg: no ultimately trusted keys found
+  [...]
   ```
 
 * Verify that the checksums file is cryptographically signed by the release signing keys.
