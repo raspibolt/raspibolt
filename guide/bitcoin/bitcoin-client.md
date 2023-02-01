@@ -65,7 +65,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
 ### Signature check
 
-Bitcoin releases are signed by several individuals, each using its own key. To verify the validity of these signatures, you must first import the corresponding public keys into your GPG key database.
+Bitcoin releases are signed by several individuals, each using their own key. To verify the validity of these signatures, you must first import the corresponding public keys into your GPG key database.
 
 * Create ".gnupg" folder by typing the next command
 
