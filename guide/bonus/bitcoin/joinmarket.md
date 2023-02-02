@@ -423,7 +423,7 @@ If upgrading from pre-0.8.1 to a newer versions, note that yield generator confi
   (jvmenv) $ ./wallet-tool.py
   ```
   
-* Then customize joinmarket.cfg per the [Configuration](joinmarket.md#configuration) section.
+* Then customize joinmarket.cfg per the [Configuration](joinmarket.md#configuration) section of this guide.
 
 * Optionally delete old JoinMarket version directory to free up about 200 megabytes.
   
