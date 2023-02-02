@@ -413,11 +413,21 @@ If upgrading from pre-0.8.1 to a newer versions, note that yield generator confi
   $ unlink joinmarket
   ```
 
-* Download, verify, extract and install the JoinMarket as described in the [Install JoinMarket](joinmarket.md#installation) section of this guide.
+* Download, verify, extract and install the JoinMarket as described in the [Installation](joinmarket.md#installation) section of this guide.
+
+* Rename the existing configuration file, activate jmvenv and run wallet-tool.py to generate a new configuration file.  
+
+  ```sh
+  $ mv /data/joinmarket/joinmarket.cfg /data/joinmarket/joinmarket.cfg.old
+  $ . activate.sh
+  (jvmenv) $ ./wallet-tool.py
+  ```
+  
+* Then customize joinmarket.cfg per the [Configuration](joinmarket.md#configuration) section.
 
 * Optionally delete old JoinMarket version directory to free up about 200 megabytes.
   
   ```sh
   $ cd
-  $ rm -rf joinmarket-clientserver-$VERSION
+  $ rm -rf joinmarket-clientserver-0.9.8
   ```
