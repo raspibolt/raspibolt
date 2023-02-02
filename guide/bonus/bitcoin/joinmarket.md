@@ -99,7 +99,7 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   ```sh
   $ VERSION="0.9.9"
   $ cd /tmp
-  $ wget -O joinmarket-clientserver-v$VERSION.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v$VERSION.tar.gz
+  $ wget -O joinmarket-clientserver-$VERSION.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v$VERSION.tar.gz
   $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v$VERSION/joinmarket-clientserver-$VERSION.tar.gz.asc
   $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v$VERSION/joinmarket-clientserver-$VERSION.tar.gz.asc.ots
   ```
