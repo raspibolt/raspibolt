@@ -109,6 +109,14 @@ To run tailscale, we need to install apt-transport-https
   ssl_certificate_key /etc/ssl/private/machine-name.your-tailscale-domain.ts.net.key;
 ```
 
+### Firewall (optional)
+
+* If you want all ports to be open on the tailscale network you can run the following command:
+
+```sh
+  sudo ufw allow in on tailscale0
+```
+
 ### Access your node
 
 * Instead of using https://raspibolt.local or your local ip address you can use https://machine-name.your-tailscale-domain.ts.net or the external ip from the tailscale vpn
