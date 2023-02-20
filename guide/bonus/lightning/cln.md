@@ -431,7 +431,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   plugin=/data/lightningd-plugins-available/c-lightning-REST-0.10.0/clrest.js
   rest-port=3092
   rest-docport=4091
-  rest-protocol=https
+  rest-protocol=http
   ```
   
 * Add a sample config file and run the plugin once manually to create required `access.macaroon`
@@ -453,11 +453,10 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   {
     "PORT": 3092,
     "DOCPORT": 4091,
-    "PROTOCOL": "https",
+    "PROTOCOL": "http",
     "EXECMODE": "production",
     "RPCCOMMANDS": ["*"],
-    "DOMAIN": "localhost",
-    "BIND": "::"
+    "DOMAIN": "localhost"
   }
   ```
 
