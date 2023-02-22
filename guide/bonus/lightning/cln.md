@@ -381,15 +381,15 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 
   ```sh
   $ sudo su - lightningd
-  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.10.0.tar.gz
-  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.10.0/v0.10.0.tar.gz.asc
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.10.1.tar.gz
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.10.1/v0.10.1.tar.gz.asc
   ```
 
 * Get the author's key and verify the release:
 
   ```sh
   $ curl https://keybase.io/suheb/pgp_keys.asc | gpg --import
-  $ gpg --verify v0.10.0.tar.gz.asc v0.10.0.tar.gz
+  $ gpg --verify v0.10.1.tar.gz.asc v0.10.1.tar.gz
   ```
   
 * Output should be like:
@@ -407,15 +407,15 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Extract the archive and install with `npm`:
 
   ```sh
-  $ tar xvf v0.10.0.tar.gz 
-  $ cd c-lightning-REST-0.10.0
+  $ tar xvf v0.10.1.tar.gz 
+  $ cd c-lightning-REST-0.10.1
   $ npm install --only=prod
   ```
   
 * Copy content to plugin datadir:
 
   ```sh
-  $ cp -r ~/c-lightning-REST-0.10.0/ /data/lightningd-plugins-available/
+  $ cp -r ~/c-lightning-REST-0.10.1/ /data/lightningd-plugins-available/
   ```
 
 * Setup c-lightning-Rest as plugin in CLN's config file:
@@ -428,7 +428,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 
   ```ini
   # cln-rest-plugin
-  plugin=/data/lightningd-plugins-available/c-lightning-REST-0.10.0/clrest.js
+  plugin=/data/lightningd-plugins-available/c-lightning-REST-0.10.1/clrest.js
   rest-port=3092
   rest-docport=4091
   rest-protocol=http
@@ -437,7 +437,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Add a sample config file and run the plugin once manually to create required `access.macaroon`
   
   ```sh
-  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.10.0
+  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.10.1
   $ cp sample-cl-rest-config.json cl-rest-config.json
   ```
 
@@ -466,7 +466,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   $ node cl-rest.js
   ```
   
-* Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.10.0/` called `certs` which contains the required `access.macaroon` for the next steps. Stop `cl-rest.js` by hitting CTRL+C.
+* Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.10.1/` called `certs` which contains the required `access.macaroon` for the next steps. Stop `cl-rest.js` by hitting CTRL+C.
   
 * Go back to the "admin" user:
 
@@ -477,7 +477,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Copy `access.macaroon` to home directory of user `rtl`:  
   
   ```sh
-  $ sudo cp /data/lightningd-plugins-available/c-lightning-REST-0.10.0/certs/access.macaroon /home/rtl/
+  $ sudo cp /data/lightningd-plugins-available/c-lightning-REST-0.10.1/certs/access.macaroon /home/rtl/
   $ sudo chown rtl:rtl /home/rtl/access.macaroon
   ```
   
@@ -580,7 +580,7 @@ The Zeus mobile app will access the node via Tor.
 * Prepare QR data:
 
   ```sh
-  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.10.0/certs
+  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.10.1/certs
   $ xxd -ps -u -c 1000 access.macaroon
   ```
 
