@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[Tunnel⚡️Sats](https://tunnelsats.com){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch. Alternatively an automated setup script can be found at the official [Tunnel⚡️Sats guide](https://blckbx.github.io/tunnelsats/){:target="_blank"}.
+[Tunnel⚡️Sats](https://tunnelsats.com){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch. Alternatively an automated setup script can be found at the official [Tunnel⚡️Sats guide](https://tunnelsats.github.io/tunnelsats/){:target="_blank"}.
 
 Paid service
 {: .label .label-yellow }
@@ -448,7 +448,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 Easy way: 
 
   ```sh
-  $ wget -O uninstallv2.sh https://github.com/blckbx/tunnelsats/raw/main/scripts/uninstallv2.sh
+  $ wget -O uninstallv2.sh https://github.com/tunnelsats/tunnelsats/raw/main/scripts/uninstallv2.sh
   $ sudo bash uninstallv2.sh
   ```
   
@@ -544,7 +544,7 @@ Manual way:
 
 ## Troubleshooting
 
-Please review the [FAQ](https://github.com/blckbx/tunnelsats/blob/main/FAQ.md){:target="_blank"} for further help. If you need help setting up hybrid mode / clearnet over VPN, join the Tunnel⚡️Sats [Telegram group](https://t.me/+NJylaUom-rxjYjU6){:target="_blank"}.
+Please review the [FAQ](https://github.com/tunnelsats/tunnelsats/blob/main/FAQ.md){:target="_blank"} for further help. If you need help setting up hybrid mode / clearnet over VPN, join the Tunnel⚡️Sats [Telegram group](https://t.me/+NJylaUom-rxjYjU6){:target="_blank"}.
 
 
 <br /><br />
