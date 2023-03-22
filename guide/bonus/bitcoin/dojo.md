@@ -794,12 +794,24 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 ## For the future: Dojo upgrade 
 
-* Upgrade packages & node package manager
+* Upgrade packages
 
   ```sh
   $ sudo apt update
   $ sudo apt full-upgrade
+  ```
+
+* Upgrade node package manager if available
+  
+  ```sh
   $ sudo npm install latest-version
+  > npm notice 
+  > npm notice New major version of npm available! x.xx.x -> y.y.y
+  > npm notice Changelog: https://github.com/npm/cli/releases/tag/vy.y.y
+  > npm notice Run npm install -g npm@y.y.y to update!
+  ```
+  ```sh
+  $ sudo npm install -g npm@y.y.y
   ```
   
 * Stop Samourai Dojo
