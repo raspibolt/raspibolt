@@ -372,14 +372,6 @@ instead of "[ X ] PASSWORD"
   adminKey: '[ I ] NODE ADMIN KEY',
   ```
   
-* (optional) add auth47 - paynym authentication
-
-  ```
-  auth47: {
-  hostname: '<dojoHostname>',
-  paymentCodes: ['<myPaymentCode>'] #Your Payment Code
-  ```
-
 * Find and edit these lines inside "jwt" configuration to following values
 
   ```
@@ -640,16 +632,10 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   ```
 
 * Start Dojo
-
-  ```sh
-  $ pm2 start mainnet  #Can be started from any directory
-  ```
-
-* (optional) You can as well start Dojo from `/opt/dojo`
   
   ```sh
   $ cd /opt/dojo
-  $ pm2 start pm2.config.cjs # Need to be in "/opt/dojo"
+  $ pm2 start pm2.config.cjs
   ```
 
   ```
