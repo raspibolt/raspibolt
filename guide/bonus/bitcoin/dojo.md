@@ -802,6 +802,41 @@ If no balance is shown in your samourai wallet, it is neccessary to rescan publi
 
 Samourai wallet uses zpubs by default, however if you use other address format than "bc", it is neccessary to rescan other pubs as well
 
+### Use Auth47 login for Dojo Maintanence Tool (optional)
+
+* Stop Samourai Dojo
+
+  ```sh
+  $ sudo systemctl stop pm2-dojo.service
+  ```
+
+* Move to "index.js" configuration file
+
+  ```sh
+  $ sudo nano /opt/dojo/keys/index.js
+  ```
+
+* Uncomment these 4 lines including "}" we commeneted during configuration part of installation. Paste your tor hostname in the shown format and your payment code
+
+  ```sh
+  auth47: {
+  hostname: 'http://xyz.onion',
+  paymentCodes: ['PM8T...']
+  }
+  ```
+  
+* Start Samourai Dojo and open Dojo Maintanence Tool
+
+  ```sh
+  $ sudo systemctl restart pm2-dojo.service
+  ```
+
+* In Samourai Wallet go to `Tools` > `Authenticate using paynym`
+
+* Scan the QR code with your phone 
+
+* Upon success you will be notified
+  
 ---
 
 ## For the future: Dojo upgrade 
