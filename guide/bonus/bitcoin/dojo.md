@@ -371,6 +371,16 @@ instead of "[ X ] PASSWORD"
   // Admin key (alphanumeric characters)
   adminKey: '[ I ] NODE ADMIN KEY',
   ```
+
+* Comment auth47 (paynym) login option using `//` including "}" right below "paymentCodes" as shown below. Dojo Maintanence Tool is not working properly if these values are empty and not commented! Auth47 login is optional and is set up later in the guide - dojo Hostname is not yet set up
+
+  ```
+  // auth47: {
+  // hostname: '<dojoHostname>',
+  // paymentCodes: ['<myPaymentCode>']
+  // }
+  ```
+
   
 * Find and edit these lines inside "jwt" configuration to following values
 
