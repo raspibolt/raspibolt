@@ -372,7 +372,9 @@ instead of "[ X ] PASSWORD"
   adminKey: '[ I ] NODE ADMIN KEY',
   ```
 
-* Comment auth47 (paynym) login option using `//` including "}" right below "paymentCodes" as shown below. Dojo Maintanence Tool is not working properly if these values are empty and not commented! Auth47 login is optional and is set up later in the guide - dojo Hostname is not yet set up
+* Comment Auth47 (paynym) login option using `//` including "}" right below "paymentCodes" as shown below (4 lines). Dojo Maintanence Tool is not working properly if these values are empty and not commented! 
+
+* If you want to set up Auth47 login option, please comment these lines anyway and uncomment them in later steps - Dojo would not start properly
 
   ```
   // auth47: {
