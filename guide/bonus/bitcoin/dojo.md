@@ -61,7 +61,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 ### Node.js
 
-To run Dojo, we need to run Node.js
+Node.js is a cross-platform, open-source server environment that can run on Windows, Linux, Unix, macOS, and more. Node.js is a back-end JavaScript runtime environment necessary for Samourai Dojo
 
 * With user "admin", let's check our version of Node.js running on the node. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
 
@@ -145,16 +145,16 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update
 
   ```sh
-  $ wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v1.18.0/samourai-dojo-v1.18.0.tar.gz
-  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/e4c2858d9e67d8910c3bddc59950e03b/samourai-dojo-v1.18.0-fingerprints.txt
-  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/0a9e7e791d0db994532106ab006e4e7d/samourai-dojo-v1.18.0-fingerprints.txt.sig
+  $ wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v1.19.1/samourai-dojo-v1.19.1.tar.gz
+  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/58cee81ab15f39314db4e9d8c33e269d/samourai-dojo-v1.19.1-fingerprints.txt
+  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/a12e21782f4191e7c765f6c482c61cdc/samourai-dojo-v1.19.1-fingerprints.txt.sig
   ```
 
 * Calculate the checksum of the binary you've downloaded and compare it to the one provided in the fingerprints text file
 
   ```sh
-  $ sha256sum --ignore-missing --check samourai-dojo-v1.18.0-fingerprints.txt
-  > samourai-dojo-v1.18.0.tar.gz: OK
+  $ sha256sum --ignore-missing --check samourai-dojo-v1.19.1-fingerprints.txt
+  > samourai-dojo-v1.19.1.tar.gz: OK
   ```
 
 * Import the GPG public key of the developper that signed the fingerprints file
@@ -166,11 +166,11 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Verify that the fingerprints file has actually been signed by that developper
 
   ```sh
-  $ gpg --verify samourai-dojo-v1.18.0-fingerprints.txt.sig
+  $ gpg --verify samourai-dojo-v1.19.1-fingerprints.txt.sig
   ```
   ```
-  > gpg: assuming signed data in 'samourai-dojo-v1.18.0-fingerprints.txt'
-  > gpg: Signature made Thu Nov 17 17:05:49 2022 CET
+  > gpg: assuming signed data in 'samourai-dojo-v1.19.1-fingerprints.txt'
+  > gpg: Signature made Wed Mar 22 20:08:20 2023 UTC
   > gpg:                using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0
   > gpg: Good signature from "pavel.sevcik@protonmail.com <pavel.sevcik@protonmail.com>" [unknown]
   [...]
@@ -179,7 +179,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * If the signature checks out, unpack the binary
 
   ```sh
-  $ tar -xvf samourai-dojo-v1.18.0.tar.gz
+  $ tar -xvf samourai-dojo-v1.19.1.tar.gz
   ```
 
 ### MariaDB
@@ -256,7 +256,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
   ```sh
   $ sudo mkdir -p /opt/dojo/
-  $ sudo mv /tmp/samourai-dojo-v1.18.0/* /opt/dojo/
+  $ sudo mv /tmp/samourai-dojo-v1.19.1/* /opt/dojo/
   $ sudo chown -R dojo:dojo /opt/dojo/
   ```
 
@@ -319,6 +319,9 @@ instead of "[ X ] PASSWORD"
   user: 'raspibolt',
   // Password
   pass: '[ B ] Bitcoin RPC password',
+  
+  [...]
+  
   // ZMQ Tx notifications
   zmqTx: 'tcp://127.0.0.1:28333',
   // ZMQ Block notifications
@@ -335,6 +338,9 @@ instead of "[ X ] PASSWORD"
   user: 'dojo',
   // Password
   pass: '[ G ] MYSQL PASSWORD',
+  
+  [...]
+  
   // Db name
   database: 'dojo_db',
   ```
@@ -364,6 +370,14 @@ instead of "[ X ] PASSWORD"
   apiKeys: ['[ H ] NODE API KEY 1', '[ H ] NODE API KEY 2'],
   // Admin key (alphanumeric characters)
   adminKey: '[ I ] NODE ADMIN KEY',
+  ```
+  
+* (optional) add auth47 - paynym authentication
+
+  ```
+  auth47: {
+  hostname: '<dojoHostname>',
+  paymentCodes: ['<myPaymentCode>'] #Your Payment Code
   ```
 
 * Find and edit these lines inside "jwt" configuration to following values
@@ -435,7 +449,7 @@ The Dojo configuration file contains the Bitcoin Core RPC username and password 
   $ sudo npm install --omit=dev
   ```
 
-* Import Dojo scripts to the MariaDB database. Change [ F ] MYSQL_ROOT_PASSWORD to your password (must stay inside quotes: "password")
+* Import Dojo scripts to the MariaDB database. Change "[ F ] MYSQL_ROOT_PASSWORD" to your password (must stay inside quotes: "password")
 
   ```sh
   $ sudo mysql -u"root" -p"[ F ] MYSQL_ROOT_PASSWORD" "dojo_db" < ./db-scripts/1_db.sql.tpl -v
@@ -639,14 +653,14 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   ```
 
   ```
-  ┌─────┬─────────────────────────────────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──    ────────┬──────────┐
-  │ id  │ name                                            │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │    user     │ watching │
-  ├─────┼─────────────────────────────────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──    ────────┼──────────┤
-  │ 4   │ Samourai Dojo - Accounts (mainnet)              │ mainnet     │ 1.18.0  │ fork    │ 1137300  │ 45s    │ 733… │ online    │ 0%       │ 98.6mb   │    dojo     │ disabled │
-  │ 5   │ Samourai Dojo - PushTX (mainnet)                │ mainnet     │ 1.18.0  │ fork    │ 1137301  │ 45s    │ 941… │ online    │ 0%       │ 72.0mb   │    dojo     │ disabled │
-  │ 6   │ Samourai Dojo - PushTX orhestrator (mainnet)    │ mainnet     │ 1.18.0  │ fork    │ 1137328  │ 42s    │ 103… │ online    │ 0%       │ 66.7mb   │    dojo     │ disabled │
-  │ 7   │ Samourai Dojo - Tracker (mainnet)               │ mainnet     │ 1.18.0  │ fork    │ 1137337  │ 41s    │ 766… │ online    │ 0%       │ 191.4mb  │    dojo     │ disabled │
-  └─────┴─────────────────────────────────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──    ────────┴──────────┘
+  ┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+  │ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+  ├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+  │ 0  │ Samourai Dojo - A… │ fork     │ 1    │ online    │ 0%       │ 115.5mb  │
+  │ 1  │ Samourai Dojo - P… │ fork     │ 1    │ online    │ 0%       │ 71.9mb   │
+  │ 2  │ Samourai Dojo - P… │ fork     │ 1    │ online    │ 0%       │ 74.1mb   │
+  │ 3  │ Samourai Dojo - T… │ fork     │ 1    │ online    │ 0%       │ 184.8mb  │
+  └────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
   ```
 
 * Check the logs, you should expect following output (it will take a while for blocks to synchronise):
@@ -670,7 +684,7 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   7|Samourai Dojo - Tracker (mainnet)  | 2022-09-26T19:13:19Z  INFO  Tracker : Processing active Mempool (8 transactions)
   ```
 
-* To log specific process, view process "id" 
+* To view Dojo status use following command
 
   ```sh
   $ pm2 status mainnet
@@ -686,7 +700,7 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
   └────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
   ```
 
-* See specific logs using following command
+* View specific logs using following command
 
   ```sh
   $ pm2 logs <id>
@@ -760,7 +774,7 @@ Connect samourai wallet to your own backend
 
 * Paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
 
-* Authenticate with `[I] NODE ADMIN KEY`.
+* Authenticate with `[I] NODE ADMIN KEY` or Paynym (if set up)
 
 ![maintancetool_auth.png](/images/maintancetool_auth.png)
 
@@ -805,13 +819,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   
   ```sh
   $ sudo npm install latest-version
-  > npm notice 
-  > npm notice New major version of npm available! x.xx.x -> y.y.y
-  > npm notice Changelog: https://github.com/npm/cli/releases/tag/vy.y.y
-  > npm notice Run npm install -g npm@y.y.y to update!
-  ```
-  ```sh
-  $ sudo npm install -g npm@y.y.y
+  > added x packages, and audited x packages in x seconds
   ```
   
 * Stop Samourai Dojo
