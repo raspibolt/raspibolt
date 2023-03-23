@@ -772,7 +772,7 @@ Connect samourai wallet to your own backend
 
 * Paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
 
-* Authenticate with `[I] NODE ADMIN KEY` or Paynym (if set up)
+* Authenticate with `[I] NODE ADMIN KEY` or [Paynym](#use-auth47-login-for-dojo-maintanence-tool-optional)
 
 ![maintancetool_auth.png](/images/maintancetool_auth.png)
 
@@ -791,6 +791,10 @@ Connect samourai wallet to your own backend
 * Tap Restore an existing wallet
 
   <img src="/images/Samourai_Wallet_Setup_2.png" width="280" height="550">
+  
+---
+
+## Extras
 
 ### Rescan public keys using Dojo Maintenance Tool (optional)
 If no balance is shown in your samourai wallet, it is neccessary to rescan public keys as they are not tracked by Dojo yet.
@@ -802,7 +806,7 @@ If no balance is shown in your samourai wallet, it is neccessary to rescan publi
 
 Samourai wallet uses zpubs by default, however if you use other address format than "bc", it is neccessary to rescan other pubs as well
 
-### Use Auth47 login for Dojo Maintanence Tool (optional)
+### Use Auth47 (Paynym) login for Dojo Maintanence Tool (optional)
 
 * Stop Samourai Dojo
 
