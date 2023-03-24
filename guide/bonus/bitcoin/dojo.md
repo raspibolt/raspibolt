@@ -796,7 +796,7 @@ Connect samourai wallet to your own backend
 
 ## Extras
 
-### Rescan public keys using Dojo Maintenance Tool (optional)
+### Rescan public keys using Dojo Maintenance Tool
 If no balance is shown in your samourai wallet, it is neccessary to rescan public keys as they are not tracked by Dojo yet.
 
 * Log into `Dojo API and Maintenance Tool` using Tor browser
@@ -806,7 +806,7 @@ If no balance is shown in your samourai wallet, it is neccessary to rescan publi
 
 Samourai wallet uses zpubs by default, however if you use other address format than "bc", it is neccessary to rescan other pubs as well
 
-### Use Auth47 (Paynym) login for Dojo Maintanence Tool (optional)
+### Use Auth47 (Paynym) login for Dojo Maintanence Tool
 
 * Stop Samourai Dojo
 
