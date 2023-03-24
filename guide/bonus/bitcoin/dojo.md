@@ -772,7 +772,7 @@ Connect samourai wallet to your own backend
 
 * Paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
 
-* Authenticate with `[I] NODE ADMIN KEY` or [Paynym](#use-auth47-login-for-dojo-maintanence-tool-optional)
+* Authenticate with `[I] NODE ADMIN KEY` or with [Paynym](#use-auth47-paynym-login-for-dojo-maintanence-tool)
 
 ![maintancetool_auth.png](/images/maintancetool_auth.png)
 
