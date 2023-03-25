@@ -374,7 +374,7 @@ instead of "[ X ] PASSWORD"
 
 * Comment Auth47 (paynym) login option using `//` including "}" right below "paymentCodes" as shown below (4 lines). Dojo Maintanence Tool is not working properly if these values are empty and not commented! 
 
-* If you want to set up Auth47 login option, please comment these lines anyway and uncomment them in later steps - Dojo would not start properly
+* If you want to set up Auth47 login option, please comment these lines anyway and uncomment them in [later steps](#use-auth47-paynym-login-for-dojo-maintanence-tool). Dojo would not start properly and Tor service is not set up yet
 
   ```
   // auth47: {
@@ -772,7 +772,7 @@ Connect samourai wallet to your own backend
 
 * Paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
 
-* Authenticate with `[I] NODE ADMIN KEY` or with [Paynym](#use-auth47-paynym-login-for-dojo-maintanence-tool)
+* Authenticate with `[I] NODE ADMIN KEY` or with [Auth47 (Paynym)](#use-auth47-paynym-login-for-dojo-maintanence-tool)
 
 ![maintancetool_auth.png](/images/maintancetool_auth.png)
 
@@ -829,17 +829,19 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   }
   ```
   
-* Start Samourai Dojo and open Dojo Maintanence Tool
+* Start Samourai Dojo
 
   ```sh
-  $ sudo systemctl restart pm2-dojo.service
+  $ sudo systemctl start pm2-dojo.service
   ```
+  
+* Open Dojo Maintanence Tool
 
 * In Samourai Wallet go to `Tools` > `Authenticate using paynym`
 
-* Scan the QR code with your phone 
+* Scan the login QR code with your phone 
 
-* Upon success you will be notified
+* If successful, you will be logged in
   
 ---
 
@@ -900,7 +902,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 * Run Dojo and check Dojo Maintanence Tool if you run correct version
 
   ```sh
-  $ sudo systemctl restart pm2-dojo.service
+  $ sudo systemctl start pm2-dojo.service
   ```
   
 ---
