@@ -104,22 +104,19 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ git clone https://github.com/ElementsProject/lightning.git
   $ cd lightning
   $ git fetch --all --tags
-  $ git reset --hard v0.11.2
+  $ git reset --hard v22.11.1
   ``` 
 
 * Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `Good Signature`.
 
   ```sh
-  $ wget -O "pgp_keys.asc" https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/rustyrussell.txt
-  $ gpg --import ./pgp_keys.asc
-  $ git verify-tag v0.11.2
+  $ curl https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/cdecker.txt | gpg --import
+  $ git verify-tag v22.11.1
   ```
 
 * Download user specific python packages.
 
   ```sh
-  $ pip3 install --user mrkd==0.2.0
-  $ pip3 install --user mistune==0.8.4
   $ pip3 install --user mako
   ```
 
@@ -305,6 +302,13 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   ```sh
   $ sudo systemctl restart lightningd.service
   ```
+  
+* ⚠️ Regarding upgrading to v22.11.1: If you encounter an error upgrading to v22.11.1 saying "upgrading to a non-final version v22.11.1", edit `config` and temporarily add the following parameter: 
+
+  ```ini
+  database-upgrade=true
+  ```
+  Background: This parameter was introduced to make clear that the user upgrades the database to a non-final version. The database migration cannot be undone. The recommendation therefore is to set this only once if you experience this issue and delete the parameter when the migration was successfull. Note: There's no migration happening to v22.11.1, so in case of failures, you still can go back to v0.12.1 or earlier versions.
 
 ## Optional Steps
 
