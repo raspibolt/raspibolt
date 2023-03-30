@@ -163,7 +163,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
   $ curl https://keys.openpgp.org/vks/v1/by-fingerprint/377DE507FDC47F020099E342CFA54E4C0CD58DF0 | gpg --import
   ```
 
-* Verify that the fingerprints file has actually been signed by that developper
+* Verify that the fingerprints file has actually been signed by that developer
 
   ```sh
   $ gpg --verify samourai-dojo-v1.19.1-fingerprints.txt.sig
