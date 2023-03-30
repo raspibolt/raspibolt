@@ -157,7 +157,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
   > samourai-dojo-v1.19.1.tar.gz: OK
   ```
 
-* Import the GPG public key of the developper that signed the fingerprints file
+* Import the GPG public key of the developer that signed the fingerprints file
 
   ```sh
   $ curl https://keys.openpgp.org/vks/v1/by-fingerprint/377DE507FDC47F020099E342CFA54E4C0CD58DF0 | gpg --import
