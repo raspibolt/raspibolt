@@ -121,7 +121,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
   ```
   # Connections
-  zmqpubhashblock=tcp://0.0.0.0:8433
+  zmqpubhashblock=tcp://127.0.0.1:8433
   ```
 
 * Restart Bitcoind
