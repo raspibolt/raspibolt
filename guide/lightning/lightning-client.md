@@ -56,7 +56,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
   ```sh
   $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/guggero.asc | gpg --import
   > ...
-  > gpg: key F4FC70F073100284: "Oliver Gugger <gugger@gmail.com>" 1 new signature
+  > gpg: key 8E4256593F177720: "Oliver Gugger <gugger@gmail.com>" 1 new signature
   > ...
   ```
 
@@ -65,7 +65,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
   ```sh
   $ gpg --verify manifest-guggero-v0.16.0-beta.sig manifest-v0.16.0-beta.txt
   > gpg:                using RSA key F4FC70F07310028424EFC20A8E4256593F177720
-  > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>"
+  > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
   > Primary key fingerprint: F4FC 70F0 7310 0284 24EF  C20A 8E42 5659 3F17 7720
   > [...]
   ```
@@ -79,7 +79,7 @@ We can also check that the manifest file was in existence around the time of the
   ```sh
   $ ots verify manifest-guggero-v0.16.0-beta.sig.ots -f manifest-guggero-v0.16.0-beta.sig
   > [...]
-  > Success! Bitcoin block 765521 attests existence as of 2022-12-01 CET
+  > Success! Bitcoin block 783050 attests existence as of 2023-03-29 CEST
   ```
 
 * Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
@@ -250,7 +250,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.15.5-beta commit=v0.15.5-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.16.0-beta commit=v0.16.0-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
