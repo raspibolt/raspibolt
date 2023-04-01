@@ -43,7 +43,8 @@ Table of contents
 
   ```sh
   $ sudo apt update
-  $ sudo apt install libffi-dev libpq-dev python3-venv
+  $ sudo add-apt-repository ppa:deadsnakes/ppa
+  $ sudo apt install python3.9 python3.9-distutils software-properties-common
   ```
 
 ### Firewall & reverse proxy
@@ -61,6 +62,12 @@ Table of contents
   server {
     listen 4003 ssl;
     proxy_pass lnbits;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header X-Forwarded-Proto https;    
   }
   ```
 
@@ -105,20 +112,27 @@ Table of contents
   $ ln -s /data/lnd /home/lnbits/.lnd
   $ ln -s /data/lnbits /home/lnbits/.lnbits
   ```
+  
+* Install poetry and update PATH environment variable.
+
+  ```sh
+  $ curl -sSL https://install.python-poetry.org | python3 -
+  $ export PATH="/home/lnbits/.local/bin:$PATH"
+  ```
 
 * Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
 
   ```sh
-  $ git clone --branch 0.9.4 https://github.com/lnbits/lnbits
-  $ cd lnbits
-  $ python3 -m venv venv
-  $ ./venv/bin/pip install setuptools wheel --upgrade
-  $ ./venv/bin/pip install -r requirements.txt
+  $ git clone https://github.com/lnbits/lnbits.git
+  $ cd lnbits  
+  $ git checkout 0.10
+  $ poetry env use python3.9
+  $ poetry install --only main
   ```
 
 ### Configuration
 
-* Copy the example configuration file and open it.
+* Create data dir and copy the example configuration file and open it.
 
   ```sh
   $ cp .env.example .env
@@ -193,19 +207,13 @@ Table of contents
   $ chmod 600 /home/lnbits/lnbits/.env
   ```
 
-* Build the static files
-
-  ```sh
-  $ ./venv/bin/python build.py
-  ```
-
 ### First start
 
 * Make sure we are in the LNBits app directory and start the application.
 
   ```sh
   $ cd ~/lnbits
-  $ ./venv/bin/uvicorn lnbits.__main__:app --port 5000
+  $ poetry run lnbits --port 5000 --host 0.0.0.0
   ```
 
 Now point your browser to the secure access point provided by the nginx web proxy, for example <https://raspibolt.local:4003> (or your node's IP address like <https://192.168.0.20:4003>).
@@ -239,7 +247,7 @@ Your browser will display a warning because we use a self-signed SSL certificate
   [Service]
   WorkingDirectory=/home/lnbits/lnbits
 
-  ExecStart=/home/lnbits/lnbits/venv/bin/uvicorn lnbits.__main__:app --port 5000
+  ExecStart=/home/lnbits/.local/bin/poetry run lnbits --port 5000 --host 0.0.0.0 --debug --reload
   User=lnbits
   Restart=always
   TimeoutSec=120
@@ -331,10 +339,9 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ git fetch
   $ git reset --hard HEAD
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > 0.9.4
-  $ git checkout 0.9.4
-  $ ./venv/bin/pip install -r requirements.txt
-  $ ./venv/bin/python build.py
+  > 0.10
+  $ git checkout 0.10
+  $ poetry install --only main
   $ exit
   ```
 
@@ -394,6 +401,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
 
   ```sh
   $ sudo su -
+  $ rm -r /data/lnbits
   $ userdel -r lnbits
   > userdel: lnbits mail spool (/var/mail/lnbits) not found
   $ exit
