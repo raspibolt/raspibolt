@@ -120,7 +120,7 @@ Table of contents
   $ export PATH="/home/lnbits/.local/bin:$PATH"
   ```
 
-* Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
+* Download the source code directly from GitHub, create a virtual environment and install all dependencies.
 
   ```sh
   $ git clone https://github.com/lnbits/lnbits.git
