@@ -1,21 +1,21 @@
 ---
 layout: default
-title: LNBits
+title: LNbits
 parent: + Lightning
 grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
 
-# Bonus guide: LNBits, a lightning wallet/accounts system
+# Bonus guide: LNbits, a lightning wallet/accounts system
 
 {: .no_toc }
 
 ---
 
-[LNBits](https://github.com/lnbits/lnbits-legend){:target="_blank"} is a free and open-source lightning-network wallet/accounts system.
+[LNbits](https://github.com/lnbits/lnbits-legend){:target="_blank"} is a free and open-source lightning-network wallet/accounts system.
 
-⚠️ _USE WITH CAUTION - LNBits wallet is still in BETA_
+⚠️ _USE WITH CAUTION - LNbits wallet is still in BETA_
 
 Difficulty: Easy
 {: .label .label-green }
@@ -23,7 +23,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![LNBits](../../../images/lnbits.png)
+![LNbits](../../../images/lnbits.png)
 
 ---
 
@@ -49,7 +49,7 @@ Table of contents
 
 ### Firewall & reverse proxy
 
-* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to LNBits.
+* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to LNbits.
 
   ```sh
   $ sudo nano /etc/nginx/streams-enabled/lnbits-reverse-proxy.conf
@@ -81,13 +81,13 @@ Table of contents
 * Configure the firewall to allow incoming HTTPS requests.
 
   ```sh
-  $ sudo ufw allow 4003/tcp comment 'allow LNBits SSL'
+  $ sudo ufw allow 4003/tcp comment 'allow LNbits SSL'
   $ sudo ufw status
   ```
 
 ---
 
-## LNBits
+## LNbits
 
 ### Installation
 
@@ -98,14 +98,14 @@ Table of contents
   $ sudo adduser lnbits lnd
   ```
 
-* Create a data directory for LNBits and give ownership to the new user.
+* Create a data directory for LNbits and give ownership to the new user.
 
   ```sh
   $ sudo mkdir /data/lnbits
   $ sudo chown -R lnbits:lnbits /data/lnbits
   ```
 
-* Open a new "lnbits" user session and create symlinks to the LND and LNBits data directories.
+* Open a new "lnbits" user session and create symlinks to the LND and LNbits data directories.
 
   ```sh
   $ sudo su - lnbits
@@ -139,7 +139,7 @@ Table of contents
   $ nano .env
   ```
 
-* Change the default path of the LNBits data folder
+* Change the default path of the LNbits data folder
 
   ```ini
   #LNBITS_DATA_FOLDER="./data"
@@ -148,7 +148,7 @@ Table of contents
   
 * Choose the colour theme for the webpage, _e.g._ "bitcoin". You can choose among the following options: `autumn`, `bitcoin`, `classic`, `flamingo`, `freedom`, `mint`, `monochrome` and  `salvador`.
 
-![LNBits themes](../../../images/lnbits-themes.PNG)
+![LNbits themes](../../../images/lnbits-themes.PNG)
 
   ```ini
   LNBITS_THEME_OPTIONS="bitcoin"
@@ -209,7 +209,7 @@ Table of contents
 
 ### First start
 
-* Make sure we are in the LNBits app directory and start the application.
+* Make sure we are in the LNbits app directory and start the application.
 
   ```sh
   $ cd ~/lnbits
@@ -218,9 +218,9 @@ Table of contents
 
 Now point your browser to the secure access point provided by the nginx web proxy, for example <https://raspibolt.local:4003> (or your node's IP address like <https://192.168.0.20:4003>).
 
-Your browser will display a warning because we use a self-signed SSL certificate. Click on "Advanced" and proceed to the LNBits web interface.
+Your browser will display a warning because we use a self-signed SSL certificate. Click on "Advanced" and proceed to the LNbits web interface.
 
-* Stop LNBits in the terminal with `Ctrl`-`C` and exit the "lnbits" user session.
+* Stop LNbits in the terminal with `Ctrl`-`C` and exit the "lnbits" user session.
 
   ```sh
   $ exit
@@ -237,10 +237,10 @@ Your browser will display a warning because we use a self-signed SSL certificate
 * Paste the following configuration. Save and exit.
 
   ```sh
-  # RaspiBolt: systemd unit for LNBits
+  # RaspiBolt: systemd unit for LNbits
   # /etc/systemd/system/lnbits.service
 
-  Description=LNBits
+  Description=LNbits
   After=lnd.service
   PartOf=lnd.service
 
@@ -274,23 +274,23 @@ Your browser will display a warning because we use a self-signed SSL certificate
   $ sudo journalctl -f -u lnbits
   ```
 
-* You can now access LNBits from within your local network by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address).
+* You can now access LNbits from within your local network by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address).
 
 ---
 
-### LNBits in action
+### LNbits in action
 
-* Access the LNBits homepage in your browser by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address)
-* Type a wallet name, _e.g._ "My LNBits wallet #1"
+* Access the LNbits homepage in your browser by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address)
+* Type a wallet name, _e.g._ "My LNbits wallet #1"
 * Click on "ADD NEW WALLET" button. You will land on the wallet homepage:
 
-![LNBits wallet homepage](../../../images/lnbits-wallet-homepage.PNG)
+![LNbits wallet homepage](../../../images/lnbits-wallet-homepage.PNG)
 
 You can fund your wallet and then send or receive lightning payments. You can also enable one or more extensions built by the community.
-Below is a list of resources to learn how to use LNBits and the extensions:
-* [Awesome LNBits](https://github.com/cryptoteun/awesome-lnbits){:target="_blank"}: a list of resources for the extensions and projects built on LNBits
-* [the LNBits Youtube channel](https://www.youtube.com/channel/UCGXU2Ae5x5K-5aKdmKqoLYg){:target="_blank"}
-* [the LNBits GitHub channel](https://github.com/lnbits/lnbits)
+Below is a list of resources to learn how to use LNbits and the extensions:
+* [Awesome LNbits](https://github.com/cryptoteun/awesome-lnbits){:target="_blank"}: a list of resources for the extensions and projects built on LNbits
+* [the LNbits Youtube channel](https://www.youtube.com/channel/UCGXU2Ae5x5K-5aKdmKqoLYg){:target="_blank"}
+* [the LNbits GitHub channel](https://github.com/lnbits/lnbits)
 
 ### Remote access over Tor (optional)
 
@@ -303,7 +303,7 @@ Below is a list of resources to learn how to use LNBits and the extensions:
 
   ```sh
   ############### This section is just for location-hidden services ###
-  # Hidden service LNBits
+  # Hidden service LNbits
   HiddenServiceDir /var/lib/tor/hidden_service_lnbits/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:5000
@@ -321,7 +321,7 @@ Below is a list of resources to learn how to use LNBits and the extensions:
 
 ---
 
-## For the future: LNBits update
+## For the future: LNbits update
 
 Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:target="_blank"} is straight-forward, but make sure to check out the release notes first.
 
@@ -355,7 +355,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
 
 ## Uninstall
 
-🚨 Warning: Before uninstalling LNBits, you might want to empty all your LNBits wallets.
+🚨 Warning: Before uninstalling LNbits, you might want to empty all your LNbits wallets.
 
 * Stop and disable the systemd service and then delete the service file
  
@@ -365,17 +365,17 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ sudo rm /etc/systemd/system/lnbits.service
   ```
 
-* Display the UFW firewall rules and notes the numbers of the rules for LNBits (e.g., X and Y below)
+* Display the UFW firewall rules and notes the numbers of the rules for LNbits (e.g., X and Y below)
 
   ```sh  
   $ sudo ufw status numbered
   > [...]
-  > [X] 4003                   ALLOW IN    Anywhere                   # allow LNBits SSL
+  > [X] 4003                   ALLOW IN    Anywhere                   # allow LNbits SSL
   > [...]
-  > [Y] 4003 (v6)              ALLOW IN    Anywhere (v6)              # allow LNBits SSL
+  > [Y] 4003 (v6)              ALLOW IN    Anywhere (v6)              # allow LNbits SSL
   ```
 
-* Delete the two LNBits rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
+* Delete the two LNbits rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
 
   ```sh 
   $ sudo ufw delete Y
