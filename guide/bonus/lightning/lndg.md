@@ -92,7 +92,7 @@ For that we will create a separate user and we will be running the code as the n
 * Clone the latest release of the project GitHub repository and enter it
 
   ```sh
-  $ git clone --branch v1.5.0 https://github.com/cryptosharks131/lndg.git
+  $ git clone --branch v1.6.0 https://github.com/cryptosharks131/lndg.git
   $ cd lndg
   ```
   
@@ -701,18 +701,22 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo su - lndg
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest 1.5.0 in this example), and update:
+* Fetch the latest GitHub repository information, display the release tags (use the latest 1.6.0 in this example), and update (special update instructions for 1.6.0 regarding new requirements `django_filter` and `protobuf`):
 
   ```sh
   $ cd /home/lndg/lndg
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v1.5.0
+  $ git checkout v1.6.0
   $ .venv/bin/pip install -r requirements.txt
+  $ .venv/bin/pip install --upgrade protobuf
+  $ rm lndg/settings.py
+  $ .venv/bin/python initialize.py -wn
   $ .venv/bin/python manage.py migrate
   $ exit
   ```
+ 
   
 * Start the `uwsgi` systemd service again. The other LNDg timers and services will start automatically.
 
