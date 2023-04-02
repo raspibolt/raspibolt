@@ -27,13 +27,12 @@ We install [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL#readme
 ### Install Node.js
 
 Starting with user “admin”, we add the Node.js package repository.
-We’ll use version 16 which is the latest stable version.
 If you installed BTC RPC Explorer, then you've already accomplished this step.
 
-* Add the Node.js software repository
+* Add the Node.js (LTS version) software repository
 
   ```sh
-  $ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+  $ curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   ```
 
 * Install Node.js using the apt package manager
@@ -103,11 +102,11 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ cd RTL
 
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > v0.13.2
+  > v0.13.4
 
-  $ git checkout v0.13.2
+  $ git checkout v0.13.4
 
-  $ git verify-tag v0.13.2
+  $ git verify-tag v0.13.4
   > gpg: Signature made Tue 22 Nov 2022 03:04:55 CET
   > gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
   > gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
@@ -121,7 +120,7 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   Downloading all dependencies can sometimes be very slow, so be patient and let the process run its course.
 
   ```sh
-  $ npm install --omit=dev
+  $ npm install --omit=dev --legacy-peer-deps
   ```
 
 The installation can take some time, and can hang on a single package for a long time.
@@ -293,7 +292,7 @@ Make sure to read the release notes first.
   $ sudo su - rtl
   ```
 
-* Fetch the latest GitHub repository information, display the latest release tag, ignoring release cadidates and update:
+* Fetch the latest GitHub repository information, display the latest release tag, ignoring release candidates and update:
 
   ```sh
   $ cd /home/rtl/RTL
@@ -302,7 +301,7 @@ Make sure to read the release notes first.
   $ latest=$(git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1)
   $ git checkout $latest
   $ git verify-tag $latest
-  $ npm install --omit=dev
+  $ npm install --omit=dev --legacy-peer-deps
   $ exit
   ```
 

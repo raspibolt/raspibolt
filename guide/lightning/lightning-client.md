@@ -32,10 +32,10 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/lnd-linux-arm64-v0.15.5-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-v0.15.5-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-roasbeef-v0.15.5-beta.sig
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.15.5-beta/manifest-roasbeef-v0.15.5-beta.sig.ots
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.16.0-beta/lnd-linux-arm64-v0.16.0-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.16.0-beta/manifest-v0.16.0-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.16.0-beta/manifest-guggero-v0.16.0-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.16.0-beta/manifest-guggero-v0.16.0-beta.sig.ots
   ```
 
 ### Checksum check
@@ -43,8 +43,8 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.15.5-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.15.5-beta.tar.gz: OK
+  $ sha256sum --check manifest-v0.16.0-beta.txt --ignore-missing
+  > lnd-linux-arm64-v0.16.0-beta.tar.gz: OK
   ```
 
 ### Signature check
@@ -54,19 +54,19 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 * Get the public key from the LND developer who signed the manifest file; and add it to your GPG keyring
 
   ```sh
-  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/roasbeef.asc | gpg --import
+  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/guggero.asc | gpg --import
   > ...
-  > gpg: key 372CBD7633C61696: "Olaoluwa Osuntokun <laolu32@gmail.com>" 1 new signature
+  > gpg: key 8E4256593F177720: "Oliver Gugger <gugger@gmail.com>" 1 new signature
   > ...
   ```
 
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.15.5-beta.sig manifest-v0.15.5-beta.txt
-  > gpg: Signature made Thu Dec  1 11:20:10 2022 PST
-  > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
-  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
+  $ gpg --verify manifest-guggero-v0.16.0-beta.sig manifest-v0.16.0-beta.txt
+  > gpg:                using RSA key F4FC70F07310028424EFC20A8E4256593F177720
+  > gpg: Good signature from "Oliver Gugger <gugger@gmail.com>" [unknown]
+  > Primary key fingerprint: F4FC 70F0 7310 0284 24EF  C20A 8E42 5659 3F17 7720
   > [...]
   ```
 
@@ -77,9 +77,9 @@ We can also check that the manifest file was in existence around the time of the
 * Let's verify the timestamp of the file matches the release date.
 
   ```sh
-  $ ots verify manifest-roasbeef-v0.15.5-beta.sig.ots -f manifest-roasbeef-v0.15.5-beta.sig
+  $ ots verify manifest-guggero-v0.16.0-beta.sig.ots -f manifest-guggero-v0.16.0-beta.sig
   > [...]
-  > Success! Bitcoin block 765521 attests existence as of 2022-12-01 CET
+  > Success! Bitcoin block 783050 attests existence as of 2023-03-29 CEST
   ```
 
 * Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
@@ -91,10 +91,10 @@ Having verified the integrity and authenticity of the release binary, we can saf
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.15.5-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.15.5-beta/*
+  $ tar -xzf lnd-linux-arm64-v0.16.0-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.16.0-beta/*
   $ lnd --version
-  > lnd version 0.15.5-beta commit=v0.15.5-beta
+  > lnd version v0.16.0-beta commit=v0.16.0-beta
   ```
 
 ### Data directory
@@ -192,6 +192,15 @@ To improve the security of your wallet, check out these more advanced methods:
   wallet-unlock-password-file=/data/lnd/password.txt
   wallet-unlock-allow-create=true
 
+  # Automatically regenerate certificate when near expiration
+  tlsautorefresh=true
+  # Do not include the interface IPs or the system hostname in TLS certificate.
+  tlsdisableautofill=true
+  # Explicitly define any additional domain names for the certificate that will be created.
+  # tlsextradomain=raspibolt.local
+  # tlsextradomain=raspibolt.public.domainname.com
+  
+
   # Channel settings
   bitcoin.basefee=1000
   bitcoin.feerate=1
@@ -199,7 +208,6 @@ To improve the security of your wallet, check out these more advanced methods:
   accept-keysend=true
   accept-amp=true
   protocol.wumbo-channels=true
-  protocol.no-anchors=false
   coop-close-target-confs=24
 
   # Watchtower
@@ -210,7 +218,6 @@ To improve the security of your wallet, check out these more advanced methods:
   gc-canceled-invoices-on-the-fly=true
   ignore-historical-gossip-filters=1
   stagger-initial-reconnect=true
-  routing.strictgraphpruning=true
 
   # Database
   [bolt]
@@ -218,8 +225,8 @@ To improve the security of your wallet, check out these more advanced methods:
   db.bolt.auto-compact-min-age=168h
 
   [Bitcoin]
-  bitcoin.active=1
-  bitcoin.mainnet=1
+  bitcoin.active=true
+  bitcoin.mainnet=true
   bitcoin.node=bitcoind
 
   [tor]
@@ -243,7 +250,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.15.5-beta commit=v0.15.5-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.16.0-beta commit=v0.16.0-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
@@ -463,7 +470,7 @@ Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
 
 * Generate a new Bitcoin address (p2wkh = native SegWit/Bech32) to receive funds on-chain and send a small amount of Bitcoin to it from any wallet of your choice.
 
-  [`newaddress`](https://api.lightning.community/#newaddress){:target="_blank"}
+  [`newaddress`](https://api.lightning.community/api/lnd/lightning/new-address){:target="_blank"}
 
   ```sh
   $ lncli newaddress p2wkh
@@ -472,7 +479,7 @@ Once you send real bitcoin to your RaspiBolt, you have "skin in the game".
 
 * Check your LND wallet balance
 
-  [`walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"}
+  [`walletbalance`](https://api.lightning.community/api/lnd/lightning/wallet-balance){:target="_blank"}
 
   ```sh
   $ lncli walletbalance
@@ -505,7 +512,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 
 * **Connect** to the remote node, with the full URI.
 
-  [`connect`](https://api.lightning.community/#connectpeer){:target="_blank"}
+  [`connect`](https://api.lightning.community/api/lnd/lightning/connect-peer){:target="_blank"}
 
   ```sh
   $ lncli connect 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f@34.239.230.56:9735
@@ -513,7 +520,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 
 * **Open a channel** using the `<pubkey>` only (*i.e.*, the part of the URI before the `@`) and the channel capacity in satoshis.
 
-  [`openchannel`](https://api.lightning.community/#openchannel){:target="_blank"}
+  [`openchannel`](https://api.lightning.community/api/lnd/lightning/open-channel){:target="_blank"}
 
   One Bitcoin equals 100 million satoshis, so at $10'000/BTC, $10 amount to 0.001 BTC or 100'000 satoshis.
   To avoid mistakes, you can just use an [online converter](https://www.buybitcoinworldwide.com/satoshi/to-usd/){:target="_blank"}.
@@ -526,7 +533,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 
 * **Check your funds**, both in the on-chain wallet and the channel balances.
 
-  [`walletbalance`](https://api.lightning.community/#walletbalance){:target="_blank"} or [`channelbalance`](https://api.lightning.community/#channelbalance){:target="_blank"}
+  [`walletbalance`](https://api.lightning.community/api/lnd/lightning/wallet-balance){:target="_blank"} or [`channelbalance`](https://api.lightning.community/api/lnd/lightning/channel-balance){:target="_blank"}
 
   ```sh
   $ lncli walletbalance
@@ -536,7 +543,7 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
 * **List active channels**. Once the channel funding transaction has been mined and gained enough confirmations, your channel is fully operational.
   That can take an hour or more.
 
-  [`listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
+  [`listchannels`](https://api.lightning.community/api/lnd/lightning/list-channels){:target="_blank"}
 
   ```sh
   $ lncli listchannels
@@ -620,35 +627,35 @@ A quick reference with common commands to play around with:
   ```
 
 * Find out some general stats about your node:
-  [`getinfo`](https://api.lightning.community/#getinfo){:target="_blank"}
+  [`getinfo`](https://api.lightning.community/api/lnd/lightning/get-info){:target="_blank"}
 
   ```sh
   $ lncli getinfo
   ```
 
 * Check the peers you are currently connected to:
-  [`listpeers`](https://api.lightning.community/#listpeers){:target="_blank"}
+  [`listpeers`](https://api.lightning.community/api/lnd/lightning/list-peers){:target="_blank"}
 
   ```sh
   $ lncli listpeers
   ```
 
 * Check the status of your pending channels:
-  [`pendingchannels`](https://api.lightning.community/#pendingchannels){:target="_blank"}
+  [`pendingchannels`](https://api.lightning.community/api/lnd/lightning/pending-channels){:target="_blank"}
 
   ```sh
   $ lncli pendingchannels
   ```
 
 * Check the status of your active channels:
-  [`listchannels`](https://api.lightning.community/#listchannels){:target="_blank"}
+  [`listchannels`](https://api.lightning.community/api/lnd/lightning/list-channels){:target="_blank"}
 
   ```sh
   $ lncli listchannels
   ```
 
 * Before paying an invoice, you should decode it to check if the amount and other infos are correct:
-  [`decodepayreq`](https://api.lightning.community/#decodepayreq){:target="_blank"}
+  [`decodepayreq`](https://api.lightning.community/api/lnd/lightning/decode-pay-req){:target="_blank"}
 
   ```sh
   $ lncli decodepayreq [INVOICE]
@@ -661,28 +668,28 @@ A quick reference with common commands to play around with:
   ```
 
 * Send a payment to a node without invoice using AMP (both sender and receiver nodes have to have AMP enabled):
-  [`sendpayment`](https://api.lightning.community/#sendpayment){:target="_blank"}
+  [`sendpayment`](https://api.lightning.community/api/lnd/lightning/send-payment){:target="_blank"}
 
   ```sh
   $ lncli sendpayment --amp --fee_limit 1 --dest=<node_pubkey> --final_cltv_delta=144 --amt=<amount_in_sats>
   ```
 
 * Check the payments that you sent:
-  [`listpayments`](https://api.lightning.community/#listpayments){:target="_blank"}
+  [`listpayments`](https://api.lightning.community/api/lnd/lightning/list-payments){:target="_blank"}
 
   ```sh
   $ lncli listpayments
   ```
 
 * Create an invoice:
-  [`addinvoice`](https://api.lightning.community/#addinvoice){:target="_blank"}
+  [`addinvoice`](https://api.lightning.community/api/lnd/lightning/add-invoice){:target="_blank"}
 
   ```sh
   $ lncli addinvoice [AMOUNT_IN_SATOSHIS]
   ```
 
 * List all invoices:
-  [`listinvoices`](https://api.lightning.community/#listinvoices){:target="_blank"}
+  [`listinvoices`](https://api.lightning.community/api/lnd/lightning/list-invoices){:target="_blank"}
 
   ```sh
   $ lncli listinvoices
@@ -690,7 +697,7 @@ A quick reference with common commands to play around with:
 
 * to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID`:`OUTPUT_INDEX`
 
-  [`closechannel`](https://api.lightning.community/#closechannel){:target="_blank"}
+  [`closechannel`](https://api.lightning.community/api/lnd/lightning/close-channel){:target="_blank"}
 
   ```sh
   $ lncli listchannels

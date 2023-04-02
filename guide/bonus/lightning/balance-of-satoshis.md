@@ -330,6 +330,19 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
   > v99.99.9
   ```
 
+* Upgrade the Telegram bot by restarting it (optional). Log out of the "bos" user and restart the bos-telegram.service
+
+   ```sh
+   $ exit
+   $ sudo systemctl restart bos-telegram.service
+   ```
+
+* Verify updated version by typing `/version` in TG bot chat. 
+
+  🤖 Running version: 13.15.0
+  
+  🤖 Latest version: 13.15.0
+
 ---
 
 ## Uninstall
