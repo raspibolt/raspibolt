@@ -940,7 +940,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   #HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   #HiddenServiceVersion 3
   #HiddenServicePort 80 127.0.0.1:80
-  ```
+$ sudo systemctl reload tor
 
   ```sh
   $ sudo systemctl restart tor
