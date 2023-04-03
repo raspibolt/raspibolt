@@ -55,9 +55,9 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.1/sparrow-server-1.7.1-aarch64.tar.gz
-  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.1/sparrow-1.7.1-manifest.txt.asc
-  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.1/sparrow-1.7.1-manifest.txt
+  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.3/sparrow-server-1.7.3-aarch64.tar.gz
+  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.3/sparrow-1.7.3-manifest.txt.asc
+  $ wget https://github.com/sparrowwallet/sparrow/releases/download/1.7.3/sparrow-1.7.3-manifest.txt
   ```
   
 * Import keys that signed the release 
@@ -69,7 +69,7 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
 * Verify the release
   
   ```sh
-  $ gpg --verify sparrow-1.7.1-manifest.txt.asc
+  $ gpg --verify sparrow-1.7.3-manifest.txt.asc
   ```
   ```
   > gpg: assuming signed data in 'sparrow-1.7.1-manifest.txt'
@@ -82,14 +82,14 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
   ```
   
   ```sh
-  $ sha256sum --check sparrow-1.7.1-manifest.txt --ignore-missing
+  $ sha256sum --check sparrow-1.7.3-manifest.txt --ignore-missing
   > sparrow-server-1.7.1-aarch64.tar.gz: OK
   ```
 
 * If everything is correct, unpack Sparrow 
 
   ```sh
-  $ tar -xvf sparrow-server-1.7.1-aarch64.tar.gz
+  $ tar -xvf sparrow-server-1.7.3-aarch64.tar.gz
   ```
 
 * Move data files to the home “admin” user
