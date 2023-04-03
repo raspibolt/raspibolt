@@ -72,8 +72,8 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
   $ gpg --verify sparrow-1.7.3-manifest.txt.asc
   ```
   ```
-  > gpg: assuming signed data in 'sparrow-1.7.1-manifest.txt'
-  > gpg: Signature made Thu Nov 17 14:08:59 2022 GMT
+  > gpg: assuming signed data in 'sparrow-1.7.3-manifest.txt'
+  > gpg: Signature made Wed Mar  1 08:17:47 2023 UTC
   > gpg:                using RSA key D4D0D3202FC06849A257B38DE94618334C674B40
   > gpg: Good signature from "Craig Raw <craigraw@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -83,7 +83,7 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
   
   ```sh
   $ sha256sum --check sparrow-1.7.3-manifest.txt --ignore-missing
-  > sparrow-server-1.7.1-aarch64.tar.gz: OK
+  > sparrow-server-1.7.3-aarch64.tar.gz: OK
   ```
 
 * If everything is correct, unpack Sparrow 
