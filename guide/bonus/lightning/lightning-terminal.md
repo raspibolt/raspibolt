@@ -32,25 +32,18 @@ Table of contents
 
 ## Introduction
 
-Lightning Terminal, developped by Lighining Labs, aims at providing additional tools for LND node operators to manage their node and channel balances. Below is a summary of Lighting Terminal's features:
+Lightning Terminal, developed by Lighining Labs, aims at providing additional tools for LND node operators to manage their node and channel balances. Below is a summary of Lighting Terminal's features:
 
 * Visualize your channel balances in a web GUI
 * Run a single daemon (`litd`) that integrates the Loop (`loopd`), Pool (`poold`) and Faraday (`faraday`) daemons
 * Loop client (`loop`): Perform submarine swaps with the LOOP node using the CLI or web GUI
 * Pool client (`pool`): Buy and sell inbound liquidity using the peer-to-peer auction-based Pool exchange using the CLI or web GUI 
 * Faraday client (`frcli`): Run the Faraday daemon on your node that provides a CLI-based LN node accounting service
+* Automate fee management (alpha)
 
 Because Pool is alpha software, Lightning Terminal is also alpha software.  
 
 ---
-
-## Preparations
-
-### Warning
-
-We will configure Lightning Terminal to use our own LND node. However, when installing Lightning Terminal, it replaces the existing `lncli` binary (the CLI tool that allows us to interact with our LND daemon) with its own version of the `lncli` binary. The Lightining Terminal `lncli` binary is generally an older version and therefore might not have all the functionalities of the `lncli` associated with the version of LND that you're running. 
-
-Just don't be surprised if you want to use a brand new `lncli` command and it does not seem to be recognized! :)
 
 ### Firewall
 
@@ -71,44 +64,53 @@ Just don't be surprised if you want to use a brand new `lncli` command and it do
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.8.1-alpha/lightning-terminal-linux-arm64-v0.8.1-alpha.tar.gz
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.8.1-alpha/manifest-v0.8.1-alpha.txt
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.8.1-alpha/manifest-roasbeef-v0.8.1-alpha.sig
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.9.0-alpha/lightning-terminal-linux-arm64-v0.9.0-alpha.tar.gz
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.9.0-alpha/manifest-v0.9.0-alpha.txt 
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.9.0-alpha/manifest-v0.9.0-alpha.sig
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v0.9.0-alpha/manifest-v0.9.0-alpha.sig.ots
   ```
 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.8.1-alpha.txt --ignore-missing
-  > lightning-terminal-linux-arm64-v0.8.1-alpha.tar.gz: OK
+  $ sha256sum --check manifest-v0.9.0-alpha.txt --ignore-missing
+  > lightning-terminal-linux-arm64-v0.9.0-alpha.tar.gz: OK
   ```
 
-* You should already have Olaoluwa Osuntokun GPG public key from when you installed LND. If not, get the key to verify the manifest file; and add it to your GPG keyring.
+* Get the key to verify the manifest file and add it to your GPG keyring.
 
   ```sh
-  $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/roasbeef.asc | gpg --import
+  $ gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys 26984CB69EB8C4A26196F7A4D7D916376026F177
   > ...
-  > gpg: key 372CBD7633C61696: public key "Olaoluwa Osuntokun <laolu32@gmail.com>" imported
+  > gpg: key D7D916376026F177: public key "Elle Mouton <elle.mouton@gmail.com>" imported
   > ...
   ```
 
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.8.1-alpha.sig manifest-v0.8.1-alpha.txt
-  > gpg: Signature made Sun Oct  9 22:06:52 2022 PDT
-  > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
-  > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [ultimate]
+  $ gpg --verify manifest-v0.9.0-alpha.sig manifest-v0.9.0-alpha.txt
+  > gpg: Signature made Thu Mar 30 10:04:01 2023 SAST
+  > gpg:                using RSA key 26984CB69EB8C4A26196F7A4D7D916376026F177
+  > gpg: Good signature from "Elle Mouton <elle.mouton@gmail.com>" [ultimate]
   > [...]
+  ```
+  
+* Verify OTS attestations
+
+  ```sh 
+  $ ots verify manifest-v0.9.0-alpha.sig.ots
+  > ...
+  > Success! Bitcoin block 783166 attests existence as of 2023-03-30 CEST
   ```
 
 * Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
 
   ```sh
-  $ tar -xzf lightning-terminal-linux-arm64-v0.8.1-alpha.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.8.1-alpha/*
+  $ tar -xzf lightning-terminal-linux-arm64-v0.9.0-alpha.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v0.9.0-alpha/*
   $ litd --lnd.version
-  > litd version 0.15.2-beta commit=lightning-terminal-v0.8.1-alpha
+  > litd version 0.16.0-beta commit=lightning-terminal-v0.9.0-alpha
   ```
 
 ### User and data directories
@@ -244,13 +246,35 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 🔍 *Notice that the options for Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
 
+* Lightning Terminal 0.9.0 requires RPC Middleware to be enabled, therefore we switch to user lnd to adjust `lnd.conf`
+
+  ```sh
+  $ exit
+  $ sudo su - lnd
+  $ nano /data/lnd/lnd.conf
+  ```
+  
+* Append the following at the end of the file (mind that this setting is only available in lnd-0.16.0-beta and newer!)
+
+  ```ini
+  [rpcmiddleware]
+  rpcmiddleware.enable=true
+  ```
+
+* Switch back to user "lit"
+
+  ```sh
+  $ exit
+  $ sudo su - lit
+  ```
+
 ---
 
 ## Run Lightning Terminal
 
 ### Manual start
 
-* Still with user “lit”, we first start Lightning Terminal manually to check if everything works fine.
+* With user "lit", we first start Lightning Terminal manually to check if everything works fine.
 
   ```sh
   $ litd
@@ -480,7 +504,7 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
 
   ```sh
   $ litd --lnd.version
-  > litd version 0.15.2-beta commit=lightning-terminal-v0.8.1-alpha
+  > litd version 0.16.0-beta commit=lightning-terminal-v0.9.0-alpha
   ```
 
 * Read the [release notes](https://github.com/lightninglabs/lightning-terminal/releases){:target="_blank"} in case there is any breaking change to be aware of.
@@ -505,7 +529,7 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
 
 🚨 Warning: Before uninstalling Lightning Terminal, you might want to make sure that there is no on-going channel leases or LOOP swaps and that you've closed your Pool account. You might also want to make some backup of key files (LSAT token, databases etc) located in the /data directories).
 
-* Stop and disable the systemd service and then delete the service file
+* As "admin", stop and disable the systemd service and then delete the service file
 
   ```sh
   $ sudo systemctl stop litd
