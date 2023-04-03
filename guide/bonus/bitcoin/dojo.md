@@ -377,10 +377,10 @@ instead of "[ X ] PASSWORD"
 * If you want to set up Auth47 login option, please comment these lines anyway and uncomment them in [later steps](#use-auth47-paynym-login-for-dojo-maintanence-tool). Dojo would not start properly and Tor service is not set up yet
 
   ```
-  // auth47: {
-  // hostname: '<dojoHostname>',
-  // paymentCodes: ['<myPaymentCode>']
-  // }
+  //auth47: {                          #  All of these lines must be commented with "//" at the beginning as shown
+  //hostname: '<dojoHostname>',       
+  //paymentCodes: ['<myPaymentCode>']  
+  //}
   ```
 
   
