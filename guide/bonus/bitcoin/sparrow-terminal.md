@@ -83,7 +83,7 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
   
   ```sh
   $ sha256sum --check sparrow-$VERSION-manifest.txt --ignore-missing
-  > sparrow-server-$VERSION-aarch64.tar.gz: OK
+  > sparrow-server-1.7.3-aarch64.tar.gz: OK
   ```
 
 * If everything is correct, unpack Sparrow 
