@@ -404,9 +404,9 @@ instead of "[ X ] PASSWORD"
   // Values: local_bitcoind | local_indexer | third_party_explorer
   active: 'local_indexer',
   // Port
-  port: 50002,  # Use 50001 for Electrs
+  port: 50002,
   // Protocol for communication (TCP or TLS)
-  protocol: 'tls'  # Use tcp for Electrs
+  protocol: 'tls'
   ```
 
 * Save and exit
