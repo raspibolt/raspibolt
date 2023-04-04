@@ -63,8 +63,15 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 Node.js is a back-end JavaScript runtime environment necessary for Samourai Dojo. 
 
-Node.js was already installed as a part of Blockchain explorer guide. If not installed, simply follow [Install Node.js](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs) part in the explorer guide and return back
+* Check if Node.js is installed on the system
 
+  ```
+  $ node -v
+  > v16.13.1
+  ```
+  
+Node.js was already installed as a part of Blockchain explorer guide. If not installed, simply follow [Install Node.js](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs) part in the explorer guide and return back
+  
 ### Install PM2 
 
 * Install PM2 process manager
