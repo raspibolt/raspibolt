@@ -177,7 +177,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 The Lightning Terminal daemon (`litd`) has its own configuration file. 
 The settings for Pool, Faraday, Loop can all be put in the configuration file 
 
-* Still with the "lit" user, create the configuration file and paste the following content (set the `uipassword` with your password [E] and adjust to your alias; and paste password [B] as required in the Faraday section). Save and exit.
+* Still with the "lit" user, create the configuration file and paste the following content (set the `uipassword` with your password [E] and paste password [B] as required in the Faraday section). Save (Ctrl+o) and exit (Ctrl+x).
 
   ```sh
   $ cd ~/.lit
