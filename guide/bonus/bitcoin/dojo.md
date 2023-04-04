@@ -61,9 +61,9 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 ### Install Node.js (optional)
 
-Node.js is a cross-platform, open-source server environment that can run on Windows, Linux, Unix, macOS, and more. Node.js is a back-end JavaScript runtime environment necessary for Samourai Dojo. 
+Node.js is a back-end JavaScript runtime environment necessary for Samourai Dojo. 
 
-Node.js was already installed as a part of Blockchain explorer guide. If not installed, simply follow [Install Node.js](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs) part in the guide and return back
+Node.js was already installed as a part of Blockchain explorer guide. If not installed, simply follow [Install Node.js](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs) part in the explorer guide and return back
 
 ### Install PM2 
 
@@ -105,7 +105,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * As a user “admin” move to a temporary directory which is cleared on reboot
 
   ```sh
-  $ cd /tmp/
+  $ cd /tmp
   ```
 
 * Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update
