@@ -117,7 +117,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
   $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
   ```
 
-* Add following line preferably under "# Connections" or at the end of the file 
+* Add following line preferably under "#zmq" or at the end of the file 
 
   ```
   # Connections
