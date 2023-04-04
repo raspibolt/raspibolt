@@ -260,11 +260,17 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   [rpcmiddleware]
   rpcmiddleware.enable=true
   ```
+  
+* Switch to "admin" to restart LND
+
+ ```sh
+ $ exit
+ $ sudo systemctl restart lnd.service
+ ```
 
 * Switch back to user "lit"
 
   ```sh
-  $ exit
   $ sudo su - lit
   ```
 
