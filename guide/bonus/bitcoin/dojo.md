@@ -86,7 +86,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Add following line preferably under "#zmq" or at the end of the file 
 
   ```
-  # Connections
+  #zmq
   zmqpubhashblock=tcp://127.0.0.1:8433
   ```
 
