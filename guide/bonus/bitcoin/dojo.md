@@ -943,7 +943,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 $ sudo systemctl reload tor
 
   ```sh
-  $ sudo systemctl restart tor
+  $ sudo systemctl reload tor
   ```
 
 ### Remove Nginx configuration
