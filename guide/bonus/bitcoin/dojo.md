@@ -59,47 +59,13 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
   [ J ] NODE JWT SECRET
   ```
 
-### Node.js
+### Install Node.js (optional)
 
-Node.js is a cross-platform, open-source server environment that can run on Windows, Linux, Unix, macOS, and more. Node.js is a back-end JavaScript runtime environment necessary for Samourai Dojo
+Node.js is a cross-platform, open-source server environment that can run on Windows, Linux, Unix, macOS, and more. Node.js is a back-end JavaScript runtime environment necessary for Samourai Dojo. 
 
-* With user "admin", let's check our version of Node.js running on the node. If the version is v14 or older, update it following [this tutorial](https://phoenixnap.com/kb/update-node-js-version){:target="_blank"}.
+Node.js was already installed as a part of Blockchain explorer guide. If not installed, simply follow [Install Node.js](https://raspibolt.org/guide/bitcoin/blockchain-explorer.html#install-nodejs) part in the guide and return back
 
-  ```sh
-  $ node -v
-  > v16.13.1
-  ```
-
-* If Node.js is not installed, add the Node.js package repository from user “admin” and install Node.js using the apt package manager
-
-  ```sh
-  $ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-  $ sudo apt install nodejs
-  ```
-
-### Node Package Manager & PM2 
-
-Node Package Manager (npm) is the default package manager for the JavaScript runtime environment and PM2 is a process manager for the JavaScript runtime Node.js
-
-* With user "admin", let's check our version of npm running on the node
- 
-  ```sh
-  $ npm -v
-  > 8.19.2
-  ```
-
-* If not already installed, install npm package manager
-
-  ```sh
-  $ sudo apt update
-  $ sudo apt install npm
-  ```
-
-* Update npm to the latest version
-
-  ```sh
-  $ sudo npm install latest-version
-  ```
+### Install PM2 
 
 * Install PM2 process manager
 
