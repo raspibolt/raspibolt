@@ -54,6 +54,7 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
 * Look up the [latest Sparrow Wallet release version](https://github.com/sparrowwallet/sparrow/releases), change "$VERSION" value in the prepared links to that number to download Sparrow 
 
   ```sh
+  $ VERSION="1.7.3"
   $ cd /tmp
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-server-$VERSION-aarch64.tar.gz
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-$VERSION-manifest.txt.asc
