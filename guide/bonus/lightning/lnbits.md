@@ -43,8 +43,9 @@ Table of contents
 
   ```sh
   $ sudo apt update
+  $ sudo apt install software-properties-common
   $ sudo add-apt-repository ppa:deadsnakes/ppa
-  $ sudo apt install python3.9 python3.9-distutils software-properties-common
+  $ sudo apt install python3.9 python3.9-distutils
   ```
 
 ### Firewall & reverse proxy
@@ -61,13 +62,7 @@ Table of contents
   }
   server {
     listen 4003 ssl;
-    proxy_pass lnbits;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header X-Forwarded-Proto https;    
+    proxy_pass lnbits;   
   }
   ```
 
@@ -234,7 +229,7 @@ Your browser will display a warning because we use a self-signed SSL certificate
   $ sudo nano /etc/systemd/system/lnbits.service
   ```
 
-* Paste the following configuration. Save and exit.
+* Paste the following configuration. Save (Ctrl+o) and close the file (Ctrl+x) afterwards.
 
   ```sh
   # RaspiBolt: systemd unit for LNbits
