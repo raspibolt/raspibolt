@@ -58,7 +58,7 @@ This guide assumes that you have followed the main RaspiBolt guide and installed
 * Configure the UFW firewall to allow incoming HTTPS requests
 
   ```sh
-  $ sudo ufw allow 4091/tcp comment 'allow Homer SSL'
+  $ sudo ufw allow 4873/tcp comment 'allow Homer SSL'
   $ sudo ufw status
   ```
 
@@ -136,7 +136,7 @@ However, if you want to re-install Homer for whatever reason, you will have to r
 
 ### nginx
 
-* Create a nginx configuration file for the Homer website with a HTTPS server listening on port 4091
+* Create a nginx configuration file for the Homer website with a HTTPS server listening on port 4873
 
   ```sh 
   $ sudo nano /etc/nginx/sites-available/homer-ssl.conf
@@ -147,8 +147,8 @@ However, if you want to re-install Homer for whatever reason, you will have to r
   
   
   server {
-      listen 4091 ssl;
-      listen [::]:4091 ssl;
+      listen 4873 ssl;
+      listen [::]:4873 ssl;
       server_name _;
   
       ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
@@ -421,79 +421,10 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
   $ sudo systemctl restart nginx
   ```
 
-### First start
-
-* Test starting Homer manually first to make sure it works.
-
-  ```sh
-  $ sudo su - homer
-  $ cd homer
-  $ npm run serve
-  ```
-  
-* Wait a couple of minutes for the server to start, until the following message is displayed
-
-  ```sh
-  > [...]
-  >   App running at:
-  >   - Local:   http://localhost:8081 
-  >   - Network: http://192.168.0.171:8081
-  ```
-
-* Now point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
+* Now point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4873 (or your node's IP address, e.g. https://192.168.0.20:4873).  
 
 Your browser will display a warning, because we use a self-signed SSL certificate. There’s nothing we can do about that, because we would need a proper domain name (e.g. https://yournode.com) to get an official certificate which browsers recognize. Click on “Advanced” and proceed to the Homer dashboard interface.
 
-* If everything worked, stop Homer in the terminal with `Ctrl`+`C` and exit the "homer" user session.
-
-  ```sh
-  $ exit
-  ```
-
-### Autostart on boot
-
-Now we’ll make sure Homer starts as a service on the Raspberry Pi so it’s always running. In order to do that, we create a systemd unit that starts the service on boot directly.
-
-* As user “admin”, create the service file.
-
-  ```sh
-  $ sudo nano /etc/systemd/system/homer.service
-  ```
-
-  ```ini
-  # RaspiBolt: systemd unit for Homer
-  # /etc/systemd/system/homer.service
-  
-  [Unit]
-  Description=Homer
-  After=network.target
-  
-  [Service]
-  WorkingDirectory=/home/homer/homer
-  ExecStart=/usr/bin/npm run serve
-  User=homer
-  
-  Restart=always
-  RestartSec=30
-  
-  [Install]
-  WantedBy=multi-user.target
-  ```
-
-* Enable the service, start it and check log logging output.
-
-  ```sh
-  $ sudo systemctl enable homer
-  $ sudo systemctl start homer
-  $ sudo journalctl -f -u homer
-  > [...]
-  > Apr 06 00:28:21 raspibolt npm[20097]:   App running at:
-  > Apr 06 00:28:21 raspibolt npm[20097]:   - Local:   http://localhost:8081
-  > Apr 06 00:28:21 raspibolt npm[20097]:   - Network: http://192.168.X.XXX:8081
-
-  ```
-
-* Wait a few minutes for the server to start and for the logs to show that the app is running. Then, point your browser to the secure access point provided by the nginx server, for example https://raspibolt.local:4091 (or your node's IP address, e.g. https://192.168.0.20:4091).  
 
 You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bitcoin/mempool.md), [ThunderHub](../lightning/thunderhub.md), [LNBits](../lightning/lnbits.md), [Lightning Terminal](../lightning/lightning-terminal.md), Bitfeed, LNDg etc, you can add them to your dashboard.
 
@@ -657,9 +588,9 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
   ```sh
   $ sudo ufw status numbered
   > [...]
-  > [X] 4091/tcp                   ALLOW IN    Anywhere                   # allow Homer SSL
+  > [X] 4873/tcp                   ALLOW IN    Anywhere                   # allow Homer SSL
   > [...]
-  > [Y] 4091/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow Homer SSL
+  > [Y] 4873/tcp (v6)              ALLOW IN    Anywhere (v6)              # allow Homer SSL
   ```
 
 * Delete the two Homer rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
