@@ -483,14 +483,11 @@ Configure nginx.conf for Dojo Maintanence Tool.
   ```
 
 * Add following block at the end of your configuration file.  
-_Note:_ If you're running an app that also uses the nginx web server (_e.g._ Homer, Mempool etc), the http context is already present in `nginx.conf`. Simply edit it to match the options below.
+_Note:_ If you're running an app that also uses the nginx web server (_e.g._ Homer, Mempool etc), the http context is already present in `nginx.conf`. Simply delete original context and replace it with this new one - it is compatible with other raspibolt apps
 
   ```
-  # RaspiBolt: Dojo configuration 
-  # /etc/nginx/nginx.conf
-  # https://code.samourai.io/dojo/samourai-dojo/-/blob/develop/docker/my-dojo/nginx/nginx.conf
-
   http {
+
       include       /etc/nginx/mime.types;
       default_type  application/octet-stream;
 
@@ -503,6 +500,8 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
       sendfile  on;
 
       keepalive_timeout  95;
+
+      ## Gzip settings
 
       # Enable response compression
       gzip  on;
@@ -517,8 +516,22 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
       # Help with proxying by adding the Vary: Accept-Encoding response
       gzip_vary  on;
 
+      ##  Basic settings
+      tcp_nodelay on;
+      tcp_nopush on;
+      types_hash_max_size 2048;
+
+      ## SSL settings
+      ssl_protocols TLSv1.3;
+      ssl_prefer_server_ciphers on;
+
+      ## Logging Settings    
+      access_log /var/log/nginx/access.log;
+      error_log /var/log/nginx/error.log;
+
+      include /etc/nginx/conf.d/*.conf;
       include  /etc/nginx/sites-enabled/*.conf;
-  }
+   }
   ```
 
 * Create a new file called `dojo.conf` inside "sites-enabled" directory
