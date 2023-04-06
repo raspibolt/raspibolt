@@ -136,7 +136,7 @@ However, if you want to re-install Homer for whatever reason, you will have to r
 
 ### nginx
 
-* Create a nginx configuration file for the Homer website with a HTTPS server listening on port 4873
+* Create a nginx configuration file for the Homer website with an HTTPS server listening on port 4873
 
   ```sh 
   $ sudo nano /etc/nginx/sites-available/homer-ssl.conf
@@ -150,6 +150,11 @@ However, if you want to re-install Homer for whatever reason, you will have to r
       listen 4873 ssl;
       listen [::]:4873 ssl;
       server_name _;
+  
+      rewrite ^/btcrpcexplorer https://$host:4000 permanent;
+      # rewrite ^/mempool https://$host:4081 permanent;
+      rewrite ^/rtl https://$host:4001 permanent;
+      rewrite ^/bitcoin-whitepaper https://$host:4000/bitcoin-whitepaper permanent;
   
       ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
       ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
@@ -370,13 +375,13 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           logo: "assets/tools/btcrpcexplorer.png"
           subtitle: "Blockchain explorer"
           tag: "app"
-          url: "https://raspibolt.local:4000/"
+          url: "/btcrpcexplorer"
           target: "_blank"
         #- name: "Mempool"
         #  logo: "assets/tools/mempool.png"
         #  subtitle: "Mempool visualizer"
         #  tag: "app"
-        #  url: "https://raspibolt.local:4081/"
+        #  url: "/mempool"
         #  target: "_blank"
     - name: "Lightning"
       icon: "fas fa-bolt"
@@ -385,7 +390,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           logo: "assets/tools/rtl.png"
           subtitle: "Node manager"
           tag: "app"
-          url: "https://raspibolt.local:4001/rtl/login"
+          url: "/rtl"
           target: "_blank"
     - name: "Resources"
       icon: "fas fa-book-open"
@@ -394,13 +399,13 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
           logo: "assets/tools/old-bitcoin.png"
           subtitle: "Download from your node"
           tag: "app"
-          url: "https://raspibolt.local:4000/bitcoin-whitepaper"
+          url: "/bitcoin-whitepaper"
           target: "_blank"
   ```
 
 🔍 *Note:* Your self-hosted web service links are configured in the last "Services" section. The default configuration enables the links for BTC RPC Explorer in the "Bitcoin" group and Ride The Lightning in the "Lightning" group. To add more web services, simply add a new item under the relevant group. An example is provided with [Mempool](../bitcoin/mempool.md) (to enable it, simply uncomment the 6 lines of the Mempool item). You can also add more groups/columns by changing the value of the `columns:` variable, at the top of the configuration file.
 
-* Create a symlink to the configuration file and change its ownshership to the "www-data" user
+* Create a symlink to the configuration file and change its ownership to the "www-data" user
 
   ```sh
   $ sudo ln -s /data/homer/config.yml /var/www/homer/assets/config.yml
@@ -426,7 +431,7 @@ A sample configuration file is available at `/home/homer/homer/dist/assets/confi
 Your browser will display a warning, because we use a self-signed SSL certificate. There’s nothing we can do about that, because we would need a proper domain name (e.g. https://yournode.com) to get an official certificate which browsers recognize. Click on “Advanced” and proceed to the Homer dashboard interface.
 
 
-You're set! You can now use the dashboard to have a quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bitcoin/mempool.md), [ThunderHub](../lightning/thunderhub.md), [LNBits](../lightning/lnbits.md), [Lightning Terminal](../lightning/lightning-terminal.md), Bitfeed, LNDg etc, you can add them to your dashboard.
+You're set! You can now use the dashboard to have quick access to your self-hosted web services and some external websites. If you have installed bonus programs like [Mempool](../bitcoin/mempool.md), [ThunderHub](../lightning/thunderhub.md), [LNBits](../lightning/lnbits.md), [Lightning Terminal](../lightning/lightning-terminal.md), Bitfeed, LNDg etc, you can add them to your dashboard.
 
 ---
 
@@ -471,7 +476,9 @@ Since you created a new group, you might want to display it in new column.
 
 If you want to add a new web service button to one of your existing group, add some item configuration lines under the `items:` entry. 
 
-* For example if you want to add the Mempool web service under the "Bitcoin" group, add the following lines (the `[...]` and the lines above represent the existing configuration lines in the file, do NOT copy/paste)
+For example if you want to add the Mempool web service under the "Bitcoin" group:
+
+* Add the following lines (the `[...]` and the lines above represent the existing configuration lines in the file, do NOT copy/paste)
   
   ```ini
     - name: "Bitcoin"
@@ -482,9 +489,118 @@ If you want to add a new web service button to one of your existing group, add s
           logo: "assets/tools/mempool.png"
           subtitle: "Mempool visualizer"
           tag: "app"
-          url: "https://raspibolt.local:4081/"
+          url: "/mempool"
           target: "_blank"
   ```
+  
+* Open the nginx configuration file for the Homer website
+
+  ```sh 
+  $ sudo nano /etc/nginx/sites-available/homer-ssl.conf
+  ```
+
+* Paste the following line in `server` block to redirect url `/mempool` to Mempool web service (note the port `4081` is the port of Mempool service).
+
+  ```ini
+     rewrite ^/mempool https://$host:4081 permanent;
+  ```
+
+* Test and reload nginx configuration
+
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  $ sudo systemctl restart nginx
+  ```
+
+### Remote access over Tor (optional)
+
+Do you want to access your Homer dashboard remotely?
+You can easily do so by adding a Tor hidden service and then access the Homer dashboard with the Tor browser from any device.
+
+* Get the onion address of your services, which are to be used in the next step
+
+  ```sh
+  $ sudo cat /var/lib/tor/hidden_service_btcrpcexplorer/hostname
+  > abcbtcrpcexplorer...xyz.onion
+  $ sudo cat /var/lib/tor/hidden_service_mempool/hostname
+  > abcmempool.....xyz.onion
+  $ sudo cat /var/lib/tor/hidden_service_rtl/hostname
+  > abcrtl.....xyz.onion
+  ```
+
+* Open the nginx configuration file for the Homer website
+
+  ```sh 
+  $ sudo nano /etc/nginx/sites-available/homer-ssl.conf
+  ```
+
+* Replace the `rewrite` directives 
+
+  ```ini
+      rewrite ^/btcrpcexplorer https://$host:4000 permanent;
+      # rewrite ^/mempool https://$host:4081 permanent;
+      rewrite ^/rtl https://$host:4001 permanent;
+      rewrite ^/bitcoin-whitepaper https://$host:4000/bitcoin-whitepaper permanent;
+  ```
+
+with lines below, which are checking if the website is accessed with an `.onion` address and redirects accordingly:
+
+  ```ini
+    if ($host !~* \.onion$) {
+        # Perform action when the domain does not end with .onion
+
+        rewrite ^/btcrpcexplorer https://$host:4000 permanent;
+        # rewrite ^/mempool https://$host:4081 permanent;
+        rewrite ^/rtl https://$host:4001 permanent;
+        rewrite ^/bitcoin-whitepaper https://$host:4000/bitcoin-whitepaper permanent;
+    }
+
+    if ($host ~* \.onion$) {
+        # Perform action when the domain ends with .onion
+
+        # You should replace each onion address with the onion address of respective service
+        rewrite ^/btcrpcexplorer  http://abcbtcrpcexplorer...xyz.onion permanent;
+        # rewrite ^/mempool  https://abcmempool.....xyz.onion permanent;
+        rewrite ^/rtl  http://abcrtl.....xyz.onion permanent;
+        rewrite ^/bitcoin-whitepaper  http://abcbtcrpcexplorer...xyz.onion/bitcoin-whitepaper permanent;
+    }
+  ```
+
+* Test and reload nginx configuration
+
+  ```sh
+  $ sudo nginx -t
+  > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+  > nginx: configuration file /etc/nginx/nginx.conf test is successful
+  $ sudo systemctl restart nginx
+  ```
+
+* Add the following three lines in the "location-hidden services" section in the `torrc` file
+  Save and exit.
+
+  ```sh
+  $ sudo nano /etc/tor/torrc
+  ```
+
+  ```sh
+  ############### This section is just for location-hidden services ###
+  # Homer dashboard Hidden Service
+  HiddenServiceDir /var/lib/tor/hidden_service_homer/
+  HiddenServiceVersion 3
+  HiddenServicePort 443 127.0.0.1:4873
+  ```
+
+* Reload Tor configuration and get your connection address.
+
+  ```sh
+  $ sudo systemctl reload tor
+  $ sudo cat /var/lib/tor/hidden_service_homer/hostname
+  > abcdefg..............xyz.onion
+  ```
+
+* Open Tor browser and insert the address `abcdefg..............xyz.onion` from previous step.
 
 ### Using logos
 
@@ -535,13 +651,6 @@ You can edit many more features such as the API-based welcome message, the top b
 
 Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:target="_blank"} is straight-forward. Make sure to read the release notes first.
 
-* From user “admin”, stop the service and open a "homer" user session.
-
-  ```sh
-  $ sudo systemctl stop homer
-  $ sudo su - homer
-  ```
-
 * Fetch the latest GitHub repository information (v9.99.9 in this example), and update:
 
   ```sh
@@ -564,12 +673,6 @@ Updating to a [new release](https://github.com/bastienwirtz/homer/releases){:tar
   $ sudo chown -R www-data:www-data /var/www/homer
   ```
 
-* Start the service again.
-
-  ```sh
-  $ sudo systemctl start homer
-  $ sudo journalctl -f -u homer
-  ```
 
 ---
 
