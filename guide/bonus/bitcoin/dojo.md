@@ -476,18 +476,41 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
 
 Configure nginx.conf for Dojo Maintanence Tool.
 
-* Open "nginx.conf" file
+* Replace the main nginx configuration file
 
   ```sh
+  $ sudo mv /etc/nginx/nginx.conf /etc/nginx/raspibolt-nginx.conf.bak
   $ sudo nano /etc/nginx/nginx.conf
   ```
 
-* Add following block at the end of your configuration file.  
-_Note:_ If you're running an app that also uses the nginx web server (_e.g._ Homer, Mempool etc), the http context is already present in `nginx.conf`. Simply delete original context and replace it with this new one - it is compatible with other raspibolt apps
+* Add following block lines inside your nginx.conf file. Configuration is mempool and homer compatible.
 
   ```
-  http {
+  user www-data;
+  worker_processes 1;
+  pid /run/nginx.pid;
+  include /etc/nginx/modules-enabled/*.conf;
 
+  events {
+    worker_connections 768;
+  }
+
+  stream {
+    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+    ssl_session_cache shared:SSL:1m;
+    ssl_session_timeout 4h;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    include /etc/nginx/streams-enabled/*.conf;
+
+  }
+
+  # RaspiBolt: Dojo / Mempool / Homer http configuration
+  # /etc/nginx/nginx.conf
+
+  http {
       include       /etc/nginx/mime.types;
       default_type  application/octet-stream;
 
@@ -500,8 +523,6 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
       sendfile  on;
 
       keepalive_timeout  95;
-
-      ## Gzip settings
 
       # Enable response compression
       gzip  on;
@@ -516,22 +537,8 @@ _Note:_ If you're running an app that also uses the nginx web server (_e.g._ Hom
       # Help with proxying by adding the Vary: Accept-Encoding response
       gzip_vary  on;
 
-      ##  Basic settings
-      tcp_nodelay on;
-      tcp_nopush on;
-      types_hash_max_size 2048;
-
-      ## SSL settings
-      ssl_protocols TLSv1.3;
-      ssl_prefer_server_ciphers on;
-
-      ## Logging Settings    
-      access_log /var/log/nginx/access.log;
-      error_log /var/log/nginx/error.log;
-
-      include /etc/nginx/conf.d/*.conf;
       include  /etc/nginx/sites-enabled/*.conf;
-   }
+  }
   ```
 
 * Create a new file called `dojo.conf` inside "sites-enabled" directory
