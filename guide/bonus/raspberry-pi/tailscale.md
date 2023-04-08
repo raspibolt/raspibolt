@@ -138,8 +138,8 @@ To run tailscale, we need to install apt-transport-https
 * As “admin” user, run:
 
 ```sh
- $ sudo apt-get update
- $ sudo apt-get install tailscale
+  $ sudo apt-get update
+  $ sudo apt-get install tailscale
 ```
 
 ### Uninstall Tailscale
@@ -147,7 +147,7 @@ To run tailscale, we need to install apt-transport-https
 * Uninstall tailscale package
 
 ```sh
- $ sudo apt-get remove tailscale
+  $ sudo apt-get remove tailscale
 ```
 
 * Rename the certificate in nginx.conf
