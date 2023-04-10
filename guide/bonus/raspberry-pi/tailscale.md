@@ -41,37 +41,37 @@ To run tailscale, we need to install apt-transport-https
 
 * With user "admin", let's install apt-transport-https.
 
-```sh
+  ```sh
   $ sudo apt-get update
   $ sudo apt-get install apt-transport-https
-```
+  ```
 
 ## Install Tailscale
 * Add Tailscale’s package signing key and repository
 
-```sh
+  ```sh
   $ curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
   $ curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
-```
+  ```
 
 * Install Tailscale
 
-```sh
+  ```sh
   $ sudo apt-get update
   $ sudo apt-get install tailscale
-```
+  ```
 
 * Connect your machine to your Tailscale network and authenticate in your browser
 
-```sh
+  ```sh
   $ sudo tailscale up
-```
+  ```
 
 * You’re connected! You can find your Tailscale IPv4 address by running
 
-```sh
+  ```sh
   $ tailscale ip -4
-```
+  ```
 
 ## Configure dns and certificate (optional)
 
@@ -85,70 +85,70 @@ To run tailscale, we need to install apt-transport-https
 
 * Generate your ssl certificate
   
-```sh
+  ```sh
   $ sudo tailscale cert machine-name.your-tailscale-domain.ts.net
-```
+  ```
 
 * Move the certificates to /etc/ssl folder
   
-```sh
+  ```sh
   $ sudo mv machine-name.your-tailscale-domain.ts.net.key /etc/ssl/private/machine-name.your-tailscale-domain.ts.net.key
   $ sudo mv machine-name.your-tailscale-domain.ts.net.crt /etc/ssl/certs/machine-name.your-tailscale-domain.ts.net.crt
-```
+  ```
 
 * Edit your nginx config
   
-```sh
+  ```sh
   $ sudo nano /etc/nginx/nginx.conf
-```
+  ```
 
 * Replace nginx-selfsigned .crt and .key with machine-name.your-tailscale-domain.ts.net
 
-```sh
+  ```sh
   ssl_certificate /etc/ssl/certs/machine-name.your-tailscale-domain.ts.net.crt;
   ssl_certificate_key /etc/ssl/private/machine-name.your-tailscale-domain.ts.net.key;
-```
+  ```
 
 ### Access your node
 
 * Instead of using https://raspibolt.local or your local ip address you can use https://machine-name.your-tailscale-domain.ts.net or the external ip from the tailscale vpn
 
-```sh
+  ```sh
   $ tailscale ip -4
-```
+  ```
 
 * to access RTL for example you would use https://machine-name.your-tailscale-domain.ts.net:4001
 
 * to access zeus with tailscale you need to change from onion address to the tailscale address
 
-```sh
+  ```sh
   $ lndconnect --host=machine-name.your-tailscale-domain.ts.net --port=8080
-``` 
+  ``` 
 
 ### For the future: Tailscale upgrade
 
 * As “admin” user, run:
 
-```sh
+  ```sh
   $ sudo apt-get update
   $ sudo apt-get install tailscale
-```
+  ```
 
 ### Uninstall Tailscale
 
 * Uninstall tailscale package
 
-```sh
+  ```sh
   $ sudo apt-get remove tailscale
-```
+  ```
 
 * Rename the certificate in nginx.conf
 
-```sh
+  ```sh
   $ sudo nano /etc/nginx/nginx.conf
-```
+  ```
 
-```sh
+  ```sh
   ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
   ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
-```
+  ```
