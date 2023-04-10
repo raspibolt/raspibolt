@@ -763,8 +763,7 @@ Erase Wallet
 
 Connect samourai wallet to your own backend
 
-* If on local network, point your browser to the secure access point provided by the nginx web proxy. Dojo uses port 80 with our configuration.
-For example: `http://yournodeipaddress:80`
+* If on local network, point your browser to the secure access point provided by the nginx web proxy, for example [http://raspibolt.local:80](http://raspibolt.local:80){:target="_blank"} (or your nodes IP address, e.g. http://192.168.0.20:80).
 
 * If using Tor, paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
 
