@@ -763,7 +763,10 @@ Erase Wallet
 
 Connect samourai wallet to your own backend
 
-* Paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
+* If on local network, point your browser to the secure access point provided by the nginx web proxy. Dojo uses port 80 with our configuration.
+For example: `http://yournodeipaddress:80`
+
+* If using Tor, paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
 
 * Authenticate with `[I] NODE ADMIN KEY` or with [Auth47 (Paynym)](#use-auth47-paynym-login-for-dojo-maintanence-tool)
 
