@@ -73,42 +73,6 @@ To run tailscale, we need to install apt-transport-https
   $ tailscale ip -4
   ```
 
-## Configure dns and certificate (optional)
-
-* Go to the dns settings in the tailscale admin [panel](https://login.tailscale.com/admin/dns){:target="_blank"}
-
-* Enable Magic DNS and HTTPS Certificates
-  
-  ![tailscale_magic_dns](../../../images/tailscale_magic_dns.png)
-
-  ![tailscale_https](../../../images/tailscale_https.png)
-
-* Generate your ssl certificate
-  
-  ```sh
-  $ sudo tailscale cert machine-name.your-tailscale-domain.ts.net
-  ```
-
-* Move the certificates to /etc/ssl folder
-  
-  ```sh
-  $ sudo mv machine-name.your-tailscale-domain.ts.net.key /etc/ssl/private/machine-name.your-tailscale-domain.ts.net.key
-  $ sudo mv machine-name.your-tailscale-domain.ts.net.crt /etc/ssl/certs/machine-name.your-tailscale-domain.ts.net.crt
-  ```
-
-* Edit your nginx config
-  
-  ```sh
-  $ sudo nano /etc/nginx/nginx.conf
-  ```
-
-* Replace nginx-selfsigned .crt and .key with machine-name.your-tailscale-domain.ts.net
-
-  ```sh
-  ssl_certificate /etc/ssl/certs/machine-name.your-tailscale-domain.ts.net.crt;
-  ssl_certificate_key /etc/ssl/private/machine-name.your-tailscale-domain.ts.net.key;
-  ```
-
 ### Access your node
 
 * Instead of using https://raspibolt.local or your local ip address you can use https://machine-name.your-tailscale-domain.ts.net or the external ip from the tailscale vpn
@@ -151,4 +115,44 @@ To run tailscale, we need to install apt-transport-https
   ```sh
   ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
   ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+  ```
+
+---
+
+## Extras
+
+### Configure dns and certificate
+
+* Go to the dns settings in the tailscale admin [panel](https://login.tailscale.com/admin/dns){:target="_blank"}
+
+* Enable Magic DNS and HTTPS Certificates
+  
+  ![tailscale_magic_dns](../../../images/tailscale_magic_dns.png)
+
+  ![tailscale_https](../../../images/tailscale_https.png)
+
+* Generate your ssl certificate
+  
+  ```sh
+  $ sudo tailscale cert machine-name.your-tailscale-domain.ts.net
+  ```
+
+* Move the certificates to /etc/ssl folder
+  
+  ```sh
+  $ sudo mv machine-name.your-tailscale-domain.ts.net.key /etc/ssl/private/machine-name.your-tailscale-domain.ts.net.key
+  $ sudo mv machine-name.your-tailscale-domain.ts.net.crt /etc/ssl/certs/machine-name.your-tailscale-domain.ts.net.crt
+  ```
+
+* Edit your nginx config
+  
+  ```sh
+  $ sudo nano /etc/nginx/nginx.conf
+  ```
+
+* Replace nginx-selfsigned .crt and .key with machine-name.your-tailscale-domain.ts.net
+
+  ```sh
+  ssl_certificate /etc/ssl/certs/machine-name.your-tailscale-domain.ts.net.crt;
+  ssl_certificate_key /etc/ssl/private/machine-name.your-tailscale-domain.ts.net.key;
   ```
