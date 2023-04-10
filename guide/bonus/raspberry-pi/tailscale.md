@@ -73,14 +73,6 @@ To run tailscale, we need to install apt-transport-https
   $ tailscale ip -4
 ```
 
-## Firewall (optional)
-
-* If you want all ports to be open on the tailscale network you can run the following command:
-
-```sh
-  $ sudo ufw allow in on tailscale0
-```
-
 ## Configure dns and certificate (optional)
 
 * Go to the dns settings in the tailscale admin [panel](https://login.tailscale.com/admin/dns){:target="_blank"}
