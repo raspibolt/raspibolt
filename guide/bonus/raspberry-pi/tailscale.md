@@ -75,18 +75,26 @@ To run tailscale, we need to install apt-transport-https
 
 ### Access your node
 
-* Instead of using https://raspibolt.local or your local ip address you can use https://machine-name.your-tailscale-domain.ts.net or the external ip from the tailscale vpn
+* To access the services installed in your machine you normally use your local ip (https://192.168.1.10) or your machine hostname (https://raspibolt.local)
+
+* With Tailscale you can use the external ip from the tailscale vpn or the hostname of your machine
 
   ```sh
   $ tailscale ip -4
   ```
 
-* to access RTL for example you would use https://machine-name.your-tailscale-domain.ts.net:4001
+* To access RTL for example you would use the ip you got from the command above (eg https://100.100.100.100:4001 or https://raspibolt:4001)
 
-* to access zeus with tailscale you need to change from onion address to the tailscale address
+* To access zeus with tailscale you need to change from onion address to the tailscale address
 
   ```sh
-  $ lndconnect --host=machine-name.your-tailscale-domain.ts.net --port=8080
+  $ lndconnect --host=100.100.100.100 --port=8080
+  ``` 
+
+* You can also use the hostname of your machine
+  
+  ```sh
+  $ lndconnect --host=raspibolt --port=8080
   ``` 
 
 ### For the future: Tailscale upgrade
