@@ -85,7 +85,7 @@ To run tailscale, we need to install apt-transport-https
 
 * To access RTL for example you would use the ip you got from the command above (eg https://100.100.100.100:4001 or https://raspibolt:4001)
 
-* To access zeus with tailscale you need to change from onion address to the tailscale address
+* When configuring zeus with tailscale you need to change from onion address in the [Create a lndconnect QR code section](https://raspibolt.org/guide/lightning/mobile-app.html#create-a-lndconnect-qr-code) to the tailscale address
 
   ```sh
   $ lndconnect --host=100.100.100.100 --port=8080
