@@ -122,6 +122,7 @@ Table of contents
   $ cd lnbits  
   $ git checkout 0.10
   $ poetry env use python3.9
+  $ poetry add setuptools wheel
   $ poetry install --only main
   ```
 
