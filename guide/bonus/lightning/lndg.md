@@ -89,7 +89,7 @@ For that we will create a separate user and we will be running the code as the n
   $ ln -s /data/lnd /home/lndg/.lnd
   ```
 
-* Check the version number of the latest LNDg release. You can also confirm with the [release page](https://github.com/cryptosharks131/lndg/releases).
+* Check the version number of the latest LNDg release (you can also confirm with the [release page](https://github.com/cryptosharks131/lndg/releases)) and clone it.
 
   ```sh
   $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/cryptosharks131/lndg/releases/latest | grep -oP '"tag_name":\s*"\K([^"]+)')
