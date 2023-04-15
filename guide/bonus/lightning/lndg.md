@@ -193,6 +193,7 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
 
   ```sh
   $ sudo su - lndg
+  $ cd ~/lndg
   $ .venv/bin/python -m pip install uwsgi
   ```
 
