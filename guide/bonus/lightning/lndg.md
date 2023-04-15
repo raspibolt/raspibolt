@@ -96,7 +96,6 @@ For that we will create a separate user and we will be running the code as the n
   $ echo $LATEST_RELEASE
   > v1.6.3
 
-  ```sh
   $ git clone --branch v1.6.3 https://github.com/cryptosharks131/lndg.git
   $ cd lndg
   ```
