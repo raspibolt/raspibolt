@@ -89,7 +89,12 @@ For that we will create a separate user and we will be running the code as the n
   $ ln -s /data/lnd /home/lndg/.lnd
   ```
 
-* Clone the latest release of the project GitHub repository and enter it
+* Check the version number of the latest LNDg release. You can also confirm with the [release page](https://github.com/cryptosharks131/lndg/releases).
+
+  ```sh
+  $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/cryptosharks131/lndg/releases/latest | grep -oP '"tag_name":\s*"\K([^"]+)')
+  $ echo $LATEST_RELEASE
+  > v1.6.3
 
   ```sh
   $ git clone --branch v1.6.3 https://github.com/cryptosharks131/lndg.git
