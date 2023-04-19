@@ -174,7 +174,7 @@ We need to set up settings in Bitcoin Core configuration file - add new lines if
 
 We have our Bitcoin Core configuration file set up, and now we can move to next part - installation of Fulcrum
 
-* Get the latest Fulcrum release version
+* Check the latest Fulcrum release version. You can also confirm with the [release page](https://github.com/cculianu/Fulcrum/releases){:target="_blank" rel="noopener"}
 
   ```sh
   $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/cculianu/Fulcrum/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
@@ -183,11 +183,15 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 
 * Download the application, checksums and signature
 
+  {: .highlight }
+  > You can also use the latest release (`$LATEST_RELEASE`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
+
   ```sh
+  $ $RELEASE=1.9.1
   $ cd /tmp
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$LATEST_RELEASE/Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$LATEST_RELEASE/Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz.asc
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$LATEST_RELEASE/Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz.sha256sum
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$RELEASE/Fulcrum-$RELEASE-arm64-linux.tar.gz
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$RELEASE/Fulcrum-$RELEASE-arm64-linux.tar.gz.asc
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$RELEASE/Fulcrum-$RELEASE-arm64-linux.tar.gz.sha256sum
   ```
 
 * Get the public key from the Fulcrum developer
@@ -199,7 +203,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz.asc
+  $ gpg --verify Fulcrum-$RELEASE-arm64-linux.tar.gz.asc
   > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg: There is no indication that the signature belongs to the owner.
@@ -209,15 +213,15 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz.sha256sum
+  $ sha256sum --check Fulcrum-$RELEASE-arm64-linux.tar.gz.sha256sum
   > Fulcrum-1.8.2-arm64-linux.tar.gz: OK
   ```
 
 * Install Fulcrum and check the correct installation requesting the version
 
   ```sh
-  $ tar -xvf Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$LATEST_RELEASE-arm64-linux/Fulcrum Fulcrum-$LATEST_RELEASE-arm64-linux/FulcrumAdmin 
+  $ tar -xvf Fulcrum-$RELEASE-arm64-linux.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$RELEASE-arm64-linux/Fulcrum Fulcrum-$RELEASE-arm64-linux/FulcrumAdmin 
   $ Fulcrum --version
   > Fulcrum 1.9.1 (Release d330248)
   compiled: gcc 8.4.0
@@ -562,7 +566,7 @@ If the database gets corrupted and you don't have a backup, you will have to res
   $ sudo systemctl stop fulcrum
   ```
 
-* Get the latest Fulcrum release version
+* Check the latest Fulcrum release version. You can also confirm with the [release page](https://github.com/cculianu/Fulcrum/releases){:target="_blank" rel="noopener"}
 
   ```sh
   $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/cculianu/Fulcrum/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
@@ -571,11 +575,15 @@ If the database gets corrupted and you don't have a backup, you will have to res
 
 * Download the application, checksums and signature
 
+  {: .highlight }
+  > You can also use the latest release (`$LATEST_RELEASE`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
+
   ```sh
+  $ $RELEASE=1.9.1
   $ cd /tmp
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$LATEST_RELEASE/Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$LATEST_RELEASE/Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz.asc
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$LATEST_RELEASE/Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz.sha256sum
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$RELEASE/Fulcrum-$RELEASE-arm64-linux.tar.gz
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$RELEASE/Fulcrum-$RELEASE-arm64-linux.tar.gz.asc
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$RELEASE/Fulcrum-$RELEASE-arm64-linux.tar.gz.sha256sum
   ```
 
 * Get the public key from the Fulcrum developer
@@ -587,7 +595,7 @@ If the database gets corrupted and you don't have a backup, you will have to res
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz.asc
+  $ gpg --verify Fulcrum-$RELEASE-arm64-linux.tar.gz.asc
   > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg: There is no indication that the signature belongs to the owner.
@@ -597,15 +605,15 @@ If the database gets corrupted and you don't have a backup, you will have to res
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz.sha256sum
+  $ sha256sum --check Fulcrum-$RELEASE-arm64-linux.tar.gz.sha256sum
   > Fulcrum-1.9.1-arm64-linux.tar.gz: OK
   ```
 
 * Install Fulcrum and check the correct installation requesting the version
 
   ```sh
-  $ tar -xvf Fulcrum-$LATEST_RELEASE-arm64-linux.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$LATEST_RELEASE-arm64-linux/Fulcrum Fulcrum-$LATEST_RELEASE-arm64-linux/FulcrumAdmin 
+  $ tar -xvf Fulcrum-$RELEASE-arm64-linux.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$RELEASE-arm64-linux/Fulcrum Fulcrum-$RELEASE-arm64-linux/FulcrumAdmin 
   $ Fulcrum --version
   > Fulcrum 1.9.1 (Release 713d2d7)
   compiled: gcc 8.4.0
