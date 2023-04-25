@@ -579,7 +579,7 @@ If the database gets corrupted and you don't have a backup, you will have to res
   > You can also use the latest release (`$LATEST_RELEASE`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
 
   ```sh
-  $ $RELEASE=1.9.1
+  $ RELEASE="1.9.1"
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$RELEASE/Fulcrum-$RELEASE-arm64-linux.tar.gz
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$RELEASE/Fulcrum-$RELEASE-arm64-linux.tar.gz.asc
