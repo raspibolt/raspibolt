@@ -358,7 +358,7 @@ $ sudo nano /etc/tor/torrc
 # Hidden Service Jam
 HiddenServiceDir /var/lib/tor/hidden_service_jam/
 HiddenServiceVersion 3
-HiddenServicePort 80 127.0.0.1:4020
+HiddenServicePort 443 127.0.0.1:4020
 ```
 
 * Reload Tor configuration and get your connection address.
@@ -431,7 +431,7 @@ $ sudo nano /etc/tor/torrc
 # Hidden Service Jam
 #HiddenServiceDir /var/lib/tor/hsv3/
 #HiddenServiceVersion 3
-#HiddenServicePort 80 127.0.0.1:4020
+#HiddenServicePort 443 127.0.0.1:4020
 ```
 
 ```sh
