@@ -142,7 +142,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Verify that the fingerprints file has actually been signed by that developer
 
   ```sh
-  $ gpg --verify samourai-dojo-v1.19.1-fingerprints.txt.sig
+  $ gpg --verify samourai-dojo-v$VERSION-fingerprints.txt.sig
   ```
   ```
   > gpg: assuming signed data in 'samourai-dojo-v1.19.1-fingerprints.txt'
