@@ -569,7 +569,7 @@ If the database gets corrupted and you don't have a backup, you will have to res
 
 * Download, verify and install the latest Fulcrum binaries as described in the [Download and set up Fulcrum section](fulcrum.md#download-and-set-up-fulcrum) of this guide
 
-* Start fulcrum service
+* Start Fulcrum service
 
   ```sh
   $ sudo systemctl start fulcrum.service
