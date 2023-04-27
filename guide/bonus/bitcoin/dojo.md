@@ -155,7 +155,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * If the signature checks out, unpack the binary
 
   ```sh
-  $ tar -xvf samourai-dojo-v1.19.1.tar.gz
+  $ tar -xvf samourai-dojo-v$VERSION.tar.gz
   ```
 
 ### MariaDB
