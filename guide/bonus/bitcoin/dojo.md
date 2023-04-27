@@ -114,9 +114,12 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
   ```sh
   $ cd /tmp
   ```
-* Set a temporary version environment variable to the installation
   
+* Set a temporary version environment variable to the installation
+
+  ```sh  
   $ VERSION=1.9.2
+  ```
   
 * Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update
 
