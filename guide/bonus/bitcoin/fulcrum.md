@@ -159,7 +159,7 @@ We need to set up settings in Bitcoin Core configuration file - add new lines if
   ```
 
   ```sh
-  zmqpubhashblock=tcp://0.0.0.0:8433
+  zmqpubhashblock=tcp://127.0.0.1:8433
   ```
 
 * Restart Bitcoin Core
