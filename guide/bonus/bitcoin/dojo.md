@@ -54,7 +54,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
   ```
   [ F ] MYSQL ROOT PASSWORD
   [ G ] MYSQL PASSWORD
-  [ H ] NODE API KEY
+  [ H ] NODE API KEY 1, NODE API KEY 2
   [ I ] NODE ADMIN KEY
   [ J ] NODE JWT SECRET
   ```
@@ -321,14 +321,14 @@ instead of "[ X ] PASSWORD"
   database: 'dojo_db',
   ```
   
-* Find and edit these lines inside "auth" configuration to following values. Delete second value of "apiKeys" to match format below (use only one apiKey)
+* Find and edit these lines inside "auth" configuration to following values.
 
   ```
   auth: {
   [...]
 
   // List of API keys (alphanumeric characters)
-  apiKeys: ['[ H ] NODE API KEY'],
+  apiKeys: ['[ H ] NODE API KEY 1','[ H ] NODE API KEY 2'],
   // Admin key (alphanumeric characters)
   adminKey: '[ I ] NODE ADMIN KEY',
   ```
