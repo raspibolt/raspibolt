@@ -145,7 +145,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
   $ gpg --verify samourai-dojo-v$VERSION-fingerprints.txt.sig
   ```
   ```
-  > gpg: assuming signed data in 'samourai-dojo-v1.19.1-fingerprints.txt'
+  > gpg: assuming signed data in 'samourai-dojo-v1.19.2-fingerprints.txt'
   > gpg: Signature made Wed Mar 22 20:08:20 2023 UTC
   > gpg:                using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0
   > gpg: Good signature from "pavel.sevcik@protonmail.com <pavel.sevcik@protonmail.com>" [unknown]
