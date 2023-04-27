@@ -566,6 +566,22 @@ If the database gets corrupted and you don't have a backup, you will have to res
   $ sudo systemctl stop fulcrum
   ```
 
+* Check `bitcoin.conf` and update `zmqpubhashblock` with the correct value if needed. Save and exit
+
+  ```sh
+  $ sudo nano /data/bitcoin/bitcoin.conf
+  ```
+
+  ```sh
+  zmqpubhashblock=tcp://127.0.0.1:8433
+  ```
+
+* Restart Bitcoin Core
+
+  ```sh
+  $ sudo systemctl restart bitcoind
+  ```
+
 * Check the latest Fulcrum release version. You can also confirm with the [release page](https://github.com/cculianu/Fulcrum/releases){:target="_blank" rel="noopener"}
 
   ```sh
