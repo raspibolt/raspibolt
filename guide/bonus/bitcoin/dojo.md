@@ -122,7 +122,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
   ```sh
   $ wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v$VERSION/samourai-dojo-v$VERSION.tar.gz
-  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/58cee81ab15f39314db4e9d8c33e269d/samourai-dojo-v1.19.1-fingerprints.txt
+  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/1cec15e14016517c3f133432bb291529/samourai-dojo-v1.19.2-fingerprints.txt
   $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/a12e21782f4191e7c765f6c482c61cdc/samourai-dojo-v1.19.1-fingerprints.txt.sig
   ```
 
