@@ -123,7 +123,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
   ```sh
   $ wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v$VERSION/samourai-dojo-v$VERSION.tar.gz
   $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/1cec15e14016517c3f133432bb291529/samourai-dojo-v1.19.2-fingerprints.txt
-  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/a12e21782f4191e7c765f6c482c61cdc/samourai-dojo-v1.19.1-fingerprints.txt.sig
+  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/094f862ba6ce3a2e333e5c9cb72324d2/samourai-dojo-v1.19.2-fingerprints.txt.sig
   ```
 
 * Calculate the checksum of the binary you've downloaded and compare it to the one provided in the fingerprints text file
