@@ -174,19 +174,19 @@ $ curl https://dergigi.com/PGP.txt | gpg --import
 * Check the latest Jam release version. You can also confirm with the [release page](https://github.com/joinmarket-webui/jam/releases){:target="_blank" rel="noopener"}
 
   ```sh
-  $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/joinmarket-webui/jam/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-  $ echo $LATEST_RELEASE
+  $ LATEST_VERSION=$(wget -qO- https://api.github.com/repos/joinmarket-webui/jam/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+  $ echo $LATEST_VERSION
   ```
 
 * Retrieve source code
 
   {: .highlight }
-  > You can also use the latest release (`$LATEST_RELEASE`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
+  > You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
 
 
 ```sh
-$ RELEASE="v0.1.5"
-$ git clone https://github.com/joinmarket-webui/jam.git --branch $RELEASE --depth=1
+$ VERSION="v0.1.5"
+$ git clone https://github.com/joinmarket-webui/jam.git --branch $VERSION --depth=1
 ```
 
 * Verify release by looking for `Good signature` response
@@ -194,7 +194,7 @@ $ git clone https://github.com/joinmarket-webui/jam.git --branch $RELEASE --dept
 ```sh
 $ cd jam
 
-$ git verify-tag $RELEASE
+$ git verify-tag $VERSION
 ...
 > gpg: Good signature from "Gigi <dergigi@pm.me>" [unknown]
 > gpg: WARNING: This key is not certified with a trusted signature!
