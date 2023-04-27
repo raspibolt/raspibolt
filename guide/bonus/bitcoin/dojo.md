@@ -623,7 +623,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
   > nginx: configuration file /etc/nginx/nginx.conf test is successful
   ```
   ```sh
-  $ sudo systemctl restart nginx
+  $ sudo systemctl reload nginx
   ```
   
 ---
