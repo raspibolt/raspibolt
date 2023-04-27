@@ -566,107 +566,14 @@ If the database gets corrupted and you don't have a backup, you will have to res
   $ sudo systemctl stop fulcrum
   ```
 
-* Check `bitcoin.conf` and update `zmqpubhashblock` with the correct value if needed. Save and exit
+* Verify Bitcoin Core configuration as described in the [Configure Bitcoin Core section](fulcrum.md#configure-bitcoin-core) of this guide
 
-  ```sh
-  $ sudo nano /data/bitcoin/bitcoin.conf
-  ```
-
-  ```sh
-  zmqpubhashblock=tcp://127.0.0.1:8433
-  ```
-
-* Restart Bitcoin Core
-
-  ```sh
-  $ sudo systemctl restart bitcoind
-  ```
-
-* Check the latest Fulcrum release version. You can also confirm with the [release page](https://github.com/cculianu/Fulcrum/releases){:target="_blank" rel="noopener"}
-
-  ```sh
-  $ LATEST_VERSION=$(wget -qO- https://api.github.com/repos/cculianu/Fulcrum/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
-  $ echo $LATEST_VERSION
-  ```
-
-* Download the application, checksums and signature
-
-  {: .highlight }
-  > You can also use the latest release (`$LATEST_VERSION`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
-
-  ```sh
-  $ VERSION="1.9.1"
-  $ DISTRO="arm64-linux"
-  $ cd /tmp
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz.asc
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz.sha256sum
-  ```
-
-* Get the public key from the Fulcrum developer
-
-  ```sh
-  $ curl https://raw.githubusercontent.com/Electron-Cash/keys-n-hashes/master/pubkeys/calinkey.txt | gpg --import
-  ```
-
-* Verify the signature of the text file containing the checksums for the application
-
-  ```sh
-  $ gpg --verify Fulcrum-$VERSION-arm64-linux.tar.gz.asc
-  > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
-  > gpg: WARNING: This key is not certified with a trusted signature!
-  > gpg: There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: D465 135F 97D0 047E 18E9  9DC3 2181 0A54 2031 C02C
-  ```
-
-* Verify the signed checksum against the actual checksum of your download
-
-  ```sh
-  $ sha256sum --check Fulcrum-$VERSION-arm64-linux.tar.gz.sha256sum
-  > Fulcrum-1.9.1-arm64-linux.tar.gz: OK
-  ```
-
-* Install Fulcrum and check the correct installation requesting the version
-
-  ```sh
-  $ tar -xvf Fulcrum-$VERSION-arm64-linux.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$VERSION-arm64-linux/Fulcrum Fulcrum-$VERSION-arm64-linux/FulcrumAdmin 
-  $ Fulcrum --version
-  > Fulcrum 1.9.1 (Release 713d2d7)
-  compiled: gcc 8.4.0
-  ...
-  ```
+* Download, verify and install the latest Fulcrum binaries as described in the [Download and set up Fulcrum section](fulcrum.md#download-and-set-up-fulcrum) of this guide
 
 * Start fulcrum service
 
   ```sh
   $ sudo systemctl start fulcrum.service
-  ```
-
-* We can check if everything goes right using these commands
-
-  ```sh
-  $ sudo systemctl status fulcrum
-  $ sudo journalctl -f -u fulcrum
-  ```
-
-* Expected output:
-
-  ```sh
-  -- Journal begins at Mon 2022-04-19 16:41:41 CEST. --
-  Apr 19 12:20:13 rasp Fulcrum[181811]: [2022-04-19 12:20:13.063] simdjson: version 0.6.0
-  Apr 19 12:20:13 rasp Fulcrum[181811]: [2022-04-19 12:20:13.063] ssl: OpenSSL 1.1.1n  15 Mar 2022
-  Apr 19 12:20:13 rasp Fulcrum[181811]: [2022-04-19 12:20:13.063] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
-  Apr 19 12:20:13 rasp Fulcrum[181811]: [2022-04-19 12:20:13.064] Fulcrum 1.9.1 (Release 713d2d7) - Thu Apr 19, 2022 12:20:13.064 CEST - starting up ...
-  Apr 19 12:20:13 rasp Fulcrum[181811]: [2022-04-19 12:20:13.064] Max open files: 524288 (increased from default: 1024)
-  Apr 19 12:20:13 rasp Fulcrum[181811]: [2022-04-19 12:20:13.065] Loading database ...
-  Apr 19 12:20:14 rasp Fulcrum[181811]: [2022-04-19 12:20:14.489] DB memory: 512.00 MiB
-  Apr 19 12:20:14 rasp Fulcrum[181811]: [2022-04-19 12:20:14.491] Coin: BTC
-  Apr 19 12:20:14 rasp Fulcrum[181811]: [2022-04-19 12:20:14.492] Chain: main
-  Apr 19 12:20:14 rasp Fulcrum[181811]: [2022-04-19 12:20:14.494] Verifying headers ...
-  Apr 19 12:20:19 rasp Fulcrum[181811]: [2022-04-19 12:20:19.780] Initializing header merkle cache ...
-  Apr 19 12:20:21 rasp Fulcrum[181811]: [2022-04-19 12:20:21.643] Checking tx counts ...
-  ...
   ```
 
 ## Uninstall
