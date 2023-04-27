@@ -232,7 +232,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
   ```sh
   $ sudo mkdir -p /opt/dojo/
-  $ sudo mv /tmp/samourai-dojo-v1.19.1/* /opt/dojo/
+  $ sudo mv /tmp/samourai-dojo-v$VERSION/* /opt/dojo/
   $ sudo chown -R dojo:dojo /opt/dojo/
   ```
 
