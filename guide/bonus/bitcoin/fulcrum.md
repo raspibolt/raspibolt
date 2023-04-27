@@ -572,7 +572,7 @@ If the database gets corrupted and you don't have a backup, you will have to res
 * Start Fulcrum service
 
   ```sh
-  $ sudo systemctl start fulcrum.service
+  $ sudo systemctl start fulcrum
   ```
 
 ## Uninstall
