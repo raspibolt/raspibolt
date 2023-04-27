@@ -187,7 +187,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
   > You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer release versions might not have been thoroughly tested with the rest of the RaspiBolt configuration.
 
   ```sh
-  $ $VERSION=1.9.1
+  $ VERSION="1.9.1"
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz.asc
@@ -214,7 +214,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 
   ```sh
   $ sha256sum --check Fulcrum-$VERSION-arm64-linux.tar.gz.sha256sum
-  > Fulcrum-1.8.2-arm64-linux.tar.gz: OK
+  > Fulcrum-1.9.1-arm64-linux.tar.gz: OK
   ```
 
 * Install Fulcrum and check the correct installation requesting the version
@@ -580,6 +580,7 @@ If the database gets corrupted and you don't have a backup, you will have to res
 
   ```sh
   $ VERSION="1.9.1"
+  $ DISTRO="arm64-linux"
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz.asc
