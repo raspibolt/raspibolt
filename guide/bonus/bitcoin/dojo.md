@@ -129,7 +129,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Calculate the checksum of the binary you've downloaded and compare it to the one provided in the fingerprints text file
 
   ```sh
-  $ sha256sum --ignore-missing --check samourai-dojo-v1.19.1-fingerprints.txt
+  $ sha256sum --ignore-missing --check samourai-dojo-v$VERSION-fingerprints.txt
   > samourai-dojo-v1.19.1.tar.gz: OK
   ```
 
