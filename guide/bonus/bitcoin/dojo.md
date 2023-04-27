@@ -130,7 +130,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
   ```sh
   $ sha256sum --ignore-missing --check samourai-dojo-v$VERSION-fingerprints.txt
-  > samourai-dojo-v1.19.1.tar.gz: OK
+  > samourai-dojo-v1.19.2.tar.gz: OK
   ```
 
 * Import the GPG public key of the developer that signed the fingerprints file
