@@ -54,7 +54,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
   ```
   [ F ] MYSQL ROOT PASSWORD
   [ G ] MYSQL PASSWORD
-  [ H ] NODE API KEY 1, NODE API KEY 2
+  [ H ] NODE API KEY
   [ I ] NODE ADMIN KEY
   [ J ] NODE JWT SECRET
   ```
@@ -336,14 +336,14 @@ instead of "[ X ] PASSWORD"
   [...]
   ```
 
-* Find and edit these lines inside "auth" configuration to following values
+* Find and edit these lines inside "auth" configuration to following values. Delete second value of "apiKeys" to match format below (use only one apiKey)
 
   ```
   auth: {
   [...]
 
   // List of API keys (alphanumeric characters)
-  apiKeys: ['[ H ] NODE API KEY 1', '[ H ] NODE API KEY 2'],
+  apiKeys: ['[ H ] NODE API KEY'],
   // Admin key (alphanumeric characters)
   adminKey: '[ I ] NODE ADMIN KEY',
   ```
@@ -353,7 +353,7 @@ instead of "[ X ] PASSWORD"
 * If you want to set up Auth47 login option, please comment these lines anyway and uncomment them in [later steps](#use-auth47-paynym-login-for-dojo-maintanence-tool). Dojo would not start properly and Tor service is not set up yet
 
   ```
-  //auth47: {                          #  All of these lines must be commented with "//" at the beginning as shown
+  //auth47: {                          #  All of these four lines must be commented with "//" at the beginning as shown
   //hostname: '<dojoHostname>',       
   //paymentCodes: ['<myPaymentCode>']  
   //}
