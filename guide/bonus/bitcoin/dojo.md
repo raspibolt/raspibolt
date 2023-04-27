@@ -320,22 +320,7 @@ instead of "[ X ] PASSWORD"
   // Db name
   database: 'dojo_db',
   ```
-
-* Find and edit these lines inside "ports" configuration to following values
-
-  ```
-  ports: {
-
-  // Port used by the API
-  account: 9990,
-  // Port used by pushtx API
-  pushtx: 9991,
-  // Port used by the tracker API
-  trackerApi: 9992,
-
-  [...]
-  ```
-
+  
 * Find and edit these lines inside "auth" configuration to following values. Delete second value of "apiKeys" to match format below (use only one apiKey)
 
   ```
@@ -566,7 +551,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
 
   # WebSocket server listening here
   upstream websocket {
-      server localhost:9990;
+      server localhost:8080;
   }
 
   # Tor Site Configuration
@@ -591,22 +576,22 @@ Configure nginx.conf for Dojo Maintanence Tool.
 
       # PushTX server is separate, so proxy first
       location /v2/pushtx/ {
-          proxy_pass http://localhost:9991/;
+          proxy_pass http://localhost:8081/;
       }
  
       # Tracker server is separate, so proxy first
       location /v2/tracker/ {
-          proxy_pass http://localhost:9992/;
+          proxy_pass http://localhost:8082/;
       }
   
       # Proxy requests to maintenance tool
       location /admin/ {
-          proxy_pass http://localhost:9990/static/admin/;
+          proxy_pass http://localhost:8080/static/admin/;
       }
 
       # Proxy all other v2 requests to the accounts server
       location /v2/ {
-          proxy_pass http://localhost:9990/;
+          proxy_pass http://localhost:8080/;
       }
   
       # Redirect onion address to maintenance tool
