@@ -223,8 +223,9 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
   $ tar -xvf Fulcrum-$VERSION-arm64-linux.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$VERSION-arm64-linux/Fulcrum Fulcrum-$VERSION-arm64-linux/FulcrumAdmin 
   $ Fulcrum --version
-  > Fulcrum 1.9.1 (Release d330248)
-  compiled: gcc 8.4.0
+  > Fulcrum 1.9.1 (Release 713d2d7)
+  > Protocol: version min: 1.4, version max: 1.5
+  > compiled: gcc 8.4.0
   ...
   ```
 
