@@ -63,19 +63,19 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * With the "admin" user, download the latest arm64 binary and its checksum and verify the integrity of the binary
 
   ```sh
-  $ VERSION="0.9.0"
+  $ VERSION="0.9.1"
   $ cd /tmp
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/lightning-terminal-linux-arm64-v$VERSION-alpha.tar.gz
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSION-alpha.txt 
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSIONalpha.sig
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSIONalpha/manifest-v$VERSION-alpha.sig.ots
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSION-alpha.sig
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSION-alpha.sig.ots
   ```
 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-alpha.txt --ignore-missing
-  > lightning-terminal-linux-arm64-v0.9.0-alpha.tar.gz: OK
+  > lightning-terminal-linux-arm64-v0.9.1-alpha.tar.gz: OK
   ```
 
 * Get the key to verify the manifest file and add it to your GPG keyring.
@@ -102,7 +102,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   ```sh 
   $ ots verify manifest-v$VERSION-alpha.sig.ots
   > ...
-  > Success! Bitcoin block 783166 attests existence as of 2023-03-30 CEST
+  > Success! Bitcoin block 786978 attests existence as of 2023-04-25 CEST
   ```
 
 * Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
@@ -111,7 +111,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   $ tar -xzf lightning-terminal-linux-arm64-v$VERSION-alpha.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v$VERSION-alpha/*
   $ litd --lnd.version
-  > litd version 0.16.0-beta commit=lightning-terminal-v0.9.0-alpha
+  > litd version 0.16.1-beta commit=lightning-terminal-v0.9.1-alpha
   ```
 
 ### User and data directories
@@ -247,7 +247,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 🔍 *Notice that the options for Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
 
-* Lightning Terminal 0.9.0 requires RPC Middleware to be enabled, therefore we switch to user lnd to adjust `lnd.conf`
+* Lightning Terminal 0.9.1 requires RPC Middleware to be enabled, therefore we switch to user lnd to adjust `lnd.conf`
 
   ```sh
   $ exit
@@ -520,7 +520,7 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
 
   ```sh
   $ litd --lnd.version
-  > litd version 0.16.0-beta commit=lightning-terminal-v0.9.0-alpha
+  > litd version 0.16.1-beta commit=lightning-terminal-v0.9.1-alpha
   ```
 
 * Read the [release notes](https://github.com/lightninglabs/lightning-terminal/releases){:target="_blank"} in case there is any breaking change to be aware of.
