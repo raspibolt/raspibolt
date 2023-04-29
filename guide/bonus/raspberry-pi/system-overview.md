@@ -47,14 +47,6 @@ This script can be run by user "admin" without root privileges, but you should s
   $ cd /tmp/raspibolt-pulse
   $ nano *.sh --linenumbers
   ```
-
-* If you use wifi instead of a network cable, go to line 28 and change `eth0` to `wlan0` for the raspibolt-pulse-switch.sh script.
-  Save with `Ctrl`-`O`and exit `nano` with `Ctrl`-`X`.
-
-  ```sh
-  # set to network device name (usually "eth0" for ethernet, and "wlan0" for wifi)
-  network_name="eth0"
-  ```
   
 * Install the script and make it executable
 
