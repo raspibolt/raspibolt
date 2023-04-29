@@ -262,6 +262,15 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   rpcmiddleware.enable=true
   ```
   
+* Also if not already present, set `rpclisten` parameter in section `[Application Options]`
+
+  ```ini
+  [Application Options]
+  rpclisten=0.0.0.0:10009
+  ```
+  
+* Save (Ctrl+O) and exit (Ctrl+X).
+  
 * Switch to "admin" to restart LND
 
  ```sh
