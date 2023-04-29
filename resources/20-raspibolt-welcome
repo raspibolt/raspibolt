@@ -72,6 +72,9 @@ ${color_yellow}━━━━━━━━━━━━━━━━━━━━━�
 printf "%0.s#" {1..40}
 echo -ne '\r### Loading System data \r'
 
+# get local network ip address
+local_ip=$(ip addr show | grep -w inet | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1)
+
 # get available update
 updates=$((`sudo apt update &>/dev/null && sudo apt list --upgradable 2>/dev/null | wc -l`-1))
 
@@ -479,7 +482,7 @@ fi
 echo -ne "\033[2K"
 printf "${color_grey}cpu temp: ${color_temp}%-2s°C${color_grey}  tx: %-10s storage:   ${color_storage}%-11s ${color_grey}  load: %s
 ${color_grey}up: %-10s  rx: %-10s 2nd drive: ${color_storage2nd}%-11s${color_grey}   available mem: ${color_ram}%sM
-${color_grey}updates: ${color_updates}%-7s${color_grey}
+${color_grey}updates: ${color_updates}%-7s${color_grey}               IP addr: %-20s
 ${color_yellow}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${color_green}     .~~.   .~~.      ${color_yellow}%-22s${bitcoind_color}%-4s${color_grey}   ${color_yellow}%-20s${lnd_color}%-4s
 ${color_green}    '. \ ' ' / .'     ${btcversion_color}%-26s ${lndversion_color}%-24s
@@ -500,7 +503,7 @@ ${color_grey}%s
 " \
 "${temp}" "${network_tx}" "${storage} free" "${load}" \
 "${uptime}" "${network_rx}" "${storage2nd}" "${ram_avail}" \
-"${updates}" \
+"${updates}" "${local_ip}" \
 "${btc_title}" "${bitcoind_running}" "Lightning (LND)" "${lnd_running}" \
 "${btcversion}" "${lndversion}" \
 "${sync} ${sync_behind}" "${ln_alias}" \
