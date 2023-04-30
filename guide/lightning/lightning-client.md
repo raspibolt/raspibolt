@@ -253,7 +253,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.16.0-beta commit=v0.16.0-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.16.2-beta commit=v0.16.2-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
