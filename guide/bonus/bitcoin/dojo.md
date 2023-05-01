@@ -447,7 +447,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
   # Hidden Service Dojo
   HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   HiddenServiceVersion 3
-  HiddenServicePort 80 127.0.0.1:80
+  HiddenServicePort 4010 127.0.0.1:4010
   ```
 
 * Restart Tor 
@@ -559,7 +559,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
 
   # Tor Site Configuration
   server {
-      listen 80;
+      listen 4010 ssl;
       server_name xyz.onion;
       server_tokens off;
 
@@ -568,6 +568,10 @@ Configure nginx.conf for Dojo Maintanence Tool.
       proxy_read_timeout 600;
       proxy_send_timeout 600;
       send_timeout 600;
+      
+      # Specify SSL certificate and key file path
+      ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+      ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
       # Proxy WebSocket connections first
       location /v2/inv {
@@ -754,9 +758,9 @@ Erase Wallet
 
 Connect samourai wallet to your own backend
 
-* If on local network, point your browser to the secure access point provided by the nginx web proxy, for example [http://raspibolt.local:80](http://raspibolt.local:80){:target="_blank"} (or your nodes IP address, e.g. http://192.168.0.20:80).
+* If on local network, point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4010](https://raspibolt.local:4010){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4010).
 
-* If using Tor, paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `xyz.onion/admin`. You can bookmark this page for easier future access
+* If using Tor, paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `https://xyz.onion:4010`. You can bookmark this page for easier future access
 
 * Authenticate with `[I] NODE ADMIN KEY` or with [Auth47 (Paynym)](#use-auth47-paynym-login-for-dojo-maintanence-tool)
 
@@ -925,7 +929,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   # Hidden Service Dojo
   #HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   #HiddenServiceVersion 3
-  #HiddenServicePort 80 127.0.0.1:80
+  #HiddenServicePort 4010 127.0.0.1:4010
   ```
 
   ```sh
