@@ -59,7 +59,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
   [ J ] NODE JWT SECRET
   ```
 
-### Install Node.js (optional)
+### Install Node.js
 
 Node.js is a back-end JavaScript runtime environment necessary for Samourai Dojo. 
 
