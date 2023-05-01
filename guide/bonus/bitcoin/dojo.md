@@ -447,7 +447,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
   # Hidden Service Dojo
   HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   HiddenServiceVersion 3
-  HiddenServicePort 4010 127.0.0.1:4010
+  HiddenServicePort 80 127.0.0.1:80
   ```
 
 * Restart Tor 
@@ -504,6 +504,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
   http {
       include       /etc/nginx/mime.types;
       default_type  application/octet-stream;
+      server_names_hash_bucket_size 128;
 
       # Disable activity logging for privacy.
       access_log  off;
@@ -548,63 +549,106 @@ Configure nginx.conf for Dojo Maintanence Tool.
   # Proxy WebSockets
   # https://www.nginx.com/blog/websocket-nginx/
   map $http_upgrade $connection_upgrade {
-      default upgrade;
-      '' close;
+    default upgrade;
+    '' close;
   }
 
   # WebSocket server listening here
   upstream websocket {
-      server localhost:8080;
+    server localhost:8080;
   }
 
   # Tor Site Configuration
   server {
-      listen 4010 ssl;
-      server_name xyz.onion;
-      server_tokens off;
+    listen 80;
+    server_name xyz.onion;
+    server_tokens off;
 
-      # Set proxy timeouts for the application
-      proxy_connect_timeout 600;
-      proxy_read_timeout 600;
-      proxy_send_timeout 600;
-      send_timeout 600;
-      
-      # Specify SSL certificate and key file path
-      ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
-      ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+    # Set proxy timeouts for the application
+    proxy_connect_timeout 600;
+    proxy_read_timeout 600;
+    proxy_send_timeout 600;
+    send_timeout 600;
 
-      # Proxy WebSocket connections first
-      location /v2/inv {
-          proxy_pass http://websocket;
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection $connection_upgrade;
-      }
+    # Proxy WebSocket connections first
+    location /v2/inv {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+    }
 
-      # PushTX server is separate, so proxy first
-      location /v2/pushtx/ {
-          proxy_pass http://localhost:8081/;
-      }
- 
-      # Tracker server is separate, so proxy first
-      location /v2/tracker/ {
-          proxy_pass http://localhost:8082/;
-      }
+    # PushTX server is separate, so proxy first
+    location /v2/pushtx/ {
+        proxy_pass http://localhost:8081/;
+    }
+
+    # Tracker server is separate, so proxy first
+    location /v2/tracker/ {
+        proxy_pass http://localhost:8082/;
+    }
+
+    # Proxy requests to maintenance tool
+    location /admin/ {
+        proxy_pass http://localhost:8080/static/admin/;
+    }
+
+    # Proxy all other v2 requests to the accounts server
+    location /v2/ {
+        proxy_pass http://localhost:8080/;
+    }
+  }
   
-      # Proxy requests to maintenance tool
-      location /admin/ {
-          proxy_pass http://localhost:8080/static/admin/;
-      }
+  # Local Network Configuration
+  server {
+    listen 4010 ssl;
+    server_name localhost;
+    server_tokens off;
 
-      # Proxy all other v2 requests to the accounts server
-      location /v2/ {
-          proxy_pass http://localhost:8080/;
-      }
+    # Set proxy timeouts for the application
+    proxy_connect_timeout 600;
+    proxy_read_timeout 600;
+    proxy_send_timeout 600;
+    send_timeout 600;
+
+    # Specify SSL certificate and key file path
+    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+
+    # Proxy WebSocket connections first
+    location /v2/inv {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+    }
+
+    # PushTX server is separate, so proxy first
+    location /v2/pushtx/ {
+        proxy_pass http://localhost:8081/;
+    }
+
+    # Tracker server is separate, so proxy first
+    location /v2/tracker/ {
+        proxy_pass http://localhost:8082/;
+    }
+
+    # Proxy requests to maintenance tool
+    location /admin/ {
+        proxy_pass http://localhost:8080/static/admin/;
+    }
+
+    # Proxy all other v2 requests to the accounts server
+    location /v2/ {
+        proxy_pass http://localhost:8080/;
+    }
+  }
   
-      # Redirect onion address to maintenance tool
-      location = / {
-          return 301 /admin;
-      }
+  # Block all requests on port 80 from local network
+  server {
+    listen 80 default_server;
+    server_name _;
+    return 444;
   }
   ```
 
@@ -760,7 +804,7 @@ Connect samourai wallet to your own backend
 
 * If on local network, point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4010](https://raspibolt.local:4010){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4010).
 
-* If using Tor, paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `https://xyz.onion:4010`. You can bookmark this page for easier future access
+* If using Tor, paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `http://xyz.onion`. You can bookmark this page for easier future access
 
 * Authenticate with `[I] NODE ADMIN KEY` or with [Auth47 (Paynym)](#use-auth47-paynym-login-for-dojo-maintanence-tool)
 
