@@ -973,7 +973,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   # Hidden Service Dojo
   #HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   #HiddenServiceVersion 3
-  #HiddenServicePort 4010 127.0.0.1:4010
+  #HiddenServicePort 80 127.0.0.1:80
   ```
 
   ```sh
