@@ -643,13 +643,6 @@ Configure nginx.conf for Dojo Maintanence Tool.
         proxy_pass http://localhost:8080/;
     }
   }
-  
-  # Block all requests on port 80 from local network
-  server {
-    listen 80 default_server;
-    server_name _;
-    return 444;
-  }
   ```
 
 * Test and restart nginx configuration
