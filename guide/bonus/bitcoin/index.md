@@ -42,7 +42,7 @@ has_toc: false
 * **[JoinMarket webui (Jam)](Jam.md)** - a web interface for JoinMarket focusing on user-friendliness and ease-of-use
 * **[I2P](i2p.md)** - The Invisible Internet Protocol
 
-* **[Samourai Dojo](Dojo.md){:target="_blank"}** - Personal backend for your Samourai Wallet
+* **[Samourai Dojo](dojo.md)** - Personal backend for your Samourai Wallet
 
 ---
 
