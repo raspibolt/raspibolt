@@ -79,6 +79,15 @@ Node.js was already installed as a part of Blockchain explorer guide. If not ins
   ```sh
   $ sudo npm i -g pm2
   ```
+  
+### Firewall
+
+* Configure the UFW firewall to allow incoming HTTP/HTTPS requests
+
+  ```sh
+  $ sudo ufw allow 4010/tcp comment 'allow Dojo SSL'
+  $ sudo ufw allow 4011/tcp comment 'allow Dojo Tor'
+  ```
 
 ### For Electrs
 
@@ -555,7 +564,8 @@ Configure nginx.conf for Dojo Maintanence Tool.
   upstream websocket {
       server localhost:8080;
   }
-  # Dojo Configuration
+  
+  # Tor Site Configuration
   server {
     listen 4010 ssl;
     listen 4011;
@@ -637,7 +647,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
   $ cd /opt/dojo
   $ pm2 start pm2.config.cjs
   ```
-
+  
   ```
   ┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
   │ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
@@ -648,6 +658,86 @@ Configure nginx.conf for Dojo Maintanence Tool.
   │ 3  │ Samourai Dojo - T… │ fork     │ 1    │ online    │ 0%       │ 184.8mb  │
   └────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
   ```
+  
+* If following error gets displayed, it is necessary to make changes to the "pm2.config.cjs"
+
+  ```
+  [PM2][ERROR] File pm2.config.cjs malformated
+  npm WARN deprecatedconst path = require('path')
+  ```
+  
+* Rename "pm2.config.cjs" to "pm2.config.cjs.bak", create a new file and paste following content
+
+  ```sh
+  $ mv /opt/dojo/pm2.config.cjs /opt/dojo/pm2.config.cjs.bak
+  $ nano pm2.config.cjs
+  ```
+  
+  ```
+  const path = require('path'); // Added this line to import the `path` module
+
+  const NAMESPACE = 'mainnet' // OR testnet
+  const INTERPRETER = 'node' // OR binary name like `node`
+
+  module.exports = {
+    apps: [
+        {
+            name: `Samourai Dojo - Accounts (${NAMESPACE})`,
+            namespace: NAMESPACE,
+            script: './index.js',
+            cwd: path.join(__dirname, 'accounts'), // Modified this line to use `path.join` instead of `./accounts`
+            interpreter: INTERPRETER,
+            out_file: './output-2022-01-01.log',
+            error_file: './error-2022-01-01.log',
+            wait_ready: true,
+            stop_exit_codes: 0,
+            listen_timeout: 5000,
+            kill_timeout: 3000,
+        },
+        {
+            name: `Samourai Dojo - PushTX (${NAMESPACE})`,
+            namespace: NAMESPACE,
+            script: './index.js',
+            cwd: path.join(__dirname, 'pushtx'), // Modified this line to use `path.join` instead of `./pushtx`
+            interpreter: INTERPRETER,
+            out_file: './output-2022-01-01.log',
+            error_file: './error-2022-01-01.log',
+            wait_ready: true,
+            stop_exit_codes: 0,
+            listen_timeout: 5000,
+            kill_timeout: 3000,
+        },
+        {
+            name: `Samourai Dojo - PushTX orhestrator (${NAMESPACE})`,
+            namespace: NAMESPACE,
+            script: './index-orchestrator.js',
+            cwd: path.join(__dirname, 'pushtx'), // Modified this line to use `path.join` instead of `./pushtx`
+            interpreter: INTERPRETER,
+            out_file: './output-orchestrator-2022-01-01.log',
+            error_file: './error-orchestrator-2022-01-01.log',
+            wait_ready: true,
+            stop_exit_codes: 0,
+            listen_timeout: 5000,
+            kill_timeout: 3000,
+        },
+        {
+            name: `Samourai Dojo - Tracker (${NAMESPACE})`,
+            namespace: NAMESPACE,
+            script: './index.js',
+            cwd: path.join(__dirname, 'tracker'), // Modified this line to use `path.join` instead of `./tracker`
+            interpreter: INTERPRETER,
+            out_file: './output-2022-01-01.log',
+            error_file: './error-2022-01-01.log',
+            wait_ready: true,
+            stop_exit_codes: 0,
+            listen_timeout: 5000,
+            kill_timeout: 3000,
+        }
+    ]
+  };
+  ```
+  
+* Save and exit. Start Dojo again 
 
 * Check the logs, you should expect following output (it will take a while for blocks to synchronise):
 
