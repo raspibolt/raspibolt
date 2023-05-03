@@ -730,8 +730,6 @@ Configure nginx.conf for Dojo Maintanence Tool.
   $ pm2 start pm2.config.cjs
   ```
   
-If following error gets diplayed: "[PM2][ERROR] File pm2.config.cjs malformated", follow [this section](#pm2config-syntax-error-skip) and return back for the rest of installation
-
   ```
   ┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
   │ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
@@ -742,6 +740,8 @@ If following error gets diplayed: "[PM2][ERROR] File pm2.config.cjs malformated"
   │ 3  │ Samourai Dojo - T… │ fork     │ 1    │ online    │ 0%       │ 184.8mb  │
   └────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
   ```
+  
+If following error gets diplayed: "[PM2][ERROR] File pm2.config.cjs malformated", follow [this section](#pm2config-syntax-error-skip) and return back for the rest of installation
   
 * Check the logs, you should expect following output (it will take a while for blocks to synchronise):
 
