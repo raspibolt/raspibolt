@@ -86,7 +86,6 @@ Node.js was already installed as a part of Blockchain explorer guide. If not ins
 
   ```sh
   $ sudo ufw allow 4010/tcp comment 'allow Dojo SSL'
-  $ sudo ufw allow 4011/tcp comment 'allow Dojo Tor'
   ```
 
 ### For Electrs
