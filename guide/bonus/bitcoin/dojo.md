@@ -85,7 +85,7 @@ Node.js was already installed as a part of Blockchain explorer guide. If not ins
 * Configure the UFW firewall to allow incoming HTTP/HTTPS requests
 
   ```sh
-  $ sudo ufw allow 4010/tcp comment 'allow Dojo SSL'
+  $ sudo ufw allow 4011/tcp comment 'allow Dojo SSL'
   ```
 
 ### For Electrs
@@ -537,7 +537,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
   # Hidden Service Dojo
   HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   HiddenServiceVersion 3
-  HiddenServicePort 80 127.0.0.1:4011
+  HiddenServicePort 80 127.0.0.1:4010
   ```
 
 * Restart Tor 
@@ -648,8 +648,8 @@ Configure nginx.conf for Dojo Maintanence Tool.
   
   # Tor Site Configuration
   server {
-    listen 4010 ssl;
-    listen 4011;
+    listen 4011 ssl;
+    listen 4010;
     server_name xyz.onion;
     port_in_redirect off;
     server_tokens off;
@@ -1017,7 +1017,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   # Hidden Service Dojo
   #HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   #HiddenServiceVersion 3
-  #HiddenServicePort 80 127.0.0.1:4011
+  #HiddenServicePort 80 127.0.0.1:4010
   ```
 
   ```sh
