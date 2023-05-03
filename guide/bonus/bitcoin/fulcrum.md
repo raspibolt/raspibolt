@@ -159,7 +159,7 @@ We need to set up settings in Bitcoin Core configuration file - add new lines if
   ```
 
   ```sh
-  zmqpubhashblock=tcp://0.0.0.0:8433
+  zmqpubhashblock=tcp://127.0.0.1:8433
   ```
 
 * Restart Bitcoin Core
@@ -172,15 +172,26 @@ We need to set up settings in Bitcoin Core configuration file - add new lines if
 
 ### Download and set up Fulcrum
 
-We have our Bitcoin Core configuration file set up and now we can move to next part - installation of Fulcrum
+We have our Bitcoin Core configuration file set up, and now we can move to next part - installation of Fulcrum
+
+* Check the latest Fulcrum release version. You can also confirm with the [release page](https://github.com/cculianu/Fulcrum/releases){:target="_blank" rel="noopener"}
+
+  ```sh
+  $ LATEST_VERSION=$(wget -qO- https://api.github.com/repos/cculianu/Fulcrum/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
+  $ echo $LATEST_VERSION
+  ```
 
 * Download the application, checksums and signature
 
+  {: .highlight }
+  > You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer release versions might not have been thoroughly tested with the rest of the RaspiBolt configuration.
+
   ```sh
+  $ VERSION="1.9.1"
   $ cd /tmp
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-arm64-linux.tar.gz
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-arm64-linux.tar.gz.asc
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v1.8.2/Fulcrum-1.8.2-arm64-linux.tar.gz.sha256sum
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz.asc
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz.sha256sum
   ```
 
 * Get the public key from the Fulcrum developer
@@ -192,7 +203,7 @@ We have our Bitcoin Core configuration file set up and now we can move to next p
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify Fulcrum-1.8.2-arm64-linux.tar.gz.asc
+  $ gpg --verify Fulcrum-$VERSION-arm64-linux.tar.gz.asc
   > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg: There is no indication that the signature belongs to the owner.
@@ -202,18 +213,19 @@ We have our Bitcoin Core configuration file set up and now we can move to next p
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check Fulcrum-1.8.2-arm64-linux.tar.gz.sha256sum
-  > Fulcrum-1.8.2-arm64-linux.tar.gz: OK
+  $ sha256sum --check Fulcrum-$VERSION-arm64-linux.tar.gz.sha256sum
+  > Fulcrum-1.9.1-arm64-linux.tar.gz: OK
   ```
 
 * Install Fulcrum and check the correct installation requesting the version
 
   ```sh
-  $ tar -xvf Fulcrum-1.8.2-arm64-linux.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-1.8.2-arm64-linux/Fulcrum Fulcrum-1.8.2-arm64-linux/FulcrumAdmin 
+  $ tar -xvf Fulcrum-$VERSION-arm64-linux.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$VERSION-arm64-linux/Fulcrum Fulcrum-$VERSION-arm64-linux/FulcrumAdmin 
   $ Fulcrum --version
-  > Fulcrum 1.8.2 (Release d330248)
-  compiled: gcc 8.4.0
+  > Fulcrum 1.9.1 (Release 713d2d7)
+  > Protocol: version min: 1.4, version max: 1.5
+  > compiled: gcc 8.4.0
   ...
   ```
 
@@ -355,19 +367,18 @@ Fulcrum needs to start automatically on system boot.
 * Expected output:
 
   ```sh
-  -- Journal begins at Mon 2022-04-04 16:41:41 CEST. --
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] simdjson: version 0.6.0
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] ssl: OpenSSL 1.1.1n  15 Mar 2022
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.063] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Fulcrum 1.8.2 (Release d330248) - Thu Jul 28, 2022 12:20:13.064 CEST - starting up ...
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.064] Max open files: 524288 (increased from default: 1024)
-  Jul 28 12:20:13 rasp Fulcrum[181811]: [2022-07-28 12:20:13.065] Loading database ...
-  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.489] DB memory: 512.00 MiB
-  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.491] Coin: BTC
-  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.492] Chain: main
-  Jul 28 12:20:14 rasp Fulcrum[181811]: [2022-07-28 12:20:14.494] Verifying headers ...
-  Jul 28 12:20:19 rasp Fulcrum[181811]: [2022-07-28 12:20:19.780] Initializing header merkle cache ...
-  Jul 28 12:20:21 rasp Fulcrum[181811]: [2022-07-28 12:20:21.643] Checking tx counts ...
+  Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] simdjson: version 0.6.0
+  Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] ssl: OpenSSL 1.1.1  11 Sep 2018
+  Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
+  Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] Fulcrum 1.9.1 (Release 713d2d7) - Thu Apr 27, 2023 21:20:52.264 EEST - starting up ...
+  Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] Max open files: 524288 (increased from default: 1024)
+  Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.265] Loading database ...
+  Apr 27 21:21:03 rasp Fulcrum[3994155]: [2023-04-27 21:21:03.907] DB memory: 1024.00 MiB
+  Apr 27 21:21:03 rasp Fulcrum[3994155]: [2023-04-27 21:21:03.907] Coin: BTC
+  Apr 27 21:21:03 rasp Fulcrum[3994155]: [2023-04-27 21:21:03.907] Chain: main
+  Apr 27 21:21:05 rasp Fulcrum[3994155]: [2023-04-27 21:21:05.190] Verifying headers ...
+  Apr 27 21:21:13 rasp Fulcrum[3994155]: [2023-04-27 21:21:13.337] Initializing header merkle cache ...
+  Apr 27 21:21:16 rasp Fulcrum[3994155]: [2023-04-27 21:21:16.074] Checking tx counts ...
   ...
   ```
 
@@ -555,7 +566,15 @@ If the database gets corrupted and you don't have a backup, you will have to res
   $ sudo systemctl stop fulcrum
   ```
 
-* Download, verify and install the latest Fulcrum binaries as described in the [Fulcrum section](fulcrum.md#download-and-set-up-fulcrum) of this guide
+* Verify Bitcoin Core configuration as described in the [Configure Bitcoin Core section](fulcrum.md#configure-bitcoin-core) of this guide
+
+* Download, verify and install the latest Fulcrum binaries as described in the [Download and set up Fulcrum section](fulcrum.md#download-and-set-up-fulcrum) of this guide
+
+* Start Fulcrum service
+
+  ```sh
+  $ sudo systemctl start fulcrum
+  ```
 
 ## Uninstall
 
