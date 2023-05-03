@@ -447,7 +447,7 @@ Tor is used to access "Dojo API and Maintanence tool" and to reach Dojo in an an
   # Hidden Service Dojo
   HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   HiddenServiceVersion 3
-  HiddenServicePort 80 127.0.0.1:80
+  HiddenServicePort 80 127.0.0.1:4011
   ```
 
 * Restart Tor 
@@ -546,63 +546,21 @@ Configure nginx.conf for Dojo Maintanence Tool.
   # /etc/nginx/sites-enabled/dojo.conf
   # https://code.samourai.io/dojo/samourai-dojo/-/blob/develop/docker/my-dojo/nginx/mainnet.conf
 
-  # Proxy WebSockets
-  # https://www.nginx.com/blog/websocket-nginx/
   map $http_upgrade $connection_upgrade {
-    default upgrade;
-    '' close;
+      default upgrade;
+      '' close;
   }
 
   # WebSocket server listening here
   upstream websocket {
-    server localhost:8080;
+      server localhost:8080;
   }
-
-  # Tor Site Configuration
-  server {
-    listen 80;
-    server_name xyz.onion;
-    server_tokens off;
-
-    # Set proxy timeouts for the application
-    proxy_connect_timeout 600;
-    proxy_read_timeout 600;
-    proxy_send_timeout 600;
-    send_timeout 600;
-
-    # Proxy WebSocket connections first
-    location /v2/inv {
-        proxy_pass http://websocket;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $connection_upgrade;
-    }
-
-    # PushTX server is separate, so proxy first
-    location /v2/pushtx/ {
-        proxy_pass http://localhost:8081/;
-    }
-
-    # Tracker server is separate, so proxy first
-    location /v2/tracker/ {
-        proxy_pass http://localhost:8082/;
-    }
-
-    # Proxy requests to maintenance tool
-    location /admin/ {
-        proxy_pass http://localhost:8080/static/admin/;
-    }
-
-    # Proxy all other v2 requests to the accounts server
-    location /v2/ {
-        proxy_pass http://localhost:8080/;
-    }
-  }
-  
-  # Local Network Configuration
+  # Dojo Configuration
   server {
     listen 4010 ssl;
-    server_name localhost;
+    listen 4011;
+    server_name xyz.onion;
+    port_in_redirect off;
     server_tokens off;
 
     # Set proxy timeouts for the application
@@ -611,7 +569,7 @@ Configure nginx.conf for Dojo Maintanence Tool.
     proxy_send_timeout 600;
     send_timeout 600;
 
-    # Specify SSL certificate and key file path
+    # Raspibolt Certificates
     ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
     ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
@@ -641,6 +599,11 @@ Configure nginx.conf for Dojo Maintanence Tool.
     # Proxy all other v2 requests to the accounts server
     location /v2/ {
         proxy_pass http://localhost:8080/;
+    }
+
+    # Redirect onion address to maintenance tool
+    location = / {
+        return 301 /admin;
     }
   }
   ```
