@@ -893,13 +893,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 ### Use Auth47 (Paynym) login for Dojo Maintanence Tool
 
-* Stop Samourai Dojo
-
-  ```sh
-  $ sudo systemctl stop pm2-dojo.service
-  ```
-
-* Move to "index.js" configuration file
+* Open "index.js" configuration file
 
   ```sh
   $ sudo nano /opt/dojo/keys/index.js
@@ -914,10 +908,10 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   }
   ```
   
-* Start Samourai Dojo
+* Restart Samourai Dojo
 
   ```sh
-  $ sudo systemctl start pm2-dojo.service
+  $ sudo systemctl restart pm2-dojo.service
   ```
   
 * Open Dojo Maintanence Tool
