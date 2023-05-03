@@ -63,7 +63,7 @@ Store a copy of your passwords somewhere safe (preferably in an open-source pass
 
 Node.js is a back-end JavaScript runtime environment necessary for Samourai Dojo. 
 
-* Check if Node.js is installed on the system
+* Ensure that you are logged with user "admin", check if Node.js is installed on the system
 
   ```
   $ node -v
