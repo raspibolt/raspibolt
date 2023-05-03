@@ -406,6 +406,88 @@ instead of "[ X ] PASSWORD"
   ```sh
   $ exit
   ```
+
+### pm2.config syntax error (Skip)
+
+* If during Dojo startup following error gets displayed, it is necessary to make following changes to the "pm2.config.cjs"
+
+  ```
+  [PM2][ERROR] File pm2.config.cjs malformated
+  npm WARN deprecatedconst path = require('path')
+  ```
+  
+* With user "dojo" rename "pm2.config.cjs" to "pm2.config.cjs.bak", create a new file and paste following content
+
+  ```sh
+  $ mv /opt/dojo/pm2.config.cjs /opt/dojo/pm2.config.cjs.bak
+  $ nano pm2.config.cjs
+  ```
+  
+  ```
+  const path = require('path'); // Added this line to import the `path` module
+
+  const NAMESPACE = 'mainnet' // OR testnet
+  const INTERPRETER = 'node' // OR binary name like `node`
+
+  module.exports = {
+    apps: [
+        {
+            name: `Samourai Dojo - Accounts (${NAMESPACE})`,
+            namespace: NAMESPACE,
+            script: './index.js',
+            cwd: path.join(__dirname, 'accounts'), // Modified this line to use `path.join` instead of `./accounts`
+            interpreter: INTERPRETER,
+            out_file: './output-2022-01-01.log',
+            error_file: './error-2022-01-01.log',
+            wait_ready: true,
+            stop_exit_codes: 0,
+            listen_timeout: 5000,
+            kill_timeout: 3000,
+        },
+        {
+            name: `Samourai Dojo - PushTX (${NAMESPACE})`,
+            namespace: NAMESPACE,
+            script: './index.js',
+            cwd: path.join(__dirname, 'pushtx'), // Modified this line to use `path.join` instead of `./pushtx`
+            interpreter: INTERPRETER,
+            out_file: './output-2022-01-01.log',
+            error_file: './error-2022-01-01.log',
+            wait_ready: true,
+            stop_exit_codes: 0,
+            listen_timeout: 5000,
+            kill_timeout: 3000,
+        },
+        {
+            name: `Samourai Dojo - PushTX orhestrator (${NAMESPACE})`,
+            namespace: NAMESPACE,
+            script: './index-orchestrator.js',
+            cwd: path.join(__dirname, 'pushtx'), // Modified this line to use `path.join` instead of `./pushtx`
+            interpreter: INTERPRETER,
+            out_file: './output-orchestrator-2022-01-01.log',
+            error_file: './error-orchestrator-2022-01-01.log',
+            wait_ready: true,
+            stop_exit_codes: 0,
+            listen_timeout: 5000,
+            kill_timeout: 3000,
+        },
+        {
+            name: `Samourai Dojo - Tracker (${NAMESPACE})`,
+            namespace: NAMESPACE,
+            script: './index.js',
+            cwd: path.join(__dirname, 'tracker'), // Modified this line to use `path.join` instead of `./tracker`
+            interpreter: INTERPRETER,
+            out_file: './output-2022-01-01.log',
+            error_file: './error-2022-01-01.log',
+            wait_ready: true,
+            stop_exit_codes: 0,
+            listen_timeout: 5000,
+            kill_timeout: 3000,
+        }
+    ]
+  };
+  ```
+  
+* Save and exit. [Start Dojo](#run-dojo) again 
   
 ### Restrict access to configuration file
 
@@ -648,6 +730,8 @@ Configure nginx.conf for Dojo Maintanence Tool.
   $ pm2 start pm2.config.cjs
   ```
   
+If following error gets diplayed: "[PM2][ERROR] File pm2.config.cjs malformated", follow [this section](#pm2config-syntax-error-skip) and return back for the rest of installation
+
   ```
   ┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
   │ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
@@ -659,91 +743,12 @@ Configure nginx.conf for Dojo Maintanence Tool.
   └────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
   ```
   
-* If following error gets displayed, it is necessary to make changes to the "pm2.config.cjs"
-
-  ```
-  [PM2][ERROR] File pm2.config.cjs malformated
-  npm WARN deprecatedconst path = require('path')
-  ```
-  
-* Rename "pm2.config.cjs" to "pm2.config.cjs.bak", create a new file and paste following content
-
-  ```sh
-  $ mv /opt/dojo/pm2.config.cjs /opt/dojo/pm2.config.cjs.bak
-  $ nano pm2.config.cjs
-  ```
-  
-  ```
-  const path = require('path'); // Added this line to import the `path` module
-
-  const NAMESPACE = 'mainnet' // OR testnet
-  const INTERPRETER = 'node' // OR binary name like `node`
-
-  module.exports = {
-    apps: [
-        {
-            name: `Samourai Dojo - Accounts (${NAMESPACE})`,
-            namespace: NAMESPACE,
-            script: './index.js',
-            cwd: path.join(__dirname, 'accounts'), // Modified this line to use `path.join` instead of `./accounts`
-            interpreter: INTERPRETER,
-            out_file: './output-2022-01-01.log',
-            error_file: './error-2022-01-01.log',
-            wait_ready: true,
-            stop_exit_codes: 0,
-            listen_timeout: 5000,
-            kill_timeout: 3000,
-        },
-        {
-            name: `Samourai Dojo - PushTX (${NAMESPACE})`,
-            namespace: NAMESPACE,
-            script: './index.js',
-            cwd: path.join(__dirname, 'pushtx'), // Modified this line to use `path.join` instead of `./pushtx`
-            interpreter: INTERPRETER,
-            out_file: './output-2022-01-01.log',
-            error_file: './error-2022-01-01.log',
-            wait_ready: true,
-            stop_exit_codes: 0,
-            listen_timeout: 5000,
-            kill_timeout: 3000,
-        },
-        {
-            name: `Samourai Dojo - PushTX orhestrator (${NAMESPACE})`,
-            namespace: NAMESPACE,
-            script: './index-orchestrator.js',
-            cwd: path.join(__dirname, 'pushtx'), // Modified this line to use `path.join` instead of `./pushtx`
-            interpreter: INTERPRETER,
-            out_file: './output-orchestrator-2022-01-01.log',
-            error_file: './error-orchestrator-2022-01-01.log',
-            wait_ready: true,
-            stop_exit_codes: 0,
-            listen_timeout: 5000,
-            kill_timeout: 3000,
-        },
-        {
-            name: `Samourai Dojo - Tracker (${NAMESPACE})`,
-            namespace: NAMESPACE,
-            script: './index.js',
-            cwd: path.join(__dirname, 'tracker'), // Modified this line to use `path.join` instead of `./tracker`
-            interpreter: INTERPRETER,
-            out_file: './output-2022-01-01.log',
-            error_file: './error-2022-01-01.log',
-            wait_ready: true,
-            stop_exit_codes: 0,
-            listen_timeout: 5000,
-            kill_timeout: 3000,
-        }
-    ]
-  };
-  ```
-  
-* Save and exit. Start Dojo again 
-
 * Check the logs, you should expect following output (it will take a while for blocks to synchronise):
 
   ```sh
   $ pm2 logs mainnet
   ```
+  
   ```
   3|Samourai | Ignoring invalid configuration option passed to Connection: acquireTimeout. This is currently a warning, but in future versions of MySQL2,     an error will be thrown if you pass an invalid configuration option to a Connection
   7|Samourai | 2022-09-26T16:26:08Z  INFO  Tracker :  Added block header 409 (id=409)
@@ -1019,7 +1024,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   # Hidden Service Dojo
   #HiddenServiceDir /var/lib/tor/hidden_service_dojo/
   #HiddenServiceVersion 3
-  #HiddenServicePort 80 127.0.0.1:80
+  #HiddenServicePort 80 127.0.0.1:4011
   ```
 
   ```sh
