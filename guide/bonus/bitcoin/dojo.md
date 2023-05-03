@@ -852,7 +852,7 @@ Erase Wallet
 
 Connect samourai wallet to your own backend
 
-* If on local network, point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4010](https://raspibolt.local:4010){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4010).
+* If on local network, point your browser to the secure access point provided by the nginx web proxy, for example [https://raspibolt.local:4011](https://raspibolt.local:4011){:target="_blank"} (or your nodes IP address, e.g. https://192.168.0.20:4011).
 
 * If using Tor, paste your hostname generated in Tor Hidden Service section into Tor browser with following syntax: `http://xyz.onion`. You can bookmark this page for easier future access
 
