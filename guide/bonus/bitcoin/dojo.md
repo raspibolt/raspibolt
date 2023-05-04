@@ -82,7 +82,7 @@ Node.js was already installed as a part of Blockchain explorer guide. If not ins
   
 ### Firewall
 
-* Configure the UFW firewall to allow incoming HTTP/HTTPS requests
+* Configure the UFW firewall to allow incoming HTTPS requests
 
   ```sh
   $ sudo ufw allow 4011/tcp comment 'allow Dojo SSL'
@@ -406,7 +406,7 @@ instead of "[ X ] PASSWORD"
   $ exit
   ```
 
-### pm2.config syntax error (Skip)
+### pm2.config syntax error (skip)
 
 * If during Dojo startup following error gets displayed, it is necessary to make following changes to the "pm2.config.cjs"
 
@@ -872,6 +872,9 @@ Connect samourai wallet to your own backend
   <img src="/images/Samourai_Wallet_Setup.png" width="280" height="550">
 
 * Scan the pairing QR code displayed by your chosen Dojo implementation
+
+💡 If you are not pairing from the Tor Browser, the Dojo Tor address will not be filled in. In that case, either use the Tor Browser for pairing or fill in the input field in the following format: `http://xyz.onion/v2`
+
 * Tap Restore an existing wallet
 
   <img src="/images/Samourai_Wallet_Setup_2.png" width="280" height="550">
