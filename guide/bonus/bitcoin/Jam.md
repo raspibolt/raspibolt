@@ -176,6 +176,7 @@ $ curl https://dergigi.com/PGP.txt | gpg --import
 ```sh
 $ LATEST_VERSION=$(wget -qO- https://api.github.com/repos/joinmarket-webui/jam/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
 $ echo $LATEST_VERSION
+```
 
 * Retrieve source code
 
