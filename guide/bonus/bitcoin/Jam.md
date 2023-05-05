@@ -173,10 +173,9 @@ $ curl https://dergigi.com/PGP.txt | gpg --import
 
 * Check the latest Jam release version. You can also confirm with the [release page](https://github.com/joinmarket-webui/jam/releases){:target="_blank" rel="noopener"}
 
-  ```sh
-  $ LATEST_VERSION=$(wget -qO- https://api.github.com/repos/joinmarket-webui/jam/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-  $ echo $LATEST_VERSION
-  ```
+```sh
+$ LATEST_VERSION=$(wget -qO- https://api.github.com/repos/joinmarket-webui/jam/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+$ echo $LATEST_VERSION
 
 * Retrieve source code
 
