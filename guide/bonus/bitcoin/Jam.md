@@ -179,8 +179,8 @@ $ echo $LATEST_VERSION
 
 * Retrieve source code
 
-  {: .highlight }
-  > You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
+{: .highlight }
+> You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
 
 
 ```sh
