@@ -47,7 +47,7 @@ Table of contents
   $ sudo add-apt-repository ppa:deadsnakes/ppa
   $ sudo apt install python3.9 python3.9-distutils
   ```
-
+  
 ### Firewall & reverse proxy
 
 * Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to LNbits.
@@ -120,10 +120,15 @@ Table of contents
   ```sh
   $ git clone https://github.com/lnbits/lnbits.git
   $ cd lnbits  
-  $ git checkout 0.10
+  $ git checkout 0.10.5
   $ poetry env use python3.9
-  $ poetry add setuptools wheel
   $ poetry install --only main
+  ```
+
+* Only if secp256k1 build fails, run:
+
+  ```sh
+  $ poetry add setuptools wheel
   ```
 
 ### Configuration
@@ -335,8 +340,8 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ git fetch
   $ git reset --hard HEAD
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > 0.10
-  $ git checkout 0.10
+  > 0.10.5
+  $ git checkout 0.10.5
   $ poetry install --only main
   $ exit
   ```
