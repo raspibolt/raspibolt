@@ -171,10 +171,22 @@ $ sudo su - jam
 $ curl https://dergigi.com/PGP.txt | gpg --import
 ```
 
-* Retrieve source code
+* Check the latest Jam release version. You can also confirm with the [release page](https://github.com/joinmarket-webui/jam/releases){:target="_blank" rel="noopener"}
 
 ```sh
-$ git clone https://github.com/joinmarket-webui/jam.git --branch v0.1.4 --depth=1
+$ LATEST_VERSION=$(wget -qO- https://api.github.com/repos/joinmarket-webui/jam/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+$ echo $LATEST_VERSION
+```
+
+* Retrieve source code
+
+{: .highlight }
+> You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer releases might not have been thoroughly tested with the rest of the RaspiBolt configuration.
+
+
+```sh
+$ VERSION="v0.1.5"
+$ git clone https://github.com/joinmarket-webui/jam.git --branch $VERSION --depth=1
 ```
 
 * Verify release by looking for `Good signature` response
@@ -182,7 +194,7 @@ $ git clone https://github.com/joinmarket-webui/jam.git --branch v0.1.4 --depth=
 ```sh
 $ cd jam
 
-$ git verify-tag v0.1.4
+$ git verify-tag $VERSION
 ...
 > gpg: Good signature from "Gigi <dergigi@pm.me>" [unknown]
 > gpg: WARNING: This key is not certified with a trusted signature!
@@ -346,7 +358,7 @@ $ sudo nano /etc/tor/torrc
 # Hidden Service Jam
 HiddenServiceDir /var/lib/tor/hidden_service_jam/
 HiddenServiceVersion 3
-HiddenServicePort 80 127.0.0.1:4020
+HiddenServicePort 443 127.0.0.1:4020
 ```
 
 * Reload Tor configuration and get your connection address.
@@ -419,7 +431,7 @@ $ sudo nano /etc/tor/torrc
 # Hidden Service Jam
 #HiddenServiceDir /var/lib/tor/hsv3/
 #HiddenServiceVersion 3
-#HiddenServicePort 80 127.0.0.1:4020
+#HiddenServicePort 443 127.0.0.1:4020
 ```
 
 ```sh
