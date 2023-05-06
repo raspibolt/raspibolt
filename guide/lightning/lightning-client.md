@@ -698,7 +698,7 @@ A quick reference with common commands to play around with:
   $ lncli listinvoices
   ```
 
-* to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channelpoint": `FUNDING_TXID`:`OUTPUT_INDEX`
+* to close a channel, you need the following two arguments that can be determined with `listchannels` and are listed as "channel_point": `FUNDING_TXID`:`OUTPUT_INDEX`
 
   [`closechannel`](https://api.lightning.community/api/lnd/lightning/close-channel){:target="_blank"}
 
