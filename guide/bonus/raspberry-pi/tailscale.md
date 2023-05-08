@@ -33,19 +33,6 @@ We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target
 
 ---
 
-## Dependencies
-
-### apt-transport-https
-
-To run tailscale, we need to install apt-transport-https
-
-* With user "admin", let's install apt-transport-https.
-
-  ```sh
-  $ sudo apt-get update
-  $ sudo apt-get install apt-transport-https
-  ```
-
 ## Install Tailscale
 * Add Tailscale’s package signing key and repository
 
