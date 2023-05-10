@@ -60,7 +60,7 @@ We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target
   $ tailscale ip -4
   ```
 
-### Access your node
+## Access your node
 
 * To access the services installed in your machine you normally use your local ip (https://192.168.1.10) or your machine hostname (https://raspibolt.local)
 
@@ -70,13 +70,13 @@ We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target
   $ tailscale ip -4
   ```
 
-## Ride The Lightning
+### Ride The Lightning
 
 * First install [Ride The Lightning](https://raspibolt.org/guide/lightning/web-app.html) if it's not installed
 
 * To access RTL instead of using your local ip (eg https://raspibolt.local or https://192.168.1.10) you would use the ip you got from the command above (eg https://100.100.100.100:4001 or https://raspibolt:4001)
 
-## Zeus
+### Zeus
 
 * Follow the [Mobile App Guide](https://raspibolt.org/guide/lightning/mobile-app.html) until the "Create a lndconnect QR code" section
 
@@ -110,7 +110,7 @@ We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target
 
 * Click on “SAVE NODE CONFIG”. Zeus is now connecting to your node, and it might take a while the first time.
 
-### For the future: Tailscale upgrade
+## For the future: Tailscale upgrade
 
 * As “admin” user, run:
 
@@ -119,7 +119,7 @@ We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target
   $ sudo apt-get install tailscale
   ```
 
-### Uninstall Tailscale
+## Uninstall Tailscale
 
 * Uninstall tailscale package
 
