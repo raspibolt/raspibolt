@@ -70,19 +70,45 @@ We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target
   $ tailscale ip -4
   ```
 
-* To access RTL for example you would use the ip you got from the command above (eg https://100.100.100.100:4001 or https://raspibolt:4001)
+## Ride The Lightning
 
-* When configuring zeus with tailscale you need to change from onion address in the [Create a lndconnect QR code section](https://raspibolt.org/guide/lightning/mobile-app.html#create-a-lndconnect-qr-code) to the tailscale address
+* First install [Ride The Lightning](https://raspibolt.org/guide/lightning/web-app.html) if it's not installed
+
+* To access RTL instead of using your local ip (eg https://raspibolt.local or https://192.168.1.10) you would use the ip you got from the command above (eg https://100.100.100.100:4001 or https://raspibolt:4001)
+
+## Zeus
+
+* Follow the [Mobile App Guide](https://raspibolt.org/guide/lightning/mobile-app.html) until the "Create a lndconnect QR code" section
+
+* Add this line in your lnd.conf in the Application options section to allow rest access from anywhere
 
   ```sh
-  $ lndconnect --host=100.100.100.100 --port=8080
+  $ restlisten=0.0.0.0:8080
   ``` 
 
-* You can also use the hostname of your machine
+* Configure the firewall
+
+  ```sh
+  $ sudo ufw allow 8080/tcp comment "allow LND REST from anywhere"
+  ``` 
+
+* Create a lndconnect QR code. Make sure to replace the .onion address with the ip from tailscale.
   
   ```sh
-  $ lndconnect --host=raspibolt --port=8080
+  $ lndconnect --host=abcdefg..............xyz.onion --port=8080
   ``` 
+ 
+* Open Zeus and tap on “GET STARTED”
+
+* Tap on “Connect a node” and then tap on the “+” at the top right to add your node
+
+* Enter a Nickname for your node (e.g., “RaspiBolt”)
+
+* Click on “SCAN LNDCONNECT CONFIG” and, if prompted, allow Zeus to use the camera
+
+* Scan the QR code generated earlier
+
+* Click on “SAVE NODE CONFIG”. Zeus is now connecting to your node, and it might take a while the first time.
 
 ### For the future: Tailscale upgrade
 
