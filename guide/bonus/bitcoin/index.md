@@ -43,6 +43,7 @@ has_toc: false
 * **[I2P](i2p.md)** - The Invisible Internet Protocol
 
 * **[Samourai Dojo](dojo.md)** - Personal backend for your Samourai Wallet
+* **[Samourai Whirlpool](whirlpool.md){:target="_blank"}** - 24/7 Whirlpool mixing on your RaspiBolt node
 
 ---
 
