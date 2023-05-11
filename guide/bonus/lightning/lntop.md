@@ -149,7 +149,7 @@ To use all the functionalities of lntop, use the following keys:
 
   ```sh
   $ cd /usr/local/bin
-  $ rm -r lntop
+  $ sudo rm -r lntop
   ```
 
 <br /><br />
