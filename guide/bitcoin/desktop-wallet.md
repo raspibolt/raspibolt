@@ -141,8 +141,8 @@ you can obtain it again by running the following command with "admin" on your no
 * Open Sparrow
 * Navigate to the server configuration page by hitting `Ctrl`+`P`, or  `Cmd`+`,` on OSX, then click on "Server"
 * Click on the "Private Electrum" tab. If you've already have an existing clearnet connection, click on "Edit Existing Connection".
-* On the "URL" line, paste your Tor hidden service connection address (e.g. "abcd...1234.onion") in the first box and `50002` in the second box
-* Enable SSL by clicking on the slider
+* On the "URL" line, paste your Tor hidden service connection address (e.g. "abcd...1234.onion") in the first box and `50001` in the second box
+* The SSL slider should be in the disabled position
 * Click on "Test Connection". A green tick should appear on the button and you should see something similar to the following output:
 
   ```
@@ -150,7 +150,7 @@ you can obtain it again by running the following command with "admin" on your no
   > [...]
   ```
 
-![Sparrow connect to Electrs via Tor](../../images/sparrow-electrum-tor-no-proxy.png)
+![Sparrow connect to Electrs via Tor](../../images/sparrow-electrum-tor-no-proxy-no-ssl.png)
 
 You're set! Sparrow is now configured to connect to your node over Tor and you can use it wherever you are.
 
