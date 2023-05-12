@@ -284,7 +284,7 @@ Note that the remote device needs to have Tor installed as well.
   ############### This section is just for location-hidden services ###
   HiddenServiceDir /var/lib/tor/hidden_service_electrs/
   HiddenServiceVersion 3
-  HiddenServicePort 50002 127.0.0.1:50002
+  HiddenServicePort 50001 127.0.0.1:50001
   ```
 
 * Reload Tor configuration and get your connection address.
