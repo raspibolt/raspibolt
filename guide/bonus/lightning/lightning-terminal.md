@@ -75,7 +75,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-alpha.txt --ignore-missing
-  > lightning-terminal-linux-arm64-v0.9.1-alpha.tar.gz: OK
+  > Example output: lightning-terminal-linux-arm64-{VERSION}-alpha.tar.gz: OK
   ```
 
 * Get the key to verify the manifest file and add it to your GPG keyring.
@@ -111,7 +111,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   $ tar -xzf lightning-terminal-linux-arm64-v$VERSION-alpha.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v$VERSION-alpha/*
   $ litd --lnd.version
-  > litd version 0.16.1-beta commit=lightning-terminal-v0.9.1-alpha
+  > Example Output: litd version {VERSION}-beta commit=lightning-terminal-{VERSION}-alpha
   ```
 
 ### User and data directories
@@ -265,7 +265,6 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 * Also if not already present, set `rpclisten` parameter in section `[Application Options]`
 
   ```ini
-  [Application Options]
   rpclisten=0.0.0.0:10009
   ```
   
@@ -520,7 +519,7 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
 
   ```sh
   $ litd --lnd.version
-  > litd version 0.16.1-beta commit=lightning-terminal-v0.9.1-alpha
+  > Example output: litd version {VERSION}-beta commit=lightning-terminal-{VERSION}-alpha
   ```
 
 * Read the [release notes](https://github.com/lightninglabs/lightning-terminal/releases){:target="_blank"} in case there is any breaking change to be aware of.
