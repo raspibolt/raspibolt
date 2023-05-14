@@ -274,7 +274,7 @@ To use your Electrum server when you're on the go, you can easily create a Tor h
 This way, you can connect the BitBoxApp or Electrum wallet also remotely, or even share the connection details with friends and family.
 Note that the remote device needs to have Tor installed as well.
 
-* Add the following three lines in the section for "location-hidden services" in the `torrc` file.
+* Add the following lines in the section for "location-hidden services" in the `torrc` file.
 
   ```sh
   $ sudo nano /etc/tor/torrc
@@ -285,7 +285,10 @@ Note that the remote device needs to have Tor installed as well.
   HiddenServiceDir /var/lib/tor/hidden_service_electrs/
   HiddenServiceVersion 3
   HiddenServicePort 50001 127.0.0.1:50001
+  HiddenServicePort 50002 127.0.0.1:50002
   ```
+
+This will allow remote connections via Tor through port 50001 (TCP) or 50002 (SSL)
 
 * Reload Tor configuration and get your connection address.
 
