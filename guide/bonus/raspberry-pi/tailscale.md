@@ -92,10 +92,10 @@ We set up [Tailscale](https://tailscale.com/download/linux/rpi-bullseye){:target
   $ sudo ufw allow 8080/tcp comment "allow LND REST from anywhere"
   ``` 
 
-* Create a lndconnect QR code. Make sure to replace the .onion address with the ip from tailscale.
+* Create a lndconnect QR code. Make sure to replace the 100.100.100.100 address with the ip from tailscale.
   
   ```sh
-  $ lndconnect --host=abcdefg..............xyz.onion --port=8080
+  $ lndconnect --host=100.100.100.100 --port=8080
   ``` 
  
 * Open Zeus and tap on “GET STARTED”
