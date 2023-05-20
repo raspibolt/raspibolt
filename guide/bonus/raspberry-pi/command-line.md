@@ -39,7 +39,7 @@ $ nano /home/admin/.bashrc
 force_color_prompt=yes
 
 # pimp prompt (comment/replace the PS1 line)
-PS1="${debian_chroot:+($debian_chroot)}\[\e[33m\]\u \[\033[01;34m\]\w\[\e[33;40m\] ₿\[\e[m\] "
+PS1="${debian_chroot:+($debian_chroot)}\[\e[33m\]\u \[\033[01;34m\]\w\[\e[33m\] ₿\[\e[m\] "
 
 # set "ls" to always use the -la option, to list details of all files (including hidden), as default
 # simply insert the following line at the end of the file, or replace existing "alias ls='ls --color=auto'" if already present in the "enable color support of ls" section
@@ -60,8 +60,9 @@ As user “admin”, install bash completion scripts for Bitcoin Core and all Li
 
 ```sh
 $ cd /tmp/
-$ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/bitcoind.bash-completion
-$ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/bitcoin-cli.bash-completion
+$ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/completions/bash/bitcoin-cli.bash-completion
+$ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/completions/bash/bitcoin-tx.bash-completion
+$ wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/completions/bash/bitcoind.bash-completion
 $ wget https://raw.githubusercontent.com/lightningnetwork/lnd/master/contrib/lncli.bash-completion
 $ sudo cp *.bash-completion /etc/bash_completion.d/
 ```
