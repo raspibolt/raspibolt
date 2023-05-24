@@ -45,13 +45,38 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 
 ---
 
-### Firewall
+### Firewall & Nginx
 
 * Configure the UFW firewall to allow incoming HTTPS requests:
 
   ```sh
   $ sudo ufw allow 8443/tcp comment 'allow Lightning Terminal SSL'
   $ sudo ufw status
+  ```
+
+* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to Thunderhub
+
+  ```sh
+  $ sudo nano /etc/nginx/streams-enabled/litd-reverse-proxy.conf
+  ```
+
+* Insert the upstream configuration
+
+  ```nginx
+  upstream litd {
+    server 127.0.0.1:8443;
+  }
+  server {
+    listen 8444 ssl;
+    proxy_pass litd;
+  }
+  ```
+
+* Test and reload NGINX configuration
+
+  ```sh
+  $ sudo nginx -t
+  $ sudo systemctl reload nginx
   ```
 
 ---
@@ -296,7 +321,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
   ```
 
 * Test that Lightning Terminal is working by visiting the web UI
-  * Past the following URL in your browser: [https://raspibolt.local:8443/](https://raspibolt.local::8443/){:target="_blank"} (replace raspibolt.local by your node IP address if required)
+  * Past the following URL in your browser: [https://raspibolt.local:8444/](https://raspibolt.local::8444/){:target="_blank"} (replace raspibolt.local by your node IP address if required)
   * Note that the first time you connect, your browser will display a warning due to the fact the SSL certificate is self-generated. On Firefox, simply click "Advanced" and then "Accept the risks and continue" (or similar wording in other browsers)
   * Enter password [E] when prompted.
   * (Optional) Follow the walkthrough to have a first introduction to Lightning Terminal GUI. Otherwise, click "No thanks" to skip it.
@@ -417,7 +442,7 @@ Rather than always typing the flags, we can create aliases for the "admin" user.
 
 ### Settings
 
-* Log in to your Lightning Terminal by pasting [https://raspibolt.local:8443/](https://raspibolt.local:8443/){:target="_blank"} in your web browser (replace rapsibolt.local by your node IP address if needed).
+* Log in to your Lightning Terminal by pasting [https://raspibolt.local:8444/](https://raspibolt.local:8444/){:target="_blank"} in your web browser (replace rapsibolt.local by your node IP address if needed).
 
 * In the left menu, click on "Settings"
 
@@ -446,7 +471,7 @@ Lightning Node Connect allows to connect to Lightning Terminal and the node from
 
 #### How to connect
 
-* Log in to your Lightning Terminal by pasting [https://raspibolt.local:8443/](https://raspibolt.local:8443/){:target="_blank"} in your web browser (replace rapsibolt.local by your node IP address if needed).
+* Log in to your Lightning Terminal by pasting [https://raspibolt.local:8444/](https://raspibolt.local:8444/){:target="_blank"} in your web browser (replace rapsibolt.local by your node IP address if needed).
 * In the left menu, click on "Lightning Node Connect"
 * Click on the "Create a new session" button and choose a name (e.g. test #1)
 * Click the "Submit" button, a pairing phrase will be copied to your clipboard
