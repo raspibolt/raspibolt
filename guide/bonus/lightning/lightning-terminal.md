@@ -127,7 +127,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   ```sh 
   $ ots verify manifest-v$VERSION-alpha.sig.ots
   > ...
-  > Success! Bitcoin block 786978 attests existence as of 2023-04-25 CEST
+  > Success! Bitcoin block 790028 attests existence as of 2023-05-16 CEST
   ```
 
 * Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
