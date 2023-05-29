@@ -272,7 +272,7 @@ The settings for Pool, Faraday, Loop can all be put in the configuration file
 
 🔍 *Notice that the options for Faraday, Loop and Pool can be set in this configuration file but you must prefix the software with a dot as we made here. Use samples configuration files shown in github repo of each software for more options*
 
-* Lightning Terminal 0.9.1 requires RPC Middleware to be enabled, therefore we switch to user lnd to adjust `lnd.conf`
+* Lightning Terminal 0.9.1+ requires RPC Middleware to be enabled, therefore we switch to user lnd to adjust `lnd.conf`
 
   ```sh
   $ exit
