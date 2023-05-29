@@ -471,7 +471,7 @@ Lightning Node Connect allows to connect to Lightning Terminal and the node from
 
 #### How to connect
 
-* Log in to your Lightning Terminal by pasting [https://raspibolt.local:8444/](https://raspibolt.local:8444/){:target="_blank"} in your web browser (replace rapsibolt.local by your node IP address if needed).
+* Log in to your Lightning Terminal by pasting [https://raspibolt.local:8444/](https://raspibolt.local:8444/){:target="_blank"} in your web browser (replace raspibolt.local by your node IP address if needed).
 * In the left menu, click on "Lightning Node Connect"
 * Click on the "Create a new session" button and choose a name (e.g. test #1)
 * Click the "Submit" button, a pairing phrase will be copied to your clipboard
