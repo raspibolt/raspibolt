@@ -688,6 +688,7 @@ Do you want to access LNDg remotely? You can easily do so by adding a Tor hidden
   ```
 
   ```ini
+  ############### This section is just for location-hidden services ###
   # Hidden service LNDg
   HiddenServiceDir /var/lib/tor/hidden_service_lndg/
   HiddenServiceVersion 3
