@@ -271,6 +271,8 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
   ```
   
   ```ini
+  # RaspiBolt: systemd unit for LNDg uWSGI app
+  # /etc/systemd/system/uwsgi.service
   [Unit]
   Description=LNDg uWSGI app
   After=lnd.service
