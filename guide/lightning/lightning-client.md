@@ -33,8 +33,7 @@ We'll download, verify and install LND.
   ```sh
   $ cd /tmp
   $ VERSION="v0.15.5-beta"
-  $ DISTRO="lnd-linux-arm64"
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/$DISTRO-$VERSION.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/lnd-linux-arm64-$VERSION.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-$VERSION.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-roasbeef-$VERSION.sig
   $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-roasbeef-$VERSION.sig.ots
@@ -65,7 +64,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-$VERSION.sig manifest-v0.15.5-beta.txt
+  $ gpg --verify manifest-roasbeef-$VERSION.sig manifest-$VERSION.txt
   > gpg: Signature made Thu Dec  1 11:20:10 2022 PST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
@@ -93,8 +92,8 @@ Having verified the integrity and authenticity of the release binary, we can saf
 * Install LND
 
   ```sh
-  $ tar -xzf $DISTRO-$VERSION.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin $DISTRO-$VERSION/*
+  $ tar -xzf lnd-linux-arm64-$VERSION.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-$VERSION/*
   $ lnd --version
   > lnd version 0.15.5-beta commit=v0.15.5-beta
   ```
