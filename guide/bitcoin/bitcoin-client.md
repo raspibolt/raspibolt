@@ -49,13 +49,13 @@ This is a precaution to make sure that this is an official release and not a mal
   $ VERSION="bitcoin-25.0"
   
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/VERSION_CORE/VERSION-aarch64-linux-gnu.tar.gz
+  $ wget https://bitcoincore.org/bin/$VERSION_CORE/$VERSION-aarch64-linux-gnu.tar.gz
 
   # download the list of cryptographic checksum
-  $ wget https://bitcoincore.org/bin/VERSION_CORE/SHA256SUMS
+  $ wget https://bitcoincore.org/bin/$VERSION_CORE/SHA256SUMS
 
   # download the signatures attesting to validity of the checksums
-  $ wget https://bitcoincore.org/bin/VERSION_CORE/SHA256SUMS.asc
+  $ wget https://bitcoincore.org/bin/$VERSION_CORE/SHA256SUMS.asc
   ```
 
 ### Checksum check
@@ -109,8 +109,8 @@ This is a precaution to make sure that this is an official release and not a mal
 * If you're satisfied with the checkum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf VERSION-aarch64-linux-gnu.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin VERSION/bin/*
+  $ tar -xvf $VERSION-aarch64-linux-gnu.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin $VERSION/bin/*
   $ bitcoind --version
   > Bitcoin Core version v25.0.0
   > [...]
