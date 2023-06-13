@@ -45,17 +45,17 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # set up some version variables for easier maintenance later on
-  $ VERSION_CORE="bitcoin-core-23.0"
-  $ VERSION="bitcoin-23.0"
+  $ VERSION_CORE="bitcoin-core-25.0"
+  $ VERSION="bitcoin-25.0"
   
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/bitcoin-23.0-aarch64-linux-gnu.tar.gz
+  $ wget https://bitcoincore.org/bin/VERSION_CORE/VERSION-aarch64-linux-gnu.tar.gz
 
   # download the list of cryptographic checksum
-  $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
+  $ wget https://bitcoincore.org/bin/VERSION_CORE/SHA256SUMS
 
   # download the signatures attesting to validity of the checksums
-  $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.asc
+  $ wget https://bitcoincore.org/bin/VERSION_CORE/SHA256SUMS.asc
   ```
 
 ### Checksum check
@@ -64,7 +64,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-23.0-aarch64-linux-gnu.tar.gz: OK
+  > bitcoin-25.0-aarch64-linux-gnu.tar.gz: OK
   ```
 
 ### Signature check
@@ -95,8 +95,8 @@ This is a precaution to make sure that this is an official release and not a mal
 ### Timestamp check
 
 * The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"}, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
-  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS.ots
-  *  https://bitcoincore.org/bin/bitcoin-core-23.0/SHA256SUMS
+  *  https://bitcoincore.org/bin/bitcoin-25.0/SHA256SUMS.ots
+  *  https://bitcoincore.org/bin/bitcoin-25.0/SHA256SUMS
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
 * In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
 * In the next box, drop or upload the SHA256SUMS file
@@ -109,10 +109,10 @@ This is a precaution to make sure that this is an official release and not a mal
 * If you're satisfied with the checkum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf bitcoin-23.0-aarch64-linux-gnu.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-23.0/bin/*
+  $ tar -xvf VERSION-aarch64-linux-gnu.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin VERSION/bin/*
   $ bitcoind --version
-  > Bitcoin Core version v23.0.0
+  > Bitcoin Core version v25.0.0
   > [...]
   ```
 
