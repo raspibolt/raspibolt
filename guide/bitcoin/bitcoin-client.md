@@ -44,6 +44,10 @@ This is a precaution to make sure that this is an official release and not a mal
 * Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download){:target="_blank"} (ARM Linux 64 bit), they change with each update.
 
   ```sh
+  # set up some version variables for easier maintenance later on
+  $ VERSION_CORE="bitcoin-core-23.0"
+  $ VERSION="bitcoin-23.0"
+  
   # download Bitcoin Core binary
   $ wget https://bitcoincore.org/bin/bitcoin-core-23.0/bitcoin-23.0-aarch64-linux-gnu.tar.gz
 
