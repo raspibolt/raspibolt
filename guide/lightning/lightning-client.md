@@ -98,7 +98,7 @@ Having verified the integrity and authenticity of the release binary, we can saf
   $ tar -xvf lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v$VERSION-beta/*
   $ lnd --version
-  > lnd version $VERSION-beta commit=v$VERSION-beta
+  > lnd version v0.16.3-beta commit=v0.16.3-beta
   ```
 
 ### Data directory
