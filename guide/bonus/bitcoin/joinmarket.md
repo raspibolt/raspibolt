@@ -97,10 +97,11 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * As user "joinmarket", download the latest release, signature and timestamp. First check for the latest release on the [Releases page](https://github.com/JoinMarket-Org/joinmarket-clientserver/releases) and update version numbers as you go if needed.
 
   ```sh
+  $ VERSION="0.9.9"
   $ cd /tmp
-  $ wget -O joinmarket-clientserver-0.9.8.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v0.9.8.tar.gz
-  $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v0.9.8/joinmarket-clientserver-0.9.8.tar.gz.asc
-  $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v0.9.8/joinmarket-clientserver-0.9.8.tar.gz.asc.ots
+  $ wget -O joinmarket-clientserver-$VERSION.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v$VERSION.tar.gz
+  $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v$VERSION/joinmarket-clientserver-$VERSION.tar.gz.asc
+  $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v$VERSION/joinmarket-clientserver-$VERSION.tar.gz.asc.ots
   ```
 
 * Get the PGP key of JoinMarket developer Adam Gibson.
@@ -117,9 +118,9 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * Verify that the application is signed by Adam Gibson.
 
   ```
-  $ gpg --verify joinmarket-clientserver-0.9.8.tar.gz.asc
-  > gpg: assuming signed data in 'joinmarket-clientserver-0.9.8.tar.gz'
-  > gpg: Signature made Thu Sep 15 15:46:38 2022 EEST
+  $ gpg --verify joinmarket-clientserver-$VERSION.tar.gz.asc
+  > gpg: assuming signed data in 'joinmarket-clientserver-0.9.9.tar.gz'
+  > gpg: Signature made Sun Jan 29 21:07:35 2023 GMT
   > gpg:                using RSA key 2B6FC204D9BF332D062B461A141001A1AF77F20B
   > gpg: Good signature from "Adam Gibson (CODE SIGNING KEY) <ekaggata@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -130,7 +131,7 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * Check the timestamp of the signature
 
   ```sh
-  $ ots verify joinmarket-clientserver-0.9.8.tar.gz.asc.ots -f joinmarket-clientserver-0.9.8.tar.gz.asc
+  $ ots verify joinmarket-clientserver-$VERSION.tar.gz.asc.ots -f joinmarket-clientserver-$VERSION.tar.gz.asc
   > [...]
   > Success! Bitcoin block 754200 attests existence as of 2022-09-15 CET
   ```
@@ -138,9 +139,9 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * If the signature and timestamp check out, unpack and install JoinMarket. The install script will take about 5 minutes to run.
 
   ```sh
-  $ tar -xvzf joinmarket-clientserver-0.9.8.tar.gz -C /home/joinmarket/
+  $ tar -xvzf joinmarket-clientserver-$VERSION.tar.gz -C /home/joinmarket/
   $ cd 
-  $ ln -s joinmarket-clientserver-0.9.8 joinmarket
+  $ ln -s joinmarket-clientserver-$VERSION joinmarket
   $ cd joinmarket
   $ ./install.sh --without-qt --disable-secp-check --disable-os-deps-check
   ```
@@ -412,7 +413,17 @@ If upgrading from pre-0.8.1 to a newer versions, note that yield generator confi
   $ unlink joinmarket
   ```
 
-* Download, verify, extract and install the JoinMarket as described in the [Install JoinMarket](#install-joinmarket) section of this guide.
+* Download, verify, extract and install the JoinMarket as described in the [Installation](joinmarket.md#installation) section of this guide.
+
+* Rename the existing configuration file, activate jmvenv and run wallet-tool.py to generate a new configuration file.  
+
+  ```sh
+  $ mv /data/joinmarket/joinmarket.cfg /data/joinmarket/joinmarket.cfg.old
+  $ . activate.sh
+  (jvmenv) $ ./wallet-tool.py
+  ```
+  
+* Then customize joinmarket.cfg per the [Configuration](joinmarket.md#configuration) section of this guide.
 
 * Optionally delete old JoinMarket version directory to free up about 200 megabytes.
   

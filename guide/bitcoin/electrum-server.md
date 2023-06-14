@@ -98,9 +98,10 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   Other releases might not have been properly tested with the rest of the RaspiBolt configuration, though.
 
   ```sh
+  $ VERSION="0.9.13"
   $ mkdir /home/admin/rust
   $ cd /home/admin/rust
-  $ git clone --branch v0.9.10 https://github.com/romanz/electrs.git
+  $ git clone --branch v$VERSION https://github.com/romanz/electrs.git
   $ cd electrs
   ```
 
@@ -108,7 +109,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 
   ```sh
   $ curl https://romanzey.de/pgp.txt | gpg --import
-  $ git verify-tag v0.9.10
+  $ git verify-tag v$VERSION
   > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
@@ -173,7 +174,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   ```
 
   ```sh
-  Starting electrs 0.9.10 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.10 (Electrum Rust Server)!", args: [] }
+  Starting electrs 0.9.13 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.13 (Electrum Rust Server)!", args: [] }
   [2021-11-09T07:09:42.744Z INFO  electrs::metrics::metrics_impl] serving Prometheus metrics on 127.0.0.1:4224
   [2021-11-09T07:09:42.744Z INFO  electrs::server] serving Electrum RPC on 127.0.0.1:50001
   [2021-11-09T07:09:42.812Z INFO  electrs::db] "/data/electrs/db/bitcoin": 0 SST files, 0 GB, 0 Grows
@@ -327,20 +328,21 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   ```sh
   $ cd /home/admin/rust/electrs
 
-  # Clean and update the local source code and show the latest release tag (example: v0.9.10)
+  # Clean and update the local source code and show the latest release tag (example: v0.9.13)
   $ git clean -xfd
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
-  > v0.9.10
+  > v0.9.13
   
-  # Verify the release
-  $ git verify-tag v0.9.10
+  # Set the VERSION variable as number from latest release tag and verify developer signature
+  $ VERSION="0.9.13"
+  $ git verify-tag v$VERSION
   > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
   > [...]
 
-  # Check out the most recent release (replace v0.9.10 with the actual version)
+  # Check out the release
   # Should you encounter an error about files that would be overwritten use the -f argument to force the checkout
-  $ git checkout v0.9.10
+  $ git checkout v$VERSION
 
   # Compile the source code
   $ cargo clean

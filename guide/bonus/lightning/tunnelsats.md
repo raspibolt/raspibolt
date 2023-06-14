@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[Tunnel⚡️Sats](https://tunnelsats.com){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch. Alternatively an automated setup script can be found at the official [Tunnel⚡️Sats guide](https://blckbx.github.io/tunnelsats/){:target="_blank"}.
+[Tunnel⚡️Sats](https://tunnelsats.com){:target="_blank"} is a paid service to enable hybrid mode on lightning nodes and run clearnet over VPNs all over the world. Tunnel⚡️Sats provides secured and LN-only configured VPNs which support port-forwarding to connect with other lightning nodes. This guide installs the underlying system from scratch. Alternatively an automated setup script can be found at the official [Tunnel⚡️Sats guide](https://tunnelsats.github.io/tunnelsats/){:target="_blank"}.
 
 Paid service
 {: .label .label-yellow }
@@ -97,11 +97,14 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 - Append additional ruleset at the end of the file:
 
   ```ini
+  #Tunnelsats-Setupv2-Non-Docker
   [Interface]
-  FwMark = 0x3333
+  FwMark = 0x2000000
   Table = off
   
-  PostUp = ip rule add from all fwmark 0xdeadbeef table 51820;ip rule add from all table main suppress_prefixlength 0
+  PostUp = while [ $(ip rule | grep -c suppress_prefixlength) -gt 0 ]; do ip rule del from all table  main suppress_prefixlength 0;done
+  PostUp = while [ $(ip rule | grep -c 0x1000000) -gt 0 ]; do ip rule del from all fwmark 0x1000000/0xff000000 table  51820;done
+  PostUp = ip rule add from all fwmark 0x1000000/0xff000000 table 51820;ip rule add from all table main suppress_prefixlength 0
   PostUp = ip route add default dev %i table 51820;
   PostUp = ip route add  10.9.0.0/24 dev %i  proto kernel scope link; ping -c1 10.9.0.1
   PostUp = sysctl -w net.ipv4.conf.all.rp_filter=0
@@ -110,13 +113,14 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   
   PostUp = nft add table ip %i
   PostUp = nft add chain ip %i prerouting '{type filter hook prerouting priority mangle -1; policy accept;}'; nft add rule ip %i prerouting meta mark set ct mark
-  PostUp = nft add chain ip %i mangle '{type route hook output priority mangle -1; policy accept;}'; nft add rule ip %i mangle tcp sport != { 8080, 10009 } meta mark != 0x3333 meta cgroup 1118498 meta mark set 0xdeadbeef
-  PostUp = nft add chain ip %i nat'{type nat hook postrouting priority srcnat -1; policy accept;}'; nft insert rule ip %i nat fib daddr type != local oif != %i ct mark 0xdeadbeef drop;nft add rule ip %i nat oif != "lo" ct mark 0xdeadbeef masquerade
-  PostUp = nft add chain ip %i postroutingmangle'{type filter hook postrouting priority mangle -1; policy accept;}'; nft add rule ip %i postroutingmangle meta mark 0xdeadbeef ct mark set meta mark
+  PostUp = nft add chain ip %i mangle '{type route hook output priority mangle -1; policy accept;}'; nft add rule ip %i mangle tcp sport != { 8080, 10009 } meta mark and 0xff000000 != 0x2000000 meta cgroup 1118498 meta mark set mark and 0x00ffffff xor 0x1000000
+  PostUp = nft add chain ip %i nat'{type nat hook postrouting priority srcnat -1; policy accept;}'; nft insert rule ip %i nat  fib daddr type != local  ip daddr != {10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16} oifname != %i ct mark and 0xff000000 == 0x1000000 drop;nft add rule ip %i nat oifname %i ct mark and 0xff000000 == 0x1000000 masquerade
+  
+  PostUp = nft add chain ip %i postroutingmangle'{type filter hook postrouting priority mangle -1; policy accept;}'; nft add rule ip %i postroutingmangle meta mark and 0xff000000 == 0x1000000 ct mark set meta mark and 0x00ffffff xor 0x1000000 
   PostUp = nft add chain ip %i input'{type filter hook input priority filter -1; policy accept;}'; nft add rule ip %i input iifname %i  ct state established,related counter accept; nft add rule ip %i input iifname %i tcp dport != 9735 counter drop; nft add rule ip %i input iifname %i udp dport != 9735 counter drop
   
   PostDown = nft delete table ip %i
-  PostDown = ip rule del from all table  main suppress_prefixlength 0; ip rule del from all fwmark 0xdeadbeef table 51820
+  PostDown = ip rule del from all table  main suppress_prefixlength 0; ip rule del from all fwmark 0x1000000/0xff000000 table 51820
   PostDown = ip route flush table 51820
   PostDown = sysctl -w net.ipv4.conf.all.rp_filter=1
   ```
@@ -161,7 +165,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 - Save and exit. Run the script once initially: 
 
   ```sh
-  $ bash /etc/wireguard/tunnelsats-create-cgroup.sh
+  $ sudo bash /etc/wireguard/tunnelsats-create-cgroup.sh
   ```
   
 - Create a systemd service to run it automatically:
@@ -301,6 +305,12 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   $ sudo cp /etc/systemd/system/lnd.service /etc/systemd/system/lnd.service.bak
   ```
   
+- Now open `lnd.service` file.
+  
+  ```sh
+  $ sudo nano /etc/systemd/system/lnd.service
+  ```
+  
 - Edit `ExecStart` in `lnd.service` and add `/usr/bin/cgexec -g net_cls:splitted_processes` to the command:
 
   ```ini
@@ -347,21 +357,21 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   ```
 
 - Then we need to gather information from the tunnelsatsv2.conf file manually:
-  - Retrieve the DNS address of the VPN. We gonna call it `vpnExternalDNS`:
+  - Retrieve the DNS address of the VPN. We gonna call it `{vpnExternalDNS}`:
 
     ``` sh
     $ sudo grep "Endpoint" /etc/wireguard/tunnelsatsv2.conf | awk '{ print $3 }' | cut -d ":" -f1
     ```
   
-  - Retrieve the personal VPN port as `vpnExternalPort`:
+  - Retrieve the personal VPN port as `{vpnExternalPort}`:
 
     ```sh
     $ sudo grep "#VPNPort" /etc/wireguard/tunnelsatsv2.conf | awk '{ print $3 }'
     ```
   
-- This is what we need to edit the lightning implementation plus some additional hybrid parameters described in the following part:
+- This is what we need to edit the lightning implementation plus some additional hybrid parameters described in the following part. Please replace `{vpnExternalDNS}` and `{vpnExternalPort}` with values from the last commands:
 
-  Configuration for LND (`/data/lnd/lnd.conf`):
+  Configuration for LND (`/data/lnd/lnd.conf`) should look like this (mind the specific sections in brackets):
   
   ⚠️ Replace existing entry `listen=localhost` with `listen=0.0.0.0:9735`!
   
@@ -375,7 +385,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
   tor.skip-proxy-for-clearnet-targets=true
   ```
   
-  Configuration for CLN (`/data/lightningd/config`):
+  OR configuration for CLN (`/data/lightningd/config`):
   
   ```ini
   # Tor
@@ -438,7 +448,7 @@ This RaspiBolt bonus guide explicitly covers parts #2 and #3.
 Easy way: 
 
   ```sh
-  $ wget -O uninstallv2.sh https://github.com/blckbx/tunnelsats/raw/main/scripts/uninstallv2.sh
+  $ wget -O uninstallv2.sh https://github.com/tunnelsats/tunnelsats/raw/main/scripts/uninstallv2.sh
   $ sudo bash uninstallv2.sh
   ```
   
@@ -534,7 +544,7 @@ Manual way:
 
 ## Troubleshooting
 
-Please review the [FAQ](https://github.com/blckbx/tunnelsats/blob/main/FAQ.md){:target="_blank"} for further help. If you need help setting up hybrid mode / clearnet over VPN, join the Tunnel⚡️Sats [Telegram group](https://t.me/+NJylaUom-rxjYjU6){:target="_blank"}.
+Please review the [FAQ](https://github.com/tunnelsats/tunnelsats/blob/main/FAQ.md){:target="_blank"} for further help. If you need help setting up hybrid mode / clearnet over VPN, join the Tunnel⚡️Sats [Telegram group](https://t.me/+NJylaUom-rxjYjU6){:target="_blank"}.
 
 
 <br /><br />

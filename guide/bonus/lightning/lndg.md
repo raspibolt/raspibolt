@@ -89,12 +89,17 @@ For that we will create a separate user and we will be running the code as the n
   $ ln -s /data/lnd /home/lndg/.lnd
   ```
 
-* Clone the latest release of the project GitHub repository and enter it
+* Check the version number of the latest LNDg release (you can also confirm with the [release page](https://github.com/cryptosharks131/lndg/releases)) and clone it.
 
   ```sh
-  $ git clone --branch v1.3.1 https://github.com/cryptosharks131/lndg.git
-  $ cd lndg
+  $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/cryptosharks131/lndg/releases/latest | grep -oP '"tag_name":\s*"\K([^"]+)')
+  $ echo $LATEST_RELEASE
+  > v1.6.4
 
+  $ git clone --branch $LATEST_RELEASE https://github.com/cryptosharks131/lndg.git
+  $ cd lndg
+  ```
+  
 * Setup a Python virtual environment
 
   ```sh
@@ -143,6 +148,12 @@ If you didn't save the password, you can get it again with: `nano /home/lndg/lnd
   ```sh
   $ rm /home/lndg/lndg/data/lndg-admin.txt
   ```
+ 
+* Exit user lndg and return to admin for the next steps.
+
+  ```sh
+  $ exit
+  ```
 
 ### Make the LNDg database easy to backup
 
@@ -177,9 +188,11 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
 
 ### Web server configuration
 
-* Install uwsgi within the LNDg Python virtual environment
+* As user `lndg` install uwsgi within the LNDg Python virtual environment
 
   ```sh
+  $ sudo su - lndg
+  $ cd ~/lndg
   $ .venv/bin/python -m pip install uwsgi
   ```
 
@@ -258,6 +271,8 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
   ```
   
   ```ini
+  # RaspiBolt: systemd unit for LNDg uWSGI app
+  # /etc/systemd/system/uwsgi.service
   [Unit]
   Description=LNDg uWSGI app
   After=lnd.service
@@ -673,6 +688,7 @@ Do you want to access LNDg remotely? You can easily do so by adding a Tor hidden
   ```
 
   ```ini
+  ############### This section is just for location-hidden services ###
   # Hidden service LNDg
   HiddenServiceDir /var/lib/tor/hidden_service_lndg/
   HiddenServiceVersion 3
@@ -700,17 +716,22 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo su - lndg
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest 1.3.0 in this example), and update:
+* Fetch the latest GitHub repository information, display the release tags (use the latest 1.6.4 in this example), and update (special update instructions for 1.6.4 regarding new requirements `django_filter` and `protobuf`):
 
   ```sh
   $ cd /home/lndg/lndg
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v1.3.1
-  $ ./.venv/bin/pip install -r requirements.txt
+  $ git checkout v1.6.4
+  $ .venv/bin/pip install -r requirements.txt
+  $ .venv/bin/pip install --upgrade protobuf
+  $ rm lndg/settings.py
+  $ .venv/bin/python initialize.py -wn
+  $ .venv/bin/python manage.py migrate
   $ exit
   ```
+ 
   
 * Start the `uwsgi` systemd service again. The other LNDg timers and services will start automatically.
 

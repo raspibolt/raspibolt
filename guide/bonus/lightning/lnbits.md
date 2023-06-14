@@ -1,21 +1,21 @@
 ---
 layout: default
-title: LNBits
+title: LNbits
 parent: + Lightning
 grand_parent: Bonus Section
 nav_exclude: true
 has_toc: false
 ---
 
-# Bonus guide: LNBits, a lightning wallet/accounts system
+# Bonus guide: LNbits, a lightning wallet/accounts system
 
 {: .no_toc }
 
 ---
 
-[LNBits](https://github.com/lnbits/lnbits-legend){:target="_blank"} is a free and open-source lightning-network wallet/accounts system.
+[LNbits](https://github.com/lnbits/lnbits-legend){:target="_blank"} is a free and open-source lightning-network wallet/accounts system.
 
-⚠️ _USE WITH CAUTION - LNBits wallet is still in BETA_
+⚠️ _USE WITH CAUTION - LNbits wallet is still in BETA_
 
 Difficulty: Easy
 {: .label .label-green }
@@ -23,7 +23,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![LNBits](../../../images/lnbits.png)
+![LNbits](../../../images/lnbits.png)
 
 ---
 
@@ -43,12 +43,14 @@ Table of contents
 
   ```sh
   $ sudo apt update
-  $ sudo apt install libffi-dev libpq-dev python3-venv
+  $ sudo apt install software-properties-common
+  $ sudo add-apt-repository ppa:deadsnakes/ppa
+  $ sudo apt install python3.9 python3.9-distutils
   ```
-
+  
 ### Firewall & reverse proxy
 
-* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to LNBits.
+* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to LNbits.
 
   ```sh
   $ sudo nano /etc/nginx/streams-enabled/lnbits-reverse-proxy.conf
@@ -60,7 +62,7 @@ Table of contents
   }
   server {
     listen 4003 ssl;
-    proxy_pass lnbits;
+    proxy_pass lnbits;   
   }
   ```
 
@@ -74,13 +76,13 @@ Table of contents
 * Configure the firewall to allow incoming HTTPS requests.
 
   ```sh
-  $ sudo ufw allow 4003/tcp comment 'allow LNBits SSL'
+  $ sudo ufw allow 4003/tcp comment 'allow LNbits SSL'
   $ sudo ufw status
   ```
 
 ---
 
-## LNBits
+## LNbits
 
 ### Installation
 
@@ -91,41 +93,54 @@ Table of contents
   $ sudo adduser lnbits lnd
   ```
 
-* Create a data directory for LNBits and give ownership to the new user.
+* Create a data directory for LNbits and give ownership to the new user.
 
   ```sh
   $ sudo mkdir /data/lnbits
   $ sudo chown -R lnbits:lnbits /data/lnbits
   ```
 
-* Open a new "lnbits" user session and create symlinks to the LND and LNBits data directories.
+* Open a new "lnbits" user session and create symlinks to the LND and LNbits data directories.
 
   ```sh
   $ sudo su - lnbits
   $ ln -s /data/lnd /home/lnbits/.lnd
   $ ln -s /data/lnbits /home/lnbits/.lnbits
   ```
-
-* Download the source code directly from GitHub, create a virtual environment, and install all dependencies with pip.
+  
+* Install poetry and update PATH environment variable.
 
   ```sh
-  $ git clone --branch 0.9.4 https://github.com/lnbits/lnbits
-  $ cd lnbits
-  $ python3 -m venv venv
-  $ ./venv/bin/pip install setuptools wheel --upgrade
-  $ ./venv/bin/pip install -r requirements.txt
+  $ curl -sSL https://install.python-poetry.org | python3 -
+  $ export PATH="/home/lnbits/.local/bin:$PATH"
+  ```
+
+* Download the source code directly from GitHub, create a virtual environment and install all dependencies.
+
+  ```sh
+  $ git clone https://github.com/lnbits/lnbits.git
+  $ cd lnbits  
+  $ git checkout 0.10.8
+  $ poetry env use python3.9
+  $ poetry install --only main
+  ```
+
+* Only if secp256k1 build fails, run:
+
+  ```sh
+  $ poetry add setuptools wheel
   ```
 
 ### Configuration
 
-* Copy the example configuration file and open it.
+* Create data dir and copy the example configuration file and open it.
 
   ```sh
   $ cp .env.example .env
   $ nano .env
   ```
 
-* Change the default path of the LNBits data folder
+* Change the default path of the LNbits data folder
 
   ```ini
   #LNBITS_DATA_FOLDER="./data"
@@ -134,7 +149,7 @@ Table of contents
   
 * Choose the colour theme for the webpage, _e.g._ "bitcoin". You can choose among the following options: `autumn`, `bitcoin`, `classic`, `flamingo`, `freedom`, `mint`, `monochrome` and  `salvador`.
 
-![LNBits themes](../../../images/lnbits-themes.PNG)
+![LNbits themes](../../../images/lnbits-themes.PNG)
 
   ```ini
   LNBITS_THEME_OPTIONS="bitcoin"
@@ -193,26 +208,20 @@ Table of contents
   $ chmod 600 /home/lnbits/lnbits/.env
   ```
 
-* Build the static files
-
-  ```sh
-  $ ./venv/bin/python build.py
-  ```
-
 ### First start
 
-* Make sure we are in the LNBits app directory and start the application.
+* Make sure we are in the LNbits app directory and start the application.
 
   ```sh
   $ cd ~/lnbits
-  $ ./venv/bin/uvicorn lnbits.__main__:app --port 5000
+  $ poetry run lnbits --port 5000 --host 0.0.0.0
   ```
 
 Now point your browser to the secure access point provided by the nginx web proxy, for example <https://raspibolt.local:4003> (or your node's IP address like <https://192.168.0.20:4003>).
 
-Your browser will display a warning because we use a self-signed SSL certificate. Click on "Advanced" and proceed to the LNBits web interface.
+Your browser will display a warning because we use a self-signed SSL certificate. Click on "Advanced" and proceed to the LNbits web interface.
 
-* Stop LNBits in the terminal with `Ctrl`-`C` and exit the "lnbits" user session.
+* Stop LNbits in the terminal with `Ctrl`-`C` and exit the "lnbits" user session.
 
   ```sh
   $ exit
@@ -226,20 +235,20 @@ Your browser will display a warning because we use a self-signed SSL certificate
   $ sudo nano /etc/systemd/system/lnbits.service
   ```
 
-* Paste the following configuration. Save and exit.
+* Paste the following configuration. Save (Ctrl+o) and close the file (Ctrl+x) afterwards.
 
   ```sh
-  # RaspiBolt: systemd unit for LNBits
+  # RaspiBolt: systemd unit for LNbits
   # /etc/systemd/system/lnbits.service
 
-  Description=LNBits
+  Description=LNbits
   After=lnd.service
   PartOf=lnd.service
 
   [Service]
   WorkingDirectory=/home/lnbits/lnbits
 
-  ExecStart=/home/lnbits/lnbits/venv/bin/uvicorn lnbits.__main__:app --port 5000
+  ExecStart=/home/lnbits/.local/bin/poetry run lnbits --port 5000 --host 0.0.0.0 --debug --reload
   User=lnbits
   Restart=always
   TimeoutSec=120
@@ -266,23 +275,23 @@ Your browser will display a warning because we use a self-signed SSL certificate
   $ sudo journalctl -f -u lnbits
   ```
 
-* You can now access LNBits from within your local network by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address).
+* You can now access LNbits from within your local network by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address).
 
 ---
 
-### LNBits in action
+### LNbits in action
 
-* Access the LNBits homepage in your browser by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address)
-* Type a wallet name, _e.g._ "My LNBits wallet #1"
+* Access the LNbits homepage in your browser by browsing to <https://raspibolt.local:4003>{:target="_blank"} (or your equivalent IP address)
+* Type a wallet name, _e.g._ "My LNbits wallet #1"
 * Click on "ADD NEW WALLET" button. You will land on the wallet homepage:
 
-![LNBits wallet homepage](../../../images/lnbits-wallet-homepage.PNG)
+![LNbits wallet homepage](../../../images/lnbits-wallet-homepage.PNG)
 
 You can fund your wallet and then send or receive lightning payments. You can also enable one or more extensions built by the community.
-Below is a list of resources to learn how to use LNBits and the extensions:
-* [Awesome LNBits](https://github.com/cryptoteun/awesome-lnbits){:target="_blank"}: a list of resources for the extensions and projects built on LNBits
-* [the LNBits Youtube channel](https://www.youtube.com/channel/UCGXU2Ae5x5K-5aKdmKqoLYg){:target="_blank"}
-* [the LNBits GitHub channel](https://github.com/lnbits/lnbits)
+Below is a list of resources to learn how to use LNbits and the extensions:
+* [Awesome LNbits](https://github.com/cryptoteun/awesome-lnbits){:target="_blank"}: a list of resources for the extensions and projects built on LNbits
+* [the LNbits Youtube channel](https://www.youtube.com/channel/UCGXU2Ae5x5K-5aKdmKqoLYg){:target="_blank"}
+* [the LNbits GitHub channel](https://github.com/lnbits/lnbits)
 
 ### Remote access over Tor (optional)
 
@@ -295,7 +304,7 @@ Below is a list of resources to learn how to use LNBits and the extensions:
 
   ```sh
   ############### This section is just for location-hidden services ###
-  # Hidden service LNBits
+  # Hidden service LNbits
   HiddenServiceDir /var/lib/tor/hidden_service_lnbits/
   HiddenServiceVersion 3
   HiddenServicePort 80 127.0.0.1:5000
@@ -313,7 +322,7 @@ Below is a list of resources to learn how to use LNBits and the extensions:
 
 ---
 
-## For the future: LNBits update
+## For the future: LNbits update
 
 Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:target="_blank"} is straight-forward, but make sure to check out the release notes first.
 
@@ -331,10 +340,9 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ git fetch
   $ git reset --hard HEAD
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > 0.9.4
-  $ git checkout 0.9.4
-  $ ./venv/bin/pip install -r requirements.txt
-  $ ./venv/bin/python build.py
+  > 0.10.8
+  $ git checkout 0.10.8
+  $ poetry install --only main
   $ exit
   ```
 
@@ -348,7 +356,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
 
 ## Uninstall
 
-🚨 Warning: Before uninstalling LNBits, you might want to empty all your LNBits wallets.
+🚨 Warning: Before uninstalling LNbits, you might want to empty all your LNbits wallets.
 
 * Stop and disable the systemd service and then delete the service file
  
@@ -358,17 +366,17 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ sudo rm /etc/systemd/system/lnbits.service
   ```
 
-* Display the UFW firewall rules and notes the numbers of the rules for LNBits (e.g., X and Y below)
+* Display the UFW firewall rules and notes the numbers of the rules for LNbits (e.g., X and Y below)
 
   ```sh  
   $ sudo ufw status numbered
   > [...]
-  > [X] 4003                   ALLOW IN    Anywhere                   # allow LNBits SSL
+  > [X] 4003                   ALLOW IN    Anywhere                   # allow LNbits SSL
   > [...]
-  > [Y] 4003 (v6)              ALLOW IN    Anywhere (v6)              # allow LNBits SSL
+  > [Y] 4003 (v6)              ALLOW IN    Anywhere (v6)              # allow LNbits SSL
   ```
 
-* Delete the two LNBits rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
+* Delete the two LNbits rules (check that the rule to be deleted is the correct one and type “y” and “Enter” when prompted)
 
   ```sh 
   $ sudo ufw delete Y
@@ -394,6 +402,7 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
 
   ```sh
   $ sudo su -
+  $ rm -r /data/lnbits
   $ userdel -r lnbits
   > userdel: lnbits mail spool (/var/mail/lnbits) not found
   $ exit
