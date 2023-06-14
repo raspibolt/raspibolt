@@ -45,7 +45,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-beta.txt --ignore-missing
-  > lnd-linux-arm64-v$VERSION-beta.tar.gz: OK
+  > lnd-linux-arm64-v0.16.3-beta.tar.gz: OK
   ```
 
 ### Signature check
