@@ -45,7 +45,6 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # set up some version variables for easier maintenance later on
-  $ VERSION_CORE="bitcoin-core-25.0"
   $ VERSION="bitcoin-25.0"
   
   # download Bitcoin Core binary
