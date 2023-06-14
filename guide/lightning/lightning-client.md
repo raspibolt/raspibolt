@@ -65,7 +65,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 
   ```sh
   $ gpg --verify manifest-roasbeef-v$VERSION-beta.sig manifest-v$VERSION-beta.txt
-  > gpg: Signature made Thu Dec  1 11:20:10 2022 PST
+  > gpg: Signature made Tue Jun  6 04:57:08 2023 EEST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
