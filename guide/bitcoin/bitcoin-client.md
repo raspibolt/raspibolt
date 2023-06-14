@@ -48,7 +48,7 @@ This is a precaution to make sure that this is an official release and not a mal
   $ VERSION="bitcoin-25.0"
   
   # download Bitcoin Core binary
-  $ wget https://bitcoincore.org/bin/$VERSION_CORE/$VERSION-aarch64-linux-gnu.tar.gz
+  $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
 
   # download the list of cryptographic checksum
   $ wget https://bitcoincore.org/bin/$VERSION_CORE/SHA256SUMS
