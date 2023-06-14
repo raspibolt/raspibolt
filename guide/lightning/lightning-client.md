@@ -32,11 +32,11 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ VERSION="v0.15.5-beta"
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/lnd-linux-arm64-$VERSION.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-$VERSION.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-roasbeef-$VERSION.sig
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/$VERSION/manifest-roasbeef-$VERSION.sig.ots
+  $ VERSION="0.16.3"
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/lnd-linux-arm64-v$VERSION-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-v$VERSION-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig.ots
   ```
 
 ### Checksum check
@@ -44,7 +44,7 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-$VERSION.txt --ignore-missing
+  $ sha256sum --check manifest-v$VERSION-beta.txt --ignore-missing
   > lnd-linux-arm64-$VERSION.tar.gz: OK
   ```
 

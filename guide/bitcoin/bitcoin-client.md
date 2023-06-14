@@ -109,7 +109,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   $ tar -xvf bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin $VERSION/bin/*
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-$VERSION/bin/*
   $ bitcoind --version
   > Bitcoin Core version v25.0.0
   > [...]
