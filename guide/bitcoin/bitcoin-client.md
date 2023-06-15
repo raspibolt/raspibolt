@@ -528,11 +528,13 @@ When upgrading, there might be breaking changes, or changes in the data structur
 * Get the latest download links at [bitcoincore.org/en/download](https://bitcoincore.org/en/download){:target="_blank"} (ARM Linux 64 bit), they change with each update. This page tends to lag the Github releases page linked above.
 
   ```sh
+  # set up some version variables for easier maintenance later on
+  $ VERSION="25.0"
   # download Bitcoin Core binary, checksums, signature file, and timestamp file
-  $ wget https://bitcoincore.org/bin/bitcoin-core-25.0/bitcoin-25.0-aarch64-linux-gnu.tar.gz
-  $ wget https://bitcoincore.org/bin/bitcoin-core-25.0/SHA256SUMS
-  $ wget https://bitcoincore.org/bin/bitcoin-core-25.0/SHA256SUMS.asc
-  $ wget https://bitcoincore.org/bin/bitcoin-core-25.0/SHA256SUMS.ots
+  $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
+  $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS
+  $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS.asc
+  $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS.ots
   ```
 
 * Verify the new version against its checksums
@@ -595,8 +597,8 @@ Now, just check that the timestamp date is close to the [release](https://github
 * If you're satisfied with the checksum, signature and timestamp checks, extract the Bitcoin Core binaries, install them and check the version.
 
   ```sh
-  $ tar -xvf bitcoin-25.0-aarch64-linux-gnu.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-25.0/bin/*
+  $ tar -xvf bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-$VERSION/bin/*
   ```
 
 * Check the new version
