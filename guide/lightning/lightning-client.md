@@ -32,10 +32,11 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.16.3-beta/lnd-linux-arm64-v0.16.3-beta.tar.gz
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.16.3-beta/manifest-v0.16.3-beta.txt
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.16.3-beta/manifest-roasbeef-v0.16.3-beta.sig
-  $ wget https://github.com/lightningnetwork/lnd/releases/download/v0.16.3-beta/manifest-roasbeef-v0.16.3-beta.sig.ots
+  $ VERSION="0.16.3"
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/lnd-linux-arm64-v$VERSION-beta.tar.gz
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-v$VERSION-beta.txt
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig
+  $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig.ots
   ```
 
 ### Checksum check
@@ -43,7 +44,7 @@ We'll download, verify and install LND.
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check manifest-v0.16.3-beta.txt --ignore-missing
+  $ sha256sum --check manifest-v$VERSION-beta.txt --ignore-missing
   > lnd-linux-arm64-v0.16.3-beta.tar.gz: OK
   ```
 
@@ -63,7 +64,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-roasbeef-v0.16.3-beta.sig manifest-v0.16.3-beta.txt
+  $ gpg --verify manifest-roasbeef-v$VERSION-beta.sig manifest-v$VERSION-beta.txt
   > gpg: Signature made Tue Jun  6 04:57:08 2023 EEST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
@@ -80,7 +81,7 @@ We can also check that the manifest file was in existence around the time of the
 * Let's verify the timestamp of the file matches the release date.
 
   ```sh
-  $ ots verify manifest-roasbeef-v0.16.3-beta.sig.ots -f manifest-roasbeef-v0.16.3-beta.sig
+  $ ots --no-cache verify manifest-roasbeef-v$VERSION-beta.sig.ots -f manifest-roasbeef-v$VERSION-beta.sig
   > [...]
   > Success! Bitcoin block 793048 attests existence as of 2023-06-06 EEST
   ```
@@ -94,8 +95,8 @@ Having verified the integrity and authenticity of the release binary, we can saf
 * Install LND
 
   ```sh
-  $ tar -xzf lnd-linux-arm64-v0.16.3-beta.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v0.16.3-beta/*
+  $ tar -xvf lnd-linux-arm64-v$VERSION-beta.tar.gz
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v$VERSION-beta/*
   $ lnd --version
   > lnd version v0.16.3-beta commit=v0.16.3-beta
   ```
