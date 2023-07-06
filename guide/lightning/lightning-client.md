@@ -83,7 +83,7 @@ We can also check that the manifest file was in existence around the time of the
   ```sh
   $ ots --no-cache verify manifest-roasbeef-v$VERSION-beta.sig.ots -f manifest-roasbeef-v$VERSION-beta.sig
   > [...]
-  > Success! Bitcoin block 793048 attests existence as of 2023-06-06 EEST
+  > Success! Bitcoin block 797397 attests existence as of 2023-07-06 CEST
   ```
 
 * Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
