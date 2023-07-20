@@ -182,7 +182,7 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
   $ sudo rm /home/lndg/lndg/data/db.sqlite3
   $ sudo ln -s /data/lndg/db.sqlite3 /home/lndg/lndg/data/db.sqlite3
   $ sudo chown -h lndg:lndg /home/lndg/lndg/data/db.sqlite3
-  $ ls -la /home/lndg/lndg/data/
+  $ sudo ls -la /home/lndg/lndg/data/
   > lrwxrwxrwx 1 lndg lndg   21 Nov 11 11:28 db.sqlite3 -> /data/lndg/db.sqlite3
   ```
 
