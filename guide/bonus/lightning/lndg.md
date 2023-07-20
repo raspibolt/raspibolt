@@ -94,7 +94,7 @@ For that we will create a separate user and we will be running the code as the n
   ```sh
   $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/cryptosharks131/lndg/releases/latest | grep -oP '"tag_name":\s*"\K([^"]+)')
   $ echo $LATEST_RELEASE
-  > v1.6.4
+  > v1.7.1
 
   $ git clone --branch $LATEST_RELEASE https://github.com/cryptosharks131/lndg.git
   $ cd lndg
@@ -716,14 +716,14 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo su - lndg
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest 1.6.4 in this example), and update (special update instructions for 1.6.4 regarding new requirements `django_filter` and `protobuf`):
+* Fetch the latest GitHub repository information, display the release tags (use the latest 1.7.1 in this example), and update:
 
   ```sh
   $ cd /home/lndg/lndg
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v1.6.4
+  $ git checkout v1.7.1
   $ .venv/bin/pip install -r requirements.txt
   $ .venv/bin/pip install --upgrade protobuf
   $ rm lndg/settings.py
