@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[LNDg](https://github.com/cryptosharks131/lndg){:target="_blank"} is a lite GUI web interface to help you manually manage your node and automate operations such as rebalancing, fee adjustemnts and channel node opening.
+[LNDg](https://github.com/cryptosharks131/lndg){:target="_blank"} is a lite GUI web interface to help you manually manage your node and automate operations such as rebalancing, fee adjustments and channel node opening.
 
 Difficulty: Hard
 {: .label .label-red }
@@ -46,7 +46,7 @@ Table of contents
 
 [Virtualenv](https://virtualenv.pypa.io/en/latest/){:target="_blank"} is a tool to create isolated Python environments. 
 
-* With user "admin", check if `virtualenv` is already installed on yout node. If not, use `apt` to install it.
+* With user "admin", check if `virtualenv` is already installed on your node. If not, use `apt` to install it.
 
   ```sh
   $ virtualenv --version
@@ -594,7 +594,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`) to automatically create circu
   > [...]
   ```
 
-* Check that the rebalancer Python script is runnning regularly.  
+* Check that the rebalancer Python script is running regularly.  
   Note: It might take a few minutes for the rebalancing script to complete its tasks.
 
   ```sh
@@ -658,7 +658,7 @@ LNDg offers the possibility to create links to blockchain and lightning explorer
 
 ### Blockchain explorer
 
-To preserve privacy it is better that you use your own self-hosted blockhain explorer (e.g. the BTC RPC Explorer).
+To preserve privacy it is better that you use your own self-hosted blockchain explorer (e.g. the BTC RPC Explorer).
 
 * Open your LNDg website at https://raspibolt.local:8889 (replace raspibolt.local by your node's IP address if necessary)
 * Click on the "Advanced settings" link
@@ -669,7 +669,7 @@ To preserve privacy it is better that you use your own self-hosted blockhain exp
 
 ### Lightning explorer
 
-Although there is not yet a self-hosted, private, lightning explorer, the Mempool lightning explorer offers a better ligthning explorer than 1ML and is probably less likely to log your IP address.
+Although there is not yet a self-hosted, private, lightning explorer, the Mempool lightning explorer offers a better lightning explorer than 1ML and is probably less likely to log your IP address.
 
 * Just above the "GUI-NetLinks", find the "GUI-GraphLinks" option and paste the following value:
   * if you don't want to leak your IP address, delete the content of the box and leave it empty
