@@ -663,7 +663,7 @@ To preserve privacy it is better that you use your own self-hosted blockchain ex
 * Open your LNDg website at https://raspibolt.local:8889 (replace raspibolt.local by your node's IP address if necessary)
 * Click on the "Advanced settings" link
 * Scroll down to the "Update Local Settings" section
-* Find the "GUI-NetLinks" option and paste the following value:
+* Find the "NET URL" option and paste the following value:
   *  if you use the [BTC RPC Explorer](../../bitcoin/btcrpcexplorer.md): `https://raspibolt.local:4000` 
   *  if you prefer [Mempool](../bitcoin/mempool.md): `https://raspibolt.local:4081`
 
@@ -671,7 +671,7 @@ To preserve privacy it is better that you use your own self-hosted blockchain ex
 
 Although there is not yet a self-hosted, private, lightning explorer, the Mempool lightning explorer offers a better lightning explorer than 1ML and is probably less likely to log your IP address.
 
-* Just above the "GUI-NetLinks", find the "GUI-GraphLinks" option and paste the following value:
+* Find the "Graph URL" option and paste the following value:
   * if you don't want to leak your IP address, delete the content of the box and leave it empty
   * if you want to use Mempool, enter: `https://mempool.space/lightning`. As an additional privacy step, you might want to have a VPN running on your computer.
 
