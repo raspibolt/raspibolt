@@ -121,10 +121,16 @@ An attacker would not be able to do much within this user's permission settings.
   $ sudo su - btcrpcexplorer
   ```
 
+* Set a temporary version environment variable to the installation
+
+  ```sh
+  $ VERSION=3.4.0
+  ```
+
 * Download the source code directly from GitHub and install all dependencies using the Node Package Manager (NPM).
 
   ```sh
-  $ git clone --branch v3.3.0 https://github.com/janoside/btc-rpc-explorer.git
+  $ git clone --branch v$VERSION https://github.com/janoside/btc-rpc-explorer.git
   $ cd btc-rpc-explorer
   $ npm install
   ```
@@ -280,14 +286,14 @@ In order to do that, we create a systemd unit that starts the service on boot di
   ```sh
   $ sudo nano /etc/systemd/system/bitcoind.service
   ```
-  
+
   ```ini
   [Unit]
   Description=Bitcoin daemon
   After=network.target
   Wants=btcrpcexplorer.service
   ```
-  
+
 * Reload the systemd manager configuration to recreate the entire dependency tree
 
   ```sh
@@ -342,14 +348,20 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
   $ sudo su - btcrpcexplorer
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest `v3.3.0` in this example), and update:
+* Set a temporary version environment variable to the installation
+
+  ```sh
+  $ VERSION=3.4.0
+  ```
+
+* Fetch the latest GitHub repository information, display the release tags (use the latest in this example), and update:
 
   ```sh
   $ cd /home/btcrpcexplorer/btc-rpc-explorer
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v3.3.0
+  $ git checkout v$VERSION
   $ npm install
   $ exit
   ```
@@ -365,4 +377,3 @@ Updating to a [new release](https://github.com/janoside/btc-rpc-explorer/release
 ---
 
 Next: [Lightning >>](../lightning/index.md)
-
