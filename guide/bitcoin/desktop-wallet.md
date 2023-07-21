@@ -132,7 +132,7 @@ If you've already set up the hidden service but lost the connection address,
 you can obtain it again by running the following command with "admin" on your node:
 
   ```
-  $ sudo cat /var/lib/tor/hidden_service_electrs/hostname`
+  $ sudo cat /var/lib/tor/hidden_service_electrs/hostname
   > abcd...1234.onion
   ```
 

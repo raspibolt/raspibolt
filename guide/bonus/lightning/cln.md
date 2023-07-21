@@ -150,12 +150,10 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   log-level=info
   # for admin to interact with lightning-cli
   rpc-file-mode=0660
-  
   # default fees and channel min size
   fee-base=<1000>
   fee-per-satoshi=<1>
   min-capacity-sat=<your minchansize>
-  
   ## optional
   # wumbo channels
   large-channels
@@ -164,13 +162,10 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   # autoclean (86400=daily)
   autocleaninvoice-cycle=86400
   autocleaninvoice-expired-by=86400
-  
   # wallet settings (replication recommended, adjust backup path)
   wallet=sqlite3:///data/lightningd/bitcoin/lightningd.sqlite3:/home/lightningd/lightningd.sqlite3
-  
   # no replication:
   #wallet=sqlite3:///data/lightningd/bitcoin/lightning.sqlite3
-  
   # network
   proxy=127.0.0.1:9050
   bind-addr=0.0.0.0:9736
