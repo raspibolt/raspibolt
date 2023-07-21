@@ -945,7 +945,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 * Stop Samourai Dojo
 
   ```sh
-  ˘ sudo systemctl stop pm2-dojo.service
+  $ sudo systemctl stop pm2-dojo.service
   ```
 
 * Following the [Installation](#installation) section, download latest Dojo version inside `/tmp` directory, verify release and unpack Dojo file. Then return back to [Upgrade](#for-the-future-dojo-upgrade) section to continue
