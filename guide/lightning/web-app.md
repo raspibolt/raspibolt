@@ -298,7 +298,7 @@ Make sure to read the release notes first.
   $ cd /home/rtl/RTL
   $ git fetch
   $ git reset --hard
-  $ latest=$(git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1)
+  $ latest=$(git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1); echo $latest
   $ git checkout $latest
   $ git verify-tag $latest
   $ npm install --omit=dev --legacy-peer-deps
