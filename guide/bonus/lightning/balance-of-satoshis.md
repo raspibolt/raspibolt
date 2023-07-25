@@ -289,7 +289,7 @@ You can also join the Balance of Satoshis Telegram group to get support: [https:
 * Find the most recent tag. Add the `--tags` option to select even a lightweight/non-annotated tag. Add the `--abbrev=0` option to remove any long-format tag names.
 
   ```sh
-  $ VERSION=$(git tag | sort --version-sort | tail -n 1)
+  $ VERSION=$(git tag | sort --version-sort | tail -n 1); echo $VERSION
   > v12.4.1
   ```
 
