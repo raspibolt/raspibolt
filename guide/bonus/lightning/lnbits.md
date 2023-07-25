@@ -120,7 +120,7 @@ Table of contents
   ```sh
   $ git clone https://github.com/lnbits/lnbits.git
   $ cd lnbits  
-  $ git checkout 0.10.6
+  $ git checkout 0.10.9
   $ poetry env use python3.9
   $ poetry install --only main
   ```
@@ -340,8 +340,8 @@ Updating to a [new release](https://github.com/lnbits/lnbits-legend/releases){:t
   $ git fetch
   $ git reset --hard HEAD
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > 0.10.6
-  $ git checkout 0.10.6
+  > 0.10.9
+  $ git checkout 0.10.9
   $ poetry install --only main
   $ exit
   ```
