@@ -390,8 +390,9 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
 Although updating Electrs is normally straight-forward, if you encorntered an error during the upgrade from v0.9.14 to v0.10.0 then it means you will need to upgrade the version of debian from 11 (bullseye) to 12 (bookworm) as the previous version has outdated sources for cargo. If you do not wish to do this then you can always continue to run an older version of electrs.
 
-If you wish to continue execute the following commands with user "admin".
+⚠️ During this process you will be prompted multiple times as the system upgrades the installed packages to either restart services or replace config files. In all instances you should choose "No" as this can adversely effect your ability to remotely connect (SSH) to your node. Or, it may mean that have have to recreate config files in order to have services return to normal functionality. Read the upgrade messages carefully at each stage before continuing.
 
+If you wish to continue, execute the following commands with user "admin".
   
   * Return to the home directory and create a back up folder
   ```sh
@@ -434,7 +435,7 @@ If you wish to continue execute the following commands with user "admin".
   $ sudo apt install librocksdb-dev=7.8.3-2
   ```
 
-  * Install the stream module for nginx. This will resolve any issue with restarting the nginx service after the upgrade. When prompted, select "N" to keep the current-installed version of the config files. Then restart the nginx service.
+  * Install the stream module for nginx. This will resolve any issues with restarting the nginx service after the upgrade. When prompted, select "N" to keep the current-installed version of the config files. Then restart the nginx service.
   ```sh
   $ sudo apt update
   $ sudo apt install libnginx-mod-stream
