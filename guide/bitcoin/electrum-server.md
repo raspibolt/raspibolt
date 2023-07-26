@@ -324,47 +324,63 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   ```
 
 * If a newer release is available, you can upgrade by executing the following commands with user "admin"
+* Navigate to the electrs directory
 
   ```sh
   $ cd /home/admin/rust/electrs
-
-  # Clean and update the local source code and show the latest release tag (example: v0.10.0).
+  ```
+  
+* Clean and update the local source code and show the latest release tag (example: v0.10.0).
+  ```sh
   $ git clean -xfd
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
   > v0.10.0
+  ```
+  
+**Note** that a version appended with '-rc' (for example: v0.10.0-rc.1) refers to a Release Candidate, which is effectively a pre-release of a given version. Where possible it is recommend to choose the formal release. To see more than one recent release modify the git tag command -n argument above and replace 1 with another positive integer (example: git tag | sort --version-sort | tail -n 3). 
 
-  # Note that a version appended with '-rc' (for example: v0.10.0-rc.1) refers to a Release Candidate, which is effectively a pre-release of a given version. Where possible it is recommend to choose the formal release. To see more than one recent release modify the git tag command -n argument above and replace 1 with another positive integer (example: git tag | sort --version-sort | tail -n 3). 
-
-  # Set the VERSION variable as number from latest release tag and verify developer signature
+* Set the VERSION variable as number from latest release tag and verify developer signature
+  ```sh
   $ VERSION="0.10.0"
   $ git verify-tag v$VERSION
   > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
   > [...]
-
-  # Check out the release
-  # Should you encounter an error about files that would be overwritten use the -f argument to force the checkout
+  ```
+  
+* Check out the release. If you encounter an error about files that would be overwritten use the -f argument to force the checkout
+  ```sh
   $ git checkout v$VERSION
-
-  # Compile the source code
+  ```
+  
+* Compile the source code
+  ```sh
   $ cargo clean
   $ cargo build --locked --release
-
-  # When executing the cargo clean command you may receive the following message. If you do, please check the 'Update cargo source' section before continuing.
+  ```
+  
+* 🚨 When executing the cargo clean command you may receive the following message. If you do, please check the [Update cargo source section](electrum-server.md#Update-cargo-source-(v0.10.0-rc.1-onwards)) of this guide before continuing.
+  ```sh
   > error: failed to parse manifest at `/home/admin/rust/electrs/Cargo.toml`
   > Caused by:
       failed to parse the `edition` key
   > Caused by:
       this version of Cargo is older than the `2021` edition, and only  supports `2015` and `2018` editions.
-
-  # Back up the old version and update
+  ```
+  
+* Back up the old version and update
+  ```sh
   $ sudo cp /usr/local/bin/electrs /usr/local/bin/electrs-old
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
+  ```
 
-  # Update the Electrs configuration if necessary (see release notes)
+* Update the Electrs configuration if necessary (see release notes)
+  ```sh
   $ nano /data/electrs/electrs.conf
-
-  # Restart Electrs
+  ```
+  
+* Restart Electrs
+  ```sh
   $ sudo systemctl restart electrs
   ```
 
@@ -378,19 +394,19 @@ If you wish to continue execute the following commands with user "admin".
 
   
   * Return to the home directory and create a back up folder
-  ```
+  ```sh
   $ cd
   $ mkdir backup
   ```
 
   * Back up the source.list and any manually added source lists.
-  ```
+  ```sh
   $ sudo cp /etc/apt/sources.list -t ~/backup
   $ sudo cp /etc/apt/sources.list.d/* -t ~/backup
   ```
 
   * Open up the source.list and replace each instance of 'bullseye' with 'bookworm' also add "non-free-firmware" to the end of each line. Save (`Ctrl`-`o` enter) and exit (`Ctrl`-`x`).
-  ```
+  ```sh
   $ sudo nano /etc/apt/sources.list
   ```
   
@@ -402,37 +418,37 @@ If you wish to continue execute the following commands with user "admin".
 
   * Open up your manually added source lists and replace each instance of 'bullseye' with 'bookworm' throughout. Save (`Ctrl`-`o`, enter) and exit (`Ctrl`-`x`). You may need to save/exit multiple pages.
 
-  ```
+  ```sh
   $ sudo nano /etc/apt/sources.list.d/*
   ```
   
   * Update, upgrade and then do a dist-upgrade to debian 12 (bookworm)
-  ```
+  ```sh
   $ sudo apt update 
   $ sudo apt upgrade
   $ sudo dist-upgrade
   ```
 
   * Install RocksDB per the [v0.10.0-rc.1 release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0100-rc1-jun-21-2023). You will be prompted to restart services during this process make sure to select "No" otherwise you may have issues connecting via SSH.
-  ```
+  ```sh
   $ sudo apt install librocksdb-dev=7.8.3-2
   ```
 
   * Install the stream module for nginx. This will resolve any issue with restarting the nginx service after the upgrade. When prompted, select "N" to keep the current-installed version of the config files. Then restart the nginx service.
-  ```
+  ```sh
   $ sudo apt update
   $ sudo apt install libnginx-mod-stream
   $ sudo systemctl restart nginx
   ```
 
    * Update and upgrade to the latest pacakage versions. Again, if prompted to replace any config files select "N" to keep the current versions throughout.
-  ```
+  ```sh
   $ sudo apt update 
   $ sudo apt upgrade
   ```
 
   * Check your `rustc` and `cargo` versions, they should be >=1.63.0 and >=1.65.0, respectively.
-  ```
+  ```sh
   $ rustc --version
   > rustc 1.63.0
   
@@ -440,7 +456,7 @@ If you wish to continue execute the following commands with user "admin".
   > cargo 1.65.0
   ```
 
-  * Go back up to the upgrade guide (making sure to return to the correct directory) and continue from the `cargo clean` step.
+  * Go back up to the [upgrade section](electrum-server.md#For-the-future:-Electrs-upgrade) of this guide (making sure to return to the correct directory) and continue from the `cargo clean` step.
 
 
   
