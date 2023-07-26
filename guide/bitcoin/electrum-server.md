@@ -98,7 +98,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   Other releases might not have been properly tested with the rest of the RaspiBolt configuration, though.
 
   ```sh
-  $ VERSION="0.9.14"
+  $ VERSION="0.10.0"
   $ mkdir /home/admin/rust
   $ cd /home/admin/rust
   $ git clone --branch v$VERSION https://github.com/romanz/electrs.git
@@ -174,7 +174,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
   ```
 
   ```sh
-  Starting electrs 0.9.14 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.9.14 (Electrum Rust Server)!", args: [] }
+  Starting electrs 0.10.0 on aarch64 linux with Config { network: Bitcoin, db_path: "/data/electrs/db/bitcoin", daemon_dir: "/home/bitcoin/.bitcoin", daemon_auth: CookieFile("/home/bitcoin/.bitcoin/.cookie"), daemon_rpc_addr: 127.0.0.1:8332, daemon_p2p_addr: 127.0.0.1:8333, electrum_rpc_addr: 127.0.0.1:50001, monitoring_addr: 127.0.0.1:4224, wait_duration: 10s, jsonrpc_timeout: 15s, index_batch_size: 10, index_lookup_limit: Some(1000), reindex_last_blocks: 0, auto_reindex: true, ignore_mempool: false, sync_once: false, disable_electrum_rpc: false, server_banner: "Welcome to electrs 0.10.0 (Electrum Rust Server)!", args: [] }
   [2021-11-09T07:09:42.744Z INFO  electrs::metrics::metrics_impl] serving Prometheus metrics on 127.0.0.1:4224
   [2021-11-09T07:09:42.744Z INFO  electrs::server] serving Electrum RPC on 127.0.0.1:50001
   [2021-11-09T07:09:42.812Z INFO  electrs::db] "/data/electrs/db/bitcoin": 0 SST files, 0 GB, 0 Grows
@@ -328,14 +328,16 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   ```sh
   $ cd /home/admin/rust/electrs
 
-  # Clean and update the local source code and show the latest release tag (example: v0.9.14)
+  # Clean and update the local source code and show the latest release tag (example: v0.10.0).
   $ git clean -xfd
   $ git fetch
   $ git tag | sort --version-sort | tail -n 1
-  > v0.9.14
-  
+  > v0.10.0
+
+  # Note that a version appended with '-rc' (for example: v0.10.0-rc.1) refers to a Release Candidate, which is effectively a pre-release of a given version. Where possible it is recommend to choose the formal release. To see more than one recent release modify the git tag command -n argument above and replace 1 with another positive integer (example: git tag | sort --version-sort | tail -n 3). 
+
   # Set the VERSION variable as number from latest release tag and verify developer signature
-  $ VERSION="0.9.14"
+  $ VERSION="0.10.0"
   $ git verify-tag v$VERSION
   > gpg: Good signature from "Roman Zeyde <me@romanzey.de>" [unknown]
   > [...]
@@ -348,6 +350,13 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   $ cargo clean
   $ cargo build --locked --release
 
+  # When executing the cargo clean command you may receive the following message. If you do, please check the 'Update cargo source' section before continuing.
+  > error: failed to parse manifest at `/home/admin/rust/electrs/Cargo.toml`
+  > Caused by:
+      failed to parse the `edition` key
+  > Caused by:
+      this version of Cargo is older than the `2021` edition, and only  supports `2015` and `2018` editions.
+
   # Back up the old version and update
   $ sudo cp /usr/local/bin/electrs /usr/local/bin/electrs-old
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
@@ -358,6 +367,83 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
   # Restart Electrs
   $ sudo systemctl restart electrs
   ```
+
+---
+
+## Update cargo source (v0.10.0-rc.1 onwards)
+
+Although updating Electrs is normally straight-forward, if you encorntered an error during the upgrade from v0.9.14 to v0.10.0 then it means you will need to upgrade the version of debian from 11 (bullseye) to 12 (bookworm) as the previous version has outdated sources for cargo. If you do not wish to do this then you can always continue to run an older version of electrs.
+
+If you wish to continue execute the following commands with user "admin".
+
+  
+  * Return to the home directory and create a back up folder
+  ```
+  $ cd
+  $ mkdir backup
+  ```
+
+  * Back up the source.list and any manually added source lists.
+  ```
+  $ sudo cp /etc/apt/sources.list -t ~/backup
+  $ sudo cp /etc/apt/sources.list.d/* -t ~/backup
+  ```
+
+  * Open up the source.list and replace each instance of 'bullseye' with 'bookworm' also add "non-free-firmware" to the end of each line. Save (`Ctrl`-`o` enter) and exit (`Ctrl`-`x`).
+  ```
+  $ sudo nano /etc/apt/sources.list
+  ```
+  
+  ```
+  deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+  deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+  deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+  ```
+
+  * Open up your manually added source lists and replace each instance of 'bullseye' with 'bookworm' throughout. Save (`Ctrl`-`o`, enter) and exit (`Ctrl`-`x`). You may need to save/exit multiple pages.
+
+  ```
+  $ sudo nano /etc/apt/sources.list.d/*
+  ```
+  
+  * Update, upgrade and then do a dist-upgrade to debian 12 (bookworm)
+  ```
+  $ sudo apt update 
+  $ sudo apt upgrade
+  $ sudo dist-upgrade
+  ```
+
+  * Install RocksDB per the [v0.10.0-rc.1 release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0100-rc1-jun-21-2023). You will be prompted to restart services during this process make sure to select "No" otherwise you may have issues connecting via SSH.
+  ```
+  $ sudo apt install librocksdb-dev=7.8.3-2
+  ```
+
+  * Install the stream module for nginx. This will resolve any issue with restarting the nginx service after the upgrade. When prompted, select "N" to keep the current-installed version of the config files. Then restart the nginx service.
+  ```
+  $ sudo apt update
+  $ sudo apt install libnginx-mod-stream
+  $ sudo systemctl restart nginx
+  ```
+
+   * Update and upgrade to the latest pacakage versions. Again, if prompted to replace any config files select "N" to keep the current versions throughout.
+  ```
+  $ sudo apt update 
+  $ sudo apt upgrade
+  ```
+
+  * Check your `rustc` and `cargo` versions, they should be >=1.63.0 and >=1.65.0, respectively.
+  ```
+  $ rustc --version
+  > rustc 1.63.0
+  
+  $ cargo --version 
+  > cargo 1.65.0
+  ```
+
+  * Go back up to the upgrade guide (making sure to return to the correct directory) and continue from the `cargo clean` step.
+
+
+  
 
 <br /><br />
 
