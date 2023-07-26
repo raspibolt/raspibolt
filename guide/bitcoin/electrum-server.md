@@ -456,7 +456,7 @@ If you wish to continue execute the following commands with user "admin".
   > cargo 1.65.0
   ```
 
-  * Go back up to the [upgrade section](electrum-server.md#For-the-future:-Electrs-upgrade) of this guide (making sure to return to the correct directory) and continue from the `cargo clean` step.
+  * Go back up to the [upgrade section](electrum-server.md#For-the-future--Electrs-upgrade) of this guide (making sure to return to the correct directory) and continue from the `cargo clean` step.
 
 
   
