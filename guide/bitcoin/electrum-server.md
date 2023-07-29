@@ -430,7 +430,7 @@ If you wish to continue, execute the following commands with user "admin".
   $ sudo apt dist-upgrade
   ```
 
-  * Install RocksDB per the [v0.10.0-rc.1 release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0100-rc1-jun-21-2023). You will be prompted to restart services during this process make sure to select "No" otherwise you may have issues connecting via SSH.
+  * Install RocksDB per the [v0.10.0-rc.1 release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0100-rc1-jun-21-2023).
   ```sh
   $ sudo apt install librocksdb-dev=7.8.3-2
   ```
