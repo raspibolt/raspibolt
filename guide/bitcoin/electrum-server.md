@@ -435,14 +435,20 @@ If you wish to continue, execute the following commands with user "admin".
   $ sudo apt install librocksdb-dev=7.8.3-2
   ```
 
-  * Install the stream module for nginx. This will resolve any issues with restarting the nginx service after the upgrade. When prompted, select "N" to keep the current-installed version of the config files. Then restart the nginx service.
+  * Check if the stream module for nginx.
+  ```sh
+  $ apt list libnginx-mod-stream
+  > libnginx-mod-stream/stable,now 1.22.1-9 arm64 [installed,auto-removable]
+  ```
+
+  * If you don't see `[installed]` as above, install the stream module for nginx. When prompted, select "N" to keep the current-installed version of the config files. Then restart the nginx service.
   ```sh
   $ sudo apt update
   $ sudo apt install libnginx-mod-stream
   $ sudo systemctl restart nginx
   ```
 
-   * Update and upgrade to the latest pacakage versions. Again, if prompted to replace any config files select "N" to keep the current versions throughout.
+   * Update and upgrade to the latest pacakage versions.
   ```sh
   $ sudo apt update 
   $ sudo apt upgrade
