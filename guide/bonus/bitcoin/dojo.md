@@ -126,22 +126,22 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Set a temporary version environment variable to the installation
 
   ```sh  
-  $ VERSION=1.19.2
+  $ VERSION=1.20.0
   ```
   
 * Get the latest download links at [code.samourai.io/dojo](https://code.samourai.io/dojo/samourai-dojo/-/releases){:target="_blank"}. They change with each update
 
   ```sh
   $ wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v$VERSION/samourai-dojo-v$VERSION.tar.gz
-  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/1cec15e14016517c3f133432bb291529/samourai-dojo-v1.19.2-fingerprints.txt
-  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/094f862ba6ce3a2e333e5c9cb72324d2/samourai-dojo-v1.19.2-fingerprints.txt.sig
+  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/7d1fb4c1dda87dc77b66e7311caeffc3/samourai-dojo-v1.20.0-fingerprints.txt
+  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/59b9682aa5e1d6f8d5306572560d79be/samourai-dojo-v1.20.0-fingerprints.txt.sig
   ```
 
 * Calculate the checksum of the binary you've downloaded and compare it to the one provided in the fingerprints text file
 
   ```sh
   $ sha256sum --ignore-missing --check samourai-dojo-v$VERSION-fingerprints.txt
-  > samourai-dojo-v1.19.2.tar.gz: OK
+  > samourai-dojo-v1.20.0.tar.gz: OK
   ```
 
 * Import the GPG public key of the developer that signed the fingerprints file
@@ -156,7 +156,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
   $ gpg --verify samourai-dojo-v$VERSION-fingerprints.txt.sig
   ```
   ```
-  > gpg: assuming signed data in 'samourai-dojo-v1.19.2-fingerprints.txt'
+  > gpg: assuming signed data in 'samourai-dojo-v1.20.0-fingerprints.txt'
   > gpg: Signature made Wed Mar 22 20:08:20 2023 UTC
   > gpg:                using RSA key 377DE507FDC47F020099E342CFA54E4C0CD58DF0
   > gpg: Good signature from "pavel.sevcik@protonmail.com <pavel.sevcik@protonmail.com>" [unknown]
@@ -953,7 +953,7 @@ Samourai wallet uses zpubs by default, however if you use other address format t
 
 
   ```sh
-  $ sudo rsync -a /tmp/samourai-dojo-vx.xx.x/* /opt/dojo/
+  $ sudo rsync -a /tmp/samourai-dojo-v$VERSION/* /opt/dojo/
   ```
   
 * Go to `keys` directory, open `index.js`
