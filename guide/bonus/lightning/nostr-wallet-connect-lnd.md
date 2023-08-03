@@ -93,7 +93,13 @@ We are going to install nostr-wallet-connect-lnd in it's home directoy, but we'l
 
 * You may change the relay above to a different relay if you prefer.
 * You will now need to configure your nostr client to use your NWC installation. Each nostr client is different. In this example, we're using [Snort](https://snort.social).
-* Copy the wallet connect pubkey and the wallet connect secret from the terminal window output.
+* Choose the Nostr Wallet Connect option.
+  
+![Snort Wallet Picker](https://raw.githubusercontent.com/derekross/raspibolt/master/images/nwc-snort-1.png)
+
+  
+![Snort NWC Setup](https://raw.githubusercontent.com/derekross/raspibolt/master/images/nwc-snort-2.png)
+* Copy the wallet connect pubkey and the wallet connect secret from the terminal window output and paste it into the input field in your Nostr client.
 * You may also configure a daily limit by adding the following paramters to the end of the string above: --daily-limit <amount of satoshis> (eg. --daily-limit 10000). This limits you to Zapping only 10,000 sats per day from your node. This is not required, but is a safeguard feature.
 * Stop nostr-wallet-connect-lnd in the terminal with `Ctrl`-`C` and exit the "nwc" user session.
 
@@ -115,6 +121,7 @@ In order to do that we create a systemd unit that starts the service on boot dir
   ```
 
 * Paste the following configuration. Save and exit.
+* Please note: If you modified the relay or the daily spending limits in your testing above, you'll want to modify the same paramters below before saving.
 
   ```ini
   # RaspiBolt: systemd unit for nostr-wallet-connect-lnd
