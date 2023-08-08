@@ -17,7 +17,6 @@ has_toc: false
 ---
 
 ## Maintenance
-* **[Auto unlock LND on startup](auto-unlock.md)** - (for RaspiBolt v1 & v2) a script to automatically unlocks the wallet on startup or service-restart
 * **[Use lncli on a different computer](remote-lncli.md)** - control your Lightning node from a different computer within you network, eg. from a Windows machine
 
 ---
