@@ -388,7 +388,7 @@ Make sure to check the [release notes](https://github.com/romanz/electrs/blob/ma
 
 ## Update cargo source (v0.10.0-rc.1 onwards)
 
-Although updating Electrs is normally straight-forward, if you encorntered an error during the upgrade from v0.9.14 to v0.10.0 then it means you will need to upgrade the version of debian from 11 (bullseye) to 12 (bookworm) as the previous version has outdated sources for cargo. If you do not wish to do this then you can always continue to run an older version of electrs.
+Although updating Electrs is normally straight-forward, if you encounter an error during the upgrade from v0.9.14 to v0.10.0 then it means you will need to upgrade the version of debian from 11 (bullseye) to 12 (bookworm) as the previous version has outdated sources for cargo. If you do not wish to do this then you can always continue to run an older version of electrs.
 
 ⚠️ During this process you will be prompted multiple times as the system upgrades the installed packages to either restart services or replace config files. In all instances you should choose "No" as this can adversely effect your ability to remotely connect (SSH) to your node. Or, it may mean that have have to recreate config files in order to have services return to normal functionality. Read the upgrade messages carefully at each stage before continuing.
 
