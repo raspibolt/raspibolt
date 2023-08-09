@@ -583,9 +583,6 @@ Configure nginx.conf for Dojo Maintanence Tool.
     ssl_session_timeout 4h;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
-
-    include /etc/nginx/streams-enabled/*.conf;
-
   }
 
   # RaspiBolt: Dojo / Mempool / Homer http configuration
