@@ -12,7 +12,7 @@ has_toc: false
 
 ---
 
-[LNDg](https://github.com/cryptosharks131/lndg){:target="_blank"} is a lite GUI web interface to help you manually manage your node and automate operations such as rebalancing, fee adjustemnts and channel node opening.
+[LNDg](https://github.com/cryptosharks131/lndg){:target="_blank"} is a lite GUI web interface to help you manually manage your node and automate operations such as rebalancing, fee adjustments and channel node opening.
 
 Difficulty: Hard
 {: .label .label-red }
@@ -46,7 +46,7 @@ Table of contents
 
 [Virtualenv](https://virtualenv.pypa.io/en/latest/){:target="_blank"} is a tool to create isolated Python environments. 
 
-* With user "admin", check if `virtualenv` is already installed on yout node. If not, use `apt` to install it.
+* With user "admin", check if `virtualenv` is already installed on your node. If not, use `apt` to install it.
 
   ```sh
   $ virtualenv --version
@@ -94,7 +94,7 @@ For that we will create a separate user and we will be running the code as the n
   ```sh
   $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/cryptosharks131/lndg/releases/latest | grep -oP '"tag_name":\s*"\K([^"]+)')
   $ echo $LATEST_RELEASE
-  > v1.6.4
+  > v1.7.1
 
   $ git clone --branch $LATEST_RELEASE https://github.com/cryptosharks131/lndg.git
   $ cd lndg
@@ -182,7 +182,7 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
   $ sudo rm /home/lndg/lndg/data/db.sqlite3
   $ sudo ln -s /data/lndg/db.sqlite3 /home/lndg/lndg/data/db.sqlite3
   $ sudo chown -h lndg:lndg /home/lndg/lndg/data/db.sqlite3
-  $ ls -la /home/lndg/lndg/data/
+  $ sudo ls -la /home/lndg/lndg/data/
   > lrwxrwxrwx 1 lndg lndg   21 Nov 11 11:28 db.sqlite3 -> /data/lndg/db.sqlite3
   ```
 
@@ -594,7 +594,7 @@ LNDg uses a Python script (`~/lndg/rebalancer.py`) to automatically create circu
   > [...]
   ```
 
-* Check that the rebalancer Python script is runnning regularly.  
+* Check that the rebalancer Python script is running regularly.  
   Note: It might take a few minutes for the rebalancing script to complete its tasks.
 
   ```sh
@@ -658,20 +658,20 @@ LNDg offers the possibility to create links to blockchain and lightning explorer
 
 ### Blockchain explorer
 
-To preserve privacy it is better that you use your own self-hosted blockhain explorer (e.g. the BTC RPC Explorer).
+To preserve privacy it is better that you use your own self-hosted blockchain explorer (e.g. the BTC RPC Explorer).
 
 * Open your LNDg website at https://raspibolt.local:8889 (replace raspibolt.local by your node's IP address if necessary)
 * Click on the "Advanced settings" link
 * Scroll down to the "Update Local Settings" section
-* Find the "GUI-NetLinks" option and paste the following value:
+* Find the "NET URL" option and paste the following value:
   *  if you use the [BTC RPC Explorer](../../bitcoin/btcrpcexplorer.md): `https://raspibolt.local:4000` 
   *  if you prefer [Mempool](../bitcoin/mempool.md): `https://raspibolt.local:4081`
 
 ### Lightning explorer
 
-Although there is not yet a self-hosted, private, lightning explorer, the Mempool lightning explorer offers a better ligthning explorer than 1ML and is probably less likely to log your IP address.
+Although there is not yet a self-hosted, private, lightning explorer, the Mempool lightning explorer offers a better lightning explorer than 1ML and is probably less likely to log your IP address.
 
-* Just above the "GUI-NetLinks", find the "GUI-GraphLinks" option and paste the following value:
+* Find the "Graph URL" option and paste the following value:
   * if you don't want to leak your IP address, delete the content of the box and leave it empty
   * if you want to use Mempool, enter: `https://mempool.space/lightning`. As an additional privacy step, you might want to have a VPN running on your computer.
 
@@ -716,14 +716,14 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo su - lndg
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest 1.6.4 in this example), and update (special update instructions for 1.6.4 regarding new requirements `django_filter` and `protobuf`):
+* Fetch the latest GitHub repository information, display the release tags (use the latest 1.7.1 in this example), and update:
 
   ```sh
   $ cd /home/lndg/lndg
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v1.6.4
+  $ git checkout v1.7.1
   $ .venv/bin/pip install -r requirements.txt
   $ .venv/bin/pip install --upgrade protobuf
   $ rm lndg/settings.py
