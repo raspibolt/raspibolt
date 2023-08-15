@@ -306,7 +306,7 @@ Updating to a [new release](https://github.com/apotdevin/thunderhub/releases) sh
   $ sudo rm /etc/systemd/system/thunderhub.service
   ```
 
-### Uninstall FW configuration
+### Uninstall UFW configuration
 
 * Display the UFW firewall rules and notes the numbers of the rules for Thunderhub (e.g., X and Y below)
 
