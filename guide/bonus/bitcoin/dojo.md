@@ -133,8 +133,8 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 
   ```sh
   $ wget https://code.samourai.io/dojo/samourai-dojo/-/archive/v$VERSION/samourai-dojo-v$VERSION.tar.gz
-  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/7d1fb4c1dda87dc77b66e7311caeffc3/samourai-dojo-v1.20.0-fingerprints.txt
-  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/59b9682aa5e1d6f8d5306572560d79be/samourai-dojo-v1.20.0-fingerprints.txt.sig
+  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/7d1fb4c1dda87dc77b66e7311caeffc3/samourai-dojo-v$VERSION-fingerprints.txt
+  $ wget https://code.samourai.io/dojo/samourai-dojo/uploads/59b9682aa5e1d6f8d5306572560d79be/samourai-dojo-v$VERSION-fingerprints.txt.sig
   ```
 
 * Calculate the checksum of the binary you've downloaded and compare it to the one provided in the fingerprints text file
@@ -1032,6 +1032,25 @@ Samourai wallet uses zpubs by default, however if you use other address format t
   $ sudo rm /etc/nginx/sites-enabled/dojo.conf
   $ sudo systemctl reload nginx
   ```
+### Uninstall UFW configuration
+
+* Display the UFW firewall rules and notes the numbers of the rules for dojo (e.g., X and Y below)
+
+  ```sh
+  $ sudo ufw status numbered
+  > [...]
+  > [X] 4011                   ALLOW IN    Anywhere                   # allow Dojo SSL
+  > [...]
+  > [Y] 4011 (v6)              ALLOW IN    Anywhere (v6)              # allow Dojo SSL
+  ```
+
+* Delete the two Thunderhub rules (check that the rule to be deleted is the correct one and type "y" and "Enter" when prompted)
+
+  ```sh
+  $ sudo ufw delete Y
+  $ sudo ufw delete X  
+  ```
+
 
 ### Remove MariaDB
 
