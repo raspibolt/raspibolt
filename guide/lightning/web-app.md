@@ -107,7 +107,7 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ git checkout v0.14.0
 
   $ git verify-tag v0.14.0
-  > gpg: Signature made Mo 26 Jun 2023 03:04:55 CET
+  > gpg: Signature made Tue May 30 03:38:10 CEST
   > gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
   > gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
   > gpg:                 aka "Suheb <39208279+saubyk@users.noreply.github.com>" [unknown]
