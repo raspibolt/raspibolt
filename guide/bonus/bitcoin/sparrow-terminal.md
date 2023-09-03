@@ -54,8 +54,8 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
 * Download Sparrow Server and signatures into "/tmp" directory, which is cleared on the reboot. If you want to update or install the latest version, look up the [latest Sparrow Wallet release version](https://github.com/sparrowwallet/sparrow/releases), and change the "VERSION="x.x.x" value line, to that number to download the latest Sparrow server binary.
 
   ```sh
-  $ VERSION="1.7.4"
   $ cd /tmp
+  $ VERSION=1.7.9
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-server-$VERSION-aarch64.tar.gz
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-$VERSION-manifest.txt.asc
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-$VERSION-manifest.txt
