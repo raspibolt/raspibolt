@@ -36,7 +36,7 @@ Table of contents
 ## Requirements
 
 * Bitcoin Core
-* Little over 100GB of free storage for database (external backup recommended)
+* Storage space for database (external backup recommended); currently takes up 133GB (as of Aug 2023).
 
 ---
 
