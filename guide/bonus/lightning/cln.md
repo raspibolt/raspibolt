@@ -55,7 +55,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * As "admin", create a new user named "lightningd" and add it to groups "bitcoin" and "debian-tor". Also add "admin" to group "lightningd" for later use.
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" lightningd
+  $ sudo adduser --system --group --shell /bin/bash --home /home/lightningd lightningd
   $ sudo usermod -a -G bitcoin,debian-tor lightningd
   $ sudo adduser admin lightningd
   ```

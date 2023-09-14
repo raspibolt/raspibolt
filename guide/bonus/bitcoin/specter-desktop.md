@@ -80,7 +80,7 @@ These instructions will clone the repo to fetch the latest version and then "pip
 
 - Create a new user, add it to the bitcoin group and open a new session
   ```sh
-  $ sudo adduser --disabled-password --gecos "" specter
+  $ sudo adduser --system --group --shell /bin/bash --home /home/specter specter
   $ sudo adduser specter bitcoin
   $ sudo su - specter
   ```

@@ -71,7 +71,7 @@ This guide assumes that you have followed the main RaspiBolt guide and installed
 * Create the "homer" service user, create the data directory and open a new session 
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" homer
+  $ sudo adduser --system --group --shell /bin/bash --home /home/homer homer
   $ sudo mkdir /data/homer
   $ sudo chown homer:homer /data/homer
   $ sudo su - homer

@@ -116,7 +116,7 @@ An attacker would not be able to do much within this user's permission settings.
 * Create a new user, assign it to the "bitcoin" group, and open a new session
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" btcrpcexplorer
+  $ sudo adduser --system --group --shell /bin/bash --home /home/btcrpcexplorer btcrpcexplorer
   $ sudo adduser btcrpcexplorer bitcoin
   $ sudo su - btcrpcexplorer
   ```

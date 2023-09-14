@@ -108,7 +108,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
 * Create the "lnd" service user, and add it to the groups "bitcoin" and "debian-tor"
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" lnd
+  $ sudo adduser --system --group --shell /bin/bash --home /home/lnd lnd
   $ sudo usermod -a -G bitcoin,debian-tor lnd
   ```
 

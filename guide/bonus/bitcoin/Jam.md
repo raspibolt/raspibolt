@@ -160,7 +160,7 @@ $ sudo ufw status
 * Create a dedicated user for Jam and switch to user
 
 ```sh
-$ sudo adduser --disabled-password --gecos "" jam
+$ sudo adduser --system --group --shell /bin/bash --home /home/jam jam
 
 $ sudo su - jam
 ```

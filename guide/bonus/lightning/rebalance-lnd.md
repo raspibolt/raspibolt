@@ -65,7 +65,7 @@ pip is not installed by default on Raspberry Pi OS Lite (64-bit), check if it is
 * We create a "rebalance-lnd" user and we make it part of the "bitcoin" group (to be able to interact with LND)
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" rebalance-lnd
+  $ sudo adduser --system --group --shell /bin/bash --home /home/rebalance-lnd rebalance-lnd
   $ sudo adduser rebalance-lnd lnd
   ```
 

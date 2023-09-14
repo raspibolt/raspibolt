@@ -79,7 +79,7 @@ Table of contents
 * With user "admin", create a new user "chargelnd" and make it a member of the "lnd" group
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" chargelnd
+  $ sudo adduser --system --group --shell /bin/bash --home /home/chargelnd chargelnd
   $ sudo adduser chargelnd lnd
   ```
 

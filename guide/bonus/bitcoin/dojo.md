@@ -235,7 +235,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Create the user "dojo" and add him to the group “bitcoin” as well
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" dojo
+  $ sudo adduser --system --group --shell /bin/bash --home /home/dojo dojo
   $ sudo adduser dojo bitcoin
   ```
 

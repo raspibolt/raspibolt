@@ -90,7 +90,7 @@ We are going to install Thunderhub in the home directory since it doesn't need t
 * Create a new "thunderhub" user. The new user needs read-only access to the `tls.cert` and our `admin.macaroon`, so we add him to the "lnd" group. Open a new session.
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" thunderhub
+  $ sudo adduser --system --group --shell /bin/bash --home /home/thunderhub thunderhub
   $ sudo adduser thunderhub lnd
   $ sudo cp /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/thunderhub/admin.macaroon
   $ sudo chown thunderhub:thunderhub /home/thunderhub/admin.macaroon

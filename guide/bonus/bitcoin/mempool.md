@@ -78,7 +78,7 @@ For improved security, we create the new user "mempool" that will run the Mempoo
 * Create a new user, assign it to the "bitcoin" group, and open a new session
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" mempool
+  $ sudo adduser --system --group --shell /bin/bash --home /home/mempool mempool
   $ sudo adduser mempool bitcoin
   $ sudo su - mempool
   ```

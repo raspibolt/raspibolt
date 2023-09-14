@@ -51,7 +51,7 @@ Table of contents
 * With user “admin”, create a new user “regolancer” and make it a member of the “lnd” group
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" regolancer
+  $ sudo adduser --system --group --shell /bin/bash --home /home/regolancer regolancer
   $ sudo adduser regolancer lnd
   ```
 

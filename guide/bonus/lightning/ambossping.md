@@ -45,7 +45,7 @@ Table of contents
 * With user “admin”, create a new user “ambossping” and make it a member of the “lnd” group
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" ambossping
+  $ sudo adduser --system --group --shell /bin/bash --home /home/ambossping ambossping
   $ sudo adduser ambossping lnd
   ```
 

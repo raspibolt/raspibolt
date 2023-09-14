@@ -144,7 +144,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * Create the “lit” service user, and make it a member of the “bitcoin” and “lnd” groups
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" lit
+  $ sudo adduser --system --group --shell /bin/bash --home /home/lit lit
   $ sudo usermod -a -G bitcoin,lnd lit
   ```
 

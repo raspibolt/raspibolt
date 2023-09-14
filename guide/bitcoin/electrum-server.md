@@ -129,7 +129,7 @@ We get the latest release of the Electrs source code, verify it, compile it to a
 * Create the "electrs" service user, and make it a member of the "bitcoin" group
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" electrs
+  $ sudo adduser --system --group --shell /bin/bash --home /home/electrs electrs
   $ sudo adduser electrs bitcoin
   ```
 

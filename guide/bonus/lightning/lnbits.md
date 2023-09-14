@@ -89,7 +89,7 @@ Table of contents
 * Create a new user and add it to the "lnd" group.
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" lnbits
+  $ sudo adduser --system --group --shell /bin/bash --home /home/lnbits lnbits
   $ sudo adduser lnbits lnd
   ```
 

@@ -82,7 +82,7 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
 
 * Create a new user, copy the LND credentials and open a new session
   ```sh
-  $ sudo adduser --disabled-password --gecos "" rtl
+  $ sudo adduser --system --group --shell /bin/bash --home /home/rtl rtl
   $ sudo cp /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/rtl/admin.macaroon
   $ sudo chown rtl:rtl /home/rtl/admin.macaroon
   $ sudo su - rtl

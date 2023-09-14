@@ -57,7 +57,7 @@ Table of contents
 * Create a new user "bos" and make it a member of the "lnd" group
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" bos
+  $ sudo adduser --system --group --shell /bin/bash --home /home/bos bos
   $ sudo adduser bos lnd
   $ sudo su - bos
   ```

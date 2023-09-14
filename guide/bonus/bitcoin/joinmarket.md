@@ -61,7 +61,7 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * Create the “joinmarket” user, and make it a member of the “bitcoin” and "debian-tor" groups
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" joinmarket
+  $ sudo adduser --system --group --shell /bin/bash --home /home/joinmarket joinmarket
   $ sudo usermod -a -G bitcoin,debian-tor joinmarket
   ```
 

@@ -50,7 +50,7 @@ Table of contents
 * Create a new user "circuitbreaker" and make it part of the "lnd" group
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" circuitbreaker
+  $ sudo adduser --system --group --shell /bin/bash --home /home/circuitbreaker circuitbreaker
   $ sudo adduser circuitbreaker lnd
   ```
  

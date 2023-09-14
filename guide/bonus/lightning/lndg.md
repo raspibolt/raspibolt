@@ -76,7 +76,7 @@ For that we will create a separate user and we will be running the code as the n
 * Create a new user and make it a member of the "lnd" group to give it read access to the LND macaroons and data
   
   ```sh
-  $ sudo adduser --disabled-password --gecos "" lndg
+  $ sudo adduser --system --group --shell /bin/bash --home /home/lndg lndg
   $ sudo adduser lndg lnd
   $ sudo adduser lndg www-data
   $ sudo adduser www-data lndg

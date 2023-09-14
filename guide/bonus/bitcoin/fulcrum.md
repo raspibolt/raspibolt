@@ -236,7 +236,7 @@ Now that Fulcrum is installed, we need to configure it to run automatically on s
 * Create the "fulcrum" service user, and add it to "bitcoin" group
 
   ```sh
-  $ sudo adduser --disabled-password --gecos "" fulcrum
+  $ sudo adduser --system --group --shell /bin/bash --home /home/fulcrum fulcrum
   $ sudo adduser fulcrum bitcoin
   ```
 
