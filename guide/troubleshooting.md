@@ -213,6 +213,43 @@ $ exit
 
 ---
 
+## Can't login to admin and/or root.
+
+Something happened and your now locked out of our pi. Don't worry there is still a way in. Shutdown the pi. Remove the SD card from your Pi and connect it to your Desktop/Laptop using a micro SD adapter. 
+
+In the `/boot` partition of the SD card, locate `cmdline.txt` and add `init=/bin/sh` to the end of the existing line (without creating a new line).
+
+Example:
+
+  Before
+  ```
+  console=serial0,115200 console=tty1 root=PARTUUID=22980bec-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
+  ```
+  After
+  ```
+  console=serial0,115200 console=tty1 root=PARTUUID=22980bec-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait init=/bin/sh
+  ```
+
+Put the SD card back in your Pi and boot it up to access the root shell. It will bypass login.
+
+Use this shell to make necessary changes/fixes. In my case, I needed to update root's password. `passwd` and admin's password `passwd admin`.
+
+- You will likely encounter a read-only file system issue. No sweat, we just need to mount the root partition manually. Typically here `/dev/mmcblk0p2`. Remount it with read-write permissions on `/`
+
+   ```
+   mount -o remount,rw /dev/mmcblk0p2 /
+   ```
+
+Once done, you can try reverting the changes in `/boot/cmdline.txt` now in th Pi.
+
+- If unable, just change this back on your other machine.
+
+You should be able to boot your Raspberry Pi normally.
+
+Ref: https://samx18.io/blog/2017/11/05/piBootIssue.html
+
+---
+
 ## Bitcoin Core
 
 First, let's disable the systemd autostart and reboot the Pi to run everything manually.
