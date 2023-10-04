@@ -607,7 +607,7 @@ The Zeus mobile app will access the node via Tor.
 * Save the QR code as an image:
 
   ```sh
-  $ qrencode -t utf8 -r cln-qr-code-template.txt -o cln-qr-code.png
+  $ qrencode -t png -r cln-qr-code-template.txt -o cln-qr-code.png
   $ chmod 644 cln-qr-code.png
   ```
 
