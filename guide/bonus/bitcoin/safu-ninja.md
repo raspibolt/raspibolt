@@ -71,10 +71,10 @@ You will need the following hardware components:
 
 * Stainless steel fender washers (e.g. M8)
 * Stainless steel bolts and wingnuts (e.g. M8)
-* Letter and number metal stamp set (e.g. 3 mm heigth)
+* Letter and number metal stamp set (e.g. 3 mm height)
 * Hammer
 
-Quantities are dependent on how many backups you plan to make and how many words there are in each backup (12 or 24 usually). One backup of 24 mnemonic words will require only one bolt and wingnut and 24 washers. Although, a few more would be useful for pratice or if you make mistakes while stamping.
+Quantities are dependent on how many backups you plan to make and how many words there are in each backup (12 or 24 usually). One backup of 24 mnemonic words will require only one bolt and wingnut and 24 washers. Although, a few more would be useful for practice or if you make mistakes while stamping.
 
 The key thing is to make sure that all the sizes are compatible with each other:
 * The washers must have the same inner diameter as the bolt
@@ -99,13 +99,13 @@ Note: Punching into the washers can be quite difficult at time. Because of this,
 
 * (Optional) Punch the name of the wallet on a washer (e.g. "WALLET XY"). It might come handy in a few years to remember what wallet was associated with this backup and also because some wallets might use uncommon derivation paths. Check this [list of derivation paths](https://walletsrecovery.org/){:target="_blank"} supported by each wallet is maintained by @NVK and @J9Roem.
 
-* (Optional) Punch the date of creation of your wallet, known as the "birth date". This could help you quicken the search for your UTXOs when reconstructing the wallet in a few years. The wallet software used for recovery will not need to scan the entire blockhain but will start at the birth date. This does not apply to LND onchain wallets which use the azeed cipher scheme that includes birth date in the mnemonic words. 
+* (Optional) Punch the date of creation of your wallet, known as the "birth date". This could help you quicken the search for your UTXOs when reconstructing the wallet in a few years. The wallet software used for recovery will not need to scan the entire blockchain but will start at the birth date. This does not apply to LND onchain wallets which use the azeed cipher scheme that includes birth date in the mnemonic words. 
 
 * Stack all the washers on the bolt
 
 * Screw and tighten the wingnut
 
-You're set! You now have a DIY steel metal backup that will be resistant to fire, flood, schocks and other kind of environmental damages.
+You're set! You now have a DIY steel metal backup that will be resistant to fire, flood, shocks and other kinds of environmental damages.
 
 ---
 
