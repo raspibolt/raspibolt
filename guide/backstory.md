@@ -23,7 +23,7 @@ It will be more important than the most novel feature of competing altcoin proje
 Currently, Bitcoin is more of a store of value and not really suited for small everyday transactions.
 Due to the limitations of the blockchain, and the growth of its usage, fees have risen and business models relying on cheap transactions are being priced out.
 This is fine.
-A **genuinely decentralized blockchains is a scarce resource** and cannot scale to accommodate all global transactions.
+A **genuinely decentralized blockchain is a scarce resource** and cannot scale to accommodate all global transactions.
 The current scaling pains are a great motivator to build better technology to scale exponentially instead of just making everything bigger for linear scaling.
 
 This is where the **Lightning Network** comes in.

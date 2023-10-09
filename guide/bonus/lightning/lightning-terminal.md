@@ -32,7 +32,7 @@ Table of contents
 
 ## Introduction
 
-Lightning Terminal, developed by Lighining Labs, aims at providing additional tools for LND node operators to manage their node and channel balances. Below is a summary of Lighting Terminal's features:
+Lightning Terminal, developed by Lightning Labs, aims to provide additional tools for LND node operators to manage their node and channel balances. Below is a summary of Lightning Terminal's features:
 
 * Visualize your channel balances in a web GUI
 * Run a single daemon (`litd`) that integrates the Loop (`loopd`), Pool (`poold`) and Faraday (`faraday`) daemons
@@ -411,7 +411,7 @@ Now we’ll make sure Lightning Terminal starts as a service on the Raspberry Pi
 
 ### Aliases
 
-For now, software packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these sofware so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them, using flags (e.g., `pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list`, do not try it now as Lightning Terminal is not running yet!).  
+For now, software packaged in Lightning Terminal are all listening to the same port 8443. This is not the default behavior set in the code of these softwares so you must always indicate the RPC port as well as the TLS certificate of Lightning Terminal when using them, using flags (e.g., `pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert accounts list`, do not try it now as Lightning Terminal is not running yet!).  
 
 Rather than always typing the flags, we can create aliases for the "admin" user.
 
@@ -465,7 +465,7 @@ Rather than always typing the flags, we can create aliases for the "admin" user.
 
 #### Introduction
 
-Lightning Node Connect allows to connect to Lightning Terminal and the node from the web via Lightning Lab's [web Terminal](https://terminal.lightning.engineering/){:target="_blank"}. Like, the Lightning Terminal web UI, the Terminal dashboard offers an overview of the channels and the Loop and Pool services but it also offers an health check and ranking information, gives a summary of recent routing and payment events and payments can be made and received. For more information, check out the Lighning Labs [blog post announcement](https://lightning.engineering/posts/2021-11-30-lightning-terminal/){:target="_blank"}.
+Lightning Node Connect allows to connect to Lightning Terminal and the node from the web via Lightning Lab's [web Terminal](https://terminal.lightning.engineering/){:target="_blank"}. Like, the Lightning Terminal web UI, the Terminal dashboard offers an overview of the channels and the Loop and Pool services but it also offers an health check and ranking information, gives a summary of recent routing and payment events and payments can be made and received. For more information, check out the Lightning Labs [blog post announcement](https://lightning.engineering/posts/2021-11-30-lightning-terminal/){:target="_blank"}.
 
 *Note:* Contrary to the Lightning Terminal web UI that can only be accessed in your LAN, the web Terminal can be used (securely) from anywhere.
 
@@ -526,7 +526,7 @@ You can use Pool using the CLI (check `litpool --help`), the Lightning Terminal 
 
 If you have installed [Ride The Lightning](../../web-app.md), you can use the Loop submarine swap service directly from the RTL GUI:
 
-* Go the the navigation menu in the top left (if it's hidden, click on the hamburger symbol)
+* Go to the navigation menu in the top left (if it's hidden, click on the hamburger symbol)
 * Click on "Node Config"
 * Click on the "Services" tab
 * If it's disabled, click on "Enable Loop service"
@@ -567,7 +567,7 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
 
 ## Uninstall
 
-🚨 Warning: Before uninstalling Lightning Terminal, you might want to make sure that there is no on-going channel leases or LOOP swaps and that you've closed your Pool account. You might also want to make some backup of key files (LSAT token, databases etc) located in the /data directories).
+🚨 Warning: Before uninstalling Lightning Terminal, you might want to make sure that there is no ongoing channel leases or LOOP swaps and that you've closed your Pool account. You might also want to make some backup of key files (LSAT token, databases etc) located in the /data directories).
 
 * As "admin", stop and disable the systemd service and then delete the service file
 
