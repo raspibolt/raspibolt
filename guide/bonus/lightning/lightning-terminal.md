@@ -67,7 +67,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
     server 127.0.0.1:8443;
   }
   server {
-    listen 8444 ssl;
+    listen 8444;
     proxy_pass litd;
   }
   ```
