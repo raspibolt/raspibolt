@@ -299,6 +299,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Upgrade CLN with care and follow the instructions on CLN repository completely to understand the changes.
 * Remove the git repository or `git pull` from within and redo the verification and building steps as described above.
 * Verify with `lightning-cli --version` that the update applied.
+* It is likely necessary to update the `c-lightning-REST` plugin as well. Don't forget to copy the `certs` directory from your prior plugin installation to the new one in order to preserve the access credentials.
 * Restart the systemd service for the update to take effect and reload configuration.
 
   ```sh
@@ -609,7 +610,7 @@ The Zeus mobile app will access the node via Tor.
 * Save the QR code as an image:
 
   ```sh
-  $ qrencode -t utf8 -r cln-qr-code-template.txt -o cln-qr-code.png
+  $ qrencode -t png -r cln-qr-code-template.txt -o cln-qr-code.png
   $ chmod 644 cln-qr-code.png
   ```
 

@@ -32,7 +32,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ VERSION="0.16.4"
+  $ VERSION="0.17.0"
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-v$VERSION-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig
@@ -45,7 +45,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.16.4-beta.tar.gz: OK
+  > lnd-linux-arm64-v0.17.0-beta.tar.gz: OK
   ```
 
 ### Signature check
@@ -65,13 +65,13 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 
   ```sh
   $ gpg --verify manifest-roasbeef-v$VERSION-beta.sig manifest-v$VERSION-beta.txt
-  > gpg: Signature made Tue Jun  6 04:57:08 2023 EEST
+  > gpg: Signature made Tue 03 Oct 2023 06:03:53 PM UTC
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
   > Primary key fingerprint: E4D8 5299 674B 2D31 FAA1  892E 372C BD76 33C6 1696
-  >      Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
+         Subkey fingerprint: 60A1 FA7D A5BF F08B DCBB  E790 3BBD 59E9 9B28 0306
   ```
 
 ### Timestamp check
@@ -83,7 +83,7 @@ We can also check that the manifest file was in existence around the time of the
   ```sh
   $ ots --no-cache verify manifest-roasbeef-v$VERSION-beta.sig.ots -f manifest-roasbeef-v$VERSION-beta.sig
   > [...]
-  > Success! Bitcoin block 797397 attests existence as of 2023-07-06 CEST
+  > Success! Bitcoin block 810517 attests existence as of 2023-10-03 UTC
   ```
 
 * Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
@@ -98,7 +98,7 @@ Having verified the integrity and authenticity of the release binary, we can saf
   $ tar -xvf lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v$VERSION-beta/*
   $ lnd --version
-  > lnd version v0.16.4-beta commit=v0.16.4-beta
+  > lnd version v0.17.0-beta commit=v0.17.0-beta
   ```
 
 ### Data directory
@@ -203,7 +203,6 @@ To improve the security of your wallet, check out these more advanced methods:
   # Explicitly define any additional domain names for the certificate that will be created.
   # tlsextradomain=raspibolt.local
   # tlsextradomain=raspibolt.public.domainname.com
-  
 
   # Channel settings
   bitcoin.basefee=1000
@@ -213,6 +212,9 @@ To improve the security of your wallet, check out these more advanced methods:
   accept-amp=true
   protocol.wumbo-channels=true
   coop-close-target-confs=24
+
+  # Set to enable support for the experimental taproot channel type
+  protocol.simple-taproot-chans=true
 
   # Watchtower
   wtclient.active=true
@@ -254,7 +256,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.16.2-beta commit=v0.16.2-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.17.0-beta commit=v0.17.0-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
@@ -554,8 +556,8 @@ Just grab the whole URI above the big QR code and use it as follows (we will use
   ```
 
 * **Make a Lightning payment**. By default, these work with invoices, so when you buy something or want to send money, you need to get an invoice first. However, you can also pay without requesting an invoice as long the receiving node supports the keysend or amp feature!
-  
-  To try, why not send me a single satoshi! You simply need to input my node pukey [`Stadicus node`](https://amboss.space/node/02acd93e3352fd59066ca3f23e8865de1926301e8be03c6a52f0f7e43533fe9888){:target="_blank"}, the amount in satoshis and add the –keysend flag. 
+
+  To try, why not send me a single satoshi! You simply need to input my node pukey [`Stadicus node`](https://amboss.space/node/02acd93e3352fd59066ca3f23e8865de1926301e8be03c6a52f0f7e43533fe9888){:target="_blank"}, the amount in satoshis and add the –keysend flag.
 
     ```sh
     * lncli sendpayment --dest 02acd93e3352fd59066ca3f23e8865de1926301e8be03c6a52f0f7e43533fe9888 --amt 1 --keysend
