@@ -104,14 +104,14 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ git clone https://github.com/ElementsProject/lightning.git
   $ cd lightning
   $ git fetch --all --tags
-  $ git checkout v23.08
+  $ git checkout v23.08.1
   ``` 
 
 * Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `Good Signature`.
 
   ```sh
   $ curl https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/rustyrussell.txt | gpg --import
-  $ git verify-tag v23.08
+  $ git verify-tag v23.08.1
   ```
 
 * Download user specific python packages.
