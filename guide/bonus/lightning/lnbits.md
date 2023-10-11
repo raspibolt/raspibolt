@@ -241,6 +241,7 @@ Your browser will display a warning because we use a self-signed SSL certificate
   # RaspiBolt: systemd unit for LNbits
   # /etc/systemd/system/lnbits.service
 
+  [Unit]
   Description=LNbits
   After=lnd.service
   PartOf=lnd.service
