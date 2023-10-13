@@ -94,7 +94,7 @@ For that we will create a separate user and we will be running the code as the n
   ```sh
   $ LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/cryptosharks131/lndg/releases/latest | grep -oP '"tag_name":\s*"\K([^"]+)')
   $ echo $LATEST_RELEASE
-  > v1.7.1
+  > v1.8.0
 
   $ git clone --branch $LATEST_RELEASE https://github.com/cryptosharks131/lndg.git
   $ cd lndg
@@ -277,7 +277,7 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
   Description=LNDg uWSGI app
   After=lnd.service
   PartOf=lnd.service
-  Wants=jobs-lndg.timer rebalancer-lndg.timer htlc-stream-lndg.service
+  Wants=controller-lndg.service
   
   [Service]
   ExecStart=/home/lndg/lndg/.venv/bin/uwsgi --ini /home/lndg/lndg/lndg.ini
@@ -460,180 +460,32 @@ You can now access LNDg from within your local network by browsing to https://ra
 
 ### Backend refreshes
 
-LNDg uses a Python script (`~/lndg/jobs.py`), to gather data about your node that is then displayed in the GUI dashboard. 
-To have updated information in the GUI, it is necessary to regularly run the script to collect new data.
+LNDg uses a Python script (`~/lndg/controller.py`), to gather data about your node that is then displayed in the GUI dashboard. 
+To have updated information in the GUI, it is necessary to regularly run the script to collect new data, run rebalances and fetch htlc stream data.
 
-* Create a systemd service file to run the LNDg `jobs.py` Python script. Save (Ctrl+o) and exit (Ctrl+x).
+* Create a systemd service file to run the LNDg `controller.py` Python script. Save (Ctrl+o) and exit (Ctrl+x).
 
   ```sh
-  $ sudo nano /etc/systemd/system/jobs-lndg.service
+  $ sudo nano /etc/systemd/system/controller-lndg.service
   ```
 
   ```ini
   # RaspiBolt: systemd unit for LNDg
-  # /etc/systemd/system/jobs-lndg.service
+  # /etc/systemd/system/controller-lndg.service
   
   [Unit]
-  Description=LNDg backend refreshes Python script
-  
+  Description=Backend Controller For Lndg
+
   [Service]
-  ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/jobs.py
+  Environment=PYTHONUNBUFFERED=1
   User=lndg
-  
-  StandardError=append:/var/log/lnd_jobs_error.log
-  RuntimeMaxSec=3600
-  ```
-
-* Create a systemd timer to activate the service every 20 seconds. Save (Ctrl+o) and exit (Ctrl+x).
-
-  ```sh
-  $ sudo nano /etc/systemd/system/jobs-lndg.timer
-  ```
-
-  ```ini
-  # RaspiBolt: systemd unit for LNDg
-  # /etc/systemd/system/jobs-lndg.timer  
-  
-  [Unit]
-  Description=Timer to activate jobs-lndg.service every 20 seconds
-  After=uwsgi.service
-  PartOf=uwsgi.service
-
-  [Timer]
-  OnBootSec=300
-  OnUnitActiveSec=20
-  AccuracySec=1
-  
-  [Install]
-  WantedBy=timers.target
-  ```
-
-* Enable the timer to start at boot. Start the timer and check its status. Exit with `Ctrl`+`c`.
-
-  ```sh
-  $ sudo systemctl enable jobs-lndg.timer
-  $ sudo systemctl start jobs-lndg.timer
-  $ sudo systemctl status jobs-lndg.timer
-  > [...]
-  >   Loaded: loaded (/etc/systemd/system/jobs-lndg.timer; enabled; vendor preset: enabled)
-  >   Active: active (running) since Fri 2022-11-11 14:09:08 GMT; 56min ago
-  > [...]
-  ```
-
-* Check that the backend refreshes Python script is run every 20 seconds or so
-
-  ```sh
-  $ sudo journalctl -f -u jobs-lndg.service
-  > [...]
-  > Nov 11 14:25:24 raspibolt systemd[1]: Started LNDg backend refreshes Python script.
-  > Nov 11 14:25:27 raspibolt systemd[1]: jobs-lndg.service: Succeeded.
-  > Nov 11 14:25:27 raspibolt systemd[1]: jobs-lndg.service: Consumed 3.063s CPU time.
-  > Nov 11 14:25:44 raspibolt systemd[1]: Started LNDg backend refreshes Python script.
-  > Nov 11 14:25:47 raspibolt systemd[1]: jobs-lndg.service: Succeeded.
-  > Nov 11 14:25:47 raspibolt systemd[1]: jobs-lndg.service: Consumed 3.107s CPU time.
-  ```
-
-### Rebalancer runs
-
-LNDg uses a Python script (`~/lndg/rebalancer.py`) to automatically create circular rebalancing payments based on user-defined parameters.
-
-* Create a systemd service file to run the LNDg `rebalancer.py` Python script. Save (Ctrl+o) and exit (Ctrl+x).
-
-  ```sh
-  $ sudo nano /etc/systemd/system/rebalancer-lndg.service
-  ```
-
-  ```ini
-  # RaspiBolt: systemd unit for LNDg
-  # /etc/systemd/system/rebalancer-lndg.service
-  
-  [Unit]
-  Description=LNDg rebalancer Python script
-  
-  [Service]
-  ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/rebalancer.py
-  User=lndg
-  
-  StandardError=append:/var/log/lnd_jobs_error.log
-  RuntimeMaxSec=3600
-  ```
-
-* Create a systemd timer to activate the service every 20 seconds. Save (Ctrl+o) and exit (Ctrl+x).
-
-  ```sh
-  $ sudo nano /etc/systemd/system/rebalancer-lndg.timer
-  ```
-
-  ```ini
-  # RaspiBolt: systemd unit for LNDg
-  # /etc/systemd/system/rebalancer-lndg.timer  
-  
-  [Unit]
-  Description=Timer to activate rebalancer-lndg.service every 20 seconds
-  After=uwsgi.service
-  PartOf=uwsgi.service
-
-  [Timer]
-  OnBootSec=300
-  OnUnitActiveSec=20
-  AccuracySec=1
-  
-  [Install]
-  WantedBy=timers.target
-  ```
-
-* Enable the timer to start at boot. Start the timer and check its status. Exit with `Ctrl`+`c`.
-
-  ```sh
-  $ sudo systemctl enable rebalancer-lndg.timer
-  $ sudo systemctl start rebalancer-lndg.timer
-  $ sudo systemctl status rebalancer-lndg.timer
-  > [...]
-  >   Loaded: loaded (/etc/systemd/system/rebalancer-lndg.timer; enabled; vendor preset: enabled)
-  >   Active: active (running) since Fri 2022-11-11 11:49:59 GMT; 3h 12min ago
-  > [...]
-  ```
-
-* Check that the rebalancer Python script is running regularly.  
-  Note: It might take a few minutes for the rebalancing script to complete its tasks.
-
-  ```sh
-  $ sudo journalctl -f -u rebalancer-lndg.service
-  > [...]
-  > Nov 11 14:52:30 raspibolt systemd[1]: rebalancer-lndg.service: Consumed 1.674s CPU time. 
-  > Nov 11 14:52:48 raspibolt systemd[1]: Started LNDg rebalancer Python script.
-  > Nov 11 14:58:50 raspibolt systemd[1]: rebalancer-lndg.service: Succeeded.
-  > Nov 11 14:58:50 raspibolt systemd[1]: rebalancer-lndg.service: Consumed 15.770s CPU time.
-  > Nov 11 14:58:50 raspibolt systemd[1]: Started LNDg rebalancer Python script.
-  ```
-
-### HTLC failure stream data
-
-LNDg uses a Python script (`~/lndg/htlc_stream.py`) to keep a log of failed HTLCs on your node. The list of failed HTLCs together with some information can be seen in the GUI at https://raspibolt.local:8889/failed_htlcs. The last 10 failed HTLCs are also displayed at the bottom of the home webpage.
-
-* Create a systemd service file to run the LNDg `htlc_stream.py` Python script. Save (Ctrl+o) and exit (Ctrl+x).
-
-  ```sh
-  $ sudo nano /etc/systemd/system/htlc-stream-lndg.service
-  ```
-
-  ```ini
-  # RaspiBolt: systemd unit for LNDg
-  # /etc/systemd/system/htlc-stream-lndg.service   
-    
-  [Unit]
-  Description=LNDg HTLC stream Python script
-  After=uwsgi.service
-  PartOf=uwsgi.service
-  
-  [Service]
-  ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/htlc_stream.py
-  User=lndg
-  
-  StandardError=append:/var/log/lnd_htlc_stream_error.log
+  Group=lndg
+  ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/controller.py
+  StandardOuput=append:/var/log/controller-lndg.log
+  StandardError=append:/var/log/controller-lndg-error.log
   Restart=always
   RestartSec=60s
-  
+
   [Install]
   WantedBy=multi-user.target
   ```
@@ -641,13 +493,24 @@ LNDg uses a Python script (`~/lndg/htlc_stream.py`) to keep a log of failed HTLC
 * Enable the service to start at boot. Start the service and check its status. Exit with `Ctrl`+`c`.
 
   ```sh
-  $ sudo systemctl enable htlc-stream-lndg.service
-  $ sudo systemctl start htlc-stream-lndg.service
-  $ sudo systemctl status htlc-stream-lndg.service
+  $ sudo systemctl enable controller-lndg.service
+  $ sudo systemctl start controller-lndg.service
+  $ sudo systemctl status controller-lndg.service
+  ```
+
+* Check that the backend refreshes Python script is run every 20 seconds or so
+
+  ```sh
+  $ sudo journalctl -f -u controller-lndg.service
   > [...]
-  >   Loaded: loaded (/etc/systemd/system/htlc-stream-lndg.service; enabled; vendor preset: enabled)
-  >   Active: active (running) since Fri 2022-11-11 15:20:59 GMT; 1s ago
-  > [...]
+  > Fri Oct 13 14:11:51 2023 : [Data] : Starting data execution...
+  > Fri Oct 13 14:12:00 2023 : [Rebalancer] : Queue currently has 0 items...
+  > Fri Oct 13 14:12:00 2023 : [Rebalancer] : There are currently 3 tasks in progress...
+  > Fri Oct 13 14:12:00 2023 : [Rebalancer] : Queue manager is checking for more work...
+  > Fri Oct 13 14:12:30 2023 : [Rebalancer] : Queue currently has 0 items...
+  > Fri Oct 13 14:12:30 2023 : [Rebalancer] : There are currently 3 tasks in progress...
+  > Fri Oct 13 14:12:30 2023 : [Rebalancer] : Queue manager is checking for more work...
+  > Fri Oct 13 14:12:31 2023 : [Data] : Data execution completed...sleeping for 20 seconds
   ```
 
 ---
@@ -716,14 +579,14 @@ With the Tor browser, you can access this onion address from any device.
   $ sudo su - lndg
   ```
 
-* Fetch the latest GitHub repository information, display the release tags (use the latest 1.7.1 in this example), and update:
+* Fetch the latest GitHub repository information, display the release tags (use the latest version), and update:
 
   ```sh
   $ cd /home/lndg/lndg
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v1.7.1
+  $ git checkout v1.8.0
   $ .venv/bin/pip install -r requirements.txt
   $ .venv/bin/pip install --upgrade protobuf
   $ rm lndg/settings.py
@@ -754,8 +617,7 @@ With the Tor browser, you can access this onion address from any device.
  
   ```sh
   $ cd /etc/systemd/system/
-  $ sudo rm uwsgi.service jobs-lndg.service rebalancer-lndg.service htlc-stream-lndg.service  
-  $ sudo rm jobs-lndg.timer rebalancer-lndg.timer
+  $ sudo rm uwsgi.service controller-lndg.service  
   $ cd
   ```
 
