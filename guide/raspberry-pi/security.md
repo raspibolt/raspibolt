@@ -232,6 +232,7 @@ This setup is called a "reverse proxy": NGINX provides secure communication to t
 
   ```sh
   $ sudo apt install nginx
+  $ sudo apt install libnginx-mod-stream
   ```
 
 * Create a self-signed SSL/TLS certificate (valid for 10 years)
