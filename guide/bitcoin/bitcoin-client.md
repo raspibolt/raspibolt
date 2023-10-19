@@ -582,14 +582,14 @@ Expected output:
   $ ots --no-cache verify SHA256SUMS.ots -f SHA256SUMS
   ```
 
-The following output is just an **example** of one of the versions:
+Expected output:
 
   ```sh
   > Got 1 attestation(s) from https://btc.calendar.catallaxy.com
   > Got 1 attestation(s) from https://finney.calendar.eternitywall.com
   > Got 1 attestation(s) from https://bob.btc.calendar.opentimestamps.org
   > Got 1 attestation(s) from https://alice.btc.calendar.opentimestamps.org
-  > Bitcoin block 791503 attests existence as of 2023-05-26 UTC
+  > Success! Bitcoin block 812858 attests existence as of 2023-10-19 UTC
   ```
 
 Now, just check that the timestamp date is close to the [release](https://github.com/bitcoin/bitcoin/releases) date of the version you're installing.
