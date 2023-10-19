@@ -284,6 +284,13 @@ This setup is called a "reverse proxy": NGINX provides secure communication to t
   > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
   > nginx: configuration file /etc/nginx/nginx.conf test is successful
   ```
+  
+If you run into the `unknown directive "stream"` error, then you need to install
+the stream module first:
+
+  ```sh
+  $ sudo apt install libnginx-mod-stream
+  ```
 
 ## Disable wireless interfaces
 
