@@ -61,7 +61,7 @@ This script can be run by user "admin" without root privileges, it requires acce
 
   ```sh
   $ cd ~
-  $ python3 UTXOracle.py
+  $ UTXOracle.py
   ```
 
 ---
