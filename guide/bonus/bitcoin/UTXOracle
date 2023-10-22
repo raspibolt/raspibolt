@@ -54,7 +54,7 @@ This script can be run by user "admin" without root privileges, it requires acce
 * Install the script and make it executable
 
   ```sh
-  $ sudo cp UTXOracle.py /home/admin/
+  $ sudo install UTXOracle.py /usr/local/bin
   ```
 
 * You can now run the script with user "admin"
