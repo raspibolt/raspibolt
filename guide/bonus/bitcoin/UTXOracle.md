@@ -18,7 +18,7 @@ alone - without accessing any external site/exchange.
 
 The sript is taken from the [UTXO.live](https://utxo.live/oracle){:target="_blank"} website run by the creators.
 A Bitcoin Magazine article explaining the concepts available [here](https://bitcoinmagazine.com/technical/utxoracle-model-could-bring-use-cases-to-bitcoin){:target="_blank"}
-In short the script is based on the fact that many utxo (15 percent on average) are in round $usd amounts ($100 and $50 mostly), so it should hold until
+In short the script is based on the fact that many utxos (15 percent on average) are in round $usd amounts ($100 and $50 mostly), so it should hold until
 hyperbitcoinisation :)
 
 Difficulty: Easy
@@ -31,7 +31,7 @@ Status: Tested v3
 
 This script can be run by user "admin" without root privileges, it requires access to bitcoin-cli and server=1 option in bitcoin.conf as well as python3
 
-* Install
+* Install python
 
   ```sh
   $ sudo apt install python3
@@ -44,11 +44,11 @@ This script can be run by user "admin" without root privileges, it requires acce
   $ wget https://github.com/raspibolt/raspibolt/blob/master/resources/UTXOracle.py
   ```
 
-* Read the script to see that it does (the script is very human readable so it is recommended)
-  Exit with `Ctrl`-`X`
+* Read the script to see what it does (the script is very human readable so it is recommended)
+  Exit with `q`
 
   ```sh
-  $ nano /tmp/UTXOracle.py
+  $ less /tmp/UTXOracle.py
   ```
   
 * Install the script and make it executable
