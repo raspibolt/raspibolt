@@ -41,7 +41,7 @@ This script can be run by user "admin" without root privileges, it requires acce
 
   ```sh
   $ cd /tmp/
-  $ wget https://github.com/raspibolt/raspibolt/blob/master/resources/UTXOracle.py
+  $ wget https://raw.githubusercontent.com/raspibolt/raspibolt/master/resources/UTXOracle.py
   ```
 
 * Read the script to see what it does (the script is very human readable so it is recommended)

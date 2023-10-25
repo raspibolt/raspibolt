@@ -62,6 +62,7 @@ has_toc: false
 
 * **[Download the white paper](white-paper.md)** - download the Bitcoin white paper directly from your blockchain data
 * **[UTXOracle](UTXOracle.md)** - get the BTC/USD price from your own node without connecting to any external exchange
+
 ---
 
 ## Testnet
