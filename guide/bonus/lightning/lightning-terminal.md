@@ -39,6 +39,7 @@ Lightning Terminal, developed by Lightning Labs, aims to provide additional tool
 * Loop client (`loop`): Perform submarine swaps with the LOOP node using the CLI or web GUI
 * Pool client (`pool`): Buy and sell inbound liquidity using the peer-to-peer auction-based Pool exchange using the CLI or web GUI 
 * Faraday client (`frcli`): Run the Faraday daemon on your node that provides a CLI-based LN node accounting service
+* Taproot Asset daemon and client (`tapd/tapcli`): Create and control Taproot Assets
 * Automate fee management (alpha)
 
 Because Pool is alpha software, Lightning Terminal is also alpha software.  
@@ -67,7 +68,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
     server 127.0.0.1:8443;
   }
   server {
-    listen 8444 ssl;
+    listen 8444;
     proxy_pass litd;
   }
   ```
@@ -88,7 +89,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * With the "admin" user, download the latest arm64 binary and its checksum and verify the integrity of the binary
 
   ```sh
-  $ VERSION="0.10.0"
+  $ VERSION="0.12.0"
   $ cd /tmp
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/lightning-terminal-linux-arm64-v$VERSION-alpha.tar.gz
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSION-alpha.txt 
@@ -106,9 +107,9 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * Get the key to verify the manifest file and add it to your GPG keyring.
 
   ```sh
-  $ gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys 26984CB69EB8C4A26196F7A4D7D916376026F177
+  $ gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys 187F6ADD93AE3B0CF335AA6AB984570980684DCC
   > ...
-  > gpg: key D7D916376026F177: public key "Elle Mouton <elle.mouton@gmail.com>" imported
+  > gpg: key B984570980684DCC: "Viktor Tigerström <vtigerstrom@gmail.com>" imported
   > ...
   ```
 
@@ -116,9 +117,9 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 
   ```sh
   $ gpg --verify manifest-v$VERSION-alpha.sig manifest-v$VERSION-alpha.txt
-  > gpg: Signature made Thu Mar 30 10:04:01 2023 SAST
-  > gpg:                using RSA key 26984CB69EB8C4A26196F7A4D7D916376026F177
-  > gpg: Good signature from "Elle Mouton <elle.mouton@gmail.com>" [ultimate]
+  > gpg: Signature made Wed Oct 18 21:00:30 2023 CEST
+  > gpg:                using EDDSA key 187F6ADD93AE3B0CF335AA6AB984570980684DCC
+  > gpg: Good signature from "Viktor Tigerström <vtigerstrom@gmail.com>"
   > [...]
   ```
   
@@ -127,13 +128,14 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   ```sh 
   $ ots verify manifest-v$VERSION-alpha.sig.ots
   > ...
-  > Success! Bitcoin block 790028 attests existence as of 2023-05-16 CEST
+  > Success! Bitcoin block 812800 attests existence as of 2023-10-18 CEST
   ```
 
-* Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
+* Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal (note that we are removing `lncli` from the package because it's already installed with LND and could potentially cause issues due to versioning mismatch)
 
   ```sh
   $ tar -xzf lightning-terminal-linux-arm64-v$VERSION-alpha.tar.gz
+  $ rm lightning-terminal-linux-arm64-v$VERSION-alpha/lncli
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v$VERSION-alpha/*
   $ litd --lnd.version
   > Example Output: litd version {VERSION}-beta commit=lightning-terminal-{VERSION}-alpha
@@ -151,7 +153,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * Create the Lightning Terminal, Loop, Pool and Faraday data directories
 
   ```sh
-  $ sudo mkdir /data/lit /data/loop /data/pool /data/faraday
+  $ sudo mkdir /data/lit /data/loop /data/pool /data/faraday /data/tapd
   $ sudo chown -R lit:lit /data/lit /data/loop /data/pool /data/faraday
   ```
 
@@ -168,6 +170,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   $ ln -s /data/loop /home/admin/.loop
   $ ln -s /data/pool /home/admin/.pool
   $ ln -s /data/faraday /home/admin/.faraday
+  $ ln -s /data/tapd /home/admin/.tapd
   ```
 
 * Display the links and check that they’re not shown in red (this would indicate an error)
@@ -190,6 +193,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   $ ln -s /data/loop /home/lit/.loop
   $ ln -s /data/pool /home/lit/.pool
   $ ln -s /data/faraday /home/lit/.faraday
+  $ ln -s /data/tapd /home/lit/.tapd
   ```
 
 * Display the links and check that they’re not shown in red (this would indicate an error)
@@ -429,7 +433,8 @@ Rather than always typing the flags, we can create aliases for the "admin" user.
   
   alias litfaraday="frcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
   alias litloop="loop --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
-  alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert" 
+  alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  alias littap="tapcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
   ```
 
 * Activate the aliases
@@ -582,21 +587,21 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
 
   ```sh
   $ cd /usr/local/bin
-  $ sudo rm frcli litcli litd loop pool
+  $ sudo rm frcli litcli litd loop pool tapcli
   ```
   
 * Remove the "admin" user symlinks
 
   ```sh
   $ cd ~/
-  $ rm .faraday .lit .loop .pool
+  $ rm .faraday .lit .loop .pool .tapd
   ```
 
 * Remove the /data Lighting Terminal, Loop, Pool and Faraday directories
 
   ```sh
   $ cd /data
-  $ sudo rm -R faraday lit loop pool
+  $ sudo rm -R faraday lit loop pool tapd
   ```
 
 * Remove (or comment out) the aliases from the `.bash_aliases` file
@@ -608,7 +613,8 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
   ```ini  
   #alias litfaraday="frcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
   #alias litloop="loop --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
-  #alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert" 
+  #alias litpool="pool --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
+  #alias littap="tapcli --rpcserver=localhost:8443 --tlscertpath=~/.lit/tls.cert"
   ```
 
 * Finally, with the "root" user, delete the "lit" user
