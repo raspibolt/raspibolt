@@ -127,7 +127,8 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   > gpg: assuming signed data in 'joinmarket-clientserver-0.9.10.tar.gz'
   > gpg: Signature made Wed Aug 30 01:33:11 2023 EEST
   > gpg:                using RSA key 70A1D47DD44F59DF8B22244333E472FE870C7E5D
-  > gpg: Good signature from "Kristaps Kaupe <kristaps@blogiem.lv>" [unknown]
+  > gpg: Good signature from "kristapsk <kristapsk@noreply.github.com>" [unknown] 
+  > gpg:                 aka "Kristaps Kaupe <kristaps@blogiem.lv>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
   > Primary key fingerprint: 70A1 D47D D44F 59DF 8B22  2443 33E4 72FE 870C 7E5D
