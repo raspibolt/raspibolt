@@ -28,8 +28,6 @@ We set up [Joinmarket clientserver](https://github.com/JoinMarket-Org/joinmarket
 
 ---
 
-[![tippin.me](https://badgen.net/badge/%E2%9A%A1%EF%B8%8Ftippin.me/@kristapsk/F0918E)](https://tippin.me/@kristapsk)
-
 ### Introduction
 
 [JoinMarket](https://github.com/JoinMarket-Org/joinmarket-clientserver) is a CoinJoin software, which allows you to increase privacy and fungibility of on-chain Bitcoin transactions. It includes its own Bitcoin wallet, backed by `bitcoind`, and uses a market maker / market taker model, which means that either you pay a small fee for having CoinJoin privacy fast (taker) or just keep the software running and get paid for providing liquidity for CoinJoins, in addition gaining privacy over a longer period of time (maker). Even if you aren't interested in the privacy of your coins, you can use JoinMarket for a little passive income from your bitcoin, without giving up your private keys.
@@ -97,14 +95,14 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * As user "joinmarket", download the latest release, signature and timestamp. First check for the latest release on the [Releases page](https://github.com/JoinMarket-Org/joinmarket-clientserver/releases) and update version numbers as you go if needed.
 
   ```sh
-  $ VERSION="0.9.9"
+  $ VERSION="0.9.10"
   $ cd /tmp
   $ wget -O joinmarket-clientserver-$VERSION.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v$VERSION.tar.gz
   $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v$VERSION/joinmarket-clientserver-$VERSION.tar.gz.asc
   $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v$VERSION/joinmarket-clientserver-$VERSION.tar.gz.asc.ots
   ```
 
-* Get the PGP key of JoinMarket developer Adam Gibson.
+* Get the PGP keys of JoinMarket developers that sign releases.
 
   ```sh
   $ curl https://raw.githubusercontent.com/JoinMarket-Org/joinmarket-clientserver/master/pubkeys/AdamGibson.asc | gpg --import 
@@ -114,18 +112,26 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   > gpg: key 141001A1AF77F20B: public key "Adam Gibson (CODE SIGNING KEY) <ekaggata@gmail.com>" imported
   > ...
   ```
+  ```sh
+  $ curl https://raw.githubusercontent.com/JoinMarket-Org/joinmarket-clientserver/master/pubkeys/KristapsKaupe.asc | gpg --import
+  ```
+  > ...
+  > gpg: key 33E472FE870C7E5D: public key "Kristaps Kaupe <kristaps@blogiem.lv>" imported
+  > ...
+  ```
 
 * Verify that the application is signed by Adam Gibson.
 
   ```
   $ gpg --verify joinmarket-clientserver-$VERSION.tar.gz.asc
-  > gpg: assuming signed data in 'joinmarket-clientserver-0.9.9.tar.gz'
-  > gpg: Signature made Sun Jan 29 21:07:35 2023 GMT
-  > gpg:                using RSA key 2B6FC204D9BF332D062B461A141001A1AF77F20B
-  > gpg: Good signature from "Adam Gibson (CODE SIGNING KEY) <ekaggata@gmail.com>" [unknown]
+  > gpg: assuming signed data in 'joinmarket-clientserver-0.9.10.tar.gz'
+  > gpg: Signature made Wed Aug 30 01:33:11 2023 EEST
+  > gpg:                using RSA key 70A1D47DD44F59DF8B22244333E472FE870C7E5D
+  > gpg: Good signature from "kristapsk <kristapsk@noreply.github.com>" [unknown] 
+  > gpg:                 aka "Kristaps Kaupe <kristaps@blogiem.lv>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
-  > Primary key fingerprint: 2B6F C204 D9BF 332D 062B  461A 1410 01A1 AF77 F20B
+  > Primary key fingerprint: 70A1 D47D D44F 59DF 8B22  2443 33E4 72FE 870C 7E5D
   ```
 
 * Check the timestamp of the signature
@@ -133,10 +139,10 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   ```sh
   $ ots verify joinmarket-clientserver-$VERSION.tar.gz.asc.ots -f joinmarket-clientserver-$VERSION.tar.gz.asc
   > [...]
-  > Success! Bitcoin block 754200 attests existence as of 2022-09-15 CET
+  > Success! Bitcoin block 805379 attests existence as of 2023-08-30 EEST
   ```
 
-* If the signature and timestamp check out, unpack and install JoinMarket. The install script will take about 5 minutes to run.
+* If the signature and timestamp check out, unpack and install JoinMarket. The install script may take 5 to 20 minutes to run, depending on hardware.
 
   ```sh
   $ tar -xvzf joinmarket-clientserver-$VERSION.tar.gz -C /home/joinmarket/
@@ -429,5 +435,5 @@ If upgrading from pre-0.8.1 to a newer versions, note that yield generator confi
   
   ```sh
   $ cd
-  $ rm -rf joinmarket-clientserver-0.9.8
+  $ rm -rf joinmarket-clientserver-0.9.9
   ```
