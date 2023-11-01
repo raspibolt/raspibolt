@@ -104,14 +104,14 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ git clone https://github.com/ElementsProject/lightning.git
   $ cd lightning
   $ git fetch --all --tags
-  $ git reset --hard v22.11.1
+  $ git checkout v23.08.1
   ``` 
 
 * Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `Good Signature`.
 
   ```sh
-  $ curl https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/cdecker.txt | gpg --import
-  $ git verify-tag v22.11.1
+  $ curl https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/rustyrussell.txt | gpg --import
+  $ git verify-tag v23.08.1
   ```
 
 * Download user specific python packages.
@@ -125,7 +125,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
 * Configure and build the source code. Experimental features will be activated. Read more about them [here](https://lightning.readthedocs.io/lightningd-config.5.html#experimental-options).
 
   ```sh
-  $ ./configure --enable-experimental-features
+  $ ./configure
   $ make
   ```
 
@@ -140,7 +140,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ nano config
   ```
 
-* Insert the following content, adjust parameters in brackets to your likings. At least remove the brackets else lightningd will not start up correctly! Choose if you want to replicate CLN's channel database file to separate storage. It's good practice to keep a synchronous state of the database somewhere else to be able to recover off-chain funds in case of emergency.
+* Insert the following content, adjust parameters in brackets to your likings. At least remove the brackets or else lightningd will not start up correctly! Choose if you want to replicate CLN's channel database file to separate storage. It's good practice to keep a synchronous state of the database somewhere else to be able to recover off-chain funds in case of emergency.
 
   ```ini
   alias=<your fancy alias>
@@ -171,6 +171,11 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   bind-addr=0.0.0.0:9736
   addr=statictor:127.0.0.1:9051/torport=9736
   always-use-proxy=true
+  # experimental options
+  # use anchor channels
+  experimental-anchors
+  # enable dual fund option
+  experimental-dual-fund
   ```
 
 ### Shortcuts & Aliases
@@ -263,16 +268,17 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ lightning-cli --version
   $ lightning-cli getinfo
   $ lightning-cli listfunds
+  $ exit
   ```
 
 ## Allow user "admin" to work with CLN
 
-* Allow "admin" to access lightningd commands. Create a symlink, adjust permissions and create aliases (switch to "admin" with `exit`).
+* Allow "admin" to access lightningd commands. Create a symlink, adjust permissions and create aliases.
 
   ```sh
   $ ln -s /data/lightningd /home/admin/.lightning
   $ sudo chmod -R g+x /data/lightningd/bitcoin/
-  $ nano .bashrc
+  $ nano .bash_aliases
   ```
 
   ```ini
@@ -280,6 +286,12 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   alias lightningd="/home/lightningd/lightning/lightningd/lightningd"
   alias hsmtool="/home/lightningd/lightning/tools/hsmtool"
   ```
+  
+* Save and exit (Ctrl+O and Ctrl+X).
+
+  ```sh
+  $ source .bash_aliases
+  ```  
 
 ## Backup
 
@@ -299,12 +311,6 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ sudo systemctl restart lightningd.service
   ```
   
-* ⚠️ Regarding upgrading to v22.11.1: If you encounter an error upgrading to v22.11.1 saying "upgrading to a non-final version v22.11.1", edit `config` and temporarily add the following parameter: 
-
-  ```ini
-  database-upgrade=true
-  ```
-  Background: This parameter was introduced to make clear that the user upgrades the database to a non-final version. The database migration cannot be undone. The recommendation therefore is to set this only once if you experience this issue and delete the parameter when the migration was successfull. Note: There's no migration happening to v22.11.1, so in case of failures, you still can go back to v0.12.1 or earlier versions.
 
 ## Optional Steps
 
@@ -381,15 +387,15 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 
   ```sh
   $ sudo su - lightningd
-  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.10.1.tar.gz
-  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.10.1/v0.10.1.tar.gz.asc
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/archive/refs/tags/v0.10.7.tar.gz
+  $ wget https://github.com/Ride-The-Lightning/c-lightning-REST/releases/download/v0.10.7/v0.10.7.tar.gz.asc
   ```
 
 * Get the author's key and verify the release:
 
   ```sh
   $ curl https://keybase.io/suheb/pgp_keys.asc | gpg --import
-  $ gpg --verify v0.10.1.tar.gz.asc v0.10.1.tar.gz
+  $ gpg --verify v0.10.7.tar.gz.asc v0.10.7.tar.gz
   ```
   
 * Output should be like:
@@ -407,15 +413,15 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Extract the archive and install with `npm`:
 
   ```sh
-  $ tar xvf v0.10.1.tar.gz 
-  $ cd c-lightning-REST-0.10.1
+  $ tar xvf v0.10.7.tar.gz 
+  $ cd c-lightning-REST-0.10.7
   $ npm install --only=prod
   ```
   
 * Copy content to plugin datadir:
 
   ```sh
-  $ cp -r ~/c-lightning-REST-0.10.1/ /data/lightningd-plugins-available/
+  $ cp -r ~/c-lightning-REST-0.10.7/ /data/lightningd-plugins-available/
   ```
 
 * Setup c-lightning-Rest as plugin in CLN's config file:
@@ -428,7 +434,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 
   ```ini
   # cln-rest-plugin
-  plugin=/data/lightningd-plugins-available/c-lightning-REST-0.10.1/clrest.js
+  plugin=/data/lightningd-plugins-available/c-lightning-REST-0.10.7/clrest.js
   rest-port=3092
   rest-docport=4091
   rest-protocol=http
@@ -437,7 +443,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Add a sample config file and run the plugin once manually to create required `access.macaroon`
   
   ```sh
-  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.10.1
+  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.10.7
   $ cp sample-cl-rest-config.json cl-rest-config.json
   ```
 
@@ -456,17 +462,18 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
     "PROTOCOL": "http",
     "EXECMODE": "production",
     "RPCCOMMANDS": ["*"],
-    "DOMAIN": "localhost"
+    "DOMAIN": "localhost",
+    "BIND": "::"
   }
   ```
 
-* Run cl-rest.js manually: 
+* Run cl-rest.js manually (note: there will be errors doing so! that's ok, we are initially generating macaroons this way): 
 
   ```sh  
   $ node cl-rest.js
   ```
   
-* Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.10.1/` called `certs` which contains the required `access.macaroon` for the next steps. Stop `cl-rest.js` by hitting CTRL+C.
+* Exit with Ctrl+C after RSA keys have been written. Now you should see a new folder being created in `/data/lightningd-plugins-available/c-lightning-REST-0.10.7/` called `certs` which contains the required `access.macaroon` for the next steps.
   
 * Go back to the "admin" user:
 
@@ -477,7 +484,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
 * Copy `access.macaroon` to home directory of user `rtl`:  
   
   ```sh
-  $ sudo cp /data/lightningd-plugins-available/c-lightning-REST-0.10.1/certs/access.macaroon /home/rtl/
+  $ sudo cp /data/lightningd-plugins-available/c-lightning-REST-0.10.7/certs/access.macaroon /home/rtl/
   $ sudo chown rtl:rtl /home/rtl/access.macaroon
   ```
   
@@ -531,6 +538,8 @@ The Zeus mobile app will access the node via Tor.
   {
     "multiPass": "<yourfancypassword>",
     "port": "3000",
+    "defaultNodeIndex": 1,
+    "dbDirectoryPath": "/home/rtl/", 
     "SSO": {
       "rtlSSO": 0,
       "rtlCookiePath": "",
@@ -550,14 +559,13 @@ The Zeus mobile app will access the node via Tor.
           "themeMode": "DAY",
           "themeColor": "INDIGO",
           "fiatConversion": true,
-          "currencyUnit": "EUR",
-          "logLevel": "ERROR",
+          "currencyUnit": "USD",
+          "logLevel": "INFO",
           "lnServerUrl": "http://127.0.0.1:3092",
-          "enableOffers": true
+          "unannouncedChannels": false
         }
       }
     ],
-    "defaultNodeIndex": 1
   }
   ```
 
@@ -580,7 +588,7 @@ The Zeus mobile app will access the node via Tor.
 * Prepare QR data:
 
   ```sh
-  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.10.1/certs
+  $ cd /data/lightningd-plugins-available/c-lightning-REST-0.10.7/certs
   $ xxd -ps -u -c 1000 access.macaroon
   ```
 
