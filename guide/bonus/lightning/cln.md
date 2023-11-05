@@ -495,6 +495,16 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   UNUSUAL plugin-plugin.js: --- cl-rest api server is ready and listening on port: 3092 ---
   UNUSUAL plugin-plugin.js: --- cl-rest doc server is ready and listening on port: 4091 ---
   ```
+  
+* Starting from v23.08, CLNRest is the [built-in Core Lightning plugin](https://docs.corelightning.org/docs/rest#clnrest) that transforms RPC calls into a REST service, and it is enabled by default. If you are facing issues when starting the `lightningd` service, you need to add the following parameter in the first line of the `# cln-rest-plugin` section, into the `lightningd` config file:
+  ```ini
+  # cln-rest-plugin
+  disable-plugin=/home/lightningd/lightning/plugins/clnrest/clnrest.py # add this line
+  plugin=/data/lightningd-plugins-available/c-lightning-REST-0.10.7/clrest.js
+  rest-port=3092
+  rest-docport=4091
+  rest-protocol=http
+  ```
 
 ### Access over Tor
 
