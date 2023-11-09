@@ -15,7 +15,7 @@
 # date and price ranges expected to work for this version are from 2020-7-26 
 # and from $10,000 to $100,000
 
-print("UTXOracle version 6\n")
+print("UTXOracle version 7\n")
 
 
 ###############################################################################  
@@ -510,8 +510,8 @@ while target_day_of_month == day_of_month:
 # of the curve, and then removing extreme values.
 
 
-#remove ouputs below 1k sats
-for n in range(0,201):
+#remove ouputs below 10k sat (increased from 1k sat in v6)
+for n in range(0,401):
     output_bell_curve_bin_counts[n]=0
 
 #remove outputs above ten btc
@@ -727,4 +727,4 @@ price_estimate = int(w1*btc_in_usd_best + w2*btc_in_usd_2nd)
 
 #report the price estimate
 print("\nThe "+price_day_date_utc+" btc price estimate is: $" + f'{price_estimate:,}')
-    
+
