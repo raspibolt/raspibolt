@@ -610,7 +610,9 @@ With the Tor browser, you can access this onion address from any device.
 
   ```sh
   $ sudo systemctl stop uwsgi.service
+  $ sudo systemctl stop lndg-controller.service
   $ sudo systemctl disable uwsgi.service
+  $ sudo systemctl disable lndg-controller.service
   ```
 
 * Delete all the LNDg systemd services and timers
