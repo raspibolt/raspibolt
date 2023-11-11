@@ -277,7 +277,7 @@ LNDg stores the LN node routing statistics and settings in a SQL database. We'll
   Description=LNDg uWSGI app
   After=lnd.service
   PartOf=lnd.service
-  Wants=controller-lndg.service
+  Wants=lndg-controller.service
   
   [Service]
   ExecStart=/home/lndg/lndg/.venv/bin/uwsgi --ini /home/lndg/lndg/lndg.ini
@@ -466,12 +466,12 @@ To have updated information in the GUI, it is necessary to regularly run the scr
 * Create a systemd service file to run the LNDg `controller.py` Python script. Save (Ctrl+o) and exit (Ctrl+x).
 
   ```sh
-  $ sudo nano /etc/systemd/system/controller-lndg.service
+  $ sudo nano /etc/systemd/system/lndg-controller.service
   ```
 
   ```ini
   # RaspiBolt: systemd unit for LNDg
-  # /etc/systemd/system/controller-lndg.service
+  # /etc/systemd/system/lndg-controller.service
   
   [Unit]
   Description=Backend Controller For Lndg
@@ -481,8 +481,8 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   User=lndg
   Group=lndg
   ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/controller.py
-  StandardOuput=append:/var/log/controller-lndg.log
-  StandardError=append:/var/log/controller-lndg-error.log
+  StandardOuput=append:/var/log/lndg-controller.log
+  StandardError=append:/var/log/lndg-controller.log
   Restart=always
   RestartSec=60s
 
@@ -493,15 +493,15 @@ To have updated information in the GUI, it is necessary to regularly run the scr
 * Enable the service to start at boot. Start the service and check its status. Exit with `Ctrl`+`c`.
 
   ```sh
-  $ sudo systemctl enable controller-lndg.service
-  $ sudo systemctl start controller-lndg.service
-  $ sudo systemctl status controller-lndg.service
+  $ sudo systemctl enable lndg-controller.service
+  $ sudo systemctl start lndg-controller.service
+  $ sudo systemctl status lndg-controller.service
   ```
 
 * Check that the backend refreshes Python script is run every 20 seconds or so
 
   ```sh
-  $ sudo journalctl -f -u controller-lndg.service
+  $ sudo journalctl -f -u lndg-controller.service
   > [...]
   > Fri Oct 13 14:11:51 2023 : [Data] : Starting data execution...
   > Fri Oct 13 14:12:00 2023 : [Rebalancer] : Queue currently has 0 items...
@@ -617,7 +617,7 @@ With the Tor browser, you can access this onion address from any device.
  
   ```sh
   $ cd /etc/systemd/system/
-  $ sudo rm uwsgi.service controller-lndg.service  
+  $ sudo rm uwsgi.service lndg-controller.service  
   $ cd
   ```
 
