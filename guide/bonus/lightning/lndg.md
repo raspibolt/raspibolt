@@ -606,7 +606,7 @@ With the Tor browser, you can access this onion address from any device.
 
 ## Uninstall
 
-* Stop and disable the `uwsgi` systemd service
+* Stop and disable the `uwsgi` and `lndg-controller` systemd services
 
   ```sh
   $ sudo systemctl stop uwsgi.service
