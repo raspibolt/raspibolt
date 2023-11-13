@@ -47,7 +47,7 @@ Table of contents
   $ sudo ufw allow 4005 comment 'allow CircuitBreaker SSL'
   ```
 
-* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to Thunderhub
+* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to Circuit Breaker
 
   ```sh
   $ sudo nano /etc/nginx/streams-enabled/circuitbreaker-reverse-proxy.conf
@@ -94,7 +94,7 @@ Table of contents
   $ ln -s /data/lnd /home/circuitbreaker/.lnd
   ```
 
-* Clone the project and install it 
+* Clone the project, install and build it 
  
   ```sh
   $ git clone https://github.com/lightningequipment/circuitbreaker.git
@@ -114,7 +114,7 @@ Table of contents
 
 ## Configuration
 
-To access CircuitBreaker's configuration, go to its webinterface at https://raspibolt.local:4005. Before that, please read some basics about the operating modes Circuitbreaker provides: [https://github.com/lightningequipment/circuitbreaker#operating-modes](https://github.com/lightningequipment/circuitbreaker#operating-modes)
+To access Circuit Breaker's configuration, go to its webinterface at https://raspibolt.local:4005. Before that, please read some basics about the operating modes Circuit Breaker has to offer: [https://github.com/lightningequipment/circuitbreaker#operating-modes](https://github.com/lightningequipment/circuitbreaker#operating-modes)
 
 ---
 
@@ -199,7 +199,7 @@ To access CircuitBreaker's configuration, go to its webinterface at https://rasp
   ```sh
   $ sudo systemctl enable circuitbreaker
   $ sudo systemctl start circuitbreaker
-  $ systemctl status circuitbreaker
+  $ sudo systemctl status circuitbreaker
   > circuitbreaker.service - Circuit Breaker, a lightning firewall
   > Loaded: loaded (/etc/systemd/system/circuitbreaker.service; enabled; vendor preset: enabled)
   > Active: active (running) since Sat 2021-10-30 16:53:04 BST; 6s ago
@@ -248,10 +248,13 @@ Updating to a new release should be straight-forward, but make sure to check out
 
 If you want to uninstall circuitbreaker
 
-* With the "root" user, delete the "circuitbreaker" user
+* With the "root" user, delete the "circuitbreaker" user, nginx and firewall configuration
 
   ```sh
   $ userdel -r circuitbreaker
+  $ rm /etc/nginx/streams-enabled/circuitbreaker-reverse-proxy.conf
+  $ systemctl reload nginx
+  $ ufw delete allow 4005
   ```
 
 <br /><br />
