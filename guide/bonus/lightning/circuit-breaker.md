@@ -34,9 +34,42 @@ Table of contents
 
 ## Requirements
 
-* LND v0.11+
-* Go v1.13+
+* LND v0.15.4+
+* Go v1.19+
 
+---
+
+## Firewall & Reverse Proxy
+
+* Configure firewall to allow incoming HTTP requests from your local network to the web server.
+
+  ```sh
+  $ sudo ufw allow 4005 comment 'allow CircuitBreaker SSL'
+  ```
+
+* Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to Thunderhub
+
+  ```sh
+  $ sudo nano /etc/nginx/streams-enabled/circuitbreaker-reverse-proxy.conf
+  ```
+
+  ```nginx
+  upstream circuitbreaker {
+    server 127.0.0.1:9235;
+  }
+  server {
+    listen 4005 ssl;
+    proxy_pass circuitbreaker;
+  }
+  ```
+
+* Test and reload NGINX configuration
+  
+  ```sh
+  $ sudo nginx -t
+  $ sudo systemctl reload nginx
+  ```
+  
 ---
 
 ## Install Go
@@ -67,6 +100,7 @@ Table of contents
   $ git clone https://github.com/lightningequipment/circuitbreaker.git
   $ cd circuitbreaker
   $ go install
+  $ go build
   ``` 
  
 * Make Circuit Breaker executable without having to provide the full path to the Go binary directory
@@ -80,75 +114,35 @@ Table of contents
 
 ## Configuration
 
-A sample configuration file is located at `~/circuitbreaker/circuitbreaker-example.yaml`.
-By default, Circuit Breaker reads its configuration file located at `~/.circuitbreaker/circuitbreaker.yaml`.
-
-* Still with  the "circuitbreaker" user, move and rename the sample configuration file to the location expected by Circuit Breaker, then open it
-  
-  ```sh
-  $ cd ~/
-  $ mkdir ~/.circuitbreaker
-  $ cp ~/circuitbreaker/circuitbreaker-example.yaml ~/.circuitbreaker/circuitbreaker.yaml
-  $ nano .circuitbreaker/circuitbreaker.yaml
-  ``` 
- 
-* Circuit Breaker suggests 5 maximum pending htlcs, set the number of htlcs that you feel comfortable with in case of a griefing attack
- 
-  ```ini
-  maxPendingHtlcs: 3
-  ```
- 
-* If you don't want to use exception groups, uncomment the entire section
- 
-  ```ini
-  #groups:
-   # For two peers, the pending and rate limits are
-   # lowered.
-     #- maxPendingHtlcs: 2
-       #htlcMinInterval: 5s
-       #htlcBurstSize: 3
-       #peers:
-       #- 03901a1fcfbf621245d859fe4b8bfd93c9e8191a93612db3db0efd11af64e226a2
-       #- 03670eff2ccfd3a469536d8e3d38825313d266fa3c2d22b1f841beca30414586d0
- 
-   # A last peer is allowed to have more pending htlcs and no rate limit.
-     #- maxPendingHtlcs: 25
-       #peers:
-       #- 035cb74e3232e98ba6a866c485f1076dca5e42147dc1e3fbf9ea7241d359988e4d
-   ```
-
-* Once edited, save and exit.
+To access CircuitBreaker's configuration, go to its webinterface at https://raspibolt.local:4005. Before that, please read some basics about the operating modes Circuitbreaker provides: [https://github.com/lightningequipment/circuitbreaker#operating-modes](https://github.com/lightningequipment/circuitbreaker#operating-modes)
 
 ---
 
 ## First run
 
-* Still with user "circuitbreaker", test if the program works by displaying the version
+* Still with user "circuitbreaker", test if the program works by displaying the help
 
   ```sh
   $ cd ~/
-  $ circuitbreaker --version
-  > circuitbreaker version 0.11.1-beta.rc3 commit=
-  ```
-
-* Display the help menu
-  
-  ```sh
   $ circuitbreaker --help
   > NAME:
-  > circuitbreaker - A new cli application
+  > circuitbreakerd - A new cli application
   > [...]
   ```
+
 * Finally, launch `circuitbreaker`
   
   ```sh 
-  $ circuitbreaker
-  $ 2021-12-08T18:33:28.557Z	INFO	Read config file	{"file": "/home/circuitbreaker/.circuitbreaker/circuitbreaker.yaml"}
-  $ 2021-12-08T18:33:28.561Z	INFO	CircuitBreaker started
-  $ 2021-12-08T18:33:28.561Z	INFO	Hold fee	{"base": 0, "rate": 0, "reporting_interval": "0s"}
-  $ 2021-12-08T18:33:28.813Z	INFO	Connected to lnd node	{"pubkey": "YourNodePubkey"}
-  $ 2021-12-08T18:33:28.814Z	INFO	Interceptor/notification handlers registered
-  $ 2021-12-08T18:33:28.814Z	INFO	Hold fee reporting disabled
+  $ circuitbreaker --httplisten=0.0.0.0:9235
+  > INFO	Circuit Breaker starting	{"version": "development"}
+  > INFO	Opening database	{"path": "/home/circuitbreaker/.circuitbreaker/circuitbreaker.db"}
+  > INFO	Applied migrations	{"count": 1}
+  > INFO	Press ctrl-c to exit
+  > INFO	HTTP server starting	{"listenAddress": "0.0.0.0:9235"}
+  > INFO	Grpc server starting	{"listenAddress": "127.0.0.1:9234"}
+  > INFO	CircuitBreaker started
+  > INFO	Connected to lnd node ...
+  > INFO	Interceptor/notification handlers registered
   ```
  
  *  Stop `circuitbreaker` with Ctrl+C
@@ -183,7 +177,7 @@ By default, Circuit Breaker reads its configuration file located at `~/.circuitb
   ###################
 
   WorkingDirectory=/home/circuitbreaker/circuitbreaker
-  ExecStart=/home/circuitbreaker/go/bin/circuitbreaker
+  ExecStart=/home/circuitbreaker/go/bin/circuitbreaker --httplisten=0.0.0.0:9235
   User=circuitbreaker
   Group=circuitbreaker
   
@@ -238,6 +232,7 @@ Updating to a new release should be straight-forward, but make sure to check out
   $ git fetch
   $ git checkout master
   $ go install
+  $ go build
   $ exit
   ```
   
