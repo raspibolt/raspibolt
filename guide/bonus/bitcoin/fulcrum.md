@@ -139,7 +139,32 @@ zram-swap is a compressed swap in memory and on disk and is necessary for the pr
   ...
   ```
 
-### Configure Firewall
+### Configure firewall and reverse proxy
+
+* Enable NGINX reverse proxy to add SSL/TLS encryption to the Fulcrum communication.
+  Create the configuration file and paste the following content
+
+  ```sh
+  $ sudo nano /etc/nginx/streams-enabled/fulcrum-reverse-proxy.conf
+  ```
+
+  ```nginx
+  upstream fulcrum {
+    server 127.0.0.1:50001;
+  }
+
+  server {
+    listen 50002 ssl;
+    proxy_pass fulcrum;
+  }
+  ```
+
+* Test and reload NGINX configuration
+
+  ```sh
+  $ sudo nginx -t
+  $ sudo systemctl reload nginx
+  ```
 
 * Configure the firewall to allow incoming requests
 
