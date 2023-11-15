@@ -62,18 +62,18 @@ zram-swap is a compressed swap in memory and on disk and is necessary for the pr
 
   ```sh
   $ cd /home/admin/
-  $ git clone https://github.com/foundObjects/zram-swap.git 
+  $ git clone https://github.com/foundObjects/zram-swap.git
   $ cd zram-swap && sudo ./install.sh
   ```
 
 * Set following size value in zram configuration file. Save and exit
-  
+
   ```sh
   $ sudo nano /etc/default/zram-swap
   ```
 
   ```sh
-  #_zram_fraction="1/2" #Comment this line 
+  #_zram_fraction="1/2" #Comment this line
   _zram_fixedsize="10G" #Uncomment and edit
   ```
 
@@ -133,7 +133,7 @@ zram-swap is a compressed swap in memory and on disk and is necessary for the pr
   Process: 287452 ExecStart=/usr/local/sbin/zram-swap.sh start (code=exited, status=0/SUCCESS)
   Main PID: 287452 (code=exited, status=0/SUCCESS)
   CPU: 191ms
-  
+
   Aug 08 00:51:51 node systemd[1]: Starting zram swap service...
   Aug 08 00:51:51 node zram-swap.sh[287471]: Setting up swapspace version 1, size = 4.6 GiB (4972199936 bytes)
   ...
@@ -187,11 +187,11 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
   > You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer release versions might not have been thoroughly tested with the rest of the RaspiBolt configuration.
 
   ```sh
-  $ VERSION="1.9.1"
+  $ VERSION="1.9.6"
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz.asc
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz.sha256sum
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-sha256sums.txt.asc
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-sha256sums.txt
   ```
 
 * Get the public key from the Fulcrum developer
@@ -203,30 +203,41 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify Fulcrum-$VERSION-arm64-linux.tar.gz.asc
+  $ gpg --verify Fulcrum-$VERSION-sha256sums.txt.asc
+  > gpg: assuming signed data in 'Fulcrum-1.9.6-sha256sums.txt'
+  > gpg: Signature made Sat 11 Nov 2023 05:52:23 CET
+  > gpg:                using DSA key D465135F97D0047E18E99DC321810A542031C02C
   > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
-  > gpg: There is no indication that the signature belongs to the owner.
+  > gpg:          There is no indication that the signature belongs to the owner.
   > Primary key fingerprint: D465 135F 97D0 047E 18E9  9DC3 2181 0A54 2031 C02C
   ```
 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ sha256sum --check Fulcrum-$VERSION-arm64-linux.tar.gz.sha256sum
-  > Fulcrum-1.9.1-arm64-linux.tar.gz: OK
+  $ grep 'arm64-linux.tar.gz' Fulcrum-1.9.6-sha256sums.txt | sha256sum --check
+  ```
+
+Expected output:
+
+  ```sh
+  > Fulcrum-1.9.6-arm64-linux.tar.gz: OK
   ```
 
 * Install Fulcrum and check the correct installation requesting the version
 
   ```sh
   $ tar -xvf Fulcrum-$VERSION-arm64-linux.tar.gz
-  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$VERSION-arm64-linux/Fulcrum Fulcrum-$VERSION-arm64-linux/FulcrumAdmin 
+  $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$VERSION-arm64-linux/Fulcrum Fulcrum-$VERSION-arm64-linux/FulcrumAdmin
   $ Fulcrum --version
-  > Fulcrum 1.9.1 (Release 713d2d7)
-  > Protocol: version min: 1.4, version max: 1.5
-  > compiled: gcc 8.4.0
-  ...
+  > Fulcrum 1.9.6 (Release 2624368)
+  > Protocol: version min: 1.4, version max: 1.5.2
+  > compiled: gcc 9.4.0
+  > jemalloc: version 5.2.1-0-gea6b3e9
+  > Qt: version 5.15.6
+  > rocksdb: version 6.14.6-ed43161
+  [...]
   ```
 
 ### Data directory
@@ -278,13 +289,13 @@ RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](ht
   ```
 
   ```sh
-  # RaspiBolt: fulcrum configuration 
+  # RaspiBolt: fulcrum configuration
   # /data/fulcrum/fulcrum.conf
-  
+
   # Bitcoin Core settings
   bitcoind = 127.0.0.1:8332
   rpccookie = /home/bitcoin/.bitcoin/.cookie
-  
+
   # Fulcrum server settings
   datadir = /data/fulcrum/fulcrum_db
   cert = /data/fulcrum/cert.pem
@@ -292,17 +303,17 @@ RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](ht
   ssl = 0.0.0.0:50002
   tcp = 0.0.0.0:50001
   peering = false
-  
+
   # RPi optimizations
   bitcoind_timeout = 600
   bitcoind_clients = 1
   worker_threads = 1
   db_mem = 1024.0
-  
+
   # 4GB RAM (default)
   db_max_open_files = 200
   fast-sync = 1024
-  
+
   # 8GB RAM (comment the last two lines and uncomment the next)
   #db_max_open_files = 400
   #fast-sync = 2048
@@ -327,14 +338,14 @@ Fulcrum needs to start automatically on system boot.
   ```sh
   # RaspiBolt: systemd unit for Fulcrum
   # /etc/systemd/system/fulcrum.service
-  
+
   [Unit]
   Description=Fulcrum
   PartOf=bitcoind.service
   After=bitcoind.service
   StartLimitBurst=2
   StartLimitIntervalSec=20
-  
+
   [Service]
   ExecStart=/usr/local/bin/Fulcrum /data/fulcrum/fulcrum.conf
   KillSignal=SIGINT
@@ -343,7 +354,7 @@ Fulcrum needs to start automatically on system boot.
   TimeoutStopSec=300
   RestartSec=30
   Restart=on-failure
-  
+
   [Install]
   WantedBy=multi-user.target
   ```
@@ -364,7 +375,7 @@ Fulcrum needs to start automatically on system boot.
   $ sudo journalctl -f -u fulcrum
   ```
 
-* Expected output:
+Expected output:
 
   ```sh
   Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] simdjson: version 0.6.0
@@ -379,7 +390,7 @@ Fulcrum needs to start automatically on system boot.
   Apr 27 21:21:05 rasp Fulcrum[3994155]: [2023-04-27 21:21:05.190] Verifying headers ...
   Apr 27 21:21:13 rasp Fulcrum[3994155]: [2023-04-27 21:21:13.337] Initializing header merkle cache ...
   Apr 27 21:21:16 rasp Fulcrum[3994155]: [2023-04-27 21:21:16.074] Checking tx counts ...
-  ...
+  [...]
   ```
 
 Fulcrum will now index the whole Bitcoin blockchain so that it can provide all necessary information to wallets. With this, the wallets you use no longer need to connect to any third-party server to communicate with the Bitcoin peer-to-peer network.
@@ -391,13 +402,13 @@ DO NOT REBOOT OR STOP THE SERVICE DURING DB CREATION PROCESS. YOU MAY CORRUPT TH
 💡 After the initial sync of Fulcrum, if you want to still use zram, you can return to the default zram config following the next instructions
 
 * As user "admin", access to zram config again and return to default config. Save and exit
-  
+
   ```sh
   $ sudo nano /etc/default/zram-swap
   ```
 
   ```sh
-  _zram_fraction="1/2"   #Uncomment this line 
+  _zram_fraction="1/2"   #Uncomment this line
   #_zram_fixedsize="10G" #Comment this line
   ```
 
@@ -448,7 +459,7 @@ This way, you can connect the BitBoxApp or Electrum wallet also remotely, or eve
   HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_ssl/
   HiddenServiceVersion 3
   HiddenServicePort 50002 127.0.0.1:50002
-  
+
   # Hidden Service Fulcrum TCP
   HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_tcp/
   HiddenServiceVersion 3
@@ -489,7 +500,7 @@ You can get creative when making your server banner, for example creating your o
     / /_/ / / / / ___/ ___/ / / / __ `__ \
    / __/ /_/ / / /__/ /  / /_/ / / / / / /
   /_/  \__,_/_/\___/_/   \__,_/_/ /_/ /_/
-  
+
   server version: $SERVER_VERSION
   bitcoind version: $DAEMON_VERSION
   ```
@@ -616,7 +627,7 @@ Ensure you are logged with user "admin"
   #HiddenServiceDir /var/lib/tor/hidden_service_fulcrum/
   #HiddenServiceVersion 3
   #HiddenServicePort 50002 127.0.0.1:50002
-  
+
   # Hidden Service Fulcrum TCP
   #HiddenServiceDir /var/lib/tor/hidden_service_fulcrum_tcp/
   #HiddenServiceVersion 3
@@ -657,7 +668,7 @@ Ensure you are logged with user "admin"
 
   ```sh
   $ cd /home/admin/zram-swap
-  $ sudo ./install.sh --uninstall 
+  $ sudo ./install.sh --uninstall
   $ sudo rm /etc/default/zram-swap
   $ sudo rm -rf /home/admin/zram-swap
   ```
