@@ -44,7 +44,7 @@ Table of contents
 * Configure firewall to allow incoming HTTP requests from your local network to the web server.
 
   ```sh
-  $ sudo ufw allow 4005 comment 'allow CircuitBreaker SSL'
+  $ sudo ufw allow 4005/tcp comment 'allow CircuitBreaker SSL'
   ```
 
 * Enable NGINX reverse proxy to route external encrypted HTTPS traffic internally to Circuit Breaker
