@@ -187,7 +187,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
   > You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer release versions might not have been thoroughly tested with the rest of the RaspiBolt configuration.
 
   ```sh
-  $ VERSION="1.9.6"
+  $ VERSION="1.9.7"
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-sha256sums.txt.asc
@@ -204,8 +204,8 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 
   ```sh
   $ gpg --verify Fulcrum-$VERSION-sha256sums.txt.asc
-  > gpg: assuming signed data in 'Fulcrum-1.9.6-sha256sums.txt'
-  > gpg: Signature made Sat 11 Nov 2023 05:52:23 CET
+  > gpg: assuming signed data in 'Fulcrum-1.9.7-sha256sums.txt'
+  > gpg: Signature made Wed 22 Nov 2023 21:29:49 CET
   > gpg:                using DSA key D465135F97D0047E18E99DC321810A542031C02C
   > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -216,13 +216,13 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ grep 'arm64-linux.tar.gz' Fulcrum-1.9.6-sha256sums.txt | sha256sum --check
+  $ grep 'arm64-linux.tar.gz' Fulcrum-$VERSION-sha256sums.txt | sha256sum --check
   ```
 
 Expected output:
 
   ```sh
-  > Fulcrum-1.9.6-arm64-linux.tar.gz: OK
+  > Fulcrum-1.9.7-arm64-linux.tar.gz: OK
   ```
 
 * Install Fulcrum and check the correct installation requesting the version
@@ -231,7 +231,7 @@ Expected output:
   $ tar -xvf Fulcrum-$VERSION-arm64-linux.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$VERSION-arm64-linux/Fulcrum Fulcrum-$VERSION-arm64-linux/FulcrumAdmin
   $ Fulcrum --version
-  > Fulcrum 1.9.6 (Release 2624368)
+  > Fulcrum 1.9.7 (Release f27fc28)
   > Protocol: version min: 1.4, version max: 1.5.2
   > compiled: gcc 9.4.0
   > jemalloc: version 5.2.1-0-gea6b3e9
