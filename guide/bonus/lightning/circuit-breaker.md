@@ -20,7 +20,7 @@ Difficulty: Easy
 Status: Tested v3
 {: .label .label-green }
 
-![circuitbreaker-screenshot](https://raw.githubusercontent.com/lightningequipment/circuitbreaker/master/screenshot.png)
+![circuitbreaker-screenshot](../../../images/circuitbreaker.png)
 
 ---
 
