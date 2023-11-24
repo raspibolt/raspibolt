@@ -203,7 +203,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify Fulcrum-$VERSION-sha256sums.txt.asc
+  $ gpg --verify Fulcrum-$VERSION-shasums.txt.asc
   > gpg: assuming signed data in 'Fulcrum-1.9.7-sha256sums.txt'
   > gpg: Signature made Wed 22 Nov 2023 21:29:49 CET
   > gpg:                using DSA key D465135F97D0047E18E99DC321810A542031C02C
@@ -216,7 +216,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
-  $ grep 'arm64-linux.tar.gz' Fulcrum-$VERSION-sha256sums.txt | sha256sum --check
+  $ grep 'arm64-linux.tar.gz' Fulcrum-$VERSION-shasums.txt | sha256sum --check
   ```
 
 Expected output:
