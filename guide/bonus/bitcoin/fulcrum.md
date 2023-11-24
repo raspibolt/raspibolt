@@ -190,8 +190,8 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
   $ VERSION="1.9.7"
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-sha256sums.txt.asc
-  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-sha256sums.txt
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-shasums.txt.asc
+  $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-shasums.txt
   ```
 
 * Get the public key from the Fulcrum developer
