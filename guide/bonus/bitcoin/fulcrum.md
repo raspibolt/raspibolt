@@ -205,7 +205,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
   ```sh
   $ gpg --verify Fulcrum-$VERSION-shasums.txt.asc
   > gpg: assuming signed data in 'Fulcrum-1.9.7-sha256sums.txt'
-  > gpg: Signature made Wed 22 Nov 2023 21:29:49 CET
+  > gpg: Signature made Fri 24 Nov 2023 08:27:08 AM UTC
   > gpg:                using DSA key D465135F97D0047E18E99DC321810A542031C02C
   > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
