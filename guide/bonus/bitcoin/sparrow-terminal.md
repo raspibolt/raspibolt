@@ -54,8 +54,8 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
 * Download Sparrow Server and signatures into "/tmp" directory, which is cleared on the reboot. If you want to update or install the latest version, look up the [latest Sparrow Wallet release version](https://github.com/sparrowwallet/sparrow/releases), and change the "VERSION="x.x.x" value line, to that number to download the latest Sparrow server binary.
 
   ```sh
-  $ VERSION="1.7.9"
-  $ cd /tmp
+  $ VERSION="1.8.1"
+  $   
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-server-$VERSION-aarch64.tar.gz
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-$VERSION-manifest.txt.asc
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-$VERSION-manifest.txt
@@ -73,7 +73,7 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
   $ gpg --verify sparrow-$VERSION-manifest.txt.asc
   ```
   ```
-  > gpg: assuming signed data in 'sparrow-1.7.9-manifest.txt'
+  > gpg: assuming signed data in 'sparrow-1.8.1-manifest.txt'
   > gpg: Signature made ...
   > gpg:                using RSA key D4D0D3202FC06849A257B38DE94618334C674B40
   > gpg: Good signature from "Craig Raw <craigraw@gmail.com>" [unknown]
@@ -84,7 +84,7 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
   
   ```sh
   $ sha256sum --check sparrow-$VERSION-manifest.txt --ignore-missing
-  > sparrow-server-1.7.9-aarch64.tar.gz: OK
+  > sparrow-server-1.8.1-aarch64.tar.gz: OK
   ```
 
 * If everything is correct, unpack Sparrow 
