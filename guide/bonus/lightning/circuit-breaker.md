@@ -120,12 +120,6 @@ Table of contents
 
 ---
 
-## Configuration
-
-To access Circuit Breaker's configuration, go to its webinterface at https://raspibolt.local:4005. Before that, please read some basics about the operating modes Circuit Breaker has to offer: [https://github.com/lightningequipment/circuitbreaker#operating-modes](https://github.com/lightningequipment/circuitbreaker#operating-modes)
-
----
-
 ## First run
 
 * Still with user "circuitbreaker", test if the program works by displaying the help
@@ -219,6 +213,12 @@ To access Circuit Breaker's configuration, go to its webinterface at https://ras
   ```sh
   $ sudo journalctl -f -u circuitbreaker
   ```
+
+---
+
+## Configuration
+
+To access Circuit Breaker's configuration, go to its webinterface at https://raspibolt.local:4005. Before that, please read some basics about the operating modes Circuit Breaker has to offer: [https://github.com/lightningequipment/circuitbreaker#operating-modes](https://github.com/lightningequipment/circuitbreaker#operating-modes)
 
 ---
 
