@@ -55,7 +55,7 @@ tmux is an open-source terminal multiplexer for Unix-like operating systems. It 
 
   ```sh
   $ VERSION="1.8.1"
-  $ cd /tmp  
+  $ cd /tmp
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-server-$VERSION-aarch64.tar.gz
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-$VERSION-manifest.txt.asc
   $ wget https://github.com/sparrowwallet/sparrow/releases/download/$VERSION/sparrow-$VERSION-manifest.txt
