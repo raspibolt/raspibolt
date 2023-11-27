@@ -94,13 +94,21 @@ Table of contents
   $ ln -s /data/lnd /home/circuitbreaker/.lnd
   ```
 
-* Clone the project, install and build it 
+* Download and import PGP keys of current tag publisher
+
+  ```sh
+  $ curl https://keybase.io/carlakirkcohen/pgp_keys.asc | gpg --import
+  ```
+
+* Clone the project, verify the tag and install
  
   ```sh
+  $ VERSION="v0.5.0"
   $ git clone https://github.com/lightningequipment/circuitbreaker.git
   $ cd circuitbreaker
+  $ git checkout $VERSION
+  $ git verify-tag $VERSION
   $ go install
-  $ go build
   ``` 
  
 * Make Circuit Breaker executable without having to provide the full path to the Go binary directory
@@ -229,10 +237,10 @@ Updating to a new release should be straight-forward, but make sure to check out
  
   ```sh
   $ cd ~/circuitbreaker
-  $ git fetch
-  $ git checkout master
+  $ latest=$(git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1); echo $latest
+  $ git checkout $latest
+  $ git verify-tag $latest
   $ go install
-  $ go build
   $ exit
   ```
   
