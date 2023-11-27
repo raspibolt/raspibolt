@@ -256,13 +256,13 @@ Updating to a new release should be straight-forward, but make sure to check out
 
 If you want to uninstall circuitbreaker
 
-* With the "root" user, delete the "circuitbreaker" user, nginx and firewall configuration
+* With the "admin" user, delete the "circuitbreaker" user, nginx and firewall configuration
 
   ```sh
-  $ userdel -r circuitbreaker
-  $ rm /etc/nginx/streams-enabled/circuitbreaker-reverse-proxy.conf
-  $ systemctl reload nginx
-  $ ufw delete allow 4005
+  $ sudo userdel -r circuitbreaker
+  $ sudo rm /etc/nginx/streams-enabled/circuitbreaker-reverse-proxy.conf
+  $ sudo systemctl reload nginx
+  $ sudo ufw delete allow 4005/tcp
   ```
 
 <br /><br />
