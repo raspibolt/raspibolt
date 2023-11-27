@@ -103,9 +103,9 @@ Table of contents
 * Clone the project, verify the tag and install
  
   ```sh
-  $ VERSION="v0.5.0"
   $ git clone https://github.com/lightningequipment/circuitbreaker.git
   $ cd circuitbreaker
+  $ VERSION=$(git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1); echo $VERSION
   $ git checkout $VERSION
   $ git verify-tag $VERSION
   $ go install
