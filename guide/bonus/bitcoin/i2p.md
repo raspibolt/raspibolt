@@ -64,12 +64,6 @@ Table of contents
   $ sudo apt install i2pd
   ```
 
-* Enable autoboot on startup
-
-  ```sh
-  $ sudo systemctl enable i2pd
-  ```
-
 * Check the service is running and the correct autoboot is enabled
 
   ```sh
