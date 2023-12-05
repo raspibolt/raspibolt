@@ -69,7 +69,7 @@ The “Advanced Packaging Tool” (apt) makes this easy.
 * Make sure that all necessary software packages are installed:
 
   ```sh
-  $ sudo apt install git --install-recommends
+  $ sudo apt install git
   ```
 
 ---
