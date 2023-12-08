@@ -154,7 +154,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 
   ```sh
   $ sudo mkdir /data/lit /data/loop /data/pool /data/faraday /data/tapd
-  $ sudo chown -R lit:lit /data/lit /data/loop /data/pool /data/faraday
+  $ sudo chown -R lit:lit /data/lit /data/loop /data/pool /data/faraday /data/tapd
   ```
 
 * Add the "admin" user to the "lit" group
