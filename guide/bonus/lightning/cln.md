@@ -79,7 +79,6 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ sudo apt-get install -y \
     autoconf automake build-essential git libtool libgmp-dev libsqlite3-dev \
     python3 python3-pip net-tools zlib1g-dev libsodium-dev gettext
-  $ pip3 install --user --upgrade pip
   ```
 
 * Open a "lightningd" user session and create symbolic links to `bitcoin` and `lightningd` data directories.
@@ -104,20 +103,22 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ git clone https://github.com/ElementsProject/lightning.git
   $ cd lightning
   $ git fetch --all --tags
-  $ git checkout v23.08.1
+  $ git checkout v23.11
   ``` 
 
 * Don't trust, verify! Check who released the current version and get their signing keys and verify checksums. Verification step should output `Good Signature`.
 
   ```sh
-  $ curl https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/rustyrussell.txt | gpg --import
-  $ git verify-tag v23.08.1
+  $ curl https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/keys/pneuroth.txt | gpg --import
+  $ git verify-tag v23.11
   ```
 
-* Download user specific python packages.
+* Download user specific python packages and plugin requirements.
 
   ```sh
+  $ pip3 install --user --upgrade pip  
   $ pip3 install --user mako
+  $ pip3 install -r plugins/clnrest/requirements.txt
   ```
 
 ### Building CLN
@@ -176,6 +177,8 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   experimental-anchors
   # enable dual fund option
   experimental-dual-fund
+  # clnrest plugin
+  clnrest-port=3001
   ```
 
 ### Shortcuts & Aliases
