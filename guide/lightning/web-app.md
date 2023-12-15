@@ -116,12 +116,12 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ cd RTL
 
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > v0.14.1
+  > v0.15.0
 
-  $ git checkout v0.14.1
+  $ git checkout v0.15.0
 
-  $ git verify-tag v0.14.1
-  > gpg: Signature made Sun Oct  8 00:25:22 2023 EEST
+  $ git verify-tag v0.15.0
+  > gpg: Signature made Thu 07 Dec 2023 05:40:57 AM CET
   > gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
   > gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
   > gpg:                 aka "Suheb <39208279+saubyk@users.noreply.github.com>" [unknown]
@@ -134,7 +134,7 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   Downloading all dependencies can sometimes be very slow, so be patient and let the process run its course.
 
   ```sh
-  $ npm install --omit=dev --legacy-peer-deps
+  $ npm install --omit=dev
   ```
 
 The installation can take some time, and can hang on a single package for a long time.
@@ -315,7 +315,7 @@ Make sure to read the release notes first.
   $ latest=$(git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1); echo $latest
   $ git checkout $latest
   $ git verify-tag $latest
-  $ npm install --omit=dev --legacy-peer-deps
+  $ npm install --omit=dev
   $ exit
   ```
 
