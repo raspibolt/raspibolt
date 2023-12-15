@@ -179,6 +179,11 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   experimental-dual-fund
   # clnrest plugin
   clnrest-port=3001
+  # c-lightning-Rest plugin
+  plugin=/data/cl-plugins-available/c-lightning-REST-0.10.7/clrest.js
+  rest-port=3092
+  rest-docport=4001
+  rest-protocol=http
   ```
 
 ### Shortcuts & Aliases
@@ -380,11 +385,98 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ sudo systemctl start lightningd.service
   ```
 
-## c-lightning-Rest & RTL
+## Choose connection method
+
+CLN provides multiple way of connecting external tools. In this guide we describe how to use `c-lightning-Rest`, a external plugin (for RTL and Zeus), and `clnrest`, a built-in plugin making use of runes (currently RTL only). Both plugins may be installed and run in parallel without interference. Please see the following sub-chapters and proceed with either procedure of your choice.
+
+### clnrest plugin & RTL (v15.0+)
+
+RTL v15.0+ is required to successfully connect via `clnrest` and runes (equivalent of macaroons).
+
+* First, we add `rtl` user to `lightnind` group for rune access, then switch to user `lightning` and create a rune for RTL with "admin" access:
+
+  ```sh
+  $ sudo adduser rtl lightningd
+  $ sudo su - lightningd
+  $ lightning-cli createrune
+  ```
+
+  This creates a rune without any restrictions. The rune string is unique and different from this example:
+  ```json
+  {
+   "rune": "23biut2tb4itb3tbi4tbgiebdfgisgefesfUBWIFwfi==",
+   "unique_id": "0",
+   "warning_unrestricted_rune": "WARNING: This rune has no restrictions! Anyone who has access to this rune could drain funds from your node. Be careful when giving this to apps that you don't trust. Consider using the restrictions parameter to only allow access to specific rpc methods."
+  }
+  ```
+
+* Now we copy the rune string (replace with your own unique rune string!) into a new file `.command` and format it for RTL. We place this rune into CLN's data directory `/data/lightningd/`:
+
+  ```sh
+  $ echo "LIGHTNING_RUNE=\"23biut2tb4itb3tbi4tbgiebdfgisgefesfUBWIFwfi==\"" | tee .command
+  $ chmod 640 .command
+  $ mv .command /data/lightningd/
+  $ exit
+  ```
+
+* Now we proceed with RTL's configuration: 
+
+  ```sh
+  $ sudo su - rtl
+  $ nano /home/rtl/RTL/RTL-Config.json
+  ```
+
+* Edit or add the following content. Adjust `multiPass` to your desired login password, if not already set. Please make sure `lnServerUrl` is set to `clnrest-port` and `runePath` points to the `.command` file.
+
+  ```ini
+  {
+    "multiPass": "<yourfancypassword>",
+    "port": "3000",
+    "defaultNodeIndex": 1,
+    "dbDirectoryPath": "/home/rtl/", 
+    "SSO": {
+      "rtlSSO": 0,
+      "rtlCookiePath": "",
+      "logoutRedirectLink": ""
+    },
+    "nodes": [
+      {
+        "index": 1,
+        "lnNode": "CLN Node",
+        "lnImplementation": "CLN",
+        "Authentication": {
+          "runePath": "/data/lightningd/.command",
+          "configPath": "/data/lightningd/config"
+        },
+        "Settings": {
+          "userPersona": "OPERATOR",
+          "themeMode": "DAY",
+          "themeColor": "INDIGO",
+          "fiatConversion": true,
+          "currencyUnit": "USD",
+          "logLevel": "INFO",
+          "lnServerUrl": "https://127.0.0.1:3001",
+          "unannouncedChannels": false
+        }
+      }
+    ],
+  }
+  ```
+  
+* As user admin, startup RTL and connect via browser: 
+
+  ```sh
+  $ exit
+  $ sudo systemctl start rtl
+  ```
+* Access RTL via your local IP: `https://<your-local-ip>:4001`
+  
+
+### c-lightning-Rest & RTL
 
 c-lightning-Rest: REST APIs for c-lightning written with node.js and provided within the [RTL repository](https://github.com/Ride-The-Lightning/c-lightning-REST). In this chapter we are going to add c-lightning-Rest as CLN plugin and furthermore connect RTL for CLN node management. The installation of RTL is already described [here](../../lightning/web-app.md), so we are focusing on its configuration.
 
-### c-lightning-Rest plugin
+#### c-lightning-Rest plugin
 
 * Setting up c-lightning-Rest as plugin for CLN. First we download and verify the c-lightning-Rest package:
 
@@ -499,7 +591,7 @@ c-lightning-Rest: REST APIs for c-lightning written with node.js and provided wi
   UNUSUAL plugin-plugin.js: --- cl-rest doc server is ready and listening on port: 4091 ---
   ```
 
-### Access over Tor
+#### Access over Tor
 
 The Zeus mobile app will access the node via Tor.
 
@@ -526,7 +618,7 @@ The Zeus mobile app will access the node via Tor.
 
 * Save the onion address in a safe place (e.g., password manager)
 
-### Configuring RTL
+#### Configuring RTL
 
 * By the following configuration we tell RTL to connect to our CLN node. Change to user `rtl`:
 
@@ -580,7 +672,7 @@ The Zeus mobile app will access the node via Tor.
   ```
 * Access RTL via your local IP: `https://<your-local-ip>:4001`
 
-## Connect Zeus
+#### Connect Zeus
 
 * As user admin, install dependencies:
 
