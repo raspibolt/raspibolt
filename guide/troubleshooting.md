@@ -478,7 +478,7 @@ $ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log
 
 Install development packages for Python 3.9
 ```
-$ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev -y
+$ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev libsecp256k1-dev -y
 ```
 
 Download Python 3.9 source code, unpack and move to bin
