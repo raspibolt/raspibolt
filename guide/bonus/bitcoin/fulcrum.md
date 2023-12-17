@@ -294,7 +294,7 @@ RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](ht
 
   # Bitcoin Core settings
   bitcoind = 127.0.0.1:8332
-  rpccookie = /home/bitcoin/.bitcoin/.cookie
+  rpccookie = /data/bitcoin/.bitcoin/.cookie
 
   # Fulcrum server settings
   datadir = /data/fulcrum/fulcrum_db
