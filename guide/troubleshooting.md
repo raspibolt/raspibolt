@@ -474,6 +474,37 @@ $ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log
 
 ---
 
+## Fix Python 3.9 installation
+
+Install development packages for Python 3.9
+```
+$ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev -y
+```
+
+Download Python 3.9 source code, unpack and move to bin
+```
+$ wget https://www.python.org/ftp/python/3.9.18/Python-3.9.18.tar.xz
+$ tar -xf Python-3.9.18.tar.xz
+$ sudo mv Python-3.9.18 /usr/local/share/python3.9
+```
+
+Configure, compile, and install Python 3.9
+```
+$ cd /usr/local/share/python3.9
+$ sudo ./configure --enable-optimizations --enable-shared --with-ensurepip=install
+$ sudo make -j 2
+$ sudo make altinstall
+$ sudo ldconfig /usr/local/share/python3.9
+$ python3.9 --version
+```
+
+You should see this output:
+```
+Python 3.9.18
+```
+
+---
+
 We will extend this troubleshooting guide constantly with findings that have been or will be reported in the issues section.
 
 <br /><br />
