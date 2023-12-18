@@ -27,34 +27,32 @@ We configure the Raspberry Pi and install the Linux operating system.
 We use the Raspberry Pi Operating System (RasPi OS) Lite, without a graphical user interface, and in the 64-bit version.
 This provides the best stability for the Raspberry Pi and makes the initial setup a breeze.
 
-RasPi OS is based on the [Debian 11](https://www.debian.org/){:target="_blank"} Linux distribution, which is available for most  hardware platforms.
+RasPi OS is based on the [Debian 11](https://www.debian.org/){:target="_blank"} Linux distribution, which is available for most hardware platforms.
 To make this guide as universal as possible, it uses only standard Debian commands.
 As a result, it should work smoothly with Raspberry Pis while still being compatible with most other hardware platforms running Debian.
 
 ## Get Raspberry Pi OS
 
-In order to write the operating system to the external drive, we will use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"} application v1.7+.
+In order to write the operating system to the external drive, we will use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"} application v1.8+.
 
 * Start the Raspberry Pi Imager
-* Select "CHOOSE OS" > "Raspberry Pi OS (Other)" > "Raspberry Pi OS Lite (64-bit)" to have the relevant image flashed to your drive
+* On the "Raspberry Pi device" section > Push on "Choose device" > Select **"No filtering"**
+* On the "Operating system" section > Push on "Choose OS" > "Raspberry Pi OS (other)" > Scroll to select **"Raspberry Pi OS (Legacy, 64 bit) Lite"** and have the relevant image flashed to your drive
+* Connect the external drive to your regular computer. On the "Storage" section > Push on "Choose storage" > Select your external drive
+* Click on the **"NEXT"** button
+* On the "Use OS customisation" banner > Click on the **"EDIT SETTINGS"** button
 
 ## Configure boot options
 
-Open the "Advanced options" by pressing the cogwheel that has appeared in the bottom right corner of the application window:
-
-![image](../../images/operating-system_imager-start.png)
-
 You can now pre-configure the operating system even before it's started for the first time.
 
-Configure the advanced options as follows:
+Configure the advanced options as follows.
 
-* **Set hostname**: choose and enter a local network name for your node, for example `raspibolt`.
+On the **"General"** tab:
+
+* **Set hostname**: choose and enter a local network name for your node, for example, `raspibolt`.
 
   Note: if you're using a different platform, you can adjust the hostname later by replacing it in the file `/etc/hostname` and adding it at the end of the first line in `/etc/hosts`.
-
-* **Enable SSH**: activate the checkbox and select "Use password authentication"
-
-  This will allow you to connect to the Raspberry Pi remotely using "**S**ecure **SH**ell" without ever connecting it to a keyboard or screen.
 
 * **Set username and password**: activate the checkbox and enter `admin` together with your `password [A]`.
 
@@ -67,24 +65,27 @@ Configure the advanced options as follows:
 
 * **Set locale settings**: activate the checkbox, select your timezone and keyboard layout.
 
+On the **"Services"** tab:
+
+* **Enable SSH**: activate the checkbox and select "Use password authentication"
+
+  This will allow you to connect to the Raspberry Pi remotely using "**S**ecure **SH**ell" without ever connecting it to a keyboard or screen.
+
 * **That's it.**
-  You can ignore the other options.
+  (Optional) If you want to improve your privacy, you can uncheck "Enable telemetry" on the "Options" tab; or ignore it.
 
-![Raspberry Pi Imager: advanced settings](../../images/operating-system_imager-settings.png)
-
-* Click "SAVE".
+* Click on **"SAVE"**.
 
 ## Write the operating system to the external drive
 
-* Connect the external drive to your regular computer
-* Make sure that "Raspberry Pi OS Lite (64bit)" is selected
-* Click on "CHOOSE STORAGE"
-* Select your external drive
-* Click on "WRITE"
-* Read the warning carefully and make sure you selected the right drive, then click "YES"
+* The "Use OS customisation" banner shows you again > Click this time on the **"YES"** button.
+
+* Read the warning banner carefully and make sure you selected the right drive, then click **"YES"**.
 
 The Raspberry Pi Imager now writes the operating system to your drive and verifies it.
 It should display a "Success" message after.
+
+![](../../images/gif_raspberry_pi_flash.gif)
 
 ## Start your Pi
 
@@ -104,12 +105,17 @@ To enable booting from USB, follow these steps:
 
 1. Get your hands on a microSD card (all data will be deleted, but you only need it once)
 1. Using the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"}, write config bootloader to enable "USB Boot" to the microSD card
-  (select Misc utility images / Bootloader / USB Boot)
+1. With **"No filtering"** selected on the "Raspberry Pi device" section, on the "Operating system" section > Push on "Choose OS" > "Misc utility images > Select Bootloader (Pi 4 or Pi 5) family, depending on your Raspberry Pi version > **USB Boot**
+1. Connect the microSD to your regular computer. On the "Storage" section > Push on "Choose storage" > Select your microSD
+1. Click on the **"NEXT"** button
+1. Read the warning banner carefully and make sure you selected the right drive, then click **"YES"**.
+
+The Raspberry Pi Imager now writes on your microSD and verifies it.
+It should display a "Success" message after.
+
 1. Boot your Pi with this microSD card
 1. Once the green LED blinks constantly, you can disconnect the power
 1. Remove the microSD card and start your Pi again with the SSD connected
-
-This procedure is also explained in more detail in the helpful guide [How to Boot Raspberry Pi 4 From a USB SSD](https://www.tomshardware.com/how-to/boot-raspberry-pi-4-usb){:target="_blank"}.
 
 Your Raspberry Pi should now boot from the SSD attached via USB.
 
