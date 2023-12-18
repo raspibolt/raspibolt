@@ -610,7 +610,7 @@ Now, just check that the timestamp date is close to the [release](https://github
 
   ```sh
   $ bitcoin-cli --version
-  > Bitcoin Core version v26.0.0
+  > Bitcoin Core RPC client version v26.0.0
   > Copyright (C) 2009-2023 The Bitcoin Core developers
   > [...]
   ```
