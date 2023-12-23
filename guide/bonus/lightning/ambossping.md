@@ -36,7 +36,6 @@ Table of contents
 ## Requirements
 
 * LND
-* cron
 
 ---
 
@@ -113,36 +112,83 @@ Table of contents
  
 ---
 
-## Schedule the ping
+## Configuring the Ping Schedule
 
-* While in an “ambossping” user session and open the crontab to create a new job.
+To ensure your [Amboss monitoring dashboard](https://amboss.space/owner?page=monitoring) is accurately updated, you may want to schedule your script to send pings at specific intervals. This section will guide you through setting up a timer server script as an alternative to using crontab.
 
-  ```sh
-  $ crontab -e
-  ```
+### Creating a Timer Service
 
-  Depending on what you have selected in your [amboss monitoring dashboard](https://amboss.space/owner?page=monitoring), you would like to schedule your script to send pings on preselected intervals. The ambossping crontab should be clean at this point, so add the following at the bottom:
- 
-  ```ini
-  * * * * * /home/ambossping/ping.sh >> /home/ambossping/ping.log
-  ```
-  This will execute the bash script every minute.
+1. **Initiate a Service File:**
+   While logged in as an “admin” user, initiate a timer service by creating a new file:
 
-  🚨 Setting up the cronjob like this will send the pings via clearnet - meaning amboss.space will know where the ping comes from. You can prevent revealing this information by either tunneling all traffic of your node via VPN or setup your cronjob to use Tor. Be aware that running the ping via Tor will cause some false-positives depending on the health of the Tor network status and availability, which will not represent the availability of your node.
+    ```sh
+    sudo nano /etc/systemd/system/ambossPing.timer
+    ```
 
-  ```ini
-  * * * * * /usr/bin/torsocks /home/ambossping/ping.sh >> /home/ambossping/ping.log
-  ```
+    Add the following configuration:
 
-  Currently ambos.space gives the option to report every 1, 3, 5, 15, 30 minutes, and 1 hour. If you want to report on different than 1 min intervals, set the beginning of the line in your cron tab as follows:
+    ```ini
+    [Unit]
+    Description=Timer to activate ambossPing.service
+    After=ambossPing.service
+    PartOf=ambossPing.service
 
-  ```ini
-  */3 * * * * - for sending a ping every 3 minutes
-  */5 * * * * - for sending a ping every 5 minutes
-  */5 * * * * - for sending a ping every 15 minutes
-  */30 * * * * - for sending a ping every 30 minutes
-  0 * * * * - for sending a ping every hour
-  ```
+    [Timer]
+    OnBootSec=900
+    OnUnitActiveSec=900
+    AccuracySec=1
+
+    [Install]
+    WantedBy=timers.target
+    ```
+
+2. **Set Up the Ping Service:**
+   Create a corresponding service file:
+
+    ```sh
+    sudo nano /etc/systemd/system/ambossPing.service
+    ```
+
+    Then, insert this configuration:
+
+    ```ini
+    [Unit]
+    Description=Amboss Ping syncing service
+    Wants=ambossPing.timer
+
+    [Service]
+    ExecStart=/home/ambossping/ping.sh >> /home/ambossping/ping.log
+    User=ambossping
+    RuntimeMaxSec=60
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
+3. **Activate the Services:**
+   Enable and start both the timer and service:
+
+    ```sh
+    sudo systemctl enable ambossPing.service
+    sudo systemctl enable ambossPing.timer
+    sudo systemctl start ambossPing.service
+    sudo systemctl start ambossPing.timer
+    ```
+
+This configuration will trigger the bash script every 15 minutes.
+
+### Security Considerations
+
+🚨 Be aware that setting up the timer as described sends pings through the clearnet. Consequently, amboss.space can identify the source of the pings. To maintain privacy, consider routing all traffic from your node through a VPN or setting up your service to use Tor. Note that using Tor may lead to occasional false-positives due to the network's health and availability, which might not accurately reflect your node's status.
+
+To use Tor, modify the `ExecStart` line in the `ambossPing.service` file:
+
+```ini
+ExecStart=torsocks /home/ambossping/ping.sh >> /home/ambossping/ping.log
+```
+
+By following these steps, you can efficiently schedule and secure your Amboss pings, ensuring consistent monitoring and privacy.
+
 
 ---
 
@@ -176,7 +222,12 @@ Table of contents
 * If you want to remove the ambossping and stop reporting health status with this script, delete the “ambossping” user with the “root” user.
 
   ```sh
-  $ sudo su - root
+  sudo su - root
 
-  $ userdel -r ambossping
+  sudo systemctl stop ambossPing.service
+  sudo systemctl stop ambossPing.timer
+  sudo systemctl disable ambossPing.service
+  sudo systemctl disable ambossPing.timer
+
+  userdel -r ambossping
   ```
