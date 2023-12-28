@@ -96,8 +96,9 @@ For that we will create a separate user and we will be running the code as the n
   $ echo $LATEST_RELEASE
   > v1.8.0
 
-  $ git clone --branch $LATEST_RELEASE https://github.com/cryptosharks131/lndg.git
+  $ git clone https://github.com/cryptosharks131/lndg.git
   $ cd lndg
+  $ git checkout tags/$LATEST_RELEASE
   ```
   
 * Setup a Python virtual environment
@@ -586,7 +587,7 @@ With the Tor browser, you can access this onion address from any device.
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v1.8.0
+  $ git checkout tags/v1.8.0
   $ .venv/bin/pip install -r requirements.txt
   $ .venv/bin/pip install --upgrade protobuf
   $ rm lndg/settings.py
