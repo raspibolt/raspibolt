@@ -586,7 +586,7 @@ With the Tor browser, you can access this onion address from any device.
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout tags/v1.8.0
+  $ git checkout v1.8.0
   $ .venv/bin/pip install -r requirements.txt
   $ .venv/bin/pip install --upgrade protobuf
   $ rm lndg/settings.py
@@ -595,11 +595,38 @@ With the Tor browser, you can access this onion address from any device.
   $ exit
   ```
 
-* On update from 1.7.x to 1.8.0 the following python package may be removed, also remove `qr_code` from the `INSTALLED_APPS` section of `lndg/settings.py` as described [here](https://github.com/cryptosharks131/lndg/releases/tag/v1.8.0):
+* Upgrading from 1.7.x to 1.8.0 the following python package may be removed:
 
   ```sh
   $ .venv/bin/pip uninstall django-qr-code
   ```
+
+* Also remove `qr_code` from the `INSTALLED_APPS` section of `lndg/settings.py` as described [here](https://github.com/cryptosharks131/lndg/releases/tag/v1.8.0):
+
+  ```sh
+  $ nano /home/lndg/lndg/lndg/settings.py
+  ```
+
+* Result looks like this:
+  
+  ```ini
+  # Application definition
+  
+  INSTALLED_APPS = [
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.admin',
+    'django.contrib.humanize',
+    'gui',
+    'rest_framework',
+    'django_filters',
+  ]
+  ```
+
+* Save and exit: Ctrl+O, Ctrl+X
   
 * Also remove unnecessary systemd services:
 
