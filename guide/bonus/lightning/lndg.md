@@ -586,7 +586,7 @@ With the Tor browser, you can access this onion address from any device.
   $ git fetch
   $ git reset --hard HEAD
   $ git tag
-  $ git checkout v1.8.0
+  $ git checkout tags/v1.8.0
   $ .venv/bin/pip install -r requirements.txt
   $ .venv/bin/pip install --upgrade protobuf
   $ rm lndg/settings.py
@@ -594,8 +594,29 @@ With the Tor browser, you can access this onion address from any device.
   $ .venv/bin/python manage.py migrate
   $ exit
   ```
- 
+
+* On update from 1.7.x to 1.8.0 the following python package may be removed, also remove `qr_code` from the `INSTALLED_APPS` section of `lndg/settings.py` as described [here](https://github.com/cryptosharks131/lndg/releases/tag/v1.8.0):
+
+  ```sh
+  $ .venv/bin/pip uninstall django-qr-code
+  ```
   
+* Also remove unnecessary systemd services:
+
+  ```sh
+  $ sudo systemctl disable jobs-lndg.timer
+  $ sudo systemctl stop jobs-lndg.service
+  $ sudo systemctl disable rebalancer-lndg.timer
+  $ sudo systemctl stop rebalancer-lndg.service
+  $ sudo systemctl stop htlc-stream-lndg.service
+  $ sudo systemctl disable  htlc-stream-lndg.service
+  $ sudo rm /etc/systemd/system/jobs-lndg.timer
+  $ sudo rm /etc/systemd/system/jobs-lndg.service
+  $ sudo rm /etc/systemd/system/rebalancer-lndg.timer
+  $ sudo rm /etc/systemd/system/rebalancer-lndg.service
+  $ sudo rm /etc/systemd/system/htlc-stream-lndg.service
+  ```
+ 
 * Start the `uwsgi` systemd service again. The other LNDg timers and services will start automatically.
 
   ```sh
