@@ -482,7 +482,7 @@ To have updated information in the GUI, it is necessary to regularly run the scr
   User=lndg
   Group=lndg
   ExecStart=/home/lndg/lndg/.venv/bin/python /home/lndg/lndg/controller.py
-  StandardOuput=append:/var/log/lndg-controller.log
+  StandardOutput=append:/var/log/lndg-controller.log
   StandardError=append:/var/log/lndg-controller.log
   Restart=always
   RestartSec=60s
