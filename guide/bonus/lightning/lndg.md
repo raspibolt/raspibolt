@@ -502,7 +502,7 @@ To have updated information in the GUI, it is necessary to regularly run the scr
 * Check that the backend refreshes Python script is run every 20 seconds or so
 
   ```sh
-  $ sudo journalctl -f -u lndg-controller.service
+  $ tail -f /var/log/lndg-controller.log
   > [...]
   > Fri Oct 13 14:11:51 2023 : [Data] : Starting data execution...
   > Fri Oct 13 14:12:00 2023 : [Rebalancer] : Queue currently has 0 items...
@@ -584,9 +584,9 @@ With the Tor browser, you can access this onion address from any device.
 
   ```sh
   $ cd /home/lndg/lndg
-  $ git fetch
+  $ git fetch --all --tags
   $ git reset --hard HEAD
-  $ git tag
+  $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
   $ git checkout tags/v1.8.0
   $ .venv/bin/pip install -r requirements.txt
   $ .venv/bin/pip install --upgrade protobuf
@@ -596,7 +596,7 @@ With the Tor browser, you can access this onion address from any device.
   $ exit
   ```
 
-* Upgrading from 1.7.x to 1.8.0 the following python package may be removed:
+* Upgrading from 1.7.x to 1.8.0 the following python package may be removed optionally:
 
   ```sh
   $ .venv/bin/pip uninstall django-qr-code
@@ -628,6 +628,12 @@ With the Tor browser, you can access this onion address from any device.
   ```
 
 * Save and exit: Ctrl+O, Ctrl+X
+
+* Return to `admin`:
+
+  ```sh
+  $ exit
+  ```
   
 * Also remove unnecessary systemd services:
 
