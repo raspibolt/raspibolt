@@ -257,6 +257,9 @@ We'll also set the proper access permissions.
   maxconnections=40
   maxuploadtarget=5000
 
+  # Set the size of the nodes internal mempool (default is 300)
+  maxmempool=2000
+
   # Initial block download optimizations
   dbcache=2000
   blocksonly=1
