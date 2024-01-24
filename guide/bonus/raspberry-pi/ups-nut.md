@@ -208,7 +208,7 @@ Modify `upsd.conf` to tell the server to listen for connections. The loopback is
 Modify the firewall to allow for 3493 to come into your system.
 
   ```sh
-  $ sudo ufw allow 3493/tcp comment ‘all UPS NUT Client’
+  $ sudo ufw allow 3493/tcp comment 'all UPS NUT Client'
   $ sudo ufw status
   ```
 
