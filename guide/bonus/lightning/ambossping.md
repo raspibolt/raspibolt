@@ -122,7 +122,7 @@ To ensure your [Amboss monitoring dashboard](https://amboss.space/owner?page=mon
    While logged in as an “admin” user, initiate a timer service by creating a new file:
 
     ```sh
-    sudo nano /etc/systemd/system/ambossPing.timer
+    $ sudo nano /etc/systemd/system/ambossPing.timer
     ```
 
     Add the following configuration:
@@ -146,7 +146,7 @@ To ensure your [Amboss monitoring dashboard](https://amboss.space/owner?page=mon
    Create a corresponding service file:
 
     ```sh
-    sudo nano /etc/systemd/system/ambossPing.service
+    $ sudo nano /etc/systemd/system/ambossPing.service
     ```
 
     Then, insert this configuration:
@@ -169,10 +169,10 @@ To ensure your [Amboss monitoring dashboard](https://amboss.space/owner?page=mon
    Enable and start both the timer and service:
 
     ```sh
-    sudo systemctl enable ambossPing.service
-    sudo systemctl enable ambossPing.timer
-    sudo systemctl start ambossPing.service
-    sudo systemctl start ambossPing.timer
+    $ sudo systemctl enable ambossPing.service
+    $ sudo systemctl enable ambossPing.timer
+    $ sudo systemctl start ambossPing.service
+    $ sudo systemctl start ambossPing.timer
     ```
 
 This configuration will trigger the bash script every 15 minutes.
@@ -184,7 +184,7 @@ This configuration will trigger the bash script every 15 minutes.
 To use Tor, modify the `ExecStart` line in the `ambossPing.service` file:
 
 ```ini
-ExecStart=torsocks /home/ambossping/ping.sh >> /home/ambossping/ping.log
+ExecStart=/usr/bin/torsocks /home/ambossping/ping.sh | /usr/bin/tee -a /home/ambossping/ping.log
 ```
 
 By following these steps, you can efficiently schedule and secure your Amboss pings, ensuring consistent monitoring and privacy.
@@ -222,12 +222,12 @@ By following these steps, you can efficiently schedule and secure your Amboss pi
 * If you want to remove the ambossping and stop reporting health status with this script, delete the “ambossping” user with the “root” user.
 
   ```sh
-  sudo su - root
+  $ sudo su - root
 
-  sudo systemctl stop ambossPing.service
-  sudo systemctl stop ambossPing.timer
-  sudo systemctl disable ambossPing.service
-  sudo systemctl disable ambossPing.timer
+  $ sudo systemctl stop ambossPing.service
+  $ sudo systemctl stop ambossPing.timer
+  $ sudo systemctl disable ambossPing.service
+  $ sudo systemctl disable ambossPing.timer
 
-  userdel -r ambossping
+  $ userdel -r ambossping
   ```
