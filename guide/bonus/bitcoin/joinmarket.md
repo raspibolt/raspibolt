@@ -115,12 +115,13 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   ```sh
   $ curl https://raw.githubusercontent.com/JoinMarket-Org/joinmarket-clientserver/master/pubkeys/KristapsKaupe.asc | gpg --import
   ```
+  ```
   > ...
   > gpg: key 33E472FE870C7E5D: public key "Kristaps Kaupe <kristaps@blogiem.lv>" imported
   > ...
   ```
 
-* Verify that the application is signed by Adam Gibson.
+* Verify that the application is signed by JoinMarket developer(s).
 
   ```
   $ gpg --verify joinmarket-clientserver-$VERSION.tar.gz.asc
