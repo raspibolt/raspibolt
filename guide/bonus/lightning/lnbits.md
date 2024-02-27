@@ -47,6 +47,8 @@ Table of contents
   $ sudo add-apt-repository ppa:deadsnakes/ppa
   $ sudo apt install python3.9 python3.9-distutils
   ```
+
+* If problem installing python3.9 follow Troubleshooting guide [Fix Python 3.9 Installation](../../troubleshooting.html#fix-python-3.9-installation)
   
 ### Firewall & reverse proxy
 
