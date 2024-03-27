@@ -104,7 +104,7 @@ We recommend setting up the RaspiBolt from scratch, but you can then copy over e
 
 ## Looking for an older version of this guide?
 
-If you're looking for an older version of this guide, you can still check out the archived source files for [version 1](https://github.com/raspibolt/raspibolt/blob/raspibolt-v1-deprecated/index.md){:target="_blank"} and [version 2](https://v2.raspibolt.org){:target="_blank"}.
+If you're looking for an older version of this guide, you can still check out the archived source files for [version 1](https://github.com/raspibolt/raspibolt/tree/1.0){:target="_blank"} and [version 2](https://v2.raspibolt.org){:target="_blank"}.
 
 <br /><br />
 
