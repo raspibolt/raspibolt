@@ -111,77 +111,100 @@ We create a shell script to monitor `channel.backup` and make a copy to our back
 
 * Check the following lines of code and paste them into the text editor. By default, both local and remote backup methods are disabled. We will enable one or both of them in the next sections, depending on your preferences. Save and exit.
 
-  ```ini
-  #!/bin/bash
+```ini
+#!/bin/bash
 
-  # Safety bash script options
-  # -e causes a bash script to exit immediately when a command fails
-  # -u causes the bash shell to treat unset variables as an error and exit immediately.
-  set -eu
+# Safety bash script options
+# -e causes a bash script to exit immediately when a command fails
+# -u causes the bash shell to treat unset variables as an error and exit immediately.
+set -eu
 
-  # The script waits for a change in /data/lnd/data/chain/bitcoin/mainnet/channel.backup.
-  # When a change happens, it creates a backup of the file locally
-  #   on a storage device and/or remotely in a GitHub repo
+# The script waits for a change in /data/lnd/data/chain/bitcoin/mainnet/channel.backup.
+# When a change happens, it creates a backup of the file locally
+#   on a storage device and/or remotely in a GitHub repo
 
-  # By default, both methods are used. If you do NOT want to use one of the
-  #   method, replace "true" by "false" in the two variables below:
-  LOCAL_BACKUP_ENABLED=false
-  REMOTE_BACKUP_ENABLED=false
+# By default, both methods are used. If you do NOT want to use one of the
+#   method, replace "true" by "false" in the two variables below:
+LOCAL_BACKUP_ENABLED=false
+REMOTE_BACKUP_ENABLED=false
+NEXTCLOUD_BACKUP_ENABLED=false
 
-  # Locations of source SCB file and the backup target directories (local and remote)
-  SCB_SOURCE_FILE="/data/lnd/data/chain/bitcoin/mainnet/channel.backup"
-  LOCAL_BACKUP_DIR="/mnt/static-channel-backup-external"
-  REMOTE_BACKUP_DIR="/data/lnd/remote-lnd-backup"
+#Nextcloud variables
+NEXTCLOUD_WEBDAV_URL=""
+NEXTCLOUD_USER=""
+NEXTCLOUD_PASSWORD=""
 
-  # Local backup function
-  run_local_backup_on_change () {
-    echo "Copying backup file to local storage device..."
-    echo "$1"
-    cp "$SCB_SOURCE_FILE" "$1"
-    echo "Success! The file is now locally backed up!"
-  }
+# Locations of source SCB file and the backup target directories (local and remote)
+SCB_SOURCE_FILE="/data/lnd/data/chain/bitcoin/mainnet/channel.backup"
+LOCAL_BACKUP_DIR="/mnt/static-channel-backup-external"
+REMOTE_BACKUP_DIR="/data/lnd/remote-lnd-backup"
 
-  # Remote backup function
-  run_remote_backup_on_change () {
-    echo "Entering Git repository..."
-    cd $REMOTE_BACKUP_DIR || exit
-    echo "Making a timestamped copy of channel.backup..."
-    echo "$1"
-    cp "$SCB_SOURCE_FILE" "$1"
-    echo "Committing changes and adding a message"
-    git add .
-    git commit -m "Static Channel Backup $(date +"%Y%m%d-%H%M%S")"
-    echo "Pushing changes to remote repository..."
-    git push --set-upstream origin master
-    echo "Success! The file is now remotely backed up!"
-  }
+# Local backup function
+run_local_backup_on_change () {
+  echo "Copying backup file to local storage device..."
+  echo "$1"
+  cp "$SCB_SOURCE_FILE" "$1"
+  echo "Success! The file is now locally backed up!"
+}
 
+# Remote backup function
+run_remote_backup_on_change () {
+  echo "Entering Git repository..."
+  cd $REMOTE_BACKUP_DIR || exit
+  echo "Making a timestamped copy of channel.backup..."
+  echo "$1"
+  cp "$SCB_SOURCE_FILE" "$1"
+  echo "Committing changes and adding a message"
+  git add .
+  git commit -m "Static Channel Backup $(date +"%Y%m%d-%H%M%S")"
+  echo "Pushing changes to remote repository..."
+  git push --set-upstream origin master
+  echo "Success! The file is now remotely backed up!"
+}
 
-  # Monitoring function
-  run () {
-    while true; do
+# Nextcloud backup function
+run_nextcloud_backup_on_change () {
+  local timestamped_file="channel-$(date +"%Y%m%d-%H%M%S").backup"
+  echo "Starting Upload to Nextcloud via WebDAV URL: $NEXTCLOUD_WEBDAV_URL"
+  cp "$SCB_SOURCE_FILE" "$1"
+  curl -u "$NEXTCLOUD_USER:$NEXTCLOUD_PASSWORD" -T "$1" "$NEXTCLOUD_WEBDAV_URL/$timestamped_file"
+  if [ $? -eq 0 ]; then
+    echo "Success! The file is now backed up on Nextcloud!"
+  else
+    echo "Error: Nextcloud backup failed"
+  fi
+}
 
-        inotifywait $SCB_SOURCE_FILE
-        echo "channel.backup has been changed!"
+# Monitoring function
+run () {
+  while true; do
 
-        LOCAL_BACKUP_FILE="$LOCAL_BACKUP_DIR/channel-$(date +"%Y%m%d-%H%M%S").backup"
-        REMOTE_BACKUP_FILE="$REMOTE_BACKUP_DIR/channel-$(date +"%Y%m%d-%H%M%S").backup"
+      inotifywait $SCB_SOURCE_FILE
+      echo "channel.backup has been changed!"
 
-        if [ "$LOCAL_BACKUP_ENABLED" == true ]; then
-          echo "Local backup is enabled"
-          run_local_backup_on_change "$LOCAL_BACKUP_FILE"
-        fi
+      LOCAL_BACKUP_FILE="$LOCAL_BACKUP_DIR/channel-$(date +"%Y%m%d-%H%M%S").backup"
+      REMOTE_BACKUP_FILE="$REMOTE_BACKUP_DIR/channel-$(date +"%Y%m%d-%H%M%S").backup"
 
-        if [ "$REMOTE_BACKUP_ENABLED" == true ]; then
-          echo "Remote backup is enabled"
-          run_remote_backup_on_change "$REMOTE_BACKUP_FILE"
-        fi
+      if [ "$LOCAL_BACKUP_ENABLED" == true ]; then
+        echo "Local backup is enabled"
+        run_local_backup_on_change "$LOCAL_BACKUP_FILE"
+      fi
 
-    done
-  }
+      if [ "$REMOTE_BACKUP_ENABLED" == true ]; then
+        echo "Remote backup is enabled"
+        run_remote_backup_on_change "$REMOTE_BACKUP_FILE"
+      fi
 
-  run
-  ```
+      if [ "$NEXTCLOUD_BACKUP_ENABLED" == true ]; then
+        echo "Nextcloud Backup is enabled"
+        run_nextcloud_backup_on_change "$REMOTE_BACKUP_FILE"
+      fi
+
+  done
+}
+
+run
+```
 
 * Make the script executable
 
