@@ -37,7 +37,7 @@ Table of contents
 
 Practically, most onchain bitcoin wallets will ask you to save a list of 12 or 24 words as backup to recover your funds in case you lose the wallet password or your hardware wallet.
 
-Technically, these words are known as "mnemonic words" and are used together with a salt to generate a "seed". The seed itself is hashed to derive your "master private key" and the "master chain code" which used for the various accounts in your HD wallet. You can read more about this process in [Chapter 5 of "Matering Bitcoin"](https://github.com/bitcoinbook/bitcoinbook/blob/develop/ch05.asciidoc#hd_wallets=){:target="_blank"}.
+Technically, these words are known as "mnemonic words" and are used together with a salt to generate a "seed". The seed itself is hashed to derive your "master private key" and the "master chain code" which used for the various accounts in your HD wallet. You can read more about this process in [Chapter 5 of "Matering Bitcoin"](https://github.com/bitcoinbook/bitcoinbook/blob/third_edition_print1/ch05_wallets.adoc#hierarchical-deterministic-hd-key-generation-bip32){:target="_blank"}.
 
 ![Mnemonics to private key illustration](../../../images/mnemonics-to-seed-to-private-key.png)
 
