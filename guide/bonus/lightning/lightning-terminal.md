@@ -88,7 +88,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * With the "admin" user, download the latest arm64 binary and its checksum and verify the integrity of the binary
 
   ```sh
-  $ VERSION="0.10.0"
+  $ VERSION="0.12.4"
   $ cd /tmp
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/lightning-terminal-linux-arm64-v$VERSION-alpha.tar.gz
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSION-alpha.txt 
