@@ -32,7 +32,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ VERSION="0.17.4"
+  $ VERSION="0.17.5"
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-v$VERSION-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig
@@ -45,7 +45,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.17.4-beta.tar.gz: OK
+  > lnd-linux-arm64-v0.17.5-beta.tar.gz: OK
   ```
 
 ### Signature check
@@ -65,7 +65,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 
   ```sh
   $ gpg --verify manifest-roasbeef-v$VERSION-beta.sig manifest-v$VERSION-beta.txt
-  > gpg: Signature made Tue Feb  6 21:39:45 2024 EET
+  > gpg: Signature made Tue Apr 23 02:43:45 2024 EEST
   > gpg:                using RSA key 60A1FA7DA5BFF08BDCBBE7903BBD59E99B280306
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -83,7 +83,7 @@ We can also check that the manifest file was in existence around the time of the
   ```sh
   $ ots --no-cache verify manifest-roasbeef-v$VERSION-beta.sig.ots -f manifest-roasbeef-v$VERSION-beta.sig
   > [...]
-  > Success! Bitcoin block 829257 attests existence as of 2024-02-06 EET  
+  > Success! Bitcoin block 840472 attests existence as of 2024-04-23 EEST
   ```
 
 * Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
@@ -98,7 +98,7 @@ Having verified the integrity and authenticity of the release binary, we can saf
   $ tar -xvf lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v$VERSION-beta/*
   $ lnd --version
-  > lnd version 0.17.4-beta commit=v0.17.4-beta
+  > lnd version 0.17.5-beta commit=v0.17.5-beta
   ```
 
 ### Data directory
@@ -256,7 +256,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.17.4-beta commit=v0.17.4-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.17.5-beta commit=v0.17.5-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
