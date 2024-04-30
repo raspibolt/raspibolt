@@ -28,6 +28,9 @@ has_toc: false
 ### CLI
 * **[Sparrow Terminal](sparrow-terminal.md)** - a stripped down version of Sparrow that can be run on systems without displays
 
+### Daemon
+* **[sentrum](sentrum.md)** - daemon that monitors watch-only wallets and sends notifications
+
 ---
 
 ## Blockchain explorers
