@@ -114,10 +114,12 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ git verify-tag v23.08.1
   ```
 
-* Download user specific python packages.
+* Still as user "lightningd" download user specific python packages.
 
   ```sh
-  $ pip3 install --user mako
+  $ pip3 install --user --upgrade pip
+  $ pip3 install --user mako grpcio-tools
+  $ pip3 install --user -r plugins/clnrest/requirements.txt
   ```
 
 ### Building CLN
