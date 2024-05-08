@@ -119,6 +119,7 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   $ pip3 install --user --upgrade pip  
   $ pip3 install --user mako
   $ pip3 install -r plugins/clnrest/requirements.txt
+  $ pip3 install grpcio-tools
   ```
 
 ### Building CLN
