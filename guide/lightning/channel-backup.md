@@ -152,7 +152,7 @@ We create a shell script to monitor `channel.backup` and make a copy to our back
     git add .
     git commit -m "Static Channel Backup $(date +"%Y%m%d-%H%M%S")"
     echo "Pushing changes to remote repository..."
-    git push --set-upstream origin master
+    git push --set-upstream origin main
     echo "Success! The file is now remotely backed up!"
   }
 
@@ -370,7 +370,7 @@ Follow this section if you want a remote backup. If you already set up a local b
   $ touch test
   $ git add .
   $ git commit -m "testing"
-  $ git push --set-upstream origin master
+  $ git push --set-upstream origin main
   ```
 
 * Check that a copy of the test file is now in your remote GitHub repository (in the `[ <> Code ]` tab).

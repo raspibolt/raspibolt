@@ -45,7 +45,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # set up some version variables for easier maintenance later on
-  $ VERSION="26.1"
+  $ VERSION="27.0"
 
   # download Bitcoin Core binary
   $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
