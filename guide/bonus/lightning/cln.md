@@ -159,9 +159,6 @@ We will download, verify, install and configure CLN on your RaspiBolt setup. Thi
   large-channels
   # channel confirmations needed
   funding-confirms=2
-  # autoclean (86400=daily)
-  autocleaninvoice-cycle=86400
-  autocleaninvoice-expired-by=86400
   # wallet settings (replication recommended, adjust backup path)
   wallet=sqlite3:///data/lightningd/bitcoin/lightningd.sqlite3:/home/lightningd/lightningd.sqlite3
   # no replication:
