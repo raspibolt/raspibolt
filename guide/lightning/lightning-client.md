@@ -32,7 +32,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ VERSION="0.17.5"
+  $ VERSION="0.18.1"
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-v$VERSION-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig
