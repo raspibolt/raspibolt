@@ -207,7 +207,7 @@ To improve the security of your wallet, check out these more advanced methods:
   # Channel settings
   bitcoin.basefee=1000
   bitcoin.feerate=1
-  minchansize=100000
+  minchansize=25000
   accept-keysend=true
   accept-amp=true
   protocol.wumbo-channels=true
