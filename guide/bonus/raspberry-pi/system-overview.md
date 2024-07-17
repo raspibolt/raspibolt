@@ -83,6 +83,18 @@ In earlier versions, the script was executed by the "Message of the day" mechani
   ```sh
   $ sudo mv /etc/update-motd.d /etc/update-motd.d.backup
   ```
+## Uninstall
+```sh
+sudo rm /usr/local/bin/raspibolt
+ ```
+```sh
+rm -rf /tmp/raspibolt-pulse
+```
+Locate the line you added to your ~/.bashrc file that displays “raspibolt” on login:
+Delete the line containing "raspibolt"
+```sh
+nano ~/.bashrc
+ ```
 
 <br /><br />
 
