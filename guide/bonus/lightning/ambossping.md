@@ -131,13 +131,12 @@ To ensure your [Amboss monitoring dashboard](https://amboss.space/owner?page=mon
     ```ini
     [Unit]
     Description=Timer to activate ambossPing.service
-    After=ambossPing.service
-    PartOf=ambossPing.service
+    After=network.target
 
     [Timer]
     OnBootSec=900
     OnUnitActiveSec=900
-    AccuracySec=1
+    AccuracySec=1s
 
     [Install]
     WantedBy=timers.target
