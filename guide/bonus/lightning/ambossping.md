@@ -168,6 +168,7 @@ To ensure your [Amboss monitoring dashboard](https://amboss.space/owner?page=mon
     ```
 
 3. **Activate the Services:**
+
    Enable and start both the timer and service:
 
     ```sh
