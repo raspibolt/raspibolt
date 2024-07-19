@@ -95,7 +95,7 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * As user "joinmarket", download the latest release, signature and timestamp. First check for the latest release on the [Releases page](https://github.com/JoinMarket-Org/joinmarket-clientserver/releases) and update version numbers as you go if needed.
 
   ```sh
-  $ VERSION="0.9.10"
+  $ VERSION="0.9.11"
   $ cd /tmp
   $ wget -O joinmarket-clientserver-$VERSION.tar.gz https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v$VERSION.tar.gz
   $ wget https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v$VERSION/joinmarket-clientserver-$VERSION.tar.gz.asc
@@ -115,20 +115,20 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   ```sh
   $ curl https://raw.githubusercontent.com/JoinMarket-Org/joinmarket-clientserver/master/pubkeys/KristapsKaupe.asc | gpg --import
   ```
+  ```
   > ...
   > gpg: key 33E472FE870C7E5D: public key "Kristaps Kaupe <kristaps@blogiem.lv>" imported
   > ...
   ```
 
-* Verify that the application is signed by Adam Gibson.
+* Verify that the application is signed by JoinMarket developer(s).
 
   ```
   $ gpg --verify joinmarket-clientserver-$VERSION.tar.gz.asc
-  > gpg: assuming signed data in 'joinmarket-clientserver-0.9.10.tar.gz'
-  > gpg: Signature made Wed Aug 30 01:33:11 2023 EEST
+  > gpg: assuming signed data in 'joinmarket-clientserver-0.9.11.tar.gz'
+  > gpg: Signature made Thu Feb 22 11:22:40 2024 EET
   > gpg:                using RSA key 70A1D47DD44F59DF8B22244333E472FE870C7E5D
-  > gpg: Good signature from "kristapsk <kristapsk@noreply.github.com>" [unknown] 
-  > gpg:                 aka "Kristaps Kaupe <kristaps@blogiem.lv>" [unknown]
+  > gpg: Good signature from "Kristaps Kaupe <kristaps@blogiem.lv>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
   > Primary key fingerprint: 70A1 D47D D44F 59DF 8B22  2443 33E4 72FE 870C 7E5D
@@ -139,7 +139,7 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   ```sh
   $ ots verify joinmarket-clientserver-$VERSION.tar.gz.asc.ots -f joinmarket-clientserver-$VERSION.tar.gz.asc
   > [...]
-  > Success! Bitcoin block 805379 attests existence as of 2023-08-30 EEST
+  > Success! Bitcoin block 831526 attests existence as of 2024-02-22 EET
   ```
 
 * If the signature and timestamp check out, unpack and install JoinMarket. The install script may take 5 to 20 minutes to run, depending on hardware.
@@ -190,25 +190,25 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
 * Open the new configuration file.
 
   ```sh
-  $ nano --linenumbers /data/joinmarket/joinmarket.cfg
+  $ nano /data/joinmarket/joinmarket.cfg
   ```
 
 * Instruct Joinmarket to verify with Bitcoin Core via cookie rather than login/pass.
 
   ```ini
-  35 # rpc_user = bitcoin
-  36 # rpc_password = password
-  37 rpc_cookie_file = /data/bitcoin/.cookie
+  # rpc_user = bitcoin
+  # rpc_password = password
+  rpc_cookie_file = /data/bitcoin/.cookie
   ```
 * Set the bitcoin core watch-only wallet to the one created earlier.
   
   ```ini
-  43 rpc_wallet_file = jm_wallet
+  rpc_wallet_file = jm_wallet
   ```
 * Change the onion_serving_port to avoid conflict with LND.
   
   ```ini
-  68 onion_serving_port = 8090
+  onion_serving_port = 8090
   ```
   
 * Save and exit.
@@ -435,5 +435,5 @@ If upgrading from pre-0.8.1 to a newer versions, note that yield generator confi
   
   ```sh
   $ cd
-  $ rm -rf joinmarket-clientserver-0.9.9
+  $ rm -rf joinmarket-clientserver-0.9.11
   ```
