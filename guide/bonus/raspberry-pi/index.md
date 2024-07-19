@@ -35,7 +35,7 @@ has_toc: false
 
 ## Resilience
 * **[UPS NUT](ups-nut.md)** - have your RaspiBolt automatically and safely shutdown when a connected UPS reaches a critical power level
-
+* **[Watchdog](watchdog.md)** - Enabling Watchdog to monitor your hardware
 ---
 ## Hardware
 * **[Boot from microSD card](boot-from-microsd-card.md)** - if your Raspberry Pi is not able to boot directly from the external drive, these instructions explain how to boot from a microSD card and attach the external drive for data storage
