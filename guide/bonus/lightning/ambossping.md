@@ -144,6 +144,7 @@ To ensure your [Amboss monitoring dashboard](https://amboss.space/owner?page=mon
     ```
 
 2. **Set Up the Ping Service:**
+
    Create a corresponding service file:
 
     ```sh
