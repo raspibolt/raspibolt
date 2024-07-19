@@ -281,7 +281,7 @@ In order to do that, we create a systemd unit that starts the service on boot di
   $ sudo journalctl -f -u btcrpcexplorer
   ```
 
-* Edit the Bitcoin Core service file to automatically starts the Explorer when Bitcoin Core starts
+* Edit the Bitcoin Core service file to automatically start the Explorer when Bitcoin Core starts
 
   ```sh
   $ sudo nano /etc/systemd/system/bitcoind.service
