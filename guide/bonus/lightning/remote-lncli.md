@@ -43,7 +43,7 @@ root@RaspiBolt:/home/admin#  ufw status
 root@RaspiBolt:/home/admin#  exit
 ```
 - Add one new line in the [Application Options] section of lnd.conf to allow rpc from more than just the default localhost
-  `admin ~  ฿  sudo nano /home/bitcoin/.lnd/lnd.conf`
+  `admin ~  ฿  sudo nano /data/lnd/lnd.conf`
 
 ```ini
 [Application Options]
@@ -51,7 +51,7 @@ rpclisten=0.0.0.0:10009
 ```
 
 - Temporarily allow admin.macaroon to be copied
-  `admin ~  ฿ sudo chmod 777 /home/bitcoin/.lnd/admin.macaroon`
+  `admin ~  ฿ sudo chmod 777 /data/lnd/admin.macaroon`
 
 ## Windows PC
 
@@ -89,14 +89,14 @@ GLOBAL OPTIONS:
   `> mkdir %LOCALAPPDATA%\Lnd`
 * Use WinSCP to copy the files shown
   * Local:  `\Users\xxxx\AppData\Local\Lnd`
-  * Remote: `/home/bitcoin/.lnd/`
+  * Remote: `/data/lnd/`
   * Files: `See below`
 
  ![Files to Copy](../../../images/60_winLND.png)
 
 
  - Back on the RaspiBolt: Reset admin.macaroon permissions
-   `admin ~  ฿ sudo chmod 600 /home/bitcoin/.lnd/admin.macaroon`
+   `admin ~  ฿ sudo chmod 600 /data/lnd/admin.macaroon`
 
 
 - Run lncli on the PC

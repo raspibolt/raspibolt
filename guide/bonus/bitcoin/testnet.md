@@ -102,7 +102,7 @@ File location: `/data/electrs/electrs.conf`
 
 # Bitcoin Core settings
 network = "testnet"
-daemon_dir= "/home/bitcoin/.bitcoin/"
+daemon_dir= "/data/bitcoin/"
 daemon_rpc_addr = "127.0.0.1:18332"
 daemon_p2p_addr = "127.0.0.1:18333"
 cookie_file = "/data/bitcoin/testnet3/.cookie"

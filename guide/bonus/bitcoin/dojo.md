@@ -95,7 +95,7 @@ If you are using Electrs instead of Fulcrum, it is necessary to make following c
 * Open `bitcoin.conf`
 
   ```sh
-  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  $ sudo nano /data/bitcoin/bitcoin.conf
   ```
 
 * Add following line preferably under "#zmq" or at the end of the file 

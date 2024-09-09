@@ -39,7 +39,7 @@ The default setup guides you on how to allow for plugging in your hardware devic
 
   Open the `bitcoin.conf` file
   ```sh
-  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  $ sudo nano /data/bitcoin/bitcoin.conf
   ```
 
   Edit the following values, or add to the end of the file if not set
