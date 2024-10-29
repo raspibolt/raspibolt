@@ -189,23 +189,30 @@ drwxr-xr-x 5 bitcoin bitcoin    4096 Nov 25 05:31 testnet3
 -rw------- 1 bitcoin bitcoin       0 Nov 14 18:50 .walletlock
 ```
 
+Don't forget to exit the "bitcoin" user session:
+
+```
+$ exit
+```
+
 If LND has been started at least once, the following files and directories should be present.
 
 ```
-$ touch /home/bitcoin/.lnd/test
-$ ls -la /home/bitcoin/.lnd/
+$ sudo su - lnd
+$ touch /home/lnd/.lnd/test
+$ ls -la /home/lnd/.lnd/
 total 28
-drwxr-xr-x 4 bitcoin bitcoin 4096 Nov 16 16:28 .
-drwxr-xr-x 5 bitcoin bitcoin 4096 Nov 13 22:28 ..
-drwx------ 4 bitcoin bitcoin 4096 Nov 13 22:37 data
--rw-r--r-- 1 bitcoin bitcoin  425 Nov 16 16:28 lnd.conf
-drwx------ 3 bitcoin bitcoin 4096 Nov 13 22:30 logs
--rw-r--r-- 1 bitcoin bitcoin    0 Nov 27 18:37 test
--rw-r--r-- 1 bitcoin bitcoin  733 Nov 13 22:30 tls.cert
--rw------- 1 bitcoin bitcoin  227 Nov 13 22:30 tls.key
+drwxr-xr-x 4 lnd lnd 4096 Nov 16 16:28 .
+drwxr-xr-x 5 lnd lnd 4096 Nov 13 22:28 ..
+drwx------ 4 lnd lnd 4096 Nov 13 22:37 data
+-rw-r--r-- 1 lnd lnd  425 Nov 16 16:28 lnd.conf
+drwx------ 3 lnd lnd 4096 Nov 13 22:30 logs
+-rw-r--r-- 1 lnd lnd    0 Nov 27 18:37 test
+-rw-r--r-- 1 lnd lnd  733 Nov 13 22:30 tls.cert
+-rw------- 1 lnd lnd  227 Nov 13 22:30 tls.key
 ```
 
-Don't forget to exit the "bitcoin" user session:
+Don't forget to exit the "lnd" user session:
 
 ```
 $ exit
@@ -361,11 +368,11 @@ Let's check the configuration and operations of LND.
 
 ```
 $ sudo systemctl stop lnd
-$ sudo su - bitcoin
+$ sudo su - lnd
 
-$ cat /home/bitcoin/.lnd/lnd.conf
+$ cat /home/lnd/.lnd/lnd.conf
 # RaspiBolt: lnd configuration
-# /home/bitcoin/.lnd/lnd.conf
+# /home/lnd/.lnd/lnd.conf
 
 [Application Options]
 debuglevel=info
@@ -399,10 +406,10 @@ Automatically obtained bitcoind's RPC credentials
 2018-11-25 19:40:03.107 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
 ```
 
-As this "bitcoin" user session is now occupied by LND, open a second SSH session (shown here with prefix `$2`) with your node and unlock your wallet.
+As this "lnd" user session is now occupied by LND, open a second SSH session (shown here with prefix `$2`) with your node and unlock your wallet.
 
 ```
-$2 sudo su - bitcoin
+$2 sudo su - lnd
 $2 lncli unlock
 ```
 
@@ -466,10 +473,12 @@ $ exit
 $ sudo systemctl start lnd
 ```
 
-Log files are located in the directory `/home/bitcoin/.lnd/logs/bitcoin/mainnet` (or `testnet`), you can check them as follows:
+Log files are located in the directory `/home/lnd/.lnd/logs/bitcoin/mainnet` (or `testnet`), you can check them as follows:
 
 ```
-$ tail -f /home/bitcoin/.lnd/logs/bitcoin/mainnet/lnd.log
+$ sudo su - lnd
+$ tail -f /home/lnd/.lnd/logs/bitcoin/mainnet/lnd.log
+$ exit
 ```
 
 ---
