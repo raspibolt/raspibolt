@@ -531,7 +531,7 @@ If you have installed [Ride The Lightning](../../web-app.md), you can use the Lo
 * Click on the "Services" tab
 * If it's disabled, click on "Enable Loop service"
 * In "Loop Server URL", replace `https://localhost:8081` by `https://localhost:8443`
-* In "Loop Macaroon Path", the path should be `/home/lit/.loop/mainnet`
+* In "Loop Macaroon Path", the path should be `/data/loop/mainnet`
 * Then click the "Update" button
 * Go back to the navigation menu and click on "Services", then "Loop"
 * You can now perform loop ins and loop outs directly from RTL
