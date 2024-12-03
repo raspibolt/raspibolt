@@ -884,14 +884,14 @@ Connect samourai wallet to your own backend
 ## Extras
 
 ### Rescan public keys using Dojo Maintenance Tool
-If no balance is shown in your samourai wallet, it is neccessary to rescan public keys as they are not tracked by Dojo yet.
+If no balance is shown in your samourai wallet, it is necessary to rescan public keys as they are not tracked by Dojo yet.
 
 * Log into `Dojo API and Maintenance Tool` using Tor browser
 * Move to `xpubs tool`, under `Tools` section
 * In samourai wallet go to `Settings > Wallet`, here you can find your public keys
 * Copy and paste all "zpubs" into `xpub tool` and rescan each public key separately
 
-Samourai wallet uses zpubs by default, however if you use other address format than "bc", it is neccessary to rescan other pubs as well
+Samourai wallet uses zpubs by default, however if you use other address format than "bc", it is necessary to rescan other pubs as well
 
 ### Use Auth47 (Paynym) login for Dojo Maintanence Tool
 
