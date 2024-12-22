@@ -333,7 +333,7 @@ price_day_block = price_day_block_estimate
 ##############################################################################
 
 # In pure math a bell curve can be perfectly smooth. But to make a bell curve
-# from a sample of data, one must specifiy a series of buckets, or bins, and then
+# from a sample of data, one must specify a series of buckets, or bins, and then
 # count how many samples are in each bin. If the bin size is too large, say just one
 # large bin, a bell curve can't appear because it will have only one bar. The bell 
 # curve also doesn't appear if the bin size is too small because then there will 
@@ -510,7 +510,7 @@ while target_day_of_month == day_of_month:
 # of the curve, and then removing extreme values.
 
 
-#remove ouputs below 10k sat (increased from 1k sat in v6)
+#remove outputs below 10k sat (increased from 1k sat in v6)
 for n in range(0,401):
     output_bell_curve_bin_counts[n]=0
 
