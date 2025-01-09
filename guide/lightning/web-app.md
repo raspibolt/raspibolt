@@ -116,12 +116,12 @@ We do not want to run Ride the Lightning alongside bitcoind and lnd because of s
   $ cd RTL
 
   $ git tag | grep -E "v[0-9]+.[0-9]+.[0-9]+$" | sort --version-sort | tail -n 1
-  > v0.15.0
+  > v0.15.4
 
-  $ git checkout v0.15.0
+  $ git checkout v0.15.4
 
-  $ git verify-tag v0.15.0
-  > gpg: Signature made Thu 07 Dec 2023 05:40:57 AM CET
+  $ git verify-tag v0.15.4
+  > gpg: Signature made Tue 19 nov 05:31:13 2024 CET
   > gpg:                using RSA key 3E9BD4436C288039CA827A9200C9E2BC2E45666F
   > gpg: Good signature from "saubyk (added uid) <39208279+saubyk@users.noreply.github.com>" [unknown]
   > gpg:                 aka "Suheb <39208279+saubyk@users.noreply.github.com>" [unknown]
