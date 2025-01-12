@@ -41,10 +41,8 @@ We set up [Joinmarket clientserver](https://github.com/JoinMarket-Org/joinmarket
 * With user "admin", install necessary dependencies
 
   ```sh
-  $ sudo apt install python-virtualenv curl python3-dev python3-pip build-essential automake pkg-config libtool libgmp-dev libltdl-dev libssl-dev libatlas3-base libopenjp2-7
+  $ sudo apt install python3-venv curl python3-dev python3-pip build-essential automake pkg-config libtool libgmp-dev libltdl-dev libssl-dev libatlas3-base libopenjp2-7
   ```
-
-If you get `E: Package 'python-virtualenv' has no installation candidate` error when running command above, replace `python-virtualenv` with `python3-virtualenv`.
 
 ### Create a JoinMarket-dedicated bitcoin wallet with bitcoin-cli
 
@@ -53,6 +51,8 @@ If you get `E: Package 'python-virtualenv' has no installation candidate` error 
   ```sh
   $ bitcoin-cli -named createwallet wallet_name=jm_wallet descriptors=false
   ```
+
+If this command fails with error `BDB wallet creation is deprecated and will be removed in a future release. In this release it can be re-enabled temporarily with the -deprecatedrpc=create_bdb setting.`, it means you run Bitcoin Core version v26 or newer. In that case you must add `deprecatedrpc=create_bdb` setting to your `bitcoin.conf`, restart Bitcoin Core and try again.
 
 ### Create dedicated user and data directory
 
