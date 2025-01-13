@@ -413,11 +413,13 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   >
   ```
 
-* Check if the permission cookie can be accessed by the group "bitcoin".
+* Check if the permission cookie can be accessed by the group "bitcoin". 
   The output must contain the `-rw-r-----` part, otherwise no application run by a different user can access Bitcoin Core.
 
+This can be either done by the user "admin" or the user "bitcoin" since both user homes are linked to /data/bitcoin/.bitcoin. The tilde (~) is a Linux "shortcut" to denote a user's home directory.
+
   ```sh
-  $ ls -la /home/bitcoin/.bitcoin/.cookie
+  $ ls -la ~/.bitcoin/.cookie
   > -rw-r----- 1 bitcoin bitcoin 75 Dec 17 13:48 /home/bitcoin/.bitcoin/.cookie
   ```
 
@@ -425,7 +427,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   Exit with `Ctrl-C`
 
   ```sh
-  $ tail -f /home/bitcoin/.bitcoin/debug.log
+  $ tail -f ~/.bitcoin/debug.log
   ```
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain
