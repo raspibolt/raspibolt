@@ -56,16 +56,21 @@ You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 ### Install Node.js
 
 * Add the [Node.js](https://nodejs.org){:target="_blank"} package repository from user "admin".
-  We'll use version 16, which is the latest stable version.
+  We'll use the latest LTS version (22.13 at writing) and we will use the nvm install.
 
   ```sh
-  $ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-  ```
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 
-* Install Node.js using the apt package manager.
+# Download and install Node.js:
+nvm install 22
 
-  ```sh
-  $ sudo apt install nodejs
+# Verify the Node.js version:
+node -v # Should print "v22.13.0".
+nvm current # Should print "v22.13.0".
+
+# Verify npm version:
+npm -v # Should print "10.9.2".
   ```
 
 ### Firewall & reverse proxy
