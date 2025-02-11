@@ -1,21 +1,49 @@
 #!/usr/bin/env python3
-###############################################################################  
-
-#             Introduction) This is UTXOracle.py           
-
-###############################################################################  
 
 
-# This python program estimates the daily USD price of bitcoin using only
-# your bitcoin Core full node. It will work even while you are disconnected 
-# from the internet because it only reads blocks from your machine. It does not
-# save files, write cookies, or access any wallet information. It only reads 
-# blocks, analyzes output patterns, and estimates a daily average a USD 
-# price of bitcoin. The call to your node is the standard "bitcoin-cli". The
-# date and price ranges expected to work for this version are from 2020-7-26 
-# and from $10,000 to $100,000
 
-print("UTXOracle version 7\n")
+#########################################################################################  
+#                                                                                       #
+#   /$$   /$$ /$$$$$$$$ /$$   /$$  /$$$$$$                               /$$            #
+#  | $$  | $$|__  $$__/| $$  / $$ /$$__  $$                             | $$            #
+#  | $$  | $$   | $$   |  $$/ $$/| $$  \ $$  /$$$$$$  /$$$$$$   /$$$$$$$| $$  /$$$$$$   #
+#  | $$  | $$   | $$    \  $$$$/ | $$  | $$ /$$__  $$|____  $$ /$$_____/| $$ /$$__  $$  #
+#  | $$  | $$   | $$     >$$  $$ | $$  | $$| $$  \__/ /$$$$$$$| $$      | $$| $$$$$$$$  #
+#  | $$  | $$   | $$    /$$/\  $$| $$  | $$| $$      /$$__  $$| $$      | $$| $$_____/  #
+#  |  $$$$$$/   | $$   | $$  \ $$|  $$$$$$/| $$     |  $$$$$$$|  $$$$$$$| $$|  $$$$$$$  #
+#   \______/    |__/   |__/  |__/ \______/ |__/      \_______/ \_______/|__/ \_______/  #
+#                                                                                       #
+#########################################################################################  
+#                     Version 8 - The Smooth Slider                                     
+
+
+
+# UTXOracle is a decentralized alternative to estimating the USD price of bitcoin.
+# Instead of relying on prices given by an exchange, UTXOracle determines the price
+# by analyzing patterns of on-chain transactions. It connects only to a bitcoin
+# node and no other outside sources. It works even with wifi turned off because
+# there are no api or internet communications. Every individual who independently
+# runs this code will produce identical price estimates because even though the algorithm
+# is statistical in nature, both the code and input data are identical.
+# There are no AI or machine learning aspects to this project because black-box style algorithms
+# can create conflicts of interest amongst parties using the price to settle contracts.
+# Every step of the algorithm is fully deterministic, human understandable, and
+# thoroughly documented in the code below.
+
+# This document is divided following sections:
+
+# Quick Start) Run it right now
+# Introduction) Background and general description of UTXOracle
+# Part 1) Create a way to talk to your node
+# Part 2) Get the latest block from the node
+# Part 3) Ask the user for a price estimate date (the target date)
+# Part 4) Hunt through blocks to find the first block on the target day
+# Part 5) Build the container to hold the output amounts bell curve
+# Part 6) Get all output amounts from all blocks on the target day
+# Part 7) Remove non-usd related outputs from the bell curve
+# Part 8) Construct the USD price finder stencils
+# Part 9) Estimate the price using the best fit stencil slide 
+
 
 
 ###############################################################################  
@@ -29,21 +57,116 @@ print("UTXOracle version 7\n")
 # 2. Make sure "server = 1" is in bitcoin.conf
 # 3. Run this file as "python3 UTXOracle.py"
 
-# If this isn't working for you, you'll likely need to explore the
-# bitcon-cli configuration options below:
+# If this doesn't work, try filling in your bitcon-cli configuration options:
 
 
-# configuration options for bitcoin-cli
-datadir      = ""
-rpcuser      = "" 
-rpcpassword  = ""
-rpcookiefile = ""
-rpcconnect   = ""
-rpcport      = ""
-conf         = ""
+# (Optional) configuration options for bitcoin-cli
+datadir       = ""
+rpcuser       = "" 
+rpcpassword   = ""
+rpccookiefile = ""
+rpcconnect    = ""
+rpcport       = ""
+conf          = ""
 
 
-#add the configuration options to the bitcoin-cli call
+
+
+
+
+
+###############################################################################  
+
+#                   Introduction to the code          
+
+###############################################################################  
+
+
+# The code that follows is written in a minimalistic style to maximize readability over 
+# efficiency. It is self contained in (this) single file and 
+# defines only one function call so that it can be read top to bottom like reading a paper. 
+# The same code is sometimes repeated instead of defining a function for the 
+# purpose of flow and continuity. There are no dependencies other than standard python 
+# imports because third party libraries improve efficiency at the cost of requiring 
+# the user to download and install third party libraries. 
+
+# Historical testing of the Oracle shows prices that are accurate within the variance 
+# seen by different bitcoin exchanges themselves. The date and price ranges expected to work 
+# for this version (version 8) are from 2023-12-15 to present and from $5k to $500k. 
+# The previous version of the code (version 7) worked flawlessly from 2020 to 2024 before 
+# ordinal related transactions dramatically changed the character of on-chain output patterns. 
+#
+# If obvious errors are seen in the current version, it will become apparent to everyone 
+# (as everyone will get the same result) and a new version will be released. New versions 
+# will not be released for slight accuracy improvements as these kinds of releases could be 
+# used to manipulate contract settlements using the Oracle.
+
+# A basic understanding of how UTXOracle works is as follows:
+    
+#  Take a day's distribution of bitcoin transaction amounts 
+#
+#                    * *   *
+#                   *   * * *                        
+#                  *     *   *   *           
+#               * *           * * *           
+#          *   * *                  * *      *
+#         * * *                      *  * * * *       
+#      * *                               * *    * * *
+#     * *                                             *
+#    *                                      
+#   10k sats        0.01 btc           1 btc        10btc 
+
+# Create a smooth stencil to align broadly with a typical output day
+#
+#                       *  *
+#                    *         *
+#                 *               * 
+#              *                     *
+#            *                          *
+#          *                               *
+#        *                                     *
+#      *                                            *  
+#   10k sats        0.01 btc           1 btc        10btc 
+
+# Create a spike stencil that fine tunes the alignment on popular usd amounts
+#
+#                         *
+#                     *   *                       
+#                     *   *                   
+#                *    *   *          *           
+#           *    *    *   *    *     *              
+#           *    *    *   *    *     *    *             
+#       *   *    *    *   *    *     *    *     *       
+#       *   *    *    *   *    *     *    *     *     
+#      $1 $10  $20  $50  $100  $500  $1k  $2k   $10k
+#
+# Slide the smooth and spike stencil over the output data and look for the best fit
+
+
+
+
+
+
+
+
+
+
+
+###############################################################################  
+
+#  Part 1) Create a way to talk to your node      
+
+###############################################################################  
+
+# We begin by defining a shortcut for calling the node. We do this repeatedly
+# throughout the program so it's better to define a function once and call it
+# whenever we need it instead of copy and pasting the same code several times. 
+# The function asks the node a question and returns the answer to the algorithm 
+# where it is needed. If you get an error in this function, the problem is 
+# likely that you don't have server=1 in your bitcoin conf file.
+
+
+#first we add any node connections options specified by the user above
 bitcoin_cli_options = []
 if datadir      != "":
     bitcoin_cli_options.append('-datadir='+ datadir)
@@ -51,8 +174,8 @@ if rpcuser      != "":
     bitcoin_cli_options.append("-rpcuser="+ rpcuser)
 if rpcpassword  != "":
     bitcoin_cli_options.append("-rpcpassword="+ rpcpassword)
-if rpcookiefile != "":
-    bitcoin_cli_options.append("-rpcookiefile="+ rpcookiefile)
+if rpccookiefile != "":
+    bitcoin_cli_options.append("-rpcookiefile="+ rpccookiefile)
 if rpcconnect   != "":
     bitcoin_cli_options.append("-rpcconnect="+ rpcconnect)
 if rpcport      != "":
@@ -61,34 +184,19 @@ if conf         != "":
     bitcoin_cli_options.append("-conf="+ conf)
 
 
+#import built in python libraries for system commands
+import subprocess, sys
 
-
-
-
-
-
-###############################################################################  
-
-#  Part 1) Defining a shortcut function to call your node      
-
-###############################################################################  
-
-# Here we define define a shortcut (a function) for calling the node as we do 
-# this many times through out the program. The function will return the 
-# answer it gets from your node with the "command" that you asked it for.
-# If we don't get an answer, the problem is likely that you don't have
-# sever=1 in your bitcoin conf file.
-
-
-
-import subprocess #a built in python library for sending command line commands
+# now define the function
 def Ask_Node(command):
+        
+    #Here "command" can be any question that your node understands
     
-    # 'bitcoin-cli' is how the command window calls your node so
-    # it needs to be the first word in any request for data from the node
-    # other options are added if given
+    #We add to the command any configurations options given by the user
     for o in bitcoin_cli_options:
         command.insert(0,o)
+    
+    #Use Core's default "bitcoin-cli" method of node communication  
     command.insert(0,"bitcoin-cli")
     
     # get the answer from the node and return it to the program
@@ -97,21 +205,17 @@ def Ask_Node(command):
         answer = subprocess.check_output(command)
     except Exception as e:
         # something went wrong while getting the answer
-        print("Error connecting to your node. Trouble shooting steps:\n")
+        print("Error connecting to your node. Troubleshooting steps:\n")
         print("\t 1) Make sure bitcoin-cli is working. Try command 'bitcoin-cli getblockcount'")
         print("\t 2) Make sure config file bitcoin.conf has server=1")
-        print("\t 3) Explore the bitcoin-cli options in UTXOracle.py (line 38)")
+        print("\t 3) Explore the bitcoin-cli options at the top of UTXOracle.py")
         print("\nThe command was:"+str(command))
         print("\nThe error from bitcoin-cli was:\n")
         print(e)
-        exit()
+        sys.exit()
         
     # answer received, return this answer to the program
     return answer
-
-
-
-
 
 
 
@@ -127,10 +231,13 @@ def Ask_Node(command):
 ###############################################################################  
 
 # The first request to the node is to ask it how many blocks it has. This
-# let's us know the maximum possible day for which we can request a
+# lets us know the maximum possible day for which we can request a
 # btc price estimate. The time information of blocks is listed in the block
 # header, so we ask for the header only when we just need to know the time.
 
+#import built in tools for dates/times and json style lists
+from datetime import datetime, timezone, timedelta
+import json 
 
 #get current block height from local node and exit if connection not made
 block_count_b = Ask_Node(['getblockcount'])
@@ -139,11 +246,9 @@ block_count = int(block_count_b)             #convert text to integer
 #get block header from current block height
 block_hash_b = Ask_Node(['getblockhash',block_count_b])
 block_header_b = Ask_Node(['getblockheader',block_hash_b[:64],'true'])
-import json #a built in tool for deciphering lists of embedded lists
 block_header = json.loads(block_header_b)
 
 #get the date and time of the current block height
-from datetime import datetime, timezone #built in tools for dates/times
 latest_time_in_seconds = block_header['time']
 time_datetime = datetime.fromtimestamp(latest_time_in_seconds,tz=timezone.utc)
 
@@ -161,16 +266,10 @@ latest_price_date = latest_price_day.strftime("%Y-%m-%d")
 
 
 # tell the user that a connection has been made and state the lastest price date
-print("Connected to local noode at block #:\t"+str(block_count))
-print("Latest available price date is: \t"+latest_price_date)
-print("Earliest available price date is:\t2020-07-26  (full node)")
-
-
-
-
-
-
-
+print("UTXOracle version 8")
+print("\nConnected to local noode at block #:\t"+str(block_count))
+print("Latest available price date:\t\t"+latest_price_date+" (pruned node ok)")
+print("Earliest available price date:\t\t2023-12-15 (requires full node)")
 
 
 
@@ -181,54 +280,57 @@ print("Earliest available price date is:\t2020-07-26  (full node)")
 
 ###############################################################################  
 
-# Part 3)  Ask for the desired date to estimate the price      
+# Part 3)  Ask the user for the desired date to estimate the price      
 
 ###############################################################################  
 
+# In this section we ask the user for a date and make sure that date is in the
+# acceptable range for this version.
 
-#use python input to get date from the user
-date_entered = input("\nEnter date in YYYY-MM-DD (or 'q' to quit):")
+
+date_entered = input("\nEnter date in YYYY-MM-DD format\nor Enter 'q' to quit "+ \
+                     "\nor press ENTER for the most recent price:")
 
 # quit if desired
 if date_entered == 'q':
-    exit()
-
-#check to see if this is a good date
-try:
-    year  = int(date_entered.split('-')[0])
-    month = int(date_entered.split('-')[1])
-    day = int(date_entered.split('-')[2])
+    sys.exit()
     
-    #make sure this date is less than the max date
-    datetime_entered = datetime(year,month,day,0,0,0,tzinfo=timezone.utc)
-    if datetime_entered.timestamp() >= latest_utc_midnight.timestamp():
-        print("\nThe date entered is not before the current date, please try again")
-        exit()
+# run latest day if hit enter
+elif (date_entered == ""):
+    datetime_entered = latest_utc_midnight + timedelta(days=-1)
     
-    #make sure this date is after the min date
-    july_26_2020 = datetime(2020,7,26,0,0,0,tzinfo=timezone.utc)
-    if datetime_entered.timestamp() < july_26_2020.timestamp():
-        print("\nThe date entered is before 2020-07-26, please try again")
-        exit()
+#user entered a specific date
+else:
+    
+    #check to see if this is a good date
+    try:
+        year  = int(date_entered.split('-')[0])
+        month = int(date_entered.split('-')[1])
+        day = int(date_entered.split('-')[2])
+        
+        #make sure this date is less than the max date
+        datetime_entered = datetime(year,month,day,0,0,0,tzinfo=timezone.utc)
+        if datetime_entered.timestamp() > latest_utc_midnight.timestamp():
+            print("\nThe date entered is not before the current date, please try again")
+            sys.exit()
+        
+        #make sure this date is after the min date
+        dec_15_2023 = datetime(2023,12,15,0,0,0,tzinfo=timezone.utc)
+        if datetime_entered.timestamp() < dec_15_2023.timestamp():
+            print("\nThe date entered is before 2023-12-15, please try again")
+            sys.exit()
+    
+    except:
+        print("\nError interpreting date. Please try again. Make sure format is YYYY-MM-DD")
+        sys.exit()
 
-except:
-    print("\nError interpreting date. Likely not entered in format YYYY-MM-DD")
-    print("Please try again\n")
-    exit()
 
 #get the seconds and printable date string of date entered
 price_day_seconds = int(datetime_entered.timestamp())
 price_day_date_utc = datetime_entered.strftime("%B %d, %Y")
 
 
-
-
-
-
-
-
-
-
+print("\n\n########   Starting Price Estimate   ########")
 
 
 
@@ -242,10 +344,12 @@ price_day_date_utc = datetime_entered.strftime("%B %d, %Y")
 
 ##############################################################################  
 
-# This section would be unnecessary if bitcoin Core blocks were organized by time
-# instead of by block height. There's no way to ask bitcoin Core for a block at a
+# Now that we have the target day we need to find which blocks were mined on this day.
+# This would be easy if bitcoin Core blocks were organized by time
+# instead of by block height. However there's no way to ask bitcoin Core for a block at a
 # specific time. Instead one must ask for a block, look at it's time, then estimate
-# the number of blocks to jump for the next guess. Rinse and repeat.
+# the number of blocks to jump for the next guess. So we use this
+# guess and check method to find all blocks on the target day.
 
 
 #first estimate of the block height of the price day
@@ -268,7 +372,7 @@ last_estimate = 0
 last_last_estimate = 0
 while block_jump_estimate >6 and block_jump_estimate != last_last_estimate:
     
-    #when we osciallate around the correct block, last_last_estimate = block_jump_estimate
+    #when we oscillate around the correct block, last_last_estimate = block_jump_estimate
     last_last_estimate = last_estimate
     last_estimate = block_jump_estimate
     
@@ -322,23 +426,20 @@ price_day_block = price_day_block_estimate
 
 
 
-
-
-
-
 ##############################################################################
 
 #  Part 5) Build the container to hold the output amounts bell curve
 
 ##############################################################################
 
+# We're almost ready to read in block data but first we must construct the 
+# containers which will hold the distribution of transaction output amounts.
 # In pure math a bell curve can be perfectly smooth. But to make a bell curve
 # from a sample of data, one must specify a series of buckets, or bins, and then
 # count how many samples are in each bin. If the bin size is too large, say just one
 # large bin, a bell curve can't appear because it will have only one bar. The bell 
 # curve also doesn't appear if the bin size is too small because then there will 
 # only be one sample in each bin and we'd fail to have a distribution of bin heights. 
-
 # Although several bin sizes would work, I have found over many years, that 200 bins 
 # for every 10x of bitcoin amounts works very well. We use 'every 10x' because just 
 # like a long term bitcoin price chart, viewing output amounts in log scale provides 
@@ -376,14 +477,6 @@ for n in range(0,number_of_bins):
 
 
 
-
-
-
-
-
-
-
-
 ##############################################################################
 
 #  Part 6) Get all output amounts from all block on target day
@@ -391,9 +484,12 @@ for n in range(0,number_of_bins):
 ##############################################################################
 
 # This section of the program will take the most time as it requests all 
-# all blocks from Core on the price day. It readers every transaction (tx)
-# from those blocks and places each tx output value into the bell curve
-
+# blocks from Core on the price day. It readers every transaction (tx)
+# from those blocks and places each tx output value into the bell curve.
+# New in version 8 are filters that disallow the following types of transactions
+# as they have been found to be unlikely to be round p2p usd transactions: coinbase,
+# greater than 5 inputs, greater than 2 outputs, only one output, has op_return,
+# has witness data > 500 bytes, and has an input created on the same day.
 
 
 
@@ -401,8 +497,8 @@ from math import log10 #built in math functions needed logarithms
 
 #print header line of update table
 print("\nReading all blocks on "+price_day_date_utc+"...")
-print("\nThis will take a few minutes (~144 blocks)...")
-print("\nHeight\tTime(utc)\t\tTime(32bit)\t\t  Completion %")
+print("This will take a few minutes (~144 blocks)...")
+print("\nBlock Height\t Block Time(utc)\t\t\tCompletion %")
 
 #get the full data of the first target day block from the node
 block_height=price_day_block
@@ -413,12 +509,14 @@ block = json.loads(block_b)
 #get the time of the first block
 time_in_seconds = int(block['time'])
 time_datetime = datetime.fromtimestamp(time_in_seconds,tz=timezone.utc)
-time_utc = time_datetime.strftime("%H:%M:%S")
+time_utc = time_datetime.strftime(" %Y-%m-%d %H:%M:%S")
 hour_of_day = int(time_datetime.strftime("%H"))
 minute_of_hour = float(time_datetime.strftime("%M"))
 day_of_month = int(time_datetime.strftime("%d"))
 target_day_of_month = day_of_month
-time_32bit = f"{time_in_seconds & 0b11111111111111111111111111111111:32b}"
+
+# start a list of unique txids using python's "set" variable type
+todays_txids = set()
 
 
 #read in blocks until we get a block on the day after the target day
@@ -426,24 +524,80 @@ while target_day_of_month == day_of_month:
     
     #get progress estimate
     progress_estimate = 100.0*(hour_of_day+minute_of_hour/60)/24.0
-    
-    #print progress update
-    print(str(block_height)+"\t"+time_utc+"\t"+time_32bit+"\t"+f"{progress_estimate:.2f}"+"%")
+    print(str(block_height)+"\t\t"+time_utc+"\t\t"+f"{progress_estimate:.2f}"+"%")
     
     #go through all the txs in the block which are stored in a list called 'tx'
     for tx in block['tx']:
         
+        #add txid to todays txids list
+        todays_txids.add(tx['txid'][-8:]) #-8 because the tx is unique with only 8 characters
+            
+        #txs have more than one input which are stored in a list called 'vin'
+        inputs = tx['vin']
+
         #txs have more than one output which are stored in a list called 'vout'
         outputs = tx['vout']
-        
-        #go through all outputs in the tx
+
+        #check for coinbase tx
+        if "coinbase" in inputs[0]:
+            continue  #continue means skip the rest of this transaction
+
+        #check for many inputs
+        if len(inputs) > 5:
+            continue
+
+        #check for one outputs
+        if len(outputs) < 2:
+            continue
+
+        #check for many outputs
+        if len(outputs) > 2: 
+            continue
+
+        #check for opreturn
+        has_op_return = False
+        for output in outputs:
+            script_pub_key = output.get("scriptPubKey", {})
+            if script_pub_key.get("type") == "nulldata" or "OP_RETURN" in script_pub_key.get("asm", ""):
+                has_op_return = True
+                break
+        if has_op_return:
+            continue
+
+        #go through all inputs s in the tx
+        has_sameday_input = False
+        has_big_witness = False
+        for inpt in inputs:
+            
+            #look for same day inputs
+            if 'txid' in inpt and inpt['txid'][-8:] in todays_txids:
+                has_sameday_input = True
+                break
+            
+            #look for large witness data (> 500 bytes)
+            if "txinwitness" in inpt:
+                for witness in inpt["txinwitness"]:
+                    if len(witness) > 500:
+                        has_big_witness = True
+                        break
+            
+            #break out of input loop if sameday input of big witness
+            if has_sameday_input or has_big_witness:
+                break
+            
+        #skip the rest of this tx if sameday input of big witness
+        if has_sameday_input or has_big_witness:
+            continue
+            
+
+        #go through all outputs in the tx and add the value to the bell curve
         for output in outputs:
             
             #the bitcoin output amount is called 'value' in Core, add this to the list
             amount = float(output['value'])
-            
+
             #tiny and huge amounts aren't used by the USD price finder
-            if 1e-6 < amount < 1e6:
+            if 1e-5 < amount < 1e5:
                 
                 #take the log
                 amount_log = log10(amount)
@@ -457,7 +611,7 @@ while target_day_of_month == day_of_month:
                     bin_number_est += 1
                 bin_number = bin_number_est - 1
                 
-                #increment the output bin
+                #add this output to the bell curve
                 output_bell_curve_bin_counts[bin_number] += 1.0   #+= means increment
     
     
@@ -470,19 +624,10 @@ while target_day_of_month == day_of_month:
     #get the time of the next block
     time_in_seconds = int(block['time'])
     time_datetime = datetime.fromtimestamp(time_in_seconds,tz=timezone.utc)
-    time_utc = time_datetime.strftime("%H:%M:%S")
+    time_utc = time_datetime.strftime(" %Y-%m-%d %H:%M:%S")
     day_of_month = int(time_datetime.strftime("%d"))
     minute_of_hour = float(time_datetime.strftime("%M"))
     hour_of_day = int(time_datetime.strftime("%H"))
-    time_32bit = f"{time_in_seconds & 0b11111111111111111111111111111111:32b}"
-
-
-
-
-
-
-
-
 
 
 
@@ -493,13 +638,11 @@ while target_day_of_month == day_of_month:
 
 ##############################################################################
 
-#  Part 7) Remove non-usd related output amounts from the bell curve
+#  Part 7) Remove non-usd related outputs from the bell curve
 
 ##############################################################################
 
-
-
-# This sectoins aims to remove non-usd denominated samples from the bell curve
+# This section aims to remove non-usd denominated samples from the bell curve
 # of outputs. The two primary steps are to remove very large/small outputs
 # and then to remove round btc amounts. We don't set the round btc amounts
 # to zero because if the USD price of bitcoin is also round, then round
@@ -507,15 +650,16 @@ while target_day_of_month == day_of_month:
 # with this. One way we've found to work is to smooth over the round btc amounts
 # using the neighboring amounts in the bell curve. The last step is to normalize
 # the bell curve. Normalizing is done by dividing the entire curve by the sum 
-# of the curve, and then removing extreme values.
+# of the curve. This is done because it's more convenient for signal processing
+# procedures if the sum of the signal integrates to one.
 
 
 #remove outputs below 10k sat (increased from 1k sat in v6)
-for n in range(0,401):
+for n in range(0,201):
     output_bell_curve_bin_counts[n]=0
 
 #remove outputs above ten btc
-for n in range(1601,number_of_bins):
+for n in range(1601,len(output_bell_curve_bin_counts)):
     output_bell_curve_bin_counts[n]=0
 
 #create a list of round btc bin numbers
@@ -556,7 +700,7 @@ for n in range(201,1601):
 for n in range(201,1601):
     output_bell_curve_bin_counts[n] /= curve_sum
     
-    #remove extremes (the iterative process mentioned below found 0.008 to work)
+    #remove extremes (0.008 chosen by historical testing)
     if output_bell_curve_bin_counts[n] > 0.008:
         output_bell_curve_bin_counts[n] = 0.008
     
@@ -568,80 +712,93 @@ for n in range(201,1601):
 
 
 
-
-
-
-
-
 ##############################################################################
 
-#  Part 8) Construct the USD price finder stencil
+#  Part 8) Construct the USD price finder stencils
 
 ##############################################################################
 
 # We now have a bell curve of outputs which should contain round USD outputs
-# as it's prominent features. To expose these prominent features even more,
-# and estimate a usd price, we slide a stencil over the bell curve and look 
+# as it's prominent features. To expose these prominent features more,
+# and estimate a usd price, we slide two types of stencils over the bell curve and look 
 # for where the slide location is maximized. There are several stencil designs
 # and maximization strategies which could accomplish this. The one used here 
-# is a stencil whose locations and heights have been found using the averages of
-# running this algorithm iteratively over the years 2020-2023. The stencil is
-# centered around 0.01 btc = $10,00 as this was the easiest mark to identify.
-# The result of this process has produced the following stencil design:
+# is to have one smooth stencil that finds the general shape of a typical output
+# distribution day, and a spike stencil which narrows in on exact locations
+# of the round USD amounts. Both the smooth and spike stenciled have been created
+# by an iterative process of manually sliding together round USD spikes in
+# output distribtutions over every day from 2020 to 2024, and then taking the average
+# general shape and round usd spike values over that period.
+
+# Load the average smooth stencil to align broadly with a typical output day 
+#
+#                       *  *
+#                    *         *
+#                 *               * 
+#              *                     *
+#            *                          *
+#          *                               *
+#        *                                     *
+#      *                                            *  
+#   10k sats        0.01 btc           1 btc        10btc 
+
+# Parameters
+num_elements = 803
+mean = 411 #(num_elements - 1) / 2  # Center of the array
+std_dev = 201
+
+smooth_stencil = []
+for x in range(num_elements):
+    exp_part = -((x - mean) ** 2) / (2 * (std_dev ** 2))
+    smooth_stencil.append( (.00150 * 2.718281828459045 ** exp_part) + (.0000005 * x) )
 
 
-# create an empty stencil the same size as the bell curve
-round_usd_stencil = []
-for n in range(0,number_of_bins):
-    round_usd_stencil.append(0.0)
+# Load the average spike stencil that fine tunes the alignment on popular usd amounts
+#
+#                         *
+#                     *   *                       
+#                     *   *                   
+#                *    *   *          *           
+#           *    *    *   *    *     *              
+#           *    *    *   *    *     *    *             
+#       *   *    *    *   *    *     *    *     *       
+#       *   *    *    *   *    *     *    *     *     
+#      $1 $10  $20  $50  $100  $500  $1k  $2k   $10k
 
-# fill the round usd stencil with the values found by the process mentioned above
-round_usd_stencil[401] = 0.0005957955691168063     # $1
-round_usd_stencil[402] = 0.0004454790662303128     # (next one for tx/atm fees)
-round_usd_stencil[429] = 0.0001763099393598914     # $1.50
-round_usd_stencil[430] = 0.0001851801497144573
-round_usd_stencil[461] = 0.0006205616481885794     # $2
-round_usd_stencil[462] = 0.0005985696860584984
-round_usd_stencil[496] = 0.0006919505728046619     # $3
-round_usd_stencil[497] = 0.0008912933078342840
-round_usd_stencil[540] = 0.0009372916238804205     # $5
-round_usd_stencil[541] = 0.0017125522985034724     # (larger needed range for fees)
-round_usd_stencil[600] = 0.0021702347223143030
-round_usd_stencil[601] = 0.0037018622326411380     # $10 
-round_usd_stencil[602] = 0.0027322168706743802
-round_usd_stencil[603] = 0.0016268322583097678     # (larger needed range for fees)
-round_usd_stencil[604] = 0.0012601953416497664
-round_usd_stencil[661] = 0.0041425242880295460     # $20
-round_usd_stencil[662] = 0.0039247767475640830
-round_usd_stencil[696] = 0.0032399441632017228     # $30
-round_usd_stencil[697] = 0.0037112959007355585
-round_usd_stencil[740] = 0.0049921908828370000     # $50
-round_usd_stencil[741] = 0.0070636869018197105
-round_usd_stencil[801] = 0.0080000000000000000     # $100
-round_usd_stencil[802] = 0.0065431388282424440     # (larger needed range for fees)
-round_usd_stencil[803] = 0.0044279509203361735
-round_usd_stencil[861] = 0.0046132440551747015     # $200
-round_usd_stencil[862] = 0.0043647851395531140
-round_usd_stencil[896] = 0.0031980892880846567     # $300
-round_usd_stencil[897] = 0.0034237641632481910
-round_usd_stencil[939] = 0.0025995335505435034     # $500
-round_usd_stencil[940] = 0.0032631930982226645     # (larger needed range for fees)
-round_usd_stencil[941] = 0.0042753262790881080
-round_usd_stencil[1001] =0.0037699501474772350     # $1,000
-round_usd_stencil[1002] =0.0030872891064215764     # (larger needed range for fees)
-round_usd_stencil[1003] =0.0023237040836798163
-round_usd_stencil[1061] =0.0023671764210889895     # $2,000
-round_usd_stencil[1062] =0.0020106877104798474
-round_usd_stencil[1140] =0.0009099214128654502     # $3,000
-round_usd_stencil[1141] =0.0012008546799361498
-round_usd_stencil[1201] =0.0007862586076341524     # $10,000
-round_usd_stencil[1202] =0.0006900048077192579
-
-
-
-
-
-
+spike_stencil = []
+for n in range(0,803):
+    spike_stencil.append(0.0)
+    
+#round usd bin location   #popularity    #usd amount  
+spike_stencil[40] = 0.001300198324984352  # $1
+spike_stencil[141]= 0.001676746949820743  # $5
+spike_stencil[201]= 0.003468805546942046  # $10
+spike_stencil[202]= 0.001991977522512513  # 
+spike_stencil[236]= 0.001905066647961839  # $15
+spike_stencil[261]= 0.003341772718156079  # $20
+spike_stencil[262]= 0.002588902624584287  # 
+spike_stencil[296]= 0.002577893841190244  # $30
+spike_stencil[297]= 0.002733728814200412  # 
+spike_stencil[340]= 0.003076117748975647  # $50
+spike_stencil[341]= 0.005613067550103145  # 
+spike_stencil[342]= 0.003088253178535568  # 
+spike_stencil[400]= 0.002918457489366139  # $100
+spike_stencil[401]= 0.006174500465286022  # 
+spike_stencil[402]= 0.004417068070043504  # 
+spike_stencil[403]= 0.002628663628020371  # 
+spike_stencil[436]= 0.002858828161543839  # $150
+spike_stencil[461]= 0.004097463611984264  # $200
+spike_stencil[462]= 0.003345917406120509  # 
+spike_stencil[496]= 0.002521467726855856  # $300
+spike_stencil[497]= 0.002784125730361008  # 
+spike_stencil[541]= 0.003792850444811335  # $500
+spike_stencil[601]= 0.003688240815848247  # $1000
+spike_stencil[602]= 0.002392400117402263  # 
+spike_stencil[636]= 0.001280993059008106  # $1500
+spike_stencil[661]= 0.001654665137536031  # $2000
+spike_stencil[662]= 0.001395501347054946  # 
+spike_stencil[741]= 0.001154279140906312  # $5000
+spike_stencil[801]= 0.000832244504868709  # $10000
 
 
 
@@ -651,60 +808,76 @@ round_usd_stencil[1202] =0.0006900048077192579
 
 ##############################################################################
 
-#  Part 9) Slide the stencil over the output bell curve to find the best fit
+#  Part 9) Part 9) Estimate the price using the best fit stencil slide
 
 ##############################################################################
 
-# This is the final step. We slide the stencil over the bell curve and see
+# This is the concluding step. We slide the stencil over the bell curve and see
 # where it fits the best. The best fit location and it's neighbor are used
 # in a weighted average to estimate the best fit USD price
 
 
 # set up scores for sliding the stencil
-best_slide       = 0
-best_slide_score = 0.0
-total_score      = 0.0
-number_of_scores = 0
+best_slide        = 0
+best_slide_score  = 0
+total_score       = 0
+
+#weighting of the smooth and spike slide scores
+smooth_weight     = 0.65
+spike_weight      = 1
+
+#establish the center slide such that if zero slide then 0.001 btc is $100 ($100k price)
+center_p001 = 601   # 601 is where 0.001 btc is in the output bell curve
+left_p001   = center_p001 - int((len(spike_stencil) +1)/2)
+right_p001  = center_p001 + int((len(spike_stencil) +1)/2)
 
 #upper and lower limits for sliding the stencil
-min_slide = -200
-max_slide = 200
-
+min_slide = -141   # $500k
+max_slide =  201   # $5k
+    
 #slide the stencil and calculate slide score
 for slide in range(min_slide,max_slide):
     
     #shift the bell curve by the slide
-    shifted_curve = output_bell_curve_bin_counts[201+slide:1401+slide]
+    shifted_curve = output_bell_curve_bin_counts[left_p001+slide:right_p001+slide]
     
-    #score the shift by multiplying the curve by the stencil
+    #score the smoothslide by multiplying the curve by the stencil
+    slide_score_smooth = 0.0
+    for n in range(0,len(smooth_stencil)):
+        slide_score_smooth += shifted_curve[n]*smooth_stencil[n]
+    
+    #score the spiky slide by multiplying the curve by the stencil
     slide_score = 0.0
-    for n in range(0,len(shifted_curve)):
-        slide_score += shifted_curve[n]*round_usd_stencil[n+201]
+    for n in range(0,len(spike_stencil)):
+        slide_score += shifted_curve[n]*spike_stencil[n]
     
-    # increment total and number of scores
-    total_score += slide_score
-    number_of_scores += 1
-    
+    # add the spike and smooth slide scores, neglect smooth slide over wrong regions
+    if slide < 150:
+        slide_score = slide_score + slide_score_smooth*.65
+        
     # see if this score is the best so far
     if slide_score > best_slide_score:
         best_slide_score = slide_score
         best_slide = slide
-
+    
+    # increment the total score
+    total_score += slide_score
+        
 # estimate the usd price of the best slide
-usd100_in_btc_best = output_bell_curve_bins[801+best_slide]
+usd100_in_btc_best = output_bell_curve_bins[center_p001+best_slide]
 btc_in_usd_best = 100/(usd100_in_btc_best)
 
 #find best slide neighbor up
-neighbor_up = output_bell_curve_bin_counts[201+best_slide+1:1401+best_slide+1]
+neighbor_up = output_bell_curve_bin_counts[left_p001+best_slide+1:right_p001+best_slide+1]
 neighbor_up_score = 0.0
-for n in range(0,len(neighbor_up)):
-    neighbor_up_score += neighbor_up[n]*round_usd_stencil[n+201]
+for n in range(0,len(spike_stencil)):
+    neighbor_up_score += neighbor_up[n]*spike_stencil[n]
 
 #find best slide neighbor down
-neighbor_down = output_bell_curve_bin_counts[201+best_slide-1:1401+best_slide-1]
+neighbor_down = output_bell_curve_bin_counts[left_p001+best_slide-1:right_p001+best_slide-1]
 neighbor_down_score = 0.0
-for n in range(0,len(neighbor_down)):
-    neighbor_down_score += neighbor_down[n]*round_usd_stencil[n+201]
+for n in range(0,len(spike_stencil)):
+    neighbor_down_score += neighbor_down[n]*spike_stencil[n]
 
 #get best neighbor
 best_neighbor = +1
@@ -714,17 +887,37 @@ if neighbor_down_score > neighbor_up_score:
     neighbor_score = neighbor_down_score
 
 #get best neighbor usd price
-usd100_in_btc_2nd = output_bell_curve_bins[801+best_slide+best_neighbor]
+usd100_in_btc_2nd = output_bell_curve_bins[center_p001+best_slide+best_neighbor]
 btc_in_usd_2nd = 100/(usd100_in_btc_2nd)
 
 #weight average the two usd price estimates
-avg_score = total_score/number_of_scores
+avg_score = total_score/len(range(min_slide,max_slide))
 a1 = best_slide_score - avg_score
-a2 = abs(neighbor_score - avg_score)  #theoretically possible to be negative
+a2 = abs(neighbor_score - avg_score)
 w1 = a1/(a1+a2)
 w2 = a2/(a1+a2)
 price_estimate = int(w1*btc_in_usd_best + w2*btc_in_usd_2nd)
 
-#report the price estimate
+# Finally, report the price estimate
 print("\nThe "+price_day_date_utc+" btc price estimate is: $" + f'{price_estimate:,}')
+
+
+
+
+
+
+
+##############################################################################
+
+#  License
+
+##############################################################################
+
+# This software is free to use, modify and distribute for non-financial gain purposes,
+# so long as the full license is included with any use or redistribution.
+
+# Any use of this software for financial gain, including but not limited to
+# commercial applications, paid services, or monetized redistribution, requires
+# the expressed written consent of the author (@SteveSimple on x.com).
+
 
