@@ -32,7 +32,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ VERSION="0.18.4"
+  $ VERSION="0.18.5"
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-v$VERSION-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig
@@ -45,7 +45,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.18.4-beta.tar.gz: OK
+  > lnd-linux-arm64-v0.18.5-beta.tar.gz: OK
   ```
 
 ### Signature check
@@ -65,7 +65,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 
   ```sh
   $ gpg --verify manifest-roasbeef-v$VERSION-beta.sig manifest-v$VERSION-beta.txt
-  > gpg: Signature made Wed Dec 18 21:56:51 2024 EET
+  > gpg: Signature made Wed Feb 12 01:53:29 2025 EET
   > gpg:                using EDDSA key 296212681AADF05656A2CDEE90525F7DEEE0AD86
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -83,7 +83,7 @@ We can also check that the manifest file was in existence around the time of the
   ```sh
   $ ots --no-cache verify manifest-roasbeef-v$VERSION-beta.sig.ots -f manifest-roasbeef-v$VERSION-beta.sig
   > [...]
-  > Success! Bitcoin block 875352 attests existence as of 2024-12-19 EET
+  > Success! Bitcoin block 883361 attests existence as of 2025-02-12 EET
   ```
 
 * Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
@@ -98,7 +98,7 @@ Having verified the integrity and authenticity of the release binary, we can saf
   $ tar -xvf lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v$VERSION-beta/*
   $ lnd --version
-  > lnd version 0.18.4-beta commit=v0.18.4-beta
+  > lnd version 0.18.5-beta commit=v0.18.5-beta
   ```
 
 ### Data directory
