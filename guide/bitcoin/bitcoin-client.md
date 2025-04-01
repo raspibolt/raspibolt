@@ -336,7 +336,7 @@ We use “systemd“, a daemon that controls the startup process using configura
                                     -pid=/run/bitcoind/bitcoind.pid \
                                     -conf=/home/bitcoin/.bitcoin/bitcoin.conf \
                                     -datadir=/home/bitcoin/.bitcoin \
-                                    -startupnotify="chmod g+r /home/bitcoin/.bitcoin/.cookie"
+                                    -startupnotify="chmod g+r /home/bitcoin/.bitcoin/.cookie && systemd-notify --ready"
 
   # Process management
   ####################
