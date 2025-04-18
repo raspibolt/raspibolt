@@ -168,7 +168,7 @@ $ sudo su - jam
 * Obtain developer pgp signature for verification
 
 ```sh
-$ curl https://dergigi.com/PGP.txt | gpg --import
+$ curl https://raw.githubusercontent.com/joinmarket-webui/jam-docker/refs/heads/master/standalone/pubkeys/tbk.asc | gpg --import
 ```
 
 * Check the latest Jam release version. You can also confirm with the [release page](https://github.com/joinmarket-webui/jam/releases){:target="_blank" rel="noopener"}
@@ -185,7 +185,7 @@ $ echo $LATEST_VERSION
 
 
 ```sh
-$ VERSION="v0.1.5"
+$ VERSION="v0.3.0"
 $ git clone https://github.com/joinmarket-webui/jam.git --branch $VERSION --depth=1
 ```
 
@@ -196,10 +196,10 @@ $ cd jam
 
 $ git verify-tag $VERSION
 ...
-> gpg: Good signature from "Gigi <dergigi@pm.me>" [unknown]
+> gpg: Good signature from "theborakompanioni (no comment) <theborakompanioni+github@gmail.com>" [unknown]
 > gpg: WARNING: This key is not certified with a trusted signature!
 > gpg:          There is no indication that the signature belongs to the owner.
-> Primary key fingerprint: 8198 A185 30A5 22A0 9561  2439 89C4 A25E 69A5 DE7F
+> Primary key fingerprint: 3550 2225 7551 EAB1 26D7  5616 E807 0AF0 053A AC0D
 ```
 
 * Install Jam using `npm`
