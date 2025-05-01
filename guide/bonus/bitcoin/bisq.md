@@ -83,6 +83,7 @@ For Bisq to connect to your Bitcoin Core node, the bloom filters have to be acti
   ```sh
   # Filters
   peerbloomfilters=1   # for Bisq
+  prune=0              # for Bisq (disable pruning old blocks)
   ```
 
 * Add the following line under `"whitelist=download@127.0.0.1       # for Electrs"` line to whitelist our own P2P connection.
@@ -146,10 +147,28 @@ From remote connection, replace `123...abc.onion:8333` with your own Bitcoin Cor
   $ Bisq -btcNodes=192.168.X.X:8333 -useTorForBtc=false
   ```
 
+* Use the full application path if Bisq isn't part of your system's PATH. First find where Bisq is installed (example with drag and drop install):
+
+  ```sh
+  $ ls /Applications | grep -i bisq
+  ```
+
+* Then use that path (example):
+
+  ```sh
+  $ /Applications/Bisq.app/Contents/MacOS/Bisq -btcNodes=192.168.X.X:8333 -useTorForBtc=false
+  ```
+
 * From remote connection, replace `123...abc.onion:8333` with your own Bitcoin Core .onion address that you obtained above.
   
   ```sh
   $ Bisq -btcNodes=123...abc.onion:8333 -useTorForBtc=true
+  ```
+
+* Using full application path if Bisq isn't part of your system's PATH (example from previous section on local network connection):
+
+  ```sh
+  $ /Applications/Bisq.app/Contents/MacOS/Bisq -btcNodes=123...abc.onion:8333 -useTorForBtc=true
   ```
 
 * Wait a few minutes until Bisq is up to date with the current state of the blockchain and go back to "Settings" > "Network info" to check that only your own node local IP address or onion address is listed in the first table.
