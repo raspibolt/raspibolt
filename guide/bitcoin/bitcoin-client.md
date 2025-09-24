@@ -79,12 +79,21 @@ Bitcoin releases are signed by several individuals, each using their own key. To
 Expected output:
 
   ```sh
-  > gpg: key 17565732E08E5E41: 29 signatures not checked due to missing keys
-  > gpg: /home/admin/.gnupg/trustdb.gpg: trustdb created
-  > gpg: key 17565732E08E5E41: public key "Andrew Chow <andrew@achow101.com>" imported
-  > gpg: Total number processed: 1
-  > gpg:               imported: 1
-  > gpg: no ultimately trusted keys found
+> gpg: key 188CBB2648416AD5: 4 signatures not checked due to missing keys
+> gpg: key 188CBB2648416AD5: ".0xB10C <b10c@b10c.me>" not changed
+> gpg: Total number processed: 1
+> gpg:              unchanged: 1
+> gpg: key A5E0907A0380E6C3: "CoinForensics (SigningKey) <59567284+coinforensics@users.noreply.github.com>" not changed
+> gpg: Total number processed: 1
+> gpg:              unchanged: 1
+> gpg: key 2EBB056FD847F8A7: 12 signatures not checked due to missing keys
+> gpg: key 2EBB056FD847F8A7: "Stephan Oeste (it) <it@oeste.de>" not changed
+> gpg: Total number processed: 1
+> gpg:              unchanged: 1
+> gpg: key 57FF9BDBCC301009: 42 signatures not checked due to missing keys
+> gpg: key 57FF9BDBCC301009: "Sjors Provoost <sjors@sprovoost.nl>" not changed
+> gpg: Total number processed: 1
+> gpg:              unchanged: 1
   [...]
   ```
 
