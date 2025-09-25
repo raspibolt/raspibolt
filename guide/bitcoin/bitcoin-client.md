@@ -45,7 +45,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # set up some version variables for easier maintenance later on
-  $ VERSION="29.0"
+  $ VERSION="29.1"
 
   # download Bitcoin Core binary
   $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
@@ -63,7 +63,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-29.0-aarch64-linux-gnu.tar.gz: OK
+  > bitcoin-29.1-aarch64-linux-gnu.tar.gz: OK
   ```
 
 ### Signature check
@@ -79,12 +79,21 @@ Bitcoin releases are signed by several individuals, each using their own key. To
 Expected output:
 
   ```sh
-  > gpg: key 17565732E08E5E41: 29 signatures not checked due to missing keys
-  > gpg: /home/admin/.gnupg/trustdb.gpg: trustdb created
-  > gpg: key 17565732E08E5E41: public key "Andrew Chow <andrew@achow101.com>" imported
+  > gpg: key 188CBB2648416AD5: 4 signatures not checked due to missing keys
+  > gpg: key 188CBB2648416AD5: ".0xB10C <b10c@b10c.me>" not changed
   > gpg: Total number processed: 1
-  > gpg:               imported: 1
-  > gpg: no ultimately trusted keys found
+  > gpg:              unchanged: 1
+  > gpg: key A5E0907A0380E6C3: "CoinForensics (SigningKey) <59567284+coinforensics@users.noreply.github.com>" not changed
+  > gpg: Total number processed: 1
+  > gpg:              unchanged: 1
+  > gpg: key 2EBB056FD847F8A7: 12 signatures not checked due to missing keys
+  > gpg: key 2EBB056FD847F8A7: "Stephan Oeste (it) <it@oeste.de>" not changed
+  > gpg: Total number processed: 1
+  > gpg:              unchanged: 1
+  > gpg: key 57FF9BDBCC301009: 42 signatures not checked due to missing keys
+  > gpg: key 57FF9BDBCC301009: "Sjors Provoost <sjors@sprovoost.nl>" not changed
+  > gpg: Total number processed: 1
+  > gpg:              unchanged: 1
   [...]
   ```
 
@@ -105,12 +114,12 @@ Expected output:
 ### Timestamp check
 
 * The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"}, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
-  *  https://bitcoincore.org/bin/bitcoin-core-29.0/SHA256SUMS.ots
-  *  https://bitcoincore.org/bin/bitcoin-core-29.0/SHA256SUMS
+  *  https://bitcoincore.org/bin/bitcoin-core-29.1/SHA256SUMS.ots
+  *  https://bitcoincore.org/bin/bitcoin-core-29.1/SHA256SUMS
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
 * In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
 * In the next box, drop or upload the SHA256SUMS file
-* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v29.0){:target="_blank"} of Bitcoin Core v29.0.
+* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v29.1){:target="_blank"} of Bitcoin Core v29.1.
 
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
 
@@ -122,7 +131,7 @@ Expected output:
   $ tar -xvf bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-$VERSION/bin/*
   $ bitcoin-cli --version
-  > Bitcoin Core RPC client version v29.0.0
+  > Bitcoin Core RPC client version v29.1.0
   > Copyright (C) 2009-2025 The Bitcoin Core developers
   > [...]
   ```
@@ -533,7 +542,7 @@ When upgrading, there might be breaking changes, or changes in the data structur
 
   ```sh
   # set up some version variables for easier maintenance later on
-  $ VERSION="29.0"
+  $ VERSION="29.1"
   # download Bitcoin Core binary, checksums, signature file, and timestamp file
   $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
   $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS
@@ -545,7 +554,7 @@ When upgrading, there might be breaking changes, or changes in the data structur
 
   ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-29.0-aarch64-linux-gnu.tar.gz: OK
+  > bitcoin-29.1-aarch64-linux-gnu.tar.gz: OK
   ```
 
 * The next command download and imports automatically all signatures from the [Bitcoin Core release attestations (Guix)](https://github.com/bitcoin-core/guix.sigs) repository
@@ -609,7 +618,7 @@ Now, just check that the timestamp date is close to the [release](https://github
 
   ```sh
   $ bitcoin-cli --version
-  > Bitcoin Core RPC client version v29.0.0
+  > Bitcoin Core RPC client version v29.1.0
   > Copyright (C) 2009-2025 The Bitcoin Core developers
   > [...]
   ```
