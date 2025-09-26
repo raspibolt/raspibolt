@@ -32,7 +32,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ VERSION="0.18.5"
+  $ VERSION="0.19.1"
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-v$VERSION-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig
@@ -45,7 +45,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.18.5-beta.tar.gz: OK
+  > lnd-linux-arm64-v0.19.1-beta.tar.gz: OK
   ```
 
 ### Signature check
@@ -65,13 +65,13 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 
   ```sh
   $ gpg --verify manifest-roasbeef-v$VERSION-beta.sig manifest-v$VERSION-beta.txt
-  > gpg: Signature made Wed Feb 12 01:53:29 2025 EET
+  > gpg: Signature made Wed 11 Jun 2025 09:07:34 PM CEST
   > gpg:                using EDDSA key 296212681AADF05656A2CDEE90525F7DEEE0AD86
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
   > gpg:          There is no indication that the signature belongs to the owner.
   > Primary key fingerprint: A5B6 1896 952D 9FDA 83BC  054C DC42 612E 8923 7182
-  >      Subkey fingerprint: 2962 1268 1AAD F056 56A2  CDEE 9052 5F7D EEE0 AD86
+  >    Subkey fingerprint: 2962 1268 1AAD F056 56A2  CDEE 9052 5F7D EEE0 AD86
   ```
 
 ### Timestamp check
@@ -83,7 +83,7 @@ We can also check that the manifest file was in existence around the time of the
   ```sh
   $ ots --no-cache verify manifest-roasbeef-v$VERSION-beta.sig.ots -f manifest-roasbeef-v$VERSION-beta.sig
   > [...]
-  > Success! Bitcoin block 883361 attests existence as of 2025-02-12 EET
+  > Success! Bitcoin block 900978 attests existence as of 2025-06-12 CEST
   ```
 
 * Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
@@ -98,7 +98,7 @@ Having verified the integrity and authenticity of the release binary, we can saf
   $ tar -xvf lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v$VERSION-beta/*
   $ lnd --version
-  > lnd version 0.18.5-beta commit=v0.18.5-beta
+  > lnd version 0.19.1-beta commit=v0.19.1-beta
   ```
 
 ### Data directory
@@ -210,11 +210,12 @@ To improve the security of your wallet, check out these more advanced methods:
   minchansize=100000
   accept-keysend=true
   accept-amp=true
-  protocol.wumbo-channels=true
   coop-close-target-confs=24
 
-  # Set to enable support for the experimental taproot channel type
+  # Set to enable support for the experimental taproot channel type, wumbo channels (> 16.7M Sats) and RBF coop closures
   protocol.simple-taproot-chans=true
+  protocol.wumbo-channels=true
+  protocol.rbf-coop-close=true
 
   # Watchtower
   wtclient.active=true
@@ -256,7 +257,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.17.5-beta commit=v0.17.5-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.19.1-beta commit=v0.19.1-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
