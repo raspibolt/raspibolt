@@ -298,7 +298,7 @@ Note that the remote device needs to have Tor installed as well.
 ---
 
 💡 Electrs must first fully index the blockchain and compact its database before you can connect to it with your wallets.
-This can take a few hours.
+This can take a few hours (for a Raspberry Pi 4 with 8 GB RAM, more than 12 hours as of September 2025).
 Only proceed with the [next section](desktop-wallet.md) once Electrs is ready.
 
 * To check if Electrs is still indexing, you can follow the log output
