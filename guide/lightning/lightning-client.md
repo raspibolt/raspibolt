@@ -208,11 +208,12 @@ To improve the security of your wallet, check out these more advanced methods:
   minchansize=100000
   accept-keysend=true
   accept-amp=true
-  protocol.wumbo-channels=true
   coop-close-target-confs=24
 
-  # Set to enable support for the experimental taproot channel type
+  # Set to enable support for the experimental taproot channel type, wumbo channels (> 16.7M Sats) and RBF coop closures
   protocol.simple-taproot-chans=true
+  protocol.wumbo-channels=true
+  protocol.rbf-coop-close=true
 
   # Watchtower
   wtclient.active=true
