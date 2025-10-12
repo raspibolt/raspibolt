@@ -32,7 +32,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ cd /tmp
-  $ VERSION="0.18.5"
+  $ VERSION="0.20.0"
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-v$VERSION-beta.txt
   $ wget https://github.com/lightningnetwork/lnd/releases/download/v$VERSION-beta/manifest-roasbeef-v$VERSION-beta.sig
@@ -45,7 +45,7 @@ We'll download, verify and install LND.
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-beta.txt --ignore-missing
-  > lnd-linux-arm64-v0.18.5-beta.tar.gz: OK
+  > lnd-linux-arm64-v0.20.0-beta.tar.gz: OK
   ```
 
 ### Signature check
@@ -98,7 +98,7 @@ Having verified the integrity and authenticity of the release binary, we can saf
   $ tar -xvf lnd-linux-arm64-v$VERSION-beta.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v$VERSION-beta/*
   $ lnd --version
-  > lnd version 0.18.5-beta commit=v0.18.5-beta
+  > lnd version 0.20.0-beta commit=v0.20.0-beta
   ```
 
 ### Data directory
@@ -147,9 +147,7 @@ Now that LND is installed, we need to configure it to work with Bitcoin Core and
 
 ### Wallet password
 
-LND includes a Bitcoin wallet that manages your on-chain and Lightning coins.
-It is password protected and must be unlocked when LND starts.
-This creates the dilemma that you either manually unlock LND after each restart of your Raspberry Pi, or you store the password somewhere on the node.
+LND includes a Bitcoin wallet that manages your on-chain and Lightning coins. It is password protected and must be unlocked on every start of LND. This creates the dilemma that you either manually unlock LND after each restart of your Raspberry Pi, or you store the password locally on the node.
 
 For this initial setup, we choose the easy route: we store the password in a file that allows LND to unlock the wallet automatically.
 This is not the most secure setup, but you can improve it later if you want, with the bonus guides linked below.
@@ -256,7 +254,7 @@ $ lnd
 ```
 Attempting automatic RPC configuration to bitcoind
 Automatically obtained bitcoind's RPC credentials
-2021-11-13 08:16:34.985 [INF] LTND: Version: 0.17.5-beta commit=v0.17.5-beta, build=production, logging=default, debuglevel=info
+2021-11-13 08:16:34.985 [INF] LTND: Version: 0.20.0-beta commit=v0.20.0-beta, build=production, logging=default, debuglevel=info
 2021-11-13 08:16:34.985 [INF] LTND: Active chain: Bitcoin (network=mainnet)
 ...
 2021-11-13 08:16:35.028 [INF] LTND: Waiting for wallet encryption password. Use `lncli create` to create a wallet, `lncli unlock` to unlock an existing wallet, or `lncli changepassword` to change the password of an existing wallet and unlock it.
