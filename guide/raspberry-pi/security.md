@@ -300,7 +300,7 @@ That's great for most projects, but we should turn off all radios that are not n
 * Open the RasPi OS configuration file, go to the following comment and add the applicable options below
 
   ```sh
-  $ sudo nano /boot/config.txt
+  $ sudo nano /boot/firmware/config.txt
   ```
 
   ```sh
