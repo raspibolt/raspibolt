@@ -262,7 +262,7 @@ We'll also set the proper access permissions.
   whitelist=download@127.0.0.1          # for Electrs
 
   # Maximum size of data in OP_RETURN outputs we relay and mine. New default: 100_000 bytes
-  # old setting pre 30.0 below, adjust to your preference
+  # note: new datacarriersize accounts for multiple OP_Returns to the limit specified here
   datacarriersize=83
 
   # Raspberry Pi optimizations
