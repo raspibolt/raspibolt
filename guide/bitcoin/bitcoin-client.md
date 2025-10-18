@@ -245,9 +245,6 @@ We'll also set the proper access permissions.
   server=1
   txindex=1
 
-  # Allow creation of legacy wallets (required for JoinMarket)
-  deprecatedrpc=create_bdb
-
   # Network
   listen=1
   listenonion=1
