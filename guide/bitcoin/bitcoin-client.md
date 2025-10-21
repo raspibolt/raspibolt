@@ -45,7 +45,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   # set up some version variables for easier maintenance later on
-  $ VERSION="29.1"
+  $ VERSION="29.2"
 
   # download Bitcoin Core binary
   $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
@@ -63,7 +63,7 @@ This is a precaution to make sure that this is an official release and not a mal
 
   ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-29.1-aarch64-linux-gnu.tar.gz: OK
+  > bitcoin-29.2-aarch64-linux-gnu.tar.gz: OK
   ```
 
 ### Signature check
@@ -114,12 +114,12 @@ Expected output:
 ### Timestamp check
 
 * The binary checksum file is timestamped on the Bitcoin blockchain via the [OpenTimestamps protocol](https://opentimestamps.org/){:target="_blank"}, proving that the file existed prior to some point in time. Let's verify this timestamp. On your local computer, download the checksums file and its timestamp proof:
-  *  https://bitcoincore.org/bin/bitcoin-core-29.1/SHA256SUMS.ots
-  *  https://bitcoincore.org/bin/bitcoin-core-29.1/SHA256SUMS
+  *  https://bitcoincore.org/bin/bitcoin-core-29.2/SHA256SUMS.ots
+  *  https://bitcoincore.org/bin/bitcoin-core-29.2/SHA256SUMS
 * In your browser, open the [OpenTimestamps website](https://opentimestamps.org/){:target="_blank"}
 * In the "Stamp and verify" section, drop or upload the downloaded SHA256SUMS.ots proof file in the dotted box
 * In the next box, drop or upload the SHA256SUMS file
-* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v29.1){:target="_blank"} of Bitcoin Core v29.1.
+* If the timestamps is verified, you should see the following message. The timestamp proves that the checksums file existed on the [release date](https://github.com/bitcoin/bitcoin/releases/tag/v29.2){:target="_blank"} of Bitcoin Core v29.2.
 
 ![Bitcoin timestamp check](../../images/bitcoin-ots-check.PNG)
 
@@ -131,7 +131,7 @@ Expected output:
   $ tar -xvf bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-$VERSION/bin/*
   $ bitcoin-cli --version
-  > Bitcoin Core RPC client version v29.1.0
+  > Bitcoin Core RPC client version v29.2.0
   > Copyright (C) 2009-2025 The Bitcoin Core developers
   > [...]
   ```
@@ -542,7 +542,7 @@ When upgrading, there might be breaking changes, or changes in the data structur
 
   ```sh
   # set up some version variables for easier maintenance later on
-  $ VERSION="29.1"
+  $ VERSION="29.2"
   # download Bitcoin Core binary, checksums, signature file, and timestamp file
   $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-aarch64-linux-gnu.tar.gz
   $ wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS
@@ -554,7 +554,7 @@ When upgrading, there might be breaking changes, or changes in the data structur
 
   ```sh
   $ sha256sum --ignore-missing --check SHA256SUMS
-  > bitcoin-29.1-aarch64-linux-gnu.tar.gz: OK
+  > bitcoin-29.2-aarch64-linux-gnu.tar.gz: OK
   ```
 
 * The next command download and imports automatically all signatures from the [Bitcoin Core release attestations (Guix)](https://github.com/bitcoin-core/guix.sigs) repository
@@ -602,7 +602,7 @@ Expected output:
   > Got 1 attestation(s) from https://finney.calendar.eternitywall.com
   > Got 1 attestation(s) from https://bob.btc.calendar.opentimestamps.org
   > Got 1 attestation(s) from https://alice.btc.calendar.opentimestamps.org
-  > Success! Bitcoin block 892418 attests existence as of 2025-04-14 CEST
+  > Success! Bitcoin block 919049 attests existence as of 2025-10-14 EET
   ```
 
 Now, just check that the timestamp date is close to the [release](https://github.com/bitcoin/bitcoin/releases) date of the version you're installing.
@@ -618,7 +618,7 @@ Now, just check that the timestamp date is close to the [release](https://github
 
   ```sh
   $ bitcoin-cli --version
-  > Bitcoin Core RPC client version v29.1.0
+  > Bitcoin Core RPC client version v29.2.0
   > Copyright (C) 2009-2025 The Bitcoin Core developers
   > [...]
   ```
