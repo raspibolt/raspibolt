@@ -62,8 +62,8 @@ Log in to your RaspiBolt via SSH as user "admin" and install Tor.
 * Add the following entries. Save and exit
 
   ```sh
-  deb     [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main
-  deb-src [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main
+  deb     [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bookworm main
+  deb-src [arch=arm64 signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bookworm main
   ```
 
 * Then up to `"root"` user temporarily to add the gpg key used to sign the packages by running the following command at your command prompt. Return to `admin` using `exit` command
