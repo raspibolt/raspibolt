@@ -231,7 +231,7 @@ This setup is called a "reverse proxy": NGINX provides secure communication to t
 * Install NGINX
 
   ```sh
-  $ sudo apt install nginx
+  $ sudo apt install nginx libnginx-mod-stream
   ```
 
 * Create a self-signed SSL/TLS certificate (valid for 10 years)
@@ -284,13 +284,7 @@ This setup is called a "reverse proxy": NGINX provides secure communication to t
   > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
   > nginx: configuration file /etc/nginx/nginx.conf test is successful
   ```
-  
-If you run into the `unknown directive "stream"` error, then you need to install
-the stream module first:
 
-  ```sh
-  $ sudo apt install libnginx-mod-stream
-  ```
 
 ## Disable wireless interfaces
 
@@ -310,7 +304,7 @@ That's great for most projects, but we should turn off all radios that are not n
   * Disable Bluetooth by adding this line
 
     ```
-    dtoverlay=disable-bt
+    dtoverlay=disable-bt    
     ```
 
   * If you're running your RaspiBolt with a network cable, disable wifi by adding this line
