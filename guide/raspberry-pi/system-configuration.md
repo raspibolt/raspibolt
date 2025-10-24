@@ -123,6 +123,12 @@ Additionally, it's easier to move that directory somewhere else, for instance to
   $ sudo chown admin:admin /data
   ```
 
+* Mount external drive (e.g. /dev/sda - check for your setup) to `/data`
+
+  ```sh
+  $ sudo mount /dev/sda1 /data
+  ```
+  
 ---
 
 ## Increase swap file size
