@@ -123,12 +123,35 @@ Additionally, it's easier to move that directory somewhere else, for instance to
   $ sudo chown admin:admin /data
   ```
 
-* Mount external drive (e.g. /dev/sda - check for your setup) to `/data`
+* Automount external drive (e.g. /dev/sda - check for your setup) to `/data` on startup
 
   ```sh
-  $ sudo mount /dev/sda1 /data
+  $ blkid
   ```
 
+* Look for the external drive (e.g. /dev/sda1) and copy UUID of external drive. Open `fstab` file
+
+  ```sh
+  $ sudo nano /etc/fstab
+  ```
+  
+* Add a new line to the bottom, replace UUID accordingly
+
+  ```sh
+  UUID=XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX  /data  ext4  defaults  0  0
+  ```
+
+* Save file and reboot
+
+  ```sh
+  $ sudo reboot
+  ```
+  
+* Once rebooted, verify that the drive has been automatically mounted by listing the `/data` dir
+
+  ```sh
+  $ ls -la /data
+  ```
 
 <br /><br />
 
