@@ -128,32 +128,7 @@ Additionally, it's easier to move that directory somewhere else, for instance to
   ```sh
   $ sudo mount /dev/sda1 /data
   ```
-  
----
 
-## Increase swap file size
-
-The swap file acts as slower memory and is essential for system stability.
-The standard size of 100M is way too small.
-
-* Edit the configuration file and comment the entry `CONF_SWAPSIZE` by placing a `#` in front of it.
-  Save and exit.
-
-  ```sh
-  $ sudo nano /etc/dphys-swapfile
-  ```
-
-  ```
-  # comment or delete the CONF_SWAPSIZE line. It will then be created dynamically
-  #CONF_SWAPSIZE=100
-  ```
-
-* Recreate and activate new swapfile
-
-  ```sh
-  $ sudo dphys-swapfile install
-  $ sudo systemctl restart dphys-swapfile.service
-  ```
 
 <br /><br />
 
