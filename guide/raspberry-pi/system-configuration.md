@@ -135,7 +135,7 @@ Additionally, it's easier to move that directory somewhere else, for instance to
   $ sudo nano /etc/fstab
   ```
   
-* Add a new line to the bottom, replace UUID accordingly
+* Add a new line to the bottom, replace UUID and format (ext4, if needed) accordingly
 
   ```sh
   UUID=XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX  /data  ext4  defaults  0  0
