@@ -170,7 +170,7 @@ Instead of creating this directory, we create a data directory in the general da
 * Create the Bitcoin data folder
 
   ```sh
-  $ mkdir /data/bitcoin
+  $ sudo mkdir /data/bitcoin
   $ sudo chown bitcoin:bitcoin /data/bitcoin
   ```
 

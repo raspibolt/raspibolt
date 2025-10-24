@@ -123,30 +123,34 @@ Additionally, it's easier to move that directory somewhere else, for instance to
   $ sudo chown admin:admin /data
   ```
 
----
-
-## Increase swap file size
-
-The swap file acts as slower memory and is essential for system stability.
-The standard size of 100M is way too small.
-
-* Edit the configuration file and comment the entry `CONF_SWAPSIZE` by placing a `#` in front of it.
-  Save and exit.
+* Automount external drive (e.g. /dev/sda - check for your setup) to `/data` on startup
 
   ```sh
-  $ sudo nano /etc/dphys-swapfile
+  $ blkid
   ```
 
-  ```
-  # comment or delete the CONF_SWAPSIZE line. It will then be created dynamically
-  #CONF_SWAPSIZE=100
-  ```
-
-* Recreate and activate new swapfile
+* Look for the external drive (e.g. /dev/sda1) and copy UUID of external drive. Open `fstab` file
 
   ```sh
-  $ sudo dphys-swapfile install
-  $ sudo systemctl restart dphys-swapfile.service
+  $ sudo nano /etc/fstab
+  ```
+  
+* Add a new line to the bottom, replace UUID and format (ext4, if needed) accordingly
+
+  ```sh
+  UUID=XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX  /data  ext4  defaults  0  0
+  ```
+
+* Save file and reboot
+
+  ```sh
+  $ sudo reboot
+  ```
+  
+* Once rebooted, verify that the drive has been automatically mounted by listing the `/data` dir
+
+  ```sh
+  $ ls -la /data
   ```
 
 <br /><br />
