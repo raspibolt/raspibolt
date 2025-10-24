@@ -298,7 +298,8 @@ That's great for most projects, but we should turn off all radios that are not n
   ```
 
   ```sh
-  # Additional overlays and parameters are documented /boot/overlays/README
+  # Additional overlays and parameters are documented
+  # /boot/overlays/README
   ```
 
   * Disable Bluetooth by adding this line
