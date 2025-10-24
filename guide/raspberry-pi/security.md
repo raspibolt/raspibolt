@@ -156,8 +156,8 @@ We'll open the port for Electrs and web applications later if needed.
   >
   > To                         Action      From
   > --                         ------      ----
-  > SSH                        ALLOW       Anywhere
-  > SSH (v6)                   ALLOW       Anywhere (v6)
+  > 22/tcp                     ALLOW       Anywhere
+  > 22/tcp (v6)                ALLOW       Anywhere (v6)
   ```
 
 🔍 *more: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands){:target="_blank"}*
