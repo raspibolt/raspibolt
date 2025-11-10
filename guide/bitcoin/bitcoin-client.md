@@ -432,7 +432,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   Exit with `Ctrl-C`
 
   ```sh
-  $ tail -f /home/bitcoin/.bitcoin/debug.log
+  $ tail -f /home/admin/.bitcoin/debug.log
   ```
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain
