@@ -156,8 +156,8 @@ We'll open the port for Electrs and web applications later if needed.
   >
   > To                         Action      From
   > --                         ------      ----
-  > SSH                        ALLOW       Anywhere
-  > SSH (v6)                   ALLOW       Anywhere (v6)
+  > 22/tcp                     ALLOW       Anywhere
+  > 22/tcp (v6)                ALLOW       Anywhere (v6)
   ```
 
 🔍 *more: [UFW Essentials](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands){:target="_blank"}*
@@ -231,7 +231,7 @@ This setup is called a "reverse proxy": NGINX provides secure communication to t
 * Install NGINX
 
   ```sh
-  $ sudo apt install nginx
+  $ sudo apt install nginx libnginx-mod-stream
   ```
 
 * Create a self-signed SSL/TLS certificate (valid for 10 years)
@@ -284,13 +284,7 @@ This setup is called a "reverse proxy": NGINX provides secure communication to t
   > nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
   > nginx: configuration file /etc/nginx/nginx.conf test is successful
   ```
-  
-If you run into the `unknown directive "stream"` error, then you need to install
-the stream module first:
 
-  ```sh
-  $ sudo apt install libnginx-mod-stream
-  ```
 
 ## Disable wireless interfaces
 
@@ -304,13 +298,14 @@ That's great for most projects, but we should turn off all radios that are not n
   ```
 
   ```sh
-  # Additional overlays and parameters are documented /boot/overlays/README
+  # Additional overlays and parameters are documented
+  # /boot/overlays/README
   ```
 
   * Disable Bluetooth by adding this line
 
     ```
-    dtoverlay=disable-bt
+    dtoverlay=disable-bt    
     ```
 
   * If you're running your RaspiBolt with a network cable, disable wifi by adding this line

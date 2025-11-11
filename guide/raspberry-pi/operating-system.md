@@ -27,17 +27,17 @@ We configure the Raspberry Pi and install the Linux operating system.
 We use the Raspberry Pi Operating System (RasPi OS) Lite, without a graphical user interface, and in the 64-bit version.
 This provides the best stability for the Raspberry Pi and makes the initial setup a breeze.
 
-RasPi OS is based on the [Debian 11](https://www.debian.org/){:target="_blank"} Linux distribution, which is available for most hardware platforms.
+RasPi OS is based on the [Debian 13](https://www.debian.org/){:target="_blank"} Linux distribution, which is available for most hardware platforms.
 To make this guide as universal as possible, it uses only standard Debian commands.
 As a result, it should work smoothly with Raspberry Pis while still being compatible with most other hardware platforms running Debian.
 
 ## Get Raspberry Pi OS
 
-In order to write the operating system to the external drive, we will use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"} application v1.8+.
+In order to write the operating system to the external drive, we will use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/){:target="_blank"} application v1.9+.
 
 * Start the Raspberry Pi Imager
 * On the "Raspberry Pi device" section > Push on "Choose device" > Select **"No filtering"**
-* On the "Operating system" section > Push on "Choose OS" > "Raspberry Pi OS (other)" > Scroll to select **"Raspberry Pi OS (Legacy, 64 bit) Lite"** and have the relevant image flashed to your drive
+* On the "Operating system" section > Push on "Choose OS" > "Raspberry Pi OS (other)" > Scroll to select **"Raspberry Pi OS Lite (64-BIT)"** and have the relevant image flashed to your drive
 * Connect the external drive to your regular computer. On the "Storage" section > Push on "Choose storage" > Select your external drive
 * Click on the **"NEXT"** button
 * On the "Use OS customisation" banner > Click on the **"EDIT SETTINGS"** button
