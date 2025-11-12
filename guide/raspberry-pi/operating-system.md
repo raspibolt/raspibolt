@@ -27,7 +27,7 @@ We configure the Raspberry Pi and install the Linux operating system.
 We use the Raspberry Pi Operating System (RasPi OS) Lite, without a graphical user interface, and in the 64-bit version.
 This provides the best stability for the Raspberry Pi and makes the initial setup a breeze.
 
-RasPi OS is based on the [Debian 11](https://www.debian.org/){:target="_blank"} Linux distribution, which is available for most hardware platforms.
+RasPi OS (Legacy) is based on the [Debian 12 Bookworm](https://www.debian.org/){:target="_blank"} Linux distribution, which is available for most hardware platforms.
 To make this guide as universal as possible, it uses only standard Debian commands.
 As a result, it should work smoothly with Raspberry Pis while still being compatible with most other hardware platforms running Debian.
 
