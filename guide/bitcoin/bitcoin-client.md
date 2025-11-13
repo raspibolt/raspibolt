@@ -425,7 +425,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
 
   ```sh
   $ ls -la /home/admin/.bitcoin/.cookie
-  > -rw-r----- 1 bitcoin bitcoin 75 Dec 17 13:48 /home/bitcoin/.bitcoin/.cookie
+  > -rw-r----- 1 bitcoin bitcoin 75 Dec 17 13:48 /home/admin/.bitcoin/.cookie
   ```
 
 * See "bitcoind" in action by monitoring its log file.
@@ -481,7 +481,7 @@ We also now want to enable the node to listen to and relay transactions.
   Save and exit.
 
   ```sh
-  $ sudo nano /home/bitcoin/.bitcoin/bitcoin.conf
+  $ sudo nano /home/admin/.bitcoin/bitcoin.conf
   ```
 
   ```
