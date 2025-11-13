@@ -424,7 +424,7 @@ After rebooting, "bitcoind" should start and begin to sync and validate the Bitc
   The output must contain the `-rw-r-----` part, otherwise no application run by a different user can access Bitcoin Core.
 
   ```sh
-  $ ls -la /home/bitcoin/.bitcoin/.cookie
+  $ ls -la /home/admin/.bitcoin/.cookie
   > -rw-r----- 1 bitcoin bitcoin 75 Dec 17 13:48 /home/bitcoin/.bitcoin/.cookie
   ```
 
