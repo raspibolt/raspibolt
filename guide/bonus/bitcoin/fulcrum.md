@@ -604,9 +604,8 @@ Then proceed deleting and creating a new datadir folder and restart Fulcrum
 To upgade your existing database, be sure to pass the one-time ```--db-upgrade``` flag to Fulcrum. It will refuse to start up if it detects that your datadir is in the old format and you did not pass this flag. This ensures that admins know what they are getting into.
 
 After upgrading Fulcrum do
-```sh
-$ Fulcrum --db-upgrade
-```
+  ```sh
+  $ Fulcrum --db-upgrade
 
 Note: The upgrade process takes around an hour or more (depending on hardware) on BTC mainnet.
 
