@@ -584,6 +584,35 @@ If the database gets corrupted and you don't have a backup, you will have to res
   ```sh
   $ sudo systemctl start fulcrum
   ```
+💡 IMPORTANT: If you're updating from v1.x to v2.x read this:
+
+* Fulcrum 2.0 has a different database format than the 1.x series. As such, you have two options for upgrading:
+
+* Option 1- Create a blank new datadir and just re-synch from block 0 (slow, but 100% reliable)
+```sh
+$ sudo cp -R /data/fulcrum/fulcrum_db /data/fulcrum/fulcrum_db_bkp
+```
+Make sure the backup was creadted succesfully before proceeding, you should see the backuped files after this command
+```sh
+$ sudo ls -la /data/fulcrum/fulcrum_db_bkp
+```
+Then proceed deleting creating a new datadir folder and restart Fulcrum
+```sh
+$ sudo rm -R /data/fulcrum/fulcrum_db
+$ sudo mkdir /data/fulcrum/fulcrum_db
+$ sudo systemctl restart fulcrum.service
+```
+
+* Option 2- Upgrade your existing 1.x datadir (faster, but irreversible and destructice)
+To upgade your existing database, be sure to pass the one-time ```--db-upgrade``` flag to Fulcrum. It will refuse to start up if it detects that your datadir is in the old format and you did not pass this flag. This ensures that admins know what they are getting into.
+
+After upgrading Fulcrum do
+```sh
+$ Fulcrum --db-upgrade
+```
+
+Note: The upgrade process takes around an hour or more (depending on hardware) on BTC mainnet.
+
 
 ## Uninstall
 
