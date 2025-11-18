@@ -591,7 +591,7 @@ If the database gets corrupted and you don't have a backup, you will have to res
 * Option 1- Create a blank new datadir and just re-synch from block 0 (slow, but 100% reliable)
   ```sh
   $ sudo cp -R /data/fulcrum/fulcrum_db /data/fulcrum/fulcrum_db_bkp
-Make sure the backup was creadted succesfully before proceeding, you should see the backuped files after this command
+Make sure the backup was created succesfully before proceeding, you should see the backuped files after this command
   ```sh
   $ sudo ls -la /data/fulcrum/fulcrum_db_bkp
 Then proceed deleting creating a new datadir folder and restart Fulcrum
