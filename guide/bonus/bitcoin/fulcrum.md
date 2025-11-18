@@ -589,9 +589,8 @@ If the database gets corrupted and you don't have a backup, you will have to res
 * Fulcrum 2.0 has a different database format than the 1.x series. As such, you have two options for upgrading:
 
 * Option 1- Create a blank new datadir and just re-synch from block 0 (slow, but 100% reliable)
-```sh
-$ sudo cp -R /data/fulcrum/fulcrum_db /data/fulcrum/fulcrum_db_bkp
-```
+  ```sh
+  $ sudo cp -R /data/fulcrum/fulcrum_db /data/fulcrum/fulcrum_db_bkp
 Make sure the backup was creadted succesfully before proceeding, you should see the backuped files after this command
 ```sh
 $ sudo ls -la /data/fulcrum/fulcrum_db_bkp
