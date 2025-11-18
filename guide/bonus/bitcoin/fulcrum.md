@@ -600,7 +600,7 @@ Then proceed deleting and creating a new datadir folder and restart Fulcrum
   $ sudo mkdir /data/fulcrum/fulcrum_db
   $ sudo systemctl restart fulcrum.service
 
-* Option 2- Upgrade your existing 1.x datadir (faster, but irreversible and destructice)
+* Option 2- Upgrade your existing 1.x datadir (faster, but irreversible and destructive)
 To upgade your existing database, be sure to pass the one-time ```--db-upgrade``` flag to Fulcrum. It will refuse to start up if it detects that your datadir is in the old format and you did not pass this flag. This ensures that admins know what they are getting into.
 
 After upgrading Fulcrum do
