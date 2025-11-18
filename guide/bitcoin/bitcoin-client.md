@@ -481,7 +481,7 @@ We also now want to enable the node to listen to and relay transactions.
   Save and exit.
 
   ```sh
-  $ nano /home/admin/.bitcoin/bitcoin.conf
+  $ sudo nano /home/admin/.bitcoin/bitcoin.conf
   ```
 
   ```
