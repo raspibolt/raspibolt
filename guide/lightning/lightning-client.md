@@ -57,7 +57,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
   ```sh
   $ curl https://raw.githubusercontent.com/lightningnetwork/lnd/master/scripts/keys/roasbeef.asc | gpg --import
   > ...
-  > gpg: key 372CBD7633C61696: "Olaoluwa Osuntokun <laolu32@gmail.com>" 1 new signature
+  > gpg: key DC42612E89237182: public key "Olaoluwa Osuntokun <laolu32@gmail.com>" imported
   > ...
   ```
 
@@ -65,7 +65,7 @@ Now that we've verified the integrity of the downloaded binary, we need to check
 
   ```sh
   $ gpg --verify manifest-roasbeef-v$VERSION-beta.sig manifest-v$VERSION-beta.txt
-  > gpg: Signature made Wed Feb 12 01:53:29 2025 EET
+  > gpg: Signature made Thu Nov 13 01:00:13 2025 GMT
   > gpg:                using EDDSA key 296212681AADF05656A2CDEE90525F7DEEE0AD86
   > gpg: Good signature from "Olaoluwa Osuntokun <laolu32@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -83,7 +83,7 @@ We can also check that the manifest file was in existence around the time of the
   ```sh
   $ ots --no-cache verify manifest-roasbeef-v$VERSION-beta.sig.ots -f manifest-roasbeef-v$VERSION-beta.sig
   > [...]
-  > Success! Bitcoin block 883361 attests existence as of 2025-02-12 EET
+  > Success! Bitcoin block 923373 attests existence as of 2025-11-13 CET
   ```
 
 * Check that the date of the timestamp is close to the [release date](https://github.com/lightningnetwork/lnd/releases){:target="_blank"} of the LND binary.
