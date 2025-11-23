@@ -56,10 +56,10 @@ You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 ### Install Node.js
 
 * Add the [Node.js](https://nodejs.org){:target="_blank"} package repository from user "admin".
-  We'll use version 16, which is the latest stable version.
+  We'll use version 22, which is the latest stable version.
 
   ```sh
-  $ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+  $ curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
   ```
 
 * Install Node.js using the apt package manager.
@@ -121,10 +121,12 @@ An attacker would not be able to do much within this user's permission settings.
   $ sudo su - btcrpcexplorer
   ```
 
-* Set a temporary version environment variable to the installation
+* We will check the latest version and set it as a variable, and then verify it was set correctly
 
   ```sh
-  $ VERSION=3.4.0
+  $ VERSION=$(wget -qO- https://api.github.com/repos/janoside/btc-rpc-explorer/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')
+  $ echo $VERSION
+  > 3.5.1
   ```
 
 * Download the source code directly from GitHub and install all dependencies using the Node Package Manager (NPM).
