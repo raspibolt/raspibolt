@@ -56,10 +56,10 @@ You can follow the progress using `tail -f ~/.bitcoin/debug.log`.
 ### Install Node.js
 
 * Add the [Node.js](https://nodejs.org){:target="_blank"} package repository from user "admin".
-  We'll use version 22, which is the latest stable version.
+  We'll use the latest LTS version.
 
   ```sh
-  $ curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+  $ curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   ```
 
 * Install Node.js using the apt package manager.
