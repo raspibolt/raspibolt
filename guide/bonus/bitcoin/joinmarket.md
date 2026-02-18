@@ -105,14 +105,6 @@ If this command fails with error `BDB wallet creation is deprecated and will be 
 * Get the PGP keys of JoinMarket developers that sign releases.
 
   ```sh
-  $ curl https://raw.githubusercontent.com/JoinMarket-Org/joinmarket-clientserver/master/pubkeys/AdamGibson.asc | gpg --import 
-  ```
-  ```
-  > ...
-  > gpg: key 141001A1AF77F20B: public key "Adam Gibson (CODE SIGNING KEY) <ekaggata@gmail.com>" imported
-  > ...
-  ```
-  ```sh
   $ curl https://raw.githubusercontent.com/JoinMarket-Org/joinmarket-clientserver/master/pubkeys/KristapsKaupe.asc | gpg --import
   ```
   ```
