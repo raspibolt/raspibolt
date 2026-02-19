@@ -69,7 +69,7 @@ Table of contents
   ```sh
   $ sudo mkdir /data/i2pd
   $ sudo chown -R i2pd:i2pd /data/i2pd
-  $ mkdir -p /var/lib/i2pd
+  $ sudo mkdir -p /var/lib/i2pd
   $ sudo chown -R i2pd:i2pd /var/lib/i2pd
   $ mount --bind /data/i2pd /var/lib/i2pd
   $ echo "/data/i2pd /var/lib/i2pd none bind 0 0" | sudo tee -a /etc/fstab
