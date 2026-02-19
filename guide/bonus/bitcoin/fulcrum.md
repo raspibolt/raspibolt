@@ -187,7 +187,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
   > You can also use the latest release version (`$LATEST_VERSION`). However, please be aware that newer release versions might not have been thoroughly tested with the rest of the RaspiBolt configuration.
 
   ```sh
-  $ VERSION="1.9.7"
+  $ VERSION="2.0.0"
   $ cd /tmp
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-arm64-linux.tar.gz
   $ wget https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-shasums.txt.asc
@@ -204,8 +204,8 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 
   ```sh
   $ gpg --verify Fulcrum-$VERSION-shasums.txt.asc
-  > gpg: assuming signed data in 'Fulcrum-1.9.7-sha256sums.txt'
-  > gpg: Signature made Fri 24 Nov 2023 08:27:08 AM UTC
+  > gpg: assuming signed data in 'Fulcrum-2.0.0-sha256sums.txt'
+  > gpg: Signature made Tue Sep 23 21:47:22 2025 IST
   > gpg:                using DSA key D465135F97D0047E18E99DC321810A542031C02C
   > gpg: Good signature from "Calin Culianu (NilacTheGrim) <calin.culianu@gmail.com>" [unknown]
   > gpg: WARNING: This key is not certified with a trusted signature!
@@ -222,7 +222,7 @@ We have our Bitcoin Core configuration file set up, and now we can move to next 
 Expected output:
 
   ```sh
-  > Fulcrum-1.9.7-arm64-linux.tar.gz: OK
+  > Fulcrum-2.0.0-arm64-linux.tar.gz: OK
   ```
 
 * Install Fulcrum and check the correct installation requesting the version
@@ -231,12 +231,12 @@ Expected output:
   $ tar -xvf Fulcrum-$VERSION-arm64-linux.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$VERSION-arm64-linux/Fulcrum Fulcrum-$VERSION-arm64-linux/FulcrumAdmin
   $ Fulcrum --version
-  > Fulcrum 1.9.7 (Release f27fc28)
-  > Protocol: version min: 1.4, version max: 1.5.2
-  > compiled: gcc 9.4.0
-  > jemalloc: version 5.2.1-0-gea6b3e9
+  > Fulcrum 2.0 (Release df51b8a)
+  > Protocol: version min: 1.4, version max: 1.5.3
+  > compiled: gcc 13.1.10
+  > jemalloc: version 5.3.0-0-g54eaed1
   > Qt: version 5.15.6
-  > rocksdb: version 6.14.6-ed43161
+  > rocksdb: version 9.2.1-08f9322
   [...]
   ```
 
@@ -312,11 +312,9 @@ RaspiBolt uses SSL as default for Fulcrum, but some wallets like [BlueWallet](ht
 
   # 4GB RAM (default)
   db_max_open_files = 200
-  fast-sync = 1024
 
   # 8GB RAM (comment the last two lines and uncomment the next)
   #db_max_open_files = 400
-  #fast-sync = 2048
   ```
 
 * Exit "fulcrum" user session to return to "admin" user session
@@ -381,7 +379,7 @@ Expected output:
   Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] simdjson: version 0.6.0
   Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] ssl: OpenSSL 1.1.1  11 Sep 2018
   Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] zmq: libzmq version: 4.3.3, cppzmq version: 4.7.1
-  Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] Fulcrum 1.9.1 (Release 713d2d7) - Thu Apr 27, 2023 21:20:52.264 EEST - starting up ...
+  Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] Fulcrum 2.0.0 (Release df51b8a) - Thu Apr 27, 2023 21:20:52.264 EEST - starting up ...
   Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.264] Max open files: 524288 (increased from default: 1024)
   Apr 27 21:20:52 rasp Fulcrum[3994155]: [2023-04-27 21:20:52.265] Loading database ...
   Apr 27 21:21:03 rasp Fulcrum[3994155]: [2023-04-27 21:21:03.907] DB memory: 1024.00 MiB
@@ -586,6 +584,31 @@ If the database gets corrupted and you don't have a backup, you will have to res
   ```sh
   $ sudo systemctl start fulcrum
   ```
+💡 IMPORTANT: If you're updating from v1.x to v2.x read this:
+
+* Fulcrum 2.0 has a different database format than the 1.x series. As such, you have two options for upgrading:
+
+* Option 1- Create a blank new datadir and just re-synch from block 0 (slow, but 100% reliable)
+  ```sh
+  $ sudo cp -R /data/fulcrum/fulcrum_db /data/fulcrum/fulcrum_db_bkp
+Make sure the backup was created succesfully before proceeding, you should see the backuped files after this command
+  ```sh
+  $ sudo ls -la /data/fulcrum/fulcrum_db_bkp
+Then proceed deleting and creating a new datadir folder and restart Fulcrum
+  ```sh
+  $ sudo rm -R /data/fulcrum/fulcrum_db
+  $ sudo mkdir /data/fulcrum/fulcrum_db
+  $ sudo systemctl restart fulcrum.service
+
+* Option 2- Upgrade your existing 1.x datadir (faster, but irreversible and destructive)
+To upgade your existing database, be sure to pass the one-time ```--db-upgrade``` flag to Fulcrum. It will refuse to start up if it detects that your datadir is in the old format and you did not pass this flag. This ensures that admins know what they are getting into.
+
+After upgrading Fulcrum do
+  ```sh
+  $ Fulcrum --db-upgrade
+
+Note: The upgrade process takes around an hour or more (depending on hardware) on BTC mainnet.
+
 
 ## Uninstall
 
