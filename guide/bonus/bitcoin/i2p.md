@@ -64,7 +64,7 @@ Table of contents
   $ sudo apt install i2pd
   ```
 
-* Create i2pd data directory on SSD, to reduce stress on SD card.
+* Create i2pd data directory on SSD, to reduce stress on SD card
 
   ```sh
   $ sudo mkdir /data/i2pd
