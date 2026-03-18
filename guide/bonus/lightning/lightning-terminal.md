@@ -67,7 +67,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
     server 127.0.0.1:8443;
   }
   server {
-    listen 8444 ssl;
+    listen 8444;
     proxy_pass litd;
   }
   ```
@@ -88,19 +88,19 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * With the "admin" user, download the latest arm64 binary and its checksum and verify the integrity of the binary
 
   ```sh
-  $ VERSION="0.10.0"
+  $ VERSION="0.16.1"
   $ cd /tmp
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/lightning-terminal-linux-arm64-v$VERSION-alpha.tar.gz
   $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSION-alpha.txt 
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSION-alpha.sig
-  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-v$VERSION-alpha.sig.ots
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-ellemouton-v$VERSION-alpha.sig
+  $ wget https://github.com/lightninglabs/lightning-terminal/releases/download/v$VERSION-alpha/manifest-ellemouton-v$VERSION-alpha.sig.ots
   ```
 
 * Verify the signed checksum against the actual checksum of your download
 
   ```sh
   $ sha256sum --check manifest-v$VERSION-alpha.txt --ignore-missing
-  > Example output: lightning-terminal-linux-arm64-{VERSION}-alpha.tar.gz: OK
+  > lightning-terminal-linux-arm64-v0.16.1-alpha.tar.gz: OK
   ```
 
 * Get the key to verify the manifest file and add it to your GPG keyring.
@@ -115,19 +115,19 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * Verify the signature of the text file containing the checksums for the application
 
   ```sh
-  $ gpg --verify manifest-v$VERSION-alpha.sig manifest-v$VERSION-alpha.txt
-  > gpg: Signature made Thu Mar 30 10:04:01 2023 SAST
+  $ gpg --verify manifest-ellemouton-v$VERSION-alpha.sig manifest-v$VERSION-alpha.txt
+  > gpg: Signature made Mon Feb 16 14:52:15 2026 EET
   > gpg:                using RSA key 26984CB69EB8C4A26196F7A4D7D916376026F177
-  > gpg: Good signature from "Elle Mouton <elle.mouton@gmail.com>" [ultimate]
+  > gpg: Good signature from "Elle Mouton <elle.mouton@gmail.com>" [expired]
   > [...]
   ```
   
 * Verify OTS attestations
 
   ```sh 
-  $ ots verify manifest-v$VERSION-alpha.sig.ots
+  $ ots verify manifest-ellemouton-v$VERSION-alpha.sig.ots
   > ...
-  > Success! Bitcoin block 790028 attests existence as of 2023-05-16 CEST
+  > Success! Bitcoin block 936902 attests existence as of 2026-02-16 EET
   ```
 
 * Now that the authenticity and integrity of the binary has been proven, unzip the binary and install Lightning Terminal
@@ -135,8 +135,8 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
   ```sh
   $ tar -xzf lightning-terminal-linux-arm64-v$VERSION-alpha.tar.gz
   $ sudo install -m 0755 -o root -g root -t /usr/local/bin lightning-terminal-linux-arm64-v$VERSION-alpha/*
-  $ litd --lnd.version
-  > Example Output: litd version {VERSION}-beta commit=lightning-terminal-{VERSION}-alpha
+  $ litd --version
+  > litd version 0.16.1-alpha commit=v0.16.1-alpha commit_hash=43518466ebe5edeadc89353a231680ee2488aa07
   ```
 
 ### User and data directories
@@ -173,6 +173,7 @@ Because Pool is alpha software, Lightning Terminal is also alpha software.
 * Display the links and check that they’re not shown in red (this would indicate an error)
 
   ```sh
+  $ cd /home/admin
   $ ls -la
   ```
 
