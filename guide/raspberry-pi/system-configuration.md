@@ -104,7 +104,7 @@ Let's check if your drive works well as-is, or if additional configuration is ne
 
 If the measured speed is more than 50 MB/s, you're good, no further action needed.
 
-If the speed of your USB3 drive is not acceptable, we need to configure the USB driver to ignore the UAS interface.
+If you experience slow node syncing despite good hdparm speeds, the USB drive's UAS interface driver is likely causing instability (e.g., Samsung T7 2TB). Follow the instructions below to configure the driver to ignore UAS.
 
 Check the [Fix bad USB3 performance](../troubleshooting.md#fix-bad-usb3-performance) entry in the Troubleshooting guide to learn how.
 
