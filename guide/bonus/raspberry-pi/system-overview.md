@@ -30,7 +30,7 @@ This script can be run by user "admin" without root privileges, but you should s
 * Install necessary software packages
 
   ```sh
-  $ sudo apt install jq net-tools netcat
+  $ sudo apt install jq net-tools netcat-openbsd
   ```
 
 * Download the script. 
