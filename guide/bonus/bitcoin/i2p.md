@@ -64,6 +64,19 @@ Table of contents
   $ sudo apt install i2pd
   ```
 
+* Create i2pd data directory on SSD, to reduce stress on SD card
+
+  ```sh
+  $ sudo mkdir /data/i2pd
+  $ sudo chown -R i2pd:i2pd /data/i2pd
+  $ sudo mkdir -p /var/lib/i2pd
+  $ sudo chown -R i2pd:i2pd /var/lib/i2pd
+  $ mount --bind /data/i2pd /var/lib/i2pd
+  $ echo "/data/i2pd /var/lib/i2pd none bind 0 0" | sudo tee -a /etc/fstab
+  /data/i2pd /var/lib/i2pd none bind 0 0
+  $ sudo sed -i 's|.*logfile =.*|logfile = /data/i2pd/i2pd.log|' /etc/i2pd/i2pd.conf
+  ```
+
 * Enable autoboot on startup
 
   ```sh
