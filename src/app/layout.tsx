@@ -1,8 +1,16 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import Script from 'next/script';
 import { Provider } from '@/components/provider';
 import { appDescription, appName, appTagline, isProductionSite, siteUrl } from '@/lib/shared';
 import './global.css';
+
+// Umami analytics. Separate websites for production (raspibolt.org)
+// and staging (stadicus.github.io/RaspiBolt) so traffic doesn't mix.
+// isProductionSite is resolved at build time from NEXT_PUBLIC_SITE_URL.
+const umamiWebsiteId = isProductionSite
+  ? 'f6788a01-2c1f-429f-815b-73d15af26a27'
+  : '3a6df4e2-9a81-4678-b782-88b940e22045';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -80,6 +88,11 @@ export default function Layout({ children }: LayoutProps<'/'>) {
     >
       <body className="flex min-h-screen flex-col">
         <Provider>{children}</Provider>
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id={umamiWebsiteId}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
