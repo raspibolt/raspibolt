@@ -11,23 +11,33 @@
 #   testing/run-walk.sh                       # core pipeline, mainnet-style
 #   testing/run-walk.sh --signet              # core pipeline, signet overlay
 #   testing/run-walk.sh --only bitcoin        # one section only
+#   testing/run-walk.sh --target pi           # walk a real Raspberry Pi
+#                                             # via testing/pi/ssh.sh
+#                                             # (set RASPIBOLT_PI_HOST etc.)
 
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-SSH="$SCRIPT_DIR/vm/ssh.sh"
 
 # ── Arg parsing ────────────────────────────────────────────
 SIGNET=0
 ONLY=""
+TARGET="vm"
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --signet) SIGNET=1; shift ;;
-    --only)   ONLY="$2"; shift 2 ;;
+    --signet)  SIGNET=1; shift ;;
+    --only)    ONLY="$2"; shift 2 ;;
+    --target)  TARGET="$2"; shift 2 ;;
     *) echo "unknown flag: $1" >&2; exit 2 ;;
   esac
 done
+
+SSH="$SCRIPT_DIR/$TARGET/ssh.sh"
+if [[ ! -x "$SSH" ]]; then
+  echo "[run] target '$TARGET' has no executable ssh wrapper at $SSH" >&2
+  exit 2
+fi
 
 # ── Core pipeline order ───────────────────────────────────
 # Curated. Skip: backstory, architecture, faq, troubleshooting (prose),
@@ -70,12 +80,18 @@ SUMMARY="$RUN_DIR/SUMMARY.md"
 MODE="mainnet-shape"
 [[ "$SIGNET" -eq 1 ]] && MODE="signet"
 
+case "$TARGET" in
+  vm) TARGET_DESC="raspibolt-testvm (Debian 13 Trixie, systemd-in-docker)" ;;
+  pi) TARGET_DESC="real Pi at ${RASPIBOLT_PI_USER:-admin}@${RASPIBOLT_PI_HOST:-?}:${RASPIBOLT_PI_PORT:-22}" ;;
+  *)  TARGET_DESC="$TARGET" ;;
+esac
+
 cat > "$SUMMARY" <<EOF
 # Walkthrough: $TS
 
 - Started: $(date -Iseconds)
 - Mode: $MODE
-- VM: raspibolt-testvm (Debian 13 Trixie, systemd-in-docker)
+- Target: $TARGET_DESC
 - Guide sha: $(cd "$REPO_ROOT" && git rev-parse --short HEAD)
 - Guide branch: $(cd "$REPO_ROOT" && git rev-parse --abbrev-ref HEAD)
 
@@ -93,9 +109,13 @@ echo "[run] regenerating steps from current guide prose (TEST_ARCH=${TEST_ARCH:-
 TEST_ARCH="${TEST_ARCH:-amd64}" \
   node "$REPO_ROOT/testing/extract/extract-steps.mjs" >/dev/null
 
-# Verify VM reachable
+# Verify target reachable
 if ! "$SSH" 'true' 2>/dev/null; then
-  echo "[run] VM not reachable via ssh.sh. Run testing/vm/up.sh first." >&2
+  echo "[run] target '$TARGET' not reachable via $SSH" >&2
+  case "$TARGET" in
+    vm) echo "[run] hint: run testing/vm/up.sh first" >&2 ;;
+    pi) echo "[run] hint: check RASPIBOLT_PI_HOST, ssh key, and that the Pi accepts $USER@host" >&2 ;;
+  esac
   exit 1
 fi
 
