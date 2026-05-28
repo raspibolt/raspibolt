@@ -32,15 +32,24 @@ Add the Tor Project's official repository rather than leaning on the
 Debian package, this way you get current Tor releases straight from
 upstream.
 
-1. Fetch the Tor Project's signing key, dearmor it into a keyring
-   file, and clean up the original:
+1. Fetch the Tor Project's signing key:
 
    ```bash
    sudo wget -qO /usr/share/keyrings/deb.torproject.org-keyring.gpg.asc \
      https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
+   ```
+
+   Dearmor it into a binary keyring file that apt can read:
+
+   ```bash
    sudo gpg --dearmor \
      -o /usr/share/keyrings/deb.torproject.org-keyring.gpg \
      /usr/share/keyrings/deb.torproject.org-keyring.gpg.asc
+   ```
+
+   Remove the original ASCII-armored copy, you don't need it anymore:
+
+   ```bash
    sudo rm /usr/share/keyrings/deb.torproject.org-keyring.gpg.asc
    ```
 
@@ -64,11 +73,16 @@ upstream.
    Signed-By: /usr/share/keyrings/deb.torproject.org-keyring.gpg
    ```
 
-3. Install `tor` along with the Tor Project's keyring package (which
-   keeps the signing key up to date automatically):
+3. Refresh the package index so apt sees the new Tor repository:
 
    ```bash
    sudo apt update
+   ```
+
+   Install `tor` along with the Tor Project's keyring package (which
+   keeps the signing key up to date automatically):
+
+   ```bash
    sudo apt install tor deb.torproject.org-keyring
    ```
 
@@ -172,12 +186,27 @@ Running Headscale itself is its own project, beyond this guide.
 
 ### Install Tailscale on the Pi
 
-Add Tailscale's apt repository, install the client, and start it:
+Add Tailscale's signing key to your keyrings:
 
 ```bash
 curl -fsSL https://pkgs.tailscale.com/stable/debian/trixie.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+```
+
+Add the Tailscale apt repository:
+
+```bash
 curl -fsSL https://pkgs.tailscale.com/stable/debian/trixie.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list >/dev/null
+```
+
+Refresh the package index:
+
+```bash
 sudo apt update
+```
+
+Install the Tailscale client:
+
+```bash
 sudo apt install -y tailscale
 ```
 
@@ -189,10 +218,15 @@ free for up to 100 devices), and authorise the Pi:
 sudo tailscale up
 ```
 
-Confirm it's connected and read its tailnet IP:
+Confirm it's connected:
 
 ```bash test:skip
 tailscale status
+```
+
+Read its tailnet IP:
+
+```bash test:skip
 tailscale ip -4
 ```
 

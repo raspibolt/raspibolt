@@ -43,10 +43,15 @@ for LND's REST API is three more lines in `torrc`.
    HiddenServicePort 8080 127.0.0.1:8080
    ```
 
-3. Reload Tor and read the generated onion address:
+3. Reload Tor so it picks up the new hidden service:
 
    ```bash
    sudo systemctl reload tor
+   ```
+
+   Read the generated onion address:
+
+   ```bash
    sudo cat /var/lib/tor/hidden_service_lnd_rest/hostname
    ```
 
@@ -106,11 +111,16 @@ terminal window, and scan it with the phone.
    ONION=$(sudo cat /var/lib/tor/hidden_service_lnd_rest/hostname)
    ```
 
-4. Build the Zeus config URL and render it as a QR code in the
-   terminal. The `lndconnect://` scheme is what Zeus expects:
+4. Build the Zeus config URL. The `lndconnect://` scheme is what
+   Zeus expects, and the macaroon needs base64url encoding:
 
    ```bash
    URL="lndconnect://${ONION}:8080?macaroon=$(echo -n "$MACAROON_HEX" | xxd -r -p | base64 | tr '+/' '-_' | tr -d '=')"
+   ```
+
+   Render it as a QR code in the terminal:
+
+   ```bash
    qrencode -t ANSIUTF8 -m 2 "$URL"
    ```
 

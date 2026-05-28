@@ -28,33 +28,63 @@ RTL is a Node.js application and needs a recent LTS runtime. The
 NodeSource repository gives you upstream Node without waiting for
 Debian backports.
 
-1. As user `admin`, add the NodeSource GPG key and apt source:
+1. As user `admin`, refresh the package index:
 
    ```bash
    sudo apt update
+   ```
+
+   Install the helper packages needed to add a third-party repo over HTTPS:
+
+   ```bash
    sudo apt install -y ca-certificates curl gnupg
+   ```
+
+   Create the keyring directory:
+
+   ```bash
    sudo mkdir -p /etc/apt/keyrings
+   ```
+
+   Import NodeSource's signing key into a dedicated keyring:
+
+   ```bash
    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+   ```
+
+   Add the NodeSource apt source:
+
+   ```bash
    echo "deb [arch=arm64 signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" \
      | sudo tee /etc/apt/sources.list.d/nodesource.list
    ```
 
-2. Install Node and verify:
+2. Refresh the package index again so apt sees the new source:
 
    ```bash
    sudo apt update
+   ```
+
+   Install Node.js:
+
+   ```bash
    sudo apt install -y nodejs
+   ```
+
+   Confirm the runtime version:
+
+   ```bash
    node --version
+   ```
+
+   Confirm the package manager version:
+
+   ```bash
    npm --version
    ```
 
-   Expected output, a `v22.x` line from `node`, and a `10.x` or
-   newer line from `npm`:
-
-   ```text
-   v22.22.2
-   10.9.7
-   ```
+   Expected output is a `v22.x` line from `node`, and a `10.x` or
+   newer line from `npm`.
 
 <Callout type="info" title="If you already installed Node for the Bitcoin Explorer">
 BTC RPC Explorer uses the same NodeSource setup. If Node 22 is
@@ -68,16 +98,42 @@ exposed HTTP port, and a compromise there should not hand an
 attacker LND's admin macaroon. A dedicated `rtl` user keeps the
 blast radius small.
 
-1. Create the user and copy in a read-only copy of LND's admin
-   macaroon. RTL only needs to **read** the macaroon; the copy is
-   what keeps `rtl` out of `/data/lnd`:
+1. Create the user. RTL only needs to **read** the macaroon; the
+   copy is what keeps `rtl` out of `/data/lnd`.
+
+   Create the service user:
 
    ```bash
    sudo adduser --disabled-password --gecos "" rtl
+   ```
+
+   Create a directory for the LND credentials:
+
+   ```bash
    sudo mkdir -p /home/rtl/lnd
+   ```
+
+   Copy in a read-only copy of LND's admin macaroon:
+
+   ```bash
    sudo cp /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon /home/rtl/lnd/admin.macaroon
+   ```
+
+   Copy in LND's TLS certificate:
+
+   ```bash
    sudo cp /data/lnd/tls.cert /home/rtl/lnd/tls.cert
+   ```
+
+   Hand the directory to the `rtl` user:
+
+   ```bash
    sudo chown -R rtl:rtl /home/rtl/lnd
+   ```
+
+   Lock the macaroon down:
+
+   ```bash
    sudo chmod 600 /home/rtl/lnd/admin.macaroon
    ```
 
@@ -90,21 +146,41 @@ down and do not commit it to any repository.
 
 ## Install RTL
 
-1. Become the `rtl` user, clone the repo, and check out the pinned
-   release tag:
+1. Become the `rtl` user:
 
    ```bash
    sudo su - rtl
+   ```
+
+   Clone the repo:
+
+   ```bash
    git clone https://github.com/Ride-The-Lightning/RTL.git
+   ```
+
+   Move into the source tree:
+
+   ```bash
    cd RTL
+   ```
+
+   Check out the pinned release tag:
+
+   ```bash
    git checkout v%versions.rtl%
    ```
 
-2. Verify the tag signature. RTL tags are signed by Suheb; fetch
-   the key and verify:
+2. Verify the tag signature. RTL tags are signed by Suheb.
+
+   Fetch the signing key:
 
    ```bash
    curl https://keybase.io/suheb/pgp_keys.asc | gpg --import
+   ```
+
+   Verify the tag:
+
+   ```bash
    git verify-tag v%versions.rtl%
    ```
 
@@ -126,10 +202,15 @@ down and do not commit it to any repository.
 RTL ships a sample config; you copy it, edit a handful of fields,
 and you're done.
 
-1. As user `rtl`, still in `/home/rtl/RTL`:
+1. As user `rtl`, still in `/home/rtl/RTL`, copy the sample config:
 
    ```bash
    cp Sample-RTL-Config.json RTL-Config.json
+   ```
+
+   Open it for editing:
+
+   ```bash
    nano RTL-Config.json
    ```
 
@@ -209,12 +290,27 @@ walk through adding more in the same `RTL-Config.json`.
    WantedBy=multi-user.target
    ```
 
-3. Enable and start:
+3. Reload systemd so it sees the new unit:
 
    ```bash
    sudo systemctl daemon-reload
+   ```
+
+   Enable the service so it starts on boot:
+
+   ```bash
    sudo systemctl enable rtl
+   ```
+
+   Start it now:
+
+   ```bash
    sudo systemctl start rtl
+   ```
+
+   Follow the log:
+
+   ```bash
    sudo journalctl -f -u rtl
    ```
 
@@ -247,10 +343,15 @@ your browser will warn about exactly once when you trust the root.
    }
    ```
 
-3. Reload Caddy and open the firewall for HTTPS on the LAN:
+3. Reload Caddy so it picks up the new site block:
 
    ```bash
    sudo systemctl reload caddy
+   ```
+
+   Open the firewall for HTTPS on the LAN:
+
+   ```bash
    sudo ufw allow from 192.168.0.0/16 to any port 443 proto tcp comment 'HTTPS LAN only'
    ```
 
@@ -300,32 +401,80 @@ Everything `lncli` does, RTL does with a mouse, plus graphs.
 
 ## Upgrading RTL
 
-1. As `admin`, stop the service and become `rtl`:
+1. As `admin`, stop the service:
 
    ```bash
    sudo systemctl stop rtl
+   ```
+
+   Switch to the `rtl` user:
+
+   ```bash
    sudo su - rtl
+   ```
+
+   Move into the install directory:
+
+   ```bash
    cd /home/rtl/RTL
    ```
 
-2. Fetch, find the latest tag, check it out, verify the signature,
-   reinstall dependencies:
+2. Fetch the latest tags:
 
    ```bash
    git fetch
+   ```
+
+   Discard any local changes:
+
+   ```bash
    git reset --hard
+   ```
+
+   Resolve the newest version tag into a shell variable:
+
+   ```bash
    latest=$(git tag | grep -E "v[0-9]+\.[0-9]+\.[0-9]+$" | sort --version-sort | tail -n 1)
+   ```
+
+   Sanity-check the resolved version:
+
+   ```bash
    echo "$latest"
+   ```
+
+   Check out that tag:
+
+   ```bash
    git checkout "$latest"
+   ```
+
+   Verify the signature on the tag:
+
+   ```bash
    git verify-tag "$latest"
+   ```
+
+   Reinstall dependencies:
+
+   ```bash
    npm install --omit=dev --legacy-peer-deps
+   ```
+
+   Drop back to `admin`:
+
+   ```bash
    exit
    ```
 
-3. Update `%versions.rtl%` in `lib/versions.ts` to keep this
-   guide honest, then restart:
+3. Update `%versions.rtl%` in `lib/versions.ts` to keep this guide honest, then restart the service:
 
    ```bash
    sudo systemctl start rtl
+   ```
+
+   Follow the log:
+
+   ```bash
    sudo journalctl -f -u rtl
    ```

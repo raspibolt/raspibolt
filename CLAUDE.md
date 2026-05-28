@@ -129,14 +129,37 @@ Body text.
 
 `type` accepts `info`, `warn`, `success`, `error`.
 
-**Code blocks.** Always specify the language; use a single block per logical sequence so the copy button grabs the whole thing:
+**Code blocks.** Always specify the language. **One shell command per block** so the copy button gives the reader exactly one paste-ready command at a time. This was the explicit feedback from reviewers on the v4 preview: a single block with multiple commands forces the reader to paste them all at once, which fails in some terminals and obscures which command does what.
 
 ````mdx
 ```bash
 sudo apt update
+```
+
+```bash
 sudo apt full-upgrade
 ```
 ````
+
+Exceptions where commands stay together in one block:
+
+- **Heredocs and multi-line configs** (`cat > file <<EOF ... EOF`). One logical write.
+- **Pipelines and chains that form one command** (`curl ... | sha256sum --check`, `tar -xf ... -C /opt`). Already one shell command.
+- **Multi-line single command** (a long `wget` with backslash continuations). Still one command.
+
+Do *not* keep `cd somewhere` glued to the next command with `&&`. Split it:
+
+````mdx
+```bash
+cd /tmp/download
+```
+
+```bash
+sha256sum bitcoin-31.0-aarch64-linux-gnu.tar.gz
+```
+````
+
+Add a short prose line between blocks when the next command needs context. Don't pad just to fill space.
 
 **Internal links.** Relative paths, no file extension:
 
@@ -161,7 +184,7 @@ A content page is complete when:
 - [ ] Front matter has both `title` and `description`
 - [ ] Version numbers use `%versions.X%` tokens, never hardcoded
 - [ ] Download URLs/filenames use `%urls.X%` / `%files.X%` tokens
-- [ ] Sequential commands live in one ```bash block, not one per line
+- [ ] One shell command per ```bash block (exceptions: heredocs, pipelines, multi-line single commands)
 - [ ] `<Callout>` replaces inline emoji warnings/tips
 - [ ] `npm run build` completes without errors
 - [ ] `pre-commit run --files guide/<path>.mdx` passes

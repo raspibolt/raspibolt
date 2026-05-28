@@ -31,36 +31,65 @@ own unprivileged system user and a dedicated data directory on the
 SSD, with the home-directory `~/.lnd` path symlinked to the real
 location. Same pattern you used for `bitcoind`.
 
-1. As user `admin`, create the `lnd` user. Give it group membership
-   in `bitcoin` (so it can read `bitcoin.conf` for auto-RPC) and in
-   `debian-tor` (so it can read Tor's cookie file for the control
-   port):
+1. As user `admin`, create the `lnd` user:
 
    ```bash
    sudo adduser --disabled-password --gecos "" lnd
+   ```
+
+   Add it to the `bitcoin` and `debian-tor` groups so it can read
+   `bitcoin.conf` for auto-RPC and Tor's cookie file for the control
+   port:
+
+   ```bash
    sudo usermod -a -G bitcoin,debian-tor lnd
+   ```
+
+   Put `admin` into the `lnd` group so you can run `lncli` later
+   without `sudo`:
+
+   ```bash
    sudo adduser admin lnd
    ```
 
-   The third command puts `admin` into the `lnd` group so you can
-   run `lncli` later without `sudo`.
-
-2. Create the data directory on the SSD and hand it to `lnd`:
+2. Create the data directory on the SSD:
 
    ```bash
    sudo mkdir /data/lnd
+   ```
+
+   Hand it to `lnd`:
+
+   ```bash
    sudo chown -R lnd:lnd /data/lnd
    ```
 
-3. Open a shell as the `lnd` user and set up the symlinks. LND
-   looks for its data in `~/.lnd` by default; pointing that at
-   `/data/lnd` means every tool and tutorial that assumes the
-   default path still works:
+3. Open a shell as the `lnd` user. LND looks for its data in
+   `~/.lnd` by default; pointing that at `/data/lnd` means every
+   tool and tutorial that assumes the default path still works.
+
+   Switch users:
 
    ```bash
    sudo su - lnd
+   ```
+
+   Symlink the LND default path to the SSD location:
+
+   ```bash
    ln -s /data/lnd /home/lnd/.lnd
+   ```
+
+   Symlink the Bitcoin data directory too, so LND can find the
+   cookie file at the default path:
+
+   ```bash
    ln -s /data/bitcoin /home/lnd/.bitcoin
+   ```
+
+   List the home directory to confirm both links resolved:
+
+   ```bash
    ls -la
    ```
 
@@ -74,13 +103,27 @@ LND ships as a statically linked binary tarball. You'll download
 it, verify the SHA256 checksum, verify the GPG signature on the
 manifest, and only then copy the binaries into place.
 
-1. Still as the `lnd` user, grab the release archive, the manifest,
-   and the maintainer's signature:
+1. Still as the `lnd` user, drop into `/tmp`:
 
    ```bash
    cd /tmp
+   ```
+
+   Download the release archive:
+
+   ```bash
    wget %urls.lndDownload%
+   ```
+
+   Download the manifest:
+
+   ```bash
    wget %urls.lndSha256%
+   ```
+
+   Download the maintainer's signature on the manifest:
+
+   ```bash
    wget https://github.com/lightningnetwork/lnd/releases/download/v%versions.lnd%/manifest-roasbeef-v%versions.lnd%.sig
    ```
 
@@ -142,12 +185,27 @@ have.
    exit
    ```
 
-2. Extract the archive and install both binaries:
+2. Drop into `/tmp`:
 
    ```bash
    cd /tmp
+   ```
+
+   Extract the archive:
+
+   ```bash
    tar -xvf %files.lndArchive%
+   ```
+
+   Install both binaries into `/usr/local/bin`, owned by root:
+
+   ```bash
    sudo install -m 0755 -o root -g root -t /usr/local/bin lnd-linux-arm64-v%versions.lnd%/*
+   ```
+
+   Confirm the right version is on `PATH`:
+
+   ```bash
    lnd --version
    ```
 
@@ -172,11 +230,16 @@ every startup. You have two options:
 
 This guide picks auto-unlock. You can switch later.
 
-1. Become `lnd` again and create the password file, then enter
-   password `[C]` (one you haven't used anywhere else):
+1. Become `lnd` again:
 
    ```bash
    sudo su - lnd
+   ```
+
+   Create the password file and enter password `[C]` (one you
+   haven't used anywhere else):
+
+   ```bash
    nano /data/lnd/password.txt
    ```
 
@@ -289,10 +352,15 @@ For actual operation you want it under systemd so it starts at
 boot, restarts after crashes, and only comes up after `bitcoind`
 is ready.
 
-1. Back as user `admin`, create the unit file:
+1. Drop back to `admin`:
 
    ```bash
    exit
+   ```
+
+   Create the unit file:
+
+   ```bash
    sudo nano /etc/systemd/system/lnd.service
    ```
 
@@ -328,11 +396,16 @@ is ready.
    WantedBy=multi-user.target
    ```
 
-3. Reload systemd and enable the unit (don't start it yet, you
-   need to create the wallet first):
+3. Reload systemd so it sees the new unit:
 
    ```bash
    sudo systemctl daemon-reload
+   ```
+
+   Enable the unit (don't start it yet, you need to create the
+   wallet first):
+
+   ```bash
    sudo systemctl enable lnd
    ```
 
@@ -342,10 +415,15 @@ First start is a two-window affair: LND runs in the foreground in
 one SSH session and waits for you to create the wallet from a
 second session.
 
-1. Still as `admin`, start LND in the foreground:
+1. Still as `admin`, switch to the `lnd` user:
 
    ```bash test:skip
    sudo su - lnd
+   ```
+
+   Start LND in the foreground:
+
+   ```bash test:skip
    lnd
    ```
 
@@ -353,11 +431,15 @@ second session.
    `Waiting for wallet encryption password. Use 'lncli create' ...`.
    Leave this window open.
 
-2. Open a **second** SSH session to the Pi. Become the `lnd` user
-   and run `lncli create`:
+2. Open a **second** SSH session to the Pi. Become the `lnd` user:
 
    ```bash test:skip
    sudo su - lnd
+   ```
+
+   Launch the wallet-creation flow:
+
+   ```bash test:skip
    lncli create
    ```
 
@@ -394,10 +476,15 @@ fresh LND.
 Seriously. Write it down before you go any further.
 </Callout>
 
-Once the seed is recorded, exit the second session:
+Once the seed is recorded, leave the `lnd` shell:
 
 ```bash
 exit
+```
+
+Close the SSH session:
+
+```bash
 exit
 ```
 
@@ -419,10 +506,15 @@ exit
 
 ## Start LND under systemd
 
-1. As `admin`, start the service and follow the log:
+1. As `admin`, start the service:
 
    ```bash
    sudo systemctl start lnd
+   ```
+
+   Follow the log:
+
+   ```bash
    sudo journalctl -f -u lnd
    ```
 
@@ -431,19 +523,36 @@ exit
 
 2. Let `admin` use `lncli` without `sudo`. The `admin` user is
    already in the `lnd` group; the remaining permissions tweak is
-   a symlink and a group-read bit on the macaroon:
+   a symlink and a group-read bit on the macaroon.
+
+   Symlink the LND data directory into `admin`'s home:
 
    ```bash test:skip
    ln -s /data/lnd /home/admin/.lnd
+   ```
+
+   Add group-execute on every directory under `data/`:
+
+   ```bash test:skip
    sudo chmod -R g+X /data/lnd/data/
+   ```
+
+   Add group-read on the admin macaroon:
+
+   ```bash test:skip
    sudo chmod g+r /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon
    ```
 
 3. Log out of the SSH session and log back in, group membership
-   only takes effect on a fresh shell. Then smoke-test:
+   only takes effect on a fresh shell. Then smoke-test the node:
 
    ```bash test:skip
    lncli getinfo
+   ```
+
+   And the wider network view:
+
+   ```bash test:skip
    lncli getnetworkinfo
    ```
 
@@ -475,12 +584,18 @@ working Lightning node.
 2. Pick a well-connected peer from
    [Amboss](https://amboss.space) or
    [LightningNetwork+](https://lightningnetwork.plus). A peer URI
-   looks like `pubkey@host:port`. Connect, then open a channel
-   (capacity in sats, explicit fee in sats/vByte from
-   [mempool.space](https://mempool.space)):
+   looks like `pubkey@host:port`.
+
+   Connect to the peer:
 
    ```bash test:skip
    lncli connect 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f@34.239.230.56:9735
+   ```
+
+   Open a channel (capacity in sats, explicit fee in sats/vByte from
+   [mempool.space](https://mempool.space)):
+
+   ```bash test:skip
    lncli openchannel --sat_per_vbyte 8 03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f 200000 0
    ```
 
@@ -507,11 +622,23 @@ cheaters, and because the worst a watchtower can do is fail
 silently, you don't have to trust them.
 
 You already enabled `wtclient.active=true` in `lnd.conf`. Add a
-tower or two:
+tower or two.
+
+Switch to the `lnd` user:
 
 ```bash test:skip
 sudo su - lnd
+```
+
+Add a watchtower (substitute the URI of your choice):
+
+```bash test:skip
 lncli wtclient add 023bad37e5795654cecc69b43599da8bd5789ac633c098253f60494bde602b60bf@iiu4epqzm6cydqhezueenccjlyzrqeruntlzbx47mlmdgfwgtrll66qd.onion:9911
+```
+
+List the configured towers to confirm:
+
+```bash test:skip
 lncli wtclient towers
 ```
 

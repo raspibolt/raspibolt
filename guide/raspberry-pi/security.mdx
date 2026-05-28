@@ -37,8 +37,8 @@ to undo it. Seriously. You don't want to learn this the hard way.
    to save, `Enter` to confirm the filename, and `Ctrl`-`X` to exit.
 
 2. Paste the following. The cipher-suite lines look like alphabet
-   soup, but they're really just a curated list of modern
-   algorithms, copy them as-is and move on:
+   soup, but they're a curated list of modern algorithms, copy them
+   as-is and move on:
 
    ```text
    # RaspiBolt SSH hardening
@@ -64,10 +64,15 @@ to undo it. Seriously. You don't want to learn this the hard way.
 
    No output means the file is valid.
 
-4. Restart the SSH daemon and log out:
+4. Restart the SSH daemon so the new config takes effect:
 
    ```bash
    sudo systemctl restart ssh
+   ```
+
+   Log out of the current session:
+
+   ```bash
    exit
    ```
 
@@ -101,25 +106,46 @@ you add later will open its own port when the time comes.
    the Pi once after installing `ufw` and carry on.
    </Callout>
 
-2. Set default policies, allow SSH with rate limiting, turn off
-   logging, and bring the firewall up, all in one go:
+2. Set the default policies. Deny everything coming in, allow
+   everything going out:
 
    ```bash
    sudo ufw default deny incoming
+   ```
+
+   ```bash
    sudo ufw default allow outgoing
+   ```
+
+   Allow SSH with rate limiting. `ufw limit ssh` blocks any IP making
+   six or more connection attempts within 30 seconds, a first layer
+   of brute-force defence on top of what `fail2ban` does below:
+
+   ```bash
    sudo ufw limit ssh
+   ```
+
+   Silence the firewall logs so they don't clutter `journalctl`:
+
+   ```bash
    sudo ufw logging off
+   ```
+
+   Bring the firewall up:
+
+   ```bash
    sudo ufw enable
    ```
 
-   `ufw limit ssh` blocks any IP making six or more connection
-   attempts within 30 seconds, a first layer of brute-force defence
-   on top of what `fail2ban` does below.
-
-3. Make sure `ufw` comes up at boot, and check the active rules:
+3. Make sure `ufw` comes up at boot:
 
    ```bash
    sudo systemctl enable ufw
+   ```
+
+   Check the active rules:
+
+   ```bash
    sudo ufw status verbose
    ```
 
@@ -176,10 +202,15 @@ Sounds fiddly, but it's two extra pieces and you're done.
    enabled = true
    ```
 
-3. Restart `fail2ban` and confirm the SSH jail is running:
+3. Restart `fail2ban` so it picks up the new config:
 
    ```bash
    sudo systemctl restart fail2ban
+   ```
+
+   Confirm the SSH jail is running:
+
+   ```bash
    sudo fail2ban-client status sshd
    ```
 
@@ -227,19 +258,23 @@ too low for that and throws `too many open files` errors.
    root hard nofile 128000
    ```
 
-2. Make sure PAM actually applies those limits on login. Open each
-   of these files and add a `pam_limits.so` line, right before any
-   trailing comment:
+2. Make sure PAM actually applies those limits on login. Open the
+   first PAM session file:
 
    ```bash
    sudo nano /etc/pam.d/common-session
-   sudo nano /etc/pam.d/common-session-noninteractive
    ```
 
-   Add:
+   Add this line right before any trailing comment:
 
    ```text
    session required                        pam_limits.so
+   ```
+
+   Open the non-interactive companion file and add the same line:
+
+   ```bash
+   sudo nano /etc/pam.d/common-session-noninteractive
    ```
 
 The new limits kick in at the next login.

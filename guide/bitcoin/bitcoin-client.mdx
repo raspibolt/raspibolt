@@ -18,7 +18,7 @@ with it, start it, check in once a day, come back when
 `verificationprogress` is a hair below 1.
 
 <Callout type="info" title="Pi 4 owners">
-A Pi 4 with 8 GB RAM still gets there, just slower, plan for five to
+A Pi 4 with 8 GB RAM still gets there, slower, plan for five to
 seven days for the initial sync and keep the `dbcache` a little lower
 (see below). Anything less than 8 GB of RAM will struggle once LND
 and Electrs join the party; upgrade if you can.
@@ -30,11 +30,16 @@ and Electrs join the party; upgrade if you can.
 sudo, if something ever does manage to break out of the daemon, it
 lands in a sandbox, not on your `admin` account.
 
-1. Create the user and add `admin` to its group so you can read its
-   files without juggling `sudo`:
+1. Create the user without a password and with no GECOS chatter:
 
    ```bash
    sudo adduser --gecos "" --disabled-password bitcoin
+   ```
+
+   Add `admin` to the new `bitcoin` group so you can read its files
+   without juggling `sudo`:
+
+   ```bash
    sudo adduser admin bitcoin
    ```
 
@@ -53,10 +58,28 @@ separate mount you carved out in [System configuration](/docs/raspberry-pi/syste
 A symlink from `/home/bitcoin/.bitcoin` to that location keeps the
 defaults happy while the actual data sits on the fast disk.
 
+Create the data directory on the SSD:
+
 ```bash
 sudo mkdir /data/bitcoin
+```
+
+Give the `bitcoin` user ownership:
+
+```bash
 sudo chown bitcoin:bitcoin /data/bitcoin
+```
+
+Symlink the default location into the SSD path:
+
+```bash
 sudo ln -s /data/bitcoin /home/bitcoin/.bitcoin
+```
+
+Fix the symlink's own ownership (the `-h` flag changes the link, not
+its target):
+
+```bash
 sudo chown -h bitcoin:bitcoin /home/bitcoin/.bitcoin
 ```
 
@@ -66,13 +89,27 @@ Never run a Bitcoin binary you haven't verified. The point of a
 full node is to trust your own software, which means the software
 has to be what the developers actually signed.
 
-1. As `admin`, drop into `/tmp` (cleared on every reboot) and pull
-   the binary, the checksum file, and the signature file:
+1. As `admin`, drop into `/tmp` (cleared on every reboot):
 
    ```bash
    cd /tmp
+   ```
+
+   Download the binary:
+
+   ```bash
    wget %urls.bitcoinDownload%
+   ```
+
+   Download the checksum file:
+
+   ```bash
    wget %urls.bitcoinSha256%
+   ```
+
+   Download the signature on the checksum file:
+
+   ```bash
    wget %urls.bitcoinSha256Sig%
    ```
 
@@ -124,11 +161,21 @@ download server. Verify both, or verify neither.
 
 ## Install the binaries
 
-If checksum and signature are happy, extract and install:
+If checksum and signature are happy, extract the archive:
 
 ```bash
 tar -xvf %files.bitcoinArchive%
+```
+
+Install the binaries into `/usr/local/bin`, owned by root:
+
+```bash
 sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-%versions.bitcoin_core%/bin/*
+```
+
+Confirm the right version is on `PATH`:
+
+```bash
 bitcoin-cli --version
 ```
 
@@ -146,11 +193,21 @@ through its RPC interface. Bitcoin Core doesn't store the password
 in plaintext, it stores a salted hash. A short Python script ships
 with the source tree to generate the config line.
 
-1. As the `bitcoin` user, fetch the helper script:
+1. Switch to the `bitcoin` user:
 
    ```bash
    sudo su - bitcoin
+   ```
+
+   Move into the data directory:
+
+   ```bash
    cd .bitcoin
+   ```
+
+   Fetch the helper script:
+
+   ```bash
    wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/share/rpcauth/rpcauth.py
    ```
 
@@ -300,10 +357,15 @@ failure with a sensible backoff.
    WantedBy=multi-user.target
    ```
 
-4. Enable it (so it runs on boot) and start it now:
+4. Enable it so it runs on boot:
 
    ```bash
    sudo systemctl enable bitcoind.service
+   ```
+
+   Start it now:
+
+   ```bash
    sudo systemctl start bitcoind.service
    ```
 
@@ -403,9 +465,21 @@ before a particular Bitcoin block. Your node can verify those proofs
 against its own chain data, so you're not trusting a third-party
 timestamp server.
 
+Install Python and its build helpers:
+
 ```bash
 sudo apt install python3 python3-dev python3-pip python3-setuptools python3-wheel
+```
+
+Install the OpenTimestamps client from pip:
+
+```bash
 sudo pip3 install opentimestamps-client --break-system-packages
+```
+
+Confirm it landed:
+
+```bash
 ots --version
 ```
 
@@ -423,14 +497,52 @@ The `%versions.bitcoin_core%` token and its derived URL in
 `lib/versions.ts` are the single source of truth in this guide; bump
 that file when a new version lands.
 
+Drop into `/tmp`:
+
 ```bash
 cd /tmp
+```
+
+Download the new release, checksum file, and signature:
+
+```bash
 wget %urls.bitcoinDownload%
+```
+
+```bash
 wget %urls.bitcoinSha256%
+```
+
+```bash
 wget %urls.bitcoinSha256Sig%
+```
+
+Verify the checksum:
+
+```bash
 sha256sum --ignore-missing --check SHA256SUMS
+```
+
+Verify the GPG signatures on the checksum file:
+
+```bash
 gpg --verify SHA256SUMS.asc
+```
+
+Extract the archive:
+
+```bash
 tar -xvf %files.bitcoinArchive%
+```
+
+Install the new binaries:
+
+```bash
 sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-%versions.bitcoin_core%/bin/*
+```
+
+Restart the daemon to pick up the new binary:
+
+```bash
 sudo systemctl restart bitcoind
 ```

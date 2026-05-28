@@ -67,13 +67,33 @@ node broadcasting stale channel state means force-closed channels
 and, in the worst case, lost funds.
 </Callout>
 
-On the old node:
+On the old node, create a mount point for the thumb drive:
 
 ```bash
 sudo mkdir /mnt/thumbdrive
+```
+
+List block devices to find which one is the thumb drive:
+
+```bash
 lsblk -pli
+```
+
+Mount it (adjust `/dev/sdb1` to match what `lsblk` showed):
+
+```bash
 sudo mount /dev/sdb1 /mnt/thumbdrive/
+```
+
+Copy the LND data directory across, preserving ownership and resuming on interruption:
+
+```bash
 sudo rsync -rhvPog --append-verify /data/lnd /mnt/thumbdrive/
+```
+
+Rename the original on the old node so it can never start again by accident:
+
+```bash
 sudo mv /data/lnd /data/lnd-do-not-start-again
 ```
 
@@ -83,14 +103,35 @@ against anything going wrong with the full directory restore.
 ### Restore onto the new node
 
 Finish the v4 setup through the Lightning section, but **don't
-create a wallet** when LND first starts. Stop LND, mount the
-thumb drive, and copy the backup into place:
+create a wallet** when LND first starts.
+
+Stop LND on the new node:
 
 ```bash
 sudo systemctl stop lnd
+```
+
+Mount the thumb drive:
+
+```bash
 sudo mount /dev/sdb1 /mnt/thumbdrive/
+```
+
+Copy the LND data directory into place:
+
+```bash
 sudo rsync -rhvPog --append-verify /mnt/thumbdrive/lnd /data/
+```
+
+Fix ownership so the `lnd` user owns its data:
+
+```bash
 sudo chown -R lnd:lnd /data/lnd
+```
+
+Start LND back up:
+
+```bash
 sudo systemctl start lnd
 ```
 
@@ -173,7 +214,9 @@ IP. Every consumer router can do this; the menu is usually called
 "DHCP reservations" or "static leases".
 
 If your router can't, configure the address directly on the Pi via
-NetworkManager (the default on Debian 13 "Trixie"):
+NetworkManager (the default on Debian 13 "Trixie").
+
+Set the static address, gateway, DNS, and method on the wired connection:
 
 ```bash
 sudo nmcli connection modify "Wired connection 1" \
@@ -181,6 +224,11 @@ sudo nmcli connection modify "Wired connection 1" \
   ipv4.gateway 192.168.1.1 \
   ipv4.dns 192.168.1.1 \
   ipv4.method manual
+```
+
+Bring the connection back up to apply the change:
+
+```bash
 sudo nmcli connection up "Wired connection 1"
 ```
 

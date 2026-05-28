@@ -196,10 +196,15 @@ If something's wrong with `bitcoind`, the quickest way to see what
 is to run it in the foreground, attached to a terminal, where the
 startup output is visible.
 
-Stop the service and start it manually:
+Stop the service:
 
 ```bash
 sudo systemctl stop bitcoind
+```
+
+Start it manually in the foreground:
+
+```bash
 sudo -u bitcoin bitcoind -printtoconsole
 ```
 
@@ -233,8 +238,15 @@ sudo -u bitcoin tail -f /data/bitcoin/debug.log
 Same approach: stop the service, run in the foreground, read the
 startup output carefully.
 
+Stop the service:
+
 ```bash
 sudo systemctl stop lnd
+```
+
+Run LND in the foreground as the `lnd` user:
+
+```bash
 sudo -u lnd lnd
 ```
 

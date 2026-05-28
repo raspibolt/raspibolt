@@ -31,14 +31,24 @@ command.
 
    ```bash
    echo "export LC_ALL=C" >> ~/.bashrc
+   ```
+
+   Reload the shell so the change takes effect in the current session:
+
+   ```bash
    source ~/.bashrc
    ```
 
-2. Refresh the package index and install every available upgrade in
-   one go:
+2. Refresh the package index:
 
    ```bash
-   sudo apt update && sudo apt full-upgrade
+   sudo apt update
+   ```
+
+   Install every available upgrade:
+
+   ```bash
+   sudo apt full-upgrade
    ```
 
 3. Install `git`, you'll need it later to clone source code:
@@ -106,10 +116,15 @@ state, backups, will live under `/data/`. Keeping it outside any
 user's home directory makes permissions obvious and means you can
 move it to a bigger drive later with nothing more than a mount.
 
-Create it once, owned by `admin`:
+Create the directory:
 
 ```bash
 sudo mkdir /data
+```
+
+Give the `admin` user ownership:
+
+```bash
 sudo chown admin:admin /data
 ```
 

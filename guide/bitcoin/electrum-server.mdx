@@ -63,12 +63,27 @@ only way to know the thing running on your node matches what the
 maintainer, [Roman Zeyde](https://github.com/romanz), actually
 released.
 
-1. As `admin`, clone the repo at a specific tag:
+1. As `admin`, create a workspace for Rust builds:
 
    ```bash
    mkdir -p /home/admin/rust
+   ```
+
+   Move into it:
+
+   ```bash
    cd /home/admin/rust
+   ```
+
+   Clone the repo at a specific tag:
+
+   ```bash
    git clone --branch v%versions.electrs% https://github.com/romanz/electrs.git
+   ```
+
+   Move into the source tree:
+
+   ```bash
    cd electrs
    ```
 
@@ -78,14 +93,36 @@ released.
    is itself PGP-signed by his old GPG key, binding the transition.
 
    Register his SSH signing key as a trusted signer for `git` and
-   point git's SSH-signature verification at that file:
+   point git's SSH-signature verification at that file.
+
+   Make sure the git config directory exists:
 
    ```bash
    mkdir -p ~/.config/git
+   ```
+
+   Write Roman's SSH key into the `allowed_signers` file:
+
+   ```bash
    echo 'git@romanzey.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAZVq/3fgkildjN/MqEnhrP5550sDpFzGxMwevr5q/9w' \
      > ~/.config/git/allowed_signers
+   ```
+
+   Tell git to verify signatures via SSH:
+
+   ```bash
    git config --global gpg.format ssh
+   ```
+
+   Point git at the trusted-signers file:
+
+   ```bash
    git config --global gpg.ssh.allowedSignersFile ~/.config/git/allowed_signers
+   ```
+
+   Verify the release tag:
+
+   ```bash
    git verify-tag v%versions.electrs%
    ```
 
@@ -111,6 +148,11 @@ released.
 
    ```bash
    sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
+   ```
+
+   Confirm the right version is on `PATH`:
+
+   ```bash
    electrs --version
    ```
 
@@ -125,10 +167,27 @@ released.
 Like `bitcoind`, Electrs runs as its own user with no shell password
 and a tidy data directory on the SSD.
 
+Create the service user:
+
 ```bash
 sudo adduser --disabled-password --gecos "" electrs
+```
+
+Add it to the `bitcoin` group:
+
+```bash
 sudo adduser electrs bitcoin
+```
+
+Create the data directory on the SSD:
+
+```bash
 sudo mkdir /data/electrs
+```
+
+Give the `electrs` user ownership:
+
+```bash
 sudo chown -R electrs:electrs /data/electrs
 ```
 
@@ -137,10 +196,15 @@ The `bitcoin` group membership is what lets Electrs read
 
 ## Configuration
 
-1. Switch to the `electrs` user and open a fresh config:
+1. Switch to the `electrs` user:
 
    ```bash
    sudo su - electrs
+   ```
+
+   Open a fresh config file:
+
+   ```bash
    nano /data/electrs/electrs.conf
    ```
 
@@ -224,10 +288,15 @@ The `bitcoin` group membership is what lets Electrs read
    WantedBy=multi-user.target
    ```
 
-3. Enable and start:
+3. Enable the service so it starts on boot:
 
    ```bash
    sudo systemctl enable electrs
+   ```
+
+   Start it now:
+
+   ```bash
    sudo systemctl start electrs
    ```
 
@@ -267,11 +336,18 @@ stunnel doesn't do automatic CA issuance the way Caddy does for HTTP.
 You generate a self-signed certificate once and point the config at
 it. This takes a single command:
 
+Generate a 10-year self-signed certificate and matching key:
+
 ```bash
 sudo openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
   -keyout /etc/stunnel/electrs.key \
   -out /etc/stunnel/electrs.crt \
   -subj "/CN=raspibolt.local"
+```
+
+Lock the private key down so only root can read it:
+
+```bash
 sudo chmod 600 /etc/stunnel/electrs.key
 ```
 
@@ -302,10 +378,15 @@ and they remember it from then on.
    key = /etc/stunnel/electrs.key
    ```
 
-3. Enable and start:
+3. Enable the service so it starts on boot:
 
    ```bash
    sudo systemctl enable stunnel4
+   ```
+
+   Restart it to load the new config:
+
+   ```bash
    sudo systemctl restart stunnel4
    ```
 
@@ -347,10 +428,15 @@ running locally too.
    HiddenServicePort 50002 127.0.0.1:50002
    ```
 
-2. Reload Tor and read the generated `.onion` address:
+2. Reload Tor so it picks up the new hidden service:
 
    ```bash
    sudo systemctl reload tor
+   ```
+
+   Read the generated `.onion` address:
+
+   ```bash
    sudo cat /var/lib/tor/hidden_service_electrs/hostname
    ```
 
@@ -362,18 +448,65 @@ running locally too.
 
 Upgrades follow the same pattern as the first build: check the
 [release notes](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md),
-bump `%versions.electrs%` in `lib/versions.ts`, then:
+bump `%versions.electrs%` in `lib/versions.ts`, then walk the steps below.
+
+Move into the source tree:
 
 ```bash
 cd /home/admin/rust/electrs
+```
+
+Discard any build artefacts and stray files:
+
+```bash
 git clean -xfd
+```
+
+Fetch the latest tags from upstream:
+
+```bash
 git fetch
+```
+
+Check out the new release tag:
+
+```bash
 git checkout v%versions.electrs%
+```
+
+Verify the signature on that tag:
+
+```bash
 git verify-tag v%versions.electrs%
+```
+
+Clear cargo's build cache so the new version compiles cleanly:
+
+```bash
 cargo clean
+```
+
+Build the new binary:
+
+```bash
 cargo build --locked --release
+```
+
+Keep a copy of the currently installed binary as a rollback option:
+
+```bash
 sudo cp /usr/local/bin/electrs /usr/local/bin/electrs.old
+```
+
+Install the freshly built binary on top:
+
+```bash
 sudo install -m 0755 -o root -g root -t /usr/local/bin ./target/release/electrs
+```
+
+Restart the service to pick up the new binary:
+
+```bash
 sudo systemctl restart electrs
 ```
 

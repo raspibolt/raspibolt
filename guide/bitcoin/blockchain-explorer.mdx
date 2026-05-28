@@ -43,32 +43,44 @@ it), and Electrs is indexed and answering queries.
 Debian 13 ships Node.js 20; BTC RPC Explorer is tested against
 Node 22. Add the NodeSource repo so `apt upgrade` keeps it current.
 
-1. Add NodeSource and install:
+1. Add the NodeSource repository:
 
    ```bash
    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+   ```
+
+   Install Node.js:
+
+   ```bash
    sudo apt install nodejs
    ```
 
-2. Confirm the version:
+2. Confirm the runtime version:
 
    ```bash
    node --version
+   ```
+
+   Confirm the package manager version:
+
+   ```bash
    npm --version
    ```
 
-   Expected output, a `v22.x` line from `node`, and a `10.x` or newer
-   line from `npm`:
-
-   ```text
-   v22.22.2
-   10.9.7
-   ```
+   Expected output is a `v22.x` line from `node`, and a `10.x` or
+   newer line from `npm`.
 
 ## Create the service user
 
+Create the service user:
+
 ```bash
 sudo adduser --disabled-password --gecos "" btcrpcexplorer
+```
+
+Add it to the `bitcoin` group:
+
+```bash
 sudo adduser btcrpcexplorer bitcoin
 ```
 
@@ -77,21 +89,40 @@ The `bitcoin` group membership is what lets the explorer read
 
 ## Install BTC RPC Explorer
 
-1. Switch to the new user and fetch the latest release tag:
+1. Switch to the new user:
 
    ```bash
    sudo su - btcrpcexplorer
+   ```
+
+   Resolve the latest release tag into a `VERSION` shell variable:
+
+   ```bash
    VERSION=$(curl -sL https://api.github.com/repos/janoside/btc-rpc-explorer/releases/latest | grep -oP '"tag_name": "v\K[^"]+')
+   ```
+
+   Echo it back so you can sanity-check what you're about to install:
+
+   ```bash
    echo "Installing BTC RPC Explorer $VERSION"
    ```
 
-2. Clone the source and pull in dependencies with npm. Expect this
-   to take 10 to 20 minutes on a Pi 5, a lot of native modules get
-   built from source:
+2. Clone the source for that tag:
 
    ```bash
    git clone --branch "v$VERSION" https://github.com/janoside/btc-rpc-explorer.git
+   ```
+
+   Move into the new directory:
+
+   ```bash
    cd btc-rpc-explorer
+   ```
+
+   Pull in dependencies with npm. Expect this to take 10 to 20
+   minutes on a Pi 5, a lot of native modules get built from source:
+
+   ```bash
    npm install
    ```
 
@@ -109,10 +140,15 @@ The explorer reads its config from `.env` in the install directory.
 A heavily commented template ships with the source. You only need to
 change a handful of lines.
 
-1. Copy the template and open it:
+1. Copy the template:
 
    ```bash
    cp .env-sample .env
+   ```
+
+   Open it for editing:
+
+   ```bash
    nano .env
    ```
 
@@ -174,11 +210,23 @@ change a handful of lines.
 ## Run it once by hand
 
 Before handing it to systemd, start it manually to shake out any
-config mistakes:
+config mistakes.
+
+Switch to the service user:
 
 ```bash
 sudo su - btcrpcexplorer
+```
+
+Move into the install directory:
+
+```bash
 cd ~/btc-rpc-explorer
+```
+
+Run the app in the foreground:
+
+```bash
 npm run start
 ```
 
@@ -227,16 +275,24 @@ exit
    WantedBy=multi-user.target
    ```
 
-3. Enable and start:
+3. Enable the service so it starts on boot:
 
    ```bash
    sudo systemctl enable btcrpcexplorer
-   sudo systemctl start btcrpcexplorer
-   sudo journalctl -f -u btcrpcexplorer
    ```
 
-   Watch the log for a "listening on port 3002" line, then
-   `Ctrl`-`C`.
+   Start it now:
+
+   ```bash
+   sudo systemctl start btcrpcexplorer
+   ```
+
+   Follow the log and watch for a "listening on port 3002" line,
+   then `Ctrl`-`C`:
+
+   ```bash
+   sudo journalctl -f -u btcrpcexplorer
+   ```
 
 ## HTTPS on the LAN with Caddy
 
@@ -247,16 +303,43 @@ and issues itself a certificate from its own internal CA.
 
 ### Install Caddy
 
-The official Caddy apt repo is the right source. One-time setup:
+The official Caddy apt repo is the right source. One-time setup.
+
+Install the helper packages needed to add a third-party repo over HTTPS:
 
 ```bash
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
+```
+
+Import Caddy's signing key into a dedicated keyring:
+
+```bash
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' \
   | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+```
+
+Add the Caddy stable apt source:
+
+```bash
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' \
   | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+```
+
+Refresh the package index:
+
+```bash
 sudo apt update
+```
+
+Install Caddy:
+
+```bash
 sudo apt install caddy
+```
+
+Confirm it landed:
+
+```bash
 caddy version
 ```
 
@@ -284,10 +367,15 @@ caddy version
    `tls internal` tells Caddy to mint and manage a self-signed
    certificate from its own CA, no public DNS needed.
 
-3. Reload Caddy and open the firewall:
+3. Reload Caddy so it picks up the new config:
 
    ```bash
    sudo systemctl reload caddy
+   ```
+
+   Open the firewall port:
+
+   ```bash
    sudo ufw allow 4000/tcp comment 'BTC RPC Explorer (Caddy)'
    ```
 
@@ -326,10 +414,15 @@ as a Tor hidden service and visit it through Tor Browser.
    HiddenServicePort 80 127.0.0.1:3002
    ```
 
-2. Reload Tor and fetch the `.onion`:
+2. Reload Tor so it picks up the new hidden service:
 
    ```bash
    sudo systemctl reload tor
+   ```
+
+   Fetch the generated `.onion` address:
+
+   ```bash
    sudo cat /var/lib/tor/hidden_service_btcrpcexplorer/hostname
    ```
 
@@ -339,23 +432,63 @@ as a Tor hidden service and visit it through Tor Browser.
 
 ## Updating BTC RPC Explorer later
 
-1. Stop the service and switch to the app user:
+1. Stop the service:
 
    ```bash
    sudo systemctl stop btcrpcexplorer
+   ```
+
+   Switch to the app user:
+
+   ```bash
    sudo su - btcrpcexplorer
    ```
 
-2. Update to the latest tag:
+2. Move into the install directory:
 
    ```bash
    cd ~/btc-rpc-explorer
+   ```
+
+   Fetch the latest tags:
+
+   ```bash
    git fetch
+   ```
+
+   Discard any local changes:
+
+   ```bash
    git reset --hard HEAD
+   ```
+
+   Resolve the newest version tag into a shell variable:
+
+   ```bash
    VERSION=$(git tag | sort --version-sort | tail -n 1)
+   ```
+
+   Sanity-check the resolved version:
+
+   ```bash
    echo "Upgrading to $VERSION"
+   ```
+
+   Check out that tag:
+
+   ```bash
    git checkout "$VERSION"
+   ```
+
+   Refresh dependencies:
+
+   ```bash
    npm install
+   ```
+
+   Drop back to `admin`:
+
+   ```bash
    exit
    ```
 

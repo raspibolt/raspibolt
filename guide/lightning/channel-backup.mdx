@@ -75,23 +75,54 @@ The sync has to run as the `lnd` user, that's the only account
 that can read `channel.backup`. So the SSH key lives in
 `/home/lnd/.ssh/`.
 
-1. As `admin`, become `lnd` and generate a key (no passphrase,
-   a passphrase would defeat unattended sync):
+1. As `admin`, become `lnd`:
 
    ```bash
    sudo su - lnd
+   ```
+
+   Generate a key (no passphrase, a passphrase would defeat unattended sync):
+
+   ```bash
    ssh-keygen -t ed25519 -f /home/lnd/.ssh/scb-backup -N ""
+   ```
+
+   Print the public key so you can copy it to the remote host:
+
+   ```bash
    cat /home/lnd/.ssh/scb-backup.pub
    ```
 
 2. Copy the public key into the remote host's
-   `authorized_keys`. On the **remote host**, run:
+   `authorized_keys`. On the **remote host**, create the `.ssh`
+   directory if it doesn't exist:
 
    ```bash test:skip
    mkdir -p ~/.ssh
+   ```
+
+   Lock it down:
+
+   ```bash test:skip
    chmod 700 ~/.ssh
+   ```
+
+   Append the public key (replace the placeholder with what `cat`
+   printed on the Pi):
+
+   ```bash test:skip
    echo "ssh-ed25519 AAAA...your-pubkey-here... lnd@raspibolt" >> ~/.ssh/authorized_keys
+   ```
+
+   Lock the file down:
+
+   ```bash test:skip
    chmod 600 ~/.ssh/authorized_keys
+   ```
+
+   Create the target directory for the backups:
+
+   ```bash test:skip
    mkdir -p ~/raspibolt-scb
    ```
 
@@ -204,12 +235,29 @@ activates a matching **service unit**. The two go together.
    ```
 
 3. Enable and start the **path** unit (not the service, systemd
-   activates the service for you on file change):
+   activates the service for you on file change).
+
+   Reload systemd so it sees the new units:
 
    ```bash
    sudo systemctl daemon-reload
+   ```
+
+   Enable the path unit so it starts on boot:
+
+   ```bash
    sudo systemctl enable scb-sync.path
+   ```
+
+   Start it now:
+
+   ```bash
    sudo systemctl start scb-sync.path
+   ```
+
+   Confirm it's active:
+
+   ```bash
    sudo systemctl status scb-sync.path
    ```
 
@@ -268,10 +316,15 @@ level is: fresh Pi, same 24-word seed, latest SCB, pray.
    sudo -u lnd scp backup@10.0.0.50:/home/backup/raspibolt-scb/channel.backup.latest /tmp/channel.backup
    ```
 
-3. Start LND in the foreground as the `lnd` user:
+3. Switch to the `lnd` user:
 
    ```bash test:skip
    sudo su - lnd
+   ```
+
+   Start LND in the foreground:
+
+   ```bash test:skip
    lnd
    ```
 
@@ -279,10 +332,17 @@ level is: fresh Pi, same 24-word seed, latest SCB, pray.
    **with** the SCB attached. The `--recovery_window` tells LND
    how many derivation steps to scan for on-chain activity,
    10000 is plenty for a home node. The `--multi_file` flag
-   tells `lncli create` to also accept an SCB:
+   tells `lncli create` to also accept an SCB.
+
+   Switch to the `lnd` user:
 
    ```bash test:skip
    sudo su - lnd
+   ```
+
+   Launch the wallet-creation flow:
+
+   ```bash test:skip
    lncli create
    ```
 
@@ -326,8 +386,15 @@ close settles at the latest state with both peers agreeing,
 doesn't trigger commit-delay timeouts, and pays lower on-chain
 fees. Planning to retire the Pi or move to new hardware?
 
+List your open channels:
+
 ```bash test:skip
 lncli listchannels
+```
+
+Close each one cooperatively (substitute the funding outpoint and a sensible fee rate):
+
+```bash test:skip
 lncli closechannel --sat_per_vbyte <fee> <funding_txid> <output_index>
 ```
 
