@@ -16,7 +16,7 @@ Add new items at the top of the relevant section. Strike items by moving them to
 
 Items to clear before merging v4 to upstream `raspibolt/raspibolt` master:
 
-- **Tag `v3-final`** on the last v3 commit of upstream master, push, then merge v4. Decision posted as upstream issue (draft at `/tmp/v3-archive-issue.md`, posting blocked by 366-day PAT org policy).
+- **Tag `v3-final`** on the last v3 commit of upstream master, push, then merge v4. Archive plan posted upstream: [raspibolt/raspibolt#1527](https://github.com/raspibolt/raspibolt/issues/1527) (open, awaiting community feedback on whether a rendered v3 site must stay online and where the pointer goes). Resolve that thread before tagging.
 - **Add "Looking for v3?" pointer** in v4 footer linking to `https://github.com/raspibolt/raspibolt/tree/v3-final`.
 - **Test Tailscale install flow on a Pi 5 Trixie** (see Deferred content below).
 
