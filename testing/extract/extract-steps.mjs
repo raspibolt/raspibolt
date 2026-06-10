@@ -191,6 +191,13 @@ function hasTestSkipMeta(meta) {
   return /\btest:skip\b/.test(meta || '');
 }
 
+// `test:append` on a nano+config pair: the guide tells the reader to
+// ADD a line to an existing file (e.g. the PAM stack), so the fusion
+// must emit `tee -a` instead of `tee`, which would replace the file.
+function hasTestAppendMeta(meta) {
+  return /\btest:append\b/.test(meta || '');
+}
+
 // Strip interactive-editor invocations from the interior of a shell
 // block. Used when the block isn't a clean `[sudo] nano PATH` standalone
 // that the nano+config fusion can pick up. Typical offender: a block
@@ -239,7 +246,8 @@ function emitInSession(blocks, i, out) {
       const next = blocks[i + 1];
       if (isContentBlock(next)) {
         const path = nanoMatch[1];
-        out.push(`tee ${path} > /dev/null <<'__EOF_CFG__'`);
+        const teeCmd = hasTestAppendMeta(b.meta) ? 'tee -a' : 'tee';
+        out.push(`${teeCmd} ${path} > /dev/null <<'__EOF_CFG__'`);
         for (const l of next.value.replace(/\n+$/, '').split('\n')) out.push(l);
         out.push('__EOF_CFG__');
         return 2;
@@ -356,8 +364,9 @@ function emitScript(pageRel, blocks, frontmatter) {
             stepIdx += 1;
             continue;
           }
-          lines.push(`${header} (fused nano+config → sudo tee ${path})`);
-          lines.push(`sudo tee ${path} > /dev/null <<'__EOF_AUTOGEN__'`);
+          const teeCmd = hasTestAppendMeta(b.meta) ? 'tee -a' : 'tee';
+          lines.push(`${header} (fused nano+config → sudo ${teeCmd} ${path})`);
+          lines.push(`sudo ${teeCmd} ${path} > /dev/null <<'__EOF_AUTOGEN__'`);
           for (const l of next.value.replace(/\n+$/, '').split('\n')) lines.push(l);
           lines.push('__EOF_AUTOGEN__');
           lines.push('');

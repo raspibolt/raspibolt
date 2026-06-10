@@ -114,7 +114,7 @@ if ! "$SSH" 'true' 2>/dev/null; then
   echo "[run] target '$TARGET' not reachable via $SSH" >&2
   case "$TARGET" in
     vm) echo "[run] hint: run testing/vm/up.sh first" >&2 ;;
-    pi) echo "[run] hint: check RASPIBOLT_PI_HOST, ssh key, and that the Pi accepts $USER@host" >&2 ;;
+    pi) echo "[run] hint: check RASPIBOLT_PI_HOST, ssh key, and that the Pi accepts ${RASPIBOLT_PI_USER:-admin}@${RASPIBOLT_PI_HOST:-<host>}" >&2 ;;
   esac
   exit 1
 fi

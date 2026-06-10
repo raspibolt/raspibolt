@@ -261,7 +261,7 @@ too low for that and throws `too many open files` errors.
 2. Make sure PAM actually applies those limits on login. Open the
    first PAM session file:
 
-   ```bash
+   ```bash test:append
    sudo nano /etc/pam.d/common-session
    ```
 
@@ -271,10 +271,16 @@ too low for that and throws `too many open files` errors.
    session required                        pam_limits.so
    ```
 
-   Open the non-interactive companion file and add the same line:
+   Open the non-interactive companion file:
 
-   ```bash
+   ```bash test:append
    sudo nano /etc/pam.d/common-session-noninteractive
+   ```
+
+   Add the same line:
+
+   ```text
+   session required                        pam_limits.so
    ```
 
 The new limits kick in at the next login.

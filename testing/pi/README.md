@@ -1,6 +1,6 @@
 # Pi target: real-hardware walkthrough
 
-Same harness as `testing/vm/`, just pointed at an actual Raspberry Pi over SSH instead of the local systemd-in-docker container. Catches ARM64-specific issues and validates the guide against real hardware.
+Same harness as `testing/vm/`, pointed at an actual Raspberry Pi over SSH instead of the local systemd-in-docker container. Catches ARM64-specific issues and validates the guide against real hardware.
 
 ## When to use this
 
@@ -28,18 +28,19 @@ If you'd rather not detach the SSD, `/data/bitcoin` survives the walk anyway (`m
 
 ## Prep on the dev-machine side
 
-Set three env vars before running:
+Set these env vars before running:
 
 ```bash
 export RASPIBOLT_PI_HOST=raspibolt.local      # or the IP
 export RASPIBOLT_PI_USER=admin                # default, can omit
+export RASPIBOLT_PI_PORT=22                   # default, can omit
 export RASPIBOLT_PI_KEY=~/.ssh/id_ed25519     # only if not in ssh-agent
 ```
 
 Smoke-test the SSH wrapper:
 
 ```bash
-testing/pi/ssh.sh 'uname -a && cat /etc/os-release | grep PRETTY'
+testing/pi/ssh.sh 'uname -a && grep PRETTY /etc/os-release'
 ```
 
 You want to see `aarch64 ... GNU/Linux` and `Debian GNU/Linux 13 (trixie)`.
@@ -65,3 +66,9 @@ The report lands at `testing/runs/<timestamp>/SUMMARY.md` with per-page exit cod
 ## After the walk
 
 The Pi is in a fully installed state. To re-run the walk, fresh-flash again. The SSD with the blockchain data does not need to be touched between runs.
+
+A fresh flash regenerates the Pi's SSH host keys, so the next connection fails with `REMOTE HOST IDENTIFICATION HAS CHANGED`. Clear the stale entry first:
+
+```bash
+ssh-keygen -R "$RASPIBOLT_PI_HOST"
+```
