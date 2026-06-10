@@ -102,5 +102,5 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: vale (advisory)
-        run: vale --no-exit guide/**/*.mdx || true
+      - name: vale
+        run: vale guide/

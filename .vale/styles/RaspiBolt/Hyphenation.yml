@@ -8,7 +8,6 @@ swap:
   "on chain": "on-chain"
   "off chain": "off-chain"
   "offchain": "off-chain"
-  "plug-in": "plugin"
-  "plug in": "plugin"
+  "plug-in": "plugin"   # noun only; "plug in"/"plug into" as verbs are fine
   "set up(?= the| your| a )": "set up"   # verb form stays two words
   "setup(?= the| your| a )": "set up"    # "setup" as verb → "set up"

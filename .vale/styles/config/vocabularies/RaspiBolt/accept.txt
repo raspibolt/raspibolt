@@ -1,12 +1,15 @@
-# Accepted technical terms — single canonical prose form per entry.
-# Code-only terms (bitcoind, lncli, etc.) appear in code scopes and are ignored.
+# Accepted technical terms - single canonical prose form per entry.
+# Code-only terms (bitcoind, lncli, etc.) appear in code scopes and are ignored,
+# but several leak into prose (user names, page titles), so they're listed too.
+# Entries are regexes; bracketed first letters accept both cases where the
+# lowercase form is legitimate prose (e.g. "real bitcoin", "the mempool").
 
 # Bitcoin / node
-Bitcoin
-Blockchain
-LND
-Electrs
-RTL
+[Bb]itcoin
+[Bb]lockchain
+[Ll][Nn][Dd]
+[Ee]lectrs
+[Rr][Tt][Ll]
 Bech32
 SegWit
 UTXO
@@ -16,8 +19,12 @@ HTLCs
 RPC
 PSBT
 xpub
+xpubs
 zpub
-mempool
+[Pp]ubkey(s)?
+[Mm]empool
+maxmempool
+dbcache
 mainnet
 testnet
 regtest
@@ -29,18 +36,51 @@ preimage
 hashlock
 CLTV
 CSV
+bitcoind
+lncli
+sats
+[Ss]atoshis?
+reindex
+reindexing
+rescanning
+[Rr]esync
 
 # Lightning
 CLN
 Eclair
-watchtower
-pathfinding
-BOLT
-BOLTs
-keysend
+[Ww]atchtower(s)?
+[Pp]athfinding
+[Bb][Oo][Ll][Tt]s?
+[Kk]eysend
 MPP
 AMP
 hodl
+wumbo
+[Gg]riefing
+rebalance
+rebalancer
+rebalances
+rebalancing
+restorechanbackup
+lndconnect
+lnbalance
+lnchannels
+lntop
+regolancer
+CLBoss
+LNbits
+LNDg
+[Aa]mboss
+
+# Wallets / ecosystem
+Trezor
+Coldcard
+Sparrow
+Bisq
+Samourai
+Orbot
+UTXOracle
+Safu
 
 # Cryptography
 secp256k1
@@ -49,6 +89,10 @@ SHA-256
 ECDSA
 Schnorr
 Taproot
+[Cc]leartext
+[Pp]laintext
+[Pp]asswordless
+[Aa]irgapped
 
 # System / Linux
 systemd
@@ -56,9 +100,12 @@ journalctl
 UFW
 fail2ban
 SSH
+sshd
 GPG
 PGP
+sudo
 sudoer
+cron
 crontab
 tmpfs
 fstab
@@ -66,6 +113,39 @@ sysctl
 ulimit
 NOPASSWD
 logrotate
+nano
+htop
+openssl
+qrencode
+scp
+rsyncs?
+[Ss]wapfile
+[Ss]ymlink('s)?
+keyrings?
+[Tt]oolchain(s)?
+[Bb]ootloader
+hdparm
+zram
+[Cc]onfig(s)?
+[Rr]epo(s)?
+[Hh]ostname(s)?
+[Ll]oopback
+[Ss]ubnet(s)?
+[Uu]nban
+mtime
+npm
+git('s)?
+[Ss]ideload(ed|ing)?
+[Ss]criptable
+
+# Hardware
+NVMe
+SSDs
+chipsets?
+JMicron
+ASMedia
+Odroid
+[Rr]eflash(ing|ed)?
 
 # Networking / Tor
 Tor
@@ -74,10 +154,74 @@ clearnet
 IPv4
 IPv6
 FQDN
+[Tt]ailscale('s)?
+tailnet
+Headscale
+[Ii]nternet('s)?
+[Rr]eachability
+[Ll]ookups?
 
 # Software
+Caddy('s)?
+Caddyfile
+stunnel('s)?
+Imager
+Trixie
+MariaDB
+NodeSource
+Fumadocs
+Umami
 Vagrantfile
 Quarto
 
 # RaspiBolt
-RaspiBolt
+[Rr]aspi[Bb]olt
+Blockaccino
+[Ww]alkthrough(s)?
+callouts?
+callee
+maintainer('s)?
+[Uu]nderperform
+[Uu]ncheck
+cypherpunk
+cryptocurrencies
+doxx
+frikkin
+xkcd
+
+# Round-2 additions
+APIs
+PSBTs
+LEDs
+[Dd]atacenter
+[Bb]ootable
+[Bb]ookmarkable
+[Bb]ackports
+[Bb]ackoff
+[Bb]ackgrounded
+[Uu]ncomment(ed|ing)?
+[Aa]utostart
+[Dd]earmor
+[Cc]rypto
+Dojo
+Litecoin
+Blockstream
+Boltz
+NGINX('s)?
+Angular('s)?
+Electrum('s)?
+
+# People
+Stadicus
+Roasbeef('s)?
+Osuntokun
+Olaoluwa
+Openoms
+Lopp
+Jeffress
+Culianu
+Calin
+Carsten
+Bosworth
+Suheb
+Zeyde

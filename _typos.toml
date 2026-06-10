@@ -24,6 +24,8 @@
 
 [files]
 extend-exclude = [
+  # Vale vocab entries are regex fragments, not words
+  ".vale/styles/config/vocabularies/**",
   "resources/**",
   "images/**",
   "node_modules/**",

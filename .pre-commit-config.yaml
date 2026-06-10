@@ -27,7 +27,7 @@ repos:
         language: system
         entry: typos
         types: [text]
-        exclude: '^(resources/|images/|node_modules/|\.source/|out/|\.next/)'
+        exclude: '^(resources/|images/|node_modules/|\.source/|out/|\.next/|\.vale/styles/config/vocabularies/)'
 
       # ── Markdown (.mdx content only) ───────────────────────────────────────
       - id: markdownlint-cli2
@@ -60,10 +60,9 @@ repos:
         files: '\.(ts|tsx|js|jsx|mjs|cjs|json|ya?ml|css|md)$'
         exclude: '^(package-lock\.json|node_modules/|\.source/|out/|\.next/)'
 
-      # ── Prose style (content only, advisory, does not block commit) ───────
+      # ── Prose style (content only, blocking; vocab in .vale/styles) ───────
       - id: vale
         name: 'Prose (vale)'
         language: system
-        entry: bash -c 'vale "$@"; exit 0' --
+        entry: vale
         files: '^guide/.*\.mdx$'
-        exclude: '^guide/(bonus|troubleshooting|faq)'
