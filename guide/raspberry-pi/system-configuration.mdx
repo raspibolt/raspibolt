@@ -99,7 +99,7 @@ Anything above **100 MB/s** is fine for a full node. If you see
 numbers below 50 MB/s, the enclosure is probably falling back to UAS
 mode with a buggy driver, a well-known problem with certain chipsets
 (hello again, JMicron). The
-[Fix bad USB3 performance](../troubleshooting#fix-bad-usb3-performance)
+[USB SSD is too slow](/docs/troubleshooting#usb-ssd-is-too-slow)
 section in Troubleshooting walks through disabling UAS for a specific
 drive.
 
