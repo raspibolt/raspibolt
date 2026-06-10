@@ -105,7 +105,7 @@ These are hard rules. They exist because each of them is a reliable "this was wr
 
 ### MDX syntax (Fumadocs)
 
-**Software versions and download URLs.** Use `%scope.key%` tokens. A remark plugin (see `lib/remark-variables.ts`) resolves them at build time from `lib/versions.ts`, the single source of truth:
+**Software versions and download URLs.** Use `%scope.key%` tokens. A remark plugin (see `lib/remark-variables.ts`) resolves them at build time from `lib/versions.ts` (raw versions in `lib/versions.json`):
 
 ```
 %versions.bitcoin_core%     → "31.0"
@@ -113,7 +113,7 @@ These are hard rules. They exist because each of them is a reliable "this was wr
 %urls.bitcoinDownload%      → "https://bitcoincore.org/bin/bitcoin-core-31.0/bitcoin-31.0-aarch64-linux-gnu.tar.gz"
 ```
 
-Tokens work inside fenced code blocks, inline code, and flowing text. To add a new version or derived filename, edit `lib/versions.ts`. Every page re-renders with the new string.
+Tokens work inside fenced code blocks, inline code, and flowing text. To bump a version, edit `lib/versions.json`; to add a derived filename or URL, edit `lib/versions.ts`. Every page re-renders with the new string.
 
 **Callouts.** Fumadocs' `<Callout>` component:
 
@@ -233,7 +233,6 @@ Before pushing, verify:
 ```
 guide/                     MDX content; contributors work here
   meta.json                Root sidebar order
-  index.mdx                /docs landing
   raspberry-pi/            RPi setup section
     meta.json              Section page order
     *.mdx
@@ -248,7 +247,8 @@ src/                       Next.js app (layouts, components, routes)
   components/              React components
   lib/
 lib/                       Plugins & helpers
-  versions.ts              Single source of truth for software versions
+  versions.json            Raw software version strings (edit here)
+  versions.ts              Derived filenames + URLs, token lookup
   remark-variables.ts      Build-time %token% replacement
 source.config.ts           Fumadocs MDX collection config
 next.config.mjs            Next.js config (static export)
@@ -266,7 +266,7 @@ scripts/
 
 ## Software Versions
 
-Defined in `lib/versions.ts` as the single source of truth. Update there first, then check `testing/test-runner.sh` assertions.
+Raw version strings live in `lib/versions.json`; derived filenames and URLs are composed in `lib/versions.ts`. To bump a version, edit `versions.json` first, then check `testing/test-runner.sh` assertions.
 
 | Software | Token |
 |----------|-------|
@@ -274,5 +274,7 @@ Defined in `lib/versions.ts` as the single source of truth. Update there first, 
 | LND | `%versions.lnd%` |
 | Electrs | `%versions.electrs%` |
 | RTL | `%versions.rtl%` |
+| Mempool | `%versions.mempool%` |
+| Node.js | `%versions.nodejs%` |
 
-Derived download filenames (`%files.bitcoinArchive%`, etc.) and full URLs (`%urls.bitcoinDownload%`, etc.) are also defined in `lib/versions.ts`. Edit the template once, every page updates.
+Derived download filenames (`%files.bitcoinArchive%`, etc.) and full URLs (`%urls.bitcoinDownload%`, etc.) are defined in `lib/versions.ts`. Edit the template once, every page updates. The extractor (`testing/extract/extract-steps.mjs`) mirrors the derived tables; keep both in sync when adding tokens.

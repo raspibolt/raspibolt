@@ -31,7 +31,7 @@ guide/
 - **Versions and download URLs** use tokens like `%versions.bitcoin_core%`, `%files.bitcoinArchive%`, `%urls.bitcoinDownload%`. Definitions live in [`lib/versions.json`](./lib/versions.json) (raw versions) and [`lib/versions.ts`](./lib/versions.ts) (derived filenames + URLs). A remark plugin resolves them at build time, even inside code fences.
 - **Callouts** use Fumadocs' `<Callout type="info|warn|success|error">...</Callout>`.
 - **Internal links** use bare paths: `/docs/raspberry-pi/preparations`, no file extension.
-- **Code blocks** always specify a language (`bash`, `text`, `ini`, etc.) and group a sequence of commands into one block so the copy button grabs the whole lot.
+- **Code blocks** always specify a language (`bash`, `text`, `ini`, etc.) and hold **one shell command each**, so the copy button hands the reader exactly one paste-ready command. Heredocs, pipelines, and reference lists stay together; see `CLAUDE.md` for the exceptions.
 
 See [`CLAUDE.md`](./CLAUDE.md) for the full voice and syntax guidelines.
 
