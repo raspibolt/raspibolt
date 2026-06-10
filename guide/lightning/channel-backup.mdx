@@ -329,10 +329,10 @@ level is: fresh Pi, same 24-word seed, latest SCB, pray.
    ```
 
 4. In a second session, create the wallet from the existing seed
-   **with** the SCB attached. The `--recovery_window` tells LND
-   how many derivation steps to scan for on-chain activity,
-   10000 is plenty for a home node. The `--multi_file` flag
-   tells `lncli create` to also accept an SCB.
+   **with** the SCB attached. `lncli create` walks you through
+   this interactively: it asks for the seed, an optional address
+   look-ahead (how many derivation steps LND scans for on-chain
+   activity; 10000 is plenty for a home node), and the SCB file.
 
    Switch to the `lnd` user:
 

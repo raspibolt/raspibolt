@@ -37,9 +37,10 @@ location. Same pattern you used for `bitcoind`.
    sudo adduser --disabled-password --gecos "" lnd
    ```
 
-   Add it to the `bitcoin` and `debian-tor` groups so it can read
-   `bitcoin.conf` for auto-RPC and Tor's cookie file for the control
-   port:
+   Add it to the `debian-tor` group so it can read Tor's cookie
+   file for the control port, and to the `bitcoin` group (the
+   standard grouping on this node; the RPC credentials themselves
+   go into `lnd.conf` below):
 
    ```bash
    sudo usermod -a -G bitcoin,debian-tor lnd
@@ -286,8 +287,6 @@ chain backend, Tor, channel policy, watchtower client, all of it.
    tlsdisableautofill=true
 
    # Channel defaults
-   bitcoin.basefee=1000
-   bitcoin.feerate=1
    minchansize=100000
    accept-keysend=true
    accept-amp=true
@@ -305,6 +304,9 @@ chain backend, Tor, channel policy, watchtower client, all of it.
    bitcoin.active=true
    bitcoin.mainnet=true
    bitcoin.node=bitcoind
+   # Default routing fees for new channels
+   bitcoin.basefee=1000
+   bitcoin.feerate=1
 
    [Bitcoind]
    bitcoind.rpchost=127.0.0.1:8332
@@ -329,8 +331,10 @@ chain backend, Tor, channel policy, watchtower client, all of it.
    wtclient.active=true
    ```
 
-   Replace `PASSWORD_B_REPLACE_ME` with the `rpcpass` from your
-   `bitcoin.conf` (password `[B]` from the Bitcoin section).
+   Replace `PASSWORD_B_REPLACE_ME` with password `[B]`, the same
+   password you fed to `rpcauth.py` when setting up Bitcoin Core
+   (`bitcoin.conf` only stores its salted hash, so you won't find
+   the cleartext there).
 
 <Callout type="info" title="Stream isolation, and why we skip it for bitcoind">
 `tor.streamisolation=true` gives every outbound Lightning
@@ -531,7 +535,7 @@ exit
    ln -s /data/lnd /home/admin/.lnd
    ```
 
-   Add group-execute on every directory under `data/`:
+   Add group-execute on every directory under `/data/lnd/data/`:
 
    ```bash test:skip
    sudo chmod -R g+X /data/lnd/data/
@@ -567,6 +571,13 @@ seed is on paper, and `lncli` works from `admin`. You have a
 working Lightning node.
 
 ## Fund the node and open a channel
+
+<Callout type="info" title="Before you open channels in anger">
+Set up [Channel backup](/docs/lightning/channel-backup) **before**
+you open your first real channel. The backup is only useful if it
+exists when you need it, and you need it as soon as the first
+channel lands.
+</Callout>
 
 1. Generate a native-SegWit address and send a small amount of
    on-chain sats to it from another wallet:
@@ -604,13 +615,6 @@ working Lightning node.
    ```bash test:skip
    lncli listchannels
    ```
-
-<Callout type="info" title="Before you open channels in anger">
-Set up [Channel backup](/docs/lightning/channel-backup) **before**
-you open your first real channel. The backup is only useful if it
-exists when you need it, and you need it as soon as the first
-channel lands.
-</Callout>
 
 ## Add watchtowers
 
