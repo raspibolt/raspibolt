@@ -24,7 +24,7 @@ gets its own callouts wherever the story differs.
 | Cable        | Short USB 3 cable rated for SSDs (often included with the enclosure) |
 | Case         | Optional, but recommended for protection                             |
 
-<Screenshot src="/images/raspberry-pi_hardware.png" alt="Raspberry Pi 5 with SSD, power supply, and cooling — the full hardware kit" />
+<Screenshot src="/images/raspberry-pi_hardware.png" alt="Raspberry Pi 5 with SSD, power supply, and cooling, the full hardware kit" />
 
 No microSD card? Correct, you'll boot the operating system directly
 from the SSD. It's faster, more reliable, and one fewer component to

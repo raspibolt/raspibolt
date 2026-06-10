@@ -98,7 +98,7 @@ export default function StyleguidePage() {
       <Section id="typography" label="Scale" title="Typography">
         <p className="text-fd-muted-foreground max-w-2xl">
           Inter variable for everything. Tight tracking on display headings (<code>-0.025em</code>{' '}
-          for h1, <code>-0.015em</code> for h2–h4). Mono fallback is the system stack.
+          for h1, <code>-0.015em</code> for h2-h4). Mono fallback is the system stack.
         </p>
         <div className="mt-8 space-y-8">
           <TypeSample

@@ -1,16 +1,16 @@
 /* ─────────────────────────────────────────────────────────────
- * RaspiBolt — design tokens
+ * RaspiBolt - design tokens
  *
  * Amber-first palette, consistent with the landing page.
  * Overrides Fumadocs' default tokens (would otherwise pull in
  * neutral.css). All values here are the canonical source of
- * truth — component styles should never hardcode colors.
+ * truth - component styles should never hardcode colors.
  * ──────────────────────────────────────────────────────────── */
 
 @import 'fumadocs-ui/css/lib/default-colors.css';
 
 @theme {
-  /* Typography — Geist everywhere. Variables come from next/font/google
+  /* Typography - Geist everywhere. Variables come from next/font/google
    * in src/app/layout.tsx; Tailwind's font-sans / font-mono / font-serif
    * utilities resolve to these.
    */
@@ -23,7 +23,7 @@
 }
 
 @theme {
-  /* Light — warm off-white, amber primary, espresso text */
+  /* Light - warm off-white, amber primary, espresso text */
   --color-fd-background: hsl(35, 30%, 98%);
   --color-fd-foreground: hsl(30, 40%, 10%);
 
@@ -57,7 +57,7 @@
   --color-rb-orange-500: hsl(25, 95%, 53%); /* accent */
   --color-rb-orange-600: hsl(22, 95%, 48%);
 
-  /* Raspberry Pi brand red (#C51A4A) — hardware callouts, Pi-specific accents */
+  /* Raspberry Pi brand red (#C51A4A) - hardware callouts, Pi-specific accents */
   --color-rb-raspberry: hsl(339, 76%, 44%);
   --color-rb-raspberry-muted: hsl(339, 76%, 96%);
 
@@ -67,7 +67,7 @@
 }
 
 .dark {
-  /* Dark — deep warm near-black, brighter amber */
+  /* Dark - deep warm near-black, brighter amber */
   --color-fd-background: hsl(25, 20%, 7%);
   --color-fd-foreground: hsl(35, 20%, 94%);
 

@@ -19,7 +19,7 @@ import { appDescription, appName, appTagline } from '@/lib/shared';
 // doesn't append a redundant suffix on the landing page. OG and Twitter
 // metadata inherit from the root layout; no override needed here.
 export const metadata: Metadata = {
-  title: { absolute: `${appName} — ${appTagline}` },
+  title: { absolute: `${appName} - ${appTagline}` },
   description: appDescription,
   alternates: { canonical: '/' },
 };
@@ -301,9 +301,9 @@ export default function HomePage() {
       <footer className="border-fd-border border-t">
         <div className="mx-auto max-w-6xl px-6 py-6 text-center">
           <p className="text-fd-muted-foreground text-xs leading-relaxed">
-            Copyright (c) 2017&#8209;2020 Stadicus
+            Copyright (c) 2017-2020 Stadicus
             <br />
-            Copyright (c) 2021&#8209;{new Date().getFullYear()} RaspiBolt contributors
+            Copyright (c) 2021-{new Date().getFullYear()} RaspiBolt contributors
           </p>
         </div>
       </footer>

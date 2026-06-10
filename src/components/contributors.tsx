@@ -18,7 +18,7 @@ export function Contributors({ limit = 20 }: { limit?: number }) {
           href={c.html_url}
           target="_blank"
           rel="noopener noreferrer"
-          title={`${c.login} — ${c.contributions} contribution${c.contributions === 1 ? '' : 's'}`}
+          title={`${c.login} - ${c.contributions} contribution${c.contributions === 1 ? '' : 's'}`}
           className="hover:bg-fd-accent group flex flex-col items-center gap-1.5 rounded-md p-2 transition-colors"
         >
           {/* Plain <img> on purpose: next.config.mjs has images.unoptimized=true

@@ -4,14 +4,14 @@ Build your own self-sovereign Bitcoin and Lightning node on a Raspberry Pi.
 
 - **Published guide:** <https://raspibolt.org>
 - **v4 staging preview:** <https://stadicus.github.io/RaspiBolt/> *(auto-deploys from `feature/v4-rewrite`)*
-- **Project history and decisions:** [`DECISIONS.md`](./DECISIONS.md) — why the stack, content, and tooling choices are what they are
+- **Project history and decisions:** [`DECISIONS.md`](./DECISIONS.md): why the stack, content, and tooling choices are what they are
 - **Open decisions & deferred work:** [`TODO.md`](./TODO.md)
 
 ---
 
 ## Contributing content
 
-All guide content lives in [`guide/`](./guide) as `.mdx` files — standard Markdown with a few React components (Callouts, Cards). You can edit any page directly in the GitHub UI. No Next.js knowledge required.
+All guide content lives in [`guide/`](./guide) as `.mdx` files, standard Markdown with a few React components (Callouts, Cards). You can edit any page directly in the GitHub UI. No Next.js knowledge required.
 
 ```
 guide/
@@ -20,7 +20,7 @@ guide/
 ├── raspberry-pi/
 │   ├── meta.json           Section page order
 │   ├── preparations.mdx
-│   └── …
+│   └── ...
 ├── bitcoin/
 ├── lightning/
 └── bonus/
@@ -29,8 +29,8 @@ guide/
 ### Writing conventions
 
 - **Versions and download URLs** use tokens like `%versions.bitcoin_core%`, `%files.bitcoinArchive%`, `%urls.bitcoinDownload%`. Definitions live in [`lib/versions.json`](./lib/versions.json) (raw versions) and [`lib/versions.ts`](./lib/versions.ts) (derived filenames + URLs). A remark plugin resolves them at build time, even inside code fences.
-- **Callouts** use Fumadocs' `<Callout type="info|warn|success|error">…</Callout>`.
-- **Internal links** use bare paths: `/docs/raspberry-pi/preparations` — no file extension.
+- **Callouts** use Fumadocs' `<Callout type="info|warn|success|error">...</Callout>`.
+- **Internal links** use bare paths: `/docs/raspberry-pi/preparations`, no file extension.
 - **Code blocks** always specify a language (`bash`, `text`, `ini`, etc.) and group a sequence of commands into one block so the copy button grabs the whole lot.
 
 See [`CLAUDE.md`](./CLAUDE.md) for the full voice and syntax guidelines.
@@ -128,7 +128,7 @@ Vale rules are in [`.vale/styles/RaspiBolt/`](./.vale/styles/RaspiBolt); accepte
 ```
 src/                  Next.js app (layouts, routes, components)
 lib/
-  versions.json       Software versions — edit here, site re-renders
+  versions.json       Software versions: edit here, site re-renders
   versions.ts         Derived filenames + URLs
   remark-variables.ts Build-time %token% replacement
 testing/
@@ -140,7 +140,7 @@ testing/
 
 ### Software versions (v4 target)
 
-Edit [`lib/versions.json`](./lib/versions.json) to update — every page re-renders on next build.
+Edit [`lib/versions.json`](./lib/versions.json) to update; every page re-renders on next build.
 
 | Software | Version |
 |----------|---------|

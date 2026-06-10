@@ -148,9 +148,9 @@ privacy problems, different tools.
 
 Start at the top and walk down:
 
-1. [Hardware](/docs/raspberry-pi) — Pi, SSD, OS, SSH, firewall, Tor, Tailscale.
-2. [Bitcoin](/docs/bitcoin) — Bitcoin Core, Electrs, BTC RPC Explorer, Sparrow.
-3. [Lightning](/docs/lightning) — LND, RTL, Zeus, channel backup.
+1. [Hardware](/docs/raspberry-pi): Pi, SSD, OS, SSH, firewall, Tor, Tailscale.
+2. [Bitcoin](/docs/bitcoin): Bitcoin Core, Electrs, BTC RPC Explorer, Sparrow.
+3. [Lightning](/docs/lightning): LND, RTL, Zeus, channel backup.
 
 If anything on the map surprised you, the matching install page has
 the why and the how.

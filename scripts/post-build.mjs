@@ -15,10 +15,10 @@ const html = `<!DOCTYPE html>
 <title>RaspiBolt</title>
 </head>
 <body>
-<p>Redirecting to <a href="${target}">${target}</a>…</p>
+<p>Redirecting to <a href="${target}">${target}</a>...</p>
 </body>
 </html>
 `;
 
 writeFileSync(resolve(outDir, 'index.html'), html, 'utf8');
-console.log(`wrote out/docs/index.html → ${target}`);
+console.log(`wrote out/docs/index.html -> ${target}`);

@@ -66,7 +66,7 @@ article#nd-page {
 }
 
 /* Fumadocs hardcodes md:pt-8 / xl:pt-14 on article#nd-page (the grid-area:main
- * item). Override directly — NOT via :has() which would target the grid
+ * item). Override directly - NOT via :has() which would target the grid
  * container and shift the sidebar down too.
  */
 @media (min-width: 768px) {
@@ -123,7 +123,7 @@ article#nd-page a.rounded-lg.border.p-4.text-sm {
   background-color: var(--color-fd-card);
 }
 
-/* Inline code — amber tint so it stands out from body text */
+/* Inline code - amber tint so it stands out from body text */
 article :not(pre) > code {
   background-color: color-mix(in srgb, var(--color-fd-primary) 10%, transparent);
   color: color-mix(in srgb, var(--color-fd-foreground) 85%, var(--color-fd-primary));
@@ -134,7 +134,7 @@ article :not(pre) > code {
   font-size: 0.88em;
 }
 
-/* Prose links — warmer underline */
+/* Prose links - warmer underline */
 article a {
   text-decoration-color: color-mix(in srgb, var(--color-fd-primary) 40%, transparent);
   text-underline-offset: 3px;
@@ -163,7 +163,7 @@ aside[class*='grid-area:toc'] a[data-active='true']::before {
   background: var(--color-fd-primary);
 }
 
-/* Keyboard keys — subtle 3D depth via a darker border-bottom. Amber-tinted
+/* Keyboard keys - subtle 3D depth via a darker border-bottom. Amber-tinted
  * like the inline code but smaller and with a sans-mono font so "Ctrl+C"
  * looks like a physical key, not a code token.
  */
@@ -193,7 +193,7 @@ article kbd {
   flex: 1;
 }
 
-/* Nav height — Fumadocs hardcodes h-14 (3.5rem / 56px) on both the outer
+/* Nav height - Fumadocs hardcodes h-14 (3.5rem / 56px) on both the outer
  * <header> and the inner <nav>. Override both to give the logo more room.
  * Remove the max-width / auto-centering on the inner nav so the logo stays
  * at x=px-4 (16px) matching the docs sidebar logo at all viewport widths.

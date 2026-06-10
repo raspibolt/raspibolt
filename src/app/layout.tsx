@@ -15,7 +15,7 @@ const umamiWebsiteId = isProductionSite
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${appName} — ${appTagline}`,
+    default: `${appName} - ${appTagline}`,
     template: `%s · ${appName}`,
   },
   description: appDescription,
@@ -37,14 +37,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: appName,
-    title: `${appName} — ${appTagline}`,
+    title: `${appName} - ${appTagline}`,
     description: appDescription,
     url: siteUrl,
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${appName} — ${appTagline}`,
+    title: `${appName} - ${appTagline}`,
     description: appDescription,
     creator: '@stadicus',
   },
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Geist everywhere — same family for sans and mono keeps the site
+// Geist everywhere - same family for sans and mono keeps the site
 // visually coherent. Exposed as CSS variables so Tailwind's font-sans
 // and font-mono utilities (wired in theme.css) resolve to these.
 const geistSans = Geist({
