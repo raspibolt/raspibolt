@@ -297,7 +297,7 @@ sync completes, alongside the `dbcache` reduction, see the bottom
 of this page.
 </Callout>
 
-## Systemd unit
+## systemd unit
 
 The node needs to start on boot and stay running, that's what
 systemd is for. This unit runs `bitcoind` as the `bitcoin` user,
@@ -492,10 +492,7 @@ that does not touch the system Python.
 
 Upgrades follow the same download-verify-install rhythm as a fresh
 install. Always read the [release notes](https://github.com/bitcoin/bitcoin/releases)
-first, some releases change the data format or default behaviour.
-The `%versions.bitcoin_core%` token and its derived URL in
-`lib/versions.ts` are the single source of truth in this guide; bump
-that file when a new version lands.
+first, some releases change the data format or default behavior.
 
 Drop into `/tmp`:
 

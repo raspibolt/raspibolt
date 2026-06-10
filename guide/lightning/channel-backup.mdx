@@ -33,7 +33,7 @@ The consequences matter:
   malicious peer could, in principle, refuse.
 - **Your SCB must be current.** If the peer closes at a state
   newer than the one in your SCB, LND sees a state it doesn't
-  recognise and refuses to claim. You'll still get a force-close
+  recognize and refuses to claim. You'll still get a force-close
   from the peer, just the slow path, not the SCB-accelerated one.
 - **Never use the SCB on a node that is still running the same
   channels elsewhere.** Restoring triggers force-closes; doing

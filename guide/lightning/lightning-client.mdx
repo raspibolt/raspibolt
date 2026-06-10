@@ -263,7 +263,7 @@ chain backend, Tor, channel policy, watchtower client, all of it.
    ```
 
 2. Paste the following. Replace `YourAlias` with whatever name you
-   want to show up in channel graphs, and pick a hex colour you
+   want to show up in channel graphs, and pick a hex color you
    like:
 
    ```ini
@@ -564,7 +564,7 @@ exit
    `block_height`, and `synced_to_chain: true` once LND has caught
    up with the graph. `getnetworkinfo` should show a non-zero
    number of nodes and channels, proof that LND is talking to the
-   wider Lightning network over Tor.
+   wider Lightning Network over Tor.
 
 **Main takeaway:** LND is up, the wallet is unlocked, the 24-word
 seed is on paper, and `lncli` works from `admin`. You have a
@@ -702,7 +702,5 @@ database migrations that are one-way. Before every upgrade:
 2. Stop the service: `sudo systemctl stop lnd`.
 3. Repeat the download, verify, and install steps above with the
    new version.
-4. Update `%versions.lnd%` in `lib/versions.ts` so the rest of the
-   guide agrees.
-5. Start the service: `sudo systemctl start lnd` and tail the log
+4. Start the service: `sudo systemctl start lnd` and tail the log
    until you see `synced_to_chain: true`.

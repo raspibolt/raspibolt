@@ -264,8 +264,8 @@ anywhere without opening a port.
 <Callout type="warn" title="Don't expose sshd publicly">
 Tailscale makes remote SSH so frictionless that the old "open
 port 22 to the internet" pattern stops being necessary. Keep your
-ufw rule scoped to the LAN (`192.168.0.0/24` or similar), the
-tailnet interface bypasses ufw by default on a fresh install, so
+UFW rule scoped to the LAN (`192.168.0.0/24` or similar), the
+tailnet interface bypasses UFW by default on a fresh install, so
 Tailscale devices can still reach the Pi without the firewall
 being in the way.
 </Callout>

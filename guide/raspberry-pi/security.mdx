@@ -1,6 +1,6 @@
 ---
 title: Security
-description: SSH hardening with ed25519 keys, UFW firewall rules, fail2ban brute-force protection on systemd, open-files limit, disable Bluetooth and Wi-Fi radios.
+description: SSH hardening with Ed25519 keys, UFW firewall rules, fail2ban brute-force protection on systemd, open-files limit, disable Bluetooth and Wi-Fi radios.
 ---
 What does "hardening" actually mean for a little computer in your
 living room? Closing doors, mostly. Your Pi is about to be reachable
@@ -89,7 +89,7 @@ file attachments.
 **Main takeaway:** only your private key can reach the Pi over
 SSH now, passwords are off the table.
 
-## Firewall (ufw)
+## Firewall (UFW)
 
 The **Uncomplicated Firewall** (`ufw`) is Debian's friendly front-end
 to `iptables`. For now it only needs to allow SSH, every service
@@ -119,7 +119,7 @@ you add later will open its own port when the time comes.
 
    Allow SSH with rate limiting. `ufw limit ssh` blocks any IP making
    six or more connection attempts within 30 seconds, a first layer
-   of brute-force defence on top of what `fail2ban` does below:
+   of brute-force defense on top of what `fail2ban` does below:
 
    ```bash
    sudo ufw limit ssh

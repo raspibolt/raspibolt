@@ -46,7 +46,7 @@ export default function HomePage() {
             Bitcoin full node.
           </h1>
           <p className="text-fd-muted-foreground mt-6 max-w-2xl text-xl leading-relaxed">
-            Become a sovereign peer in the Bitcoin and Lightning network, on a small, cheap
+            Become a sovereign peer in the Bitcoin and Lightning networks, on a small, cheap
             Raspberry Pi sitting in the corner of your room.
           </p>
           <p className="mt-4 text-xl font-semibold tracking-tight text-amber-700 dark:text-amber-300">
@@ -105,11 +105,11 @@ export default function HomePage() {
           <Reason
             icon={<Zap className="h-5 w-5" />}
             title="Be part of Lightning"
-            description="Run a Lightning node for everyday payments and help build a robust, decentralized payment network on top of Bitcoin."
+            description="Run a Lightning node for everyday payments and help build a reliable, decentralized payment network on top of Bitcoin."
           />
         </div>
 
-        <div className="mt-16 flex items-center justify-center gap-4" aria-hidden="false">
+        <div className="mt-16 flex items-center justify-center gap-4">
           <span className="h-px w-12 bg-gradient-to-r from-transparent to-amber-500/60 md:w-24" />
           <p className="text-fd-muted-foreground text-center text-xl italic">
             Did we mention that it&apos;s fun, as well?
@@ -159,7 +159,7 @@ export default function HomePage() {
             />
             <Feature
               icon={<Search className="h-5 w-5" />}
-              title="Blockchain Explorer"
+              title="Blockchain explorer"
               description="Private, local block and transaction lookup. No information leaks to third-party explorers."
             />
             <Feature
@@ -253,8 +253,8 @@ export default function HomePage() {
             Ready to build your own?
           </h2>
           <p className="text-fd-muted-foreground mx-auto mt-5 max-w-xl text-lg leading-relaxed">
-            Grab a Raspberry Pi, a 2 TB SSD, and a weekend. Start with the preparations chapter,
-            we&apos;ll take it from there.
+            Grab a Raspberry Pi, a 2 TB SSD, and a weekend. The guide opens with a short backstory,
+            then walks you through every step.
           </p>
           <div className="mt-10 flex justify-center">
             <Link

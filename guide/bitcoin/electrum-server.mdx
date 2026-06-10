@@ -247,7 +247,7 @@ The `bitcoin` group membership is what lets Electrs read
    exit
    ```
 
-## Systemd unit
+## systemd unit
 
 1. As `admin`, create the unit file:
 
@@ -334,7 +334,7 @@ sudo apt install stunnel4
 
 stunnel doesn't do automatic CA issuance the way Caddy does for HTTP.
 You generate a self-signed certificate once and point the config at
-it. This takes a single command:
+it.
 
 Generate a 10-year self-signed certificate and matching key:
 
@@ -456,7 +456,7 @@ Move into the source tree:
 cd /home/admin/rust/electrs
 ```
 
-Discard any build artefacts and stray files:
+Discard any build artifacts and stray files:
 
 ```bash
 git clean -xfd

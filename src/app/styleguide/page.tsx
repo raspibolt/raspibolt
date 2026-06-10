@@ -191,7 +191,7 @@ export default function StyleguidePage() {
             type="tip"
             icon={<Lightbulb className="h-5 w-5" />}
             title="Optional shortcut"
-            body="Nice-to-know trick or optimisation that isn't required to complete the chapter."
+            body="Nice-to-know trick or optimization that isn't required to complete the chapter."
           />
         </div>
       </Section>
