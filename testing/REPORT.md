@@ -5,7 +5,7 @@ VM: Debian 13 Trixie, systemd-in-docker, native amd64 (arch-rewrite for Pi-only 
 
 ## TL;DR
 
-Built a Docker-based test harness, an MDX step extractor, and a page-by-page runner. Iterated through five walks. Final walk: **11 PASS / 0 FAIL / 0 SKIP** on the 11-page core pipeline (Pi setup → Bitcoin → Lightning). Three real guide bugs fixed on the way; one known open (see "Known open" below).
+Built a Docker-based test harness, an MDX step extractor, and a page-by-page runner. Latest walk (2026-06-10, after the v4 review-fix round): **11 PASS / 0 FAIL / 0 SKIP** on the 11-page core pipeline (Pi setup → Bitcoin → Lightning). Three real guide bugs fixed on the way; one known open (see "Known open" below).
 
 ## The harness
 
@@ -28,6 +28,7 @@ Built a Docker-based test harness, an MDX step extractor, and a page-by-page run
 | 4     | 4 / 7       | `su -` regex fixed. `lightning/lightning-client` PASS. Laptop-side blocks (`remote-access`, `privacy` placeholder) still fail. `bitcoind` still fails QEMU. `blockchain-explorer` regressed: skipped `sudo su - btcrpcexplorer` block dropped `VERSION=...`.                                                                                                                                                                                       |
 | 5     | 8 / 3       | Dropped QEMU; switched to amd64-arch-rewrite (no more `mprotect` / glibc-loader issues). Removed `policy-rc.d` (Tor/Tailscale auto-start). `docker cp` the authorized_keys. `sudo su - USER` session grouping fixed `bitcoin-client`, `electrum-server`, `blockchain-explorer`. Remaining: `security` hit `/boot/firmware/config.txt`, `lightning-client` hit sudo-inside-`sudo su - lnd`, `channel-backup` hit `lncli` placeholder syntax errors. |
 | **6** | **11 / 0**  | Final. Security `/boot/firmware/config.txt` marked `test:skip` (Pi-firmware-only). Lightning-client fixed: real guide bug, `sudo install` runs inside `sudo su - lnd` session where `lnd` user (no sudoer, no password) can't auth. Added explicit `exit` before the install and `sudo su - lnd` after. Channel-backup: interactive `lncli create` + external-SSH blocks marked `test:skip`.                                                       |
+| **7** | **11 / 0**  | Re-validation after the v4 review-fix round (2026-06-10): one-command-per-block sweep, `bitcoin.basefee`/`feerate` moved to `[Bitcoin]` in lnd.conf, new `test:append` fusion writes the PAM limits lines with `tee -a` instead of replacing the files, Node.js version tokens resolved via the extractor mirror. All green, no regressions.                                                                                                       |
 
 ## Real guide bugs found and fixed
 
@@ -51,6 +52,7 @@ These aren't guide bugs; they disappear on real Pi hardware (Phase C).
 ## Extractor conventions (for future contributors)
 
 - Wrap a reader's "become USER, do stuff, exit" in `sudo su - USER` ... `exit` exactly. Any shape the extractor recognises becomes one `sudo -u USER bash <<EOF ...` session in the test wrapper.
+- Mark a `sudo nano PATH` block whose following content block ADDS a line to an existing file with `test:append`; the fusion then emits `tee -a` instead of a replacing `tee` (e.g. the PAM limits lines in `security.mdx`).
 - Mark code fences that a test harness can't run with `test:skip`:
   - ` ```bash test:skip ` for laptop-side, remote-host-side, or placeholder blocks.
   - Works for standalone `sudo su - USER` blocks too (suppresses the session grouping).
@@ -59,7 +61,8 @@ These aren't guide bugs; they disappear on real Pi hardware (Phase C).
 
 ## Artifact locations
 
-- `testing/runs/20260422-105902/` — final green run. Per-page logs + `SUMMARY.md`.
+- `testing/runs/20260610-114301/` — latest green run (post review fixes). Per-page logs + `SUMMARY.md`.
+- `testing/runs/20260422-105902/` — final green run of the original harness round.
 - `testing/steps/` — latest extraction, one `.sh` + `.json` per guide page.
 
 ## Next: Phase C (real Pi 5)
