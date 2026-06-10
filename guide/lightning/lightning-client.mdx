@@ -654,26 +654,36 @@ add two or three more for redundancy.
 
 A small reference you'll come back to:
 
+Node info and peers:
+
 ```bash test:skip
-# node info and peers
 lncli getinfo
 lncli listpeers
+```
 
-# channels
+Channels:
+
+```bash test:skip
 lncli pendingchannels
 lncli listchannels
 lncli closechannel --sat_per_vbyte <fee> <funding_txid> <output_index>
 lncli closechannel --force <funding_txid> <output_index>
+```
 
-# payments
+Payments:
+
+```bash test:skip
 lncli decodepayreq <invoice>
 lncli payinvoice <invoice>
 lncli sendpayment --amp --dest=<pubkey> --amt=<sats>
 lncli addinvoice <sats>
 lncli listinvoices
 lncli listpayments
+```
 
-# help
+Help:
+
+```bash test:skip
 lncli
 lncli help <command>
 ```

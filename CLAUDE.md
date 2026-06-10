@@ -146,6 +146,7 @@ Exceptions where commands stay together in one block:
 - **Heredocs and multi-line configs** (`cat > file <<EOF ... EOF`). One logical write.
 - **Pipelines and chains that form one command** (`curl ... | sha256sum --check`, `tar -xf ... -C /opt`). Already one shell command.
 - **Multi-line single command** (a long `wget` with backslash continuations). Still one command.
+- **Reference command lists** (cheat sheets with `<placeholder>` arguments, like the lncli reference). Group by topic instead of one block per command; the commands aren't paste-ready anyway, so per-command copy buttons add noise, not value.
 
 Do *not* keep `cd somewhere` glued to the next command with `&&`. Split it:
 
