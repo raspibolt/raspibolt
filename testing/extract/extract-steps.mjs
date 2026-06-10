@@ -45,6 +45,8 @@ const urls = {
   bitcoinSha256Sig: `https://bitcoincore.org/bin/bitcoin-core-${versions.bitcoin_core}/${files.bitcoinSha256Sig}`,
   lndDownload: `https://github.com/lightningnetwork/lnd/releases/download/v${versions.lnd}/${files.lndArchive}`,
   lndSha256: `https://github.com/lightningnetwork/lnd/releases/download/v${versions.lnd}/${files.lndSha256}`,
+  nodesourceSetup: `https://deb.nodesource.com/setup_${versions.nodejs}.x`,
+  nodesourceRepo: `https://deb.nodesource.com/node_${versions.nodejs}.x`,
 };
 const TOKEN_TABLE = { versions, files, urls };
 const TOKEN_RE = /%((?:versions|files|urls)\.[a-zA-Z_][a-zA-Z0-9_]*)%/g;

@@ -10,7 +10,7 @@ covers channels, on-chain, routing, and fees in one place. No
 phone-home telemetry, no account, no upstream service; RTL runs on
 your Pi and talks to LND over the loopback interface.
 
-You'll install Node.js 22, clone RTL %versions.rtl% as its own
+You'll install Node.js %versions.nodejs%, clone RTL %versions.rtl% as its own
 unprivileged user, point it at LND's macaroon and TLS certificate,
 and expose it behind Caddy at `https://rtl.raspibolt.local` on your
 LAN.
@@ -22,7 +22,7 @@ LAN.
   stale
 />
 
-## Install Node.js 22
+## Install Node.js
 
 RTL is a Node.js application and needs a recent LTS runtime. The
 NodeSource repository gives you upstream Node without waiting for
@@ -55,7 +55,7 @@ Debian backports.
    Add the NodeSource apt source:
 
    ```bash
-   echo "deb [arch=arm64 signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" \
+   echo "deb [arch=arm64 signed-by=/etc/apt/keyrings/nodesource.gpg] %urls.nodesourceRepo% nodistro main" \
      | sudo tee /etc/apt/sources.list.d/nodesource.list
    ```
 
@@ -83,11 +83,11 @@ Debian backports.
    npm --version
    ```
 
-   Expected output is a `v22.x` line from `node`, and a `10.x` or
+   Expected output is a `v%versions.nodejs%.x` line from `node`, and a `10.x` or
    newer line from `npm`.
 
 <Callout type="info" title="If you already installed Node for the Bitcoin Explorer">
-BTC RPC Explorer uses the same NodeSource setup. If Node 22 is
+BTC RPC Explorer uses the same NodeSource setup. If Node %versions.nodejs% is
 already present, skip this whole section.
 </Callout>
 

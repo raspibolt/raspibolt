@@ -1,6 +1,6 @@
 ---
 title: Blockchain explorer
-description: Run BTC RPC Explorer on Node.js 22 behind Caddy HTTPS. Private lookup for blocks, transactions, mempool, fee estimates, UTXO queries. No leakage to public explorers.
+description: Run BTC RPC Explorer on Node.js behind Caddy HTTPS. Private lookup for blocks, transactions, mempool, fee estimates, UTXO queries. No leakage to public explorers.
 ---
 Querying a public block explorer is one of the sneakiest ways to
 leak your financial activity. Every address you search, every
@@ -23,7 +23,7 @@ mempool, and fee estimates, and never phones home.
 
 ## What you'll do
 
-- Install Node.js 22 LTS from NodeSource.
+- Install Node.js %versions.nodejs% LTS from NodeSource.
 - Create a dedicated `btcrpcexplorer` user and clone the app.
 - Wire up the `.env` config so it reads `bitcoind`'s cookie and
   queries Electrs for address data.
@@ -38,15 +38,15 @@ fully synced (`verificationprogress` at 1.0), `txindex=1`
 is in `bitcoin.conf` (the default config in this guide already has
 it), and Electrs is indexed and answering queries.
 
-## Install Node.js 22 LTS
+## Install Node.js
 
 Debian 13 ships Node.js 20; BTC RPC Explorer is tested against
-Node 22. Add the NodeSource repo so `apt upgrade` keeps it current.
+Node %versions.nodejs%. Add the NodeSource repo so `apt upgrade` keeps it current.
 
 1. Add the NodeSource repository:
 
    ```bash
-   curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+   curl -fsSL %urls.nodesourceSetup% | sudo -E bash -
    ```
 
    Install Node.js:
@@ -67,7 +67,7 @@ Node 22. Add the NodeSource repo so `apt upgrade` keeps it current.
    npm --version
    ```
 
-   Expected output is a `v22.x` line from `node`, and a `10.x` or
+   Expected output is a `v%versions.nodejs%.x` line from `node`, and a `10.x` or
    newer line from `npm`.
 
 ## Create the service user
