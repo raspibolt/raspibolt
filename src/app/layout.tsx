@@ -8,9 +8,13 @@ import './global.css';
 // Umami analytics. Separate websites for production (raspibolt.org)
 // and staging (stadicus.github.io/RaspiBolt) so traffic doesn't mix.
 // isProductionSite is resolved at build time from NEXT_PUBLIC_SITE_URL.
+// The script only renders in production builds; data-domains is a
+// second guard so a locally served production build can't pollute
+// the stats either.
 const umamiWebsiteId = isProductionSite
   ? 'f6788a01-2c1f-429f-815b-73d15af26a27'
   : '3a6df4e2-9a81-4678-b782-88b940e22045';
+const umamiDomains = isProductionSite ? 'raspibolt.org' : 'stadicus.github.io';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -88,11 +92,14 @@ export default function Layout({ children }: LayoutProps<'/'>) {
     >
       <body className="flex min-h-screen flex-col">
         <Provider>{children}</Provider>
-        <Script
-          src="https://cloud.umami.is/script.js"
-          data-website-id={umamiWebsiteId}
-          strategy="afterInteractive"
-        />
+        {process.env.NODE_ENV === 'production' && (
+          <Script
+            src="https://cloud.umami.is/script.js"
+            data-website-id={umamiWebsiteId}
+            data-domains={umamiDomains}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );
