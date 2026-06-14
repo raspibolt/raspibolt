@@ -1,0 +1,94 @@
+name: Publish site (production)
+
+# Fires on pushes to master and deploys to https://raspibolt.org.
+# This runs only in the upstream repo (raspibolt/raspibolt); the
+# repository guard below keeps it dormant on the fork, where master
+# still serves the v3 Jekyll site.
+#
+# Near-identical to the staging deploy (site-publish.yml). The two
+# deliberately differ in exactly two lines: the trigger branch and
+# NEXT_PUBLIC_SITE_URL. Setting that to https://raspibolt.org flips
+# isProductionSite true, which is the ONLY switch that enables indexing
+# and production analytics. Keeping it explicit in its own file makes an
+# accidental indexing of a non-prod build practically impossible.
+#
+# Prerequisite: the upstream repo's Pages source must be set to
+# "GitHub Actions" with the custom domain raspibolt.org configured in
+# Settings -> Pages.
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'guide/**'
+      - 'src/**'
+      - 'lib/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'next.config.mjs'
+      - 'source.config.ts'
+      - 'tsconfig.json'
+      - 'postcss.config.mjs'
+      - 'eslint.config.mjs'
+      - 'scripts/post-build.mjs'
+      - '.github/workflows/site-publish-prod.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # Guard so the production deploy can only ever run on the upstream repo,
+    # never on a fork whose master happens to hold v4.
+    if: github.repository == 'raspibolt/raspibolt'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        # No NEXT_PUBLIC_BASE_PATH: served at the raspibolt.org root.
+        env:
+          NEXT_PUBLIC_SITE_URL: https://raspibolt.org
+        run: npm run build
+
+      - name: Check internal links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --config .lychee.toml
+            --root-dir ${{ github.workspace }}/out
+            'out/**/*.html'
+          fail: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,10 +1,18 @@
-name: Publish site (v4)
+name: Publish site (staging)
 
-# Fires on pushes to feature/v4-rewrite (direct commits and merged
-# PRs land as push events on the target branch, so merging a
-# sub-branch into feature/v4-rewrite automatically triggers a
-# deploy). Master is intentionally excluded to keep the v3 Jekyll
-# site live on raspibolt.org untouched.
+# Fires on pushes to feature/v4-rewrite and deploys to the fork's
+# GitHub Pages at the custom domain https://next.raspibolt.org.
+#
+# This is a 1:1 rehearsal of the production deploy (site-publish-prod.yml):
+# same official actions/deploy-pages mechanism, same empty basePath
+# (served at a domain root, not /RaspiBolt), same custom-domain-via-Settings
+# flow. The ONLY differences from prod are the trigger branch and the
+# NEXT_PUBLIC_SITE_URL value below. Because that URL is not raspibolt.org,
+# isProductionSite stays false -> the build ships noindex + a Disallow-all
+# robots.txt + staging analytics, so this mirror never competes with prod.
+#
+# Master is intentionally excluded; the fork's master still serves the v3
+# Jekyll site, and prod deploys run from the upstream repo.
 on:
   push:
     branches: [feature/v4-rewrite]
@@ -20,20 +28,25 @@ on:
       - 'tsconfig.json'
       - 'postcss.config.mjs'
       - 'eslint.config.mjs'
+      - 'scripts/post-build.mjs'
       - '.github/workflows/site-publish.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
+# Allow one concurrent deployment to the Pages environment; don't cancel a
+# run mid-deploy.
 concurrency:
-  group: site-publish
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  build-deploy:
+  build:
+    # Guard so this staging deploy can only ever run on the fork.
+    if: github.repository == 'Stadicus/RaspiBolt'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,32 +62,36 @@ jobs:
         run: npm ci
 
       - name: Build static site
+        # No NEXT_PUBLIC_BASE_PATH: served at the domain root, so links and
+        # assets are root-relative (/docs/..., /images/...) just like prod.
         env:
-          NEXT_PUBLIC_BASE_PATH: /RaspiBolt
+          NEXT_PUBLIC_SITE_URL: https://next.raspibolt.org
         run: npm run build
 
-      # Stage the built site under a directory that mirrors the deploy URL.
-      # Lychee resolves /RaspiBolt/foo root-relative links against --root-dir,
-      # so the path on disk needs to match — otherwise every internal link 404s.
-      - name: Stage for link check
-        run: |
-          mkdir -p staging/RaspiBolt
-          cp -r out/. staging/RaspiBolt/
-
+      # Gate the deploy on internal links. With an empty basePath the built
+      # links are root-relative (/foo), so lychee resolves them against
+      # --root-dir = out/ directly; no staging-directory trick needed.
       - name: Check internal links
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
             --config .lychee.toml
-            --root-dir ${{ github.workspace }}/staging
-            staging/RaspiBolt/**/*.html
+            --root-dir ${{ github.workspace }}/out
+            'out/**/*.html'
           fail: true
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
-          publish_branch: gh-pages
-          force_orphan: false
-          commit_message: 'site: render from ${{ github.sha }}'
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
