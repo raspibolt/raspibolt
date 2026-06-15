@@ -25,8 +25,13 @@ series.
 
 - The mark is a single orange lightning bolt. Files: `public/images/logo-dark.png`
   (for dark grounds), `public/images/logo-light.png` (for light grounds).
-- Pass it with `--logo` so the model keeps the real shape instead of inventing one.
-- Place it small, one corner or beside the wordmark. It is a signature, not the
+- The model does NOT reproduce the logo exactly, even with `--logo`. It reinterprets
+  the shape (a tested run redrew it as a literal raspberry fruit). For any card where
+  the **real mark must appear**, composite `logo-*.png` in afterwards. For stylistic
+  cards, a freshly drawn bolt is fine and looks good.
+- The wordmark text "RaspiBolt" does render correctly, so the model is fine for the
+  name even when it cannot be trusted with the exact mark.
+- Place the mark small, one corner or beside the wordmark. It is a signature, not the
   subject.
 
 ## Type
@@ -40,15 +45,30 @@ series.
 - Lots of negative space. One idea per card.
 - Optional texture: a faint amber grid (`#f59e0b` at very low opacity, 64px cells)
   echoing the site hero. Keep it in the background, never busy.
-- No stock photos, no people, no fake app screenshots, no QR codes.
+- No generic stock photos, no people, no fake app screenshots, no QR codes. A
+  purpose-built photorealistic product shot of the hardware (a Pi plus SSD under
+  warm amber light) is a fine separate register and tested well.
 - Always include the handle `@raspibolt` or `raspibolt.org` small in a corner.
 
-## On-image text: keep it short
+## On-image text: what renders reliably
 
-Put at most a **short punchy line (about six words)** on the image. The full
-sentence goes in the tweet caption, not the graphic. Short on-image text renders
-cleanly and reads better in the feed. Always proof the render: if a letter is
-malformed, regenerate rather than ship it.
+Tested against Gemini 3 Pro Image. All of the following came back correct and
+legible, so text is not the constraint it usually is with image models:
+
+- Full short sentences and two-line statements, not just a few words.
+- Monospace commands, file names, and version strings, e.g.
+  `sha256sum --check SHA256SUMS` and `bitcoin-31.0-aarch64-linux-gnu.tar.gz: OK`.
+- Numbers and symbols: `~700 GB`, `31.0`.
+- Several short labels in one diagram (Bitcoin Core, Electrs, LND, Tor, RTL).
+
+Keep text purposeful, but you are not capped at six words. Still proof every
+render: if a glyph is malformed, regenerate rather than ship it.
+
+## Proven card formats
+
+All tested and reliable: ethos statement, privacy/value tip, software update
+(version bump), new bonus guide, a stat/number, a terminal "verify" card, and a
+labeled architecture diagram. Light and dark grounds both work.
 
 ## Aspect ratios
 

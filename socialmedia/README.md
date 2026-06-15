@@ -12,7 +12,6 @@ image generator. Renders land in `out/` and are gitignored.
   so they run before, during, and after.
 - Never share `next.raspibolt.org` publicly. It is noindexed staging and the link
   changes at cutover.
-- One to two posts a day. Space the ethos and tip cards out; do not stack them.
 
 ## Voice
 
@@ -77,6 +76,12 @@ node socialmedia/generate.mjs \
   --out socialmedia/out/ethos.png
 ```
 
-Read `brand.md` for the palette, the prompt scaffold, and the on-image text rule
-(keep it short, full sentence goes in the caption). Proof every render before it
-ships.
+Reusable prompt templates live in `prompts/`: `ethos.txt`, `update.txt` (version
+bumps, swap the software and version), and `bonus-guide.txt` (swap the guide name
+and what it does). Read `brand.md` for the palette, the prompt scaffold, and what
+text the model renders reliably (full sentences, monospace, numbers, and labels all
+work; the exact logo does not, composite it in for launch cards).
+
+Run renders **one at a time, not in parallel**. Concurrent calls hit HTTP 429 rate
+limits; the script retries, but a serial loop is the reliable path. Proof every
+render before it ships.

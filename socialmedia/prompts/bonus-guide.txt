@@ -1,0 +1,16 @@
+A social graphic for RaspiBolt, a self-custody Bitcoin and Lightning node guide.
+
+Style: clean, technical, confident, lots of negative space. Dark ink background
+(#0f1010) with warm amber accents (#f59e0b to #f97316) and a faint amber grid
+texture in the far background. Geist-style geometric sans typography, heavy weight.
+
+Subject: an elegant visual hint of <WHAT THE GUIDE IS ABOUT>, glowing amber,
+minimal. For mempool.space: a neat isometric stack of a few translucent "pending
+transaction" blocks, like a mempool visualization.
+
+On-image text, set correctly: a small kicker "NEW BONUS GUIDE" at the top, then
+large "<GUIDE NAME>", then beneath it smaller "<ONE LINE ON WHAT IT DOES>".
+
+Small in a bottom corner: "raspibolt.org".
+
+No people, no photos, no fake UI, no extra text.

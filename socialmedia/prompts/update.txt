@@ -1,0 +1,15 @@
+A social graphic for RaspiBolt, a self-custody Bitcoin and Lightning node guide.
+
+Style: clean, technical, confident, lots of negative space. Dark ink background
+(#0f1010) with warm amber accents (#f59e0b to #f97316) and a faint amber grid
+texture in the far background. Geist-style geometric sans typography, heavy weight.
+
+Subject: a fresh-software-update feel, a subtle glowing amber circular upgrade
+arrow motif, minimal.
+
+On-image text, set correctly and large: "<SOFTWARE> <VERSION>" (for example
+"BITCOIN CORE 31.0"), and beneath it smaller "now in the RaspiBolt guide".
+
+Small in a bottom corner: "raspibolt.org".
+
+No people, no photos, no fake UI, no extra text.
