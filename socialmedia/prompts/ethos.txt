@@ -1,0 +1,16 @@
+A social graphic for RaspiBolt, a self-custody Bitcoin and Lightning node guide.
+
+Style: clean, technical, confident, lots of negative space. Dark ink background
+(#0f1010) with a single orange lightning bolt mark and warm amber accents
+(#f59e0b to #f97316). A faint amber grid texture in the far background.
+Geist-style geometric sans typography, heavy weight.
+
+Subject: a lone Raspberry Pi node as a minimal glowing amber circuit silhouette,
+one bright lightning bolt running through it, standing on its own with no servers
+or clouds around it. Quiet, sovereign, self-contained.
+
+On-image text, set cleanly and correctly, nothing else: "RUN YOUR OWN NODE"
+
+Small in a bottom corner: "raspibolt.org"
+
+No people, no photos, no fake UI, no extra text.
