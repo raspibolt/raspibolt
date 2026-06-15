@@ -1,8 +1,8 @@
 {
-  "bitcoin_core": "30.2",
-  "lnd": "0.20.1-beta",
+  "bitcoin_core": "31.0",
+  "lnd": "0.21.0-beta",
   "electrs": "0.11.1",
-  "rtl": "0.15.6",
+  "rtl": "0.15.8",
   "mempool": "3.3.1",
   "nodejs": "22"
 }
