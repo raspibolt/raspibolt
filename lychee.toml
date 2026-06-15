@@ -35,6 +35,8 @@ exclude = [
   "^ssh://",
   # Author bio site; owner's server currently serves a default cert (being fixed)
   "https?://(www\\.)?stadicus\\.com",
+  # Vimeo embed player returns 401 to non-browser clients but renders in the page
+  "https?://player\\.vimeo\\.com",
 ]
 
 # Cache successful checks so a weekly cron doesn't re-hit every URL.
