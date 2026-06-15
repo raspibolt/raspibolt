@@ -49,6 +49,16 @@ export default function NotFound() {
         The URL might be from an older version of the guide, renamed in the v4 rewrite, or just
         mistyped. Three ways out:
       </p>
+      <p className="text-fd-muted-foreground mt-3 text-sm">
+        Looking for the previous{' '}
+        <a
+          href="https://v3.raspibolt.org"
+          className="underline underline-offset-2 hover:text-amber-700 dark:hover:text-amber-400"
+        >
+          v3 guide
+        </a>
+        ? It stays archived there.
+      </p>
 
       <div className="mt-8 flex flex-wrap gap-3">
         <button

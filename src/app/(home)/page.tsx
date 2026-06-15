@@ -277,12 +277,12 @@ export default function HomePage() {
               for details.
             </p>
             <p>
-              Looking for older versions? Check the archived source of{' '}
+              Looking for older versions? The archived{' '}
               <a
-                href="https://github.com/raspibolt/raspibolt/tree/1.0"
+                href="https://v3.raspibolt.org"
                 className="underline underline-offset-2 hover:text-amber-700 dark:hover:text-amber-400"
               >
-                v1
+                v3
               </a>{' '}
               and{' '}
               <a
@@ -290,8 +290,15 @@ export default function HomePage() {
                 className="underline underline-offset-2 hover:text-amber-700 dark:hover:text-amber-400"
               >
                 v2
-              </a>
-              .
+              </a>{' '}
+              guides stay online, and the{' '}
+              <a
+                href="https://github.com/raspibolt/raspibolt/tree/1.0"
+                className="underline underline-offset-2 hover:text-amber-700 dark:hover:text-amber-400"
+              >
+                v1 source
+              </a>{' '}
+              is on GitHub.
             </p>
           </div>
         </div>
