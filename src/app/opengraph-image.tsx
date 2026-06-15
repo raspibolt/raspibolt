@@ -29,7 +29,13 @@ export default async function Image() {
         background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
       }}
     >
-      <img src={logoSrc} width={200} height={200} style={{ borderRadius: 44 }} alt="" />
+      <img
+        src={logoSrc}
+        width={200}
+        height={200}
+        style={{ borderRadius: 44, border: '1px solid rgba(120, 53, 15, 0.15)' }}
+        alt=""
+      />
 
       <div
         style={{

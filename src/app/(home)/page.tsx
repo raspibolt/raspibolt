@@ -126,12 +126,12 @@ export default function HomePage() {
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo-light.png`}
                 alt="RaspiBolt"
-                className="h-16 w-16 dark:hidden"
+                className="ring-fd-border h-16 w-16 rounded-xl ring-1 dark:hidden"
               />
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo-dark.png`}
                 alt="RaspiBolt"
-                className="hidden h-16 w-16 dark:block"
+                className="ring-fd-border hidden h-16 w-16 rounded-xl ring-1 dark:block"
               />
             </div>
             <div className="text-xs font-semibold tracking-widest text-amber-700 uppercase dark:text-amber-400">

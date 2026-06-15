@@ -10,13 +10,13 @@ function AppIcon() {
         src={`${basePath}/images/logo-light.png`}
         alt=""
         aria-hidden="true"
-        className="h-9 w-9 dark:hidden"
+        className="ring-fd-border h-9 w-9 rounded-lg ring-1 dark:hidden"
       />
       <img
         src={`${basePath}/images/logo-dark.png`}
         alt=""
         aria-hidden="true"
-        className="hidden h-9 w-9 dark:block"
+        className="ring-fd-border hidden h-9 w-9 rounded-lg ring-1 dark:block"
       />
     </>
   );
