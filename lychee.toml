@@ -33,6 +33,8 @@ exclude = [
   # Git SSH schema (not HTTP)
   "^git@",
   "^ssh://",
+  # Author bio site; owner's server currently serves a default cert (being fixed)
+  "https?://(www\\.)?stadicus\\.com",
 ]
 
 # Cache successful checks so a weekly cron doesn't re-hit every URL.

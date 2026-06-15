@@ -34,16 +34,16 @@ jobs:
 
       - name: Build site
         run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_PATH: /RaspiBolt
 
       - name: Link check (lychee)
         uses: lycheeverse/lychee-action@v2
         with:
-          # Point at built HTML. External URLs get checked too; github.com
-          # lands on the authenticated path so we don't hit 60/h unauth.
+          # Build uses an empty basePath (prod shape), so internal links are
+          # root-relative (/docs/...); --root-dir resolves them against out/.
+          # External URLs get checked too; github.com uses the token path.
           args: >-
             --config lychee.toml
+            --root-dir ${{ github.workspace }}/out
             './out/**/*.html'
           fail: ${{ github.event_name == 'pull_request' }}
           token: ${{ secrets.GITHUB_TOKEN }}
