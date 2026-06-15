@@ -1,0 +1,3 @@
+# Generated renders are not committed. The folder keeps the rules, styling,
+# and tooling in git; the images themselves are disposable output.
+out/
