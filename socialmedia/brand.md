@@ -107,3 +107,24 @@ No people, no photos, no fake UI, no extra text.
   (a node, a private connection) without a literal screenshot.
 - **Launch card** (`16:9`): the logo, the wordmark, `raspibolt.org`, one line. Only
   when v4 is live.
+
+## Twitter profile assets
+
+The committed pair lives in `assets/` (tracked, unlike `out/`):
+
+- `assets/twitter-banner.png` (1500x500): the header. It follows the **v4 landing
+  page**, not the dark cards above: warm off-white ground, faint amber grid, bold
+  Geist-style sans, near-black text with amber-to-orange accents, and the
+  "do-everything-yourself Bitcoin node" headline. Content sits right of center so
+  the profile picture has clear space on the left.
+- `assets/twitter-avatar.png` (800x800): the real logo on a light ground, to match
+  the light banner. `assets/twitter-avatar-dark.png` is the dark alternate. Avatars
+  are derived from `images/sources/raspibolt-v4-{light,dark}.png`, never generated,
+  the model redraws the mark.
+
+To redo the banner: screenshot the landing page (via the browserless container,
+see project memory), pass it to `generate.mjs` with `--logo` as a style reference,
+then crop the 21:9 render to 1500x500 with ImageMagick.
+
+Both registers are valid: dark cards for in-feed statements, the light
+landing-page style for the profile header.
