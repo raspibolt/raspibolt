@@ -16,8 +16,10 @@ export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://stadicus.git
 // non-production and kept out of search indexes.
 export const isProductionSite = siteUrl === 'https://raspibolt.org';
 
-export const gitConfig = {
-  user: 'Stadicus',
-  repo: 'RaspiBolt',
-  branch: 'feature/v4-rewrite',
-};
+// Drives the "edit this page" / source links. Production (raspibolt.org)
+// points at the upstream repo on master; staging and the fork keep pointing
+// at the working branch so edit links resolve to the actual source of truth.
+// Keyed off isProductionSite so the cutover needs no manual edit here.
+export const gitConfig = isProductionSite
+  ? { user: 'raspibolt', repo: 'raspibolt', branch: 'master' }
+  : { user: 'Stadicus', repo: 'RaspiBolt', branch: 'feature/v4-rewrite' };
