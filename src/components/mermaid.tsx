@@ -1,6 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 import mermaid from 'mermaid';
 
 // Amber-tinted Mermaid theme matching the Fumadocs Fd color tokens.
@@ -115,11 +123,37 @@ function ZoomOverlay({ svg, onClose }: { svg: string; onClose: () => void }) {
   const [tx, setTx] = useState(0);
   const [ty, setTy] = useState(0);
   const drag = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null);
+  const surfaceRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  // Scale at which the diagram fits the viewport. 100% in the readout maps
+  // to this, not to the SVG's (tiny) native size.
+  const [fitScale, setFitScale] = useState(1);
 
   const reset = useCallback(() => {
-    setScale(1);
+    setScale(fitScale);
     setTx(0);
     setTy(0);
+  }, [fitScale]);
+
+  // On open, scale the diagram up to fill the screen (with a margin), so it
+  // lands at about screen width instead of its small native size. Layout
+  // effect: measured and applied before paint, no flash at scale 1.
+  useLayoutEffect(() => {
+    const surface = surfaceRef.current;
+    const content = contentRef.current;
+    if (!surface || !content) return;
+    // offsetWidth/Height are the untransformed (native) box; transform does
+    // not affect layout, so this is stable regardless of current scale.
+    const w = content.offsetWidth;
+    const h = content.offsetHeight;
+    if (!w || !h) return;
+    const fit = clamp(
+      Math.min((surface.clientWidth * 0.92) / w, (surface.clientHeight * 0.92) / h),
+      MIN_SCALE,
+      MAX_SCALE,
+    );
+    setFitScale(fit);
+    setScale(fit);
   }, []);
 
   // Esc to close, lock background scroll while open.
@@ -162,6 +196,7 @@ function ZoomOverlay({ svg, onClose }: { svg: string; onClose: () => void }) {
       onClick={onClose}
     >
       <div
+        ref={surfaceRef}
         className="absolute inset-0 flex cursor-grab touch-none items-center justify-center overflow-hidden active:cursor-grabbing"
         onClick={(e) => e.stopPropagation()}
         onWheel={onWheel}
@@ -170,6 +205,7 @@ function ZoomOverlay({ svg, onClose }: { svg: string; onClose: () => void }) {
         onPointerUp={onPointerUp}
       >
         <div
+          ref={contentRef}
           className="select-none [&_svg]:max-w-none"
           style={{
             transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
@@ -187,7 +223,7 @@ function ZoomOverlay({ svg, onClose }: { svg: string; onClose: () => void }) {
           &minus;
         </ToolButton>
         <ToolButton label="Reset zoom" onClick={reset}>
-          {Math.round(scale * 100)}%
+          {Math.round((scale / fitScale) * 100)}%
         </ToolButton>
         <ToolButton
           label="Zoom in"
