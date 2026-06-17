@@ -8,12 +8,18 @@
 # a morning-after job.
 #
 # Usage:
-#   testing/run-walk.sh                       # core pipeline, mainnet-style
-#   testing/run-walk.sh --signet              # core pipeline, signet overlay
+#   testing/run-walk.sh                       # VM walk, signet (default)
+#   testing/run-walk.sh --mainnet             # full mainnet IBD (~700 GB!)
+#   testing/run-walk.sh --signet              # force signet (the default)
 #   testing/run-walk.sh --only bitcoin        # one section only
 #   testing/run-walk.sh --target pi           # walk a real Raspberry Pi
-#                                             # via testing/pi/ssh.sh
+#                                             # (defaults to mainnet) via
+#                                             # testing/pi/ssh.sh
 #                                             # (set RASPIBOLT_PI_HOST etc.)
+#
+# The VM defaults to signet so the walk never does a full mainnet IBD that
+# fills the host disk (on WSL2 that crashes the whole VM). See
+# testing/vm/README.md.
 
 set -uo pipefail
 
@@ -21,17 +27,30 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 
 # ── Arg parsing ────────────────────────────────────────────
-SIGNET=0
+# CHAIN selects the Bitcoin network the walk runs on. The VM defaults to
+# signet: a tutorial-validation box has no business doing a ~700 GB mainnet
+# IBD that fills the host disk (and on WSL2 grows the VHDX until C: is full
+# and the whole VM crashes). A real Pi (--target pi) defaults to mainnet,
+# the actual guide target. Override either way with --mainnet / --signet.
+CHAIN=""
 ONLY=""
 TARGET="vm"
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --signet)  SIGNET=1; shift ;;
-    --only)    ONLY="$2"; shift 2 ;;
-    --target)  TARGET="$2"; shift 2 ;;
+    --signet)   CHAIN="signet"; shift ;;
+    --mainnet)  CHAIN="mainnet"; shift ;;
+    --only)     ONLY="$2"; shift 2 ;;
+    --target)   TARGET="$2"; shift 2 ;;
     *) echo "unknown flag: $1" >&2; exit 2 ;;
   esac
 done
+
+if [[ -z "$CHAIN" ]]; then
+  case "$TARGET" in
+    pi) CHAIN="mainnet" ;;
+    *)  CHAIN="signet" ;;
+  esac
+fi
 
 SSH="$SCRIPT_DIR/$TARGET/ssh.sh"
 if [[ ! -x "$SSH" ]]; then
@@ -77,8 +96,7 @@ RUN_DIR="$REPO_ROOT/testing/runs/$TS"
 mkdir -p "$RUN_DIR/pages"
 SUMMARY="$RUN_DIR/SUMMARY.md"
 
-MODE="mainnet-shape"
-[[ "$SIGNET" -eq 1 ]] && MODE="signet"
+MODE="$CHAIN"
 
 case "$TARGET" in
   vm) TARGET_DESC="raspibolt-testvm (Debian 13 Trixie, systemd-in-docker)" ;;
@@ -118,6 +136,37 @@ if ! "$SSH" 'true' 2>/dev/null; then
   esac
   exit 1
 fi
+
+# ── Signet overlay ────────────────────────────────────────
+# Rewrite a page's extracted script in place so the walk runs on signet
+# instead of mainnet. Applied to the wrapper before it ships over SSH, so
+# the guide prose (and the committed steps/*.sh) stay pure mainnet.
+#
+# The chain is forced on bitcoind's systemd ExecStart (-signet), not only
+# in bitcoin.conf: the bitcoin-client page rewrites bitcoin.conf again
+# after the (simulated) sync, which would drop a conf-only chain line. A
+# command-line flag survives that rewrite and every systemctl restart.
+# electrs, LND, RTL, and the SCB watcher are pointed at the same chain,
+# RPC port (signet = 38332), and chain/bitcoin/<net>/ data subdir.
+apply_signet_overlay() {
+  local page="$1" file="$2"
+
+  if [[ "$page" == "bitcoin/bitcoin-client" ]]; then
+    sed -i -E \
+      -e 's|(/usr/local/bin/bitcoind -daemon) \\$|\1 -signet \\|' \
+      -e '/^__EOF_CFG__$/i signet=1' \
+      "$file"
+  fi
+
+  # Network-specific rewrites. Safe to attempt on every page: each is a
+  # no-op where the pattern is absent.
+  sed -i -E \
+    -e 's/^network = "bitcoin"$/network = "signet"/' \
+    -e 's/^bitcoin\.mainnet=true$/bitcoin.signet=true/' \
+    -e 's|127\.0\.0\.1:8332|127.0.0.1:38332|g' \
+    -e 's|chain/bitcoin/mainnet/|chain/bitcoin/signet/|g' \
+    "$file"
+}
 
 # ── Per-page runner ───────────────────────────────────────
 total_pass=0
@@ -174,6 +223,8 @@ run_page() {
           -e 's/^sudo +-u +bitcoin +bitcoin-cli +-netinfo +[0-9]+.*/sudo -u bitcoin bitcoin-cli getconnectioncount/g'
   } > "$wrapper"
 
+  [[ "$CHAIN" == "signet" ]] && apply_signet_overlay "$page" "$wrapper"
+
   local rc=0
   "$SSH" "timeout --foreground $timeout_s bash -s" \
     < "$wrapper" > "$log" 2>&1 || rc=$?
@@ -190,18 +241,6 @@ run_page() {
     local errline
     errline=$(grep -E '^\+\+' "$log" | tail -1 | head -c 200 || true)
     echo "| \`$page\` | $bash_blocks | $rc | last trace: \`${errline//|/\\|}\` |" >> "$SUMMARY"
-  fi
-
-  # Optional signet overlay hook, after bitcoin-client.
-  # shellcheck disable=SC2317
-  if [[ "$SIGNET" -eq 1 && "$page" == "bitcoin/bitcoin-client" ]]; then
-    echo "[run] applying signet overlay to bitcoin.conf"
-    "$SSH" 'sudo tee -a /data/bitcoin/bitcoin.conf > /dev/null <<EOF
-chain=signet
-signet=1
-EOF
-sudo systemctl restart bitcoind 2>&1 || sudo -u bitcoin bitcoin-cli stop 2>&1 || true' \
-      >> "$log" 2>&1 || true
   fi
 }
 
