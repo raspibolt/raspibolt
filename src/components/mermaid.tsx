@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 import mermaid from 'mermaid';
 
 // Amber-tinted Mermaid theme matching the Fumadocs Fd color tokens.
@@ -76,10 +76,172 @@ export function Mermaid({ chart }: { chart: string }) {
     };
   }, [chart, id, isDark]);
 
+  const [zoomed, setZoomed] = useState(false);
+
+  if (!svg) {
+    return (
+      <div className="border-fd-border bg-fd-card my-6 flex justify-center overflow-x-auto rounded-lg border p-4" />
+    );
+  }
+
+  return (
+    <>
+      <div className="border-fd-border bg-fd-card group relative my-6 overflow-x-auto rounded-lg border p-4">
+        <button
+          type="button"
+          onClick={() => setZoomed(true)}
+          aria-label="Zoom diagram"
+          className="border-fd-border bg-fd-card/80 text-fd-muted-foreground hover:text-fd-foreground hover:bg-fd-accent absolute top-2 right-2 z-10 rounded-md border p-1.5 opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+        >
+          <ExpandIcon />
+        </button>
+        <div
+          className="flex cursor-zoom-in justify-center"
+          onClick={() => setZoomed(true)}
+          dangerouslySetInnerHTML={{ __html: svg }}
+        />
+      </div>
+      {zoomed && <ZoomOverlay svg={svg} onClose={() => setZoomed(false)} />}
+    </>
+  );
+}
+
+const MIN_SCALE = 0.5;
+const MAX_SCALE = 8;
+const clamp = (n: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, n));
+
+function ZoomOverlay({ svg, onClose }: { svg: string; onClose: () => void }) {
+  const [scale, setScale] = useState(1);
+  const [tx, setTx] = useState(0);
+  const [ty, setTy] = useState(0);
+  const drag = useRef<{ x: number; y: number; tx: number; ty: number } | null>(null);
+
+  const reset = useCallback(() => {
+    setScale(1);
+    setTx(0);
+    setTy(0);
+  }, []);
+
+  // Esc to close, lock background scroll while open.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  const onWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
+    setScale((s) => clamp(s * factor, MIN_SCALE, MAX_SCALE));
+  };
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    (e.target as Element).setPointerCapture(e.pointerId);
+    drag.current = { x: e.clientX, y: e.clientY, tx, ty };
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!drag.current) return;
+    setTx(drag.current.tx + (e.clientX - drag.current.x));
+    setTy(drag.current.ty + (e.clientY - drag.current.y));
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    (e.target as Element).releasePointerCapture(e.pointerId);
+    drag.current = null;
+  };
+
   return (
     <div
-      className="border-fd-border bg-fd-card my-6 flex justify-center overflow-x-auto rounded-lg border p-4"
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
+      className="bg-fd-background/90 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="absolute inset-0 flex cursor-grab touch-none items-center justify-center overflow-hidden active:cursor-grabbing"
+        onClick={(e) => e.stopPropagation()}
+        onWheel={onWheel}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+      >
+        <div
+          className="select-none [&_svg]:max-w-none"
+          style={{
+            transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
+            transformOrigin: 'center center',
+            willChange: 'transform',
+          }}
+          dangerouslySetInnerHTML={{ __html: svg }}
+        />
+      </div>
+      <div className="absolute top-4 right-4 z-10 flex gap-1" onClick={(e) => e.stopPropagation()}>
+        <ToolButton
+          label="Zoom out"
+          onClick={() => setScale((s) => clamp(s / 1.2, MIN_SCALE, MAX_SCALE))}
+        >
+          &minus;
+        </ToolButton>
+        <ToolButton label="Reset zoom" onClick={reset}>
+          {Math.round(scale * 100)}%
+        </ToolButton>
+        <ToolButton
+          label="Zoom in"
+          onClick={() => setScale((s) => clamp(s * 1.2, MIN_SCALE, MAX_SCALE))}
+        >
+          +
+        </ToolButton>
+        <ToolButton label="Close" onClick={onClose}>
+          &times;
+        </ToolButton>
+      </div>
+    </div>
+  );
+}
+
+function ToolButton({
+  label,
+  onClick,
+  children,
+}: {
+  label: string;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      onClick={onClick}
+      className="border-fd-border bg-fd-card text-fd-foreground hover:bg-fd-accent min-w-9 rounded-md border px-2 py-1 text-sm tabular-nums shadow-sm"
+    >
+      {children}
+    </button>
+  );
+}
+
+function ExpandIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M15 3h6v6" />
+      <path d="M9 21H3v-6" />
+      <path d="M21 3l-7 7" />
+      <path d="M3 21l7-7" />
+    </svg>
   );
 }
