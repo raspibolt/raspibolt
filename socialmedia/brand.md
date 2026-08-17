@@ -57,8 +57,8 @@ legible, so text is not the constraint it usually is with image models:
 
 - Full short sentences and two-line statements, not just a few words.
 - Monospace commands, file names, and version strings, e.g.
-  `sha256sum --check SHA256SUMS` and `bitcoin-31.0-aarch64-linux-gnu.tar.gz: OK`.
-- Numbers and symbols: `~700 GB`, `31.0`.
+  `sha256sum --check SHA256SUMS` and `bitcoin-31.1-aarch64-linux-gnu.tar.gz: OK`.
+- Numbers and symbols: `~700 GB`, `31.1`.
 - Several short labels in one diagram (Bitcoin Core, Electrs, LND, Tor, RTL).
 
 Keep text purposeful, but you are not capped at six words. Still proof every

@@ -6,9 +6,9 @@
  * filenames and download URLs are composed here in TypeScript.
  *
  * Reference from MDX:
- *   %versions.bitcoin_core%     → "31.0"
- *   %files.bitcoinArchive%      → "bitcoin-31.0-aarch64-linux-gnu.tar.gz"
- *   %urls.bitcoinDownload%      → "https://bitcoincore.org/bin/bitcoin-core-31.0/bitcoin-31.0-aarch64-linux-gnu.tar.gz"
+ *   %versions.bitcoin_core%     → "31.1"
+ *   %files.bitcoinArchive%      → "bitcoin-31.1-aarch64-linux-gnu.tar.gz"
+ *   %urls.bitcoinDownload%      → "https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-aarch64-linux-gnu.tar.gz"
  *
  * The tokens also work inside fenced code blocks — a remark plugin
  * (lib/remark-variables.ts) resolves them at build time.

@@ -129,13 +129,12 @@ has to be what the developers actually signed.
 
 3. Bitcoin Core releases are signed by multiple maintainers through
    the [guix.sigs repository](https://github.com/bitcoin-core/guix.sigs).
-   Import all current signing keys in one sweep:
+   Clone its signed-key collection once, then import all current builder keys.
+   This avoids making dozens of individual GitHub requests:
 
    ```bash
-   curl -s "https://api.github.com/repositories/355107265/contents/builder-keys" \
-     | grep download_url \
-     | grep -oE "https://[a-zA-Z0-9./-]+" \
-     | while read url; do curl -s "$url" | gpg --import; done
+   git clone --depth 1 https://github.com/bitcoin-core/guix.sigs.git /tmp/guix.sigs
+   gpg --import /tmp/guix.sigs/builder-keys/*.gpg
    ```
 
 4. Verify the checksum file's signatures. You want several `Good

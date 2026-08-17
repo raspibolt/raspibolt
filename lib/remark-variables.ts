@@ -8,7 +8,7 @@
  *   ```
  *
  * At render time this becomes:
- *   wget https://bitcoincore.org/bin/bitcoin-core-31.0/bitcoin-31.0-aarch64-linux-gnu.tar.gz
+ *   wget https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-aarch64-linux-gnu.tar.gz
  *
  * The token syntax uses %…% because MDX already claims `{…}` for JSX
  * expressions. The lookup map lives in lib/versions.ts — update the

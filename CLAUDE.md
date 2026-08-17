@@ -108,9 +108,9 @@ These are hard rules. They exist because each of them is a reliable "this was wr
 **Software versions and download URLs.** Use `%scope.key%` tokens. A remark plugin (see `lib/remark-variables.ts`) resolves them at build time from `lib/versions.ts` (raw versions in `lib/versions.json`):
 
 ```
-%versions.bitcoin_core%     → "31.0"
-%files.bitcoinArchive%      → "bitcoin-31.0-aarch64-linux-gnu.tar.gz"
-%urls.bitcoinDownload%      → "https://bitcoincore.org/bin/bitcoin-core-31.0/bitcoin-31.0-aarch64-linux-gnu.tar.gz"
+%versions.bitcoin_core%     → "31.1"
+%files.bitcoinArchive%      → "bitcoin-31.1-aarch64-linux-gnu.tar.gz"
+%urls.bitcoinDownload%      → "https://bitcoincore.org/bin/bitcoin-core-31.1/bitcoin-31.1-aarch64-linux-gnu.tar.gz"
 ```
 
 Tokens work inside fenced code blocks, inline code, and flowing text. To bump a version, edit `lib/versions.json`; to add a derived filename or URL, edit `lib/versions.ts`. Every page re-renders with the new string.
@@ -156,7 +156,7 @@ cd /tmp/download
 ```
 
 ```bash
-sha256sum bitcoin-31.0-aarch64-linux-gnu.tar.gz
+sha256sum bitcoin-31.1-aarch64-linux-gnu.tar.gz
 ```
 ````
 
