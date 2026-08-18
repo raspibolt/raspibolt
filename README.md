@@ -149,7 +149,7 @@ Edit [`lib/versions.json`](./lib/versions.json) to update; every page re-renders
 | Bitcoin Core | 31.1 |
 | LND | 0.21.2-beta |
 | Electrs | 0.11.1 |
-| RTL | 0.15.10 |
+| RTL | 0.15.11 |
 | Mempool | 3.3.1 |
 | Node.js | 24 LTS |
 

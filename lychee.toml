@@ -30,6 +30,10 @@ exclude = [
   # Example placeholders in the guide
   "\\.onion",
   "raspibolt\\.local",
+  # PR builds use the staging domain for canonical metadata. The static
+  # output is checked locally via --root-dir; do not make CI depend on the
+  # availability of the separate staging deployment.
+  "https?://next\\.raspibolt\\.org",
   # Git SSH schema (not HTTP)
   "^git@",
   "^ssh://",
