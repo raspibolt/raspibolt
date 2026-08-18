@@ -82,3 +82,7 @@ jobs:
       - name: Tear down VM
         if: always()
         run: testing/vm/down.sh
+
+      - name: Fail when the walk found errors
+        if: always() && steps.walk.outcome == 'failure'
+        run: exit 1

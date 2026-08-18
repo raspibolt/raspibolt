@@ -390,11 +390,14 @@ and they remember it from then on.
    sudo systemctl restart stunnel4
    ```
 
-4. Open the firewall for Electrum over TLS:
+4. Open the firewall for Electrum over TLS on your LAN only:
 
    ```bash
-   sudo ufw allow 50002/tcp comment 'Electrum SSL'
+   sudo ufw allow from 192.168.0.0/16 to any port 50002 proto tcp comment 'Electrum SSL LAN only'
    ```
+
+   Replace `192.168.0.0/16` with your actual home LAN range. The
+   optional Tor service below is the safe way to reach Electrs remotely.
 
 <Callout type="info" title="Self-signed is fine on the LAN">
 Wallets will flag the certificate the first time, that's expected.
