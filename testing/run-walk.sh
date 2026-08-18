@@ -225,7 +225,7 @@ run_page() {
           -e 's/ tail +-f +/ tail -n 50 /g' \
           -e 's/^watch +/echo "[skipped watch] "/g' \
           -e 's/^sudo +-u +bitcoin +bitcoin-cli +-netinfo +[0-9]+.*/sudo -u bitcoin bitcoin-cli getconnectioncount/g'
-    echo 'exit "$failures"'
+    echo 'if (( failures > 0 )); then exit 1; fi'
   } > "$wrapper"
 
   [[ "$CHAIN" == "signet" ]] && apply_signet_overlay "$page" "$wrapper"
