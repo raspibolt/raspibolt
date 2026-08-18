@@ -42,15 +42,15 @@
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.4",
+    "eslint": "^10.8.1",
     "eslint-config-next": "16.2.4",
     "eslint-plugin-mdx": "^3.7.0",
     "postcss": "^8.5.10",
-    "prettier": "^3.8.3",
+    "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "serve": "^14.2.6",
     "tailwindcss": "^4.2.2",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.5"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   }
 }
