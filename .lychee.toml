@@ -3,7 +3,7 @@
 # content stabilises by flipping offline = false.
 
 offline = true
-include_fragments = false
+include_fragments = "none"
 
 exclude = [
   # Next.js asset paths
