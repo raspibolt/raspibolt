@@ -13,7 +13,8 @@ Dates from `git log --all --date=short`. Most of this document captures decision
 - **2017** — v1 written as a Medium post (see [`backstory.mdx`](./guide/backstory.mdx)).
 - **2018-03-15** — repo's first commit (`8c3a906`). Guide runs on **Jekyll** + GitHub Pages for the next several years. `raspibolt.org` becomes canonical.
 - **2026-04-21** — v4 kicks off. First commits (`34955b6`, `4beceb8`) start a **Quarto** scaffold. Same day, side-by-side prototypes of Next.js + Fumadocs and hand-crafted HTML (`3f9b8fc`) lead to the pivot to Next.js + Fumadocs (`3204c6c`). Quarto attempt never shipped.
-- **2026-04**: v3 content migrated section by section (hardware, Bitcoin, Lightning, bonus stubs). Landing page, styleguide, CI workflows, and Docker-based testing harness built in parallel. `feature/v4-rewrite` in active development; staging auto-deploys to `stadicus.github.io/RaspiBolt`, `raspibolt.org` continues to serve v3.
+- **2026-04**: v3 content migrated section by section (hardware, Bitcoin, Lightning, bonus stubs). Landing page, styleguide, CI workflows, and Docker-based testing harness built in parallel. At that time, `feature/v4-rewrite` deployed to `stadicus.github.io/RaspiBolt` while `raspibolt.org` continued to serve v3.
+- **2026-08-18**: v4 merged into `master` and deployed to `https://raspibolt.org`. `https://next.raspibolt.org` remains the noindexed staging deployment from `feature/v4-rewrite`; `https://v3.raspibolt.org` is the noindexed v3 archive at tag `v3-final`.
 
 ---
 
@@ -185,16 +186,17 @@ Not in CI (needs a privileged container). Has caught real guide bugs: missing `x
 
 ## Deployment
 
-| Environment | URL                                     | Source branch                          |
-| ----------- | --------------------------------------- | -------------------------------------- |
-| Staging     | `https://stadicus.github.io/RaspiBolt/` | `feature/v4-rewrite`                   |
-| Production  | `https://raspibolt.org`                 | `master` (v3 today, v4 after cut-over) |
+| Environment | URL                          | Source branch        |
+| ----------- | ---------------------------- | -------------------- |
+| Staging     | `https://next.raspibolt.org` | `feature/v4-rewrite` |
+| Production  | `https://raspibolt.org`      | `master`             |
+| Archive     | `https://v3.raspibolt.org`   | `v3-final`           |
 
-Staging is noindexed. `site-publish.yml` force-pushes `out/` to `gh-pages`.
+Staging is noindexed. Both staging and production deploy through GitHub Pages Actions; the archive remains a separate, noindexed v3 site.
 
 ### basePath
 
-Staging serves at `/RaspiBolt/`, production at `/`. `next.config.mjs` reads `NEXT_PUBLIC_BASE_PATH`:
+Both current deployments serve at the domain root. `next.config.mjs` still supports an optional `NEXT_PUBLIC_BASE_PATH` for an alternate preview:
 
 ```js
 basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? '',

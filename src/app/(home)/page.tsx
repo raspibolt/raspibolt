@@ -36,7 +36,7 @@ export default function HomePage() {
 
         <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
           <div className="inline-flex items-center rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold tracking-widest text-amber-700 uppercase dark:text-amber-300">
-            v4 &middot; June 2026
+            v4 &middot; Updated August 2026
           </div>
           <h1 className="text-fd-foreground mt-4 text-5xl font-bold tracking-tight md:text-7xl">
             Build your own{' '}

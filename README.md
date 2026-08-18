@@ -3,7 +3,8 @@
 Build your own self-sovereign Bitcoin and Lightning node on a Raspberry Pi.
 
 - **Published guide:** <https://raspibolt.org>
-- **v4 staging preview:** <https://stadicus.github.io/RaspiBolt/> *(auto-deploys from `feature/v4-rewrite`)*
+- **v4 staging preview:** <https://next.raspibolt.org> *(auto-deploys from `feature/v4-rewrite`)*
+- **v3 archive:** <https://v3.raspibolt.org> *(read-only, noindex)*
 - **Project history and decisions:** [`DECISIONS.md`](./DECISIONS.md): why the stack, content, and tooling choices are what they are
 - **Open decisions & deferred work:** [`TODO.md`](./TODO.md)
 
@@ -32,6 +33,7 @@ guide/
 - **Callouts** use Fumadocs' `<Callout type="info|warn|success|error">...</Callout>`.
 - **Internal links** use bare paths: `/docs/raspberry-pi/preparations`, no file extension.
 - **Code blocks** always specify a language (`bash`, `text`, `ini`, etc.) and hold **one shell command each**, so the copy button hands the reader exactly one paste-ready command. Heredocs, pipelines, and reference lists stay together; see `CLAUDE.md` for the exceptions.
+- **Homepage freshness:** when a reader-facing guide change is published, update the `v4 · Updated Month YYYY` badge in [`src/app/(home)/page.tsx`](./src/app/(home)/page.tsx).
 
 See [`CLAUDE.md`](./CLAUDE.md) for the full voice and syntax guidelines.
 
@@ -49,8 +51,8 @@ See [`CLAUDE.md`](./CLAUDE.md) for the full voice and syntax guidelines.
 ### First-time setup
 
 ```bash
-git clone https://github.com/Stadicus/RaspiBolt.git
-cd RaspiBolt
+git clone https://github.com/raspibolt/raspibolt.git
+cd raspibolt
 bash scripts/setup-dev.sh
 ```
 
@@ -122,7 +124,7 @@ Vale rules are in [`.vale/styles/RaspiBolt/`](./.vale/styles/RaspiBolt); accepte
 - **Framework:** [Next.js 16](https://nextjs.org) with static export
 - **Docs theme:** [Fumadocs](https://fumadocs.dev)
 - **Styling:** Tailwind CSS 4
-- **Deployment:** GitHub Pages (via [`.github/workflows/site-publish.yml`](./.github/workflows/site-publish.yml))
+- **Deployment:** GitHub Pages, production via [`.github/workflows/site-publish-prod.yml`](./.github/workflows/site-publish-prod.yml) and staging via [`.github/workflows/site-publish.yml`](./.github/workflows/site-publish.yml)
 - **Variable resolution:** Custom [remark plugin](./lib/remark-variables.ts)
 
 ```
@@ -138,7 +140,7 @@ testing/
   REPORT.md           Latest walk report (per-page PASS/FAIL)
 ```
 
-### Software versions (v4 target)
+### Current software versions
 
 Edit [`lib/versions.json`](./lib/versions.json) to update; every page re-renders on next build.
 
@@ -153,4 +155,4 @@ Edit [`lib/versions.json`](./lib/versions.json) to update; every page re-renders
 
 ---
 
-*v4 rewrite in progress on `feature/v4-rewrite`. Current stable guide: <https://raspibolt.org>*
+*RaspiBolt v4 is the current guide at <https://raspibolt.org>. RaspiBolt v3 remains available at <https://v3.raspibolt.org>.*

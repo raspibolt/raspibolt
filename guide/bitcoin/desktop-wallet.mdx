@@ -60,7 +60,7 @@ A quick piece of framing before you install anything.
 
 Sparrow is happiest when it's watch-only plus a hardware wallet on
 a USB port. This is why, if you can swing it, you'll want a
-BitBox02, Coldcard, Jade, Ledger, or Trezor before you load real
+BitBox02, Jade, Ledger, or Trezor before you load real
 funds into this setup.
 
 ## Install Sparrow
@@ -146,8 +146,8 @@ world. A quick tour:
   transaction, and let your hardware wallet sign it. Sparrow shows
   the exact bytes the device will sign, every fee, and every
   change output. Nothing is hidden.
-- **PSBT:** if the signing device lives air-gapped (a Coldcard with
-  an SD card, for example), export a Partially Signed Bitcoin
+- **PSBT:** if the signing device lives air-gapped and uses removable
+  storage, export a Partially Signed Bitcoin
   Transaction, sign on the cold device, and import the signed PSBT
   back. Same result; no USB.
 

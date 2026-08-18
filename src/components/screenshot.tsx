@@ -9,7 +9,7 @@ type Props = {
 };
 
 // Next.js only rewrites <Link> and <Image> for basePath; plain <img>
-// needs the prefix applied manually so staging (/RaspiBolt) resolves.
+// needs the prefix applied manually when an alternate preview uses one.
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 export function Screenshot({ src, alt, caption, stale, float }: Props) {

@@ -6,7 +6,7 @@ import { appDescription, appName, appTagline, isProductionSite, siteUrl } from '
 import './global.css';
 
 // Umami analytics. Separate websites for production (raspibolt.org)
-// and staging (stadicus.github.io/RaspiBolt) so traffic doesn't mix.
+// and staging (next.raspibolt.org) so traffic doesn't mix.
 // isProductionSite is resolved at build time from NEXT_PUBLIC_SITE_URL.
 // The script only renders in production builds; data-domains is a
 // second guard so a locally served production build can't pollute
@@ -14,7 +14,7 @@ import './global.css';
 const umamiWebsiteId = isProductionSite
   ? 'f6788a01-2c1f-429f-815b-73d15af26a27'
   : '3a6df4e2-9a81-4678-b782-88b940e22045';
-const umamiDomains = isProductionSite ? 'raspibolt.org' : 'stadicus.github.io';
+const umamiDomains = isProductionSite ? 'raspibolt.org' : 'next.raspibolt.org';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     creator: '@stadicus',
   },
   // Only the canonical production domain (raspibolt.org) should be
-  // indexed. Staging (stadicus.github.io/RaspiBolt) and PR previews
+  // indexed. Staging (next.raspibolt.org) and PR previews
   // get full noindex so they don't compete with prod in search.
   robots: isProductionSite
     ? { index: true, follow: true }

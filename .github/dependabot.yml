@@ -8,7 +8,7 @@ updates:
       interval: 'weekly'
       day: 'monday'
     open-pull-requests-limit: 5
-    target-branch: 'feature/v4-rewrite'
+    target-branch: 'master'
     groups:
       next-ecosystem:
         patterns:
@@ -41,5 +41,5 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
-    target-branch: 'feature/v4-rewrite'
+    target-branch: 'master'
     open-pull-requests-limit: 3

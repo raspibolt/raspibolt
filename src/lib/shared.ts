@@ -7,9 +7,9 @@ export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';
 
 // Canonical site URL for Open Graph, Twitter cards, sitemap, and
-// canonical links. Defaults to the GitHub Pages staging target;
+// canonical links. Defaults to the staging target;
 // override via NEXT_PUBLIC_SITE_URL when cutting over to raspibolt.org.
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://stadicus.github.io/RaspiBolt';
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://next.raspibolt.org';
 
 // True when we're building for the canonical production domain.
 // Everything else (staging, PR previews, local dev) is treated as

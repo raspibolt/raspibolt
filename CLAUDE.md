@@ -2,7 +2,7 @@
 
 RaspiBolt is a self-custody Bitcoin and Lightning full-node guide for technically capable hobbyists. People who can follow terminal commands but may not be Bitcoin experts. The guide walks through a complete setup on a Raspberry Pi, from flashing the OS to running Lightning payments.
 
-**v4 goal:** Rewrite the guide on Next.js + Fumadocs (MDX). Modernize structure, update all software versions, and establish a sustainable, automatable publishing workflow. The feature branch `feature/v4-rewrite` auto-deploys to the staging preview at https://stadicus.github.io/RaspiBolt/. The reasoning behind the stack (including why Quarto was tried and dropped) is captured in [`DECISIONS.md`](./DECISIONS.md).
+**Current state:** RaspiBolt v4 runs on Next.js + Fumadocs (MDX) at https://raspibolt.org. The feature branch `feature/v4-rewrite` auto-deploys to the staging preview at https://next.raspibolt.org. The v3 guide is archived at https://v3.raspibolt.org. The reasoning behind the stack (including why Quarto was tried and dropped) is captured in [`DECISIONS.md`](./DECISIONS.md).
 
 ---
 
@@ -24,7 +24,7 @@ No approval needed. Act and commit.
 
 1. Write, migrate, or rewrite any content section
 2. Make prose decisions: structure, wording, what to cut from v3, what to rewrite
-3. Commit and push to `feature/v4-rewrite`
+3. Commit and push to the branch for the change
 4. Update software versions in `lib/versions.json`
 5. Fix lint/spell/markdownlint failures
 6. Update `testing/test-runner.sh` tests to match migrated content
@@ -53,8 +53,8 @@ Present a recommendation and wait for approval.
 
 Only on explicit instruction.
 
-1. Merge `feature/v4-rewrite` into `master`
-2. Open a PR toward the upstream `raspibolt/RaspiBolt` repository
+1. Merge a pull request into `master`
+2. Change the production deployment workflow or its repository guard
 3. Change the `CNAME` or published domain configuration
 4. Force-push to any branch
 
@@ -199,7 +199,7 @@ Images live in `public/images/` at the repo root. Reference them with root-relat
 ![Raspberry Pi 5 board](/images/raspberry-pi-5.png)
 ```
 
-This keeps images discoverable for contributors (one place to look) and plays nicely with the `/RaspiBolt/` basePath on the staging deploy; Next.js rewrites root-relative paths automatically.
+This keeps images discoverable for contributors in one place. Next.js rewrites root-relative paths automatically when a base path is configured.
 
 Optimize PNG/JPG to <300 KB before committing (use `oxipng -o 4 file.png` or an equivalent). Screenshots of the Raspberry Pi Imager UI tend to go stale fast, so prefer numbered steps with bold UI labels over screenshots.
 

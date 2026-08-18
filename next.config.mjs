@@ -2,9 +2,8 @@ import { createMDX } from 'fumadocs-mdx/next';
 
 const withMDX = createMDX();
 
-// GitHub Pages deploy lives at https://stadicus.github.io/RaspiBolt/,
-// so assets and internal links need the /RaspiBolt prefix.
-// Skipped in local dev (NEXT_PUBLIC_BASE_PATH not set).
+// Both current deployments serve from their domain root. Keep this optional
+// base path for alternate previews served below a path prefix.
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 /** @type {import('next').NextConfig} */

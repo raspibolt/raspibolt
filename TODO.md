@@ -1,4 +1,4 @@
-# RaspiBolt v4: open decisions and deferred work
+# RaspiBolt: open decisions and deferred work
 
 Tracking file for non-urgent items: open design decisions, deferred content work, tooling nice-to-haves. One place to look when a session starts, without touching `CLAUDE.md` (which is in the prompt cache; every edit invalidates it).
 
@@ -12,20 +12,18 @@ Add new items at the top of the relevant section. Strike items by moving them to
 
 ---
 
-## Pre-cutover checklist
+## Launch status
 
-Items to clear before merging v4 to upstream `raspibolt/raspibolt` master:
-
-- **Tag `v3-final`** on the last v3 commit of upstream master, push, then merge v4. Archive plan posted upstream: [raspibolt/raspibolt#1527](https://github.com/raspibolt/raspibolt/issues/1527) (open, awaiting community feedback on whether a rendered v3 site must stay online and where the pointer goes). Resolve that thread before tagging.
-- **Add "Looking for v3?" pointer** in v4 footer linking to `https://github.com/raspibolt/raspibolt/tree/v3-final`.
-- **Test Tailscale install flow on a Pi 5 Trixie** (see Deferred content below).
+- RaspiBolt v4 is live at <https://raspibolt.org>.
+- The noindexed v3 archive is live at <https://v3.raspibolt.org> from tag `v3-final`.
+- The noindexed staging deployment remains at <https://next.raspibolt.org> from `feature/v4-rewrite`.
 
 ---
 
 ## Deferred content
 
 - **Bonus sections** (`guide/bonus/**`) are stubs with v3 source links. Full content migration deferred until the main path is battle-tested.
-- **Test Tailscale install flow on a Pi 5 Trixie**. The privacy.mdx Tailscale steps are written from upstream docs but haven't been walked on real hardware. Verify before v4 goes live.
+- **Test Tailscale install flow on a Pi 5 Trixie**. The privacy.mdx Tailscale steps are written from upstream docs but haven't been walked on real hardware.
 
 ---
 
