@@ -53,5 +53,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: lychee-report
-          path: lychee/out.md
+          path: out/lychee-report.md
           if-no-files-found: ignore

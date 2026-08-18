@@ -43,6 +43,6 @@ exclude = [
 cache = true
 max_cache_age = "7d"
 
-# Output: write a markdown report alongside CLI output.
+# Output: write a markdown report inside the generated site directory.
 format = "markdown"
-output = "./lychee/out.md"
+output = "./out/lychee-report.md"
