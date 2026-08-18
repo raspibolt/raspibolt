@@ -68,7 +68,7 @@ export function Mermaid({ chart }: { chart: string }) {
     let cancelled = false;
     mermaid.initialize({
       startOnLoad: false,
-      securityLevel: 'loose',
+      securityLevel: 'strict',
       ...(isDark ? darkTheme : lightTheme),
     });
     mermaid
