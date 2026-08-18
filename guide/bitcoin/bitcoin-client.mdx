@@ -134,6 +134,11 @@ has to be what the developers actually signed.
 
    ```bash
    git clone --depth 1 https://github.com/bitcoin-core/guix.sigs.git /tmp/guix.sigs
+   ```
+
+   Import the builder keys:
+
+   ```bash
    gpg --import /tmp/guix.sigs/builder-keys/*.gpg
    ```
 

@@ -204,7 +204,9 @@ run_page() {
 
   # Relax: we remove set -e because one bad step shouldn't stop the
   # whole page script; we want to see what does and doesn't work.
-  # Preserve unset-var safety (-u) and pipefail, but add -x for trace.
+  # Preserve unset-var safety (-u) and pipefail, add -x for trace, and
+  # record failures so a page with any failed command cannot be reported
+  # as PASS after the remaining steps have run.
   # Rewrite blocking commands on the fly: `journalctl -f` and
   # `tail -f` would hang the page; replace with a single-shot read.
   # Also rewrite `watch` to a one-shot equivalent.
@@ -215,12 +217,15 @@ run_page() {
     echo 'set -uo pipefail'
     echo 'set +e'
     echo 'set -x'
+    echo 'failures=0'
+    echo 'trap '\''rc=$?; ((failures++)); printf "[walk] command failed (rc=%s): %s\\n" "$rc" "$BASH_COMMAND" >&2'\'' ERR'
     sed -e '1,/^set -euo pipefail$/d' "$script" \
       | sed -E \
           -e 's/journalctl +-f +/journalctl --no-pager -n 50 /g' \
           -e 's/ tail +-f +/ tail -n 50 /g' \
           -e 's/^watch +/echo "[skipped watch] "/g' \
           -e 's/^sudo +-u +bitcoin +bitcoin-cli +-netinfo +[0-9]+.*/sudo -u bitcoin bitcoin-cli getconnectioncount/g'
+    echo 'exit "$failures"'
   } > "$wrapper"
 
   [[ "$CHAIN" == "signet" ]] && apply_signet_overlay "$page" "$wrapper"
@@ -239,8 +244,8 @@ run_page() {
     echo "[run] FAIL $page rc=$rc (continuing; see $log)"
     ((total_fail++)) || true
     local errline
-    errline=$(grep -E '^\+\+' "$log" | tail -1 | head -c 200 || true)
-    echo "| \`$page\` | $bash_blocks | $rc | last trace: \`${errline//|/\\|}\` |" >> "$SUMMARY"
+    errline=$(grep -F '[walk] command failed' "$log" | tail -1 | head -c 200 || true)
+    echo "| \`$page\` | $bash_blocks | $rc | failure: \`${errline//|/\\|}\` |" >> "$SUMMARY"
   fi
 }
 
