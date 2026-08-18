@@ -18,7 +18,7 @@ jobs:
     timeout-minutes: 90
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Remove the label immediately so re-adding it later triggers a fresh run.
       - name: Remove trigger label
