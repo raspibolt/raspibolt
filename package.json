@@ -19,7 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "flexsearch": "^0.8.212",
     "fumadocs-core": "16.8.1",
-    "fumadocs-mdx": "14.3.1",
+    "fumadocs-mdx": "15.2.3",
     "fumadocs-ui": "16.8.1",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "^1.8.0",
