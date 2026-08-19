@@ -104,28 +104,29 @@ SSD. If the SSD fails and you have the seed phrase and the latest
 
 ```mermaid
 graph TB
-  subgraph you[You, across the internet]
-    D1[Your laptop]
-    D2[Your phone]
+  subgraph you["You, across the internet"]
+    D1["Your laptop"]
+    D2["Your phone"]
   end
 
-  subgraph trust[Your trust boundary]
-    TS[Tailscale 100.x.y.z]
-    HS[Tor hidden service .onion]
-    A[admin on the Pi]
+  subgraph trust["Your trust boundary"]
+    TS["Tailscale 100.x.y.z"]
+    HS["Tor hidden service .onion"]
+    A["admin on the Pi"]
   end
 
-  subgraph public[Public internet]
-    rando[Random observer]
+  subgraph public["Public internet"]
+    rando["Random observer"]
   end
+
+  obs_note["Sees nothing but<br/>Tor exit traffic"]
 
   D1 -- SSH over WireGuard --> TS
   D2 -- SSH or Zeus over WireGuard --> TS
   D2 -- Zeus REST over Tor --> HS
   TS --> A
   HS --> A
-
-  rando -. sees nothing but Tor exit traffic .-> public
+  rando --- obs_note
 ```
 
 Three routes into your Pi, in increasing order of privacy:
