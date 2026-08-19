@@ -1,7 +1,7 @@
 export const appName = 'RaspiBolt';
-export const appTagline = 'Self-custody Bitcoin & Lightning on a Raspberry Pi';
+export const appTagline = 'Sovereign Bitcoin & Lightning node';
 export const appDescription =
-  'A step-by-step guide to building your own sovereign Bitcoin and Lightning node on a Raspberry Pi. No custodian, no cloud, just you and the protocol.';
+  'Build your own sovereign Bitcoin and Lightning node on a Raspberry Pi—step by step, with no custodian or cloud.';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';
