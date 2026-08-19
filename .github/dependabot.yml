@@ -1,45 +1,24 @@
 version: 2
 
 updates:
-  # npm deps — group patch/minor updates into a single weekly PR.
+  # npm — disable routine version PRs and group security fixes.
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'weekly'
       day: 'monday'
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 0
     target-branch: 'master'
     groups:
-      next-ecosystem:
+      security-updates:
+        applies-to: 'security-updates'
         patterns:
-          - 'next'
-          - 'eslint-config-next'
-          - '@types/react*'
-          - 'react'
-          - 'react-dom'
-      fumadocs:
-        patterns:
-          - 'fumadocs-*'
-          - '@orama/*'
-      dev-tooling:
-        patterns:
-          - 'eslint'
-          - 'eslint-*'
-          - '@typescript-eslint/*'
-          - 'prettier'
-          - 'prettier-*'
-          - 'vitest'
-          - 'typescript'
-          - '@types/*'
-      minor-and-patch:
-        update-types:
-          - 'minor'
-          - 'patch'
+          - '*'
 
-  # GitHub Actions — keep action versions current.
+  # GitHub Actions — disable routine version PRs.
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
     target-branch: 'master'
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 0
