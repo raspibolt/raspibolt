@@ -15,7 +15,6 @@
     "update:contributors": "node scripts/fetch-contributors.mjs"
   },
   "dependencies": {
-    "@orama/orama": "^3.1.18",
     "class-variance-authority": "^0.7.1",
     "flexsearch": "^0.8.212",
     "fumadocs-core": "16.14.4",
