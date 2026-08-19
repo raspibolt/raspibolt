@@ -31,7 +31,7 @@ const exportDir = resolve(process.cwd(), 'out');
 const rootHtmlPath = resolve(exportDir, 'index.html');
 const socialImagePath = resolve(exportDir, 'opengraph-image');
 const socialImagePngPath = resolve(exportDir, 'opengraph-image.png');
-const socialImagePattern = /opengraph-image\?[^"'<>\s]+/g;
+const socialImagePattern = /opengraph-image\?[a-zA-Z0-9]+/g;
 const rootHtml = readFileSync(rootHtmlPath, 'utf8');
 const rewrittenRootHtml = rootHtml.replace(socialImagePattern, 'opengraph-image.png');
 
