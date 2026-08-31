@@ -1,0 +1,475 @@
+---
+title: Alby Hub
+description: Self-custodial Lightning node manager with NWC app connections and sub-wallets, pointed at your existing LND node.
+---
+
+[Alby Hub](https://albyhub.com) is a self-custodial wallet and node
+manager that connects your Lightning node to other applications over
+[Nostr Wallet Connect](https://nwc.dev) (NWC). It issues scoped
+connection secrets, so a browser extension, a mobile wallet, or a
+podcast app can spend from your node under a budget you set, without
+ever holding your macaroon.
+
+Alby Hub can run its own embedded LDK node. This guide takes the other
+route and points it at the LND node you already run, so both share the
+same channels and the same on-chain funds.
+
+![Alby Hub](/images/alby-hub.png)
+
+## Requirements
+
+- [Lightning client](/docs/lightning/lightning-client) (LND) running and unlocked
+- Caddy installed (from the [BTC RPC Explorer guide](/docs/bitcoin/blockchain-explorer#install-nodejs) or standalone via `caddyserver.com`)
+- ~150 MB free on the SSD for the binary, its shared library, and the database
+
+<Callout type="warn" title="Walked against a test node, not a Raspberry Pi">
+The download, verification, install, and connection steps were walked
+end to end against a real LND v0.21.2-beta on regtest. Alby Hub read
+the configuration below, completed its setup over gRPC, reported
+`Connected to LND`, and issued a working NWC connection.
+
+Three things are still unproven on a real node: the ARM64 binary (the
+walk used the x86_64 build of the same release), the systemd unit, and
+the Caddy and Tor sections. If you run this on a Pi, report what broke
+in [the issue tracker](https://github.com/raspibolt/raspibolt/issues).
+</Callout>
+
+## Create the service user
+
+A dedicated system user limits the blast radius of any bug:
+
+```bash
+sudo adduser --disabled-password --gecos "" albyhub
+```
+
+Create the data directory:
+
+```bash
+sudo mkdir /data/albyhub
+```
+
+Hand it to the new user:
+
+```bash
+sudo chown -R albyhub:albyhub /data/albyhub
+```
+
+## Give Alby Hub access to LND
+
+Alby Hub talks to LND over gRPC on port 10009 and needs LND's TLS
+certificate plus the admin macaroon. Give it its own read-only copies
+rather than adding the user to the `lnd` group, the same approach the
+[Web app](/docs/lightning/web-app) guide uses for RTL.
+
+<Callout type="warn" title="The admin macaroon is the keys to the castle">
+Anyone with `admin.macaroon` and network reach to LND's gRPC port can
+move your funds and close your channels. Alby Hub needs it to open
+channels and pay invoices on your behalf. Keep the copy readable only
+by the `albyhub` user, and treat the web interface as something that
+must never be exposed to the internet without authentication.
+</Callout>
+
+Create a directory for the credentials:
+
+```bash
+sudo mkdir -p /data/albyhub/lnd
+```
+
+Copy in LND's TLS certificate:
+
+```bash
+sudo cp /data/lnd/tls.cert /data/albyhub/lnd/tls.cert
+```
+
+Copy in the admin macaroon:
+
+```bash
+sudo cp /data/lnd/data/chain/bitcoin/mainnet/admin.macaroon /data/albyhub/lnd/admin.macaroon
+```
+
+Hand both to the service user:
+
+```bash
+sudo chown -R albyhub:albyhub /data/albyhub/lnd
+```
+
+Lock the macaroon down:
+
+```bash
+sudo chmod 600 /data/albyhub/lnd/admin.macaroon
+```
+
+## Download and verify
+
+Alby Hub ships prebuilt server binaries. The release includes a
+`manifest.txt` with SHA256 checksums, signed by one of the Alby
+developers.
+
+Move to a temporary directory:
+
+```bash
+mkdir -p /tmp/albyhub && cd /tmp/albyhub
+```
+
+Download the ARM64 server release:
+
+```bash
+wget %urls.albyhubDownload%
+```
+
+Download the checksum manifest:
+
+```bash
+wget %urls.albyhubManifest%
+```
+
+Download its signature:
+
+```bash
+wget %urls.albyhubManifestSig%
+```
+
+Check the archive against the manifest:
+
+```bash
+grep %files.albyhubArchive% %files.albyhubManifest% | sha256sum --check
+```
+
+Expected output is `%files.albyhubArchive%: OK`.
+
+<Callout type="info" title="Why grep instead of checking the whole manifest">
+`sha256sum --check %files.albyhubManifest%` on its own reports
+`FAILED` for `manifest.txt` itself: the manifest lists its own
+checksum as the hash of an empty file, because it's generated before
+it's filled in. Scoping the check to the archive avoids a false alarm.
+</Callout>
+
+Now confirm the manifest is authentic. Import the signing key of Alby
+developer Roland Bewick:
+
+```bash
+curl https://github.com/rolznz.gpg | gpg --import
+```
+
+Verify the signature:
+
+```bash
+gpg --verify %files.albyhubManifestSig% %files.albyhubManifest%
+```
+
+Look for `Good signature from "Roland Bewick <roland.bewick@gmail.com>"`.
+The primary key fingerprint is
+`5D92 1859 38E6 DBF8 93DC CC5B A5EA BD88 3509 2B08`. The
+`WARNING: This key is not certified with a trusted signature` line is
+expected, it only means you haven't personally signed the key.
+
+<Callout type="info" title="Second signer">
+Releases also carry `manifest-im-adithya.txt.asc`, signed by a second
+Alby developer. Verifying either signature is enough; checking both
+gives you more assurance that no single compromised key produced the
+release.
+</Callout>
+
+## Install
+
+Unpack the archive into the data directory:
+
+```bash
+sudo tar -xjf %files.albyhubArchive% -C /data/albyhub
+```
+
+Hand the extracted files to the service user:
+
+```bash
+sudo chown -R albyhub:albyhub /data/albyhub
+```
+
+Confirm the binary is in place:
+
+```bash
+ls /data/albyhub/bin/albyhub
+```
+
+The archive contains `bin/albyhub` and `lib/libldk_node.so`. The
+binary finds its shared library through an embedded `$ORIGIN/../lib`
+runtime path, so keep the two directories side by side. Moving the
+binary out of `bin/` on its own breaks startup.
+
+Clean up the download:
+
+```bash
+rm -r /tmp/albyhub
+```
+
+## Configure
+
+Alby Hub reads its settings from an environment file. Write it as the
+service user:
+
+```bash
+sudo -u albyhub tee /data/albyhub/.env > /dev/null <<'CONFIG'
+# RaspiBolt: Alby Hub configuration
+# /data/albyhub/.env
+
+PORT=8095
+WORK_DIR=/data/albyhub
+
+# Use the existing LND node as the Lightning backend
+LN_BACKEND_TYPE=LND
+LND_ADDRESS=localhost:10009
+LND_CERT_FILE=/data/albyhub/lnd/tls.cert
+LND_MACAROON_FILE=/data/albyhub/lnd/admin.macaroon
+CONFIG
+```
+
+Restrict it to the service user:
+
+```bash
+sudo chmod 600 /data/albyhub/.env
+```
+
+<Callout type="info" title="Why port 8095 and not 8080">
+Alby Hub defaults to port 8080, which LND already uses for its REST
+API on a RaspiBolt. Two services cannot bind the same port, so this
+guide moves Alby Hub to 8095. If you change it, keep the Caddy block
+below in sync.
+</Callout>
+
+## Autostart on boot
+
+Back as user `admin`, create the service file:
+
+```bash
+sudo nano /etc/systemd/system/albyhub.service
+```
+
+Paste:
+
+```ini
+# RaspiBolt: systemd unit for Alby Hub
+# /etc/systemd/system/albyhub.service
+
+[Unit]
+Description=Alby Hub
+Requires=lnd.service
+After=lnd.service
+
+[Service]
+WorkingDirectory=/data/albyhub
+ExecStart=/data/albyhub/bin/albyhub
+EnvironmentFile=/data/albyhub/.env
+User=albyhub
+Restart=on-failure
+RestartSec=30
+TimeoutSec=120
+
+# Hardening measures
+PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable the service so it starts on boot:
+
+```bash
+sudo systemctl enable albyhub
+```
+
+Start it now:
+
+```bash
+sudo systemctl start albyhub
+```
+
+Follow the log:
+
+```bash
+sudo journalctl -f -u albyhub
+```
+
+Wait for a line reporting the server listening on port 8095. Press
+`Ctrl`-`C` to stop following the log.
+
+## HTTPS on the LAN with Caddy
+
+Alby Hub listens on plain HTTP bound to loopback. Caddy puts it behind
+HTTPS so you can reach it from any browser on your LAN.
+
+1. Open the Caddyfile:
+
+   ```bash
+   sudo nano /etc/caddy/Caddyfile
+   ```
+
+2. Add a block after your existing ones:
+
+   ```text
+   # Alby Hub
+   :4090 {
+     tls internal
+     reverse_proxy localhost:8095
+   }
+   ```
+
+3. Reload Caddy so it picks up the new block:
+
+   ```bash
+   sudo systemctl reload caddy
+   ```
+
+4. Open the firewall port:
+
+   ```bash
+   sudo ufw allow 4090/tcp comment 'Alby Hub (Caddy)'
+   ```
+
+5. Point your browser at `https://raspibolt.local:4090`. Accept the
+   one-time certificate warning.
+
+The first visit walks you through creating an unlock password and
+confirming the LND connection. Once that's done, the **Connections**
+page issues NWC connection secrets for the
+[Alby Browser Extension](https://getalby.com/alby-extension),
+[Alby Go](https://getalby.com/alby-go), or any other NWC-capable app,
+each with its own spending budget.
+
+<Callout type="warn" title="Alby Hub does not unlock itself after a reboot">
+The unlock password is what encrypts Alby Hub's own data. After every
+restart, connected apps stay disconnected until someone opens the web
+interface and unlocks it. Set `AUTO_UNLOCK_PASSWORD` in
+`/data/albyhub/.env` to unlock automatically on boot, the same
+trade-off as LND's `wallet-unlock-password-file`: convenience against
+having the password readable on disk.
+</Callout>
+
+**Main takeaway:** your node can now serve NWC apps with per-app
+budgets, without handing any of them the admin macaroon.
+
+## Remote access over Tor (optional)
+
+1. Open the Tor configuration:
+
+   ```bash
+   sudo nano /etc/tor/torrc
+   ```
+
+   Scroll to the section marked **"This section is just for
+   location-hidden services"** and add:
+
+   ```text
+   # Hidden service: Alby Hub
+   HiddenServiceDir /var/lib/tor/hidden_service_albyhub/
+   HiddenServiceVersion 3
+   HiddenServicePort 80 127.0.0.1:8095
+   ```
+
+2. Reload Tor so it picks up the new hidden service:
+
+   ```bash
+   sudo systemctl reload tor
+   ```
+
+   Read the generated `.onion` address:
+
+   ```bash
+   sudo cat /var/lib/tor/hidden_service_albyhub/hostname
+   ```
+
+3. Open that address in the [Tor Browser](https://www.torproject.org)
+   from any device.
+
+<Callout type="warn" title="A hidden service is not a password">
+Anyone who learns the `.onion` address reaches your Alby Hub login
+screen. The unlock password is the only thing between them and your
+node. Use a strong one, and don't share the address.
+</Callout>
+
+## Upgrade
+
+Check the [release notes](https://github.com/getAlby/hub/releases)
+before upgrading.
+
+Stop the service:
+
+```bash
+sudo systemctl stop albyhub
+```
+
+Download, verify, and unpack the new release exactly as in
+[Download and verify](#download-and-verify) above, replacing
+v%versions.albyhub% with the new version. Unpacking over `/data/albyhub`
+replaces `bin/` and `lib/` and leaves the database and `.env` alone.
+
+Start it again:
+
+```bash
+sudo systemctl start albyhub
+```
+
+<Callout type="info" title="No update script in the server release">
+Other Alby Hub install methods ship an `update.sh` helper. The
+`albyhub-Server-Linux-*` archives do not, they contain only `bin/` and
+`lib/`. Repeating the download and verify steps is the upgrade path
+here.
+</Callout>
+
+## Uninstall
+
+Stop the service:
+
+```bash
+sudo systemctl stop albyhub
+```
+
+Disable it so it no longer starts on boot:
+
+```bash
+sudo systemctl disable albyhub
+```
+
+Delete the unit file:
+
+```bash
+sudo rm /etc/systemd/system/albyhub.service
+```
+
+Remove the Caddy block you added from `/etc/caddy/Caddyfile`:
+
+```bash
+sudo nano /etc/caddy/Caddyfile
+```
+
+Reload Caddy:
+
+```bash
+sudo systemctl reload caddy
+```
+
+List the firewall rules and note the numbers of the Alby Hub entries:
+
+```bash
+sudo ufw status numbered
+```
+
+Delete them, highest number first so the numbering stays valid:
+
+```bash
+sudo ufw delete <number>
+```
+
+Delete the data directory, including the database and the macaroon
+copy:
+
+```bash
+sudo rm -r /data/albyhub
+```
+
+Remove the service user:
+
+```bash
+sudo userdel -r albyhub
+```

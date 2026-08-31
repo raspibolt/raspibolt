@@ -71,6 +71,11 @@ CLBoss
 LNbits
 LNDg
 [Aa]mboss
+[Aa]lby
+NWC
+Nostr
+LDK
+albyhub
 
 # Wallets / ecosystem
 Trezor
