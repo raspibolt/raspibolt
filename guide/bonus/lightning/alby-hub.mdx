@@ -22,12 +22,16 @@ same channels and the same on-chain funds.
 - Caddy installed (from the [BTC RPC Explorer guide](/docs/bitcoin/blockchain-explorer#install-nodejs) or standalone via `caddyserver.com`)
 - ~150 MB free on the SSD for the binary, its shared library, and the database
 
-<Callout type="warn" title="Not yet walked on real hardware">
-These steps are assembled from Alby Hub's own documentation and
-verified against the v%versions.albyhub% release artifacts, but nobody
-has run them end to end on a RaspiBolt yet. Treat this page as a
-well-researched draft. If you walk it, report what broke in
-[the issue tracker](https://github.com/raspibolt/raspibolt/issues).
+<Callout type="warn" title="Walked against a test node, not a Raspberry Pi">
+The download, verification, install, and connection steps were walked
+end to end against a real LND v0.21.2-beta on regtest. Alby Hub read
+the configuration below, completed its setup over gRPC, reported
+`Connected to LND`, and issued a working NWC connection.
+
+Three things are still unproven on a real node: the ARM64 binary (the
+walk used the x86_64 build of the same release), the systemd unit, and
+the Caddy and Tor sections. If you run this on a Pi, report what broke
+in [the issue tracker](https://github.com/raspibolt/raspibolt/issues).
 </Callout>
 
 ## Create the service user
