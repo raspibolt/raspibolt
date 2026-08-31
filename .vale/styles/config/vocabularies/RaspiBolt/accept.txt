@@ -47,6 +47,7 @@ rescanning
 
 # Lightning
 CLN
+clnrest
 Eclair
 [Ww]atchtower(s)?
 [Pp]athfinding
