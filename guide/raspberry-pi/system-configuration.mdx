@@ -21,9 +21,9 @@ anything that touches system files needs `sudo` in front of it
 
 ## System update
 
-Keeping the system patched is table stakes. Debian's `apt` package
-manager handles OS updates and application upgrades in the same
-command.
+Keeping the system patched is table stakes. Raspberry Pi OS uses
+`apt` to update applications, its kernel, and firmware. Install
+security updates promptly, especially on a node that stays online.
 
 1. Set a default locale. This silences the noisy `LC_ALL: cannot
    change locale` warnings that some tools throw when you SSH in from
@@ -51,15 +51,47 @@ command.
    sudo apt full-upgrade
    ```
 
+   Reboot to start the updated kernel and firmware:
+
+   ```bash
+   sudo reboot
+   ```
+
+   Your SSH connection will close. Reconnect when the Pi is back up,
+   then check which kernel is running:
+
+   ```bash
+   uname -r
+   ```
+
 3. Install `git`, you'll need it later to clone source code:
 
    ```bash
    sudo apt install git
    ```
 
-<Callout type="info">
-Run `sudo apt update && sudo apt full-upgrade` every few months to
-pick up security fixes. Set a reminder if you're the forgetful type.
+<Callout type="warn" title="Keep up with kernel security updates">
+[Debian security advisory DSA-6528-1](https://lists.debian.org/debian-security-announce/2026/msg00441.html)
+reports kernel flaws that may allow privilege escalation, denial of
+service, or information leaks. Debian 13 fixed them in its `linux`
+package version `6.12.111-1`. This guide uses Raspberry Pi OS, which
+ships a Raspberry Pi kernel with its own package versions. Do not use
+the Debian version number or `uname -r` alone to decide whether your
+Pi has the fixes.
+
+As of October 2, 2026, the [Raspberry Pi OS Trixie package index](https://archive.raspberrypi.com/debian/dists/trixie/main/binary-arm64/Packages.gz)
+offers kernel `6.18.50` for Pi 4 and Pi 5. At least one fix in this
+advisory, [CVE-2026-97417](https://kernel-team.pages.debian.net/kernel-sec/CVE-2026-97417.html)
+in network packet filtering, entered the upstream 6.18 series in
+`6.18.53`. The stable Raspberry Pi OS kernel therefore cannot be
+assumed to contain all the advisory's fixes yet. Keep installing
+stable updates and check the status of specific flaws when newer
+kernels arrive. Do not use `rpi-update` for routine security updates.
+
+Check for updates at least weekly and whenever a relevant security
+advisory appears. After a kernel or firmware update, reboot. `uname -r`
+shows the running kernel version, but does not prove that a specific
+vulnerability is fixed.
 </Callout>
 
 ## Check SSD performance
