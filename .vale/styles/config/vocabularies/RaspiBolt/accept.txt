@@ -32,6 +32,7 @@ signet
 timelock
 multisig
 multisignature
+multiprocess
 preimage
 hashlock
 CLTV
