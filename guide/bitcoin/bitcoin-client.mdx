@@ -177,6 +177,14 @@ Install the binaries into `/usr/local/bin`, owned by root:
 sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-%versions.bitcoin_core%/bin/*
 ```
 
+The archive also ships helper programs in `libexec/`. The `bitcoin`
+command needs them for its multiprocess mode (`bitcoin -m node`) and
+looks for them in `/usr/local/libexec`, so install them there too:
+
+```bash
+sudo install -D -m 0755 -o root -g root -t /usr/local/libexec bitcoin-%versions.bitcoin_core%/libexec/*
+```
+
 Confirm the right version is on `PATH`:
 
 ```bash
@@ -540,6 +548,12 @@ Install the new binaries:
 
 ```bash
 sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-%versions.bitcoin_core%/bin/*
+```
+
+Install the new helper programs:
+
+```bash
+sudo install -D -m 0755 -o root -g root -t /usr/local/libexec bitcoin-%versions.bitcoin_core%/libexec/*
 ```
 
 Restart the daemon to pick up the new binary:
