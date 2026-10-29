@@ -16,7 +16,7 @@ Add new items at the top of the relevant section. Strike items by moving them to
 
 - RaspiBolt v4 is live at <https://raspibolt.org>.
 - The noindexed v3 archive is live at <https://v3.raspibolt.org> from tag `v3-final`.
-- The noindexed staging deployment remains at <https://next.raspibolt.org> from `feature/v4-rewrite`.
+- The noindexed staging deployment remains at <https://next.raspibolt.org> from the fork's `next` branch.
 
 ---
 

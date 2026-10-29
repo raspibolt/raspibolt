@@ -3,7 +3,7 @@
 Build your own self-sovereign Bitcoin and Lightning node on a Raspberry Pi.
 
 - **Published guide:** <https://raspibolt.org>
-- **v4 staging preview:** <https://next.raspibolt.org> *(auto-deploys from `feature/v4-rewrite`)*
+- **v4 staging preview:** <https://next.raspibolt.org> *(auto-deploys from the fork's `next` branch)*
 - **v3 archive:** <https://v3.raspibolt.org> *(read-only, noindex)*
 - **Project history and decisions:** [`DECISIONS.md`](./DECISIONS.md): why the stack, content, and tooling choices are what they are
 - **Open decisions & deferred work:** [`TODO.md`](./TODO.md)

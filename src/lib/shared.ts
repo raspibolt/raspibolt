@@ -22,4 +22,4 @@ export const isProductionSite = siteUrl === 'https://raspibolt.org';
 // Keyed off isProductionSite so the cutover needs no manual edit here.
 export const gitConfig = isProductionSite
   ? { user: 'raspibolt', repo: 'raspibolt', branch: 'master' }
-  : { user: 'Stadicus', repo: 'RaspiBolt', branch: 'feature/v4-rewrite' };
+  : { user: 'Stadicus', repo: 'RaspiBolt', branch: 'next' };
