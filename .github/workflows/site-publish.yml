@@ -1,6 +1,6 @@
 name: Publish site (staging)
 
-# Fires on pushes to feature/v4-rewrite and deploys to the fork's
+# Fires on pushes to `next` and deploys to the fork's
 # GitHub Pages at the custom domain https://next.raspibolt.org.
 #
 # This is a 1:1 rehearsal of the production deploy (site-publish-prod.yml):
@@ -11,11 +11,11 @@ name: Publish site (staging)
 # isProductionSite stays false -> the build ships noindex + a Disallow-all
 # robots.txt + staging analytics, so this mirror never competes with prod.
 #
-# Master is intentionally excluded; the fork's master still serves the v3
-# Jekyll site, and prod deploys run from the upstream repo.
+# Master is intentionally excluded: prod deploys run from the upstream
+# repo's master (site-publish-prod.yml).
 on:
   push:
-    branches: [feature/v4-rewrite]
+    branches: [next]
     paths:
       - 'guide/**'
       - 'src/**'

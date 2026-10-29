@@ -2,7 +2,7 @@
 
 RaspiBolt is a self-custody Bitcoin and Lightning full-node guide for technically capable hobbyists. People who can follow terminal commands but may not be Bitcoin experts. The guide walks through a complete setup on a Raspberry Pi, from flashing the OS to running Lightning payments.
 
-**Current state:** RaspiBolt v4 runs on Next.js + Fumadocs (MDX) at https://raspibolt.org. The feature branch `feature/v4-rewrite` auto-deploys to the staging preview at https://next.raspibolt.org. The v3 guide is archived at https://v3.raspibolt.org. The reasoning behind the stack (including why Quarto was tried and dropped) is captured in [`DECISIONS.md`](./DECISIONS.md).
+**Current state:** RaspiBolt v4 runs on Next.js + Fumadocs (MDX) at https://raspibolt.org. The fork's `next` branch auto-deploys to the staging preview at https://next.raspibolt.org. The v3 guide is archived at https://v3.raspibolt.org. The reasoning behind the stack (including why Quarto was tried and dropped) is captured in [`DECISIONS.md`](./DECISIONS.md).
 
 ---
 

@@ -2,7 +2,7 @@ name: Link check
 
 on:
   push:
-    branches: [feature/v4-rewrite]
+    branches: [next]
     paths:
       - 'guide/**'
       - 'src/**'
