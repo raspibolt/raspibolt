@@ -146,7 +146,7 @@ Edit [`lib/versions.json`](./lib/versions.json) to update; every page re-renders
 
 | Software | Version |
 |----------|---------|
-| Bitcoin Core | 31.1 |
+| Bitcoin Core | 32.1 |
 | LND | 0.21.2-beta |
 | Electrs | 0.11.1 |
 | RTL | 0.15.11 |

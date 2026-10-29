@@ -1,5 +1,5 @@
 {
-  "bitcoin_core": "31.1",
+  "bitcoin_core": "32.1",
   "lnd": "0.21.2-beta",
   "electrs": "0.11.1",
   "rtl": "0.15.11",
