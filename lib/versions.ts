@@ -23,6 +23,9 @@ export const versions = rawVersions as {
   rtl: string;
   mempool: string;
   nodejs: string;
+  joinmarket_ng: string;
+  jam: string;
+  jam_nodejs: string;
 };
 
 export type VersionKey = keyof typeof versions;
@@ -36,6 +39,7 @@ export const files = {
   bitcoinSha256Sig: 'SHA256SUMS.asc',
   lndArchive: `lnd-linux-arm64-v${versions.lnd}.tar.gz`,
   lndSha256: `manifest-v${versions.lnd}.txt`,
+  jamNodeArchive: `node-v${versions.jam_nodejs}-linux-arm64.tar.xz`,
 } as const;
 
 export type FileKey = keyof typeof files;
@@ -51,6 +55,8 @@ export const urls = {
   lndSha256: `https://github.com/lightningnetwork/lnd/releases/download/v${versions.lnd}/${files.lndSha256}`,
   nodesourceSetup: `https://deb.nodesource.com/setup_${versions.nodejs}.x`,
   nodesourceRepo: `https://deb.nodesource.com/node_${versions.nodejs}.x`,
+  jamNodeDownload: `https://nodejs.org/dist/v${versions.jam_nodejs}/${files.jamNodeArchive}`,
+  jamNodeSha256: `https://nodejs.org/dist/v${versions.jam_nodejs}/SHASUMS256.txt`,
 } as const;
 
 export type UrlKey = keyof typeof urls;

@@ -38,6 +38,7 @@ const files = {
   bitcoinSha256Sig: 'SHA256SUMS.asc',
   lndArchive: `lnd-linux-arm64-v${versions.lnd}.tar.gz`,
   lndSha256: `manifest-v${versions.lnd}.txt`,
+  jamNodeArchive: `node-v${versions.jam_nodejs}-linux-arm64.tar.xz`,
 };
 const urls = {
   bitcoinDownload: `https://bitcoincore.org/bin/bitcoin-core-${versions.bitcoin_core}/${files.bitcoinArchive}`,
@@ -47,6 +48,8 @@ const urls = {
   lndSha256: `https://github.com/lightningnetwork/lnd/releases/download/v${versions.lnd}/${files.lndSha256}`,
   nodesourceSetup: `https://deb.nodesource.com/setup_${versions.nodejs}.x`,
   nodesourceRepo: `https://deb.nodesource.com/node_${versions.nodejs}.x`,
+  jamNodeDownload: `https://nodejs.org/dist/v${versions.jam_nodejs}/${files.jamNodeArchive}`,
+  jamNodeSha256: `https://nodejs.org/dist/v${versions.jam_nodejs}/SHASUMS256.txt`,
 };
 const TOKEN_TABLE = { versions, files, urls };
 const TOKEN_RE = /%((?:versions|files|urls)\.[a-zA-Z_][a-zA-Z0-9_]*)%/g;

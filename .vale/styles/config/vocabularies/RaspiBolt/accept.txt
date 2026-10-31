@@ -226,3 +226,16 @@ Carsten
 Bosworth
 Suheb
 Zeyde
+
+# JoinMarket
+JoinMarket
+joinmarket
+joinmarket-ng
+CoinJoin(s)?
+[Mm]ixdepth(s)?
+[Tt]aker(s)?
+[Mm]aker(s)?
+orderbook
+jmwalletd
+JAM
+WebSocket

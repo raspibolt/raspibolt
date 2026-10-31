@@ -1,15 +1,563 @@
 ---
 title: JAM (JoinMarket UI)
-description: Web interface for JoinMarket focused on user-friendliness, with sensible defaults for CoinJoin newcomers.
+description: Web interface for JoinMarket. Build JAM v2 as a static site, run jmwalletd and the orderbook watcher as services, and serve it over HTTPS with Caddy on port 4020.
 ---
 
-<Callout type="info" title="Migration in progress">
-This bonus page hasn't been rewritten for RaspiBolt v4 yet. The v3
-version still works, see the [original guide on GitHub](https://github.com/raspibolt/raspibolt/blob/v3-final/guide/bonus/bitcoin/Jam.md)
-while we port it over.
+[JAM](https://github.com/joinmarket-webui/jam) is a web interface for
+JoinMarket. It wraps the maker, the taker, and a scheduled mixing plan
+in a browser UI with sensible defaults, so you can run CoinJoins from
+your desktop without touching the command line.
+
+This guide builds JAM v%versions.jam% as a static site and serves it
+with Caddy. Behind it run two services from joinmarket-ng: `jmwalletd`,
+the wallet daemon with the REST API that JAM talks to, and the
+orderbook watcher that feeds JAM's orderbook page.
+
+<Callout type="info" title="JAM v2 is a beta">
+JAM v2 is the JAM generation that works with joinmarket-ng. Earlier
+JAM releases (v0.x) only speak to the original joinmarket-clientserver
+and do not work with this setup. v2 is marked as a beta upstream; it
+works well in day-to-day use, but expect UI changes between releases.
 </Callout>
 
-[JAM](https://github.com/joinmarket-webui/jam) is a web interface for
-JoinMarket that aims to make CoinJoin accessible to non-expert users.
-It ships sensible defaults and a browser-based UI while still
-exposing the advanced knobs experienced JoinMarket users rely on.
+## Requirements
+
+- The [JoinMarket guide](/docs/bonus/bitcoin/joinmarket) completed:
+  user `joinmarket`, joinmarket-ng installed with the orderbook watcher,
+  `config.toml` written
+- Caddy installed (from the
+  [BTC RPC Explorer guide](/docs/bitcoin/blockchain-explorer) or
+  standalone via `caddyserver.com`)
+- About 1 GB of disk under `/home/jam/` for the Node.js toolchain and
+  the build
+
+## Install jmwalletd
+
+`jmwalletd` lives in the joinmarket-ng repository, but the release
+installer does not install it yet
+([joinmarket-ng#639](https://github.com/joinmarket-ng/joinmarket-ng/issues/639)).
+Until that lands, install it by hand into the same environment, pinned
+to the same verified commit and with the same hash-locked dependencies
+the installer used.
+
+1. Switch to the `joinmarket` user:
+
+   ```bash
+   sudo su - joinmarket
+   ```
+
+2. Read the commit the installer pinned. pip records it for every
+   package installed from Git:
+
+   ```bash
+   COMMIT=$(python3 -c 'import json, glob, os; p = glob.glob(os.path.expanduser("~/.joinmarket-ng/venv/lib/python3*/site-packages/jmcore-*.dist-info/direct_url.json"))[0]; print(json.load(open(p))["vcs_info"]["commit_id"])')
+   ```
+
+   Print it to make sure the lookup worked (a 40-character hash):
+
+   ```bash
+   echo "$COMMIT"
+   ```
+
+3. Fetch the hash-locked requirements for that commit and install
+   them. pip refuses any package whose hash does not match:
+
+   ```bash
+   curl -sSL "https://raw.githubusercontent.com/joinmarket-ng/joinmarket-ng/${COMMIT}/jmwalletd/requirements.txt" -o ~/.joinmarket-ng/jmwalletd-requirements.txt
+   ```
+
+   ```bash
+   pip install --require-hashes -r ~/.joinmarket-ng/jmwalletd-requirements.txt
+   ```
+
+4. Install `jmwalletd` itself, without resolving dependencies again:
+
+   ```bash
+   pip install --no-deps "git+https://github.com/joinmarket-ng/joinmarket-ng.git@${COMMIT}#subdirectory=jmwalletd"
+   ```
+
+5. Check that it runs:
+
+   ```bash
+   jmwalletd --help
+   ```
+
+   Leave the `joinmarket` shell:
+
+   ```bash
+   exit
+   ```
+
+## Autostart jmwalletd and the orderbook watcher
+
+Both services run as `joinmarket` and only listen on localhost.
+`jmwalletd` serves its API with TLS on port 28183 and generates a
+self-signed certificate under `~/.joinmarket-ng/ssl/` on first start.
+The orderbook watcher serves plain HTTP on port 8000.
+
+1. Create the `jmwalletd` unit:
+
+   ```bash
+   sudo nano /etc/systemd/system/jmwalletd.service
+   ```
+
+   Paste:
+
+   ```ini
+   # RaspiBolt: systemd unit for the joinmarket-ng wallet daemon
+   # /etc/systemd/system/jmwalletd.service
+
+   [Unit]
+   Description=JoinMarket wallet daemon (jmwalletd)
+   After=network-online.target bitcoind.service tor.service
+   Wants=network-online.target bitcoind.service tor.service
+   StartLimitIntervalSec=0
+
+   [Service]
+   Type=simple
+   User=joinmarket
+   Environment=JOINMARKET_DATA_DIR=/home/joinmarket/.joinmarket-ng
+   ExecStart=/home/joinmarket/.joinmarket-ng/venv/bin/jmwalletd
+   Restart=on-failure
+   RestartSec=30
+   PrivateTmp=true
+   NoNewPrivileges=true
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+2. Create the orderbook watcher unit:
+
+   ```bash
+   sudo nano /etc/systemd/system/obwatcher.service
+   ```
+
+   Paste:
+
+   ```ini
+   # RaspiBolt: systemd unit for the joinmarket-ng orderbook watcher
+   # /etc/systemd/system/obwatcher.service
+
+   [Unit]
+   Description=JoinMarket orderbook watcher
+   After=network-online.target tor.service
+   Wants=network-online.target tor.service
+   StartLimitIntervalSec=0
+
+   [Service]
+   Type=simple
+   User=joinmarket
+   Environment=JOINMARKET_DATA_DIR=/home/joinmarket/.joinmarket-ng
+   ExecStart=/home/joinmarket/.joinmarket-ng/venv/bin/jm-orderbook-watcher
+   Restart=on-failure
+   RestartSec=30
+   PrivateTmp=true
+   NoNewPrivileges=true
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+3. Enable both so they start on boot:
+
+   ```bash
+   sudo systemctl enable jmwalletd obwatcher
+   ```
+
+   Start them:
+
+   ```bash
+   sudo systemctl start jmwalletd obwatcher
+   ```
+
+   Follow the wallet daemon log:
+
+   ```bash
+   sudo journalctl -f -u jmwalletd
+   ```
+
+   Wait for `Uvicorn running on https://127.0.0.1:28183`, then press
+   `Ctrl`-`C`.
+
+4. Ask the API for its status. It answers with a small JSON object
+   even before any wallet is open:
+
+   ```bash
+   curl -sk https://127.0.0.1:28183/api/v1/session
+   ```
+
+<Callout type="warn" title="One operator per wallet">
+`jmwalletd` opens the wallet for JAM. The `tmux` maker from the
+JoinMarket guide opens the same seed from the command line. Never run
+both at the same time: two makers on one wallet reuse addresses and
+can fail CoinJoins for everyone involved. Pick JAM or the CLI for
+running the maker, and stop one before you start the other.
+</Callout>
+
+## Create the jam user
+
+The build pulls a few hundred npm packages. Run it as a user that owns
+nothing else:
+
+```bash
+sudo adduser --disabled-password --gecos "" jam
+```
+
+## Install Node.js for the build
+
+JAM v2 builds with Node.js %versions.jam_nodejs%, which is newer than
+the Node.js %versions.nodejs% the explorer guide installs from
+NodeSource. Instead of replacing the system Node.js, download the
+official Node.js tarball into the `jam` home. It is only used to build
+JAM; nothing runs on it afterwards.
+
+1. Become the `jam` user:
+
+   ```bash
+   sudo su - jam
+   ```
+
+2. Download the Node.js archive and the checksum list:
+
+   ```bash
+   wget %urls.jamNodeDownload%
+   ```
+
+   ```bash
+   wget %urls.jamNodeSha256%
+   ```
+
+3. Verify the archive. Expect `%files.jamNodeArchive%: OK`:
+
+   ```bash
+   sha256sum --ignore-missing --check SHASUMS256.txt
+   ```
+
+4. Unpack it into `~/node`:
+
+   ```bash
+   mkdir -p ~/node
+   ```
+
+   ```bash
+   tar -xf %files.jamNodeArchive% -C ~/node --strip-components=1
+   ```
+
+   Put it first on the `PATH` for this shell session:
+
+   ```bash
+   export PATH="$HOME/node/bin:$PATH"
+   ```
+
+   Check that the build shell sees the right version:
+
+   ```bash
+   node --version
+   ```
+
+   Expected output: `v%versions.jam_nodejs%`.
+
+## Build JAM
+
+Still as user `jam`, with `~/node/bin` on the `PATH`.
+
+1. Clone the release tag:
+
+   ```bash
+   git clone --branch v%versions.jam% --depth 1 https://github.com/joinmarket-webui/jam.git ~/jam
+   ```
+
+   Move into the source tree:
+
+   ```bash
+   cd ~/jam
+   ```
+
+2. Verify the tag signature. JAM tags are signed by
+   theborakompanioni. Import the maintainer's key from the
+   jam-docker repository:
+
+   ```bash
+   curl -sSL https://raw.githubusercontent.com/joinmarket-webui/jam-docker/master/ui-only/pubkeys/tbk.asc | gpg --import
+   ```
+
+   Verify the tag:
+
+   ```bash
+   git verify-tag v%versions.jam%
+   ```
+
+   Look for `Good signature from "theborakompanioni"`. The primary key
+   fingerprint is `3550 2225 7551 EAB1 26D7 5616 E807 0AF0 053A AC0D`.
+
+3. Install the build dependencies exactly as locked in the release.
+   This takes a few minutes:
+
+   ```bash
+   npm clean-install --no-fund --no-audit
+   ```
+
+4. Build the static site. The result lands in `~/jam/dist/`:
+
+   ```bash
+   npm run build
+   ```
+
+   Leave the `jam` shell:
+
+   ```bash
+   exit
+   ```
+
+5. As user `admin`, publish the build to a directory Caddy can read.
+   Root-owned, read-only files are the safest way to serve a web app
+   that will handle your wallet password:
+
+   ```bash
+   sudo mkdir -p /var/www/jam
+   ```
+
+   ```bash
+   sudo rsync -a --delete --chown=root:root /home/jam/jam/dist/ /var/www/jam/
+   ```
+
+   ```bash
+   sudo chmod -R a+rX /var/www/jam
+   ```
+
+## HTTPS on the LAN with Caddy
+
+JAM is a single-page app that talks to `jmwalletd` through a set of
+fixed paths (`/api/`, `/jmws` for the WebSocket, `/obwatch/` for the
+orderbook). Caddy serves the static files and proxies those paths to
+the two local services. The proxy rules mirror the nginx configuration
+that JAM's own Docker image uses.
+
+1. Open the Caddyfile:
+
+   ```bash
+   sudo nano /etc/caddy/Caddyfile
+   ```
+
+2. Add the JAM block after your existing blocks:
+
+   ```text
+   # JAM (JoinMarket UI)
+   :4020 {
+     tls internal
+
+     root * /var/www/jam
+     encode gzip
+
+     # REST API. JAM sends its token as x-jm-authorization so a proxy
+     # in front can use Authorization for its own login; jmwalletd
+     # expects Authorization.
+     handle /api/* {
+       reverse_proxy https://127.0.0.1:28183 {
+         header_up Authorization {header.x-jm-authorization}
+         header_up -x-jm-authorization
+         transport http {
+           tls_insecure_skip_verify
+         }
+       }
+     }
+
+     # WebSocket for live updates
+     handle /jmws {
+       rewrite * /api/v1/ws
+       reverse_proxy https://127.0.0.1:28183 {
+         header_up -Authorization
+         transport http {
+           tls_insecure_skip_verify
+         }
+       }
+     }
+
+     # Orderbook watcher, prefix removed
+     handle_path /obwatch/* {
+       reverse_proxy 127.0.0.1:8000
+     }
+
+     # Endpoints the UI expects from its usual nginx front end
+     handle /jam/api/v0/health {
+       header Content-Type application/json
+       respond `{ "status": "UP" }` 200
+     }
+     handle /jam/api/v0/features {
+       header Content-Type application/json
+       respond `{ "features": { "logs": false } }` 200
+     }
+     handle /jam/api/v0/log/* {
+       respond 501
+     }
+
+     # Everything else is the static app
+     handle {
+       header /index.html Cache-Control "no-cache"
+       try_files {path} /index.html
+       file_server
+     }
+   }
+   ```
+
+   `tls_insecure_skip_verify` only applies to the hop from Caddy to
+   `jmwalletd` on localhost, which uses a self-signed certificate.
+   Your browser still gets a proper certificate from Caddy's CA.
+
+3. Open the firewall port:
+
+   ```bash
+   sudo ufw allow 4020/tcp comment 'JAM (Caddy)'
+   ```
+
+   Reload Caddy so it picks up the new block:
+
+   ```bash
+   sudo systemctl reload caddy
+   ```
+
+4. Point your browser at `https://raspibolt.local:4020`. Accept the
+   one-time certificate warning.
+
+## Create or import a wallet
+
+After a short intro, JAM offers two buttons.
+
+- **Create new wallet** makes a new seed. JAM shows the recovery words
+  once; write them down, then set a wallet password.
+- **Import existing wallet** takes the seed words of an existing
+  wallet, for example the one from the JoinMarket guide, and creates a
+  second, JAM-managed wallet file for the same seed. The first open
+  scans the blockchain for its history, which takes a few minutes.
+
+Both end up in `/home/joinmarket/.joinmarket-ng/wallets/`. JAM's
+wallet files and the `.mnemonic` files from the command line are
+different formats; keep the "one operator per wallet" rule from above
+in mind if both exist for the same seed.
+
+After unlocking the wallet, the **Earn** tab starts and stops the
+maker, **Send** creates a CoinJoin as a taker, and the **Orderbook**
+page shows the current offers, including your own once the maker runs.
+JAM calls the mixdepths "jars".
+
+**Main takeaway:** JAM is static files behind Caddy, `jmwalletd` is
+the only process that touches the wallet, and everything listens on
+localhost except Caddy's port 4020.
+
+## Upgrade
+
+Read the [JAM release notes](https://github.com/joinmarket-webui/jam/releases)
+and check which joinmarket-ng version the release was tested against;
+the [jam-docker `.env`](https://github.com/joinmarket-webui/jam-docker/blob/master/.env)
+records the pair used for the official images.
+
+1. Stop the maker in JAM's Earn tab, then upgrade joinmarket-ng as
+   described in the [JoinMarket guide](/docs/bonus/bitcoin/joinmarket#upgrade).
+   Repeat the [jmwalletd install](#install-jmwalletd) afterwards: the
+   updater does not cover it yet.
+
+2. Rebuild JAM as user `jam`:
+
+   ```bash
+   sudo su - jam
+   ```
+
+   ```bash
+   export PATH="$HOME/node/bin:$PATH"
+   ```
+
+   ```bash
+   cd ~/jam
+   ```
+
+   Fetch the new tag and check it out. Replace `v2.0.0` with the new
+   release:
+
+   ```bash
+   git fetch --depth 1 origin tag v2.0.0
+   ```
+
+   ```bash
+   git checkout v2.0.0
+   ```
+
+   ```bash
+   git verify-tag v2.0.0
+   ```
+
+   ```bash
+   npm clean-install --no-fund --no-audit
+   ```
+
+   ```bash
+   npm run build
+   ```
+
+   ```bash
+   exit
+   ```
+
+   If the release needs a newer Node.js than `~/node`, repeat the
+   [Node.js step](#install-nodejs-for-the-build) with the new version
+   first.
+
+3. Publish the new build and restart the services:
+
+   ```bash
+   sudo rsync -a --delete --chown=root:root /home/jam/jam/dist/ /var/www/jam/
+   ```
+
+   ```bash
+   sudo systemctl restart jmwalletd obwatcher
+   ```
+
+   Reload the page in your browser with `Ctrl`-`Shift`-`R` to bypass
+   the cache.
+
+## Uninstall
+
+Stop the maker in JAM, then stop the services:
+
+```bash
+sudo systemctl stop jmwalletd obwatcher
+```
+
+Disable them:
+
+```bash
+sudo systemctl disable jmwalletd obwatcher
+```
+
+Remove the unit files:
+
+```bash
+sudo rm /etc/systemd/system/jmwalletd.service /etc/systemd/system/obwatcher.service
+```
+
+Drop the firewall rule:
+
+```bash
+sudo ufw delete allow 4020/tcp
+```
+
+Remove the JAM block from `/etc/caddy/Caddyfile`, then reload:
+
+```bash
+sudo systemctl reload caddy
+```
+
+Remove the published site:
+
+```bash
+sudo rm -rf /var/www/jam
+```
+
+Remove the build user and its home directory:
+
+```bash
+sudo deluser --remove-home jam
+```
+
+The JAM wallet files stay under `/home/joinmarket/.joinmarket-ng/wallets/`
+until you uninstall JoinMarket itself.
