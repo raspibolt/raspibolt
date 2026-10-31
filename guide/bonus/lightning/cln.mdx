@@ -9,6 +9,26 @@ version still works, see the [original guide on GitHub](https://github.com/raspi
 while we port it over.
 </Callout>
 
+<Callout type="warn" title="Skip the c-lightning-REST section in the v3 guide">
+The "c-lightning-Rest & RTL" chapter of the linked v3 guide is out of
+date and no longer leads anywhere useful.
+
+[c-lightning-REST](https://github.com/Ride-The-Lightning/c-lightning-REST)
+was archived on 24 July 2026. It receives no further updates, including
+no security fixes. RTL dropped support for it in v0.15.0 and moved to
+CLN's built-in [`clnrest`](https://docs.corelightning.org/docs/rest) with
+rune authentication, and RaspiBolt pins RTL v%versions.rtl%. Following the
+v3 steps therefore leaves you with a plugin your RTL version cannot talk
+to.
+
+Everything else in the v3 guide, installing and running CLN itself, is
+still valid. For node management, set `clnrest-port` in your CLN config,
+mint a rune with `lightning-cli createrune`, and point RTL at clnrest
+instead of the plugin. The rewritten instructions land here when this
+page is ported. Details and progress:
+[raspibolt/raspibolt#1532](https://github.com/raspibolt/raspibolt/issues/1532).
+</Callout>
+
 [Core Lightning](https://github.com/ElementsProject/lightning) (CLN)
 is a lightweight, highly customizable implementation of the
 Lightning Network protocol from Blockstream. You can run it as a
