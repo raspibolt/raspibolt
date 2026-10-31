@@ -1,16 +1,357 @@
 ---
 title: JoinMarket
-description: Decentralized marketplace for CoinJoin transactions to improve on-chain privacy, with optional yield from providing liquidity.
+description: Run joinmarket-ng on your node. Mix your own coins as a taker or earn sats as a maker, over Tor, with Bitcoin Core as the backend.
 ---
 
-<Callout type="info" title="Migration in progress">
-This bonus page hasn't been rewritten for RaspiBolt v4 yet. The v3
-version still works, see the [original guide on GitHub](https://github.com/raspibolt/raspibolt/blob/v3-final/guide/bonus/bitcoin/joinmarket.md)
-while we port it over.
+[JoinMarket](https://joinmarket-ng.github.io/joinmarket-ng/) is a
+decentralized marketplace for CoinJoin transactions. Takers pay a
+small fee to mix their coins with other participants. Makers provide
+the liquidity and earn that fee. There is no central coordinator: the
+participants find each other through Tor onion services.
+
+This guide installs joinmarket-ng %versions.joinmarket_ng% as a
+command-line setup for the user `joinmarket`. The
+[JAM guide](/docs/bonus/bitcoin/Jam) builds on it and adds a web
+interface.
+
+<Callout type="info" title="joinmarket-ng, not joinmarket-clientserver">
+The v3 guide installed the original
+[joinmarket-clientserver](https://github.com/JoinMarket-Org/joinmarket-clientserver)
+on top of a legacy (non-descriptor) Bitcoin Core wallet. Bitcoin Core
+30 removed legacy wallet support, and Core %versions.bitcoin_core% on
+this node cannot load one.
+[joinmarket-ng](https://github.com/joinmarket-ng/joinmarket-ng) is a
+reimplementation of the same protocol. It talks to the same makers and
+takers, uses the same seed derivation, works with Bitcoin Core
+descriptor wallets, and ships releases signed by two maintainers.
 </Callout>
 
-[JoinMarket](https://github.com/JoinMarket-Org/joinmarket-clientserver)
-is a decentralized marketplace for CoinJoin transactions. Running it
-on your node lets you either mix your own coins by paying a small
-fee or become a liquidity maker and earn sats for providing the
-inputs others use to mix.
+## Requirements
+
+- [Bitcoin Core](/docs/bitcoin/bitcoin-client) fully synced, with
+  wallet support enabled (the default; JoinMarket needs it for a
+  watch-only descriptor wallet)
+- [Tor](/docs/raspberry-pi/privacy) with the control port on
+  `127.0.0.1:9051` and cookie authentication, as set up in the
+  privacy section. Makers publish their offers through ephemeral onion
+  services created over this control port.
+- Python 3.11 or newer. Debian 13 Trixie ships Python 3.13.
+- About 500 MB of disk for the Python environment.
+
+## Create the user
+
+A dedicated user keeps the JoinMarket wallet and its Python
+environment separate from everything else on the node. Membership in
+`bitcoin` lets it read the Bitcoin Core cookie; membership in
+`debian-tor` lets it read Tor's control cookie.
+
+Create the user:
+
+```bash
+sudo adduser --disabled-password --gecos "" joinmarket
+```
+
+Add it to the `bitcoin` group:
+
+```bash
+sudo adduser joinmarket bitcoin
+```
+
+Add it to the `debian-tor` group:
+
+```bash
+sudo adduser joinmarket debian-tor
+```
+
+## Install build dependencies
+
+The installer compiles a few Python extensions (libsecp256k1 bindings,
+libsodium) and verifies release signatures with GnuPG:
+
+```bash
+sudo apt install build-essential ca-certificates libffi-dev libsodium-dev libsecp256k1-dev pkg-config python3-dev python3-venv git gnupg curl
+```
+
+## Install joinmarket-ng
+
+joinmarket-ng ships an installer script. It resolves the release tag to
+a commit, checks that commit against detached GPG signatures from two
+maintainers, pins the install to the verified commit, and installs all
+Python dependencies from a hash-locked requirements file. If any of
+these checks fail, it stops.
+
+1. Switch to the `joinmarket` user:
+
+   ```bash
+   sudo su - joinmarket
+   ```
+
+2. Download the installer:
+
+   ```bash
+   curl -sSL https://raw.githubusercontent.com/joinmarket-ng/joinmarket-ng/main/install.sh -o install.sh
+   ```
+
+3. Run it. `--skip-tor` tells it to leave the Tor configuration alone
+   (yours already has the control port set up); `--yes` accepts the
+   remaining prompts, which only concern shell completion:
+
+   ```bash
+   bash install.sh --version %versions.joinmarket_ng% --maker --taker --orderbook-watcher --skip-tor --yes
+   ```
+
+   The installer creates `~/.joinmarket-ng/` with a Python virtual
+   environment in `venv/`, a `config.toml`, a `wallets/` directory,
+   and an `activate.sh` that puts the `jm-*` commands on your `PATH`.
+   It also saves a verified copy of itself as
+   `~/.joinmarket-ng/install.sh` for later updates.
+
+4. Load the environment (new shells of the `joinmarket` user do this
+   automatically from `~/.bashrc`):
+
+   ```bash
+   source ~/.joinmarket-ng/activate.sh
+   ```
+
+5. Check that the commands are there:
+
+   ```bash
+   jm-wallet --help
+   ```
+
+## Configure
+
+The installer writes a short starter `config.toml`. Replace it with the
+settings for this node. The Bitcoin Core connection uses the cookie
+file, so there is no RPC password to manage; the Tor block points at
+the control cookie from the privacy section.
+
+Write the configuration:
+
+```bash
+tee ~/.joinmarket-ng/config.toml > /dev/null <<'CONFIG'
+# joinmarket-ng configuration
+# Full reference: ~/.joinmarket-ng/config.toml.template
+
+[bitcoin]
+backend_type = "descriptor_wallet"
+rpc_url = "http://127.0.0.1:8332"
+rpc_cookie_file = "/data/bitcoin/.cookie"
+
+[tor]
+socks_host = "127.0.0.1"
+socks_port = 9050
+control_port = 9051
+cookie_path = "/run/tor/control.authcookie"
+
+[wallet]
+# Block height to start the initial scan from. Leave commented for a
+# new wallet; set it for a recovered wallet (see the v3 note below).
+# scan_start_height = 0
+
+[maker]
+# Relative offers use cj_fee_relative; absolute offers use cj_fee_absolute.
+# Keep min_size at its default: a different value makes your maker
+# recognizable across sessions.
+offer_type = "sw0reloffer"
+cj_fee_relative = "0.0001"
+cj_fee_absolute = 500
+tx_fee_contribution = 0
+
+[taker]
+# Maximum fee you accept per maker, absolute (sats) and relative (fraction)
+max_cj_fee_abs = 500
+max_cj_fee_rel = "0.001"
+fee_block_target = 6
+CONFIG
+```
+
+Lock the file down. If you ever store a wallet password in it for
+unattended operation, this is the only thing between that password and
+other local users:
+
+```bash
+chmod 600 ~/.joinmarket-ng/config.toml
+```
+
+## Create a wallet
+
+The wallet is a BIP39 seed stored in an encrypted file. joinmarket-ng
+derives the same paths as the original client (`m/84'/0'/n'` for
+mixdepth `n`), so a seed from one works in the other.
+
+<Callout type="warn" title="The seed words are the money">
+`jm-wallet generate` shows 24 words once. Write them down on paper and
+store them somewhere safe. The password you enter afterwards only
+encrypts the local file; it does not change the wallet. Anyone with
+the 24 words can spend your coins, and without them a lost SSD means
+lost coins.
+</Callout>
+
+Generate the wallet:
+
+```bash
+jm-wallet generate
+```
+
+Write down the 24 words, then choose a wallet password when prompted.
+The encrypted file lands at `~/.joinmarket-ng/wallets/default.mnemonic`;
+every `jm-*` command uses it unless told otherwise.
+
+Open the wallet to see its structure. On the first run this creates a
+watch-only descriptor wallet in Bitcoin Core and scans it, which takes a
+few minutes:
+
+```bash
+jm-wallet info
+```
+
+You'll see five mixdepths (0-4). Coins move down one mixdepth with
+every CoinJoin; the maker offers coins from all of them.
+
+## Fund the wallet
+
+Get a deposit address in mixdepth 0:
+
+```bash
+jm-wallet address new 0 --label "deposit"
+```
+
+Send coins to it and wait for a confirmation. Then check the balance:
+
+```bash
+jm-wallet info
+```
+
+## Run a maker
+
+The maker (yield generator) keeps running, announces offers, and signs
+CoinJoins for takers who accept your fee. It needs the wallet password
+at start. Run it in a `tmux` session so it survives your SSH logout.
+
+Install tmux (as user `admin`, in a second terminal):
+
+```bash
+sudo apt install tmux
+```
+
+Back as `joinmarket`, open a session:
+
+```bash
+tmux new -s maker
+```
+
+Start the maker:
+
+```bash
+jm-maker start
+```
+
+Enter the wallet password. The maker creates an onion service over the
+Tor control port, connects to the directory servers, and publishes its
+offers. Detach with `Ctrl`-`B`, then `D`. Reattach later with
+`tmux attach -t maker`.
+
+Your offers appear in the public orderbook after a minute. You can
+check with the orderbook watcher from a second session:
+
+```bash
+jm-orderbook-watcher
+```
+
+It serves an HTML orderbook on `http://127.0.0.1:8000` (reachable
+through SSH port forwarding, or through JAM once you follow the
+[JAM guide](/docs/bonus/bitcoin/Jam)). Stop it with `Ctrl`-`C`.
+
+<Callout type="info" title="Unattended maker after reboot">
+The maker above stops when the node reboots. joinmarket-ng documents a
+systemd unit for
+[unattended makers](https://joinmarket-ng.github.io/joinmarket-ng/maker-service/),
+but it needs the wallet password in a file the service can read.
+Anyone who can read that file and the wallet can spend the coins.
+Decide for yourself whether that trade-off fits your threat model;
+this guide keeps the password interactive.
+</Callout>
+
+## Send a CoinJoin as a taker
+
+Stop the maker first (`tmux attach -t maker`, then `Ctrl`-`C`). The
+wallet must not be used by a maker and a taker at the same time.
+
+Mix the whole balance of mixdepth 0 into the next mixdepth:
+
+```bash
+jm-taker coinjoin --amount 0 --mixdepth 0 --destination INTERNAL
+```
+
+`--amount 0` means "everything in this mixdepth"; `INTERNAL` sends the
+output to your own next mixdepth. Replace `INTERNAL` with an address to
+pay someone with a CoinJoin. The taker picks makers within the fee
+limits from `config.toml`, negotiates over Tor, and broadcasts the
+transaction. Expect a few minutes.
+
+For a multi-step mixing plan across all mixdepths, look at
+`jm-tumbler plan --help`.
+
+**Main takeaway:** the maker runs from `tmux` with an interactive
+password; the taker is a one-off command. Both use the same encrypted
+wallet file under `~/.joinmarket-ng/wallets/`.
+
+<Callout type="info" title="Coming from the v3 JoinMarket guide?">
+joinmarket-ng cannot read the old `wallet.jmdat`. Recover your wallet
+from its 12 words instead: `jm-wallet import`, then `jm-wallet info`.
+Since the recovered wallet is older than the default scan window, set
+`scan_start_height` in the `[wallet]` section of `config.toml` to a
+block height shortly before your first transaction, so the initial
+scan covers the full history. Never run the old and the new
+installation against the same seed at the same time.
+</Callout>
+
+## Upgrade
+
+Stop the maker (`tmux attach -t maker`, `Ctrl`-`C`), then run the
+saved, verified installer as user `joinmarket`:
+
+```bash
+bash ~/.joinmarket-ng/install.sh --update
+```
+
+The update goes through the same signature and hash checks as the
+initial install and keeps your `config.toml`. Check the
+[release notes](https://github.com/joinmarket-ng/joinmarket-ng/releases)
+for configuration changes, then start the maker again.
+
+## Uninstall
+
+Stop the maker (`tmux attach -t maker`, `Ctrl`-`C`).
+
+<Callout type="warn" title="Move your coins first">
+Uninstalling deletes the encrypted wallet file. Send the balance
+somewhere else or make sure you have the 24 seed words before you
+continue.
+</Callout>
+
+As user `admin`, unload the watch-only wallet from Bitcoin Core.
+joinmarket-ng names it `jm_<fingerprint>_mainnet`, where the
+fingerprint is derived from the seed. List the loaded wallets to find
+it:
+
+```bash
+bitcoin-cli listwallets
+```
+
+Unload it, using the name from the list:
+
+```bash
+bitcoin-cli unloadwallet "jm_<fingerprint>_mainnet"
+```
+
+The wallet directory stays under `/data/bitcoin/wallets/`; delete it
+if you don't plan to come back.
+
+Remove the user and its home directory, including the Python
+environment and the wallet:
+
+```bash
+sudo deluser --remove-home joinmarket
+```

@@ -23,6 +23,7 @@ export const versions = rawVersions as {
   rtl: string;
   mempool: string;
   nodejs: string;
+  joinmarket_ng: string;
 };
 
 export type VersionKey = keyof typeof versions;

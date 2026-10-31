@@ -4,5 +4,6 @@
   "electrs": "0.11.1",
   "rtl": "0.15.11",
   "mempool": "3.3.1",
-  "nodejs": "24"
+  "nodejs": "24",
+  "joinmarket_ng": "0.39.2"
 }
