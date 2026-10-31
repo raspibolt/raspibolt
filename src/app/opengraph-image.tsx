@@ -1,7 +1,6 @@
 import { ImageResponse } from 'next/og';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import { appName } from '@/lib/shared';
+import { ogFrameStyle, ogLogoSrc, ogSize } from '@/lib/og';
 
 // Root-level OG image. Shown on Twitter / Mastodon / LinkedIn / iMessage
 // link previews when no page-specific OG image is set (landing, 404,
@@ -11,29 +10,12 @@ import { appName } from '@/lib/shared';
 export const dynamic = 'force-static';
 
 export const alt = `${appName} v4 - Build your own do-everything-yourself Bitcoin node`;
-export const size = { width: 1200, height: 630 };
+export const size = ogSize;
 export const contentType = 'image/png';
 
 export default async function Image() {
-  const logoData = readFileSync(join(process.cwd(), 'public/images/logo-light.png'));
-  const logoSrc = `data:image/png;base64,${logoData.toString('base64')}`;
-
   return new ImageResponse(
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: '54px 64px 48px',
-        color: '#1c140d',
-        backgroundColor: '#fffbeb',
-        backgroundImage:
-          'linear-gradient(rgba(245, 158, 11, 0.11) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 158, 11, 0.11) 1px, transparent 1px), radial-gradient(circle at 88% 18%, rgba(249, 115, 22, 0.18), transparent 32%)',
-        backgroundSize: '64px 64px, 64px 64px, 100% 100%',
-      }}
-    >
+    <div style={ogFrameStyle}>
       <div
         style={{
           display: 'flex',
@@ -53,7 +35,7 @@ export default async function Image() {
           }}
         >
           <img
-            src={logoSrc}
+            src={ogLogoSrc()}
             width={72}
             height={72}
             style={{
