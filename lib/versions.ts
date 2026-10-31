@@ -21,6 +21,7 @@ export const versions = rawVersions as {
   lnd: string;
   electrs: string;
   rtl: string;
+  albyhub: string;
   mempool: string;
   nodejs: string;
 };
@@ -36,6 +37,9 @@ export const files = {
   bitcoinSha256Sig: 'SHA256SUMS.asc',
   lndArchive: `lnd-linux-arm64-v${versions.lnd}.tar.gz`,
   lndSha256: `manifest-v${versions.lnd}.txt`,
+  albyhubArchive: 'albyhub-Server-Linux-aarch64.tar.bz2',
+  albyhubManifest: 'manifest.txt',
+  albyhubManifestSig: 'manifest.txt.asc',
 } as const;
 
 export type FileKey = keyof typeof files;
@@ -49,6 +53,9 @@ export const urls = {
   bitcoinSha256Sig: `https://bitcoincore.org/bin/bitcoin-core-${versions.bitcoin_core}/${files.bitcoinSha256Sig}`,
   lndDownload: `https://github.com/lightningnetwork/lnd/releases/download/v${versions.lnd}/${files.lndArchive}`,
   lndSha256: `https://github.com/lightningnetwork/lnd/releases/download/v${versions.lnd}/${files.lndSha256}`,
+  albyhubDownload: `https://github.com/getAlby/hub/releases/download/v${versions.albyhub}/${files.albyhubArchive}`,
+  albyhubManifest: `https://github.com/getAlby/hub/releases/download/v${versions.albyhub}/${files.albyhubManifest}`,
+  albyhubManifestSig: `https://github.com/getAlby/hub/releases/download/v${versions.albyhub}/${files.albyhubManifestSig}`,
   nodesourceSetup: `https://deb.nodesource.com/setup_${versions.nodejs}.x`,
   nodesourceRepo: `https://deb.nodesource.com/node_${versions.nodejs}.x`,
 } as const;
