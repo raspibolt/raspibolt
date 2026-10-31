@@ -14,12 +14,31 @@ export const ogFrameStyle: CSSProperties = {
   flexDirection: 'column',
   justifyContent: 'space-between',
   padding: '54px 64px 48px',
+  fontFamily: 'Geist',
   color: '#1c140d',
   backgroundColor: '#fffbeb',
   backgroundImage:
     'linear-gradient(rgba(245, 158, 11, 0.11) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 158, 11, 0.11) 1px, transparent 1px), radial-gradient(circle at 88% 18%, rgba(249, 115, 22, 0.18), transparent 32%)',
   backgroundSize: '64px 64px, 64px 64px, 100% 100%',
 };
+
+// Geist matches the site typography (src/app/layout.tsx). Satori needs
+// TTF/OTF, not the WOFF2 that next/font serves, so the files live in the
+// repo. Source: npm package geist 1.9.0, SIL OFL (see OFL.txt).
+// The GPOS table is stripped: Satori misapplies Geist's kerning and
+// renders uneven, double-width gaps after words like "verify" or "conf".
+export function ogFonts() {
+  const font = (file: string) => readFileSync(join(process.cwd(), 'src/app/og/fonts', file));
+  return [
+    {
+      name: 'Geist',
+      data: font('Geist-Regular.ttf'),
+      weight: 400 as const,
+      style: 'normal' as const,
+    },
+    { name: 'Geist', data: font('Geist-Bold.ttf'), weight: 700 as const, style: 'normal' as const },
+  ];
+}
 
 export function ogLogoSrc(): string {
   const logoData = readFileSync(join(process.cwd(), 'public/images/logo-light.png'));

@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { appName } from '@/lib/shared';
-import { ogFrameStyle, ogLogoSrc, ogSize } from '@/lib/og';
+import { ogFrameStyle, ogFonts, ogLogoSrc, ogSize } from '@/lib/og';
 
 // Root-level OG image. Shown on Twitter / Mastodon / LinkedIn / iMessage
 // link previews when no page-specific OG image is set (landing, 404,
@@ -29,7 +29,7 @@ export default async function Image() {
             display: 'flex',
             alignItems: 'center',
             fontSize: 34,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: -1.5,
             lineHeight: 1,
           }}
@@ -69,7 +69,7 @@ export default async function Image() {
           style={{
             display: 'flex',
             fontSize: 74,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: -4.2,
             lineHeight: 1.02,
           }}
@@ -81,7 +81,7 @@ export default async function Image() {
             display: 'flex',
             color: '#d65f0b',
             fontSize: 74,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: -4.2,
             lineHeight: 1.02,
           }}
@@ -92,7 +92,7 @@ export default async function Image() {
           style={{
             display: 'flex',
             fontSize: 74,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: -4.2,
             lineHeight: 1.02,
           }}
@@ -115,6 +115,6 @@ export default async function Image() {
         <span style={{ fontWeight: 700 }}>raspibolt.org</span>
       </div>
     </div>,
-    { ...size },
+    { ...size, fonts: ogFonts() },
   );
 }

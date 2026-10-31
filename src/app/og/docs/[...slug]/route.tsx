@@ -4,7 +4,7 @@ import { ImageResponse } from 'next/og';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { appName } from '@/lib/shared';
-import { ogFrameStyle, ogLogoSrc, ogSize, ogTruncate } from '@/lib/og';
+import { ogFonts, ogFrameStyle, ogLogoSrc, ogSize, ogTruncate } from '@/lib/og';
 
 export const revalidate = false;
 
@@ -45,7 +45,7 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
             display: 'flex',
             alignItems: 'center',
             fontSize: 34,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: -1.5,
             lineHeight: 1,
           }}
@@ -88,7 +88,7 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
           style={{
             display: 'flex',
             fontSize: 68,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: -3,
             lineHeight: 1.05,
           }}
@@ -124,7 +124,7 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
         <span style={{ fontWeight: 700 }}>raspibolt.org</span>
       </div>
     </div>,
-    { ...ogSize },
+    { ...ogSize, fonts: ogFonts() },
   );
 }
 
