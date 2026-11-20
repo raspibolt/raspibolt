@@ -58,8 +58,7 @@ We need to set up settings in Bitcoin Core configuration file - add new lines if
 - Configure the firewall to allow incoming requests
 
   ```bash
-  sudo ufw allow 50002/tcp comment 'allow Fulcrum SSL'
-  sudo ufw allow 50001/tcp comment 'allow Fulcrum TCP'
+  sudo ufw allow from 192.168.0.0/24 to any port 50002 proto tcp comment 'Fulcrum Electrum TLS LAN'
   ```
 
 ## Install Fulcrum
@@ -522,13 +521,10 @@ Ensure you are logged with user "admin"
 Expected output:
 
 ```bash
-    [ W] 50002/tcp                  ALLOW IN    Anywhere                   # allow Fulcrum SSL
-    [ X] 50001/tcp                  ALLOW IN    Anywhere                   # allow Fulcrum TCP
-    [ Y] 50002/tcp (v6)             ALLOW IN    Anywhere (v6)              # allow Fulcrum SSL
-    [ Z] 50001/tcp (v6)             ALLOW IN    Anywhere (v6)              # allow Fulcrum TCP
+    [ X] 50002/tcp                  ALLOW IN    192.168.1.0/24             # Fulcrum Electrum TLS LAN
 ```
 
-- Find the "allow Fulcrum TCP" and "allow Fulcrum SSL" lines and write down the corresponding rule numbers (W, X, Y, and Z in the example)
+- Find the "Fulcrum Electrum TLS LAN" line and write down the corresponding rule number (X)
 
 - Delete the rule with the correct number and confirm with "yes"
 
